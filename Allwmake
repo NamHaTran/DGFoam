@@ -1,0 +1,12 @@
+#!/bin/sh
+
+# Set DG_ROOT to this script's directory + /DGFoam (absolute path)
+export DG_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/DGFoam" && pwd -P)"
+
+echo "==> Entering $DG_ROOT/src and building DGFS libraries"
+cd "$DG_ROOT/src"
+
+# Run the Allwmake script in src/
+./Allwmake
+
+#------------------------------------------------------------------------------

@@ -1,0 +1,16 @@
+EXE_INC = \
+    -I$(LIB_SRC)/finiteVolume/lnInclude \
+    -I$(LIB_SRC)/meshTools/lnInclude \
+    -I$(DG_SRC)/mesh/lnInclude \
+    -I$(DG_SRC)/math/lnInclude \
+    -I$(DG_SRC)/DGFoam/lnInclude \
+    -I$(DG_SRC)/thermophysicalModels/lnInclude
+
+EXE_LIBS = \
+    -L$(FOAM_USER_LIBBIN) \
+    -lfiniteVolume \
+    -lmeshTools \
+    -lDGMesh \
+    -lDGMath \
+    -lDGFoam \
+    -lDGFluidThermophysicalModels

@@ -1,0 +1,111 @@
+/*---------------------------------------------------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2412                                  |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+Build  : _8dbc61e11c-20241220 OPENFOAM=2412 version=v2412
+Arch   : "LSB;label=32;scalar=64"
+Exec   : fluentMeshToFoam /home/namtran/OpenFOAM/OpenFOAM-v2412/tutorials/resources/geometry/elbow.msh
+Date   : Jul 28 2025
+Time   : 09:02:59
+Host   : NamTran
+PID    : 11458
+I/O    : uncollated
+Case   : /home/namtran/NAM/Working/DGFoamProject/DGFoam/applications/DGHyperSonicFoam/elbow
+nProcs : 1
+trapFpe: Floating point exception trapping enabled (FOAM_SIGFPE).
+fileModificationChecking : Monitoring run-time modified files using timeStampMaster (fileModificationSkew 5, maxFileModificationPolls 20)
+allowSystemOperations : Allowing user-supplied system call operations
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+Create time
+
+Reading header: "TGrid 2D 2.4.1"
+Reading header: "PreBFC V4.3"
+Dimension of grid: 2
+Embedded blocks in comment or unknown:	(
+Embedded blocks in comment or unknown:(
+Found end of section in unknown:) 
+Embedded blocks in comment or unknown:(
+Found end of section in unknown:)
+Found end of section in unknown:)
+Embedded blocks in comment or unknown:	(
+Embedded blocks in comment or unknown:(
+Found end of section in unknown:)
+Embedded blocks in comment or unknown:
+		(
+Found end of section in unknown:)
+Found end of section in unknown:)
+Embedded blocks in comment or unknown:	(
+Embedded blocks in comment or unknown:(
+Found end of section in unknown:)
+Found end of section in unknown:)
+Number of points: 537
+
+number of faces: 1454
+Number of cells: 918
+Reading points
+Reading points
+Reading uniform faces
+Reading uniform faces
+Reading uniform faces
+Reading uniform faces
+Reading uniform faces
+Reading uniform faces
+Tgrid syntax problem: 9 1 396 1
+cellGroupZoneID:9
+cellGroupStartIndex:1
+cellGroupEndIndex:918
+cellGroupType:1
+Read zone1:3 name:internal-3 patchTypeID:interior
+Reading zone data
+Read zone1:4 name:wall-4 patchTypeID:wall
+Reading zone data
+Read zone1:5 name:velocity-inlet-5 patchTypeID:velocity-inlet
+Reading zone data
+Read zone1:6 name:velocity-inlet-6 patchTypeID:velocity-inlet
+Reading zone data
+Read zone1:7 name:pressure-outlet-7 patchTypeID:pressure-outlet
+Reading zone data
+Read zone1:8 name:wall-8 patchTypeID:wall
+Reading zone data
+Read zone1:9 name:fluid-9 patchTypeID:fluid
+Reading zone data
+
+
+FINISHED LEXING
+
+
+dimension of grid: 2
+Grid is 2-D. Extruding in z-direction by: 1.87548
+Creating shapes for 2-D cells
+Building patch-less mesh...--> FOAM Warning : 
+    From Foam::polyMesh::polyMesh(const Foam::IOobject&, Foam::pointField&&, const Foam::cellShapeList&, const Foam::faceListList&, const Foam::wordList&, const Foam::wordList&, const Foam::word&, const Foam::word&, const Foam::wordList&, bool)
+    in file meshes/polyMesh/polyMeshFromShapeMesh.C at line 640
+    Found 1990 undefined faces in mesh; adding to default patch defaultFaces
+done.
+
+Building boundary and internal patches.
+Creating patch 0 for zone: 3 start: 155 end: 1454 type: interior name: internal-3
+Creating patch 1 for zone: 4 start: 55 end: 154 type: wall name: wall-4
+Creating patch 2 for zone: 5 start: 47 end: 54 type: velocity-inlet name: velocity-inlet-5
+Creating patch 3 for zone: 6 start: 43 end: 46 type: velocity-inlet name: velocity-inlet-6
+Creating patch 4 for zone: 7 start: 35 end: 42 type: pressure-outlet name: pressure-outlet-7
+Creating patch 5 for zone: 8 start: 1 end: 34 type: wall name: wall-8
+Creating patch for front and back planes
+
+Patch internal-3 is internal to the mesh  and is not being added to the boundary.
+Adding new patch wall-4 of type wall as patch 0
+Adding new patch velocity-inlet-5 of type patch as patch 1
+Adding new patch velocity-inlet-6 of type patch as patch 2
+Adding new patch pressure-outlet-7 of type patch as patch 3
+Adding new patch wall-8 of type wall as patch 4
+Adding new patch frontAndBackPlanes of type empty as patch 5
+
+Writing mesh... to "constant/polyMesh"  done.
+
+
+End
+

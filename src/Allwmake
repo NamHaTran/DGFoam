@@ -1,0 +1,26 @@
+#!/bin/sh
+# Go to mesh and create symbolic includes
+echo "==> Linking includes in mesh/"
+cd mesh
+wmakeLnInclude -f .
+
+# Build mesh library
+echo "==> Building libDGMesh from mesh/"
+cd ../mesh
+wmake libso
+
+# Build DGFoam library
+echo "==> Building libDGFoam from DGFoam/"
+cd ../DGFoam
+wmake libso
+
+# Build math library
+echo "==> Building libDGMath from math/"
+cd ../math
+wmake libso
+
+# Build thermophysicalModels library
+echo "==> Building libDGFluidThermophysicalModels from thermophysicalModels/"
+cd ../thermophysicalModels
+wmake libso
+#------------------------------------------------------------------------------

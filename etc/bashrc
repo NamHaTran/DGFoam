@@ -1,0 +1,55 @@
+#----------------------------------*-sh-*--------------------------------------
+# =========                 |
+# \\      /  D irect         | DGFS: Discontinuous Galerkin Foam Solver
+#  \\    /   G alerkin       |
+#   \\  /    F oam           | Custom extension of OpenFOAM
+#    \\/     S olver         |
+#------------------------------------------------------------------------------
+#     Copyright (C) 2024      Ha Nam Tran & Contributors
+#------------------------------------------------------------------------------
+# License
+#     This file is part of DGFS, distributed under GPL-3.0-or-later.
+#
+# File
+#     etc/bashrc
+#
+# Description
+#     The DGFS environment for POSIX shell (eg, bash, dash, zsh,...).
+#     Source manually or from the ~/.bashrc or ~/.profile files.
+#
+#     Defines environment variables for development and compilation:
+#       - $DG_ROOT          : root directory of DGFS
+#       - $DG_SRC           : source code path
+#       - $DG_APP           : application path
+#       - $DG_THIRD_PARTY   : third-party sources (e.g., Boost, etc.)
+#
+#     Libraries will be installed in:
+#       - $FOAM_USER_LIBBIN
+#       - $FOAM_USER_APPBIN
+#
+#     LD_LIBRARY_PATH is updated to include $FOAM_USER_LIBBIN.
+#
+# Note
+#     You can source this file via your ~/.bashrc:
+#
+#         source ~/path/to/DGFS/etc/bashrc
+#
+#------------------------------------------------------------------------------
+
+# Detect DG_ROOT automatically
+DG_BASHRC_PATH="${BASH_SOURCE[0]:-${(%):-%x}}"
+export DG_ROOT="$(cd "$(dirname "$DG_BASHRC_PATH")/.." && pwd -P)"
+
+# DGFS paths
+export DG_SRC=$DG_ROOT/src
+export DG_APP=$DG_ROOT/applications
+export DG_THIRD_PARTY=$DG_ROOT/thirdPartySources
+
+# Output directories (reuse OpenFOAM's platform settings)
+export FOAM_USER_LIBBIN=$DG_ROOT/platforms/$WM_OPTIONS/lib
+export FOAM_USER_APPBIN=$DG_ROOT/platforms/$WM_OPTIONS/bin
+
+# Append to library path
+export LD_LIBRARY_PATH=$FOAM_USER_LIBBIN:$LD_LIBRARY_PATH
+
+
