@@ -1,8 +1,23 @@
 #!/bin/sh
-# Go to mesh and create symbolic includes
+# Create symbolic includes
+#--------------------------------------------#
 echo "==> Linking includes in mesh/"
 cd mesh
 wmakeLnInclude -f .
+
+echo "==> Linking includes in math/"
+cd ../math
+wmakeLnInclude -f .
+
+echo "==> Linking includes in DGFoam/"
+cd ../DGFoam
+wmakeLnInclude -f .
+#--------------------------------------------#
+
+# Build math library
+echo "==> Building libDGMath from math/"
+cd ../math
+wmake libso
 
 # Build mesh library
 echo "==> Building libDGMesh from mesh/"
@@ -12,11 +27,6 @@ wmake libso
 # Build DGFoam library
 echo "==> Building libDGFoam from DGFoam/"
 cd ../DGFoam
-wmake libso
-
-# Build math library
-echo "==> Building libDGMath from math/"
-cd ../math
 wmake libso
 
 # Build thermophysicalModels library
