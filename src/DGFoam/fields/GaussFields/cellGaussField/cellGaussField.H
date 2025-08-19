@@ -62,8 +62,8 @@ private:
     //- Reference to geometric mesh
     const dgGeomMesh& dgMesh_;
 
-    //- Pointer to the geometric cell
-    dgGeomCell* cell_;
+    //- Reference to the geometric cell
+    const dgGeomCell& cell_;
 
     //- Number of Gauss points in this cell
     label nGauss_;
@@ -101,8 +101,7 @@ public:
         const Type& initVal
     );
 
-    // Constructor without initial values
-    // This is useful when you want to create an empty field and fill it later
+    //- Constructor without initial values
     cellGaussField
     (
         const label cellID,
@@ -110,19 +109,19 @@ public:
     );
 
     //- Return reference to value at Gauss point
-    inline Type& operator[](const label gpI) {return values_[gpI];};
+    inline Type& operator[](const label gpI) { return values_[gpI]; }
 
     //- Const access to value at Gauss point
-    inline const Type& operator[](const label gpI) const {return values_[gpI];};
+    inline const Type& operator[](const label gpI) const { return values_[gpI]; }
 
     //- Return number of Gauss points
-    inline label size() const {return nGauss_;};
+    inline label size() const { return nGauss_; }
 
     //- Return cell ID
-    inline label cellID() const {return cellID_;};
+    inline label cellID() const { return cellID_; }
 
-    //- Return const reference to geometric mesh (for const object)
-    inline const dgGeomMesh& dgMesh() const {return dgMesh_;};
+    //- Return const reference to geometric mesh
+    inline const dgGeomMesh& dgMesh() const { return dgMesh_; }
 
     //- Interpolate values at Gauss points from DOF using basis functions
     void interpolateFromDof();
@@ -139,13 +138,9 @@ public:
         cellGaussField<Type>& operator=(const Type& value);
 };
 
-
 } // End namespace Foam
-
-#ifdef NoRepository
-    #include "cellGaussField.C"
-#endif
 
 #endif
 
 // ************************************************************************* //
+

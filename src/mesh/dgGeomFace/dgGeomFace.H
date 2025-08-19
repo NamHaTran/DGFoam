@@ -104,6 +104,10 @@ private:
         //- Gauss point connectivity of owner and neighbor
         List<label> connectivity_;
 
+        //- Basis data for the face
+        Foam::basisData ownerBasisData_;
+        Foam::basisData neighborBasisData_;
+
 public:
 
     // Constructors
@@ -189,6 +193,9 @@ public:
         // Compute connectivity between Gauss points from owner and neighbor
         void findGaussConnectivity();
 
+        //- Compute basis functions and derivatives for the face
+        void computeBasisAndDerivatives();
+
         // Mapping from reference to physical space for quad or tri face
         void mappingFromRefToReal
         (
@@ -243,6 +250,46 @@ public:
         {
             return connectivity_;
         }
+
+        //- Return owner basis function
+        inline const List<List<scalar>>& ownerBasis() const
+        {
+            return ownerBasisData_.basis;
+        }
+
+        //- Return neighbor basis function
+        inline const List<List<scalar>>& neighborBasis() const
+        {
+            return neighborBasisData_.basis;
+        }
+
+        //- Return owner basis derivatives
+        inline const List<List<scalar>>& owner_dBasis_dEta1() const
+        {
+            return ownerBasisData_.dBasis_dEta1;
+        };
+        inline const List<List<scalar>>& owner_dBasis_dEta2() const
+        {
+            return ownerBasisData_.dBasis_dEta2;
+        };
+        inline const List<List<scalar>>& owner_dBasis_dEta3() const
+        {
+            return ownerBasisData_.dBasis_dEta3;
+        };
+
+        //- Return neighbor basis derivatives
+        inline const List<List<scalar>>& neighbor_dBasis_dEta1() const
+        {
+            return neighborBasisData_.dBasis_dEta1;
+        };
+        inline const List<List<scalar>>& neighbor_dBasis_dEta2() const
+        {
+            return neighborBasisData_.dBasis_dEta2;
+        };
+        inline const List<List<scalar>>& neighbor_dBasis_dEta3() const
+        {
+            return neighborBasisData_.dBasis_dEta3;
+        };
 
     //- Operator overload
     

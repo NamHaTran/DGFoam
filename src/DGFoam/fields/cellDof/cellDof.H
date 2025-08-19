@@ -61,8 +61,8 @@ private:
     //- Reference to DG geometry mesh
     dgGeomMesh& dgMesh_;
 
-    //- Pointer to geometric cell
-    dgGeomCell* cell_;
+    //- Reference to geometric cell
+    dgGeomCell& cell_;
 
     //- Number of degrees of freedom
     label nDof_;
@@ -113,15 +113,23 @@ public:
     //- Return reference to DG geometric cell
     inline const dgGeomCell& cell() const
     {
-        return *cell_;
+        return cell_;
+    }
+
+    //- Return non-const reference to Dof at given index
+    inline Type& operator[](const label i)
+    {
+        return dof_[i];
+    }
+
+    //- Return const reference to Dof at given index
+    inline const Type& operator[](const label i) const
+    {
+        return dof_[i];
     }
 };
 
 } // End namespace Foam
-
-#ifdef NoRepository
-    #include "cellDof.C"
-#endif
 
 #endif
 

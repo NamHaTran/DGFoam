@@ -148,5 +148,119 @@ const Foam::List<Foam::vector>& Foam::dgRefFace::gaussPoints(const dgFacePositio
     return gaussP_BADC_; // Should never reach here
 }
 
+Foam::basisData Foam::dgRefFace::computeBasisAndDerivatives
+(
+    const dgCellType cellType, // Cell type for basis functions
+    const dgFacePosition pos // Face position for which to compute basis functions
+)
+{
+    const label nBasis = Foam::math::getNumBasis(pOrder_, cellType);
+
+    Foam::basisData basisData;
+    basisData.basis.setSize(nGauss_);
+    basisData.dBasis_dEta1.setSize(nGauss_);
+    basisData.dBasis_dEta2.setSize(nGauss_);
+    basisData.dBasis_dEta3.setSize(nGauss_);
+
+    for (label gp = 0; gp < nGauss_; ++gp)
+    {
+        basisData.basis[gp].setSize(nBasis);
+        basisData.dBasis_dEta1[gp].setSize(nBasis);
+        basisData.dBasis_dEta2[gp].setSize(nBasis);
+        basisData.dBasis_dEta3[gp].setSize(nBasis);
+
+        scalar eta1(0.0), eta2(0.0), eta3(0.0);
+
+        // Get Gauss point coordinates based on face position
+        // and compute basis functions and derivatives
+        switch (pos)
+        {
+            case dgFacePosition::BADC:
+                eta1 = gaussP_BADC_[gp].x();
+                eta2 = gaussP_BADC_[gp].y();
+                eta3 = gaussP_BADC_[gp].z();
+                break;
+            case dgFacePosition::EFGH:
+                eta1 = gaussP_EFGH_[gp].x();
+                eta2 = gaussP_EFGH_[gp].y();
+                eta3 = gaussP_EFGH_[gp].z();
+                break;
+            case dgFacePosition::ABFE:
+                eta1 = gaussP_ABFE_[gp].x();
+                eta2 = gaussP_ABFE_[gp].y();
+                eta3 = gaussP_ABFE_[gp].z();
+                break;
+            case dgFacePosition::CDHG:
+                eta1 = gaussP_CDHG_[gp].x();
+                eta2 = gaussP_CDHG_[gp].y();
+                eta3 = gaussP_CDHG_[gp].z();
+                break;
+            case dgFacePosition::DAEH:
+                eta1 = gaussP_DAEH_[gp].x();
+                eta2 = gaussP_DAEH_[gp].y();
+                eta3 = gaussP_DAEH_[gp].z();
+                break;
+            case dgFacePosition::BCGF:
+                eta1 = gaussP_BCGF_[gp].x();
+                eta2 = gaussP_BCGF_[gp].y();
+                eta3 = gaussP_BCGF_[gp].z();
+                break;
+            default:
+                FatalErrorInFunction
+                    << "Invalid dgFacePosition enum value."
+                    << abort(FatalError);
+        }
+        
+        switch (cellType)
+        {
+            case dgCellType::HEX:
+                Foam::math::computeHexBasisAndDerivatives(
+                    eta1, eta2, eta3, pOrder_,
+                    basisData.basis[gp],
+                    basisData.dBasis_dEta1[gp],
+                    basisData.dBasis_dEta2[gp],
+                    basisData.dBasis_dEta3[gp]
+                );
+                break;
+
+            case dgCellType::PRISM:
+                Foam::math::computePrismBasisAndDerivatives(
+                    eta1, eta2, eta3, pOrder_,
+                    basisData.basis[gp],
+                    basisData.dBasis_dEta1[gp],
+                    basisData.dBasis_dEta2[gp],
+                    basisData.dBasis_dEta3[gp]
+                );
+                break;
+
+            case dgCellType::TET:
+                Foam::math::computeTetBasisAndDerivatives(
+                    eta1, eta2, eta3, pOrder_,
+                    basisData.basis[gp],
+                    basisData.dBasis_dEta1[gp],
+                    basisData.dBasis_dEta2[gp],
+                    basisData.dBasis_dEta3[gp]
+                );
+                break;
+
+            case dgCellType::PYRAMID:
+                Foam::math::computePyramidBasisAndDerivatives(
+                    eta1, eta2, eta3, pOrder_,
+                    basisData.basis[gp],
+                    basisData.dBasis_dEta1[gp],
+                    basisData.dBasis_dEta2[gp],
+                    basisData.dBasis_dEta3[gp]
+                );
+                break;
+
+            default:
+                FatalErrorInFunction
+                    << "Unsupported cell type: " << cellType << nl
+                    << abort(FatalError);
+        }
+    }
+
+    return basisData;
+}
 // ************************************************************************* //
 

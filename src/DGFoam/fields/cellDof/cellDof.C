@@ -43,15 +43,12 @@ Foam::cellDof<Type>::cellDof
 )
 :
     cellID_(cellID),
-    dgMesh_(dgMesh),
-    cell_(dgMesh_.cells()[cellID_]),
+    dgMesh_(dgMesh),                    // Store reference to mesh
+    cell_(*dgMesh.cells()[cellID]),     // Reference to geometric cell
     nDof_(0)
 {
-    // Get pointer to geometric cell from mesh
-    cell_ = &(dgMesh_.cells()[cellID_]);
-
     // Get number of Dof from basis size
-    nDof_ = cell_->basis().size();
+    nDof_ = cell_.basis().size();
 
     // Resize internal Dof list
     dof_.setSize(nDof_);
@@ -71,6 +68,13 @@ Foam::cellDof<Type>::cellDof
         dof_[i] = pTraits<Type>::zero;
     }
 }
+
+// * * * * * * * * * * * * * * Template instantiation * * * * * * * * * * * * //
+template class Foam::cellDof<scalar>;
+template class Foam::cellDof<vector>;
+template class Foam::cellDof<tensor>;
+template class Foam::cellDof<symmTensor>;
+template class Foam::cellDof<sphericalTensor>;
 
 } // End namespace Foam
 

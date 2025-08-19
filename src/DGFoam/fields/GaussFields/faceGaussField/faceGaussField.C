@@ -26,6 +26,7 @@ License
 \*---------------------------------------------------------------------------*/
 
 #include "faceGaussField.H"
+#include "vector.H"
 
 // * * * * * * * * * * * * * * * * Constructors  * * * * * * * * * * * * * * //
 
@@ -38,36 +39,32 @@ Foam::faceGaussField<Type>::faceGaussField
 :
     mesh_(mesh),
     cellID_(cellsDof[0]->cellID()),
-    cell_(mesh.cells()[cellID_]),
-    facesID_(cell_->faces()),
+    cell_(*mesh.cells()[cellID_]),
+    facesID_(cell_.faces()),
     nFaces_(facesID_.size()),
     faces_(nFaces_),
     cellsDof_(cellsDof)
 {
-    // Extract face pointers from mesh
     for (label faceI = 0; faceI < nFaces_; ++faceI)
     {
         faces_[faceI] = mesh_.faces()[facesID_[faceI]];
     }
 
-    // Assume same number of Gauss points on all faces
     nGaussPerFace_ = faces_[0]->gaussPointsOwner().size();
     nGauss_ = nFaces_ * nGaussPerFace_;
 
-    // Compute offset for each face
     gaussOffset_.setSize(nFaces_);
     for (label faceI = 0; faceI < nFaces_; ++faceI)
     {
         gaussOffset_[faceI] = faceI * nGaussPerFace_;
     }
 
-    // Allocate Gauss value storage
     plusValues_.setSize(nGauss_);
     minusValues_.setSize(nGauss_);
 
-    // Calculate Gauss values
-    interpolate();
+    interpolateFromDof();
 }
+
 
 template<class Type>
 Foam::faceGaussField<Type>::faceGaussField
@@ -79,36 +76,32 @@ Foam::faceGaussField<Type>::faceGaussField
 :
     mesh_(mesh),
     cellID_(cellsDof[0]->cellID()),
-    cell_(mesh.cells()[cellID_]),
-    facesID_(cell_->faces()),
+    cell_(*mesh.cells()[cellID_]),
+    facesID_(cell_.faces()),
     nFaces_(facesID_.size()),
     faces_(nFaces_),
     cellsDof_(cellsDof)
 {
-    // Extract face pointers from mesh
     for (label faceI = 0; faceI < nFaces_; ++faceI)
     {
         faces_[faceI] = mesh_.faces()[facesID_[faceI]];
     }
 
-    // Assume same number of Gauss points on all faces
     nGaussPerFace_ = faces_[0]->gaussPointsOwner().size();
     nGauss_ = nFaces_ * nGaussPerFace_;
 
-    // Compute offset for each face
     gaussOffset_.setSize(nFaces_);
     for (label faceI = 0; faceI < nFaces_; ++faceI)
     {
         gaussOffset_[faceI] = faceI * nGaussPerFace_;
     }
 
-    // Allocate Gauss value storage
     plusValues_.setSize(nGauss_);
     minusValues_.setSize(nGauss_);
 
-    // Calculate Gauss values
-    interpolate();
+    interpolateFromDof();
 }
+
 
 template<class Type>
 Foam::faceGaussField<Type>::faceGaussField
@@ -120,8 +113,8 @@ Foam::faceGaussField<Type>::faceGaussField
 :
     mesh_(mesh),
     cellID_(cellsDof[0]->cellID()),
-    cell_(mesh.cells()[cellID_]),
-    facesID_(cell_->faces()),
+    cell_(*mesh.cells()[cellID_]),
+    facesID_(cell_.faces()),
     nFaces_(facesID_.size()),
     faces_(nFaces_),
     cellsDof_(cellsDof)
@@ -144,6 +137,7 @@ Foam::faceGaussField<Type>::faceGaussField
     minusValues_.setSize(nGauss_, initialValues);
 }
 
+
 template<class Type>
 Foam::faceGaussField<Type>::faceGaussField
 (
@@ -154,13 +148,12 @@ Foam::faceGaussField<Type>::faceGaussField
 :
     mesh_(mesh),
     cellID_(cellID),
-    cell_(mesh.cells()[cellID_]),
-    facesID_(cell_->faces()),
+    cell_(*mesh.cells()[cellID]),
+    facesID_(cell_.faces()),
     nFaces_(facesID_.size()),
     faces_(nFaces_),
     cellsDof_(0)
 {
-    // Get all dgGeomFace*
     for (label faceI = 0; faceI < nFaces_; ++faceI)
     {
         faces_[faceI] = mesh_.faces()[facesID_[faceI]];
@@ -169,17 +162,16 @@ Foam::faceGaussField<Type>::faceGaussField
     nGaussPerFace_ = faces_[0]->gaussPointsOwner().size();
     nGauss_ = nFaces_ * nGaussPerFace_;
 
-    // Calculate offset
     gaussOffset_.setSize(nFaces_);
     for (label faceI = 0; faceI < nFaces_; ++faceI)
     {
         gaussOffset_[faceI] = faceI * nGaussPerFace_;
     }
 
-    // Initialize values
     plusValues_.setSize(nGauss_, initialValues);
     minusValues_.setSize(nGauss_, initialValues);
 }
+
 
 template<class Type>
 Foam::faceGaussField<Type>::faceGaussField
@@ -190,13 +182,12 @@ Foam::faceGaussField<Type>::faceGaussField
 :
     mesh_(mesh),
     cellID_(cellID),
-    cell_(mesh.cells()[cellID_]),
-    facesID_(cell_->faces()),
+    cell_(*mesh.cells()[cellID]),
+    facesID_(cell_.faces()),
     nFaces_(facesID_.size()),
     faces_(nFaces_),
     cellsDof_(0)
 {
-    // Get all dgGeomFace*
     for (label faceI = 0; faceI < nFaces_; ++faceI)
     {
         faces_[faceI] = mesh_.faces()[facesID_[faceI]];
@@ -205,17 +196,16 @@ Foam::faceGaussField<Type>::faceGaussField
     nGaussPerFace_ = faces_[0]->gaussPointsOwner().size();
     nGauss_ = nFaces_ * nGaussPerFace_;
 
-    // Calculate offset
     gaussOffset_.setSize(nFaces_);
     for (label faceI = 0; faceI < nFaces_; ++faceI)
     {
         gaussOffset_[faceI] = faceI * nGaussPerFace_;
     }
 
-    // Initialize values
     plusValues_.setSize(nGauss_);
     minusValues_.setSize(nGauss_);
 }
+
 
 template<class Type>
 Foam::faceGaussField<Type>::faceGaussField
@@ -239,9 +229,8 @@ Foam::faceGaussField<Type>::faceGaussField
 
 
 // * * * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * * //
-
 template<class Type>
-void Foam::faceGaussField<Type>::interpolate()
+void Foam::faceGaussField<Type>::interpolateFromDof()
 {
     const cellDof<Type>& cellPDof = *cellsDof_[0];
 
@@ -254,20 +243,27 @@ void Foam::faceGaussField<Type>::interpolate()
 
         const dgGeomFace& face = *faces_[localFaceI];
 
+        // Get Gauss points for neighbor sides
         const List<vector>& gpOwner = face.gaussPointsOwner();
         const List<vector>& gpNeigh = face.gaussPointsNeighbor();
+
+        // Get basis functions for neighbor sides
+        const List<List<scalar>>& ownerBasis = face.ownerBasis();
+        const List<List<scalar>>& neighborBasis = face.neighborBasis();
 
         const label offset = gaussOffset_[localFaceI];
 
         if (isOwner)
         {
-            // Interpolate minus side from current cell (owner)
             forAll(gpOwner, i)
             {
-                minusValues_[offset + i] = cellPDof.interpolateAt(gpOwner[i]);
+                minusValues_[offset + i] = pTraits<Type>::zero;
+                for (label k = 0; k < cellPDof.nDof(); ++k)
+                {
+                    minusValues_[offset + i] += cellPDof[k] * ownerBasis[i][k];
+                }
             }
 
-            // For boundary face, plus side is zero
             if (isBoundaryFace)
             {
                 forAll(gpNeigh, i)
@@ -278,14 +274,26 @@ void Foam::faceGaussField<Type>::interpolate()
         }
         else
         {
-            // Interpolate plus side from neighbor cell (cellsDof_[localFaceI + 1])
             const cellDof<Type>& cellNDof = *cellsDof_[localFaceI + 1];
             forAll(gpNeigh, i)
             {
-                plusValues_[offset + i] = cellNDof.interpolateAt(gpNeigh[i]);
+                plusValues_[offset + i] = pTraits<Type>::zero;
+                for (label k = 0; k < cellNDof.nDof(); ++k)
+                {
+                    plusValues_[offset + i] += cellNDof[k] * neighborBasis[i][k];
+                }
             }
         }
     }
 }
 
+// * * * * * * * * * * * * * * Template instantiations * * * * * * * * * * * * //
+
+template class Foam::faceGaussField<Foam::scalar>;
+template class Foam::faceGaussField<Foam::vector>;
+template class Foam::faceGaussField<Foam::tensor>;
+template class Foam::faceGaussField<Foam::symmTensor>;
+template class Foam::faceGaussField<Foam::sphericalTensor>;
+
 // ************************************************************************* //
+

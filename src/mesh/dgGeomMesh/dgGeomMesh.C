@@ -107,10 +107,14 @@ Foam::dgGeomMesh::dgGeomMesh
         cells_[cellI]->updateFaceInfo(faces_);
     }
 
-    // Update face connectivity
+    // Update face connectivity and calculate basis functions
     for (label faceI = 0; faceI < nF; ++faceI)
     {
         faces_[faceI]->findGaussConnectivity();
+
+        // Note, computing basis functions and derivatives must be done after
+        // the connectivity is established, as it depends on the Gauss points.
+        faces_[faceI]->computeBasisAndDerivatives();
     }
 
     // Get boundary faces

@@ -45,11 +45,11 @@ cellGaussField<Type>::cellGaussField
 :
     cellID_(cellID),
     dgMesh_(dgMesh),
-    cell_(dgMesh_.cells()[cellID_]),
-    nGauss_(cell_->gaussPoints().size()),
-    nDof_(0),                 // no DOF provided
-    dof_(0),                  // empty DOF list
-    values_(values)           // copy input values
+    cell_(*dgMesh.cells()[cellID]),
+    nGauss_(cell_.gaussPoints().size()),
+    nDof_(0),
+    dof_(0),
+    values_(values)
 {
     if (values_.size() != nGauss_)
     {
@@ -71,10 +71,10 @@ cellGaussField<Type>::cellGaussField
     cellID_(dof.cellID()),
     dgMesh_(dof.mesh()),
     cell_(dof.cell()),
-    nGauss_(cell_->gaussPoints().size()),
+    nGauss_(cell_.gaussPoints().size()),
     nDof_(dof.nDof()),
     dof_(dof.dof()),
-    values_(nGauss_) // allocate space for Gauss point values
+    values_(nGauss_)
 {}
 
 
@@ -106,15 +106,15 @@ Foam::cellGaussField<Type>::cellGaussField
 :
     cellID_(cellID),
     dgMesh_(dgMesh),
-    cell_(dgMesh_.cells()[cellID_]),
-    nGauss_(cell_->gaussPoints().size()),
+    cell_(*dgMesh.cells()[cellID]),
+    nGauss_(cell_.gaussPoints().size()),
     nDof_(0),
     dof_(0),
-    values_(nGauss_, initVal) // fill with initVal
+    values_(nGauss_, initVal)
 {}
 
+
 // Constructor without initial values
-// This is useful when you want to create an empty field and fill it later
 template<class Type>
 Foam::cellGaussField<Type>::cellGaussField
 (
@@ -124,12 +124,13 @@ Foam::cellGaussField<Type>::cellGaussField
 :
     cellID_(cellID),
     dgMesh_(dgMesh),
-    cell_(dgMesh_.cells()[cellID_]),
-    nGauss_(cell_->gaussPoints().size()),
+    cell_(*dgMesh.cells()[cellID]),
+    nGauss_(cell_.gaussPoints().size()),
     nDof_(0),
     dof_(0),
     values_(nGauss_)
 {}
+
 
 // * * * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * * //
 
@@ -144,31 +145,26 @@ void cellGaussField<Type>::print() const
     }
 }
 
+
 template<class Type>
 void Foam::cellGaussField<Type>::interpolateFromDof()
 {
-    // Access Gauss points (not used here but can be helpful later)
-    const List<vector>& gaussPts = cell_->gaussPoints();
+    //const List<vector>& gaussPts = cell_.gaussPoints();
+    const List<List<scalar>>& b = cell_.basis();
 
-    // Access basis function values at Gauss points
-    const List<List<scalar>>& b = cell_->basis();
-
-    // Loop over each Gauss point
     for (label gp = 0; gp < nGauss_; ++gp)
     {
-        // Initialize interpolated value
-        Type val = pTraits<Type>::zero; // zero for scalar, vector, tensor... this is OpenFOAM's standard
+        Type val = pTraits<Type>::zero;
 
-        // Sum over each DOF
         for (label k = 0; k < nDof_; ++k)
         {
             val += dof_[k] * b[gp][k];
         }
 
-        // Store interpolated value
         values_[gp] = val;
     }
 }
+
 
 template<class Type>
 Foam::cellGaussField<Type>& Foam::cellGaussField<Type>::operator=
@@ -176,13 +172,11 @@ Foam::cellGaussField<Type>& Foam::cellGaussField<Type>::operator=
     const cellGaussField<Type>& other
 )
 {
-    // Self-assignment check
     if (this == &other)
     {
         return *this;
     }
 
-    // Check if same cell
     if (cellID_ != other.cellID_)
     {
         FatalErrorInFunction
@@ -191,13 +185,13 @@ Foam::cellGaussField<Type>& Foam::cellGaussField<Type>::operator=
             << abort(FatalError);
     }
 
-    // Copy values (same size assumed)
     values_ = other.values_;
     dof_    = other.dof_;
     nDof_   = other.nDof_;
 
     return *this;
 }
+
 
 template<class Type>
 Foam::cellGaussField<Type>& Foam::cellGaussField<Type>::operator=
@@ -213,6 +207,15 @@ Foam::cellGaussField<Type>& Foam::cellGaussField<Type>::operator=
     return *this;
 }
 
+
+// * * * * * * * * * * * * * * Template instantiation * * * * * * * * * * * * //
+template class Foam::cellGaussField<scalar>;
+template class Foam::cellGaussField<vector>;
+template class Foam::cellGaussField<tensor>;
+template class Foam::cellGaussField<symmTensor>;
+template class Foam::cellGaussField<sphericalTensor>;
+
 } // End namespace Foam
 
 // ************************************************************************* //
+

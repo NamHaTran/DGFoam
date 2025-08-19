@@ -91,11 +91,32 @@ SourceFiles
 #include "List.H"
 #include "vector.H"
 #include "dgFacePosition.H"
+#include "dgCellType.H"
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
 namespace Foam
 {
+
+/*---------------------------------------------------------------------------*\
+                        Struct basisData Declaration
+\*---------------------------------------------------------------------------*/
+
+//- Store basis functions and their derivatives at Gauss points
+struct basisData
+{
+    //- Values of basis function at Gauss points
+    List<List<scalar>> basis;
+
+    //- Derivative with respect to eta1
+    List<List<scalar>> dBasis_dEta1;
+
+    //- Derivative with respect to eta2
+    List<List<scalar>> dBasis_dEta2;
+
+    //- Derivative with respect to eta3
+    List<List<scalar>> dBasis_dEta3;
+};
 
 /*---------------------------------------------------------------------------*\
                            Class dgRefFace Declaration
@@ -150,6 +171,13 @@ public:
 
         //- Generate Gauss points and weights based on face type and polynomial order
         void generateFaceGaussPointsAndWeights();
+
+        //- Compute basis and derivatives for all face positions
+        Foam::basisData computeBasisAndDerivatives
+        (
+            const dgCellType cellType, // Cell type for basis functions
+            const dgFacePosition pos // Face position for which to compute basis functions
+        );
 };
 // * * * * * * * * * * * * * * * Global Functions  * * * * * * * * * * * * * //
 

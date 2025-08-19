@@ -66,8 +66,8 @@ private:
     //- Cell ID
     label cellID_;
 
-    //- Pointer to the geometric cell
-    dgGeomCell* cell_;
+    //- Reference to the geometric cell
+    dgGeomCell& cell_;
 
     //- List of face IDs of the cell
     const labelList& facesID_;
@@ -120,7 +120,7 @@ public:
         const dgGeomMesh& mesh,
         const Type& initialValues
     );
-    
+
     //- Copy constructor
     faceGaussField(const faceGaussField<Type>& other);
 
@@ -132,8 +132,7 @@ public:
         const Type& initialValues
     );
 
-    //- Construct from cell pointer, mesh
-    // This is empty and will be filled later
+    //- Construct from cellID and mesh (values will be filled later)
     faceGaussField
     (
         const label cellID,
@@ -147,42 +146,44 @@ public:
     inline label nGauss() const { return nGauss_; }
 
     //- Interpolate values from DOF to Gauss points
-    void interpolate();
+    void interpolateFromDof();
 
-    //- Accessors:
+    // Accessors
 
         //- Return cell ID
-        inline label cellID() const {return cellID_;};
+        inline label cellID() const { return cellID_; }
 
-        //- Return const reference to geometric mesh (for const object)
-        inline const dgGeomMesh& dgMesh() const {return mesh_;};
+        //- Return reference to geometric mesh
+        inline const dgGeomMesh& dgMesh() const { return mesh_; }
 
-        //- Return value on plus side at global Gauss point index, allow modifying value
-        inline Type& plusValueAt(const label nG) {return plusValues_[nG];};
+        //- Return value on plus side at global Gauss point index
+        inline Type& plusValueAt(const label nG) { return plusValues_[nG]; }
 
-        //- Return value on minus side at global Gauss point index, allow modifying value
-        inline Type& minusValueAt(const label nG) {return minusValues_[nG];};
+        //- Return value on minus side at global Gauss point index
+        inline Type& minusValueAt(const label nG) { return minusValues_[nG]; }
 
-        //- Return value on plus side by global Gauss point ID
-        inline const Type& plusValue(const label nG) const {return plusValues_[nG];};
+        //- Return value on plus side (const) at global Gauss point index
+        inline const Type& plusValue(const label nG) const { return plusValues_[nG]; }
 
-        //- Return value on minus side by global Gauss point ID
-        inline const Type& minusValue(const label nG) const {return minusValues_[nG];};
+        //- Return value on minus side (const) at global Gauss point index
+        inline const Type& minusValue(const label nG) const { return minusValues_[nG]; }
 
         //- Return value on plus side at faceI and Gauss point index
-        inline const Type& plusValue(const label faceI, const label gpI) const {return plusValues_[gaussOffset_[faceI] + gpI];};
+        inline const Type& plusValue(const label faceI, const label gpI) const
+        {
+            return plusValues_[gaussOffset_[faceI] + gpI];
+        }
 
         //- Return value on minus side at faceI and Gauss point index
-        inline const Type& minusValue(const label faceI, const label gpI) const {return minusValues_[gaussOffset_[faceI] + gpI];};
-
+        inline const Type& minusValue(const label faceI, const label gpI) const
+        {
+            return minusValues_[gaussOffset_[faceI] + gpI];
+        }
 };
 
 } // End namespace Foam
 
-#ifdef NoRepository
-    #include "faceGaussField.C"
-#endif
-
 #endif
 
 // ************************************************************************* //
+

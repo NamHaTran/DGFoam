@@ -110,7 +110,9 @@ Foam::dgGeomFace::dgGeomFace(const dgGeomFace& other)
     ownerCellType_(other.ownerCellType_),
     neighborCellType_(other.neighborCellType_),
     flattenedPoints_(other.flattenedPoints_),
-    connectivity_(other.connectivity_)
+    connectivity_(other.connectivity_),
+    ownerBasisData_(other.ownerBasisData_),
+    neighborBasisData_(other.neighborBasisData_)
 {
 
 }
@@ -188,6 +190,8 @@ Foam::dgGeomFace& Foam::dgGeomFace::operator=(const dgGeomFace& other)
         flattenedPoints_  = other.flattenedPoints_;
         type_             = other.type_;
         connectivity_     = other.connectivity_;
+        ownerBasisData_   = other.ownerBasisData_;
+        neighborBasisData_ = other.neighborBasisData_;
     }
     return *this;
 }
@@ -461,5 +465,12 @@ void Foam::dgGeomFace::findGaussConnectivity()
             }
         }
     }
+}
+
+void Foam::dgGeomFace::computeBasisAndDerivatives()
+{
+    // Calculate basis functions and derivatives for both owner and neighbor
+    ownerBasisData_ = refFace_->computeBasisAndDerivatives(ownerCellType_, ownerPos_);
+    neighborBasisData_ = refFace_->computeBasisAndDerivatives(neighborCellType_, neighborPos_);
 }
 // ************************************************************************* //
