@@ -47,6 +47,10 @@ SourceFiles
 #include "dgGeomFace.H"
 #include "cellDof.H"
 #include "List.H"
+#include "fieldsContext.H"
+
+// Forward declaration
+class fieldsContext;
 
 namespace Foam
 {
@@ -96,6 +100,9 @@ private:
     //- Values on minus side (owner side) of faces
     List<Type> minusValues_;
 
+    //- Pointer to the fields context for registration
+    const fieldsContext* ctxPtr_ = nullptr;
+
 public:
 
     //- Construct from list of cell DOFs (P cell + neighbor cells) and mesh
@@ -138,6 +145,9 @@ public:
         const label cellID,
         const dgGeomMesh& mesh
     );
+
+    //- Set the fields context
+    inline void setContext(const fieldsContext& ctx) { ctxPtr_ = &ctx;}
 
     //- Return number of faces
     inline label nFaces() const { return nFaces_; }

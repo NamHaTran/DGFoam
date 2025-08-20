@@ -196,7 +196,6 @@ Foam::dgGeomFace& Foam::dgGeomFace::operator=(const dgGeomFace& other)
     return *this;
 }
 
-// Print debug information about the face
 void Foam::dgGeomFace::printDebugInfo() const
 {
     const face& f = mesh_.faces()[faceID_];
@@ -234,6 +233,31 @@ void Foam::dgGeomFace::printDebugInfo() const
     forAll(connectivity_, i)
     {
         Info << "    owner[" << i << "] → neighbor[" << connectivity_[i] << "]" << nl;
+    }
+
+    Info << "  Basis functions at Gauss points (owner side):" << nl;
+    {
+        for (label gp = 0; gp < ownerBasisData_.basis.size(); ++gp)
+        {
+            Info << "    Gauss point " << gp << ":" << nl;
+            Info << "      basis        : " << ownerBasisData_.basis[gp] << nl;
+            Info << "      dBasis/dEta1 : " << ownerBasisData_.dBasis_dEta1[gp] << nl;
+            Info << "      dBasis/dEta2 : " << ownerBasisData_.dBasis_dEta2[gp] << nl;
+            Info << "      dBasis/dEta3 : " << ownerBasisData_.dBasis_dEta3[gp] << nl;
+        }
+    }
+
+    if (neighborCellType_ != dgCellType::NONE)
+    {
+        Info << "  Basis functions at Gauss points (neighbor side):" << nl;
+        for (label gp = 0; gp < neighborBasisData_.basis.size(); ++gp)
+        {
+            Info << "    Gauss point " << gp << ":" << nl;
+            Info << "      basis        : " << neighborBasisData_.basis[gp] << nl;
+            Info << "      dBasis/dEta1 : " << neighborBasisData_.dBasis_dEta1[gp] << nl;
+            Info << "      dBasis/dEta2 : " << neighborBasisData_.dBasis_dEta2[gp] << nl;
+            Info << "      dBasis/dEta3 : " << neighborBasisData_.dBasis_dEta3[gp] << nl;
+        }
     }
 }
 
@@ -471,6 +495,11 @@ void Foam::dgGeomFace::computeBasisAndDerivatives()
 {
     // Calculate basis functions and derivatives for both owner and neighbor
     ownerBasisData_ = refFace_->computeBasisAndDerivatives(ownerCellType_, ownerPos_);
-    neighborBasisData_ = refFace_->computeBasisAndDerivatives(neighborCellType_, neighborPos_);
+
+    // Only compute neighbor if it exists
+    if (neighborPos_ != dgFacePosition::NONE)
+    {
+        neighborBasisData_ = refFace_->computeBasisAndDerivatives(neighborCellType_, neighborPos_);
+    }
 }
 // ************************************************************************* //

@@ -71,7 +71,7 @@ Description
 #include "dgGeomMesh.H"
 
 // Test libs
-#include "dgThermo.H"
+// #include "dgThermo.H"
 
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
@@ -79,7 +79,7 @@ Description
 int main(int argc, char *argv[])
 {
     // Declare pOrder
-    const label pOrder = 2; // Polynomial order for basis functions
+    const label pOrder = 1; // Polynomial order for basis functions
 
     #include "setRootCase.H"
 
@@ -100,6 +100,7 @@ int main(int argc, char *argv[])
     #include "createDGMesh.H"
 
     // Test dgThermo
+    /*
     #include "createDGFields.H"
     dgThermoInputs in;
     dgThermoOutputs out;
@@ -154,6 +155,7 @@ int main(int argc, char *argv[])
     delete out.h;
     delete out.e;
     delete out.Pr;
+    */
 
     // *************************************** Accessing points and faces of cells *************************************** //
     

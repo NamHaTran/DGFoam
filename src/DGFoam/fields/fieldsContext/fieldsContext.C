@@ -32,7 +32,7 @@ namespace Foam
 {
 
 // * * * * * * * * * * * * * * Type key generation * * * * * * * * * * * * * //
-
+// Generate a unique key for each type used in fieldsContext
 template<> word fieldsContext::typeKey<scalar>() { return "scalar"; }
 template<> word fieldsContext::typeKey<vector>() { return "vector"; }
 template<> word fieldsContext::typeKey<tensor>() { return "tensor"; }
@@ -138,18 +138,25 @@ const faceGaussField<Type>& fieldsContext::lookupFaceField(const word& name) con
 
 // * * * * * * * * * * * * * * Template instantiation * * * * * * * * * * * * //
 
+// Instantiate the template functions for all types used in fieldsContext
+// This is necessary to ensure that the template functions are compiled and linked correctly.
+// Note: This is a common practice in C++ to avoid linker errors for template functions.
+// If you add new types, you should also add them here.
+// If you remove a type, you should also remove it from here.
 #define makeFieldsContextFuncs(Type) \
     template void fieldsContext::regis<Type>(const cellGaussField<Type>&, const word&); \
     template void fieldsContext::regis<Type>(const faceGaussField<Type>&, const word&); \
     template const cellGaussField<Type>& fieldsContext::lookupCellField<Type>(const word&) const; \
     template const faceGaussField<Type>& fieldsContext::lookupFaceField<Type>(const word&) const;
 
+// Register all types used in fieldsContext using the macro
 makeFieldsContextFuncs(scalar)
 makeFieldsContextFuncs(vector)
 makeFieldsContextFuncs(tensor)
 makeFieldsContextFuncs(symmTensor)
 makeFieldsContextFuncs(sphericalTensor)
 
+// Delete the macro to avoid redefinition errors
 #undef makeFieldsContextFuncs
 
 } // End namespace Foam

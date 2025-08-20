@@ -88,8 +88,8 @@ label getNumBasis(const label pOrder, const dgCellType type)
         default:
         {
             FatalErrorInFunction
-                << "Unsupported or invalid cell type for basis function count: "
-                << static_cast<int>(type) << nl
+                << "Unsupported or invalid cell type for basis function: "
+                << type << nl
                 << exit(FatalError);
             return -1; // Just to satisfy compiler
         }

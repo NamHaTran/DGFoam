@@ -115,6 +115,9 @@ Foam::dgGeomMesh::dgGeomMesh
         // Note, computing basis functions and derivatives must be done after
         // the connectivity is established, as it depends on the Gauss points.
         faces_[faceI]->computeBasisAndDerivatives();
+
+        // Print debug information for each face
+        // faces_[faceI]->printDebugInfo();
     }
 
     // Get boundary faces

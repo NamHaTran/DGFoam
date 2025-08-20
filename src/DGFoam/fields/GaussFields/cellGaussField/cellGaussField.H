@@ -43,6 +43,10 @@ SourceFiles
 #include "dgGeomMesh.H"
 #include "dgGeomCell.H"
 #include "cellDof.H"
+#include "fieldsContext.H"
+
+// Forward declaration
+class fieldsContext;
 
 namespace Foam
 {
@@ -76,6 +80,9 @@ private:
 
     //- Field values at Gauss points
     List<Type> values_;
+
+    //- Pointer to the fields context for registration
+    const fieldsContext* ctxPtr_ = nullptr;
 
 public:
 
@@ -125,6 +132,9 @@ public:
 
     //- Interpolate values at Gauss points from DOF using basis functions
     void interpolateFromDof();
+
+    //- Set the fields context
+    inline void setContext(const fieldsContext& ctx) { ctxPtr_ = &ctx;}
 
     //- Debug print
     void print() const;

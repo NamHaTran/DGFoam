@@ -43,7 +43,8 @@ Foam::faceGaussField<Type>::faceGaussField
     facesID_(cell_.faces()),
     nFaces_(facesID_.size()),
     faces_(nFaces_),
-    cellsDof_(cellsDof)
+    cellsDof_(cellsDof),
+    ctxPtr_(nullptr)
 {
     for (label faceI = 0; faceI < nFaces_; ++faceI)
     {
@@ -80,7 +81,8 @@ Foam::faceGaussField<Type>::faceGaussField
     facesID_(cell_.faces()),
     nFaces_(facesID_.size()),
     faces_(nFaces_),
-    cellsDof_(cellsDof)
+    cellsDof_(cellsDof),
+    ctxPtr_(nullptr)
 {
     for (label faceI = 0; faceI < nFaces_; ++faceI)
     {
@@ -117,7 +119,8 @@ Foam::faceGaussField<Type>::faceGaussField
     facesID_(cell_.faces()),
     nFaces_(facesID_.size()),
     faces_(nFaces_),
-    cellsDof_(cellsDof)
+    cellsDof_(cellsDof),
+    ctxPtr_(nullptr)
 {
     for (label faceI = 0; faceI < nFaces_; ++faceI)
     {
@@ -152,7 +155,8 @@ Foam::faceGaussField<Type>::faceGaussField
     facesID_(cell_.faces()),
     nFaces_(facesID_.size()),
     faces_(nFaces_),
-    cellsDof_(0)
+    cellsDof_(0),
+    ctxPtr_(nullptr)
 {
     for (label faceI = 0; faceI < nFaces_; ++faceI)
     {
@@ -186,7 +190,8 @@ Foam::faceGaussField<Type>::faceGaussField
     facesID_(cell_.faces()),
     nFaces_(facesID_.size()),
     faces_(nFaces_),
-    cellsDof_(0)
+    cellsDof_(0),
+    ctxPtr_(nullptr)
 {
     for (label faceI = 0; faceI < nFaces_; ++faceI)
     {
@@ -224,7 +229,8 @@ Foam::faceGaussField<Type>::faceGaussField
     cellsDof_(other.cellsDof_),
     gaussOffset_(other.gaussOffset_),
     plusValues_(other.plusValues_),
-    minusValues_(other.minusValues_)
+    minusValues_(other.minusValues_),
+    ctxPtr_(other.ctxPtr_)
 {}
 
 

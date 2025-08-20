@@ -60,6 +60,12 @@ SourceFiles
 #include "HashTable.H"
 #include "word.H"
 
+// Forward declaration
+template<class Type>
+class cellGaussField;
+template<class Type>
+class faceGaussField;
+
 namespace Foam
 {
 
@@ -120,9 +126,9 @@ public:
 
 } // End namespace Foam
 
-#ifdef NoRepository
-    #include "fieldsContext.C"
-#endif
+//#ifdef NoRepository
+//    #include "fieldsContext.C"
+//#endif
 
 #endif
 

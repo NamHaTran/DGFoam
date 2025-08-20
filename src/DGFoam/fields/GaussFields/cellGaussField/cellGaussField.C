@@ -49,7 +49,8 @@ cellGaussField<Type>::cellGaussField
     nGauss_(cell_.gaussPoints().size()),
     nDof_(0),
     dof_(0),
-    values_(values)
+    values_(values),
+    ctxPtr_(nullptr)
 {
     if (values_.size() != nGauss_)
     {
@@ -74,7 +75,8 @@ cellGaussField<Type>::cellGaussField
     nGauss_(cell_.gaussPoints().size()),
     nDof_(dof.nDof()),
     dof_(dof.dof()),
-    values_(nGauss_)
+    values_(nGauss_),
+    ctxPtr_(nullptr)
 {}
 
 
@@ -91,7 +93,8 @@ cellGaussField<Type>::cellGaussField
     nGauss_(other.nGauss_),
     nDof_(other.nDof_),
     dof_(other.dof_),
-    values_(other.values_)
+    values_(other.values_),
+    ctxPtr_(other.ctxPtr_)
 {}
 
 
@@ -110,7 +113,8 @@ Foam::cellGaussField<Type>::cellGaussField
     nGauss_(cell_.gaussPoints().size()),
     nDof_(0),
     dof_(0),
-    values_(nGauss_, initVal)
+    values_(nGauss_, initVal),
+    ctxPtr_(nullptr)
 {}
 
 
@@ -128,7 +132,8 @@ Foam::cellGaussField<Type>::cellGaussField
     nGauss_(cell_.gaussPoints().size()),
     nDof_(0),
     dof_(0),
-    values_(nGauss_)
+    values_(nGauss_),
+    ctxPtr_(nullptr)
 {}
 
 
