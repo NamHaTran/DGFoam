@@ -23,7 +23,7 @@ License
     along with DGFoam.  If not, see <http://www.gnu.org/licenses/>.
 
 Class
-    Foam::dgFixedValueBoundaryField
+    Foam::dgGeneralFixedValueBoundaryField
 
 Description
     Fixed value (Dirichlet) boundary condition for DG methods.
@@ -40,26 +40,26 @@ Description
     arithmetic operations.
 
 SourceFiles
-    dgFixedValueBoundaryField.C
+    dgGeneralFixedValueBoundaryField.C
 
 \*---------------------------------------------------------------------------*/
 
-#ifndef dgFixedValueBoundaryField_H
-#define dgFixedValueBoundaryField_H
+#ifndef dgGeneralFixedValueBoundaryField_H
+#define dgGeneralFixedValueBoundaryField_H
 
-#include "dgBoundaryField.H"
+#include "dgGeneralBoundaryField.H"
 
 namespace Foam
 {
 
 /*---------------------------------------------------------------------------*\
-                    Class dgFixedValueBoundaryField Declaration
+                    Class dgGeneralFixedValueBoundaryField Declaration
 \*---------------------------------------------------------------------------*/
 
 template<class Type>
-class dgFixedValueBoundaryField
+class dgGeneralFixedValueBoundaryField
 :
-    public dgBoundaryField<Type>
+    public dgGeneralBoundaryField<Type>
 {
     //- Prescribed boundary value
     Type value_;
@@ -67,17 +67,17 @@ class dgFixedValueBoundaryField
 public:
 
     //- Runtime type information
-    TypeName("fixedValue");
+    TypeName("generalFixedValue");
 
     //- Constructor from name and dictionary
-    dgFixedValueBoundaryField
+    dgGeneralFixedValueBoundaryField
     (
         const word& name,
         const dictionary& dict
     );
 
     //- Destructor
-    virtual ~dgFixedValueBoundaryField() = default;
+    virtual ~dgGeneralFixedValueBoundaryField() = default;
 
     //- Update value at plus side using fixed value BC
     virtual void updateValue
@@ -103,4 +103,4 @@ public:
 } // End namespace Foam
 
 #endif
-
+// ************************************************************************* //

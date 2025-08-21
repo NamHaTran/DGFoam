@@ -23,15 +23,15 @@ License
     along with DGFoam.  If not, see <http://www.gnu.org/licenses/>.
 
 Class
-    Foam::dgBoundaryField
+    Foam::dgGeneralBoundaryField
 
 Description
     Base class for runtime-selectable DG boundary conditions.
 
 \*---------------------------------------------------------------------------*/
 
-#ifndef Foam_dgBoundaryField_H
-#define Foam_dgBoundaryField_H
+#ifndef Foam_dgGeneralBoundaryField_H
+#define Foam_dgGeneralBoundaryField_H
 
 #include "word.H"
 #include "dictionary.H"
@@ -43,20 +43,12 @@ Description
 namespace Foam
 {
 
-//- Boundary-condition enforcement form
-enum class dgBCForm : unsigned char
-{
-    strong = 0,   // Strong imposition
-    weak   = 1    // Weak/penalty imposition
-};
-
-
 /*---------------------------------------------------------------------------*\
-                           Class dgBoundaryField Declaration
+                      Class dgGeneralBoundaryField Declaration
 \*---------------------------------------------------------------------------*/
 
 template<class Type>
-class dgBoundaryField
+class dgGeneralBoundaryField
 {
 protected:
 
@@ -71,26 +63,16 @@ protected:
         //- Pointer to the fields context for registration/lookup
         const fieldsContext* ctxPtr_ = nullptr;
 
-        //- Enforcement form (strong/weak)
-        dgBCForm bcForm_;
-
-
-    // Helpers
-
-        //- Parse "form" from dictionary (default = strong)
-        static dgBCForm parseForm_(const dictionary& dict);
-
-
 public:
 
     //- Runtime type info
-    TypeName("dgBoundaryField");
+    TypeName("dgGeneralBoundaryField");
 
     //- Runtime selection support
     declareRunTimeSelectionTable
     (
         autoPtr,
-        dgBoundaryField,
+        dgGeneralBoundaryField,
         dictionary,
         (const word& name, const dictionary& dict),
         (name, dict)
@@ -99,15 +81,15 @@ public:
     // Constructors
 
         //- Construct from name and dictionary
-        dgBoundaryField(const word& name, const dictionary& dict);
+        dgGeneralBoundaryField(const word& name, const dictionary& dict);
 
     //- Destructor
-    virtual ~dgBoundaryField() = default;
+    virtual ~dgGeneralBoundaryField() = default;
 
     // Factory
 
         //- Static factory method
-        static autoPtr<dgBoundaryField<Type>> New
+        static autoPtr<dgGeneralBoundaryField<Type>> New
         (
             const word& name,
             const dictionary& dict
@@ -115,7 +97,7 @@ public:
 
     // Core interface
 
-        //- Update '+' side value according to BC (may use form)
+        //- Update '+' side value
         virtual void updateValue
         (
             const vector& n,
@@ -125,7 +107,7 @@ public:
             Type& plusGrad
         ) const = 0;
 
-        //- Update '+' side gradient according to BC (may use form)
+        //- Update '+' side gradient
         virtual void updateGrad
         (
             const vector& n,
@@ -142,27 +124,9 @@ public:
 
         //- Get the fields context pointer (may be null)
         inline const fieldsContext* context() const { return ctxPtr_; }
-
-    // Form accessors
-
-        //- Return enforcement form
-        inline dgBCForm form() const { return bcForm_; }
-
-        //- True if strong form
-        inline bool isStrong() const { return bcForm_ == dgBCForm::strong; }
-
-        //- True if weak form
-        inline bool isWeak()   const { return bcForm_ == dgBCForm::weak; }
-
-        //- Return form as word ("strong" or "weak")
-        word formName() const;
 };
 
 } // End namespace Foam
-
-//#ifdef NoRepository
-//    #include "dgBoundaryField.C"
-//#endif
 
 #endif
 

@@ -24,7 +24,7 @@ License
 
 \*---------------------------------------------------------------------------*/
 
-#include "dgFixedValueBoundaryField.H"
+#include "dgGeneralFixedValueBoundaryField.H"
 #include "addToRunTimeSelectionTable.H"
 #include "vector.H"
 #include "tensor.H"
@@ -34,34 +34,55 @@ namespace Foam
 
 // * * * * * * * * * * * * * * Static Data Members * * * * * * * * * * * * * //
 // Type info for common types
-defineNamedTemplateTypeNameAndDebug(dgFixedValueBoundaryField<scalar>, 0);
-defineNamedTemplateTypeNameAndDebug(dgFixedValueBoundaryField<vector>, 0);
-defineNamedTemplateTypeNameAndDebug(dgFixedValueBoundaryField<tensor>, 0);
+defineNamedTemplateTypeNameAndDebug(dgGeneralFixedValueBoundaryField<scalar>, 0);
+defineNamedTemplateTypeNameAndDebug(dgGeneralFixedValueBoundaryField<vector>, 0);
+defineNamedTemplateTypeNameAndDebug(dgGeneralFixedValueBoundaryField<tensor>, 0);
 
-// Register the dgFixedValueBoundaryField into the runtime selection table
-addToRunTimeSelectionTable(dgBoundaryField<scalar>, dgFixedValueBoundaryField<scalar>, dictionary);
-addToRunTimeSelectionTable(dgBoundaryField<vector>, dgFixedValueBoundaryField<vector>, dictionary);
-addToRunTimeSelectionTable(dgBoundaryField<tensor>, dgFixedValueBoundaryField<tensor>, dictionary);
+// Register the dgGeneralFixedValueBoundaryField into the runtime selection table
+addTemplatedToRunTimeSelectionTable
+(
+    dgGeneralBoundaryField,
+    dgGeneralFixedValueBoundaryField,
+    scalar,
+    dictionary
+);
+
+addTemplatedToRunTimeSelectionTable
+(
+    dgGeneralBoundaryField,
+    dgGeneralFixedValueBoundaryField,
+    vector,
+    dictionary
+);
+
+addTemplatedToRunTimeSelectionTable
+(
+    dgGeneralBoundaryField,
+    dgGeneralFixedValueBoundaryField,
+    tensor,
+    dictionary
+);
 
 
 // * * * * * * * * * * * * * * Constructor  * * * * * * * * * * * * * * //
 
 template<class Type>
-dgFixedValueBoundaryField<Type>::dgFixedValueBoundaryField
+dgGeneralFixedValueBoundaryField<Type>::dgGeneralFixedValueBoundaryField
 (
     const word& name,
     const dictionary& dict
 )
 :
-    dgBoundaryField<Type>(name, dict),
-    value_(dict.lookup("value"))
-{}
+    dgGeneralBoundaryField<Type>(name, dict)
+{
+    dict.lookup("value") >> value_;
+}
 
 
 // * * * * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * //
 
 template<class Type>
-void dgFixedValueBoundaryField<Type>::updateValue
+void dgGeneralFixedValueBoundaryField<Type>::updateValue
 (
     const vector& n,
     const Type& minusValue,
@@ -75,7 +96,7 @@ void dgFixedValueBoundaryField<Type>::updateValue
 }
 
 template<class Type>
-void dgFixedValueBoundaryField<Type>::updateGrad
+void dgGeneralFixedValueBoundaryField<Type>::updateGrad
 (
     const vector& n,
     const Type& minusValue,
