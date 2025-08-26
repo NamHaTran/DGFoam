@@ -28,41 +28,14 @@ License
 #include "addToRunTimeSelectionTable.H"
 #include "vector.H"
 #include "tensor.H"
+#include "dgGeneralBoundaryFieldMacros.H"
 
 namespace Foam
 {
 
 // * * * * * * * * * * * * * * Static Data Members * * * * * * * * * * * * * //
-// Type info for common types
-defineNamedTemplateTypeNameAndDebug(dgGeneralFixedValueBoundaryField<scalar>, 0);
-defineNamedTemplateTypeNameAndDebug(dgGeneralFixedValueBoundaryField<vector>, 0);
-defineNamedTemplateTypeNameAndDebug(dgGeneralFixedValueBoundaryField<tensor>, 0);
 
-// Register the dgGeneralFixedValueBoundaryField into the runtime selection table
-addTemplatedToRunTimeSelectionTable
-(
-    dgGeneralBoundaryField,
-    dgGeneralFixedValueBoundaryField,
-    scalar,
-    dictionary
-);
-
-addTemplatedToRunTimeSelectionTable
-(
-    dgGeneralBoundaryField,
-    dgGeneralFixedValueBoundaryField,
-    vector,
-    dictionary
-);
-
-addTemplatedToRunTimeSelectionTable
-(
-    dgGeneralBoundaryField,
-    dgGeneralFixedValueBoundaryField,
-    tensor,
-    dictionary
-);
-
+makeDgGeneralBoundaryField(dgGeneralFixedValueBoundaryField);
 
 // * * * * * * * * * * * * * * Constructor  * * * * * * * * * * * * * * //
 
@@ -84,6 +57,7 @@ dgGeneralFixedValueBoundaryField<Type>::dgGeneralFixedValueBoundaryField
 template<class Type>
 void dgGeneralFixedValueBoundaryField<Type>::updateValue
 (
+    const label gaussID,
     const vector& n,
     const Type& minusValue,
     const Type& minusGrad,
@@ -98,6 +72,7 @@ void dgGeneralFixedValueBoundaryField<Type>::updateValue
 template<class Type>
 void dgGeneralFixedValueBoundaryField<Type>::updateGrad
 (
+    const label gaussID,
     const vector& n,
     const Type& minusValue,
     const Type& minusGrad,

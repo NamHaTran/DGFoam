@@ -29,37 +29,14 @@ License
 #include "vector.H"
 #include "tensor.H"
 #include "VectorSpace.H"
+#include "dgGeneralBoundaryFieldMacros.H"
 
 namespace Foam
 {
 
 // * * * * * * * * * * * * * * Static Data Members * * * * * * * * * * * * * //
 
-defineNamedTemplateTypeNameAndDebug(dgGeneralSymmetryBoundaryField<scalar>, 0);
-defineNamedTemplateTypeNameAndDebug(dgGeneralSymmetryBoundaryField<vector>, 0);
-defineNamedTemplateTypeNameAndDebug(dgGeneralSymmetryBoundaryField<tensor>, 0);
-
-addTemplatedToRunTimeSelectionTable
-(
-    dgGeneralBoundaryField,
-    dgGeneralSymmetryBoundaryField,
-    scalar,
-    dictionary
-);
-addTemplatedToRunTimeSelectionTable
-(
-    dgGeneralBoundaryField,
-    dgGeneralSymmetryBoundaryField,
-    vector,
-    dictionary
-);
-addTemplatedToRunTimeSelectionTable
-(
-    dgGeneralBoundaryField,
-    dgGeneralSymmetryBoundaryField,
-    tensor,
-    dictionary
-);
+makeDgGeneralBoundaryField(dgGeneralSymmetryBoundaryField);
 
 // * * * * * * * * * * * * * Constructor * * * * * * * * * * * * * //
 
@@ -78,6 +55,7 @@ dgGeneralSymmetryBoundaryField<Type>::dgGeneralSymmetryBoundaryField
 template<>
 void dgGeneralSymmetryBoundaryField<scalar>::updateValue
 (
+    const label gaussID,
     const vector& n,
     const scalar& minusValue,
     const scalar& minusGrad,
@@ -91,6 +69,7 @@ void dgGeneralSymmetryBoundaryField<scalar>::updateValue
 template<>
 void dgGeneralSymmetryBoundaryField<vector>::updateValue
 (
+    const label gaussID,
     const vector& n,
     const vector& minusValue,
     const vector& minusGrad,
@@ -104,6 +83,7 @@ void dgGeneralSymmetryBoundaryField<vector>::updateValue
 template<>
 void dgGeneralSymmetryBoundaryField<tensor>::updateValue
 (
+    const label gaussID,
     const vector& n,
     const tensor& minusValue,
     const tensor& minusGrad,
@@ -118,6 +98,7 @@ void dgGeneralSymmetryBoundaryField<tensor>::updateValue
 template<>
 void dgGeneralSymmetryBoundaryField<scalar>::updateGrad
 (
+    const label gaussID,
     const vector& n,
     const scalar& minusValue,
     const scalar& minusGrad,
@@ -131,6 +112,7 @@ void dgGeneralSymmetryBoundaryField<scalar>::updateGrad
 template<>
 void dgGeneralSymmetryBoundaryField<vector>::updateGrad
 (
+    const label gaussID,
     const vector& n,
     const vector& minusValue,
     const vector& minusGrad,
@@ -144,6 +126,7 @@ void dgGeneralSymmetryBoundaryField<vector>::updateGrad
 template<>
 void dgGeneralSymmetryBoundaryField<tensor>::updateGrad
 (
+    const label gaussID,
     const vector& n,
     const tensor& minusValue,
     const tensor& minusGrad,

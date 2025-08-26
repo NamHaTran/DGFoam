@@ -82,6 +82,7 @@ public:
     //- Update value at plus side using fixed value BC
     virtual void updateValue
     (
+        const label gaussID,
         const vector& n,
         const Type& minusValue,
         const Type& minusGrad,
@@ -92,6 +93,7 @@ public:
     //- Update gradient at plus side using mirror condition
     virtual void updateGrad
     (
+        const label gaussID,
         const vector& n,
         const Type& minusValue,
         const Type& minusGrad,

@@ -26,40 +26,14 @@ License
 
 #include "dgGeneralZeroGradientBoundaryField.H"
 #include "addToRunTimeSelectionTable.H"
+#include "dgGeneralBoundaryFieldMacros.H"
 
 namespace Foam
 {
 
 // * * * * * * * * * * * * * Runtime Type * * * * * * * * * * * * * * //
 
-defineNamedTemplateTypeNameAndDebug(dgGeneralZeroGradientBoundaryField<scalar>, 0);
-defineNamedTemplateTypeNameAndDebug(dgGeneralZeroGradientBoundaryField<vector>, 0);
-defineNamedTemplateTypeNameAndDebug(dgGeneralZeroGradientBoundaryField<tensor>, 0);
-
-addTemplatedToRunTimeSelectionTable
-(
-    dgGeneralBoundaryField,
-    dgGeneralZeroGradientBoundaryField,
-    scalar,
-    dictionary
-);
-
-addTemplatedToRunTimeSelectionTable
-(
-    dgGeneralBoundaryField,
-    dgGeneralZeroGradientBoundaryField,
-    vector,
-    dictionary
-);
-
-addTemplatedToRunTimeSelectionTable
-(
-    dgGeneralBoundaryField,
-    dgGeneralZeroGradientBoundaryField,
-    tensor,
-    dictionary
-);
-
+makeDgGeneralBoundaryField(dgGeneralZeroGradientBoundaryField);
 
 // * * * * * * * * * * * * * Constructors * * * * * * * * * * * * * * //
 
@@ -79,6 +53,7 @@ dgGeneralZeroGradientBoundaryField<Type>::dgGeneralZeroGradientBoundaryField
 template<class Type>
 void dgGeneralZeroGradientBoundaryField<Type>::updateValue
 (
+    const label gaussID,
     const vector& n,
     const Type& minusValue,
     const Type& minusGrad,
@@ -94,6 +69,7 @@ void dgGeneralZeroGradientBoundaryField<Type>::updateValue
 template<class Type>
 void dgGeneralZeroGradientBoundaryField<Type>::updateGrad
 (
+    const label gaussID,
     const vector& n,
     const Type& minusValue,
     const Type& minusGrad,

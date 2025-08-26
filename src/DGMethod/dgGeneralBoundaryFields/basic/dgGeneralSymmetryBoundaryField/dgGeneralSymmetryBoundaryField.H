@@ -100,6 +100,7 @@ public:
     //- Update '+' value according to symmetry condition
     virtual void updateValue
     (
+        const label gaussID,
         const vector& n,
         const Type& minusValue,
         const Type& minusGrad,
@@ -110,6 +111,7 @@ public:
     //- Update '+' gradient according to symmetry condition
     virtual void updateGrad
     (
+        const label gaussID,
         const vector& n,
         const Type& minusValue,
         const Type& minusGrad,

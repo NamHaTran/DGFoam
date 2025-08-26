@@ -100,6 +100,7 @@ public:
         //- Update '+' side value
         virtual void updateValue
         (
+            const label gaussID,
             const vector& n,
             const Type& minusValue,
             const Type& minusGrad,
@@ -110,6 +111,7 @@ public:
         //- Update '+' side gradient
         virtual void updateGrad
         (
+            const label gaussID,
             const vector& n,
             const Type& minusValue,
             const Type& minusGrad,
