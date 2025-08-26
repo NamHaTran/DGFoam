@@ -9,46 +9,44 @@ FoamFile
 {
     version     2.0;
     format      ascii;
-    class       volScalarField;
+    class       dictionary;
     object      p;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-dimensions      [0 2 -2 0 0 0 0];
-
-internalField   uniform 0;
+internalField   uniform 1e5;
 
 boundaryField
 {
     wall-4
     {
-        type            zeroGradient;
+        type            generalZeroGradient;
     }
 
     velocity-inlet-5
     {
-        type            zeroGradient;
+        type            generalZeroGradient;
     }
 
     velocity-inlet-6
     {
-        type            zeroGradient;
+        type            generalZeroGradient;
     }
 
     pressure-outlet-7
     {
-        type            fixedValue;
-        value           uniform 0;
+        type            generalFixedValue;
+        value           1e5;
     }
 
     wall-8
     {
-        type            zeroGradient;
+        type            generalZeroGradient;
     }
 
     frontAndBackPlanes
     {
-        type            empty;
+        type            generalZeroGradient;
     }
 }
 

@@ -25,6 +25,7 @@ License
 \*---------------------------------------------------------------------------*/
 
 #include "dgGeneralBoundaryManager.H"
+#include "tmp.H"
 
 namespace Foam
 {
@@ -37,8 +38,33 @@ dgGeneralBoundaryManager<Type>::dgGeneralBoundaryManager
     const dictionary& fieldDict
 )
 {
-    const dictionary& bfDict = fieldDict.subDict("boundaryField");
+    // Read internalField
+    const entry* internalFieldEntry = fieldDict.findEntry("internalField", keyType::LITERAL);
 
+    if (!internalFieldEntry)
+    {
+        FatalIOErrorInFunction(fieldDict)
+            << "Missing 'internalField' entry in field dictionary"
+            << exit(FatalIOError);
+    }
+
+    // Remove const to allow reading
+    ITstream& is = const_cast<entry*>(internalFieldEntry)->stream();
+
+    word fieldType;
+    is >> fieldType;
+
+    if (fieldType != "uniform")
+    {
+        FatalIOErrorInFunction(fieldDict)
+            << "Only 'uniform' internalField is supported. Got: " << fieldType
+            << exit(FatalIOError);
+    }
+
+    is >> internalValue_;
+
+    // Read boundaryField
+    const dictionary& bfDict = fieldDict.subDict("boundaryField");
     bConditions_.setSize(bfDict.size());
 
     label patchI = 0;
@@ -56,6 +82,58 @@ dgGeneralBoundaryManager<Type>::dgGeneralBoundaryManager
     }
 }
 
+template<class Type>
+dgGeneralBoundaryManager<Type>::dgGeneralBoundaryManager
+(
+    const IOobject& io
+)
+{
+    // Create dictionary from IOobject (e.g., 0/U, 0/p)
+    IOdictionary fieldDict(io);
+
+    // Read internalField
+    const entry* internalFieldEntry = fieldDict.findEntry("internalField", keyType::LITERAL);
+
+    if (!internalFieldEntry)
+    {
+        FatalIOErrorInFunction(fieldDict)
+            << "Missing 'internalField' entry in field dictionary"
+            << exit(FatalIOError);
+    }
+
+    // Remove const to allow reading
+    ITstream& is = const_cast<entry*>(internalFieldEntry)->stream();
+
+    word fieldType;
+    is >> fieldType;
+
+    if (fieldType != "uniform")
+    {
+        FatalIOErrorInFunction(fieldDict)
+            << "Only 'uniform' internalField is supported. Got: " << fieldType
+            << exit(FatalIOError);
+    }
+
+    is >> internalValue_;
+
+    // Read boundaryField
+    const dictionary& bfDict = fieldDict.subDict("boundaryField");
+    bConditions_.setSize(bfDict.size());
+
+    label patchI = 0;
+    for (const entry& e : bfDict)
+    {
+        if (!e.isDict()) continue;
+
+        const word& patchName = e.keyword();
+        const dictionary& patchDict = e.dict();
+
+        autoPtr<dgGeneralBoundaryField<Type>> bc =
+            dgGeneralBoundaryField<Type>::New(patchName, patchDict);
+
+        bConditions_.set(patchI++, bc.ptr());
+    }
+}
 
 // * * * * * * * * * * * * * Member Functions * * * * * * * * * * * * * //
 

@@ -54,12 +54,18 @@ private:
     //- List of boundary condition objects (one per patch)
     PtrList<dgGeneralBoundaryField<Type>> bConditions_;
 
+    //- Internal field value (only supports 'uniform <value>')
+    Type internalValue_;
+
 public:
 
     // Constructors
 
         //- Construct from dictionary, without context
         dgGeneralBoundaryManager(const dictionary& fieldDict);
+
+        //- Construct from IOobject
+        dgGeneralBoundaryManager(const IOobject& io);
 
     //- Destructor
     ~dgGeneralBoundaryManager() = default;
@@ -85,6 +91,9 @@ public:
         {
             return bConditions_[i];
         }
+
+        //- Return internal value
+        inline const Type& internalValue() const { return internalValue_; }
 };
 
 } // End namespace Foam

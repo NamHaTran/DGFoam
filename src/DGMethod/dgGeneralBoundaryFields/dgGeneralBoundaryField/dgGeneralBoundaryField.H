@@ -126,6 +126,19 @@ public:
 
         //- Get the fields context pointer (may be null)
         inline const fieldsContext* context() const { return ctxPtr_; }
+
+    // Access
+
+        //- Return the name of the patch
+        inline const word& name() const { return name_; }
+
+        // Getter type
+        inline word BCtype() const
+        {
+            word result;
+            this->dict_.lookup("type") >> result;
+            return result;
+        }
 };
 
 } // End namespace Foam

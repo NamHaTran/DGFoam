@@ -71,7 +71,8 @@ Description
 #include "dgGeomMesh.H"
 
 // Test libs
-// #include "dgThermo.H"
+#include "dgThermo.H"
+#include "dgGeneralBoundaryManager.H"
 
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
@@ -91,13 +92,16 @@ int main(int argc, char *argv[])
     #include "createMesh.H"
 
     // Create fields
-    #include "createFields.H"
+    //#include "createFields.H"
 
     // **************************** DGFoam Initialization **************************** //
     
     
     // Create the DG geometric mesh
     #include "createDGMesh.H"
+
+    // Create the DG fields
+    #include "createDGFields.H"
 
     // Test dgThermo
     /*
