@@ -171,7 +171,7 @@ void Foam::rhoBasedConservative::update
 
 
     // 5) Cache to base (optional)
-    setCp(Cp); setE(e); setH(h); setMu(mu); setKappa(kappa); setPr(Pr); setA(a);
+    setCp(Cp); setE(e); setH(h); setMu(mu); setKappa(kappa); setPr(Pr); setA(a); setGamma(gamma);
 
     // 6) Write outputs if pointers are provided
     if (out.rho)   *out.rho   = rho;
@@ -186,6 +186,7 @@ void Foam::rhoBasedConservative::update
     if (out.h)     *out.h     = h;
     if (out.e)     *out.e     = e;
     if (out.Pr)    *out.Pr    = Pr;
+    if (out.gamma) *out.gamma = gamma;
 }
 
 // ************************************************************************* //

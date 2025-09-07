@@ -1,0 +1,49 @@
+Dưới đây là thiết kế dgSchemes dictionary để khai báo các scheme dùng trong DGFoam:
+
+
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2412                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+
+
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      dgSchemes;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+fluxSchemes
+{
+	fluxSolvers
+	{
+		default         		pureCentral;
+		
+		massConvectiveFlux		HLLE;
+		momentumConvectiveFlux	LF;
+		
+		/* Các flux khác bao gồm:
+		- auxiliaryFlux
+		- massDiffusiveFlux
+		- momentumDiffusiveFlux
+		- energyConvectiveFlux
+		- energyDiffusiveFlux
+		Vì không khai báo trong dict nên nhận scheme pureCentral
+		*/
+	}
+	
+	fluxSolverCoeffs
+	{
+		// Khai báo chi tiết cho các flux solver được dùng trong dict, ví dụ HLLE flux cần để user chọn speedEstimate method là roeEinfeldt hay davis
+		HLLECoeffs
+		{
+			speedEstimate roeEinfeldt;
+		}
+	}
+}
+// ************************************************************************* //

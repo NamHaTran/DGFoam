@@ -98,6 +98,7 @@ struct dgThermoOutputs
     scalar* h{nullptr};
     scalar* e{nullptr};
     scalar* Pr{nullptr};
+    scalar* gamma{nullptr};
 };
 
 /*---------------------------------------------------------------------------*\
@@ -134,6 +135,7 @@ protected:
         scalar kappa_;   // Thermal conductivity
         scalar Pr_;      // Prandtl number
         scalar a_;       // Speed of sound
+        scalar gamma_;   // Heat capacity ratio
 
 public:
 
@@ -186,7 +188,7 @@ public:
 
     // Accessors (can be overridden)
 
-        inline const eqnOfState& eqn() const { return eqnState_(); }
+        inline const eqnOfState&      eqnOfState() const { return eqnState_(); }
         inline const thermoLaw&       thermo() const { return thermo_(); }
         inline const transportLaw&    transport() const { return transport_(); }
 
@@ -198,6 +200,7 @@ public:
         inline scalar kappa() const { return kappa_; }
         inline scalar Pr()    const { return Pr_; }
         inline scalar a()     const { return a_; }
+        inline scalar gamma() const { return gamma_; }
 
         // For derived classes to set cached values conveniently
         inline void setR(const scalar v){ R_=v; }
@@ -208,6 +211,7 @@ public:
         inline void setKappa(const scalar v){ kappa_=v; }
         inline void setPr(const scalar v){ Pr_=v; }
         inline void setA(const scalar v){ a_=v; }
+        inline void setGamma(const scalar v){ gamma_=v; }
 };
 
 } // End namespace Foam
