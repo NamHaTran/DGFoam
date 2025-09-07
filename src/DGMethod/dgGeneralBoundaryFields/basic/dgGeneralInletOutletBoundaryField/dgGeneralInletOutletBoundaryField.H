@@ -55,7 +55,6 @@ SourceFiles
 #define dgGeneralInletOutletBoundaryField_H
 
 #include "dgGeneralBoundaryField.H"
-#include "fieldsContext.H"
 
 namespace Foam
 {
@@ -73,9 +72,6 @@ protected:
 
     //- Inlet value for Dirichlet BC
     Type inletValue_;
-
-    //- Pointer to field context
-    const fieldsContext* ctxPtr_ = nullptr;
 
 public:
 

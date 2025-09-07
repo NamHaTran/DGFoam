@@ -27,9 +27,8 @@ License
 #include "dgHLLEFluxSolver.H"
 #include "addToRunTimeSelectionTable.H"
 #include "error.H"
-
-// #include "faceGaussField.H"
-// #include "fieldsContext.H"
+#include "faceGaussField.H"
+#include "fieldsContext.H"
 
 namespace Foam
 {
@@ -108,8 +107,8 @@ void Foam::dgHLLEFluxSolver::computeFlux
     const scalar UnR = (URv & n);
     const scalar UnL = (ULv & n);
 
-    const scalar TR = thermo_.eqnOfState().T(rhoR, pR);
-    const scalar TL = thermo_.eqnOfState().T(rhoL, pL);
+    const scalar TR = thermo_.eos().T(rhoR, pR);
+    const scalar TL = thermo_.eos().T(rhoL, pL);
     const scalar aR = thermo_.thermo().a(TR);
     const scalar aL = thermo_.thermo().a(TL);
 

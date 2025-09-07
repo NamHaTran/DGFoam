@@ -188,7 +188,7 @@ public:
 
     // Accessors (can be overridden)
 
-        inline const eqnOfState&      eqnOfState() const { return eqnState_(); }
+        inline const eqnOfState&      eos() const { return eqnState_(); }
         inline const thermoLaw&       thermo() const { return thermo_(); }
         inline const transportLaw&    transport() const { return transport_(); }
 

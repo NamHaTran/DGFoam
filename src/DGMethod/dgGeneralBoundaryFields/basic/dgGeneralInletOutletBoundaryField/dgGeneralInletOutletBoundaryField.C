@@ -25,10 +25,11 @@ License
 \*---------------------------------------------------------------------------*/
 
 #include "dgGeneralInletOutletBoundaryField.H"
-#include "faceGaussField.H"
+#include "dgGeneralBoundaryFieldMacros.H"
 #include "addToRunTimeSelectionTable.H"
 #include "dictionary.H"
-#include "dgGeneralBoundaryFieldMacros.H"
+#include "faceGaussField.H"
+#include "fieldsContext.H"
 
 namespace Foam
 {
@@ -65,7 +66,7 @@ void dgGeneralInletOutletBoundaryField<Type>::updateValue
 ) const
 {
     const faceGaussField<vector>& V =
-        ctxPtr_->lookupFaceField<vector>("U");
+        this->ctxPtr_->template lookupFaceField<vector>("U");
 
     const vector& Vn = V.plusValue(gaussID);
     scalar dotProd = Vn & n;

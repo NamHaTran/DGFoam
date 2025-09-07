@@ -140,7 +140,7 @@ void dgFluxSolverManager::setContext(const fieldsContext& ctx)
     // Also set for default solver if present
     if (defaultFluxSolver_.valid())
     {
-        defaultFluxSolver_()->setContext(ctx);
+        defaultFluxSolver_().setContext(ctx);
     }
 }
 
