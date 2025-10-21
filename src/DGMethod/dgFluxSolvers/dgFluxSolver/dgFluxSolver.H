@@ -83,6 +83,16 @@ class fieldsContext;
 
 class dgFluxSolver
 {
+public:
+    // Enumeration for identifying the PDE being solved
+    enum class equationType
+    {
+        massTransport,
+        momentumTransport,
+        energyTransport,
+        scalarTransport
+    };
+
 protected:
 
     // Attributes
@@ -98,6 +108,9 @@ protected:
 
         //- Reference to thermo object for fluid properties (non-owning)
         const dgThermo& thermo_;
+
+        // Internal equation type used for interpreting UL/UR
+        equationType eqnType_;
 
 public:
 
@@ -182,7 +195,30 @@ public:
 
         // - Reading method
         virtual void read(const dictionary& dict) = 0;
+
+        // Equation type Setter and getter
+        inline void setEquationType(equationType t) { eqnType_ = t; }
+        inline equationType getEquationType() const { return eqnType_; }
 };
+
+    // Overload operator<< to print equationType
+    inline Ostream& operator<< (Ostream& os, const dgFluxSolver::equationType& type)
+    {
+        switch (type)
+        {
+            case dgFluxSolver::equationType::massTransport:
+                os << "massTransport"; break;
+            case dgFluxSolver::equationType::momentumTransport:
+                os << "momentumTransport"; break;
+            case dgFluxSolver::equationType::energyTransport:
+                os << "energyTransport"; break;
+            case dgFluxSolver::equationType::scalarTransport:
+                os << "scalarTransport"; break;
+            default:
+                os << "UnknownEquationType"; break;
+        }
+        return os;
+    }
 
 } // End namespace Foam
 
