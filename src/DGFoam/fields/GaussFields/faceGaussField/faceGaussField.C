@@ -35,7 +35,7 @@ namespace Foam
 template<class Type>
 Foam::faceGaussField<Type>::faceGaussField
 (
-    const List<const cellDof<Type>*>& cellsDof,
+    List<const cellDof<Type>*>& cellsDof,
     const dgGeomMesh& mesh
 )
 :
@@ -176,13 +176,11 @@ void Foam::faceGaussField<Type>::interpolateFromDof()
 
         const dgGeomFace& face = *faces_[localFaceI];
 
-        // Get Gauss points for neighbor sides
+        // Get Gauss points for owner sides
         const List<vector>& gpOwner = face.gaussPointsOwner();
-        const List<vector>& gpNeigh = face.gaussPointsNeighbor();
 
-        // Get basis functions for neighbor sides
+        // Get basis functions for owner sides
         const List<List<scalar>>& ownerBasis = face.ownerBasis();
-        const List<List<scalar>>& neighborBasis = face.neighborBasis();
 
         const label offset = gaussOffset_[localFaceI];
 
@@ -199,7 +197,7 @@ void Foam::faceGaussField<Type>::interpolateFromDof()
 
             if (isBoundaryFace)
             {
-                forAll(gpNeigh, i)
+                forAll(gpOwner, i)
                 {
                     plusValues_[offset + i] = pTraits<Type>::zero;
                 }
@@ -207,6 +205,12 @@ void Foam::faceGaussField<Type>::interpolateFromDof()
         }
         else
         {
+            // Get Gauss points for owner sides
+            const List<vector>& gpNeigh = face.gaussPointsNeighbor();
+
+            // Get basis functions for neighbor sides
+            const List<List<scalar>>& neighborBasis = face.neighborBasis();
+
             const cellDof<Type>& cellNDof = *cellsDof_[localFaceI + 1];
             forAll(gpNeigh, i)
             {

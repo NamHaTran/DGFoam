@@ -119,25 +119,16 @@ int main(int argc, char *argv[])
             cellI,
             dgMesh
         );
+        // Interpolate values at Gauss points from DOF using basis functions
+        UGauss.interpolateFromDof();
 
-        if (cellI == 1000)
-        {
-            // Print results for cellID == 1000
-            Info << "Cell " << cellI << ":\n";
-            Info << "Original pGauss:\n";
-            UGauss.print();
-        }
-
-        /*
+        
         GaussField<scalar> pGauss
         (
             &pDof,
             cellI,
             dgMesh
         );
-
-        // Interpolate values at Gauss points from DOF using basis functions
-        UGauss.interpolateFromDof();
         pGauss.interpolateFromDof();
 
         GaussField<scalar> p1
@@ -179,7 +170,7 @@ int main(int argc, char *argv[])
         p5 = pGauss / 2.0;
         p6 = pow(pGauss, 2);
 
-        if (cellI == 1000)
+        if (cellI == 0)
         {
             // Print results for cellID == 1000
             Info << "Cell " << cellI << ":\n";
@@ -198,7 +189,6 @@ int main(int argc, char *argv[])
             Info << "p6 = pow(pGauss, 2):\n";
             p6.print();
         }
-        */
     }
 
 

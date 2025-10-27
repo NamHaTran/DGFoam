@@ -41,13 +41,9 @@ DG_BASHRC_PATH="${BASH_SOURCE[0]:-${(%):-%x}}"
 export DG_ROOT="$(cd "$(dirname "$DG_BASHRC_PATH")/.." && pwd -P)"
 
 #-------------------------------------------------------------------------------
-# Compilation mode (similar to WM_COMPILE_OPTION in OpenFOAM)
-#   Options:
-#     Opt   - Optimized (release build, default)
-#     Debug - Debug build with -g and -O0
-#     Prof  - Profile build
+# Overwrite WM_COMPILE_OPTION
 #-------------------------------------------------------------------------------
-export DG_COMPILE_OPTION=Debug
+export WM_COMPILE_OPTION=Debug
 
 #-------------------------------------------------------------------------------
 # DGFS paths
@@ -59,8 +55,8 @@ export DG_THIRD_PARTY=$DG_ROOT/thirdPartySources
 #-------------------------------------------------------------------------------
 # Output directories (based on compile option)
 #-------------------------------------------------------------------------------
-export DG_LIBBIN=$DG_ROOT/platforms/$WM_OPTIONS/$DG_COMPILE_OPTION/lib
-export DG_APPBIN=$DG_ROOT/platforms/$WM_OPTIONS/$DG_COMPILE_OPTION/bin
+export DG_LIBBIN=$DG_ROOT/platforms/$WM_OPTIONS/$WM_COMPILE_OPTION/lib
+export DG_APPBIN=$DG_ROOT/platforms/$WM_OPTIONS/$WM_COMPILE_OPTION/bin
 
 #-------------------------------------------------------------------------------
 # Append to library and executable paths

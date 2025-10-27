@@ -46,26 +46,28 @@ Foam::GaussField<Type>::GaussField
     cellID_(cellID),
     mesh_(mesh),
     cellField_(mesh, &(*dofField_)[cellID_]),
-    faceField_
-    (
-        // create list of cellDof pointers for neighbor cells
-        [&]()
-        {
-            const labelList& neighbors = mesh_.cells()[cellID_]->neighborCells();
-            List<const cellDof<Type>*> cellsDof(neighbors.size());
-
-            forAll(neighbors, i)
-            {
-                const label nid = neighbors[i];
-                cellsDof[i] = (nid >= 0 ? &(*dofField_)[nid] : nullptr);
-            }
-            return cellsDof;
-        }(),
-        mesh
-    ),
+    faceField_(cellID,mesh),
     ctxPtr_(nullptr)
 {
+    const labelList& neighbors = mesh_.cells()[cellID_]->neighborCells();
+    List<const cellDof<Type>*> cellsDof(neighbors.size()+1);
 
+    // The first entry is the cell itself
+    cellsDof[0] = &(*dofField_)[cellID_];
+
+    forAll(neighbors, i)
+    {
+        const label nid = neighbors[i];
+        if (nid >= 0)
+        {
+            cellsDof[i+1] = &(*dofField_)[nid];
+        }
+        else
+        {
+            cellsDof[i+1] = nullptr;
+        }
+    }
+    faceField_.setCellsDof(cellsDof);
 }
 
 

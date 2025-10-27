@@ -89,7 +89,7 @@ private:
     List<dgGeomFace*> faces_;
 
     //- List of DOF pointers for current cell and neighbor cells
-    const List<const cellDof<Type>*> cellsDof_;
+    List<const cellDof<Type>*> cellsDof_;
 
     //- Per-face offset in Gauss values array
     List<label> gaussOffset_;
@@ -108,7 +108,7 @@ public:
     //- Construct from list of cell DOFs (P cell + neighbor cells) and mesh
     faceGaussField
     (
-        const List<const cellDof<Type>*>& cellsDof,
+        List<const cellDof<Type>*>& cellsDof,
         const dgGeomMesh& mesh
     );
 
@@ -132,6 +132,9 @@ public:
 
     //- Set the fields context
     inline void setContext(const fieldsContext& ctx) { ctxPtr_ = &ctx;}
+
+    //- Set cell dof
+    void setCellsDof(const List<const cellDof<Type>*>& cellsDof) {cellsDof_ = cellsDof;}
 
     //- Return number of faces
     inline label nFaces() const { return nFaces_; }
