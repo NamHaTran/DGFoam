@@ -7,50 +7,52 @@
 \*---------------------------------------------------------------------------*/
 FoamFile
 {
-    version     2.0;
-    format      ascii;
-    class       dictionary;
-    object      U;
+	version  2.0;
+    format  ascii;
+    class  volVectorField;
+    location "0";
+    object  U_0;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
-
-internalField   uniform (0 0 0);
+dimensions [0 0 0 0 0 0 0];
+internalField   uniform (0.01 0.05 0.03);
 
 boundaryField
 {
     wall-4
     {
-        type            generalFixedValue;
-        value           (0 0 0);
+        type            calculated;
+		value           uniform (0 0 0);
     }
 
     velocity-inlet-5
     {
-        type            generalFixedValue;
-        value           (1 0 0);
+        type            calculated;
+		value           uniform (0 0 0);
     }
 
     velocity-inlet-6
     {
-        type            generalFixedValue;
-        value           (0 3 0);
+        type            calculated;
+		value           uniform (0 0 0);
     }
 
     pressure-outlet-7
     {
-        type            generalZeroGradient;
+        type            calculated;
+		value           uniform (0 0 0);
     }
 
     wall-8
     {
-        type            generalFixedValue;
-        value           (0 0 0);
+        type            calculated;
+		value           uniform (0 0 0);
     }
 
     frontAndBackPlanes
     {
-        type            generalFixedValue;
-        value           (0 0 0);
+        type            calculated;
+		value           uniform (0 0 0);
     }
 }
 

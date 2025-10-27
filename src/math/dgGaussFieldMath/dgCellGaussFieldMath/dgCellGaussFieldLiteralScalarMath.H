@@ -39,73 +39,166 @@ SourceFiles
 #define Foam_dgCellGaussFieldLiteralScalarMath_H
 
 #include "cellGaussField.H"
+#include <cmath>
 
 namespace Foam
 {
-namespace dgGaussFieldMath
+// * * * * * * * * * * * Scalar * Field * * * * * * * * * * * * * * * //
+
+inline cellGaussField<scalar> operator*
+(
+    const scalar& a,
+    const cellGaussField<scalar>& A
+)
 {
+    cellGaussField<scalar> result(A.cellID(), A.dgMesh());
 
-// Scalar * field
-template<class Type>
-cellGaussField<Type> operator*
-(
-    const scalar& a,
-    const cellGaussField<Type>& A
-);
+    for (label i = 0; i < A.size(); ++i)
+    {
+        result[i] = a * A[i];
+    }
 
-template<class Type>
-cellGaussField<Type> operator*
-(
-    const cellGaussField<Type>& A,
-    const scalar& a
-);
+    return result;
+}
 
-// Scalar / field
-template<class Type>
-cellGaussField<Type> operator/
-(
-    const scalar& a,
-    const cellGaussField<Type>& A
-);
-
-template<class Type>
-cellGaussField<Type> operator/
-(
-    const cellGaussField<Type>& A,
-    const scalar& a
-);
-
-// Scalar + field<scalar>
-template<class Type>
-cellGaussField<Type> operator+
-(
-    const scalar& a,
-    const cellGaussField<scalar>& A
-);
-
-template<class Type>
-cellGaussField<Type> operator+
+inline cellGaussField<scalar> operator*
 (
     const cellGaussField<scalar>& A,
     const scalar& a
-);
+)
+{
+    cellGaussField<scalar> result(A.cellID(), A.dgMesh());
 
-// Scalar - field<scalar>
-template<class Type>
-cellGaussField<Type> operator-
+    for (label i = 0; i < A.size(); ++i)
+    {
+        result[i] = a * A[i];
+    }
+
+    return result;
+}
+
+
+// * * * * * * * * * * * Scalar / Field * * * * * * * * * * * * * * * //
+
+inline cellGaussField<scalar> operator/
 (
     const scalar& a,
     const cellGaussField<scalar>& A
-);
+)
+{
+    cellGaussField<scalar> result(A.cellID(), A.dgMesh());
+    
+    for (label i = 0; i < A.size(); ++i)
+    {
+        result[i] = a / A[i];
+    }
 
-template<class Type>
-cellGaussField<Type> operator-
+    return result;
+}
+
+inline cellGaussField<scalar> operator/
 (
     const cellGaussField<scalar>& A,
     const scalar& a
-);
+)
+{
+    cellGaussField<scalar> result(A.cellID(), A.dgMesh());
+    
+    for (label i = 0; i < A.size(); ++i)
+    {
+        result[i] = A[i] / a;
+    }
 
-} // End namespace dgGaussFieldMath
+    return result;
+}
+
+
+// * * * * * * * * * Scalar + Field<scalar> * * * * * * * * * * * * * //
+
+inline cellGaussField<scalar> operator+
+(
+    const scalar& a,
+    const cellGaussField<scalar>& A
+)
+{
+    cellGaussField<scalar> result(A.cellID(), A.dgMesh());
+    
+    for (label i = 0; i < A.size(); ++i)
+    {
+        result[i] = a + A[i];
+    }
+
+    return result;
+}
+
+inline cellGaussField<scalar> operator+
+(
+    const cellGaussField<scalar>& A,
+    const scalar& a
+)
+{
+    cellGaussField<scalar> result(A.cellID(), A.dgMesh());
+    
+    for (label i = 0; i < A.size(); ++i)
+    {
+        result[i] = a + A[i];
+    }
+
+    return result;
+}
+
+
+// * * * * * * * * * Scalar - Field<scalar> * * * * * * * * * * * * * //
+
+inline cellGaussField<scalar> operator-
+(
+    const scalar& a,
+    const cellGaussField<scalar>& A
+)
+{
+    cellGaussField<scalar> result(A.cellID(), A.dgMesh());
+    
+
+    for (label i = 0; i < A.size(); ++i)
+    {
+        result[i] = a - A[i];
+    }
+
+    return result;
+}
+
+inline cellGaussField<scalar> operator-
+(
+    const cellGaussField<scalar>& A,
+    const scalar& a
+)
+{
+    cellGaussField<scalar> result(A.cellID(), A.dgMesh());
+    
+
+    for (label i = 0; i < A.size(); ++i)
+    {
+        result[i] = A[i] - a;
+    }
+
+    return result;
+}
+
+// pow(field<scalar>, scalar)
+inline cellGaussField<scalar> pow
+(
+    const cellGaussField<scalar>& A,
+    const scalar& a
+)
+{
+    cellGaussField<scalar> result(A.cellID(), A.dgMesh());
+    
+    for (label i = 0; i < A.size(); ++i)
+    {
+        result[i] = std::pow(A[i], a);
+    }
+    return result;
+}
 } // End namespace Foam
 
 #endif

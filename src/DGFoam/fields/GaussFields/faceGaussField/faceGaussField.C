@@ -28,12 +28,14 @@ License
 #include "faceGaussField.H"
 #include "vector.H"
 
+namespace Foam
+{
 // * * * * * * * * * * * * * * * * Constructors  * * * * * * * * * * * * * * //
 
 template<class Type>
 Foam::faceGaussField<Type>::faceGaussField
 (
-    const List<cellDof<Type>*>& cellsDof,
+    const List<const cellDof<Type>*>& cellsDof,
     const dgGeomMesh& mesh
 )
 :
@@ -65,81 +67,6 @@ Foam::faceGaussField<Type>::faceGaussField
 
     interpolateFromDof();
 }
-
-
-template<class Type>
-Foam::faceGaussField<Type>::faceGaussField
-(
-    const List<cellDof<Type>*>& cellsDof,
-    const GeometricField<Type, fvPatchField, volMesh>& foamField,
-    const dgGeomMesh& mesh
-)
-:
-    mesh_(mesh),
-    cellID_(cellsDof[0]->cellID()),
-    cell_(*mesh.cells()[cellID_]),
-    facesID_(cell_.faces()),
-    nFaces_(facesID_.size()),
-    faces_(nFaces_),
-    cellsDof_(cellsDof),
-    ctxPtr_(nullptr)
-{
-    for (label faceI = 0; faceI < nFaces_; ++faceI)
-    {
-        faces_[faceI] = mesh_.faces()[facesID_[faceI]];
-    }
-
-    nGaussPerFace_ = faces_[0]->gaussPointsOwner().size();
-    nGauss_ = nFaces_ * nGaussPerFace_;
-
-    gaussOffset_.setSize(nFaces_);
-    for (label faceI = 0; faceI < nFaces_; ++faceI)
-    {
-        gaussOffset_[faceI] = faceI * nGaussPerFace_;
-    }
-
-    plusValues_.setSize(nGauss_);
-    minusValues_.setSize(nGauss_);
-
-    interpolateFromDof();
-}
-
-
-template<class Type>
-Foam::faceGaussField<Type>::faceGaussField
-(
-    const List<cellDof<Type>*>& cellsDof,
-    const dgGeomMesh& mesh,
-    const Type& initialValues
-)
-:
-    mesh_(mesh),
-    cellID_(cellsDof[0]->cellID()),
-    cell_(*mesh.cells()[cellID_]),
-    facesID_(cell_.faces()),
-    nFaces_(facesID_.size()),
-    faces_(nFaces_),
-    cellsDof_(cellsDof),
-    ctxPtr_(nullptr)
-{
-    for (label faceI = 0; faceI < nFaces_; ++faceI)
-    {
-        faces_[faceI] = mesh_.faces()[facesID_[faceI]];
-    }
-
-    nGaussPerFace_ = faces_[0]->gaussPointsOwner().size();
-    nGauss_ = nFaces_ * nGaussPerFace_;
-
-    gaussOffset_.setSize(nFaces_);
-    for (label faceI = 0; faceI < nFaces_; ++faceI)
-    {
-        gaussOffset_[faceI] = faceI * nGaussPerFace_;
-    }
-
-    plusValues_.setSize(nGauss_, initialValues);
-    minusValues_.setSize(nGauss_, initialValues);
-}
-
 
 template<class Type>
 Foam::faceGaussField<Type>::faceGaussField
@@ -293,6 +220,64 @@ void Foam::faceGaussField<Type>::interpolateFromDof()
     }
 }
 
+template<class Type>
+Foam::faceGaussField<Type>& Foam::faceGaussField<Type>::operator=
+(
+    const faceGaussField<Type>& other
+)
+{
+    if (this == &other)
+    {
+        return *this;
+    }
+
+    if (cellID_ != other.cellID_)
+    {
+        FatalErrorInFunction
+            << "Assignment between different cells is not allowed. "
+            << "cellID_ = " << cellID_ << ", other.cellID_ = " << other.cellID_
+            << abort(FatalError);
+    }
+
+    cellID_ = other.cellID_;
+    nFaces_ = other.nFaces_;
+    nGaussPerFace_ = other.nGaussPerFace_;
+    nGauss_ = other.nGauss_;
+    gaussOffset_ = other.gaussOffset_;
+    plusValues_ = other.plusValues_;
+    minusValues_ = other.minusValues_;
+    ctxPtr_ = other.ctxPtr_;
+
+    return *this;
+}
+
+template<class Type>
+Foam::faceGaussField<Type>& Foam::faceGaussField<Type>::operator=
+(
+    const Type& value
+)
+{
+    for (label i = 0; i < minusValues_.size(); ++i)
+    {
+        minusValues_[i] = value;
+        plusValues_[i] = value;
+    }
+
+    return *this;
+}
+
+template<class Type>
+void Foam::faceGaussField<Type>::print() const
+{
+    Info << "Gauss field values for all faces of cell " << cellID_ << nl;
+
+    for (label i = 0; i < minusValues_.size(); ++i)
+    {
+        Info << "  Gauss pt " << i << " on minus side: " << minusValues_[i] << nl;
+        Info << "  Gauss pt " << i << " on plus side: " << plusValues_[i] << nl;
+    }
+}
+
 // * * * * * * * * * * * * * * Template instantiations * * * * * * * * * * * * //
 
 template class Foam::faceGaussField<Foam::scalar>;
@@ -302,4 +287,4 @@ template class Foam::faceGaussField<Foam::symmTensor>;
 template class Foam::faceGaussField<Foam::sphericalTensor>;
 
 // ************************************************************************* //
-
+} // End namespace Foam

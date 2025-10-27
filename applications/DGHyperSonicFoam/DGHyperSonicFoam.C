@@ -73,6 +73,12 @@ Description
 // Test libs
 #include "dgThermo.H"
 #include "dgGeneralBoundaryManager.H"
+//#include "cellDof.H"
+#include "dofField.H"
+//#include "cellGaussField.H"
+//#include "faceGaussField.H"
+#include "GaussField.H"
+#include "dgGaussFieldLiteralScalarMath.H"
 
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
@@ -80,7 +86,7 @@ Description
 int main(int argc, char *argv[])
 {
     // Declare pOrder
-    const label pOrder = 1; // Polynomial order for basis functions
+    const label pOrder = 2; // Polynomial order for basis functions
 
     #include "setRootCase.H"
 
@@ -103,197 +109,97 @@ int main(int argc, char *argv[])
     // Create the DG fields
     #include "createDGFields.H"
 
-    // Test dgThermo
-    /*
-    #include "createDGFields.H"
-    dgThermoInputs in;
-    dgThermoOutputs out;
-
-    Foam::scalar rhoC = 0.7;
-    Foam::vector rhoU(300, 0, 0);
-    Foam::scalar rhoE = 0.5 * rhoC * magSqr(rhoU) + 780 * 400;
-
-    // Gán con trỏ tới biến local
-    in.rhoC = &rhoC;
-    in.rhoU = &rhoU;
-    in.rhoE = &rhoE;
-
-    // Initialize outputs
-    out.rho = new Foam::scalar;
-    out.U = new Foam::vector;
-    out.p = new Foam::scalar;
-    out.T = new Foam::scalar;
-    out.a = new Foam::scalar;
-    out.mu = new Foam::scalar;
-    out.kappa = new Foam::scalar;
-    out.Cp = new Foam::scalar;
-    out.h = new Foam::scalar;
-    out.e = new Foam::scalar;
-    out.Pr = new Foam::scalar;
-
-    // Run the update
-    thermo->update(in, out);
-
-    // Output results
-    Info << "rho: " << *out.rho << endl;
-    Info << "U: " << *out.U << endl;
-    Info << "p: " << *out.p << endl;
-    Info << "T: " << *out.T << endl;
-    Info << "a: " << *out.a << endl;
-    Info << "mu: " << *out.mu << endl;
-    Info << "kappa: " << *out.kappa << endl;
-    Info << "Cp: " << *out.Cp << endl;
-    Info << "h: " << *out.h << endl;
-    Info << "e: " << *out.e << endl;
-    Info << "Pr: " << *out.Pr << endl;
-
-    // Delete output pointers
-    delete out.rho;
-    delete out.U;
-    delete out.p;
-    delete out.T;
-    delete out.a;
-    delete out.mu;
-    delete out.kappa;
-    delete out.Cp;
-    delete out.h;
-    delete out.e;
-    delete out.Pr;
-    */
-
-    // *************************************** Accessing points and faces of cells *************************************** //
-    
-
     // It's possible to iterate over every cell in a standard C++ for loop
     for (label cellI = 0; cellI < mesh.C().size(); cellI++)
     {
-        if (cellI % 20 == 0)
+        // Create GaussField from DOF field
+        GaussField<vector> UGauss
+        (
+            &UDof,
+            cellI,
+            dgMesh
+        );
+
+        if (cellI == 1000)
         {
-            /*
-            // Get current cell and its points
-            const cell& c = mesh.cells()[cellI];
-            const label nFaces = c.size();
-            Info << "Cell " << cellI << " has " << nFaces << " faces." << endl;
-
-
-            // Get points of the cell
-            const labelList& cellPoints = mesh.cellPoints()[cellI];
-            const label nPoints = cellPoints.size();
-            Info << "Cell " << cellI << " has " << nPoints << " points:" << endl;
-
-
-            // Guess the type of cell based on the number of points
-            std::shared_ptr<dgRefCell> refCell = nullptr;
-
-            if (nPoints == 4)
-            {
-                refCell = refCellTet;
-            }
-            else if (nPoints == 8)
-            {
-                refCell = refCellHex;
-            }
-            else if (nPoints == 6)
-            {
-                refCell = refCellPrism;
-            }
-            else if (nPoints == 5)
-            {
-                refCell = refCellPyramid;
-            }
-            else
-            {
-                Info << "Skip unsupported cell with " << nPoints << " points." << endl;
-                continue;
-            }
-
-            // Create geomCell
-            dgGeomCell geomCell(cellI, mesh, refCell, refFace);
-
-            // Print debug information about the cell
-            geomCell.printDebugInfo();
-
-            const cell& cFaces = mesh.cells()[cellI]; // Face indices of this cell
-
-            forAll(cFaces, i)
-            {
-                label faceI = cFaces[i];
-
-                // Create a dgGeomFace object for this face with faceID, mesh, and reference face
-                dgGeomFace dgF(faceI, mesh, refFace);
-
-                Info << "  Face " << faceI << " has " << dgF.size() << " points:" << endl;
-
-                for (label ptI = 0; ptI < dgF.size(); ++ptI)
-                {
-                    label ptID = dgF.baseFace()[ptI];
-                    const point& pt = dgF.getPoint(ptI);
-                    Info << "    Point ID " << ptID << ": " << pt << endl;
-                }
-
-                Info << "    Face " << dgF.id() << ":" << nl;
-                Info << "    Centre     : " << dgF.centre() << nl;
-                Info << "    Normal     : " << dgF.normal() << nl;
-                Info << "    AreaNormal : " << dgF.areaNormal() << nl;
-                Info << "    Area       : " << dgF.area() << nl;
-                Info << "    Gauss points: " << dgF.gaussPoints() << endl;
-                Info << "    Gauss weights: " << dgF.weights() << endl;
-            }
-            */
+            // Print results for cellID == 1000
+            Info << "Cell " << cellI << ":\n";
+            Info << "Original pGauss:\n";
+            UGauss.print();
         }
-    }
 
-    /*
-    for (label cellI = 0; cellI < mesh.C().size(); cellI++)
-    {
-        if (cellI % 20 == 0)
+        /*
+        GaussField<scalar> pGauss
+        (
+            &pDof,
+            cellI,
+            dgMesh
+        );
+
+        // Interpolate values at Gauss points from DOF using basis functions
+        UGauss.interpolateFromDof();
+        pGauss.interpolateFromDof();
+
+        GaussField<scalar> p1
+        (
+            cellI,
+            dgMesh
+        );
+        GaussField<scalar> p2
+        (
+            cellI,
+            dgMesh
+        );
+        GaussField<scalar> p3
+        (
+            cellI,
+            dgMesh
+        );
+        GaussField<scalar> p4
+        (
+            cellI,
+            dgMesh
+        );
+        GaussField<scalar> p5
+        (
+            cellI,
+            dgMesh
+        );
+        GaussField<scalar> p6
+        (
+            cellI,
+            dgMesh
+        );
+
+        // Test operators on GaussField
+        p1 = pGauss;
+        p2 = pGauss + 1e5;
+        p3 = pGauss - 1e5;
+        p4 = pGauss * 2.0;
+        p5 = pGauss / 2.0;
+        p6 = pow(pGauss, 2);
+
+        if (cellI == 1000)
         {
-            Info << "Cell " << cellI << " with centre at " << mesh.C()[cellI] << endl;
-
-            // POINTS THAT DEFINE THE CELL
-            // Each cell is defined by a list of point indices into the mesh.points() array.
-            const labelList& pointLabels = mesh.cellPoints()[cellI];
-            Info << "  has " << pointLabels.size() << " vertices:" << endl;
-
-            forAll(pointLabels, vertexI)
-            {
-                const label ptID = pointLabels[vertexI];
-                const point& pt = mesh.points()[ptID];
-                Info << "    Vertex ID " << ptID << ": " << pt << endl;
-            }
-
-            Info << endl;
-
-            // FACES THAT DEFINE THE CELL
-            // Each cell is also defined by a list of face indices into the mesh.faces() list.
-            const cell& cFaces = mesh.cells()[cellI]; // Face indices of this cell
-
-            forAll(cFaces, i)
-            {
-                label faceI = cFaces[i];
-
-                // Create a dgGeomFace object for this face with faceID, mesh, and reference face
-                dgGeomFace dgF(faceI, mesh, refFace);
-
-                Info << "  Face " << faceI << " has " << dgF.size() << " points:" << endl;
-
-                for (label ptI = 0; ptI < dgF.size(); ++ptI)
-                {
-                    label ptID = dgF.baseFace()[ptI];
-                    const point& pt = dgF.getPoint(ptI);
-                    Info << "    Point ID " << ptID << ": " << pt << endl;
-                }
-
-                Info << "    Face normal: " << dgF.normal() << endl;
-                Info << "    Face area: " << dgF.area() << endl;
-                Info << "    Gauss points: " << dgF.gaussPoints() << endl;
-                Info << "    Gauss weights: " << dgF.weights() << endl;
-            }
-
-            Info << endl;
+            // Print results for cellID == 1000
+            Info << "Cell " << cellI << ":\n";
+            Info << "Original pGauss:\n";
+            pGauss.print();
+            Info << "p1 = pGauss:\n";
+            p1.print();
+            Info << "p2 = pGauss + 1e5:\n";
+            p2.print();
+            Info << "p3 = pGauss - 1e5:\n";
+            p3.print();
+            Info << "p4 = pGauss * 2.0:\n";
+            p4.print();
+            Info << "p5 = pGauss / 2.0:\n";
+            p5.print();
+            Info << "p6 = pow(pGauss, 2):\n";
+            p6.print();
         }
+        */
     }
-    */
 
 
     // Each cell is constructed of faces - these may either be internal or constitute a

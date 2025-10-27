@@ -94,6 +94,9 @@ private:
     //- List of face ids of the cell
     labelList faceLabels_;
 
+    //- List of neighboring cell ids of the cell
+    labelList neighborCellLabels_;
+
     //- List of unique vertices of the cell
     pointField cellPoints_;
 
@@ -118,16 +121,34 @@ public:
     // Member Functions
 
         //- Return the list of face ids of the cell
-        const labelList& faces() const;
+        inline const labelList& faces() const
+        {
+            return faceLabels_;
+        }
+
+        //- Return the list of neighboring cell ids of the cell
+        inline const labelList& neighborCells() const
+        {
+            return neighborCellLabels_;
+        }
 
         //- Return the number of faces in the cell
-        label nFaces() const;
+        inline label nFaces() const
+        {
+            return faceLabels_.size();
+        }
 
         //- Return list of unique cell points
-        const pointField& points() const;
+        inline const pointField& points() const
+        {
+            return cellPoints_;
+        }
 
         //- Return the number of unique points in the cell
-        label nPoints() const;
+        inline label nPoints() const
+        {
+            return cellPoints_.size();
+        }
 
         //- Return cell centroid (from mesh)
         point centre() const;

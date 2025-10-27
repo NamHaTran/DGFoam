@@ -26,38 +26,32 @@ License
 
 \*---------------------------------------------------------------------------*/
 
+#include "dgGaussFieldLiteralScalarMath.H"
+#include "dgCellGaussFieldLiteralScalarMath.H"
 #include "dgFaceGaussFieldLiteralScalarMath.H"
 #include "faceGaussField.H"
+#include "cellGaussField.H"
+#include "GaussField.H"
 
 namespace Foam
 {
-namespace dgGaussFieldMath
-{
-
 // * * * * * * * * * * * * * * scalar * field * * * * * * * * * * * * * * * //
 
-template<class Type>
-faceGaussField<Type> operator*
+GaussField<scalar> operator*
 (
     const scalar& s,
-    const faceGaussField<Type>& A
+    const GaussField<scalar>& A
 )
 {
-    faceGaussField<Type> result(A.cellID(), A.dgMesh());
-
-    for (label gp = 0; gp < A.nGauss(); ++gp)
-    {
-        result.plusValueAt(gp)  = s * A.plusValue(gp);
-        result.minusValueAt(gp) = s * A.minusValue(gp);
-    }
-
+    GaussField<scalar> result(A);
+    result.cellField() = s * A.cellField();
+    result.faceField() = s * A.faceField();
     return result;
 }
 
-template<class Type>
-faceGaussField<Type> operator*
+GaussField<scalar> operator*
 (
-    const faceGaussField<Type>& A,
+    const GaussField<scalar>& A,
     const scalar& s
 )
 {
@@ -67,106 +61,89 @@ faceGaussField<Type> operator*
 
 // * * * * * * * * * * * * * * scalar / field * * * * * * * * * * * * * * * //
 
-template<class Type>
-faceGaussField<Type> operator/
+GaussField<scalar> operator/
 (
     const scalar& s,
-    const faceGaussField<Type>& A
+    const GaussField<scalar>& A
 )
 {
-    faceGaussField<Type> result(A.cellID(), A.dgMesh());
-
-    for (label gp = 0; gp < A.nGauss(); ++gp)
-    {
-        result.plusValueAt(gp)  = s / A.plusValue(gp);
-        result.minusValueAt(gp) = s / A.minusValue(gp);
-    }
-
+    GaussField<scalar> result(A);
+    result.cellField() = s / A.cellField();
+    result.faceField() = s / A.faceField();
     return result;
 }
 
-template<class Type>
-faceGaussField<Type> operator/
+GaussField<scalar> operator/
 (
-    const faceGaussField<Type>& A,
+    const GaussField<scalar>& A,
     const scalar& s
 )
 {
-    faceGaussField<Type> result(A.cellID(), A.dgMesh());
-
-    for (label gp = 0; gp < A.nGauss(); ++gp)
-    {
-        result.plusValueAt(gp)  = A.plusValue(gp) / s;
-        result.minusValueAt(gp) = A.minusValue(gp) / s;
-    }
-
+    GaussField<scalar> result(A);
+    result.cellField() = A.cellField() / s;
+    result.faceField() = A.faceField() / s;
     return result;
 }
 
 
 // * * * * * * * * * * scalar +- field<scalar> only * * * * * * * * * * * * //
 
-faceGaussField<scalar> operator+
+GaussField<scalar> operator+
 (
     const scalar& s,
-    const faceGaussField<scalar>& A
+    const GaussField<scalar>& A
 )
 {
-    faceGaussField<scalar> result(A.cellID(), A.dgMesh());
-
-    for (label gp = 0; gp < A.nGauss(); ++gp)
-    {
-        result.plusValueAt(gp)  = s + A.plusValue(gp);
-        result.minusValueAt(gp) = s + A.minusValue(gp);
-    }
-
+    GaussField<scalar> result(A);
+    result.cellField() = s + A.cellField();
+    result.faceField() = s + A.faceField();
     return result;
 }
 
-faceGaussField<scalar> operator+
+GaussField<scalar> operator+
 (
-    const faceGaussField<scalar>& A,
+    const GaussField<scalar>& A,
     const scalar& s
 )
 {
     return s + A;
 }
 
-faceGaussField<scalar> operator-
+GaussField<scalar> operator-
 (
     const scalar& s,
-    const faceGaussField<scalar>& A
+    const GaussField<scalar>& A
 )
 {
-    faceGaussField<scalar> result(A.cellID(), A.dgMesh());
-
-    for (label gp = 0; gp < A.nGauss(); ++gp)
-    {
-        result.plusValueAt(gp)  = s - A.plusValue(gp);
-        result.minusValueAt(gp) = s - A.minusValue(gp);
-    }
-
+    GaussField<scalar> result(A);
+    result.cellField() = s - A.cellField();
+    result.faceField() = s - A.faceField();
     return result;
 }
 
-faceGaussField<scalar> operator-
+GaussField<scalar> operator-
 (
-    const faceGaussField<scalar>& A,
+    const GaussField<scalar>& A,
     const scalar& s
 )
 {
-    faceGaussField<scalar> result(A.cellID(), A.dgMesh());
-
-    for (label gp = 0; gp < A.nGauss(); ++gp)
-    {
-        result.plusValueAt(gp)  = A.plusValue(gp) - s;
-        result.minusValueAt(gp) = A.minusValue(gp) - s;
-    }
-
+    GaussField<scalar> result(A);
+    result.cellField() = A.cellField() - s;
+    result.faceField() = A.faceField() - s;
     return result;
 }
 
-} // End namespace dgGaussFieldMath
+GaussField<scalar> pow
+(
+    const GaussField<scalar>& A,
+    const scalar& s
+)
+{
+    GaussField<scalar> result(A);
+    result.cellField() = pow(A.cellField(), s);
+    result.faceField() = pow(A.faceField(), s);
+    return result;
+}
 } // End namespace Foam
 
 // ************************************************************************* //

@@ -93,27 +93,6 @@ Foam::dgGeomCell::~dgGeomCell()
 
 // * * * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * * //
 
-Foam::label Foam::dgGeomCell::nFaces() const
-{
-    return faceLabels_.size();
-}
-
-const labelList& Foam::dgGeomCell::faces() const
-{
-    return faceLabels_;
-}
-
-const Foam::pointField& Foam::dgGeomCell::points() const
-{
-    return cellPoints_;
-}
-
-
-Foam::label Foam::dgGeomCell::nPoints() const
-{
-    return cellPoints_.size();
-}
-
 // Return the centroid of the cell.
 // Note:
 // - mesh_.C() is a volVectorField (GeometricField)
@@ -203,6 +182,8 @@ void Foam::dgGeomCell::updateFaceInfo
     List<dgGeomFace*>& faces
 )
 {
+    neighborCellLabels_.resize(faceLabels_.size());
+
     forAll(faceLabels_, localID)
     {
         const label faceI = faceLabels_[localID];
@@ -257,12 +238,19 @@ void Foam::dgGeomCell::updateFaceInfo
             {
                 facePtr->setNeighborPos(dgFacePosition::NONE);
                 facePtr->setNeighborCellType(dgCellType::NONE);
+                neighborCellLabels_[localID] = -1;
+            }
+            else
+            {
+                const label neighbor = mesh_.faceNeighbour()[faceI];
+                neighborCellLabels_[localID] = neighbor;
             }
         }
         else
         {
             facePtr->setNeighborPos(pos);
             facePtr->setNeighborCellType(type_);
+            neighborCellLabels_[localID] = owner;
         }
     }
 }

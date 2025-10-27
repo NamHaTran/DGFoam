@@ -40,8 +40,9 @@ SourceFiles
 
 #include "label.H"
 #include "List.H"
-#include "dgGeomMesh.H"
-#include "dgGeomCell.H"
+#include "tensor.H"
+#include "symmTensor.H"
+#include "sphericalTensor.H"
 
 namespace Foam
 {
@@ -58,12 +59,6 @@ private:
     //- Cell ID
     label cellID_;
 
-    //- Reference to DG geometry mesh
-    dgGeomMesh& dgMesh_;
-
-    //- Reference to geometric cell
-    dgGeomCell& cell_;
-
     //- Number of degrees of freedom
     label nDof_;
 
@@ -72,61 +67,36 @@ private:
 
 public:
 
-    //- Construct from cell ID, mesh, and input Dof list
+    //- Default constructor (required for List<T>)
+    cellDof();
+
+    //- Copy constructor
+    cellDof(const cellDof<Type>& other);
+
+    //- Construct from cell ID, number of DoF, and input Dof list
     cellDof
     (
         const label cellID,
-        dgGeomMesh& dgMesh,
+        const label nDof,
         const UList<Type>& inputDof
     );
 
-    //- Return modifiable reference to Dof list
-    inline List<Type>& dof()
-    {
-        return dof_;
-    }
+    //- Assignment operator
+    cellDof<Type>& operator=(const cellDof<Type>& other);
 
-    //- Return const reference to Dof list
-    inline const List<Type>& dof() const
-    {
-        return dof_;
-    }
+    // Accessors
 
-    //- Return number of Dof
-    inline label nDof() const
-    {
-        return nDof_;
-    }
+    inline List<Type>& dof() { return dof_; }
 
-    //- Return cell ID
-    inline label cellID() const
-    {
-        return cellID_;
-    }
+    inline const List<Type>& dof() const { return dof_; }
 
-    //- Return reference to DG mesh
-    inline dgGeomMesh& mesh() const
-    {
-        return dgMesh_;
-    }
+    inline label nDof() const { return nDof_; }
 
-    //- Return reference to DG geometric cell
-    inline const dgGeomCell& cell() const
-    {
-        return cell_;
-    }
+    inline label cellID() const { return cellID_; }
 
-    //- Return non-const reference to Dof at given index
-    inline Type& operator[](const label i)
-    {
-        return dof_[i];
-    }
+    inline Type& operator[](const label i) { return dof_[i]; }
 
-    //- Return const reference to Dof at given index
-    inline const Type& operator[](const label i) const
-    {
-        return dof_[i];
-    }
+    inline const Type& operator[](const label i) const { return dof_[i]; }
 };
 
 } // End namespace Foam

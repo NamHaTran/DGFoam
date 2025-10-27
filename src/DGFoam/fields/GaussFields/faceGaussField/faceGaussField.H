@@ -71,7 +71,7 @@ private:
     label cellID_;
 
     //- Reference to the geometric cell
-    dgGeomCell& cell_;
+    const dgGeomCell& cell_;
 
     //- List of face IDs of the cell
     const labelList& facesID_;
@@ -89,7 +89,7 @@ private:
     List<dgGeomFace*> faces_;
 
     //- List of DOF pointers for current cell and neighbor cells
-    List<cellDof<Type>*> cellsDof_;
+    const List<const cellDof<Type>*> cellsDof_;
 
     //- Per-face offset in Gauss values array
     List<label> gaussOffset_;
@@ -108,24 +108,8 @@ public:
     //- Construct from list of cell DOFs (P cell + neighbor cells) and mesh
     faceGaussField
     (
-        const List<cellDof<Type>*>& cellsDof,
+        const List<const cellDof<Type>*>& cellsDof,
         const dgGeomMesh& mesh
-    );
-
-    //- Construct from list of cell DOFs, mesh, and OpenFOAM volField
-    faceGaussField
-    (
-        const List<cellDof<Type>*>& cellsDof,
-        const GeometricField<Type, fvPatchField, volMesh>& foamField,
-        const dgGeomMesh& mesh
-    );
-
-    //- Construct from list of cell DOFs, mesh, and initial values
-    faceGaussField
-    (
-        const List<cellDof<Type>*>& cellsDof,
-        const dgGeomMesh& mesh,
-        const Type& initialValues
     );
 
     //- Copy constructor
@@ -158,6 +142,9 @@ public:
     //- Interpolate values from DOF to Gauss points
     void interpolateFromDof();
 
+    // Debug printing
+    void print() const;
+
     // Accessors
 
         //- Return cell ID
@@ -189,6 +176,14 @@ public:
         {
             return minusValues_[gaussOffset_[faceI] + gpI];
         }
+
+        // Operators
+
+            //- Copy assignment operator
+            faceGaussField<Type>& operator=(const faceGaussField<Type>& other);
+
+            //- Assign a constant value to all Gauss points
+            faceGaussField<Type>& operator=(const Type& value);
 };
 
 } // End namespace Foam

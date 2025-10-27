@@ -36,79 +36,152 @@ Description
 
 namespace Foam
 {
-namespace dgGaussFieldMath
-{
-
+    
 // * * * * * * * * * * * * * * scalar * field * * * * * * * * * * * * * * * //
 
-//- Multiply scalar with faceGaussField
-template<class Type>
-faceGaussField<Type> operator*
+inline faceGaussField<scalar> operator*
 (
     const scalar& s,
-    const faceGaussField<Type>& A
-);
+    const faceGaussField<scalar>& A
+)
+{
+    faceGaussField<scalar> result(A.cellID(), A.dgMesh());
 
-//- Multiply faceGaussField with scalar
-template<class Type>
-faceGaussField<Type> operator*
+    for (label gp = 0; gp < A.nGauss(); ++gp)
+    {
+        result.plusValueAt(gp)  = s * A.plusValue(gp);
+        result.minusValueAt(gp) = s * A.minusValue(gp);
+    }
+
+    return result;
+}
+
+inline faceGaussField<scalar> operator*
 (
-    const faceGaussField<Type>& A,
+    const faceGaussField<scalar>& A,
     const scalar& s
-);
+)
+{
+    return s * A;
+}
 
 
 // * * * * * * * * * * * * * * scalar / field * * * * * * * * * * * * * * * //
 
-//- Divide scalar by faceGaussField
-template<class Type>
-faceGaussField<Type> operator/
+inline faceGaussField<scalar> operator/
 (
     const scalar& s,
-    const faceGaussField<Type>& A
-);
+    const faceGaussField<scalar>& A
+)
+{
+    faceGaussField<scalar> result(A.cellID(), A.dgMesh());
 
-//- Divide faceGaussField by scalar
-template<class Type>
-faceGaussField<Type> operator/
+    for (label gp = 0; gp < A.nGauss(); ++gp)
+    {
+        result.plusValueAt(gp)  = s / A.plusValue(gp);
+        result.minusValueAt(gp) = s / A.minusValue(gp);
+    }
+
+    return result;
+}
+
+inline faceGaussField<scalar> operator/
 (
-    const faceGaussField<Type>& A,
+    const faceGaussField<scalar>& A,
     const scalar& s
-);
+)
+{
+    faceGaussField<scalar> result(A.cellID(), A.dgMesh());
+
+    for (label gp = 0; gp < A.nGauss(); ++gp)
+    {
+        result.plusValueAt(gp)  = A.plusValue(gp) / s;
+        result.minusValueAt(gp) = A.minusValue(gp) / s;
+    }
+
+    return result;
+}
 
 
 // * * * * * * * * * * scalar +- field<scalar> only * * * * * * * * * * * * //
 
-//- Add scalar to faceGaussField<scalar>
-faceGaussField<scalar> operator+
+inline faceGaussField<scalar> operator+
 (
     const scalar& s,
     const faceGaussField<scalar>& A
-);
+)
+{
+    faceGaussField<scalar> result(A.cellID(), A.dgMesh());
 
-//- Add faceGaussField<scalar> to scalar
-faceGaussField<scalar> operator+
+    for (label gp = 0; gp < A.nGauss(); ++gp)
+    {
+        result.plusValueAt(gp)  = s + A.plusValue(gp);
+        result.minusValueAt(gp) = s + A.minusValue(gp);
+    }
+
+    return result;
+}
+
+inline faceGaussField<scalar> operator+
 (
     const faceGaussField<scalar>& A,
     const scalar& s
-);
+)
+{
+    return s + A;
+}
 
-//- Subtract faceGaussField<scalar> from scalar
-faceGaussField<scalar> operator-
+inline faceGaussField<scalar> operator-
 (
     const scalar& s,
     const faceGaussField<scalar>& A
-);
+)
+{
+    faceGaussField<scalar> result(A.cellID(), A.dgMesh());
 
-//- Subtract scalar from faceGaussField<scalar>
-faceGaussField<scalar> operator-
+    for (label gp = 0; gp < A.nGauss(); ++gp)
+    {
+        result.plusValueAt(gp)  = s - A.plusValue(gp);
+        result.minusValueAt(gp) = s - A.minusValue(gp);
+    }
+
+    return result;
+}
+
+inline faceGaussField<scalar> operator-
 (
     const faceGaussField<scalar>& A,
     const scalar& s
-);
+)
+{
+    faceGaussField<scalar> result(A.cellID(), A.dgMesh());
 
+    for (label gp = 0; gp < A.nGauss(); ++gp)
+    {
+        result.plusValueAt(gp)  = A.plusValue(gp) - s;
+        result.minusValueAt(gp) = A.minusValue(gp) - s;
+    }
 
-} // End namespace dgGaussFieldMath
+    return result;
+}
+
+inline faceGaussField<scalar> pow
+(
+    const faceGaussField<scalar>& A,
+    const scalar& s
+)
+{
+    faceGaussField<scalar> result(A.cellID(), A.dgMesh());
+
+    for (label gp = 0; gp < A.nGauss(); ++gp)
+    {
+        result.plusValueAt(gp)  = std::pow(A.plusValue(gp),s);
+        result.minusValueAt(gp) = std::pow(A.minusValue(gp),s);
+    }
+
+    return result;
+}
+
 } // End namespace Foam
 
 #endif

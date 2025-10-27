@@ -26,58 +26,77 @@ License
 
 \*---------------------------------------------------------------------------*/
 
-#ifndef Foam_cellDof_C
-#define Foam_cellDof_C
-
 #include "cellDof.H"
 
 namespace Foam
 {
 
+// * * * * * * * * * * * * * * * * Constructors  * * * * * * * * * * * * * * //
+
 template<class Type>
-Foam::cellDof<Type>::cellDof
+cellDof<Type>::cellDof()
+:
+    cellID_(-1),
+    nDof_(0),
+    dof_()
+{}
+
+
+template<class Type>
+cellDof<Type>::cellDof(const cellDof<Type>& other)
+:
+    cellID_(other.cellID_),
+    nDof_(other.nDof_),
+    dof_(other.dof_)
+{}
+
+
+template<class Type>
+cellDof<Type>::cellDof
 (
     const label cellID,
-    dgGeomMesh& dgMesh,
+    const label nDof,
     const UList<Type>& inputDof
 )
 :
     cellID_(cellID),
-    dgMesh_(dgMesh),                    // Store reference to mesh
-    cell_(*dgMesh.cells()[cellID]),     // Reference to geometric cell
-    nDof_(0)
+    nDof_(nDof),
+    dof_(nDof, pTraits<Type>::zero)
 {
-    // Get number of Dof from basis size
-    nDof_ = cell_.basis().size();
-
-    // Resize internal Dof list
-    dof_.setSize(nDof_);
-
     const label inputSize = inputDof.size();
     const label minSize = min(inputSize, nDof_);
 
-    // Copy values from inputDof to internal list
     for (label i = 0; i < minSize; ++i)
     {
         dof_[i] = inputDof[i];
     }
-
-    // Fill remaining values with zero (default constructor)
-    for (label i = minSize; i < nDof_; ++i)
-    {
-        dof_[i] = pTraits<Type>::zero;
-    }
 }
 
-// * * * * * * * * * * * * * * Template instantiation * * * * * * * * * * * * //
-template class Foam::cellDof<scalar>;
-template class Foam::cellDof<vector>;
-template class Foam::cellDof<tensor>;
-template class Foam::cellDof<symmTensor>;
-template class Foam::cellDof<sphericalTensor>;
+
+// * * * * * * * * * * * * * * * * Assignment * * * * * * * * * * * * * * * * //
+
+template<class Type>
+cellDof<Type>& cellDof<Type>::operator=(const cellDof<Type>& other)
+{
+    if (this != &other)
+    {
+        cellID_ = other.cellID_;
+        nDof_   = other.nDof_;
+        dof_    = other.dof_;
+    }
+
+    return *this;
+}
+
+
+// * * * * * * * * * * * * * * * * Instantiation * * * * * * * * * * * * * * //
+
+template class cellDof<scalar>;
+template class cellDof<vector>;
+template class cellDof<tensor>;
+template class cellDof<symmTensor>;
+template class cellDof<sphericalTensor>;
 
 } // End namespace Foam
-
-#endif
 
 // ************************************************************************* //

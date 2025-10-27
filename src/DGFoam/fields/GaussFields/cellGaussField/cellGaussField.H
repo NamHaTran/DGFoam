@@ -76,7 +76,7 @@ private:
     label nDof_;
 
     //- DOF values in this cell
-    List<Type> dof_;
+    const cellDof<Type>* dof_;
 
     //- Field values at Gauss points
     List<Type> values_;
@@ -86,16 +86,12 @@ private:
 
 public:
 
-    //- Constructor from cell ID and mesh
+    //- Constructor from DOF object
     cellGaussField
     (
-        const label cellID, 
         const dgGeomMesh& dgMesh,
-        const List<Type>& values
+        const cellDof<Type>* dof
     );
-
-    //- Constructor from DOF object
-    cellGaussField(const cellDof<Type>& dof);
 
     //- Copy constructor
     cellGaussField(const cellGaussField<Type>& other);

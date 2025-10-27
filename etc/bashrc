@@ -24,10 +24,10 @@
 #       - $DG_THIRD_PARTY   : third-party sources (e.g., Boost, etc.)
 #
 #     Libraries will be installed in:
-#       - $FOAM_USER_LIBBIN
-#       - $FOAM_USER_APPBIN
+#       - $DG_LIBBIN
+#       - $DG_APPBIN
 #
-#     LD_LIBRARY_PATH is updated to include $FOAM_USER_LIBBIN.
+#     LD_LIBRARY_PATH is updated to include $DG_LIBBIN.
 #
 # Note
 #     You can source this file via your ~/.bashrc:
@@ -40,16 +40,41 @@
 DG_BASHRC_PATH="${BASH_SOURCE[0]:-${(%):-%x}}"
 export DG_ROOT="$(cd "$(dirname "$DG_BASHRC_PATH")/.." && pwd -P)"
 
+#-------------------------------------------------------------------------------
+# Compilation mode (similar to WM_COMPILE_OPTION in OpenFOAM)
+#   Options:
+#     Opt   - Optimized (release build, default)
+#     Debug - Debug build with -g and -O0
+#     Prof  - Profile build
+#-------------------------------------------------------------------------------
+export DG_COMPILE_OPTION=Debug
+
+#-------------------------------------------------------------------------------
 # DGFS paths
+#-------------------------------------------------------------------------------
 export DG_SRC=$DG_ROOT/src
 export DG_APP=$DG_ROOT/applications
 export DG_THIRD_PARTY=$DG_ROOT/thirdPartySources
 
-# Output directories (reuse OpenFOAM's platform settings)
-export FOAM_USER_LIBBIN=$DG_ROOT/platforms/$WM_OPTIONS/lib
-export FOAM_USER_APPBIN=$DG_ROOT/platforms/$WM_OPTIONS/bin
+#-------------------------------------------------------------------------------
+# Output directories (based on compile option)
+#-------------------------------------------------------------------------------
+export DG_LIBBIN=$DG_ROOT/platforms/$WM_OPTIONS/$DG_COMPILE_OPTION/lib
+export DG_APPBIN=$DG_ROOT/platforms/$WM_OPTIONS/$DG_COMPILE_OPTION/bin
 
-# Append to library path
-export LD_LIBRARY_PATH=$FOAM_USER_LIBBIN:$LD_LIBRARY_PATH
+#-------------------------------------------------------------------------------
+# Append to library and executable paths
+#-------------------------------------------------------------------------------
+export LD_LIBRARY_PATH=$DG_LIBBIN:$LD_LIBRARY_PATH
+export PATH=$DG_APPBIN:$PATH
 
-
+#-------------------------------------------------------------------------------
+# Display current environment
+#-------------------------------------------------------------------------------
+echo "-----------------------------------------------"
+echo "DGFoam Environment Setup"
+echo "  DG_ROOT          : $DG_ROOT"
+echo "  DG_COMPILE_OPTION: $DG_COMPILE_OPTION"
+echo "  DG_LIBBIN        : $DG_LIBBIN"
+echo "  DG_APPBIN        : $DG_APPBIN"
+echo "-----------------------------------------------"

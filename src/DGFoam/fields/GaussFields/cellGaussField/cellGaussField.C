@@ -35,46 +35,20 @@ namespace Foam
 
 // * * * * * * * * * * * * * * * * Constructors  * * * * * * * * * * * * * * //
 
-template<class Type>
-cellGaussField<Type>::cellGaussField
-(
-    const label cellID,
-    const dgGeomMesh& dgMesh,
-    const List<Type>& values
-)
-:
-    cellID_(cellID),
-    dgMesh_(dgMesh),
-    cell_(*dgMesh.cells()[cellID]),
-    nGauss_(cell_.gaussPoints().size()),
-    nDof_(0),
-    dof_(0),
-    values_(values),
-    ctxPtr_(nullptr)
-{
-    if (values_.size() != nGauss_)
-    {
-        FatalErrorInFunction
-            << "Size of input values (" << values_.size()
-            << ") does not match number of Gauss points (" << nGauss_ << ")"
-            << abort(FatalError);
-    }
-}
-
-
 // Construct from DOF object
 template<class Type>
 cellGaussField<Type>::cellGaussField
 (
-    const cellDof<Type>& dof
+    const dgGeomMesh& dgMesh,
+    const cellDof<Type>* dof
 )
 :
-    cellID_(dof.cellID()),
-    dgMesh_(dof.mesh()),
-    cell_(dof.cell()),
+    cellID_(dof->cellID()),
+    dgMesh_(dgMesh),
+    cell_(*dgMesh.cells()[cellID_]),
     nGauss_(cell_.gaussPoints().size()),
-    nDof_(dof.nDof()),
-    dof_(dof.dof()),
+    nDof_(dof->nDof()),
+    dof_(dof),
     values_(nGauss_),
     ctxPtr_(nullptr)
 {}
@@ -112,7 +86,7 @@ Foam::cellGaussField<Type>::cellGaussField
     cell_(*dgMesh.cells()[cellID]),
     nGauss_(cell_.gaussPoints().size()),
     nDof_(0),
-    dof_(0),
+    dof_(nullptr),
     values_(nGauss_, initVal),
     ctxPtr_(nullptr)
 {}
@@ -131,7 +105,7 @@ Foam::cellGaussField<Type>::cellGaussField
     cell_(*dgMesh.cells()[cellID]),
     nGauss_(cell_.gaussPoints().size()),
     nDof_(0),
-    dof_(0),
+    dof_(nullptr),
     values_(nGauss_),
     ctxPtr_(nullptr)
 {}
@@ -163,13 +137,12 @@ void Foam::cellGaussField<Type>::interpolateFromDof()
 
         for (label k = 0; k < nDof_; ++k)
         {
-            val += dof_[k] * b[gp][k];
+            val += dof_->dof()[k] * b[gp][k];
         }
 
         values_[gp] = val;
     }
 }
-
 
 template<class Type>
 Foam::cellGaussField<Type>& Foam::cellGaussField<Type>::operator=
@@ -190,13 +163,15 @@ Foam::cellGaussField<Type>& Foam::cellGaussField<Type>::operator=
             << abort(FatalError);
     }
 
+    cellID_ = other.cellID_;
+    nGauss_ = other.nGauss_;
+    nDof_ = other.nDof_;
+    // dof_(other.dof_), not copying dof pointer
     values_ = other.values_;
-    dof_    = other.dof_;
-    nDof_   = other.nDof_;
+    ctxPtr_ = other.ctxPtr_;
 
     return *this;
 }
-
 
 template<class Type>
 Foam::cellGaussField<Type>& Foam::cellGaussField<Type>::operator=
@@ -211,7 +186,6 @@ Foam::cellGaussField<Type>& Foam::cellGaussField<Type>::operator=
 
     return *this;
 }
-
 
 // * * * * * * * * * * * * * * Template instantiation * * * * * * * * * * * * //
 template class Foam::cellGaussField<scalar>;

@@ -155,6 +155,12 @@ public:
             const label faceID,
             const label patchID
         ) const;
+
+        //- Return reference to fvMesh
+        inline const fvMesh& getFvMesh() const
+        {
+            return mesh_;
+        }
 };
 
 } // End namespace Foam
