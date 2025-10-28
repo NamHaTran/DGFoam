@@ -39,6 +39,9 @@ SourceFiles
 #define Foam_dgCellGaussFieldLiteralScalarMath_H
 
 #include "cellGaussField.H"
+#include "tensor.H"
+#include "symmTensor.H"
+#include "sphericalTensor.H"
 #include <cmath>
 
 namespace Foam
@@ -77,6 +80,133 @@ inline cellGaussField<scalar> operator*
     return result;
 }
 
+inline cellGaussField<vector> operator*
+(
+    const scalar& a,
+    const cellGaussField<vector>& A
+)
+{
+    cellGaussField<vector> result(A.cellID(), A.dgMesh());
+
+    for (label i = 0; i < A.size(); ++i)
+    {
+        result[i] = a * A[i];
+    }
+
+    return result;
+}
+
+inline cellGaussField<vector> operator*
+(
+    const cellGaussField<vector>& A,
+    const scalar& a
+)
+{
+    cellGaussField<vector> result(A.cellID(), A.dgMesh());
+
+    for (label i = 0; i < A.size(); ++i)
+    {
+        result[i] = a * A[i];
+    }
+
+    return result;
+}
+
+inline cellGaussField<tensor> operator*
+(
+    const scalar& a,
+    const cellGaussField<tensor>& A
+)
+{
+    cellGaussField<tensor> result(A.cellID(), A.dgMesh());
+
+    for (label i = 0; i < A.size(); ++i)
+    {
+        result[i] = a * A[i];
+    }
+
+    return result;
+}
+
+inline cellGaussField<tensor> operator*
+(
+    const cellGaussField<tensor>& A,
+    const scalar& a
+)
+{
+    cellGaussField<tensor> result(A.cellID(), A.dgMesh());
+
+    for (label i = 0; i < A.size(); ++i)
+    {
+        result[i] = a * A[i];
+    }
+
+    return result;
+}
+
+inline cellGaussField<symmTensor> operator*
+(
+    const scalar& a,
+    const cellGaussField<symmTensor>& A
+)
+{
+    cellGaussField<symmTensor> result(A.cellID(), A.dgMesh());
+
+    for (label i = 0; i < A.size(); ++i)
+    {
+        result[i] = a * A[i];
+    }
+
+    return result;
+}
+
+inline cellGaussField<symmTensor> operator*
+(
+    const cellGaussField<symmTensor>& A,
+    const scalar& a
+)
+{
+    cellGaussField<symmTensor> result(A.cellID(), A.dgMesh());
+
+    for (label i = 0; i < A.size(); ++i)
+    {
+        result[i] = a * A[i];
+    }
+
+    return result;
+}
+
+inline cellGaussField<sphericalTensor> operator*
+(
+    const scalar& a,
+    const cellGaussField<sphericalTensor>& A
+)
+{
+    cellGaussField<sphericalTensor> result(A.cellID(), A.dgMesh());
+
+    for (label i = 0; i < A.size(); ++i)
+    {
+        result[i] = a * A[i];
+    }
+
+    return result;
+}
+
+inline cellGaussField<sphericalTensor> operator*
+(
+    const cellGaussField<sphericalTensor>& A,
+    const scalar& a
+)
+{
+    cellGaussField<sphericalTensor> result(A.cellID(), A.dgMesh());
+
+    for (label i = 0; i < A.size(); ++i)
+    {
+        result[i] = a * A[i];
+    }
+
+    return result;
+}
 
 // * * * * * * * * * * * Scalar / Field * * * * * * * * * * * * * * * //
 
@@ -112,6 +242,133 @@ inline cellGaussField<scalar> operator/
     return result;
 }
 
+inline cellGaussField<vector> operator/
+(
+    const scalar& a,
+    const cellGaussField<vector>& A
+)
+{
+    cellGaussField<vector> result(A.cellID(), A.dgMesh());
+    
+    for (label i = 0; i < A.size(); ++i)
+    {
+        result[i] = a / A[i];
+    }
+
+    return result;
+}
+
+inline cellGaussField<vector> operator/
+(
+    const cellGaussField<vector>& A,
+    const scalar& a
+)
+{
+    cellGaussField<vector> result(A.cellID(), A.dgMesh());
+    
+    for (label i = 0; i < A.size(); ++i)
+    {
+        result[i] = A[i] / a;
+    }
+
+    return result;
+}
+
+inline cellGaussField<tensor> operator/
+(
+    const scalar& a,
+    const cellGaussField<tensor>& A
+)
+{
+    cellGaussField<tensor> result(A.cellID(), A.dgMesh());
+    
+    for (label i = 0; i < A.size(); ++i)
+    {
+        result[i] = a / A[i];
+    }
+
+    return result;
+}
+
+inline cellGaussField<tensor> operator/
+(
+    const cellGaussField<tensor>& A,
+    const scalar& a
+)
+{
+    cellGaussField<tensor> result(A.cellID(), A.dgMesh());
+    
+    for (label i = 0; i < A.size(); ++i)
+    {
+        result[i] = A[i] / a;
+    }
+
+    return result;
+}
+
+inline cellGaussField<symmTensor> operator/
+(
+    const scalar& a,
+    const cellGaussField<symmTensor>& A
+)
+{
+    cellGaussField<symmTensor> result(A.cellID(), A.dgMesh());
+    
+    for (label i = 0; i < A.size(); ++i)
+    {
+        result[i] = a / A[i];
+    }
+
+    return result;
+}
+
+inline cellGaussField<symmTensor> operator/
+(
+    const cellGaussField<symmTensor>& A,
+    const scalar& a
+)
+{
+    cellGaussField<symmTensor> result(A.cellID(), A.dgMesh());
+    
+    for (label i = 0; i < A.size(); ++i)
+    {
+        result[i] = A[i] / a;
+    }
+
+    return result;
+}
+
+inline cellGaussField<sphericalTensor> operator/
+(
+    const scalar& a,
+    const cellGaussField<sphericalTensor>& A
+)
+{
+    cellGaussField<sphericalTensor> result(A.cellID(), A.dgMesh());
+    
+    for (label i = 0; i < A.size(); ++i)
+    {
+        result[i] = a / A[i];
+    }
+
+    return result;
+}
+
+inline cellGaussField<sphericalTensor> operator/
+(
+    const cellGaussField<sphericalTensor>& A,
+    const scalar& a
+)
+{
+    cellGaussField<sphericalTensor> result(A.cellID(), A.dgMesh());
+    
+    for (label i = 0; i < A.size(); ++i)
+    {
+        result[i] = A[i] / a;
+    }
+
+    return result;
+}
 
 // * * * * * * * * * Scalar + Field<scalar> * * * * * * * * * * * * * //
 

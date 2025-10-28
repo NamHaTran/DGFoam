@@ -37,6 +37,9 @@ Description
 #include "GaussField.H"
 #include "dgFaceGaussFieldLiteralScalarMath.H"
 #include "dgCellGaussFieldLiteralScalarMath.H"
+#include "tensor.H"
+#include "symmTensor.H"
+#include "sphericalTensor.H"
 
 namespace Foam
 {
@@ -63,7 +66,89 @@ inline GaussField<scalar> operator*
     return s * A;
 }
 
+inline GaussField<vector> operator*
+(
+    const scalar& s,
+    const GaussField<vector>& A
+)
+{
+    GaussField<vector> result(A);
+    result.cellField() = s * A.cellField();
+    result.faceField() = s * A.faceField();
+    return result;
+}
 
+inline GaussField<vector> operator*
+(
+    const GaussField<vector>& A,
+    const scalar& s
+)
+{
+    return s * A;
+}
+
+inline GaussField<tensor> operator*
+(
+    const scalar& s,
+    const GaussField<tensor>& A
+)
+{
+    GaussField<tensor> result(A);
+    result.cellField() = s * A.cellField();
+    result.faceField() = s * A.faceField();
+    return result;
+}
+
+inline GaussField<tensor> operator*
+(
+    const GaussField<tensor>& A,
+    const scalar& s
+)
+{
+    return s * A;
+}
+
+inline GaussField<symmTensor> operator*
+(
+    const scalar& s,
+    const GaussField<symmTensor>& A
+)
+{
+    GaussField<symmTensor> result(A);
+    result.cellField() = s * A.cellField();
+    result.faceField() = s * A.faceField();
+    return result;
+}
+
+inline GaussField<symmTensor> operator*
+(
+    const GaussField<symmTensor>& A,
+    const scalar& s
+)
+{
+    return s * A;
+}
+
+inline GaussField<sphericalTensor> operator*
+(
+    const scalar& s,
+    const GaussField<sphericalTensor>& A
+)
+{
+    GaussField<sphericalTensor> result(A);
+    result.cellField() = s * A.cellField();
+    result.faceField() = s * A.faceField();
+    return result;
+}  
+
+inline GaussField<sphericalTensor> operator*
+(
+    const GaussField<sphericalTensor>& A,
+    const scalar& s
+)
+{
+    return s * A;
+}
 // * * * * * * * * * * * * * * scalar / field * * * * * * * * * * * * * * * //
 
 inline GaussField<scalar> operator/
@@ -90,6 +175,101 @@ inline GaussField<scalar> operator/
     return result;
 }
 
+inline GaussField<vector> operator/
+(
+    const scalar& s,
+    const GaussField<vector>& A
+)
+{
+    GaussField<vector> result(A);
+    result.cellField() = s / A.cellField();
+    result.faceField() = s / A.faceField();
+    return result;
+}
+
+inline GaussField<vector> operator/
+(
+    const GaussField<vector>& A,
+    const scalar& s
+)
+{
+    GaussField<vector> result(A);
+    result.cellField() = A.cellField() / s;
+    result.faceField() = A.faceField() / s;
+    return result;
+}
+
+inline GaussField<tensor> operator/
+(
+    const scalar& s,
+    const GaussField<tensor>& A
+)
+{
+    GaussField<tensor> result(A);
+    result.cellField() = s / A.cellField();
+    result.faceField() = s / A.faceField();
+    return result;
+}
+
+inline GaussField<tensor> operator/
+(
+    const GaussField<tensor>& A,
+    const scalar& s
+)
+{
+    GaussField<tensor> result(A);
+    result.cellField() = A.cellField() / s;
+    result.faceField() = A.faceField() / s;
+    return result;
+}
+
+inline GaussField<symmTensor> operator/
+(
+    const scalar& s,
+    const GaussField<symmTensor>& A
+)
+{
+    GaussField<symmTensor> result(A);
+    result.cellField() = s / A.cellField();
+    result.faceField() = s / A.faceField();
+    return result;
+}
+
+inline GaussField<symmTensor> operator/
+(
+    const GaussField<symmTensor>& A,
+    const scalar& s
+)
+{
+    GaussField<symmTensor> result(A);
+    result.cellField() = A.cellField() / s;
+    result.faceField() = A.faceField() / s;
+    return result;
+}
+
+inline GaussField<sphericalTensor> operator/
+(
+    const scalar& s,
+    const GaussField<sphericalTensor>& A
+)
+{
+    GaussField<sphericalTensor> result(A);
+    result.cellField() = s / A.cellField();
+    result.faceField() = s / A.faceField();
+    return result;
+}
+
+inline GaussField<sphericalTensor> operator/
+(
+    const GaussField<sphericalTensor>& A,
+    const scalar& s
+)
+{
+    GaussField<sphericalTensor> result(A);
+    result.cellField() = A.cellField() / s;
+    result.faceField() = A.faceField() / s;
+    return result;
+}
 
 // * * * * * * * * * * scalar +- field<scalar> only * * * * * * * * * * * * //
 

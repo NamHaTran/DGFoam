@@ -46,129 +46,236 @@ Description
 
 namespace Foam
 {
-namespace dgGaussFieldMath
-{
-
 // * * * * * * * * * * Scalar - Scalar * * * * * * * * * * //
-
-//- Add two faceGaussField<scalar>
 faceGaussField<scalar> operator+
 (
     const faceGaussField<scalar>& A,
     const faceGaussField<scalar>& B
-);
+)
+{
+    faceGaussField<scalar> result(A.cellID(), A.dgMesh());
+    for (label gp = 0; gp < A.nGauss(); ++gp)
+    {
+        result.plusValueAt(gp)  = A.plusValue(gp) + B.plusValue(gp);
+        result.minusValueAt(gp) = A.minusValue(gp) + B.minusValue(gp);
+    }
+    return result;
+}
 
-//- Subtract two faceGaussField<scalar>
 faceGaussField<scalar> operator-
 (
     const faceGaussField<scalar>& A,
     const faceGaussField<scalar>& B
-);
+)
+{
+    faceGaussField<scalar> result(A.cellID(), A.dgMesh());
+    for (label gp = 0; gp < A.nGauss(); ++gp)
+    {
+        result.plusValueAt(gp)  = A.plusValue(gp) - B.plusValue(gp);
+        result.minusValueAt(gp) = A.minusValue(gp) - B.minusValue(gp);
+    }
+    return result;
+}
 
-//- Multiply two faceGaussField<scalar>
+
 faceGaussField<scalar> operator*
 (
     const faceGaussField<scalar>& A,
     const faceGaussField<scalar>& B
-);
+)
+{
+    faceGaussField<scalar> result(A.cellID(), A.dgMesh());
+    for (label gp = 0; gp < A.nGauss(); ++gp)
+    {
+        result.plusValueAt(gp)  = A.plusValue(gp) * B.plusValue(gp);
+        result.minusValueAt(gp) = A.minusValue(gp) * B.minusValue(gp);
+    }
+    return result;
+}
 
-//- Divide two faceGaussField<scalar>
 faceGaussField<scalar> operator/
 (
     const faceGaussField<scalar>& A,
     const faceGaussField<scalar>& B
-);
+)
+{
+    faceGaussField<scalar> result(A.cellID(), A.dgMesh());
+    for (label gp = 0; gp < A.nGauss(); ++gp)
+    {
+        result.plusValueAt(gp)  = A.plusValue(gp) / B.plusValue(gp);
+        result.minusValueAt(gp) = A.minusValue(gp) / B.minusValue(gp);
+    }
+    return result;
+}
 
 
 // * * * * * * * * * * Scalar - Vector * * * * * * * * * * //
 
-//- Multiply faceGaussField<scalar> and faceGaussField<vector>
 faceGaussField<vector> operator*
 (
     const faceGaussField<scalar>& A,
     const faceGaussField<vector>& B
-);
+)
+{
+    faceGaussField<vector> result(B.cellID(), B.dgMesh());
+    for (label gp = 0; gp < A.nGauss(); ++gp)
+    {
+        result.plusValueAt(gp)  = A.plusValue(gp) * B.plusValue(gp);
+        result.minusValueAt(gp) = A.minusValue(gp) * B.minusValue(gp);
+    }
+    return result;
+}
 
-//- Multiply faceGaussField<vector> and faceGaussField<scalar>
 faceGaussField<vector> operator*
 (
     const faceGaussField<vector>& A,
     const faceGaussField<scalar>& B
-);
+)
+{
+    return B * A;
+}
+
+faceGaussField<vector> operator/
+(
+    const faceGaussField<vector>& A,
+    const faceGaussField<scalar>& B
+)
+{
+    faceGaussField<vector> result(A.cellID(), A.dgMesh());
+    for (label gp = 0; gp < A.nGauss(); ++gp)
+    {
+        result.plusValueAt(gp)  = A.plusValue(gp) / B.plusValue(gp);
+        result.minusValueAt(gp) = A.minusValue(gp) / B.minusValue(gp);
+    }
+    return result;
+}
 
 
 // * * * * * * * * * * Scalar - Tensor * * * * * * * * * * //
 
-//- Multiply faceGaussField<scalar> and faceGaussField<tensor>
 faceGaussField<tensor> operator*
 (
     const faceGaussField<scalar>& A,
     const faceGaussField<tensor>& B
-);
+)
+{
+    faceGaussField<tensor> result(B.cellID(), B.dgMesh());
+    for (label gp = 0; gp < A.nGauss(); ++gp)
+    {
+        result.plusValueAt(gp)  = A.plusValue(gp) * B.plusValue(gp);
+        result.minusValueAt(gp) = A.minusValue(gp) * B.minusValue(gp);
+    }
+    return result;
+}
 
-//- Multiply faceGaussField<tensor> and faceGaussField<scalar>
 faceGaussField<tensor> operator*
 (
     const faceGaussField<tensor>& A,
     const faceGaussField<scalar>& B
-);
+)
+{
+    return B * A;
+}
 
-//- Divide faceGaussField<tensor> by faceGaussField<scalar>
 faceGaussField<tensor> operator/
 (
     const faceGaussField<tensor>& A,
     const faceGaussField<scalar>& B
-);
+)
+{
+    faceGaussField<tensor> result(A.cellID(), A.dgMesh());
+    for (label gp = 0; gp < A.nGauss(); ++gp)
+    {
+        result.plusValueAt(gp)  = A.plusValue(gp) / B.plusValue(gp);
+        result.minusValueAt(gp) = A.minusValue(gp) / B.minusValue(gp);
+    }
+    return result;
+}
 
 
-// * * * * * * * * * * Scalar - symmTensor * * * * * * * * * * //
+// * * * * * * * * * * Scalar - symmTensor * * * * * * * * //
 
-//- Multiply faceGaussField<scalar> and faceGaussField<symmTensor>
 faceGaussField<symmTensor> operator*
 (
     const faceGaussField<scalar>& A,
     const faceGaussField<symmTensor>& B
-);
+)
+{
+    faceGaussField<symmTensor> result(B.cellID(), B.dgMesh());
+    for (label gp = 0; gp < A.nGauss(); ++gp)
+    {
+        result.plusValueAt(gp)  = A.plusValue(gp) * B.plusValue(gp);
+        result.minusValueAt(gp) = A.minusValue(gp) * B.minusValue(gp);
+    }
+    return result;
+}
 
-//- Multiply faceGaussField<symmTensor> and faceGaussField<scalar>
 faceGaussField<symmTensor> operator*
 (
     const faceGaussField<symmTensor>& A,
     const faceGaussField<scalar>& B
-);
+)
+{
+    return B * A;
+}
 
-//- Divide faceGaussField<symmTensor> by faceGaussField<scalar>
 faceGaussField<symmTensor> operator/
 (
     const faceGaussField<symmTensor>& A,
     const faceGaussField<scalar>& B
-);
+)
+{
+    faceGaussField<symmTensor> result(A.cellID(), A.dgMesh());
+    for (label gp = 0; gp < A.nGauss(); ++gp)
+    {
+        result.plusValueAt(gp)  = A.plusValue(gp) / B.plusValue(gp);
+        result.minusValueAt(gp) = A.minusValue(gp) / B.minusValue(gp);
+    }
+    return result;
+}
 
 
-// * * * * * * * * * * Scalar - sphericalTensor * * * * * * * * * * //
+// * * * * * * * * * * Scalar - sphericalTensor * * * * * * * * //
 
-//- Multiply faceGaussField<scalar> and faceGaussField<sphericalTensor>
 faceGaussField<sphericalTensor> operator*
 (
     const faceGaussField<scalar>& A,
     const faceGaussField<sphericalTensor>& B
-);
+)
+{
+    faceGaussField<sphericalTensor> result(A.cellID(), A.dgMesh());
+    for (label gp = 0; gp < A.nGauss(); ++gp)
+    {
+        result.plusValueAt(gp)  = A.plusValue(gp) * B.plusValue(gp);
+        result.minusValueAt(gp) = A.minusValue(gp) * B.minusValue(gp);
+    }
+    return result;
+}
 
-//- Multiply faceGaussField<sphericalTensor> and faceGaussField<scalar>
 faceGaussField<sphericalTensor> operator*
 (
     const faceGaussField<sphericalTensor>& A,
     const faceGaussField<scalar>& B
-);
+)
+{
+    return B * A;
+}
 
-//- Divide faceGaussField<sphericalTensor> by faceGaussField<scalar>
 faceGaussField<sphericalTensor> operator/
 (
     const faceGaussField<sphericalTensor>& A,
     const faceGaussField<scalar>& B
-);
+)
+{
+    faceGaussField<sphericalTensor> result(A.cellID(), A.dgMesh());
+    for (label gp = 0; gp < A.nGauss(); ++gp)
+    {
+        result.plusValueAt(gp)  = A.plusValue(gp) / B.plusValue(gp);
+        result.minusValueAt(gp) = A.minusValue(gp) / B.minusValue(gp);
+    }
+    return result;
+}
 
-} // End namespace dgGaussFieldMath
 } // End namespace Foam
 
 #endif
