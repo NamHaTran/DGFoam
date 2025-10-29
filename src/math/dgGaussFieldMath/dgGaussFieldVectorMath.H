@@ -25,7 +25,7 @@ License
     along with OpenFOAM.  If not, see <http://www.gnu.org/licenses/>.
 
 Description
-    Operator overloads and utility functions for faceGaussField<vector>:
+    Operator overloads and utility functions for GaussField<vector>:
     - vector ± vector
     - vector ^ vector
     - mag(vector)
@@ -33,10 +33,14 @@ Description
 
 \*---------------------------------------------------------------------------*/
 
-#ifndef Foam_dgFaceGaussFieldVectorMath_H
-#define Foam_dgFaceGaussFieldVectorMath_H
+#ifndef Foam_dgGaussFieldVectorMath_H
+#define Foam_dgGaussFieldVectorMath_H
 
-#include "faceGaussField.H"
+#include "cellGaussField.H"
+#include "GaussField.H"
+#include "GaussField.H"
+#include "dgFaceGaussFieldVectorMath.H"
+#include "dgCellGaussFieldVectorMath.H"
 #include "vector.H"
 #include "tensor.H"
 #include "symmTensor.H"
@@ -44,90 +48,168 @@ Description
 
 namespace Foam
 {
-namespace dgGaussFieldMath
-{
 
 // * * * * * * * * * * * * Vector - Vector * * * * * * * * * * * * //
 
 //- Vector addition
-faceGaussField<vector> operator+
+// Component by component
+GaussField<vector> operator+
 (
-    const faceGaussField<vector>& A,
-    const faceGaussField<vector>& B
-);
+    const GaussField<vector>& A,
+    const GaussField<vector>& B
+)
+{
+    GaussField<vector> result(A);
+    result.cellField() = A.cellField() + B.cellField();
+    result.faceField() = A.faceField() + B.faceField();
+    return result;
+}
+
 
 //- Vector subtraction
-faceGaussField<vector> operator-
+// Component by component
+GaussField<vector> operator-
 (
-    const faceGaussField<vector>& A,
-    const faceGaussField<vector>& B
-);
+    const GaussField<vector>& A,
+    const GaussField<vector>& B
+)
+{
+    GaussField<vector> result(A);
+    result.cellField() = A.cellField() - B.cellField();
+    result.faceField() = A.faceField() - B.faceField();
+    return result;
+}
 
 //- Vector cross product
-faceGaussField<vector> operator^
+GaussField<vector> operator^
 (
-    const faceGaussField<vector>& A,
-    const faceGaussField<vector>& B
-);
+    const GaussField<vector>& A,
+    const GaussField<vector>& B
+)
+{
+    GaussField<vector> result(A);
+    result.cellField() = A.cellField() ^ B.cellField();
+    result.faceField() = A.faceField() ^ B.faceField();
+    return result;
+}
+
+//- Vector dot product
+GaussField<scalar> operator&
+(
+    const GaussField<vector>& A,
+    const GaussField<vector>& B
+)
+{
+    GaussField<scalar> result(A.cellID(), A.dgMesh());
+    result.cellField() = A.cellField() & B.cellField();
+    result.faceField() = A.faceField() & B.faceField();
+    return result;
+}
 
 //- Vector magnitude
-faceGaussField<scalar> mag
+GaussField<scalar> mag
 (
-    const faceGaussField<vector>& A
-);
-
+    const GaussField<vector>& A
+)
+{
+    GaussField<scalar> result(A.cellID(), A.dgMesh());
+    result.cellField() = mag(A.cellField());
+    result.faceField() = mag(A.faceField());
+    return result;
+}
 
 // * * * * * * * * * * * * Vector - Tensor * * * * * * * * * * * * //
 
 //- Vector & tensor
-faceGaussField<vector> operator&
+// Dot product of vector with each column of the tensor
+GaussField<vector> operator&
 (
-    const faceGaussField<vector>& A,
-    const faceGaussField<tensor>& B
-);
+    const GaussField<vector>& A,
+    const GaussField<tensor>& B
+)
+{
+    GaussField<vector> result(A.cellID(), A.dgMesh());
+    result.cellField() = A.cellField() & B.cellField();
+    result.faceField() = A.faceField() & B.faceField();
+    return result;
+}
 
 //- Tensor & vector
-faceGaussField<vector> operator&
+// Dot product of each row of the tensor with the vector
+GaussField<vector> operator&
 (
-    const faceGaussField<tensor>& A,
-    const faceGaussField<vector>& B
-);
+    const GaussField<tensor>& A,
+    const GaussField<vector>& B
+)
+{
+    GaussField<vector> result(A.cellID(), A.dgMesh());
+    result.cellField() = A.cellField() & B.cellField();
+    result.faceField() = A.faceField() & B.faceField();
+    return result;
+}
 
 
 // * * * * * * * * * * * * Vector - symmTensor * * * * * * * * * * //
 
 //- Vector & symmTensor
-faceGaussField<vector> operator&
+// Dot product of vector with each column of the symmTensor
+GaussField<vector> operator&
 (
-    const faceGaussField<vector>& A,
-    const faceGaussField<symmTensor>& B
-);
+    const GaussField<vector>& A,
+    const GaussField<symmTensor>& B
+)
+{
+    GaussField<vector> result(A.cellID(), A.dgMesh());
+    result.cellField() = A.cellField() & B.cellField();
+    result.faceField() = A.faceField() & B.faceField();
+    return result;
+}
 
 //- symmTensor & vector
-faceGaussField<vector> operator&
+// Dot product of each row of the symmTensor with the vector
+GaussField<vector> operator&
 (
-    const faceGaussField<symmTensor>& A,
-    const faceGaussField<vector>& B
-);
+    const GaussField<symmTensor>& A,
+    const GaussField<vector>& B
+)
+{
+    GaussField<vector> result(A.cellID(), A.dgMesh());
+    result.cellField() = A.cellField() & B.cellField();
+    result.faceField() = A.faceField() & B.faceField();
+    return result;
+}
 
 
 // * * * * * * * * * * * * Vector - sphericalTensor * * * * * * * * * * //
 
 //- Vector & sphericalTensor
-faceGaussField<vector> operator&
+// Dot product of vector with each column of the sphericalTensor
+GaussField<vector> operator&
 (
-    const faceGaussField<vector>& A,
-    const faceGaussField<sphericalTensor>& B
-);
+    const GaussField<vector>& A,
+    const GaussField<sphericalTensor>& B
+)
+{
+    GaussField<vector> result(A.cellID(), A.dgMesh());
+    result.cellField() = A.cellField() & B.cellField();
+    result.faceField() = A.faceField() & B.faceField();
+    return result;
+}
 
 //- sphericalTensor & vector
-faceGaussField<vector> operator&
+// Dot product of each row of the sphericalTensor with the vector
+GaussField<vector> operator&
 (
-    const faceGaussField<sphericalTensor>& A,
-    const faceGaussField<vector>& B
-);
+    const GaussField<sphericalTensor>& A,
+    const GaussField<vector>& B
+)
+{
+    GaussField<vector> result(A.cellID(), A.dgMesh());
+    result.cellField() = A.cellField() & B.cellField();
+    result.faceField() = A.faceField() & B.faceField();
+    return result;
+}
 
-} // End namespace dgGaussFieldMath
 } // End namespace Foam
 
 #endif

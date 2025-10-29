@@ -185,7 +185,7 @@ void Foam::faceGaussField<Type>::interpolateFromDof()
         const label offset = gaussOffset_[localFaceI];
 
         if (isOwner)
-        {
+        {   
             forAll(gpOwner, i)
             {
                 minusValues_[offset + i] = pTraits<Type>::zero;
@@ -199,25 +199,55 @@ void Foam::faceGaussField<Type>::interpolateFromDof()
             {
                 forAll(gpOwner, i)
                 {
+                    plusValues_[offset + i] = pTraits<Type>::max; //pTraits<Type>::zero;
+                }
+            }
+            else
+            {
+                // Get Gauss points for neighbor sides
+                const List<vector>& gpNeigh = face.gaussPointsNeighbor();
+
+                // Get basis functions for neighbor sides
+                const List<List<scalar>>& neighborBasis = face.neighborBasis();
+
+                const cellDof<Type>& cellNDof = *cellsDof_[localFaceI + 1];
+                forAll(gpNeigh, i)
+                {
                     plusValues_[offset + i] = pTraits<Type>::zero;
+                    for (label k = 0; k < cellNDof.nDof(); ++k)
+                    {
+                        plusValues_[offset + i] += cellNDof[k] * neighborBasis[i][k];
+                    }
                 }
             }
         }
         else
         {
-            // Get Gauss points for owner sides
+            // This face has both owner and neighbor sides, so it is internal
+            
+            // Get Gauss points for neighbor sides
             const List<vector>& gpNeigh = face.gaussPointsNeighbor();
 
             // Get basis functions for neighbor sides
             const List<List<scalar>>& neighborBasis = face.neighborBasis();
 
             const cellDof<Type>& cellNDof = *cellsDof_[localFaceI + 1];
+            
             forAll(gpNeigh, i)
+            {
+                minusValues_[offset + i] = pTraits<Type>::zero;
+                for (label k = 0; k < cellPDof.nDof(); ++k)
+                {
+                    minusValues_[offset + i] += cellPDof[k] * neighborBasis[i][k];
+                }
+            }
+
+            forAll(gpOwner, i)
             {
                 plusValues_[offset + i] = pTraits<Type>::zero;
                 for (label k = 0; k < cellNDof.nDof(); ++k)
                 {
-                    plusValues_[offset + i] += cellNDof[k] * neighborBasis[i][k];
+                    plusValues_[offset + i] += cellNDof[k] * ownerBasis[i][k];
                 }
             }
         }

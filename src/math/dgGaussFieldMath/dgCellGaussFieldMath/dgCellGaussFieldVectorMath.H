@@ -42,72 +42,182 @@ SourceFiles
 
 namespace Foam
 {
-namespace dgGaussFieldMath
+    
+// * * * * * * * * * * * * * * * Vector - Vector * * * * * * * * * * * * * * * //
+
+inline cellGaussField<vector> operator+
+(
+    const cellGaussField<vector>& A,
+    const cellGaussField<vector>& B
+)
 {
+    cellGaussField<vector> result(A.cellID(), A.dgMesh());
+    
+    for (label i = 0; i < A.size(); ++i)
+    {
+        result[i] = A[i] + B[i];
+    }
+    return result;
+}
 
-// Vector operators
-
-cellGaussField<vector> operator+
+inline cellGaussField<vector> operator-
 (
     const cellGaussField<vector>& A,
     const cellGaussField<vector>& B
-);
+)
+{
+    cellGaussField<vector> result(A.cellID(), A.dgMesh());
+    
+    for (label i = 0; i < A.size(); ++i)
+    {
+        result[i] = A[i] - B[i];
+    }
+    return result;
+}
 
-cellGaussField<vector> operator-
+// Cross product: A ^ B
+inline cellGaussField<vector> operator^
 (
     const cellGaussField<vector>& A,
     const cellGaussField<vector>& B
-);
+)
+{
+    cellGaussField<vector> result(A.cellID(), A.dgMesh());
+    
+    for (label i = 0; i < A.size(); ++i)
+    {
+        result[i] = A[i] ^ B[i];
+    }
+    return result;
+}
 
-cellGaussField<vector> operator^
+// Dot product: A & B
+inline cellGaussField<scalar> operator&
 (
     const cellGaussField<vector>& A,
     const cellGaussField<vector>& B
-);
+)
+{
+    cellGaussField<scalar> result(A.cellID(), A.dgMesh());
+    
+    for (label i = 0; i < A.size(); ++i)
+    {
+        result[i] = A[i] & B[i];
+    }
+    return result;
+}
 
-cellGaussField<scalar> mag
+// Magnitude: mag(A)
+inline cellGaussField<scalar> mag
 (
     const cellGaussField<vector>& A
-);
+)
+{
+    cellGaussField<scalar> result(A.cellID(), A.dgMesh());
+    
+    for (label i = 0; i < A.size(); ++i)
+    {
+        result[i] = mag(A[i]);
+    }
+    return result;
+}
 
-// Vector-Tensor contractions
-cellGaussField<vector> operator&
+// * * * * * * * * * * * * * * * Vector - Tensor * * * * * * * * * * * * * * * //
+
+inline cellGaussField<vector> operator&
 (
     const cellGaussField<vector>& A,
     const cellGaussField<tensor>& B
-);
+)
+{
+    cellGaussField<vector> result(A.cellID(), A.dgMesh());
+    
+    for (label i = 0; i < A.size(); ++i)
+    {
+        result[i] = A[i] & B[i];
+    }
+    return result;
+}
 
-cellGaussField<vector> operator&
+inline cellGaussField<vector> operator&
 (
     const cellGaussField<tensor>& A,
     const cellGaussField<vector>& B
-);
+)
+{
+    cellGaussField<vector> result(A.cellID(), A.dgMesh());
+    
+    for (label i = 0; i < A.size(); ++i)
+    {
+        result[i] = A[i] & B[i];
+    }
+    return result;
+}
 
-cellGaussField<vector> operator&
+// * * * * * * * * * * * * * * * Vector - symmTensor * * * * * * * * * * * * * //
+
+inline cellGaussField<vector> operator&
 (
     const cellGaussField<vector>& A,
     const cellGaussField<symmTensor>& B
-);
+)
+{
+    cellGaussField<vector> result(A.cellID(), A.dgMesh());
+    
+    for (label i = 0; i < A.size(); ++i)
+    {
+        result[i] = A[i] & B[i];
+    }
+    return result;
+}
 
-cellGaussField<vector> operator&
+inline cellGaussField<vector> operator&
 (
     const cellGaussField<symmTensor>& A,
     const cellGaussField<vector>& B
-);
+)
+{
+    cellGaussField<vector> result(A.cellID(), A.dgMesh());
+    
+    for (label i = 0; i < A.size(); ++i)
+    {
+        result[i] = A[i] & B[i];
+    }
+    return result;
+}
 
-cellGaussField<vector> operator&
+// * * * * * * * * * * * * * * * Vector - sphericalTensor * * * * * * * * * * * //
+
+inline cellGaussField<vector> operator&
 (
     const cellGaussField<vector>& A,
     const cellGaussField<sphericalTensor>& B
-);
+)
+{
+    cellGaussField<vector> result(A.cellID(), A.dgMesh());
+    
+    for (label i = 0; i < A.size(); ++i)
+    {
+        result[i] = A[i] & B[i];
+    }
+    return result;
+}
 
-cellGaussField<vector> operator&
+inline cellGaussField<vector> operator&
 (
     const cellGaussField<sphericalTensor>& A,
     const cellGaussField<vector>& B
-);
+)
+{
+    cellGaussField<vector> result(A.cellID(), A.dgMesh());
+    
+    for (label i = 0; i < A.size(); ++i)
+    {
+        result[i] = A[i] & B[i];
+    }
+    return result;
+}
 
-} // End namespace dgGaussFieldMath
 } // End namespace Foam
 
 #endif

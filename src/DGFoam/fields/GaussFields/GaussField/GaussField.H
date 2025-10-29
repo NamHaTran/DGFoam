@@ -108,6 +108,9 @@ public:
 
     // Member access
 
+        //- Return const reference to geometric mesh
+        inline const dgGeomMesh& dgMesh() const { return mesh_; }
+
         //- Return reference to cellGaussField
         inline cellGaussField<Type>& cellField() { return cellField_; }
 

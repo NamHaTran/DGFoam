@@ -80,6 +80,7 @@ Description
 #include "GaussField.H"
 #include "dgGaussFieldLiteralScalarMath.H"
 #include "dgGaussFieldScalarMath.H"
+#include "dgGaussFieldVectorMath.H"
 
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
@@ -113,57 +114,43 @@ int main(int argc, char *argv[])
     // It's possible to iterate over every cell in a standard C++ for loop
     for (label cellI = 0; cellI < mesh.C().size(); cellI++)
     {
-        scalar R = 287.0;
-        scalar cv = 718;
-        scalar gamma = 1.4;
-
-        // Create GaussField from DOF field
-        GaussField<vector> UGauss
+        GaussField<tensor> T1
         (
-            &UDof,
             cellI,
-            dgMesh
+            dgMesh,
+            Foam::tensor(1, 2, 3, 4, 5, 6, 7, 8, 9)
         );
-        // Interpolate values at Gauss points from DOF using basis functions
-        UGauss.interpolateFromDof();
-
         
-        GaussField<scalar> pGauss
+        GaussField<vector> V1
         (
-            &pDof,
             cellI,
-            dgMesh
+            dgMesh,
+            Foam::vector(1, 2, 3)
         );
-        pGauss.interpolateFromDof();
 
-        GaussField<scalar> TGauss
+        GaussField<vector> V2
         (
-            &pDof,
             cellI,
-            dgMesh
+            dgMesh,
+            Foam::vector(4, -3, -1)
         );
-        TGauss.interpolateFromDof();
 
-        GaussField<scalar> rhoGauss = pGauss / (R * TGauss);
-        GaussField<scalar> eGauss = cv * TGauss;
-        GaussField<scalar> aGauss = pow(gamma * R * TGauss, 0.5);
-        //GaussField<scalar> MGauss = mag(UGauss) / aGauss;
-        //GaussField<scalar> pDymGauss = 0.5 * rhoGauss * magSqr(UGauss);
-
-        GaussField<vector> rhoUGauss = rhoGauss * UGauss;
+        GaussField<vector> V3 = V1 + V2;
+        GaussField<vector> V4 = V1 - V2;
+        GaussField<scalar> magV1 = mag(V1);
+        GaussField<vector> crossV1V2 = V1 ^ V2;
+        GaussField<scalar> V5 = V1 & V2;
+        GaussField<vector> V6 = V1 & T1;
+        GaussField<vector> V7 = T1 & V1;
 
         if (cellI == 0)
         {
-            // Print results for cellID == 1000
             Info << "Cell " << cellI << ":\n";
-            Info << "rhoGauss:\n";
-            rhoGauss.print();
-            Info << "eGauss:\n";
-            eGauss.print();
-            Info << "aGauss:\n";
-            aGauss.print();
-            Info << "rhoUGauss:\n";
-            rhoUGauss.print();
+            Info << "V6 = V1 & T1 = " <<  endl;
+            V6.print();
+            Info << "V7 = T1 & V1 = " <<  endl;
+            V7.print();
+            Info << endl;
         }
     }
 
