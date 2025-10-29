@@ -165,7 +165,7 @@ inline faceGaussField<sphericalTensor> operator*
 
 inline faceGaussField<sphericalTensor> operator*
 (
-    const faceGaussField<symsphericalTensormTensor>& A,
+    const faceGaussField<sphericalTensor>& A,
     const scalar& s
 )
 {
@@ -210,23 +210,6 @@ inline faceGaussField<scalar> operator/
 
 inline faceGaussField<vector> operator/
 (
-    const scalar& s,
-    const faceGaussField<vector>& A
-)
-{
-    faceGaussField<vector> result(A.cellID(), A.dgMesh());
-
-    for (label gp = 0; gp < A.nGauss(); ++gp)
-    {
-        result.plusValueAt(gp)  = s / A.plusValue(gp);
-        result.minusValueAt(gp) = s / A.minusValue(gp);
-    }
-
-    return result;
-}
-
-inline faceGaussField<vector> operator/
-(
     const faceGaussField<vector>& A,
     const scalar& s
 )
@@ -237,23 +220,6 @@ inline faceGaussField<vector> operator/
     {
         result.plusValueAt(gp)  = A.plusValue(gp) / s;
         result.minusValueAt(gp) = A.minusValue(gp) / s;
-    }
-
-    return result;
-}
-
-inline faceGaussField<tensor> operator/
-(
-    const scalar& s,
-    const faceGaussField<tensor>& A
-)
-{
-    faceGaussField<tensor> result(A.cellID(), A.dgMesh());
-
-    for (label gp = 0; gp < A.nGauss(); ++gp)
-    {
-        result.plusValueAt(gp)  = s / A.plusValue(gp);
-        result.minusValueAt(gp) = s / A.minusValue(gp);
     }
 
     return result;
@@ -278,23 +244,6 @@ inline faceGaussField<tensor> operator/
 
 inline faceGaussField<symmTensor> operator/
 (
-    const scalar& s,
-    const faceGaussField<symmTensor>& A
-)
-{
-    faceGaussField<symmTensor> result(A.cellID(), A.dgMesh());
-
-    for (label gp = 0; gp < A.nGauss(); ++gp)
-    {
-        result.plusValueAt(gp)  = s / A.plusValue(gp);
-        result.minusValueAt(gp) = s / A.minusValue(gp);
-    }
-
-    return result;
-}
-
-inline faceGaussField<symmTensor> operator/
-(
     const faceGaussField<symmTensor>& A,
     const scalar& s
 )
@@ -305,23 +254,6 @@ inline faceGaussField<symmTensor> operator/
     {
         result.plusValueAt(gp)  = A.plusValue(gp) / s;
         result.minusValueAt(gp) = A.minusValue(gp) / s;
-    }
-
-    return result;
-}
-
-inline faceGaussField<sphericalTensor> operator/
-(
-    const scalar& s,
-    const faceGaussField<sphericalTensor>& A
-)
-{
-    faceGaussField<sphericalTensor> result(A.cellID(), A.dgMesh());
-
-    for (label gp = 0; gp < A.nGauss(); ++gp)
-    {
-        result.plusValueAt(gp)  = s / A.plusValue(gp);
-        result.minusValueAt(gp) = s / A.minusValue(gp);
     }
 
     return result;

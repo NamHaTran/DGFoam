@@ -244,22 +244,6 @@ inline cellGaussField<scalar> operator/
 
 inline cellGaussField<vector> operator/
 (
-    const scalar& a,
-    const cellGaussField<vector>& A
-)
-{
-    cellGaussField<vector> result(A.cellID(), A.dgMesh());
-    
-    for (label i = 0; i < A.size(); ++i)
-    {
-        result[i] = a / A[i];
-    }
-
-    return result;
-}
-
-inline cellGaussField<vector> operator/
-(
     const cellGaussField<vector>& A,
     const scalar& a
 )
@@ -269,22 +253,6 @@ inline cellGaussField<vector> operator/
     for (label i = 0; i < A.size(); ++i)
     {
         result[i] = A[i] / a;
-    }
-
-    return result;
-}
-
-inline cellGaussField<tensor> operator/
-(
-    const scalar& a,
-    const cellGaussField<tensor>& A
-)
-{
-    cellGaussField<tensor> result(A.cellID(), A.dgMesh());
-    
-    for (label i = 0; i < A.size(); ++i)
-    {
-        result[i] = a / A[i];
     }
 
     return result;
@@ -308,22 +276,6 @@ inline cellGaussField<tensor> operator/
 
 inline cellGaussField<symmTensor> operator/
 (
-    const scalar& a,
-    const cellGaussField<symmTensor>& A
-)
-{
-    cellGaussField<symmTensor> result(A.cellID(), A.dgMesh());
-    
-    for (label i = 0; i < A.size(); ++i)
-    {
-        result[i] = a / A[i];
-    }
-
-    return result;
-}
-
-inline cellGaussField<symmTensor> operator/
-(
     const cellGaussField<symmTensor>& A,
     const scalar& a
 )
@@ -333,22 +285,6 @@ inline cellGaussField<symmTensor> operator/
     for (label i = 0; i < A.size(); ++i)
     {
         result[i] = A[i] / a;
-    }
-
-    return result;
-}
-
-inline cellGaussField<sphericalTensor> operator/
-(
-    const scalar& a,
-    const cellGaussField<sphericalTensor>& A
-)
-{
-    cellGaussField<sphericalTensor> result(A.cellID(), A.dgMesh());
-    
-    for (label i = 0; i < A.size(); ++i)
-    {
-        result[i] = a / A[i];
     }
 
     return result;

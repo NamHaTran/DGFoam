@@ -1,1 +1,0 @@
-../dgGaussFieldMath/dgGaussFieldLiteralScalarMath.C

@@ -40,8 +40,8 @@ Description
 #include "cellGaussField.H"
 #include "faceGaussField.H"
 #include "GaussField.H"
-#include "dgFaceGaussFieldLiteralScalarMath.H"
-#include "dgCellGaussFieldLiteralScalarMath.H"
+#include "dgFaceGaussFieldScalarMath.H"
+#include "dgCellGaussFieldScalarMath.H"
 #include "scalar.H"
 #include "vector.H"
 #include "tensor.H"
@@ -109,7 +109,7 @@ GaussField<vector> operator*
     const GaussField<vector>& B
 )
 {
-    GaussField<scalar> result(A);
+    GaussField<vector> result(B);
     result.cellField() = A.cellField() * B.cellField();
     result.faceField() = A.faceField() * B.faceField();
     return result;
@@ -130,7 +130,7 @@ GaussField<vector> operator/
     const GaussField<scalar>& B
 )
 {
-    GaussField<scalar> result(A);
+    GaussField<vector> result(A);
     result.cellField() = A.cellField() / B.cellField();
     result.faceField() = A.faceField() / B.faceField();
     return result;
@@ -144,7 +144,7 @@ GaussField<tensor> operator*
     const GaussField<tensor>& B
 )
 {
-    GaussField<scalar> result(A);
+    GaussField<tensor> result(B);
     result.cellField() = A.cellField() * B.cellField();
     result.faceField() = A.faceField() * B.faceField();
     return result;
@@ -165,7 +165,7 @@ GaussField<tensor> operator/
     const GaussField<scalar>& B
 )
 {
-    GaussField<scalar> result(A);
+    GaussField<tensor> result(A);
     result.cellField() = A.cellField() / B.cellField();
     result.faceField() = A.faceField() / B.faceField();
     return result;
@@ -179,7 +179,7 @@ GaussField<symmTensor> operator*
     const GaussField<symmTensor>& B
 )
 {
-    GaussField<scalar> result(A);
+    GaussField<symmTensor> result(B);
     result.cellField() = A.cellField() * B.cellField();
     result.faceField() = A.faceField() * B.faceField();
     return result;
@@ -200,7 +200,7 @@ GaussField<symmTensor> operator/
     const GaussField<scalar>& B
 )
 {
-    GaussField<scalar> result(A);
+    GaussField<symmTensor> result(A);
     result.cellField() = A.cellField() / B.cellField();
     result.faceField() = A.faceField() / B.faceField();
     return result;
@@ -214,7 +214,7 @@ GaussField<sphericalTensor> operator*
     const GaussField<sphericalTensor>& B
 )
 {
-    GaussField<scalar> result(A);
+    GaussField<sphericalTensor> result(B);
     result.cellField() = A.cellField() * B.cellField();
     result.faceField() = A.faceField() * B.faceField();
     return result;
@@ -235,7 +235,7 @@ GaussField<sphericalTensor> operator/
     const GaussField<scalar>& B
 )
 {
-    GaussField<scalar> result(A);
+    GaussField<sphericalTensor> result(A);
     result.cellField() = A.cellField() / B.cellField();
     result.faceField() = A.faceField() / B.faceField();
     return result;

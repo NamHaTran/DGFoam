@@ -79,6 +79,7 @@ Description
 //#include "faceGaussField.H"
 #include "GaussField.H"
 #include "dgGaussFieldLiteralScalarMath.H"
+#include "dgGaussFieldScalarMath.H"
 
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
@@ -86,7 +87,7 @@ Description
 int main(int argc, char *argv[])
 {
     // Declare pOrder
-    const label pOrder = 2; // Polynomial order for basis functions
+    const label pOrder = 1; // Polynomial order for basis functions
 
     #include "setRootCase.H"
 
@@ -112,6 +113,10 @@ int main(int argc, char *argv[])
     // It's possible to iterate over every cell in a standard C++ for loop
     for (label cellI = 0; cellI < mesh.C().size(); cellI++)
     {
+        scalar R = 287.0;
+        scalar cv = 718;
+        scalar gamma = 1.4;
+
         // Create GaussField from DOF field
         GaussField<vector> UGauss
         (
@@ -131,63 +136,34 @@ int main(int argc, char *argv[])
         );
         pGauss.interpolateFromDof();
 
-        GaussField<scalar> p1
+        GaussField<scalar> TGauss
         (
+            &pDof,
             cellI,
             dgMesh
         );
-        GaussField<scalar> p2
-        (
-            cellI,
-            dgMesh
-        );
-        GaussField<scalar> p3
-        (
-            cellI,
-            dgMesh
-        );
-        GaussField<scalar> p4
-        (
-            cellI,
-            dgMesh
-        );
-        GaussField<scalar> p5
-        (
-            cellI,
-            dgMesh
-        );
-        GaussField<scalar> p6
-        (
-            cellI,
-            dgMesh
-        );
+        TGauss.interpolateFromDof();
 
-        // Test operators on GaussField
-        p1 = pGauss;
-        p2 = pGauss + 1e5;
-        p3 = pGauss - 1e5;
-        p4 = pGauss * 2.0;
-        p5 = pGauss / 2.0;
-        p6 = pow(pGauss, 2);
+        GaussField<scalar> rhoGauss = pGauss / (R * TGauss);
+        GaussField<scalar> eGauss = cv * TGauss;
+        GaussField<scalar> aGauss = pow(gamma * R * TGauss, 0.5);
+        //GaussField<scalar> MGauss = mag(UGauss) / aGauss;
+        //GaussField<scalar> pDymGauss = 0.5 * rhoGauss * magSqr(UGauss);
+
+        GaussField<vector> rhoUGauss = rhoGauss * UGauss;
 
         if (cellI == 0)
         {
             // Print results for cellID == 1000
             Info << "Cell " << cellI << ":\n";
-            Info << "Original pGauss:\n";
-            pGauss.print();
-            Info << "p1 = pGauss:\n";
-            p1.print();
-            Info << "p2 = pGauss + 1e5:\n";
-            p2.print();
-            Info << "p3 = pGauss - 1e5:\n";
-            p3.print();
-            Info << "p4 = pGauss * 2.0:\n";
-            p4.print();
-            Info << "p5 = pGauss / 2.0:\n";
-            p5.print();
-            Info << "p6 = pow(pGauss, 2):\n";
-            p6.print();
+            Info << "rhoGauss:\n";
+            rhoGauss.print();
+            Info << "eGauss:\n";
+            eGauss.print();
+            Info << "aGauss:\n";
+            aGauss.print();
+            Info << "rhoUGauss:\n";
+            rhoUGauss.print();
         }
     }
 

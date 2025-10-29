@@ -177,18 +177,6 @@ inline GaussField<scalar> operator/
 
 inline GaussField<vector> operator/
 (
-    const scalar& s,
-    const GaussField<vector>& A
-)
-{
-    GaussField<vector> result(A);
-    result.cellField() = s / A.cellField();
-    result.faceField() = s / A.faceField();
-    return result;
-}
-
-inline GaussField<vector> operator/
-(
     const GaussField<vector>& A,
     const scalar& s
 )
@@ -196,18 +184,6 @@ inline GaussField<vector> operator/
     GaussField<vector> result(A);
     result.cellField() = A.cellField() / s;
     result.faceField() = A.faceField() / s;
-    return result;
-}
-
-inline GaussField<tensor> operator/
-(
-    const scalar& s,
-    const GaussField<tensor>& A
-)
-{
-    GaussField<tensor> result(A);
-    result.cellField() = s / A.cellField();
-    result.faceField() = s / A.faceField();
     return result;
 }
 
@@ -225,18 +201,6 @@ inline GaussField<tensor> operator/
 
 inline GaussField<symmTensor> operator/
 (
-    const scalar& s,
-    const GaussField<symmTensor>& A
-)
-{
-    GaussField<symmTensor> result(A);
-    result.cellField() = s / A.cellField();
-    result.faceField() = s / A.faceField();
-    return result;
-}
-
-inline GaussField<symmTensor> operator/
-(
     const GaussField<symmTensor>& A,
     const scalar& s
 )
@@ -247,17 +211,6 @@ inline GaussField<symmTensor> operator/
     return result;
 }
 
-inline GaussField<sphericalTensor> operator/
-(
-    const scalar& s,
-    const GaussField<sphericalTensor>& A
-)
-{
-    GaussField<sphericalTensor> result(A);
-    result.cellField() = s / A.cellField();
-    result.faceField() = s / A.faceField();
-    return result;
-}
 
 inline GaussField<sphericalTensor> operator/
 (

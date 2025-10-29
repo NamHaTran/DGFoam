@@ -20,3 +20,13 @@ dofField<vector> UDof
     IOobject::AUTO_WRITE,
     dgMesh
 );
+
+Info<< "Reading field T\n" << endl;
+dofField<scalar> TDof
+(
+    "T",
+    runTime.timeName(),
+    IOobject::MUST_READ,
+    IOobject::AUTO_WRITE,
+    dgMesh
+);

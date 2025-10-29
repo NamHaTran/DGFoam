@@ -44,7 +44,6 @@ namespace Foam
 {
 // * * * * * * * * * * * * * * * Scalar - Scalar * * * * * * * * * * * * * * * //
 
-template<>
 inline cellGaussField<scalar> operator+
 (
     const cellGaussField<scalar>& A,
@@ -60,7 +59,6 @@ inline cellGaussField<scalar> operator+
     return result;
 }
 
-template<>
 inline cellGaussField<scalar> operator-
 (
     const cellGaussField<scalar>& A,
@@ -76,7 +74,6 @@ inline cellGaussField<scalar> operator-
     return result;
 }
 
-template<>
 inline cellGaussField<scalar> operator*
 (
     const cellGaussField<scalar>& A,
@@ -92,7 +89,6 @@ inline cellGaussField<scalar> operator*
     return result;
 }
 
-template<>
 inline cellGaussField<scalar> operator/
 (
     const cellGaussField<scalar>& A,
