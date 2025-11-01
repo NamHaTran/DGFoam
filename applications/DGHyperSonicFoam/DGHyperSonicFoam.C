@@ -81,6 +81,8 @@ Description
 #include "dgGaussFieldLiteralScalarMath.H"
 #include "dgGaussFieldScalarMath.H"
 #include "dgGaussFieldVectorMath.H"
+#include "dgGaussFieldTensorMath.H"
+#include "dgBasisField.H"
 
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
@@ -114,46 +116,60 @@ int main(int argc, char *argv[])
     // It's possible to iterate over every cell in a standard C++ for loop
     for (label cellI = 0; cellI < mesh.C().size(); cellI++)
     {
-        GaussField<tensor> T1
-        (
-            cellI,
-            dgMesh,
-            Foam::tensor(1, 2, 3, 4, 5, 6, 7, 8, 9)
-        );
-        
-        GaussField<vector> V1
-        (
-            cellI,
-            dgMesh,
-            Foam::vector(1, 2, 3)
-        );
-
-        GaussField<vector> V2
-        (
-            cellI,
-            dgMesh,
-            Foam::vector(4, -3, -1)
-        );
-
-        GaussField<vector> V3 = V1 + V2;
-        GaussField<vector> V4 = V1 - V2;
-        GaussField<scalar> magV1 = mag(V1);
-        GaussField<vector> crossV1V2 = V1 ^ V2;
-        GaussField<scalar> V5 = V1 & V2;
-        GaussField<vector> V6 = V1 & T1;
-        GaussField<vector> V7 = T1 & V1;
+        Foam::dgBasisField basisField(cellI, dgMesh);
 
         if (cellI == 0)
         {
-            Info << "Cell " << cellI << ":\n";
-            Info << "V6 = V1 & T1 = " <<  endl;
-            V6.print();
-            Info << "V7 = T1 & V1 = " <<  endl;
-            V7.print();
-            Info << endl;
+            Info << "Cell " << cellI << " basis functions at Gauss points:" << endl;
+            for (label dof = 0; dof < basisField.nDof(); ++dof)
+            {
+                Foam::GaussField<scalar> phi = basisField.getBasis(dof);
+                Foam::GaussField<vector> dPhi = basisField.getDBasis(dof);
+
+                Info << "//---------------------- DoF = " << dof << "---------------------//" << endl;
+                Info << "  phi: " << phi << endl;
+                Info << "  dPhi: " << dPhi << endl;
+                Info << "//-------------------------------------------//" << endl << endl;
+            }
+
+            Foam::GaussField<tensor> T1
+            (
+                cellI,
+                &dgMesh,
+                Foam::tensor
+                ( 1, 2, 3, 
+                4, 4, 5,
+                7, 3, 1 )
+            );
+            
+            Foam::GaussField<vector> V1
+            (
+                cellI,
+                &dgMesh,
+                Foam::vector(1, 2, 3)
+            );
+
+            Foam::GaussField<symmTensor> symmT1
+            (
+                cellI,
+                &dgMesh,
+                Foam::symmTensor(1.0, 0.2, 0.3, 2.0, 0.4, 3.0)
+            );
+
+            Foam::GaussField<symmTensor> symmT2 = symmT1*2.0;
+
+            Foam::GaussField<tensor> T2
+            (
+                cellI,
+                &dgMesh,
+                Foam::tensor
+
+                ( 1.0, 0.2, 0.3,
+                0.2, 2.0, 0.4,
+                0.3, 0.4, 3.0 )
+            );
         }
     }
-
 
     // Each cell is constructed of faces - these may either be internal or constitute a
     // boundary, or a patch in OpenFOAM terms; internal faces have an owner cell

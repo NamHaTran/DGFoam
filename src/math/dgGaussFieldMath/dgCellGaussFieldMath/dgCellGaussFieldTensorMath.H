@@ -39,127 +39,383 @@ SourceFiles
 #define Foam_dgCellGaussFieldTensorMath_H
 
 #include "cellGaussField.H"
+#include "Tensor.H"
 
 namespace Foam
 {
-namespace dgGaussFieldMath
-{
+// * * * * * * * * * * * * * * * Tensor utilities * * * * * * * * * * * * * * //
 
-// Tensor utilities
-cellGaussField<tensor> dev(const cellGaussField<tensor>& A);
-cellGaussField<tensor> symm(const cellGaussField<tensor>& A);
-cellGaussField<tensor> skew(const cellGaussField<tensor>& A);
-cellGaussField<scalar> tr(const cellGaussField<tensor>& A);
-cellGaussField<scalar> det(const cellGaussField<tensor>& A);
-cellGaussField<tensor> T(const cellGaussField<tensor>& A);
+inline cellGaussField<tensor> dev(const cellGaussField<tensor>& A)
+{
+    cellGaussField<tensor> result(A.cellID(), A.dgMesh());
+    
+    for (label i = 0; i < A.size(); ++i)
+    {
+        result[i] = dev(A[i]);
+    }
+    return result;
+}
+
+inline cellGaussField<symmTensor> symm(const cellGaussField<tensor>& A)
+{
+    cellGaussField<symmTensor> result(A.cellID(), A.dgMesh());
+    
+    for (label i = 0; i < A.size(); ++i)
+    {
+        result[i] = symm(A[i]);
+    }
+    return result;
+}
+
+inline cellGaussField<tensor> skew(const cellGaussField<tensor>& A)
+{
+    cellGaussField<tensor> result(A.cellID(), A.dgMesh());
+    
+    for (label i = 0; i < A.size(); ++i)
+    {
+        result[i] = skew(A[i]);
+    }
+    return result;
+}
+
+inline cellGaussField<scalar> tr(const cellGaussField<tensor>& A)
+{
+    cellGaussField<scalar> result(A.cellID(), A.dgMesh());
+    
+    for (label i = 0; i < A.size(); ++i)
+    {
+        result[i] = tr(A[i]);
+    }
+    return result;
+}
+
+inline cellGaussField<scalar> det(const cellGaussField<tensor>& A)
+{
+    cellGaussField<scalar> result(A.cellID(), A.dgMesh());
+    
+    for (label i = 0; i < A.size(); ++i)
+    {
+        result[i] = det(A[i]);
+    }
+    return result;
+}
+
+inline cellGaussField<tensor> T(const cellGaussField<tensor>& A)
+{
+    cellGaussField<tensor> result(A.cellID(), A.dgMesh());
+    
+    for (label i = 0; i < A.size(); ++i)
+    {
+        result[i] = T(A[i]);
+    }
+    return result;
+}
+
+inline cellGaussField<tensor> inv(const cellGaussField<tensor>& A)
+{
+    cellGaussField<tensor> result(A.cellID(), A.dgMesh());
+    
+    for (label i = 0; i < A.size(); ++i)
+    {
+        result[i] = inv(A[i]);
+    }
+    return result;
+}
 
 // symmTensor utilities
-cellGaussField<scalar> tr(const cellGaussField<symmTensor>& A);
-cellGaussField<symmTensor> dev(const cellGaussField<symmTensor>& A);
-cellGaussField<symmTensor> T(const cellGaussField<symmTensor>& A);
 
-// Tensor-tensor operators
-cellGaussField<tensor> operator+
+inline cellGaussField<scalar> tr(const cellGaussField<symmTensor>& A)
+{
+    cellGaussField<scalar> result(A.cellID(), A.dgMesh());
+    
+    for (label i = 0; i < A.size(); ++i)
+    {
+        result[i] = tr(A[i]);
+    }
+    return result;
+}
+
+inline cellGaussField<symmTensor> dev(const cellGaussField<symmTensor>& A)
+{
+    cellGaussField<symmTensor> result(A.cellID(), A.dgMesh());
+    
+    for (label i = 0; i < A.size(); ++i)
+    {
+        result[i] = dev(A[i]);
+    }
+    return result;
+}
+
+inline cellGaussField<symmTensor> T(const cellGaussField<symmTensor>& A)
+{
+    cellGaussField<symmTensor> result(A.cellID(), A.dgMesh());
+    
+    for (label i = 0; i < A.size(); ++i)
+    {
+        result[i] = A[i];
+    }
+    return result;
+}
+
+inline cellGaussField<tensor> inv(const cellGaussField<symmTensor>& A)
+{
+    cellGaussField<tensor> result(A.cellID(), A.dgMesh());
+    
+    for (label i = 0; i < A.size(); ++i)
+    {
+        result[i] = inv(A[i]);
+    }
+    return result;
+}
+
+// * * * * * * * * * * * * * * Tensor-Tensor Operators * * * * * * * * * * * * //
+
+inline cellGaussField<tensor> operator+
 (
     const cellGaussField<tensor>& A,
     const cellGaussField<tensor>& B
-);
+)
+{
+    cellGaussField<tensor> result(A.cellID(), A.dgMesh());
+    
+    for (label i = 0; i < A.size(); ++i)
+    {
+        result[i] = A[i] + B[i];
+    }
+    return result;
+}
 
-cellGaussField<tensor> operator-
+inline cellGaussField<tensor> operator-
 (
     const cellGaussField<tensor>& A,
     const cellGaussField<tensor>& B
-);
+)
+{
+    cellGaussField<tensor> result(A.cellID(), A.dgMesh());
+    
+    for (label i = 0; i < A.size(); ++i)
+    {
+        result[i] = A[i] - B[i];
+    }
+    return result;
+}
 
-cellGaussField<tensor> operator&
+inline cellGaussField<tensor> operator&
 (
     const cellGaussField<tensor>& A,
     const cellGaussField<tensor>& B
-);
+)
+{
+    cellGaussField<tensor> result(A.cellID(), A.dgMesh());
+    
+    for (label i = 0; i < A.size(); ++i)
+    {
+        result[i] = A[i] & B[i];
+    }
+    return result;
+}
 
-cellGaussField<scalar> operator&&
+inline cellGaussField<scalar> operator&&
 (
     const cellGaussField<tensor>& A,
     const cellGaussField<tensor>& B
-);
+)
+{
+    cellGaussField<scalar> result(A.cellID(), A.dgMesh());
+    
+    for (label i = 0; i < A.size(); ++i)
+    {
+        result[i] = A[i] && B[i];
+    }
+    return result;
+}
 
-// Tensor - symmTensor
-cellGaussField<tensor> operator+
+// * * * * * * * * * * * * Tensor - symmTensor Operators * * * * * * * * * * * * //
+
+inline cellGaussField<tensor> operator+
 (
     const cellGaussField<tensor>& A,
     const cellGaussField<symmTensor>& B
-);
+)
+{
+    cellGaussField<tensor> result(A.cellID(), A.dgMesh());
+    
+    for (label i = 0; i < A.size(); ++i)
+    {
+        result[i] = A[i] + B[i];
+    }
+    return result;
+}
 
-cellGaussField<tensor> operator-
+inline cellGaussField<tensor> operator-
 (
     const cellGaussField<tensor>& A,
     const cellGaussField<symmTensor>& B
-);
+)
+{
+    cellGaussField<tensor> result(A.cellID(), A.dgMesh());
+    
+    for (label i = 0; i < A.size(); ++i)
+    {
+        result[i] = A[i] - B[i];
+    }
+    return result;
+}
 
-cellGaussField<tensor> operator&
+inline cellGaussField<tensor> operator&
 (
     const cellGaussField<tensor>& A,
     const cellGaussField<symmTensor>& B
-);
+)
+{
+    cellGaussField<tensor> result(A.cellID(), A.dgMesh());
+    
+    for (label i = 0; i < A.size(); ++i)
+    {
+        result[i] = A[i] & B[i];
+    }
+    return result;
+}
 
-cellGaussField<scalar> operator&&
+inline cellGaussField<scalar> operator&&
 (
     const cellGaussField<tensor>& A,
     const cellGaussField<symmTensor>& B
-);
+)
+{
+    cellGaussField<scalar> result(A.cellID(), A.dgMesh());
+    
+    for (label i = 0; i < A.size(); ++i)
+    {
+        result[i] = A[i] && B[i];
+    }
+    return result;
+}
 
-// symmTensor - Tensor Operators
+// * * * * * * * * * * * * symmTensor - Tensor Operators * * * * * * * * * * * * //
 
 inline cellGaussField<tensor> operator+
 (
     const cellGaussField<symmTensor>& A,
     const cellGaussField<tensor>& B
-);
+)
+{
+    cellGaussField<tensor> result(A.cellID(), A.dgMesh());
+
+    for (label i = 0; i < A.size(); ++i)
+    {
+        result[i] = A[i] + B[i];
+    }
+    return result;
+}
 
 inline cellGaussField<tensor> operator-
 (
     const cellGaussField<symmTensor>& A,
     const cellGaussField<tensor>& B
-);
+)
+{
+    cellGaussField<tensor> result(A.cellID(), A.dgMesh());
+
+    for (label i = 0; i < A.size(); ++i)
+    {
+        result[i] = A[i] - B[i];
+    }
+    return result;
+}
 
 inline cellGaussField<tensor> operator&
 (
     const cellGaussField<symmTensor>& A,
     const cellGaussField<tensor>& B
-);
+)
+{
+    cellGaussField<tensor> result(A.cellID(), A.dgMesh());
+
+    for (label i = 0; i < A.size(); ++i)
+    {
+        result[i] = A[i] & B[i];
+    }
+    return result;
+}
 
 inline cellGaussField<scalar> operator&&
 (
     const cellGaussField<symmTensor>& A,
     const cellGaussField<tensor>& B
-);
+)
+{
+    cellGaussField<scalar> result(A.cellID(), A.dgMesh());
 
-// symmTensor - symmTensor
-cellGaussField<symmTensor> operator+
+    for (label i = 0; i < A.size(); ++i)
+    {
+        result[i] = A[i] && B[i];
+    }
+    return result;
+}
+
+// * * * * * * * * * * * * symmTensor - symmTensor Operators * * * * * * * * * * * * //
+
+inline cellGaussField<symmTensor> operator+
 (
     const cellGaussField<symmTensor>& A,
     const cellGaussField<symmTensor>& B
-);
+)
+{
+    cellGaussField<symmTensor> result(A.cellID(), A.dgMesh());
+    
+    for (label i = 0; i < A.size(); ++i)
+    {
+        result[i] = A[i] + B[i];
+    }
+    return result;
+}
 
-cellGaussField<symmTensor> operator-
+inline cellGaussField<symmTensor> operator-
 (
     const cellGaussField<symmTensor>& A,
     const cellGaussField<symmTensor>& B
-);
+)
+{
+    cellGaussField<symmTensor> result(A.cellID(), A.dgMesh());
+    
+    for (label i = 0; i < A.size(); ++i)
+    {
+        result[i] = A[i] - B[i];
+    }
+    return result;
+}
 
-cellGaussField<tensor> operator&
+inline cellGaussField<tensor> operator&
 (
     const cellGaussField<symmTensor>& A,
     const cellGaussField<symmTensor>& B
-);
+)
+{
+    cellGaussField<tensor> result(A.cellID(), A.dgMesh());
+    
+    for (label i = 0; i < A.size(); ++i)
+    {
+        result[i] = A[i] & B[i];
+    }
+    return result;
+}
 
-cellGaussField<scalar> operator&&
+inline cellGaussField<scalar> operator&&
 (
     const cellGaussField<symmTensor>& A,
     const cellGaussField<symmTensor>& B
-);
+)
+{
+    cellGaussField<scalar> result(A.cellID(), A.dgMesh());
+    
+    for (label i = 0; i < A.size(); ++i)
+    {
+        result[i] = A[i] && B[i];
+    }
+    return result;
+}
 
-} // End namespace dgGaussFieldMath
 } // End namespace Foam
 
 #endif

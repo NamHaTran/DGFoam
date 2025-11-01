@@ -35,23 +35,42 @@ namespace Foam
 
 // * * * * * * * * * * * * * * * * Constructors  * * * * * * * * * * * * * * //
 
+// Default constructor
+template<class Type>
+Foam::cellGaussField<Type>::cellGaussField()
+:
+    cellID_(-1),
+    dgMesh_(nullptr),
+    cell_(nullptr),
+    nGauss_(0),
+    nDof_(0),
+    dof_(nullptr),
+    values_(),
+    ctxPtr_(nullptr)
+{}
+
 // Construct from DOF object
 template<class Type>
 cellGaussField<Type>::cellGaussField
 (
-    const dgGeomMesh& dgMesh,
+    const dgGeomMesh* dgMesh,
     const cellDof<Type>* dof
 )
 :
     cellID_(dof->cellID()),
     dgMesh_(dgMesh),
-    cell_(*dgMesh.cells()[cellID_]),
-    nGauss_(cell_.gaussPoints().size()),
+    cell_(dgMesh->cells()[cellID_]),
+    nGauss_(cell_->gaussPoints().size()),
     nDof_(dof->nDof()),
     dof_(dof),
     values_(nGauss_),
     ctxPtr_(nullptr)
-{}
+{
+    if (!dgMesh)
+    {
+        FatalErrorInFunction << "dgMesh pointer is null" << abort(FatalError);
+    }
+}
 
 
 // Copy constructor
@@ -77,19 +96,24 @@ template<class Type>
 Foam::cellGaussField<Type>::cellGaussField
 (
     const label cellID,
-    const dgGeomMesh& dgMesh,
+    const dgGeomMesh* dgMesh,
     const Type& initVal
 )
 :
     cellID_(cellID),
     dgMesh_(dgMesh),
-    cell_(*dgMesh.cells()[cellID]),
-    nGauss_(cell_.gaussPoints().size()),
+    cell_(dgMesh->cells()[cellID]),
+    nGauss_(cell_->gaussPoints().size()),
     nDof_(0),
     dof_(nullptr),
     values_(nGauss_, initVal),
     ctxPtr_(nullptr)
-{}
+{
+    if (!dgMesh)
+    {
+        FatalErrorInFunction << "dgMesh pointer is null" << abort(FatalError);
+    }
+}
 
 
 // Constructor without initial values
@@ -97,39 +121,32 @@ template<class Type>
 Foam::cellGaussField<Type>::cellGaussField
 (
     const label cellID,
-    const dgGeomMesh& dgMesh
+    const dgGeomMesh* dgMesh
 )
 :
     cellID_(cellID),
     dgMesh_(dgMesh),
-    cell_(*dgMesh.cells()[cellID]),
-    nGauss_(cell_.gaussPoints().size()),
+    cell_(dgMesh->cells()[cellID]),
+    nGauss_(cell_->gaussPoints().size()),
     nDof_(0),
     dof_(nullptr),
     values_(nGauss_),
     ctxPtr_(nullptr)
-{}
+{
+    if (!dgMesh)
+    {
+        FatalErrorInFunction << "dgMesh pointer is null" << abort(FatalError);
+    }
+}
 
 
 // * * * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * * //
 
 template<class Type>
-void cellGaussField<Type>::print() const
-{
-    Info << "Gauss field values for cell " << cellID_ << nl;
-
-    for (label i = 0; i < nGauss_; ++i)
-    {
-        Info << "  Gauss pt " << i << ": " << values_[i] << nl;
-    }
-}
-
-
-template<class Type>
 void Foam::cellGaussField<Type>::interpolateFromDof()
 {
     //const List<vector>& gaussPts = cell_.gaussPoints();
-    const List<List<scalar>>& b = cell_.basis();
+    const List<List<scalar>>& b = cell_->basis();
 
     for (label gp = 0; gp < nGauss_; ++gp)
     {
@@ -153,14 +170,6 @@ Foam::cellGaussField<Type>& Foam::cellGaussField<Type>::operator=
     if (this == &other)
     {
         return *this;
-    }
-
-    if (cellID_ != other.cellID_)
-    {
-        FatalErrorInFunction
-            << "Assignment between different cells is not allowed. "
-            << "cellID_ = " << cellID_ << ", other.cellID_ = " << other.cellID_
-            << abort(FatalError);
     }
 
     cellID_ = other.cellID_;

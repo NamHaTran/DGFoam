@@ -32,14 +32,24 @@ namespace Foam
 {
 // * * * * * * * * * * * * * * * * Constructors  * * * * * * * * * * * * * * //
 
-// Construct from dofField, cellID and mesh
+template<class Type>
+Foam::GaussField<Type>::GaussField()
+:
+    dofField_(nullptr),
+    cellID_(-1),
+    mesh_(nullptr),
+    cellField_(),
+    faceField_(),
+    ctxPtr_(nullptr)
+{}
 
+// Construct from dofField, cellID and mesh
 template<class Type>
 Foam::GaussField<Type>::GaussField
 (
     const dofField<Type>* dofField,
     label cellID,
-    const dgGeomMesh& mesh
+    const dgGeomMesh* mesh
 )
 :
     dofField_(dofField),
@@ -49,7 +59,14 @@ Foam::GaussField<Type>::GaussField
     faceField_(cellID,mesh),
     ctxPtr_(nullptr)
 {
-    const labelList& neighbors = mesh_.cells()[cellID_]->neighborCells();
+    if (!dofField_ || !mesh_)
+    {
+        FatalErrorInFunction
+            << "Null dofField_ or mesh_ pointer in GaussField constructor"
+            << abort(FatalError);
+    }
+
+    const labelList& neighbors = mesh_->cells()[cellID_]->neighborCells();
     List<const cellDof<Type>*> cellsDof(neighbors.size()+1);
 
     // The first entry is the cell itself
@@ -77,7 +94,7 @@ template<class Type>
 Foam::GaussField<Type>::GaussField
 (
     label cellID,
-    const dgGeomMesh& mesh
+    const dgGeomMesh* mesh
 )
 :
     dofField_(nullptr),
@@ -94,7 +111,7 @@ template<class Type>
 Foam::GaussField<Type>::GaussField
 (
     label cellID,
-    const dgGeomMesh& mesh,
+    const dgGeomMesh* mesh,
     const Type& initVal
 )
 :
@@ -105,8 +122,7 @@ Foam::GaussField<Type>::GaussField
     faceField_(cellID, mesh, initVal)
 {}
 
-// Construct container with initial value
-
+// Copy constructor
 template<class Type>
 Foam::GaussField<Type>::GaussField
 (
@@ -161,13 +177,6 @@ void Foam::GaussField<Type>::interpolateFromDof()
 {
     cellField_.interpolateFromDof();
     faceField_.interpolateFromDof();
-}
-
-template<class Type>
-void Foam::GaussField<Type>::print() const
-{
-    cellField_.print();
-    faceField_.print();
 }
 
 // * * * * * * * * * * * * * * Template Instantiations  * * * * * * * * * * //

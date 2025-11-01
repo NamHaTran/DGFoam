@@ -64,10 +64,10 @@ private:
     label cellID_;
 
     //- Reference to geometric mesh
-    const dgGeomMesh& dgMesh_;
+    const dgGeomMesh* dgMesh_ = nullptr;
 
     //- Reference to the geometric cell
-    const dgGeomCell& cell_;
+    const dgGeomCell* cell_ = nullptr;
 
     //- Number of Gauss points in this cell
     label nGauss_;
@@ -86,10 +86,13 @@ private:
 
 public:
 
+    //- Default (empty) constructor
+    cellGaussField();
+
     //- Constructor from DOF object
     cellGaussField
     (
-        const dgGeomMesh& dgMesh,
+        const dgGeomMesh* dgMesh,
         const cellDof<Type>* dof
     );
 
@@ -100,7 +103,7 @@ public:
     cellGaussField
     (
         const label cellID,
-        const dgGeomMesh& dgMesh,
+        const dgGeomMesh* dgMesh,
         const Type& initVal
     );
 
@@ -108,7 +111,7 @@ public:
     cellGaussField
     (
         const label cellID,
-        const dgGeomMesh& dgMesh
+        const dgGeomMesh* dgMesh
     );
 
     //- Return reference to value at Gauss point
@@ -124,16 +127,34 @@ public:
     inline label cellID() const { return cellID_; }
 
     //- Return const reference to geometric mesh
-    inline const dgGeomMesh& dgMesh() const { return dgMesh_; }
+    inline const dgGeomMesh* dgMesh() const 
+    {
+        if (!dgMesh_)
+        {
+            FatalErrorInFunction
+                << "dgMesh_ pointer of cellGaussField is null" << abort(FatalError);
+        }
+        return dgMesh_;
+    }
 
     //- Interpolate values at Gauss points from DOF using basis functions
     void interpolateFromDof();
 
+    //- Set the geometric mesh pointer
+    inline void setMesh(const dgGeomMesh& mesh)
+    {
+        if (dgMesh_)
+        {
+            WarningInFunction
+                << "dgMesh_ pointer is already set. Overwriting existing pointer." 
+                << nl << endl;
+        }
+
+        dgMesh_ = &mesh;
+    }
+
     //- Set the fields context
     inline void setContext(const fieldsContext& ctx) { ctxPtr_ = &ctx;}
-
-    //- Debug print
-    void print() const;
 
     // Operators
 
@@ -142,9 +163,37 @@ public:
 
         //- Assign a constant value to all Gauss points
         cellGaussField<Type>& operator=(const Type& value);
+
+        //- Overload << operator for printing
+        friend Ostream& operator<<(Ostream& os, const cellGaussField& cgf)
+        {
+            os << "cellGaussField for cell " << cgf.cellID() << ":\n";
+            for (label i = 0; i < cgf.size(); ++i)
+            {
+                os << "  Gauss point " << i << ": " << cgf[i] << "\n";
+            }
+            return os;
+        }
+
+    // Specialisations for vector type
+    cellGaussField<scalar> x() const;
+    cellGaussField<scalar> y() const;
+    cellGaussField<scalar> z() const;
+    void setX(const cellGaussField<scalar>& fx);
+    void setY(const cellGaussField<scalar>& fy);
+    void setZ(const cellGaussField<scalar>& fz);
+    void setXYZ
+    (
+        const cellGaussField<scalar>& fx,
+        const cellGaussField<scalar>& fy,
+        const cellGaussField<scalar>& fz
+    );
 };
 
 } // End namespace Foam
+
+// Specialisations for vector type
+#include "cellGaussFieldVectorI.H"
 
 #endif
 

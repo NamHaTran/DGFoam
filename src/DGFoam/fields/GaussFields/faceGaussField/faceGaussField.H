@@ -48,6 +48,7 @@ SourceFiles
 #include "cellDof.H"
 #include "List.H"
 #include "fieldsContext.H"
+// #include "faceGaussFieldVectorI.H"
 
 // Forward declaration
 class fieldsContext;
@@ -65,16 +66,16 @@ class faceGaussField
 private:
 
     //- Reference to geometric mesh
-    const dgGeomMesh& mesh_;
+    const dgGeomMesh* mesh_;
 
     //- Cell ID
     label cellID_;
 
     //- Reference to the geometric cell
-    const dgGeomCell& cell_;
+    const dgGeomCell* cell_;
 
     //- List of face IDs of the cell
-    const labelList& facesID_;
+    const labelList* facesID_;
 
     //- Number of faces
     label nFaces_;
@@ -105,11 +106,14 @@ private:
 
 public:
 
+    //- Default (empty) constructor
+    faceGaussField();
+
     //- Construct from list of cell DOFs (P cell + neighbor cells) and mesh
     faceGaussField
     (
         List<const cellDof<Type>*>& cellsDof,
-        const dgGeomMesh& mesh
+        const dgGeomMesh* mesh
     );
 
     //- Copy constructor
@@ -119,7 +123,7 @@ public:
     faceGaussField
     (
         const label cellID,
-        const dgGeomMesh& mesh,
+        const dgGeomMesh* mesh,
         const Type& initialValues
     );
 
@@ -127,7 +131,7 @@ public:
     faceGaussField
     (
         const label cellID,
-        const dgGeomMesh& mesh
+        const dgGeomMesh* mesh
     );
 
     //- Set the fields context
@@ -145,16 +149,21 @@ public:
     //- Interpolate values from DOF to Gauss points
     void interpolateFromDof();
 
-    // Debug printing
-    void print() const;
-
     // Accessors
 
         //- Return cell ID
         inline label cellID() const { return cellID_; }
 
-        //- Return reference to geometric mesh
-        inline const dgGeomMesh& dgMesh() const { return mesh_; }
+        //- Return pointer to geometric mesh
+        inline const dgGeomMesh* dgMesh() const 
+        {
+            if (!mesh_)
+            {
+                FatalErrorInFunction
+                    << "mesh_ pointer of faceGaussField is null" << abort(FatalError);
+            }
+            return mesh_;
+        }
 
         //- Return value on plus side at global Gauss point index
         inline Type& plusValueAt(const label nG) { return plusValues_[nG]; }
@@ -168,14 +177,26 @@ public:
         //- Return value on minus side (const) at global Gauss point index
         inline const Type& minusValue(const label nG) const { return minusValues_[nG]; }
 
-        //- Return value on plus side at faceI and Gauss point index
+        //- Return value on plus side at local ID faceI and Gauss point index
         inline const Type& plusValue(const label faceI, const label gpI) const
         {
             return plusValues_[gaussOffset_[faceI] + gpI];
         }
 
-        //- Return value on minus side at faceI and Gauss point index
+        //- Return value on minus side at local ID faceI and Gauss point index
         inline const Type& minusValue(const label faceI, const label gpI) const
+        {
+            return minusValues_[gaussOffset_[faceI] + gpI];
+        }
+
+        //- Assign value on plus side at local ID faceI and Gauss point index
+        inline Type& plusValueOnFace(const label faceI, const label gpI)
+        {
+            return plusValues_[gaussOffset_[faceI] + gpI];
+        }
+
+        //- Assign value on minus side at local ID faceI and Gauss point index
+        inline Type& minusValueOnFace(const label faceI, const label gpI)
         {
             return minusValues_[gaussOffset_[faceI] + gpI];
         }
@@ -187,9 +208,40 @@ public:
 
             //- Assign a constant value to all Gauss points
             faceGaussField<Type>& operator=(const Type& value);
+
+            //- Overload << operator for printing
+            friend Ostream& operator<<(Ostream& os, const faceGaussField& fgf)
+            {
+                os << "Gauss field values for all faces of cell " << fgf.cellID() << nl;
+
+                for (label i = 0; i < fgf.nGauss(); ++i)
+                {
+                    os << "  Gauss pt " << i << " on minus side: " << fgf.minusValue(i) << nl;
+                    os << "  Gauss pt " << i << " on plus  side: " << fgf.plusValue(i) << nl;
+                }
+
+                return os;
+            }
+
+        // Specialisations for vector type
+        faceGaussField<scalar> x() const;
+        faceGaussField<scalar> y() const;
+        faceGaussField<scalar> z() const;
+        void setX(const faceGaussField<scalar>& fx);
+        void setY(const faceGaussField<scalar>& fy);
+        void setZ(const faceGaussField<scalar>& fz);
+        void setXYZ
+        (
+            const faceGaussField<scalar>& fx,
+            const faceGaussField<scalar>& fy,
+            const faceGaussField<scalar>& fz
+        );
 };
 
 } // End namespace Foam
+
+// Specialisations for vector type
+#include "faceGaussFieldVectorI.H"
 
 #endif
 

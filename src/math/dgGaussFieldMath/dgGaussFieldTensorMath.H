@@ -25,162 +25,318 @@ License
     along with OpenFOAM.  If not, see <http://www.gnu.org/licenses/>.
 
 Description
-    Tensor math operations for faceGaussField:
+    Tensor math operations for GaussField:
     - dev, symm, skew, tr, det, transpose
     - tensor-tensor, tensor-symmTensor, symmTensor-symmTensor operators
 
 \*---------------------------------------------------------------------------*/
 
-#ifndef Foam_dgFaceGaussFieldTensorMath_H
-#define Foam_dgFaceGaussFieldTensorMath_H
+#ifndef Foam_dgGaussFieldTensorMath_H
+#define Foam_dgGaussFieldTensorMath_H
 
-#include "faceGaussField.H"
-#include "tensor.H"
+#include "GaussField.H"
+#include "dgFaceGaussFieldTensorMath.H"
+#include "dgCellGaussFieldTensorMath.H"
+#include "Tensor.H"
 #include "symmTensor.H"
 #include "sphericalTensor.H"
 #include "scalar.H"
 
 namespace Foam
 {
-namespace dgGaussFieldMath
-{
-
 // * * * * * * * * * * * Tensor utility functions * * * * * * * * * * * //
 
 //- Deviatoric part of tensor field
-faceGaussField<tensor> dev(const faceGaussField<tensor>& A);
+GaussField<tensor> dev(const GaussField<tensor>& A)
+{
+    GaussField<tensor> result(A.cellID(), A.dgMesh());
+    result.cellField() = dev(A.cellField());
+    result.faceField() = dev(A.faceField());
+    return result;
+}
 
 //- Symmetric part of tensor field
-faceGaussField<tensor> symm(const faceGaussField<tensor>& A);
+GaussField<symmTensor> symm(const GaussField<tensor>& A)
+{
+    GaussField<symmTensor> result(A.cellID(), A.dgMesh());
+    result.cellField() = symm(A.cellField());
+    result.faceField() = symm(A.faceField());
+    return result;
+}
 
 //- Skew-symmetric part of tensor field
-faceGaussField<tensor> skew(const faceGaussField<tensor>& A);
+GaussField<tensor> skew(const GaussField<tensor>& A)
+{
+    GaussField<tensor> result(A.cellID(), A.dgMesh());
+    result.cellField() = skew(A.cellField());
+    result.faceField() = skew(A.faceField());
+    return result;
+}
 
 //- Transpose of tensor field
-faceGaussField<tensor> T(const faceGaussField<tensor>& A);
+GaussField<tensor> T(const GaussField<tensor>& A)
+{
+    GaussField<tensor> result(A.cellID(), A.dgMesh());
+    result.cellField() = T(A.cellField());
+    result.faceField() = T(A.faceField());
+    return result;
+}
 
 //- Trace of tensor field
-faceGaussField<scalar> tr(const faceGaussField<tensor>& A);
+GaussField<scalar> tr(const GaussField<tensor>& A)
+{
+    GaussField<scalar> result(A.cellID(), A.dgMesh());
+    result.cellField() = tr(A.cellField());
+    result.faceField() = tr(A.faceField());
+    return result;
+}
 
 //- Determinant of tensor field
-faceGaussField<scalar> det(const faceGaussField<tensor>& A);
+GaussField<scalar> det(const GaussField<tensor>& A)
+{
+    GaussField<scalar> result(A.cellID(), A.dgMesh());
+    result.cellField() = det(A.cellField());
+    result.faceField() = det(A.faceField());
+    return result;
+}
 
+//- Inverse of tensor field
+GaussField<tensor> inv(const GaussField<tensor>& A)
+{
+    GaussField<tensor> result(A.cellID(), A.dgMesh());
+    result.cellField() = inv(A.cellField());
+    result.faceField() = inv(A.faceField());
+    return result;
+}
 
 // * * * * * * * * * * * symmTensor utility functions * * * * * * * * * * * //
 
 //- Trace of symmTensor field
-faceGaussField<scalar> tr(const faceGaussField<symmTensor>& A);
+GaussField<scalar> tr(const GaussField<symmTensor>& A)
+{
+    GaussField<scalar> result(A.cellID(), A.dgMesh());
+    result.cellField() = tr(A.cellField());
+    result.faceField() = tr(A.faceField());
+    return result;
+}
 
 //- Deviatoric part of symmTensor field
-faceGaussField<symmTensor> dev(const faceGaussField<symmTensor>& A);
+GaussField<symmTensor> dev(const GaussField<symmTensor>& A)
+{
+    GaussField<symmTensor> result(A.cellID(), A.dgMesh());
+    result.cellField() = dev(A.cellField());
+    result.faceField() = dev(A.faceField());
+    return result;
+}
 
+//- Inverse of symmTensor field
+GaussField<tensor> inv(const GaussField<symmTensor>& A)
+{
+    GaussField<tensor> result(A.cellID(), A.dgMesh());
+    result.cellField() = inv(A.cellField());
+    result.faceField() = inv(A.faceField());
+    return result;
+}
 
 // * * * * * * * * * * * tensor-tensor operators * * * * * * * * * * * * * //
 
 //- A + B
-faceGaussField<tensor> operator+
+GaussField<tensor> operator+
 (
-    const faceGaussField<tensor>& A,
-    const faceGaussField<tensor>& B
-);
+    const GaussField<tensor>& A,
+    const GaussField<tensor>& B
+)
+{
+    GaussField<tensor> result(A.cellID(), A.dgMesh());
+    result.cellField() = A.cellField() + B.cellField();
+    result.faceField() = A.faceField() + B.faceField();
+    return result;
+}
 
 //- A - B
-faceGaussField<tensor> operator-
+GaussField<tensor> operator-
 (
-    const faceGaussField<tensor>& A,
-    const faceGaussField<tensor>& B
-);
+    const GaussField<tensor>& A,
+    const GaussField<tensor>& B
+)
+{
+    GaussField<tensor> result(A.cellID(), A.dgMesh());
+    result.cellField() = A.cellField() - B.cellField();
+    result.faceField() = A.faceField() - B.faceField();
+    return result;
+}
 
 //- A & B
-faceGaussField<tensor> operator&
+// Normal tensor product: row of A times column of B
+GaussField<tensor> operator&
 (
-    const faceGaussField<tensor>& A,
-    const faceGaussField<tensor>& B
-);
+    const GaussField<tensor>& A,
+    const GaussField<tensor>& B
+)
+{
+    GaussField<tensor> result(A.cellID(), A.dgMesh());
+    result.cellField() = A.cellField() & B.cellField();
+    result.faceField() = A.faceField() & B.faceField();
+    return result;
+}
 
 //- A && B
-faceGaussField<scalar> operator&&
+GaussField<scalar> operator&&
 (
-    const faceGaussField<tensor>& A,
-    const faceGaussField<tensor>& B
-);
+    const GaussField<tensor>& A,
+    const GaussField<tensor>& B
+)
+{
+    GaussField<scalar> result(A.cellID(), A.dgMesh());
+    result.cellField() = A.cellField() && B.cellField();
+    result.faceField() = A.faceField() && B.faceField();
+    return result;
+}
 
 // tensor ± symmTensor
-faceGaussField<tensor> operator+
+GaussField<tensor> operator+
 (
-    const faceGaussField<tensor>& A,
-    const faceGaussField<symmTensor>& B
-);
+    const GaussField<tensor>& A,
+    const GaussField<symmTensor>& B
+)
+{
+    GaussField<tensor> result(A.cellID(), A.dgMesh());
+    result.cellField() = A.cellField() + B.cellField();
+    result.faceField() = A.faceField() + B.faceField();
+    return result;
+}
 
-faceGaussField<tensor> operator-
+GaussField<tensor> operator-
 (
-    const faceGaussField<tensor>& A,
-    const faceGaussField<symmTensor>& B
-);
+    const GaussField<tensor>& A,
+    const GaussField<symmTensor>& B
+)
+{
+    GaussField<tensor> result(A.cellID(), A.dgMesh());
+    result.cellField() = A.cellField() - B.cellField();
+    result.faceField() = A.faceField() - B.faceField();
+    return result;
+}
 
-faceGaussField<tensor> operator&
+// Normal tensor product: row of A times column of B
+GaussField<tensor> operator&
 (
-    const faceGaussField<tensor>& A,
-    const faceGaussField<symmTensor>& B
-);
+    const GaussField<tensor>& A,
+    const GaussField<symmTensor>& B
+)
+{
+    GaussField<tensor> result(A.cellID(), A.dgMesh());
+    result.cellField() = A.cellField() & B.cellField();
+    result.faceField() = A.faceField() & B.faceField();
+    return result;
+}
 
-faceGaussField<scalar> operator&&
+// Double contraction: element-element product and sum
+GaussField<scalar> operator&&
 (
-    const faceGaussField<tensor>& A,
-    const faceGaussField<symmTensor>& B
-);
+    const GaussField<tensor>& A,
+    const GaussField<symmTensor>& B
+)
+{
+    GaussField<scalar> result(A.cellID(), A.dgMesh());
+    result.cellField() = A.cellField() && B.cellField();
+    result.faceField() = A.faceField() && B.faceField();
+    return result;
+}
 
 // symmTensor ± tensor
-faceGaussField<tensor> operator+
+GaussField<tensor> operator+
 (
-    const faceGaussField<symmTensor>& A,
-    const faceGaussField<tensor>& B
-);
+    const GaussField<symmTensor>& A,
+    const GaussField<tensor>& B
+)
+{
+    return B + A;
+}
 
-faceGaussField<tensor> operator-
+GaussField<tensor> operator-
 (
-    const faceGaussField<symmTensor>& A,
-    const faceGaussField<tensor>& B
-);
+    const GaussField<symmTensor>& A,
+    const GaussField<tensor>& B
+)
+{
+    GaussField<tensor> result(A.cellID(), A.dgMesh());
+    result.cellField() = A.cellField() - B.cellField();
+    result.faceField() = A.faceField() - B.faceField();
+    return result;
+}
 
-faceGaussField<tensor> operator&
+// Normal tensor product: row of A times column of B
+GaussField<tensor> operator&
 (
-    const faceGaussField<symmTensor>& A,
-    const faceGaussField<tensor>& B
-);
+    const GaussField<symmTensor>& A,
+    const GaussField<tensor>& B
+)
+{
+    return B & A;
+}
 
-faceGaussField<scalar> operator&&
+// Double contraction: element-element product and sum
+GaussField<scalar> operator&&
 (
-    const faceGaussField<symmTensor>& A,
-    const faceGaussField<tensor>& B
-);
+    const GaussField<symmTensor>& A,
+    const GaussField<tensor>& B
+)
+{
+    return B && A;
+}
 
 // symmTensor ± symmTensor
-faceGaussField<symmTensor> operator+
+GaussField<symmTensor> operator+
 (
-    const faceGaussField<symmTensor>& A,
-    const faceGaussField<symmTensor>& B
-);
+    const GaussField<symmTensor>& A,
+    const GaussField<symmTensor>& B
+)
+{
+    GaussField<symmTensor> result(A.cellID(), A.dgMesh());
+    result.cellField() = A.cellField() + B.cellField();
+    result.faceField() = A.faceField() + B.faceField();
+    return result;
+}
 
-faceGaussField<symmTensor> operator-
+GaussField<symmTensor> operator-
 (
-    const faceGaussField<symmTensor>& A,
-    const faceGaussField<symmTensor>& B
-);
+    const GaussField<symmTensor>& A,
+    const GaussField<symmTensor>& B
+)
+{
+    GaussField<symmTensor> result(A.cellID(), A.dgMesh());
+    result.cellField() = A.cellField() - B.cellField();
+    result.faceField() = A.faceField() - B.faceField();
+    return result;
+}
 
-faceGaussField<tensor> operator&
+// Normal tensor product: row of A times column of B
+GaussField<tensor> operator&
 (
-    const faceGaussField<symmTensor>& A,
-    const faceGaussField<symmTensor>& B
-);
+    const GaussField<symmTensor>& A,
+    const GaussField<symmTensor>& B
+)
+{
+    GaussField<tensor> result(A.cellID(), A.dgMesh());
+    result.cellField() = A.cellField() & B.cellField();
+    result.faceField() = A.faceField() & B.faceField();
+    return result;
+}
 
-faceGaussField<scalar> operator&&
+// Double contraction: element-element product and sum
+GaussField<scalar> operator&&
 (
-    const faceGaussField<symmTensor>& A,
-    const faceGaussField<symmTensor>& B
-);
+    const GaussField<symmTensor>& A,
+    const GaussField<symmTensor>& B
+)
+{
+    GaussField<scalar> result(A.cellID(), A.dgMesh());
+    result.cellField() = A.cellField() && B.cellField();
+    result.faceField() = A.faceField() && B.faceField();
+    return result;
 
-} // End namespace dgGaussFieldMath
+}
 } // End namespace Foam
 
 #endif

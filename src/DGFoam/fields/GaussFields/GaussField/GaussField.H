@@ -53,6 +53,7 @@ SourceFiles
 #include "dofField.H"
 #include "dgGeomMesh.H"
 #include "fieldsContext.H"
+// #include "GaussFieldVectorI.H"
 
 namespace Foam
 {
@@ -73,7 +74,7 @@ private:
     label cellID_;
 
     //- Reference to the DG mesh
-    const dgGeomMesh& mesh_;
+    const dgGeomMesh* mesh_;
 
     //- Gauss field values inside the cell
     cellGaussField<Type> cellField_;
@@ -88,14 +89,17 @@ public:
 
     // Constructors
 
+        //- Default (empty) constructor
+        GaussField();
+
         //- Construct from dofField, cellID and mesh
-        GaussField(const dofField<Type>* dofField, label cellID, const dgGeomMesh& mesh);
+        GaussField(const dofField<Type>* dofField, label cellID, const dgGeomMesh* mesh);
 
         //- Construct as container only (empty data)
-        GaussField(label cellID, const dgGeomMesh& mesh);
+        GaussField(label cellID, const dgGeomMesh* mesh);
 
         //- Construct as container with initial value
-        GaussField(label cellID, const dgGeomMesh& mesh, const Type& initVal);
+        GaussField(label cellID, const dgGeomMesh* mesh, const Type& initVal);
 
         //- Copy constructor
         GaussField(const GaussField<Type>& other);
@@ -108,8 +112,16 @@ public:
 
     // Member access
 
-        //- Return const reference to geometric mesh
-        inline const dgGeomMesh& dgMesh() const { return mesh_; }
+        //- Return const pointer to geometric mesh
+        inline const dgGeomMesh* dgMesh() const 
+        {
+            if (!mesh_)
+            {
+                FatalErrorInFunction
+                    << "mesh_ pointer of GaussField is null" << abort(FatalError);
+            }
+            return mesh_;
+        }
 
         //- Return reference to cellGaussField
         inline cellGaussField<Type>& cellField() { return cellField_; }
@@ -140,12 +152,78 @@ public:
         //- Interpolate values at Gauss points from DOF using basis functions
         void interpolateFromDof();
 
-        // Debug printing
-        void print() const;
+        //- Overload << operator for printing
+        friend Ostream& operator<<(Ostream& os, const GaussField& gf)
+        {
+            os << "GaussField for cell " << gf.cellID() << ":\n";
+            os << "Cell Gauss Field:\n" << gf.cellField() << "\n";
+            os << "Face Gauss Field:\n" << gf.faceField() << "\n";
+            return os;
+        }
+
+        //- Assign value to volume Gauss point
+        inline Type& cellValueAt(const label nG)
+        {
+            return cellField_[nG];
+        } 
+
+        //- Access value at volume Gauss point (const)
+        inline const Type& cellValueAt(const label nG) const
+        {
+            return cellField_[nG];
+        } 
+
+        //- Assign value to face Gauss point (plus side), faceI is local face ID on list faces of the cell
+        inline Type& facePlusValueAt(const label faceI, const label gpI)
+        {
+            return faceField_.plusValueOnFace(faceI, gpI);
+        }
+
+        //- Access value at face Gauss point (plus side, const), faceI is local face ID on list faces of the cell
+        inline const Type& facePlusValueAt(const label faceI, const label gpI) const
+        {
+            return faceField_.plusValue(faceI, gpI);
+        }
+
+        //- Assign value to face Gauss point (minus side), faceI is local face ID on list faces of the cell
+        inline Type& faceMinusValueAt(const label faceI, const label gpI)
+        {
+            return faceField_.minusValueOnFace(faceI, gpI);
+        }
+
+        //- Access value at face Gauss point (minus side, const), faceI is local face ID on list faces of the cell
+        inline const Type& faceMinusValueAt(const label faceI, const label gpI) const
+        {
+            return faceField_.minusValue(faceI, gpI);
+        }
+
+        //- Return cellGaussField
+        inline cellGaussField<Type>& getCellGaussField() { return cellField_; }
+
+        //- Return faceGaussField
+        inline faceGaussField<Type>& getFaceGaussField() { return faceField_; }
+
+    // Specialisations for vector type
+    GaussField<scalar> x() const;
+    GaussField<scalar> y() const;
+    GaussField<scalar> z() const;
+    void setX(const GaussField<scalar>& fx);
+    void setY(const GaussField<scalar>& fy);
+    void setZ(const GaussField<scalar>& fz);
+    void setXYZ
+    (
+        const GaussField<scalar>& fx,
+        const GaussField<scalar>& fy,
+        const GaussField<scalar>& fz
+    );
 };
 
 } // End namespace Foam
 
+// Specialisations for vector type
+#include "GaussFieldVectorI.H"
+
 #endif
 
 // ************************************************************************* //
+

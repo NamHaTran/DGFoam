@@ -35,152 +35,356 @@ Description
 #define Foam_dgFaceGaussFieldTensorMath_H
 
 #include "faceGaussField.H"
-#include "tensor.H"
+#include "Tensor.H"
 #include "symmTensor.H"
 #include "sphericalTensor.H"
 #include "scalar.H"
 
 namespace Foam
 {
-namespace dgGaussFieldMath
+// * * * * * * * * * * * Tensor utilities * * * * * * * * * * //
+
+inline faceGaussField<tensor> dev(const faceGaussField<tensor>& A)
 {
+    faceGaussField<tensor> result(A.cellID(), A.dgMesh());
+    for (label gp = 0; gp < A.nGauss(); ++gp)
+    {
+        result.plusValueAt(gp)  = dev(A.plusValue(gp));
+        result.minusValueAt(gp) = dev(A.minusValue(gp));
+    }
+    return result;
+}
 
-// * * * * * * * * * * * Tensor utility functions * * * * * * * * * * * //
+inline faceGaussField<symmTensor> symm(const faceGaussField<tensor>& A)
+{
+    faceGaussField<symmTensor> result(A.cellID(), A.dgMesh());
+    for (label gp = 0; gp < A.nGauss(); ++gp)
+    {
+        result.plusValueAt(gp)  = symm(A.plusValue(gp));
+        result.minusValueAt(gp) = symm(A.minusValue(gp));
+    }
+    return result;
+}
 
-//- Deviatoric part of tensor field
-faceGaussField<tensor> dev(const faceGaussField<tensor>& A);
+inline faceGaussField<tensor> skew(const faceGaussField<tensor>& A)
+{
+    faceGaussField<tensor> result(A.cellID(), A.dgMesh());
+    for (label gp = 0; gp < A.nGauss(); ++gp)
+    {
+        result.plusValueAt(gp)  = skew(A.plusValue(gp));
+        result.minusValueAt(gp) = skew(A.minusValue(gp));
+    }
+    return result;
+}
 
-//- Symmetric part of tensor field
-faceGaussField<tensor> symm(const faceGaussField<tensor>& A);
+inline faceGaussField<scalar> tr(const faceGaussField<tensor>& A)
+{
+    faceGaussField<scalar> result(A.cellID(), A.dgMesh());
+    for (label gp = 0; gp < A.nGauss(); ++gp)
+    {
+        result.plusValueAt(gp)  = tr(A.plusValue(gp));
+        result.minusValueAt(gp) = tr(A.minusValue(gp));
+    }
+    return result;
+}
 
-//- Skew-symmetric part of tensor field
-faceGaussField<tensor> skew(const faceGaussField<tensor>& A);
+inline faceGaussField<scalar> det(const faceGaussField<tensor>& A)
+{
+    faceGaussField<scalar> result(A.cellID(), A.dgMesh());
+    for (label gp = 0; gp < A.nGauss(); ++gp)
+    {
+        result.plusValueAt(gp)  = det(A.plusValue(gp));
+        result.minusValueAt(gp) = det(A.minusValue(gp));
+    }
+    return result;
+}
 
-//- Transpose of tensor field
-faceGaussField<tensor> T(const faceGaussField<tensor>& A);
+inline faceGaussField<tensor> T(const faceGaussField<tensor>& A)
+{
+    faceGaussField<tensor> result(A.cellID(), A.dgMesh());
+    for (label gp = 0; gp < A.nGauss(); ++gp)
+    {
+        result.plusValueAt(gp)  = T(A.plusValue(gp));
+        result.minusValueAt(gp) = T(A.minusValue(gp));
+    }
+    return result;
+}
 
-//- Trace of tensor field
-faceGaussField<scalar> tr(const faceGaussField<tensor>& A);
+inline faceGaussField<tensor> inv(const faceGaussField<tensor>& A)
+{
+    faceGaussField<tensor> result(A.cellID(), A.dgMesh());
+    for (label gp = 0; gp < A.nGauss(); ++gp)
+    {
+        result.plusValueAt(gp)  = inv(A.plusValue(gp));
+        result.minusValueAt(gp) = inv(A.minusValue(gp));
+    }
+    return result;
+}
 
-//- Determinant of tensor field
-faceGaussField<scalar> det(const faceGaussField<tensor>& A);
+// * * * * * * * symmTensor utilities * * * * * * * //
 
+inline faceGaussField<scalar> tr(const faceGaussField<symmTensor>& A)
+{
+    faceGaussField<scalar> result(A.cellID(), A.dgMesh());
+    for (label gp = 0; gp < A.nGauss(); ++gp)
+    {
+        result.plusValueAt(gp)  = tr(A.plusValue(gp));
+        result.minusValueAt(gp) = tr(A.minusValue(gp));
+    }
+    return result;
+}
 
-// * * * * * * * * * * * symmTensor utility functions * * * * * * * * * * * //
+inline faceGaussField<symmTensor> dev(const faceGaussField<symmTensor>& A)
+{
+    faceGaussField<symmTensor> result(A.cellID(), A.dgMesh());
+    for (label gp = 0; gp < A.nGauss(); ++gp)
+    {
+        result.plusValueAt(gp)  = dev(A.plusValue(gp));
+        result.minusValueAt(gp) = dev(A.minusValue(gp));
+    }
+    return result;
+}
 
-//- Trace of symmTensor field
-faceGaussField<scalar> tr(const faceGaussField<symmTensor>& A);
+inline faceGaussField<tensor> inv(const faceGaussField<symmTensor>& A)
+{
+    faceGaussField<tensor> result(A.cellID(), A.dgMesh());
+    for (label gp = 0; gp < A.nGauss(); ++gp)
+    {
+        result.plusValueAt(gp)  = inv(A.plusValue(gp));
+        result.minusValueAt(gp) = inv(A.minusValue(gp));
+    }
+    return result;
+}
 
-//- Deviatoric part of symmTensor field
-faceGaussField<symmTensor> dev(const faceGaussField<symmTensor>& A);
+// * * * * * * * tensor - tensor * * * * * * * //
 
-
-// * * * * * * * * * * * tensor-tensor operators * * * * * * * * * * * * * //
-
-//- A + B
-faceGaussField<tensor> operator+
+inline faceGaussField<tensor> operator+
 (
     const faceGaussField<tensor>& A,
     const faceGaussField<tensor>& B
-);
+)
+{
+    faceGaussField<tensor> result(A.cellID(), A.dgMesh());
+    for (label gp = 0; gp < A.nGauss(); ++gp)
+    {
+        result.plusValueAt(gp)  = A.plusValue(gp) + B.plusValue(gp);
+        result.minusValueAt(gp) = A.minusValue(gp) + B.minusValue(gp);
+    }
+    return result;
+}
 
-//- A - B
-faceGaussField<tensor> operator-
+inline faceGaussField<tensor> operator-
 (
     const faceGaussField<tensor>& A,
     const faceGaussField<tensor>& B
-);
+)
+{
+    faceGaussField<tensor> result(A.cellID(), A.dgMesh());
+    for (label gp = 0; gp < A.nGauss(); ++gp)
+    {
+        result.plusValueAt(gp)  = A.plusValue(gp) - B.plusValue(gp);
+        result.minusValueAt(gp) = A.minusValue(gp) - B.minusValue(gp);
+    }
+    return result;
+}
 
-//- A & B
-faceGaussField<tensor> operator&
+inline faceGaussField<tensor> operator&
 (
     const faceGaussField<tensor>& A,
     const faceGaussField<tensor>& B
-);
+)
+{
+    faceGaussField<tensor> result(A.cellID(), A.dgMesh());
+    for (label gp = 0; gp < A.nGauss(); ++gp)
+    {
+        result.plusValueAt(gp)  = A.plusValue(gp) & B.plusValue(gp);
+        result.minusValueAt(gp) = A.minusValue(gp) & B.minusValue(gp);
+    }
+    return result;
+}
 
-//- A && B
-faceGaussField<scalar> operator&&
+inline faceGaussField<scalar> operator&&
 (
     const faceGaussField<tensor>& A,
     const faceGaussField<tensor>& B
-);
+)
+{
+    faceGaussField<scalar> result(A.cellID(), A.dgMesh());
+    for (label gp = 0; gp < A.nGauss(); ++gp)
+    {
+        result.plusValueAt(gp)  = A.plusValue(gp) && B.plusValue(gp);
+        result.minusValueAt(gp) = A.minusValue(gp) && B.minusValue(gp);
+    }
+    return result;
+}
 
-// tensor ± symmTensor
-faceGaussField<tensor> operator+
+// * * * * * * * tensor ± symmTensor * * * * * * * //
+
+inline faceGaussField<tensor> operator+
 (
     const faceGaussField<tensor>& A,
     const faceGaussField<symmTensor>& B
-);
+)
+{
+    faceGaussField<tensor> result(A.cellID(), A.dgMesh());
+    for (label gp = 0; gp < A.nGauss(); ++gp)
+    {
+        result.plusValueAt(gp)  = A.plusValue(gp) + B.plusValue(gp);
+        result.minusValueAt(gp) = A.minusValue(gp) + B.minusValue(gp);
+    }
+    return result;
+}
 
-faceGaussField<tensor> operator-
+inline faceGaussField<tensor> operator-
 (
     const faceGaussField<tensor>& A,
     const faceGaussField<symmTensor>& B
-);
+)
+{
+    faceGaussField<tensor> result(A.cellID(), A.dgMesh());
+    for (label gp = 0; gp < A.nGauss(); ++gp)
+    {
+        result.plusValueAt(gp)  = A.plusValue(gp) - B.plusValue(gp);
+        result.minusValueAt(gp) = A.minusValue(gp) - B.minusValue(gp);
+    }
+    return result;
+}
 
-faceGaussField<tensor> operator&
+inline faceGaussField<tensor> operator&
 (
     const faceGaussField<tensor>& A,
     const faceGaussField<symmTensor>& B
-);
+)
+{
+    faceGaussField<tensor> result(A.cellID(), A.dgMesh());
+    for (label gp = 0; gp < A.nGauss(); ++gp)
+    {
+        result.plusValueAt(gp)  = A.plusValue(gp) & B.plusValue(gp);
+        result.minusValueAt(gp) = A.minusValue(gp) & B.minusValue(gp);
+    }
+    return result;
+}
 
-faceGaussField<scalar> operator&&
+inline faceGaussField<scalar> operator&&
 (
     const faceGaussField<tensor>& A,
     const faceGaussField<symmTensor>& B
-);
+)
+{
+    faceGaussField<scalar> result(A.cellID(), A.dgMesh());
+    for (label gp = 0; gp < A.nGauss(); ++gp)
+    {
+        result.plusValueAt(gp)  = A.plusValue(gp) && B.plusValue(gp);
+        result.minusValueAt(gp) = A.minusValue(gp) && B.minusValue(gp);
+    }
+    return result;
+}
 
-// symmTensor ± tensor
-faceGaussField<tensor> operator+
+// * * * * * * * symmTensor ± tensor * * * * * * * //
+
+inline faceGaussField<tensor> operator+
 (
     const faceGaussField<symmTensor>& A,
     const faceGaussField<tensor>& B
-);
+)
+{
+    return B + A;
+}
 
-faceGaussField<tensor> operator-
+inline faceGaussField<tensor> operator-
 (
     const faceGaussField<symmTensor>& A,
     const faceGaussField<tensor>& B
-);
+)
+{
+    faceGaussField<tensor> result(A.cellID(), A.dgMesh());
+    for (label gp = 0; gp < A.nGauss(); ++gp)
+    {
+        result.plusValueAt(gp)  = A.plusValue(gp) - B.plusValue(gp);
+        result.minusValueAt(gp) = A.minusValue(gp) - B.minusValue(gp);
+    }
+    return result;
+}
 
-faceGaussField<tensor> operator&
+inline faceGaussField<tensor> operator&
 (
     const faceGaussField<symmTensor>& A,
     const faceGaussField<tensor>& B
-);
+)
+{
+    return B & A;
+}
 
-faceGaussField<scalar> operator&&
+inline faceGaussField<scalar> operator&&
 (
     const faceGaussField<symmTensor>& A,
     const faceGaussField<tensor>& B
-);
+)
+{
+    return B && A;
+}
 
-// symmTensor ± symmTensor
-faceGaussField<symmTensor> operator+
+// * * * * * * * symmTensor ± symmTensor * * * * * * * //
+
+inline faceGaussField<symmTensor> operator+
 (
     const faceGaussField<symmTensor>& A,
     const faceGaussField<symmTensor>& B
-);
+)
+{
+    faceGaussField<symmTensor> result(A.cellID(), A.dgMesh());
+    for (label gp = 0; gp < A.nGauss(); ++gp)
+    {
+        result.plusValueAt(gp)  = A.plusValue(gp) + B.plusValue(gp);
+        result.minusValueAt(gp) = A.minusValue(gp) + B.minusValue(gp);
+    }
+    return result;
+}
 
-faceGaussField<symmTensor> operator-
+inline faceGaussField<symmTensor> operator-
 (
     const faceGaussField<symmTensor>& A,
     const faceGaussField<symmTensor>& B
-);
+)
+{
+    faceGaussField<symmTensor> result(A.cellID(), A.dgMesh());
+    for (label gp = 0; gp < A.nGauss(); ++gp)
+    {
+        result.plusValueAt(gp)  = A.plusValue(gp) - B.plusValue(gp);
+        result.minusValueAt(gp) = A.minusValue(gp) - B.minusValue(gp);
+    }
+    return result;
+}
 
-faceGaussField<tensor> operator&
+inline faceGaussField<tensor> operator&
 (
     const faceGaussField<symmTensor>& A,
     const faceGaussField<symmTensor>& B
-);
+)
+{
+    faceGaussField<tensor> result(A.cellID(), A.dgMesh());
+    for (label gp = 0; gp < A.nGauss(); ++gp)
+    {
+        result.plusValueAt(gp)  = A.plusValue(gp) & B.plusValue(gp);
+        result.minusValueAt(gp) = A.minusValue(gp) & B.minusValue(gp);
+    }
+    return result;
+}
 
-faceGaussField<scalar> operator&&
+inline faceGaussField<scalar> operator&&
 (
     const faceGaussField<symmTensor>& A,
     const faceGaussField<symmTensor>& B
-);
-
-} // End namespace dgGaussFieldMath
+)
+{
+    faceGaussField<scalar> result(A.cellID(), A.dgMesh());
+    for (label gp = 0; gp < A.nGauss(); ++gp)
+    {
+        result.plusValueAt(gp)  = A.plusValue(gp) && B.plusValue(gp);
+        result.minusValueAt(gp) = A.minusValue(gp) && B.minusValue(gp);
+    }
+    return result;
+}
 } // End namespace Foam
 
 #endif
