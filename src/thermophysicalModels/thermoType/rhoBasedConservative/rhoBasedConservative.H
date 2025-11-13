@@ -45,6 +45,7 @@ SourceFiles
 
 #include "dgThermo.H"
 #include "addToRunTimeSelectionTable.H"
+#include "GaussField.H"
 
 namespace Foam
 {

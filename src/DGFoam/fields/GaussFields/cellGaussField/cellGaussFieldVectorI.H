@@ -157,6 +157,66 @@ inline void cellGaussField<vector>::setXYZ
     }
 }
 
+//- Limit vector magnitudes to a maximum value
+template<>
+inline void cellGaussField<vector>::limitMax(const scalar magMax)
+{
+    for (label gp = 0; gp < size(); ++gp)
+    {
+        vector& v = values_[gp];
+        const scalar m = mag(v);
+
+        if (m > magMax && m > VSMALL)
+        {
+            // Scale vector down to magnitude = magMax
+            v *= (magMax / m);
+        }
+    }
+}
+
+
+//- Limit vector magnitudes to a minimum value
+template<>
+inline void cellGaussField<vector>::limitMin(const scalar magMin)
+{
+    for (label gp = 0; gp < size(); ++gp)
+    {
+        vector& v = values_[gp];
+        const scalar m = mag(v);
+
+        if (m < magMin && m > VSMALL)
+        {
+            // Scale vector up to magnitude = magMin
+            v *= (magMin / m);
+        }
+    }
+}
+
+
+//- Limit vector magnitudes to lie within [magMin, magMax]
+template<>
+inline void cellGaussField<vector>::limitRange
+(
+    const scalar magMin,
+    const scalar magMax
+)
+{
+    for (label gp = 0; gp < size(); ++gp)
+    {
+        vector& v = values_[gp];
+        const scalar m = mag(v);
+
+        if (m > magMax && m > VSMALL)
+        {
+            v *= (magMax / m);
+        }
+        else if (m < magMin && m > VSMALL)
+        {
+            v *= (magMin / m);
+        }
+    }
+}
+
 // ************************************************************************* //
 
 } // End namespace Foam

@@ -156,6 +156,94 @@ inline void faceGaussField<vector>::setXYZ
     }
 }
 
+//- Limit vector magnitudes (plus/minus) to a maximum value
+template<>
+inline void faceGaussField<vector>::limitMax(const scalar magMax)
+{
+    for (label gp = 0; gp < nGauss(); ++gp)
+    {
+        vector& vPlus = plusValues_[gp];
+        vector& vMinus = minusValues_[gp];
+
+        const scalar magP = mag(vPlus);
+        const scalar magM = mag(vMinus);
+
+        if (magP > magMax && magP > VSMALL)
+        {
+            vPlus *= (magMax / magP);
+        }
+
+        if (magM > magMax && magM > VSMALL)
+        {
+            vMinus *= (magMax / magM);
+        }
+    }
+}
+
+
+//- Limit vector magnitudes (plus/minus) to a minimum value
+template<>
+inline void faceGaussField<vector>::limitMin(const scalar magMin)
+{
+    for (label gp = 0; gp < nGauss(); ++gp)
+    {
+        vector& vPlus = plusValues_[gp];
+        vector& vMinus = minusValues_[gp];
+
+        const scalar magP = mag(vPlus);
+        const scalar magM = mag(vMinus);
+
+        if (magP < magMin && magP > VSMALL)
+        {
+            vPlus *= (magMin / magP);
+        }
+
+        if (magM < magMin && magM > VSMALL)
+        {
+            vMinus *= (magMin / magM);
+        }
+    }
+}
+
+
+//- Limit vector magnitudes (plus/minus) to lie within [magMin, magMax]
+template<>
+inline void faceGaussField<vector>::limitRange
+(
+    const scalar magMin,
+    const scalar magMax
+)
+{
+    for (label gp = 0; gp < nGauss(); ++gp)
+    {
+        vector& vPlus = plusValues_[gp];
+        vector& vMinus = minusValues_[gp];
+
+        const scalar magP = mag(vPlus);
+        const scalar magM = mag(vMinus);
+
+        // Limit plus side
+        if (magP > magMax && magP > VSMALL)
+        {
+            vPlus *= (magMax / magP);
+        }
+        else if (magP < magMin && magP > VSMALL)
+        {
+            vPlus *= (magMin / magP);
+        }
+
+        // Limit minus side
+        if (magM > magMax && magM > VSMALL)
+        {
+            vMinus *= (magMax / magM);
+        }
+        else if (magM < magMin && magM > VSMALL)
+        {
+            vMinus *= (magMin / magM);
+        }
+    }
+}
+
 } // namespace Foam
 
 // ************************************************************************* //

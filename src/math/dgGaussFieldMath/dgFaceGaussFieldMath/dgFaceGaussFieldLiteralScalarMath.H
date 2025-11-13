@@ -355,6 +355,81 @@ inline faceGaussField<scalar> pow
     return result;
 }
 
+// Comparison operators between faceGaussField<scalar> and literal scalar
+inline bool operator>
+(
+    const faceGaussField<scalar>& A,
+    const scalar B
+)
+{
+    for (label gp = 0; gp < A.nGauss(); ++gp)
+    {
+        if (!((A.plusValue(gp) > B) && (A.minusValue(gp) > B))) return false;
+    }
+    return true;
+}
+
+inline bool operator>=
+(
+    const faceGaussField<scalar>& A,
+    const scalar B
+)
+{
+    for (label gp = 0; gp < A.nGauss(); ++gp)
+    {
+        if (!((A.plusValue(gp) >= B) && (A.minusValue(gp) >= B))) return false;
+    }
+    return true;
+}
+
+inline bool operator<
+(
+    const faceGaussField<scalar>& A,
+    const scalar B
+)
+{
+    for (label gp = 0; gp < A.nGauss(); ++gp)
+    {
+        if (!((A.plusValue(gp) < B) && (A.minusValue(gp) < B))) return false;
+    }
+    return true;
+}
+
+inline bool operator<=
+(
+    const faceGaussField<scalar>& A,
+    const scalar B
+)
+{
+    for (label gp = 0; gp < A.nGauss(); ++gp)
+    {
+        if (!((A.plusValue(gp) <= B) && (A.minusValue(gp) <= B))) return false;
+    }
+    return true;
+}
+
+inline bool operator==
+(
+    const faceGaussField<scalar>& A,
+    const scalar B
+)
+{
+    for (label gp = 0; gp < A.nGauss(); ++gp)
+    {
+        if (!((A.plusValue(gp) == B) && (A.minusValue(gp) == B))) return false;
+    }
+    return true;
+}
+
+inline bool operator!=
+(
+    const faceGaussField<scalar>& A,
+    const scalar B
+)
+{
+    return !(A == B);
+}
+
 } // End namespace Foam
 
 #endif

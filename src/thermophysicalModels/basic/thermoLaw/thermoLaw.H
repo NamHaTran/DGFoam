@@ -46,6 +46,7 @@ SourceFiles
 #include "runTimeSelectionTables.H"
 #include "scalar.H"
 #include "word.H"
+#include "GaussField.H"
 
 namespace Foam
 {
@@ -87,22 +88,16 @@ public:
     static autoPtr<thermoLaw> New(const word& name, const dictionary& dict);
 
     //- Specific heat capacity Cp(T) [J/(kg·K)]
-    virtual scalar Cp(const scalar T) const = 0;
+    virtual GaussField<scalar> Cp(const GaussField<scalar>& T) const = 0;
 
     //- Sensible enthalpy h(T) [J/kg]
-    virtual scalar h(const scalar T) const = 0;
+    virtual GaussField<scalar> h(const GaussField<scalar>& T) const = 0;
 
     //- Sensible internal energy e(T) [J/kg]
-    virtual scalar e(const scalar T) const = 0;
-
-    //- T from sensible internal energy
-    virtual scalar TfrE(const scalar e) const = 0;
-
-    //- T from sensible enthalpy energy
-    virtual scalar TfrH(const scalar e) const = 0;
+    virtual GaussField<scalar> e(const GaussField<scalar>& T) const = 0;
 
     //- Speed of sound a(T) (optional; default aborts)
-    virtual scalar a(const scalar T) const = 0;
+    virtual GaussField<scalar> a(const GaussField<scalar>& T) const = 0;
 };
 
 } // End namespace Foam

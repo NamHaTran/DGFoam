@@ -273,6 +273,92 @@ inline cellGaussField<sphericalTensor> operator/
     }
     return result;
 }
+
+// Comparison operators between cellGaussField<scalar>
+inline bool operator<
+(
+    const cellGaussField<scalar>& A,
+    const cellGaussField<scalar>& B
+)
+{
+    if (A.size() != B.size()) return false;
+
+    for (label i = 0; i < A.size(); ++i)
+    {
+        if (!(A[i] < B[i])) return false;
+    }
+    return true;
+}
+
+inline bool operator<=
+(
+    const cellGaussField<scalar>& A,
+    const cellGaussField<scalar>& B
+)
+{
+    if (A.size() != B.size()) return false;
+
+    for (label i = 0; i < A.size(); ++i)
+    {
+        if (!(A[i] <= B[i])) return false;
+    }
+    return true;
+}
+
+inline bool operator>
+(
+    const cellGaussField<scalar>& A,
+    const cellGaussField<scalar>& B
+)
+{
+    if (A.size() != B.size()) return false;
+
+    for (label i = 0; i < A.size(); ++i)
+    {
+        if (!(A[i] > B[i])) return false;
+    }
+    return true;
+}
+
+inline bool operator>=
+(
+    const cellGaussField<scalar>& A,
+    const cellGaussField<scalar>& B
+)
+{
+    if (A.size() != B.size()) return false;
+
+    for (label i = 0; i < A.size(); ++i)
+    {
+        if (!(A[i] >= B[i])) return false;
+    }
+    return true;
+}
+
+inline bool operator==
+(
+    const cellGaussField<scalar>& A,
+    const cellGaussField<scalar>& B
+)
+{
+    if (A.size() != B.size()) return false;
+
+    for (label i = 0; i < A.size(); ++i)
+    {
+        if (!(A[i] == B[i])) return false;
+    }
+    return true;
+}
+
+inline bool operator!=
+(
+    const cellGaussField<scalar>& A,
+    const cellGaussField<scalar>& B
+)
+{
+    return !(A == B);
+}
+
 } // End namespace Foam
 
 #endif

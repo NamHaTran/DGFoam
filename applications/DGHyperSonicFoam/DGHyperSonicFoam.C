@@ -71,17 +71,13 @@ Description
 #include "dgGeomMesh.H"
 
 // Test libs
-#include "dgThermo.H"
 #include "dgGeneralBoundaryManager.H"
 //#include "cellDof.H"
-#include "dofField.H"
 //#include "cellGaussField.H"
 //#include "faceGaussField.H"
 #include "GaussField.H"
-#include "dgGaussFieldLiteralScalarMath.H"
-#include "dgGaussFieldScalarMath.H"
-#include "dgGaussFieldVectorMath.H"
-#include "dgGaussFieldTensorMath.H"
+#include "dgField.H"
+
 #include "dgBasisField.H"
 
 
@@ -113,6 +109,18 @@ int main(int argc, char *argv[])
     // Create the DG fields
     #include "createDGFields.H"
 
+    Info<< "\n--- Checking registered objects in mesh.thisDb() ---" << nl;
+
+    const objectRegistry& db = mesh.thisDb();
+    forAllConstIter(objectRegistry, db, iter)
+    {
+        Info<< "Registered object: " << iter()->name()
+            << " (type: " << iter()->type() << ")" << nl;
+    }
+
+    Info<< "----------------------------------------------------" << nl;
+
+
     // It's possible to iterate over every cell in a standard C++ for loop
     for (label cellI = 0; cellI < mesh.C().size(); cellI++)
     {
@@ -132,6 +140,7 @@ int main(int argc, char *argv[])
                 Info << "//-------------------------------------------//" << endl << endl;
             }
 
+            /*
             Foam::GaussField<tensor> T1
             (
                 cellI,
@@ -168,6 +177,7 @@ int main(int argc, char *argv[])
                 0.2, 2.0, 0.4,
                 0.3, 0.4, 3.0 )
             );
+            */
         }
     }
 

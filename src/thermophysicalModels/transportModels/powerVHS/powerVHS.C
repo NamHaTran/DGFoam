@@ -67,7 +67,7 @@ Foam::powerVHS::powerVHS
 // * * * * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * //
 
 // Compute mu(T) using power law
-Foam::scalar Foam::powerVHS::mu(const scalar T) const
+Foam::GaussField<scalar> Foam::powerVHS::mu(const GaussField<scalar>& T) const
 {
     // Step: basic guard for temperature domain
     if (T <= scalar(0))
@@ -78,15 +78,16 @@ Foam::scalar Foam::powerVHS::mu(const scalar T) const
     }
 
     // Step: compute mu(T) = muRef_ * (T/TRef_)^omega_
-    const scalar theta = T/TRef_;
-    return muRef_ * std::pow(theta, omega_);
+    const GaussField<scalar> theta = T/TRef_;
+    return muRef_ * pow(theta, omega_);
 }
 
 
 // Return constant Prandtl number
-Foam::scalar Foam::powerVHS::Pr(const scalar) const
+Foam::GaussField<scalar> Foam::powerVHS::Pr(const GaussField<scalar>& T) const
 {
-    return Pr0_;
+    GaussField<scalar> Pr0(T.cellID(), T.dgMesh(), Pr0_);
+    return Pr0;
 }
 
 

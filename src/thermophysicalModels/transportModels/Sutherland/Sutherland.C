@@ -63,7 +63,7 @@ Foam::Sutherland::Sutherland
 // * * * * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * //
 
 // mu(T) = muRef * (T/TRef)^(3/2) * (TRef + S)/(T + S)
-Foam::scalar Foam::Sutherland::mu(const scalar T) const
+Foam::GaussField<scalar> Foam::Sutherland::mu(const GaussField<scalar>& T) const
 {
     // Guard: T must be positive
     if (T <= scalar(0))
@@ -73,7 +73,7 @@ Foam::scalar Foam::Sutherland::mu(const scalar T) const
             << exit(FatalError);
     }
 
-    const scalar denom = T + S_;
+    const GaussField<scalar> denom = T + S_;
 
     // Guard: avoid division by zero
     if (denom == scalar(0))
@@ -83,14 +83,14 @@ Foam::scalar Foam::Sutherland::mu(const scalar T) const
             << exit(FatalError);
     }
 
-    const scalar muT = As_ * std::pow(T, scalar(1.5)) / denom;
+    const GaussField<scalar> muT = As_ * pow(T, scalar(1.5)) / denom;
 
     return muT;
 }
 
 
 // Pr(T): constant Prandtl number
-Foam::scalar Foam::Sutherland::Pr(const scalar T) const
+Foam::GaussField<scalar> Foam::Sutherland::Pr(const GaussField<scalar>& T) const
 {
     return Pr0_;
 }

@@ -241,6 +241,61 @@ GaussField<sphericalTensor> operator/
     return result;
 }
 
+// Comparison operators between GaussField<scalar>
+inline bool operator>
+(
+    const GaussField<scalar>& A,
+    const GaussField<scalar>& B
+)
+{
+    return (A.cellField() > B.cellField()) && (A.faceField() > B.faceField());
+}
+
+inline bool operator>=
+(
+    const GaussField<scalar>& A,
+    const GaussField<scalar>& B
+)
+{
+    return (A.cellField() >= B.cellField()) && (A.faceField() >= B.faceField());
+}
+
+inline bool operator<
+(
+    const GaussField<scalar>& A,
+    const GaussField<scalar>& B
+)
+{
+    return (A.cellField() < B.cellField()) && (A.faceField() < B.faceField());
+}
+
+inline bool operator<=
+(
+    const GaussField<scalar>& A,
+    const GaussField<scalar>& B
+)
+{
+    return (A.cellField() <= B.cellField()) && (A.faceField() <= B.faceField());
+}
+
+inline bool operator==
+(
+    const GaussField<scalar>& A,
+    const GaussField<scalar>& B
+)
+{
+    return (A.cellField() == B.cellField()) && (A.faceField() == B.faceField());
+}
+
+inline bool operator!=
+(
+    const GaussField<scalar>& A,
+    const GaussField<scalar>& B
+)
+{
+    return !(A == B);
+}
+
 } // End namespace Foam
 
 #endif

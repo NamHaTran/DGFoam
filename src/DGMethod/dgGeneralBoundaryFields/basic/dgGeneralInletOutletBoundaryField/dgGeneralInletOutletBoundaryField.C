@@ -28,8 +28,6 @@ License
 #include "dgGeneralBoundaryFieldMacros.H"
 #include "addToRunTimeSelectionTable.H"
 #include "dictionary.H"
-#include "faceGaussField.H"
-#include "fieldsContext.H"
 
 namespace Foam
 {
@@ -65,6 +63,7 @@ void dgGeneralInletOutletBoundaryField<Type>::updateValue
     Type& plusGrad
 ) const
 {
+    /*
     const faceGaussField<vector>& V =
         this->ctxPtr_->template lookupFaceField<vector>("U");
 
@@ -78,7 +77,7 @@ void dgGeneralInletOutletBoundaryField<Type>::updateValue
     else // Outlet: flow out of domain
     {
         plusValue = minusValue;
-    }
+    */
 }
 
 

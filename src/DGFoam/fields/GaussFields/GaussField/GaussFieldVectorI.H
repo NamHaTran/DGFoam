@@ -144,6 +144,37 @@ inline void GaussField<vector>::setXYZ
     faceField_.setXYZ(fx.faceField(), fy.faceField(), fz.faceField());
 }
 
+//- Limit all Gauss-point values (cell and face) to a maximum value
+template<>
+inline void GaussField<vector>::limitMax(const scalar maxVal)
+{
+    cellField_.limitMax(maxVal);
+    faceField_.limitMax(maxVal);
+}
+
+
+//- Limit all Gauss-point values (cell and face) to a minimum value
+template<>
+inline void GaussField<vector>::limitMin(const scalar minVal)
+{
+    cellField_.limitMin(minVal);
+    faceField_.limitMin(minVal);
+}
+
+
+//- Limit all Gauss-point values (cell and face) to lie within [minVal, maxVal]
+template<>
+inline void GaussField<vector>::limitRange
+(
+    const scalar minVal,
+    const scalar maxVal
+)
+{
+    // Delegate directly to subfields
+    cellField_.limitRange(minVal, maxVal);
+    faceField_.limitRange(minVal, maxVal);
+}
+
 } // End namespace Foam
 
 // ************************************************************************* //

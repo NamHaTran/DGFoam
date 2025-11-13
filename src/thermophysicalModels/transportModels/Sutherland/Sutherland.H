@@ -45,6 +45,7 @@ SourceFiles
 #include "transportLaw.H"
 #include "word.H"
 #include "scalar.H"
+#include "GaussField.H"
 
 namespace Foam
 {
@@ -84,10 +85,10 @@ public:
     // Member Functions
 
         //- Dynamic viscosity mu(T) via Sutherland correlation
-        scalar mu(const scalar T) const override;
+        GaussField<scalar> mu(const GaussField<scalar>& T) const override;
 
         //- Prandtl number (constant)
-        scalar Pr(const scalar T) const override;
+        GaussField<scalar> Pr(const GaussField<scalar>& T) const override;
 
         //- Read/parse coefficients from coeff() and validate
         void read() override;

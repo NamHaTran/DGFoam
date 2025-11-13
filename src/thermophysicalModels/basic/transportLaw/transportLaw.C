@@ -94,14 +94,14 @@ Foam::autoPtr<Foam::transportLaw> Foam::transportLaw::New
 // * * * * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * //
 
 // Compute kappa from Cp, T, and Pr
-Foam::scalar Foam::transportLaw::kappa
+Foam::GaussField<scalar> Foam::transportLaw::kappa
 (
-    const scalar Cp,
-    const scalar T
+    const GaussField<scalar>& Cp,
+    const GaussField<scalar>& T
 ) const
 {
-    const scalar muT = this->mu(T);
-    const scalar Pr  = this->Pr(T);
+    const GaussField<scalar>& muT = this->mu(T);
+    const GaussField<scalar>& Pr  = this->Pr(T);
 
     return muT*Cp/Pr;
 }

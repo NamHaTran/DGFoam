@@ -33,6 +33,7 @@ Description
 #define Foam_dgGeneralBoundaryFieldMacros_H
 
 #include "dgGeneralBoundaryField.H"
+#include "tensor.H"
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 // Runtime selection macros

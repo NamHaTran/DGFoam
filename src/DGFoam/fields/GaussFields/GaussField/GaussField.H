@@ -52,7 +52,6 @@ SourceFiles
 #include "faceGaussField.H"
 #include "dofField.H"
 #include "dgGeomMesh.H"
-#include "fieldsContext.H"
 // #include "GaussFieldVectorI.H"
 
 namespace Foam
@@ -81,9 +80,6 @@ private:
 
     //- Gauss field values on faces of the cell
     faceGaussField<Type> faceField_;
-
-    //- Pointer to fields context for auxiliary lookups
-    const fieldsContext* ctxPtr_ = nullptr;
 
 public:
 
@@ -140,12 +136,6 @@ public:
 
         //- Return const pointer to associated dofField (may be nullptr)
         inline const dofField<Type>* dofFieldPtr() const { return dofField_; }
-
-        //- Set the context pointer
-        inline void setContext(const fieldsContext& ctx) { ctxPtr_ = &ctx; }
-
-        //- Return context pointer
-        inline const fieldsContext* context() const { return ctxPtr_; }
 
     // Member Functions
 
@@ -216,6 +206,11 @@ public:
         const GaussField<scalar>& fy,
         const GaussField<scalar>& fz
     );
+
+    // Specialisations for scalar and vector type
+    void limitMax(const scalar maxVal);
+    void limitMin(const scalar minVal);
+    void limitRange(const scalar minVal, const scalar maxVal);
 };
 
 } // End namespace Foam

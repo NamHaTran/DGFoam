@@ -52,11 +52,11 @@ sensibleInternalEnergy::sensibleInternalEnergy
 
 // * * * * * * * * * * * * * Member Functions * * * * * * * * * * * * * * //
 
-scalar sensibleInternalEnergy::T
+GaussField<scalar> sensibleInternalEnergy::T
 (
-    const scalar he,
-    const scalar Cv,
-    const scalar Cp
+    const GaussField<scalar>& he,
+    const GaussField<scalar>& Cv,
+    const GaussField<scalar>& Cp
 ) const
 {
     return he / Cv;

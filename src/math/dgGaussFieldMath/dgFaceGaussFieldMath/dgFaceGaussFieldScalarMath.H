@@ -276,6 +276,111 @@ faceGaussField<sphericalTensor> operator/
     return result;
 }
 
+// Comparison operators between faceGaussField<scalar>
+inline bool operator<
+(
+    const faceGaussField<scalar>& A,
+    const faceGaussField<scalar>& B
+)
+{
+    if (A.nGauss() != B.nGauss()) return false;
+
+    for (label gp = 0; gp < A.nGauss(); ++gp)
+    {
+        if (!((A.plusValue(gp) < B.plusValue(gp)) &&
+              (A.minusValue(gp) < B.minusValue(gp))))
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
+inline bool operator<=
+(
+    const faceGaussField<scalar>& A,
+    const faceGaussField<scalar>& B
+)
+{
+    if (A.nGauss() != B.nGauss()) return false;
+
+    for (label gp = 0; gp < A.nGauss(); ++gp)
+    {
+        if (!((A.plusValue(gp) <= B.plusValue(gp)) &&
+              (A.minusValue(gp) <= B.minusValue(gp))))
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
+inline bool operator>
+(
+    const faceGaussField<scalar>& A,
+    const faceGaussField<scalar>& B
+)
+{
+    if (A.nGauss() != B.nGauss()) return false;
+
+    for (label gp = 0; gp < A.nGauss(); ++gp)
+    {
+        if (!((A.plusValue(gp) > B.plusValue(gp)) &&
+              (A.minusValue(gp) > B.minusValue(gp))))
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
+inline bool operator>=
+(
+    const faceGaussField<scalar>& A,
+    const faceGaussField<scalar>& B
+)
+{
+    if (A.nGauss() != B.nGauss()) return false;
+
+    for (label gp = 0; gp < A.nGauss(); ++gp)
+    {
+        if (!((A.plusValue(gp) >= B.plusValue(gp)) &&
+              (A.minusValue(gp) >= B.minusValue(gp))))
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
+inline bool operator==
+(
+    const faceGaussField<scalar>& A,
+    const faceGaussField<scalar>& B
+)
+{
+    if (A.nGauss() != B.nGauss()) return false;
+
+    for (label gp = 0; gp < A.nGauss(); ++gp)
+    {
+        if (!((A.plusValue(gp) == B.plusValue(gp)) &&
+              (A.minusValue(gp) == B.minusValue(gp))))
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
+inline bool operator!=
+(
+    const faceGaussField<scalar>& A,
+    const faceGaussField<scalar>& B
+)
+{
+    return !(A == B);
+}
+
 } // End namespace Foam
 
 #endif

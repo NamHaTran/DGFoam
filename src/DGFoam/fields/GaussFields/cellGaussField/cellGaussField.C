@@ -45,8 +45,7 @@ Foam::cellGaussField<Type>::cellGaussField()
     nGauss_(0),
     nDof_(0),
     dof_(nullptr),
-    values_(),
-    ctxPtr_(nullptr)
+    values_()
 {}
 
 // Construct from DOF object
@@ -63,8 +62,7 @@ cellGaussField<Type>::cellGaussField
     nGauss_(cell_->gaussPoints().size()),
     nDof_(dof->nDof()),
     dof_(dof),
-    values_(nGauss_),
-    ctxPtr_(nullptr)
+    values_(nGauss_)
 {
     if (!dgMesh)
     {
@@ -73,22 +71,23 @@ cellGaussField<Type>::cellGaussField
 }
 
 
-// Copy constructor
 template<class Type>
-cellGaussField<Type>::cellGaussField
+Foam::cellGaussField<Type>::cellGaussField
 (
     const cellGaussField<Type>& other
 )
 :
-    cellID_(other.cellID_),
-    dgMesh_(other.dgMesh_),
-    cell_(other.cell_),
-    nGauss_(other.nGauss_),
-    nDof_(other.nDof_),
-    dof_(other.dof_),
-    values_(other.values_),
-    ctxPtr_(other.ctxPtr_)
-{}
+    cellID_(other.cellID_),       // Copy cell ID
+    dgMesh_(other.dgMesh_),       // Copy pointer to mesh (non-owning)
+    cell_(other.cell_),           // Copy pointer to cell (non-owning)
+    nGauss_(other.nGauss_),       // Copy number of Gauss points
+    nDof_(other.nDof_),           // Copy number of DOFs
+    dof_(other.dof_),             // Copy pointer to DOF (non-owning)
+    values_(other.values_)        // Deep copy of Gauss-point values
+{
+    // Nothing else to do
+    // All pointers are non-owning, so shallow copy is safe
+}
 
 
 // Initial value constructor
@@ -106,8 +105,7 @@ Foam::cellGaussField<Type>::cellGaussField
     nGauss_(cell_->gaussPoints().size()),
     nDof_(0),
     dof_(nullptr),
-    values_(nGauss_, initVal),
-    ctxPtr_(nullptr)
+    values_(nGauss_, initVal)
 {
     if (!dgMesh)
     {
@@ -130,8 +128,7 @@ Foam::cellGaussField<Type>::cellGaussField
     nGauss_(cell_->gaussPoints().size()),
     nDof_(0),
     dof_(nullptr),
-    values_(nGauss_),
-    ctxPtr_(nullptr)
+    values_(nGauss_)
 {
     if (!dgMesh)
     {
@@ -172,12 +169,18 @@ Foam::cellGaussField<Type>& Foam::cellGaussField<Type>::operator=
         return *this;
     }
 
-    cellID_ = other.cellID_;
-    nGauss_ = other.nGauss_;
-    nDof_ = other.nDof_;
-    // dof_(other.dof_), not copying dof pointer
+    // Copy basic attributes
+    cellID_ = other.cellID_;           // Copy cell ID
+    nGauss_ = other.nGauss_;           // Copy number of Gauss points
+    nDof_   = other.nDof_;             // Copy number of DOFs
+
+    // Copy pointer references (non-owning pointers)
+    dgMesh_ = other.dgMesh_;           // Copy pointer to mesh (no ownership)
+    cell_   = other.cell_;             // Copy pointer to cell (no ownership)
+    dof_    = other.dof_;              // Copy pointer to DOF (no ownership)
+
+    // Deep copy of values (field data at Gauss points)
     values_ = other.values_;
-    ctxPtr_ = other.ctxPtr_;
 
     return *this;
 }

@@ -1,1 +1,0 @@
-../basic/thermoLaw/thermoLaw.C

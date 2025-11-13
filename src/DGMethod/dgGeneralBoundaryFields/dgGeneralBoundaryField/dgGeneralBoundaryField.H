@@ -38,7 +38,6 @@ Description
 #include "vector.H"
 #include "autoPtr.H"
 #include "runTimeSelectionTables.H"
-#include "fieldsContext.H"
 
 namespace Foam
 {
@@ -59,9 +58,6 @@ protected:
 
         //- Dictionary for this boundary
         dictionary dict_;
-
-        //- Pointer to the fields context for registration/lookup
-        const fieldsContext* ctxPtr_ = nullptr;
 
 public:
 
@@ -118,14 +114,6 @@ public:
             Type& plusValue,
             Type& plusGrad
         ) const = 0;
-
-    // Context
-
-        //- Set the fields context
-        inline void setContext(const fieldsContext& ctx) { ctxPtr_ = &ctx; }
-
-        //- Get the fields context pointer (may be null)
-        inline const fieldsContext* context() const { return ctxPtr_; }
 
     // Access
 

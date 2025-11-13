@@ -43,7 +43,6 @@ SourceFiles
 #include "dgGeomMesh.H"
 #include "dgGeomCell.H"
 #include "cellDof.H"
-#include "fieldsContext.H"
 
 // Forward declaration
 class fieldsContext;
@@ -80,9 +79,6 @@ private:
 
     //- Field values at Gauss points
     List<Type> values_;
-
-    //- Pointer to the fields context for registration
-    const fieldsContext* ctxPtr_ = nullptr;
 
 public:
 
@@ -153,9 +149,6 @@ public:
         dgMesh_ = &mesh;
     }
 
-    //- Set the fields context
-    inline void setContext(const fieldsContext& ctx) { ctxPtr_ = &ctx;}
-
     // Operators
 
         //- Copy assignment operator
@@ -188,9 +181,17 @@ public:
         const cellGaussField<scalar>& fy,
         const cellGaussField<scalar>& fz
     );
+
+    // Specialisations for scalar and vector type
+    void limitMax(const scalar maxVal);
+    void limitMin(const scalar minVal);
+    void limitRange(const scalar minVal, const scalar maxVal);
 };
 
 } // End namespace Foam
+
+// Specialisations for scalar type
+#include "cellGaussFieldScalarI.H"
 
 // Specialisations for vector type
 #include "cellGaussFieldVectorI.H"

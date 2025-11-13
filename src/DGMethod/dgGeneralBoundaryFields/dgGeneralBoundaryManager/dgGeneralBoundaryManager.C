@@ -26,6 +26,7 @@ License
 
 #include "dgGeneralBoundaryManager.H"
 #include "tmp.H"
+#include "tensor.H"
 
 namespace Foam
 {
@@ -137,6 +138,7 @@ dgGeneralBoundaryManager<Type>::dgGeneralBoundaryManager
 
 // * * * * * * * * * * * * * Member Functions * * * * * * * * * * * * * //
 
+/*
 template<class Type>
 void dgGeneralBoundaryManager<Type>::setContext(const fieldsContext& ctx)
 {
@@ -145,7 +147,7 @@ void dgGeneralBoundaryManager<Type>::setContext(const fieldsContext& ctx)
         bConditions_[i].setContext(ctx);
     }
 }
-
+*/
 // * * * * * * * * * * * * * Template Instantiations * * * * * * * * * * * * //
 
 template class dgGeneralBoundaryManager<scalar>;

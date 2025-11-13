@@ -392,6 +392,82 @@ inline cellGaussField<scalar> pow
     }
     return result;
 }
+
+// Comparison operators between literal scalar and cellGaussField<scalar>
+inline bool operator<
+(
+    const cellGaussField<scalar>& A,
+    const scalar B
+)
+{
+    for (label i = 0; i < A.size(); ++i)
+    {
+        if (!(A[i] < B)) return false;
+    }
+    return true;
+}
+
+inline bool operator<=
+(
+    const cellGaussField<scalar>& A,
+    const scalar B
+)
+{
+    for (label i = 0; i < A.size(); ++i)
+    {
+        if (!(A[i] <= B)) return false;
+    }
+    return true;
+}
+
+inline bool operator>
+(
+    const cellGaussField<scalar>& A,
+    const scalar B
+)
+{
+    for (label i = 0; i < A.size(); ++i)
+    {
+        if (!(A[i] > B)) return false;
+    }
+    return true;
+}
+
+inline bool operator>=
+(
+    const cellGaussField<scalar>& A,
+    const scalar B
+)
+{
+    for (label i = 0; i < A.size(); ++i)
+    {
+        if (!(A[i] >= B)) return false;
+    }
+    return true;
+}
+
+inline bool operator==
+(
+    const cellGaussField<scalar>& A,
+    const scalar B
+)
+{
+    for (label i = 0; i < A.size(); ++i)
+    {
+        if (!(A[i] == B)) return false;
+    }
+    return true;
+}
+
+inline bool operator!=
+(
+    const cellGaussField<scalar>& A,
+    const scalar B
+)
+{
+    return !(A == B);
+}
+
 } // End namespace Foam
 
 #endif

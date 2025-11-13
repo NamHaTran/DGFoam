@@ -40,6 +40,7 @@ SourceFiles
 #define Foam_idealGas_H
 
 #include "eqnOfState.H"
+#include "GaussField.H"
 
 namespace Foam
 {
@@ -71,13 +72,13 @@ public:
     // Member Functions
 
         //- Return density [kg/m3] from T [K] and p [Pa]
-        virtual scalar rho(scalar T, scalar p) const override;
+        virtual GaussField<scalar> rho(GaussField<scalar>& T, GaussField<scalar>& p) const override;
 
         //- Return pressure [Pa] from rho [kg/m3] and T [K]
-        virtual scalar p(scalar rho, scalar T) const override;
+        virtual GaussField<scalar> p(GaussField<scalar>& rho, GaussField<scalar>& T) const override;
 
         //- Return temperature [K] from rho [kg/m3] and p [Pa]
-        virtual scalar T(scalar rho, scalar p) const override;
+        virtual GaussField<scalar> T(GaussField<scalar>& rho, GaussField<scalar>& p) const override;
 
         //- Return gas constant [J/(kg.K)]
         virtual scalar R() const override;

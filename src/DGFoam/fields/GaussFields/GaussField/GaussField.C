@@ -39,8 +39,7 @@ Foam::GaussField<Type>::GaussField()
     cellID_(-1),
     mesh_(nullptr),
     cellField_(),
-    faceField_(),
-    ctxPtr_(nullptr)
+    faceField_()
 {}
 
 // Construct from dofField, cellID and mesh
@@ -56,8 +55,7 @@ Foam::GaussField<Type>::GaussField
     cellID_(cellID),
     mesh_(mesh),
     cellField_(mesh, &(*dofField_)[cellID_]),
-    faceField_(cellID,mesh),
-    ctxPtr_(nullptr)
+    faceField_(cellID,mesh)
 {
     if (!dofField_ || !mesh_)
     {
@@ -151,9 +149,9 @@ Foam::GaussField<Type>& Foam::GaussField<Type>::operator=
 
     dofField_ = other.dofField_;
     cellID_ = other.cellID_;
-    ctxPtr_ = other.ctxPtr_;
     cellField_ = other.cellField_;
     faceField_ = other.faceField_;
+    mesh_ = other.mesh_;
 
     return *this;
 }

@@ -49,6 +49,7 @@ SourceFiles
 #include "runTimeSelectionTables.H"
 #include "scalar.H"
 #include "word.H"
+#include "GaussField.H"
 
 namespace Foam
 {
@@ -96,13 +97,13 @@ public:
 
     // Accessors
     //- Dynamic viscosity mu(T) [kg/(m·s)]
-    virtual scalar mu(const scalar T) const = 0;
+    virtual GaussField<scalar> mu(const GaussField<scalar>& T) const = 0;
 
     //- Thermal conductivity kappa(T) [W/(m·K)]
-    virtual scalar kappa(const scalar Cp, const scalar T) const;
+    virtual GaussField<scalar> kappa(const GaussField<scalar>& Cp, const GaussField<scalar>& T) const;
 
     //- Prandtl number
-    virtual scalar Pr(const scalar T) const = 0;
+    virtual GaussField<scalar> Pr(const GaussField<scalar>& T) const = 0;
 
     // Reading / I/O
 

@@ -47,7 +47,6 @@ SourceFiles
 #include "dgGeomFace.H"
 #include "cellDof.H"
 #include "List.H"
-#include "fieldsContext.H"
 // #include "faceGaussFieldVectorI.H"
 
 // Forward declaration
@@ -101,9 +100,6 @@ private:
     //- Values on minus side (owner side) of faces
     List<Type> minusValues_;
 
-    //- Pointer to the fields context for registration
-    const fieldsContext* ctxPtr_ = nullptr;
-
 public:
 
     //- Default (empty) constructor
@@ -133,9 +129,6 @@ public:
         const label cellID,
         const dgGeomMesh* mesh
     );
-
-    //- Set the fields context
-    inline void setContext(const fieldsContext& ctx) { ctxPtr_ = &ctx;}
 
     //- Set cell dof
     void setCellsDof(const List<const cellDof<Type>*>& cellsDof) {cellsDof_ = cellsDof;}
@@ -236,9 +229,17 @@ public:
             const faceGaussField<scalar>& fy,
             const faceGaussField<scalar>& fz
         );
+
+        // Specialisations for scalar and vector type
+        void limitMax(const scalar maxVal);
+        void limitMin(const scalar minVal);
+        void limitRange(const scalar minVal, const scalar maxVal);
 };
 
 } // End namespace Foam
+
+// Specialisations for scalar type
+#include "faceGaussFieldScalarI.H"
 
 // Specialisations for vector type
 #include "faceGaussFieldVectorI.H"

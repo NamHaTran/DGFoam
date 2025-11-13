@@ -52,8 +52,7 @@ Foam::dgGeneralBoundaryField<Type>::dgGeneralBoundaryField
 )
 :
     name_(name),
-    dict_(dict),
-    ctxPtr_(nullptr)
+    dict_(dict)
 {}
 
 

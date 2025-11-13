@@ -34,10 +34,10 @@ Description
 #define Foam_dgGeneralBoundaryManager_H
 
 #include "dictionary.H"
+#include "IOdictionary.H"
 #include "wordList.H"
 #include "PtrList.H"
 #include "dgGeneralBoundaryField.H"
-#include "fieldsContext.H"
 
 namespace Foam
 {
@@ -69,11 +69,6 @@ public:
 
     //- Destructor
     ~dgGeneralBoundaryManager() = default;
-
-    // Context
-
-        //- Set context for all boundary conditions
-        void setContext(const fieldsContext& ctx);
 
     // Access
 

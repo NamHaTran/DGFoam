@@ -43,6 +43,7 @@ SourceFiles
 #define Foam_constantCp_H
 
 #include "thermoLaw.H"
+#include "GaussField.H"
 
 namespace Foam
 {
@@ -58,13 +59,13 @@ class constantCp
 private:
 
     //- Constant specific heat at constant pressure [J/(kg.K)]
-    scalar Cp_;
+    GaussField<scalar> Cp_;
 
     //- Specific gas constant (computed) [J/(kg.K)]
     scalar R_;
 
     //- Constant specific heat at constant volume (computed) [J/(kg.K)]
-    scalar Cv_;
+    GaussField<scalar> Cv_;
 
     //- Heat capacity ratio gamma = Cp/Cv [-]
     scalar gamma_;
@@ -83,26 +84,20 @@ public:
     // Member Functions
 
         //- Cp(T) [J/(kg.K)] – constant
-        scalar Cp(const scalar T) const override;
+        GaussField<scalar> Cp(const GaussField<scalar>& T) const override;
 
         //- h(T) [J/kg] – using Cp
-        scalar h(const scalar T) const override;
+        GaussField<scalar> h(const GaussField<scalar>& T) const override;
 
         //- e(T) [J/kg] – using Cv = Cp - R
-        scalar e(const scalar T) const override;
+        GaussField<scalar> e(const GaussField<scalar>& T) const override;
 
         //- Speed of sound
-        scalar a(const scalar T) const override;
-
-        //- T from sensible internal energy
-        scalar TfrE(const scalar e) const override;
-
-        //- T from sensible enthalpy energy
-        scalar TfrH(const scalar e) const override;
+        GaussField<scalar> a(const GaussField<scalar>& T) const override;
 
         //- Accessors (useful for debugging/packing)
-        inline scalar Cp()    const { return Cp_;    }
-        inline scalar Cv()    const { return Cv_;    }
+        inline GaussField<scalar> Cp()    const { return Cp_;    }
+        inline GaussField<scalar> Cv()    const { return Cv_;    }
         inline scalar R()     const { return R_;     }
         inline scalar gamma() const { return gamma_; }
 };

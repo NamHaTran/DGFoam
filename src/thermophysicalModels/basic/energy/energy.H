@@ -43,6 +43,7 @@ SourceFiles
 #include "dictionary.H"
 #include "autoPtr.H"
 #include "runTimeSelectionTables.H"
+#include "GaussField.H"
 
 namespace Foam
 {
@@ -84,11 +85,11 @@ public:
     static autoPtr<energy> New(const word& name, const dictionary& dict);
 
     //- Return temperature T from energy (e or h), with Cp and Cv passed in
-    virtual scalar T
+    virtual GaussField<scalar> T
     (
-        const scalar he,
-        const scalar Cv,
-        const scalar Cp
+        const GaussField<scalar>& he,
+        const GaussField<scalar>& Cv,
+        const GaussField<scalar>& Cp
     ) const = 0;
 };
 

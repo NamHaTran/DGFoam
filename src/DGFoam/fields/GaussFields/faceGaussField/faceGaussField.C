@@ -47,8 +47,7 @@ Foam::faceGaussField<Type>::faceGaussField()
     cellsDof_(),
     gaussOffset_(),
     plusValues_(),
-    minusValues_(),
-    ctxPtr_(nullptr)
+    minusValues_()
 {}
 
 template<class Type>
@@ -64,8 +63,7 @@ Foam::faceGaussField<Type>::faceGaussField
     facesID_(&(cell_->faces())),
     nFaces_(facesID_->size()),
     faces_(nFaces_),
-    cellsDof_(cellsDof),
-    ctxPtr_(nullptr)
+    cellsDof_(cellsDof)
 {
     for (label faceI = 0; faceI < nFaces_; ++faceI)
     {
@@ -101,8 +99,7 @@ Foam::faceGaussField<Type>::faceGaussField
     facesID_(&(cell_->faces())),
     nFaces_(facesID_->size()),
     faces_(nFaces_),
-    cellsDof_(0),
-    ctxPtr_(nullptr)
+    cellsDof_(0)
 {
     for (label faceI = 0; faceI < nFaces_; ++faceI)
     {
@@ -136,8 +133,7 @@ Foam::faceGaussField<Type>::faceGaussField
     facesID_(&(cell_->faces())),
     nFaces_(facesID_->size()),
     faces_(nFaces_),
-    cellsDof_(0),
-    ctxPtr_(nullptr)
+    cellsDof_(0)
 {
     for (label faceI = 0; faceI < nFaces_; ++faceI)
     {
@@ -164,20 +160,31 @@ Foam::faceGaussField<Type>::faceGaussField
     const faceGaussField<Type>& other
 )
 :
-    mesh_(other.mesh_),
-    cellID_(other.cellID_),
-    cell_(other.cell_),
-    facesID_(other.facesID_),
-    nFaces_(other.nFaces_),
-    nGaussPerFace_(other.nGaussPerFace_),
-    nGauss_(other.nGauss_),
-    faces_(other.faces_),
-    cellsDof_(other.cellsDof_),
-    gaussOffset_(other.gaussOffset_),
-    plusValues_(other.plusValues_),
-    minusValues_(other.minusValues_),
-    ctxPtr_(other.ctxPtr_)
-{}
+    // Copy mesh and geometry references
+    mesh_(other.mesh_),             // Pointer to mesh (non-owning)
+    cellID_(other.cellID_),         // ID of the associated cell
+    cell_(other.cell_),             // Pointer to geometric cell (non-owning)
+    facesID_(other.facesID_),       // Pointer to list of face IDs (non-owning)
+
+    // Copy geometry-related information
+    nFaces_(other.nFaces_),         // Number of faces in the cell
+    nGaussPerFace_(other.nGaussPerFace_), // Number of Gauss points per face
+    nGauss_(other.nGauss_),         // Total number of Gauss points on all faces
+
+    // Copy pointer lists (shallow copy, non-owning)
+    faces_(other.faces_),           // List of dgGeomFace* (non-owning)
+    cellsDof_(other.cellsDof_),     // List of DOF pointers for owner and neighbour cells
+
+    // Copy indexing and Gauss-point offset data
+    gaussOffset_(other.gaussOffset_), // Per-face Gauss offset list
+
+    // Deep copy of actual Gauss field values
+    plusValues_(other.plusValues_),   // '+' side (neighbour) Gauss-point values
+    minusValues_(other.minusValues_)  // '-' side (owner) Gauss-point values
+{
+    // No dynamic allocation here
+    // All pointers are non-owning, safe for shallow copy
+}
 
 
 // * * * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * * //
@@ -284,14 +291,27 @@ Foam::faceGaussField<Type>& Foam::faceGaussField<Type>::operator=
         return *this;
     }
 
-    cellID_ = other.cellID_;
-    nFaces_ = other.nFaces_;
-    nGaussPerFace_ = other.nGaussPerFace_;
-    nGauss_ = other.nGauss_;
-    gaussOffset_ = other.gaussOffset_;
-    plusValues_ = other.plusValues_;
-    minusValues_ = other.minusValues_;
-    ctxPtr_ = other.ctxPtr_;
+    // Copy geometric and topological references
+    mesh_           = other.mesh_;          // Pointer to mesh (non-owning)
+    cellID_         = other.cellID_;        // ID of the cell
+    cell_           = other.cell_;          // Pointer to cell (non-owning)
+    facesID_        = other.facesID_;       // Pointer to face IDs list (non-owning)
+
+    // Copy geometry-related counts
+    nFaces_         = other.nFaces_;        // Number of faces
+    nGaussPerFace_  = other.nGaussPerFace_; // Number of Gauss points per face
+    nGauss_         = other.nGauss_;        // Total number of Gauss points on all faces
+
+    // Copy pointer lists (non-owning references)
+    faces_          = other.faces_;         // List of dgGeomFace* (non-owning)
+    cellsDof_       = other.cellsDof_;      // List of cellDof pointers (non-owning)
+
+    // Copy indexing and offset information
+    gaussOffset_    = other.gaussOffset_;   // Per-face offset of Gauss points
+
+    // Deep copy of Gauss field values (these are actual data)
+    plusValues_     = other.plusValues_;    // Values on the '+' (neighbor) side
+    minusValues_    = other.minusValues_;   // Values on the '-' (owner) side
 
     return *this;
 }

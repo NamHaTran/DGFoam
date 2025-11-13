@@ -54,17 +54,17 @@ Foam::idealGas::idealGas(const word& name, const dictionary& dict)
 
 // * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * * * * //
 
-Foam::scalar Foam::idealGas::rho(scalar T, scalar p) const
+Foam::GaussField<scalar> Foam::idealGas::rho(GaussField<scalar>& T, GaussField<scalar>& p) const
 {
     return p / (R_ * T);
 }
 
-Foam::scalar Foam::idealGas::p(scalar rho, scalar T) const
+Foam::GaussField<scalar> Foam::idealGas::p(GaussField<scalar>& rho, GaussField<scalar>& T) const
 {
     return rho * R_ * T;
 }
 
-Foam::scalar Foam::idealGas::T(scalar rho, scalar p) const
+Foam::GaussField<scalar> Foam::idealGas::T(GaussField<scalar>& rho, GaussField<scalar>& p) const
 {
     return p / (rho * R_);
 }

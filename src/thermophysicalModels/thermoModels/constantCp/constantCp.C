@@ -132,36 +132,27 @@ Foam::constantCp::constantCp
 
 // * * * * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * //
 
-Foam::scalar Foam::constantCp::Cp(const scalar T) const
+Foam::GaussField<scalar> Foam::constantCp::Cp(const GaussField<scalar>& T) const
 {
     // Constant Cp model
-    return Cp_;
+    GaussField<scalar> Cp (T.cellID(), T.dgMesh(), Cp_);
+    return Cp;
 }
 
-Foam::scalar Foam::constantCp::h(const scalar T) const
+Foam::GaussField<scalar> Foam::constantCp::h(const GaussField<scalar>& T) const
 {
     // h(T) = Cp * T  (no reference offset here)
-    return Cp_ * T;
+    return h = Cp_ * T;
 }
 
-Foam::scalar Foam::constantCp::e(const scalar T) const
+Foam::GaussField<scalar> Foam::constantCp::e(const GaussField<scalar>& T) const
 {
     // e(T) = Cv * T = (Cp - R) * T
     return Cv_ * T;
 }
 
-Foam::scalar Foam::constantCp::TfrH(const scalar h) const
+Foam::GaussField<scalar> Foam::constantCp::a(const GaussField<scalar>& T) const
 {
-    return h / Cp_;
-}
-
-Foam::scalar Foam::constantCp::TfrE(const scalar e) const
-{
-    return e / Cv_;
-}
-
-Foam::scalar Foam::constantCp::a(const scalar T) const
-{
-    return std::sqrt(max(gamma_*R_*T, SMALL));
+    return pow(gamma_ * R_ * T, 0.5);
 }
 // ************************************************************************* //

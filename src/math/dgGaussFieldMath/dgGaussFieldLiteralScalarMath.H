@@ -283,6 +283,62 @@ inline GaussField<scalar> pow
     return result;
 }
 
+// Comparison operators between GaussField<scalar> and literal scalar
+
+inline bool operator>
+(
+    const GaussField<scalar>& A,
+    const scalar B
+)
+{
+    return (A.cellField() > B) && (A.faceField() > B);
+}
+
+inline bool operator>=
+(
+    const GaussField<scalar>& A,
+    const scalar B
+)
+{
+    return (A.cellField() >= B) && (A.faceField() >= B);
+}
+
+inline bool operator<
+(
+    const GaussField<scalar>& A,
+    const scalar B
+)
+{
+    return (A.cellField() < B) && (A.faceField() < B);
+}
+
+inline bool operator<=
+(
+    const GaussField<scalar>& A,
+    const scalar B
+)
+{
+    return (A.cellField() <= B) && (A.faceField() <= B);
+}
+
+inline bool operator==
+(
+    const GaussField<scalar>& A,
+    const scalar B
+)
+{
+    return (A.cellField() == B) && (A.faceField() == B);
+}
+
+inline bool operator!=
+(
+    const GaussField<scalar>& A,
+    const scalar B
+)
+{
+    return !(A == B);
+}
+
 } // End namespace Foam
 
 #endif

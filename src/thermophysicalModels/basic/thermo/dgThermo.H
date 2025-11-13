@@ -55,6 +55,7 @@ SourceFiles
 #include "thermoLaw.H"
 #include "transportLaw.H"
 #include "energy.H"
+#include "GaussField.H"
 
 // Forward decl to avoid heavy include
 namespace Foam { class dgGeomMesh; }
@@ -72,33 +73,33 @@ namespace Foam
 struct dgThermoInputs
 {
     // Conserved variables (per-cell)
-    const scalar* rhoC{nullptr};
-    const vector* rhoU{nullptr};
-    const scalar* rhoE{nullptr};
+    const GaussField<scalar>* rhoC{nullptr};
+    const GaussField<vector>* rhoU{nullptr};
+    const GaussField<scalar>* rhoE{nullptr};
     // Primitive variables (per-cell)
-    const scalar* p{nullptr};
-    const vector* U{nullptr};
-    const scalar* T{nullptr};
+    const GaussField<scalar>* p{nullptr};
+    const GaussField<vector>* U{nullptr};
+    const GaussField<scalar>* T{nullptr};
 };
 
 //- Outputs from dgThermo::update()
 struct dgThermoOutputs
 {
     // Primitive (optional write-back by pipelines)
-    scalar* rho{nullptr};
-    vector* U{nullptr};
-    scalar* p{nullptr};
-    scalar* T{nullptr};
+    GaussField<scalar>* rho{nullptr};
+    GaussField<vector>* U{nullptr};
+    GaussField<scalar>* p{nullptr};
+    GaussField<scalar>* T{nullptr};
 
     // Thermo/transport outputs (required)
-    scalar* a{nullptr};
-    scalar* mu{nullptr};
-    scalar* kappa{nullptr};
-    scalar* Cp{nullptr};
-    scalar* h{nullptr};
-    scalar* e{nullptr};
-    scalar* Pr{nullptr};
-    scalar* gamma{nullptr};
+    GaussField<scalar>* a{nullptr};
+    GaussField<scalar>* mu{nullptr};
+    GaussField<scalar>* kappa{nullptr};
+    GaussField<scalar>* Cp{nullptr};
+    GaussField<scalar>* h{nullptr};
+    GaussField<scalar>* e{nullptr};
+    GaussField<scalar>* Pr{nullptr};
+    GaussField<scalar>* gamma{nullptr};
 };
 
 /*---------------------------------------------------------------------------*\
@@ -127,15 +128,15 @@ protected:
         autoPtr<energy>     energy_;
 
         //- Cached properties (last update)
-        scalar R_;       // Gas constant
-        scalar Cp_;      // Specific heat Cp
-        scalar h_;       // Enthalpy
-        scalar e_;       // Internal energy
-        scalar mu_;      // Dynamic viscosity
-        scalar kappa_;   // Thermal conductivity
-        scalar Pr_;      // Prandtl number
-        scalar a_;       // Speed of sound
-        scalar gamma_;   // Heat capacity ratio
+        scalar R_;                   // Gas constant
+        GaussField<scalar> Cp_;      // Specific heat Cp
+        GaussField<scalar> h_;       // Enthalpy
+        GaussField<scalar> e_;       // Internal energy
+        GaussField<scalar> mu_;      // Dynamic viscosity
+        GaussField<scalar> kappa_;   // Thermal conductivity
+        GaussField<scalar> Pr_;      // Prandtl number
+        GaussField<scalar> a_;       // Speed of sound
+        GaussField<scalar> gamma_;   // Heat capacity ratio
 
 public:
 
@@ -192,15 +193,15 @@ public:
         inline const thermoLaw&       thermo() const { return thermo_(); }
         inline const transportLaw&    transport() const { return transport_(); }
 
-        inline scalar R()     const { return R_; }
-        inline scalar Cp()    const { return Cp_; }
-        inline scalar h()     const { return h_; }
-        inline scalar e()     const { return e_; }
-        inline scalar mu()    const { return mu_; }
-        inline scalar kappa() const { return kappa_; }
-        inline scalar Pr()    const { return Pr_; }
-        inline scalar a()     const { return a_; }
-        inline scalar gamma() const { return gamma_; }
+        inline scalar R()                 const { return R_; }
+        inline GaussField<scalar> Cp()    const { return Cp_; }
+        inline GaussField<scalar> h()     const { return h_; }
+        inline GaussField<scalar> e()     const { return e_; }
+        inline GaussField<scalar> mu()    const { return mu_; }
+        inline GaussField<scalar> kappa() const { return kappa_; }
+        inline GaussField<scalar> Pr()    const { return Pr_; }
+        inline GaussField<scalar> a()     const { return a_; }
+        inline GaussField<scalar> gamma() const { return gamma_; }
 
         // For derived classes to set cached values conveniently
         inline void setR(const scalar v){ R_=v; }

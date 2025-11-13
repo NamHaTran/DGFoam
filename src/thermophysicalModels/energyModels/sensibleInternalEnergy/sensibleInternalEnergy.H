@@ -42,6 +42,7 @@ SourceFiles
 #include "energy.H"
 #include "word.H"
 #include "dictionary.H"
+#include "GaussField.H"
 
 namespace Foam
 {
@@ -66,7 +67,7 @@ public:
     sensibleInternalEnergy(const word& name, const dictionary& dict);
 
     //- Override method: compute T from internal energy and Cv
-    scalar T(const scalar he, const scalar Cv, const scalar Cp) const override;
+    GaussField<scalar> T(const GaussField<scalar>& he, const GaussField<scalar>& Cv, const GaussField<scalar>& Cp) const override;
 };
 
 } // namespace Foam

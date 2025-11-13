@@ -45,6 +45,7 @@ SourceFiles
 #include "runTimeSelectionTables.H"
 #include "scalar.H"
 #include "word.H"
+#include "GaussField.H"
 
 namespace Foam
 {
@@ -86,13 +87,13 @@ public:
     static autoPtr<eqnOfState> New(const word& name, const dictionary& dict);
 
     //- Density rho(T,p)
-    virtual scalar rho(const scalar T, const scalar p) const = 0;
+    virtual GaussField<scalar> rho(const GaussField<scalar>& T, const GaussField<scalar>& p) const = 0;
 
     //- Pressure p(T,rho)
-    virtual scalar p(const scalar rho, const scalar T) const = 0;
+    virtual GaussField<scalar> p(const GaussField<scalar>& rho, const GaussField<scalar>& T) const = 0;
 
     //- Temperature T(p,rho)
-    virtual scalar T(const scalar rho, const scalar p) const = 0;
+    virtual GaussField<scalar> T(const GaussField<scalar>& rho, const GaussField<scalar>& p) const = 0;
 
     //- Gas cpnstant R
     virtual scalar R() const = 0;
