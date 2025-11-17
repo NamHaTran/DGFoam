@@ -118,6 +118,18 @@ GaussField<scalar> mag
     return result;
 }
 
+//- Vector squared magnitude
+GaussField<scalar> magSqr
+(
+    const GaussField<vector>& A
+)
+{
+    GaussField<scalar> result(A.cellID(), A.dgMesh());
+    result.cellField() = magSqr(A.cellField());
+    result.faceField() = magSqr(A.faceField());
+    return result;
+}
+
 // * * * * * * * * * * * * Vector - Tensor * * * * * * * * * * * * //
 
 //- Vector & tensor

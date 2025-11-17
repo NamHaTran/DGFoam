@@ -39,13 +39,11 @@ SourceFiles
 #define Foam_dgField_H
 
 #include "regIOobject.H"
-#include "autoPtr.H"
 #include "dofField.H"
 #include "GaussField.H"
 #include "dgGeomMesh.H"
 #include "dgGeneralBoundaryManager.H"
 #include "tensor.H"
-#include "dofField.H"
 
 namespace Foam
 {
@@ -61,33 +59,28 @@ class dgField
 {
 private:
 
-    //- Reference to the DG geometric mesh
+    //- Reference to DG geometric mesh
     const dgGeomMesh& mesh_;
 
-    //- Has DOF field
+    //- True if this field owns DOF data
     bool hasDof_;
 
-    //- Pointer to DOF field (only valid for conservative fields)
-    // autoPtr<dofField<Type>> dofPtr_;
-    dofField<Type>* dofPtr_ = nullptr;
+    //- Pointer to DOF field (null for primary fields)
+    dofField<Type>* dofPtr_;
 
-    //- List of Gauss fields for all cells in the mesh
+    //- GaussField for every cell in the mesh
     List<GaussField<Type>> gaussFields_;
 
-    //- Pointer to boundary manager (optional)
-    dgGeneralBoundaryManager<Type>* bcManagerPtr_;
+    //- Pointer to boundary manager
+    // dgGeneralBoundaryManager<Type>* bcManagerPtr_;
 
 public:
 
     //- Runtime type information
     TypeName("dgField");
 
-    // Constructors
-    //-------------------------------------------------------------------------
+    // Constructors ------------------------------------------------------------
 
-    //- Construct from IOobject and mesh
-    //  If hasDof == true, the field will read DOF from file and interpolate Gauss values.
-    //  Otherwise, the field will create empty GaussField structures (for primary fields).
     dgField
     (
         const IOobject& io,
@@ -95,102 +88,82 @@ public:
         bool hasDof = true
     );
 
-    //- Disable copy constructor and assignment operator
+    //- No copy
     dgField(const dgField&) = delete;
     dgField& operator=(const dgField&) = delete;
 
     //- Destructor
     ~dgField();
 
+    // Member Functions --------------------------------------------------------
 
-    // Member Functions
-    //-------------------------------------------------------------------------
-
-    //- Return true if DOF field is available
+    //- Return true if this field has DOF data
     inline bool hasDof() const
     {
         return dofPtr_ != nullptr;
     }
 
-    //- Access to DOF field (non-const)
+    //- Return non-const access to DOF field
     inline dofField<Type>& dof()
     {
         if (!dofPtr_)
         {
             FatalErrorInFunction
-                << "Attempting to access DOF field in dgField<"
-                << pTraits<Type>::typeName
-                << "> but no DOF data has been created for this field."
+                << "Attempt to access non-existing DOF field"
                 << abort(FatalError);
         }
-
         return *dofPtr_;
     }
 
-    //- Access to DOF field (const)
+    //- Return const access to DOF field
     inline const dofField<Type>& dof() const
     {
         if (!dofPtr_)
         {
             FatalErrorInFunction
-                << "Attempting to access DOF field in dgField<"
-                << pTraits<Type>::typeName
-                << "> but no DOF data has been created for this field."
+                << "Attempt to access non-existing DOF field"
                 << abort(FatalError);
         }
-
         return *dofPtr_;
     }
 
-    //- Return list of Gauss fields (non-const)
+    //- Return non-const access to GaussFields
     inline List<GaussField<Type>>& gaussFields()
     {
         return gaussFields_;
     }
 
-    //- Return list of Gauss fields (const)
+    //- Return const access to GaussFields
     inline const List<GaussField<Type>>& gaussFields() const
     {
         return gaussFields_;
     }
 
-    //- Return Gauss field of a specific cell
-    inline GaussField<Type>& cellGaussField(const label cellI)
-    {
-        return gaussFields_[cellI];
-    }
-
-    //- Return number of cells
     inline label nCells() const
     {
         return gaussFields_.size();
     }
 
-    //- Set boundary manager pointer
+    /*
     inline void setBCManager(dgGeneralBoundaryManager<Type>* ptr)
     {
         bcManagerPtr_ = ptr;
     }
+    
 
-    //- Return boundary manager pointer
     inline dgGeneralBoundaryManager<Type>* bcManager() const
     {
         return bcManagerPtr_;
     }
+    */
 
-    //- Placeholder for boundary correction (to be implemented later)
-    void correctBoundary();
-
-    //- Write data
+    //- Write data (minimal)
     bool writeData(Ostream& os) const;
-
-    // I/O
-    //-------------------------------------------------------------------------
 };
 
-// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
-
 } // End namespace Foam
+
+#include "dgFieldI.H"
 
 #endif
 

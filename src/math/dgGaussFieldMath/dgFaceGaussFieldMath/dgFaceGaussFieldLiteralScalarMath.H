@@ -355,6 +355,23 @@ inline faceGaussField<scalar> pow
     return result;
 }
 
+// sqrt(field<scalar>)
+inline faceGaussField<scalar> sqrt
+(
+    const faceGaussField<scalar>& A
+)
+{
+    faceGaussField<scalar> result(A.cellID(), A.dgMesh());
+
+    for (label gp = 0; gp < A.nGauss(); ++gp)
+    {
+        result.plusValueAt(gp)  = pow(A.plusValue(gp), 0.5);
+        result.minusValueAt(gp) = pow(A.minusValue(gp), 0.5);
+    }
+
+    return result;
+}
+
 // Comparison operators between faceGaussField<scalar> and literal scalar
 inline bool operator>
 (

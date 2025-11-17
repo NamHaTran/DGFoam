@@ -122,6 +122,21 @@ inline cellGaussField<scalar> mag
     return result;
 }
 
+// Squared Magnitude: magSqr(A)
+inline cellGaussField<scalar> magSqr
+(
+    const cellGaussField<vector>& A
+)
+{
+    cellGaussField<scalar> result(A.cellID(), A.dgMesh());
+    
+    for (label i = 0; i < A.size(); ++i)
+    {
+        result[i] = magSqr(A[i]);
+    }
+    return result;
+}
+
 // * * * * * * * * * * * * * * * Vector - Tensor * * * * * * * * * * * * * * * //
 
 inline cellGaussField<vector> operator&

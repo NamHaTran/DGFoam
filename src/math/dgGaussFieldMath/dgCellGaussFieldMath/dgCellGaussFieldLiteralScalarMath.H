@@ -393,6 +393,21 @@ inline cellGaussField<scalar> pow
     return result;
 }
 
+// sqrt(field<scalar>)
+inline cellGaussField<scalar> sqrt
+(
+    const cellGaussField<scalar>& A
+)
+{
+    cellGaussField<scalar> result(A.cellID(), A.dgMesh());
+    
+    for (label i = 0; i < A.size(); ++i)
+    {
+        result[i] = pow(A[i], 0.5);
+    }
+    return result;
+}
+
 // Comparison operators between literal scalar and cellGaussField<scalar>
 inline bool operator<
 (

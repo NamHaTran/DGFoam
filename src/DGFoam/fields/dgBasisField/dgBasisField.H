@@ -46,31 +46,30 @@ namespace Foam
 {
 
 /*---------------------------------------------------------------------------*\
-                          Class dgBasisField Declaration
+                         Class dgBasisField Declaration
 \*---------------------------------------------------------------------------*/
 
 class dgBasisField
 {
 private:
 
-    //- Reference to geometric mesh
+    //- Reference to geometric DG mesh
     const dgGeomMesh& mesh_;
 
-    //- Cell ID associated with this field
+    //- Cell ID associated with this basis field
     const label cellID_;
 
     //- Local face labels of the current cell
     labelList faceLabels_;
 
-    //- nDof of the current cell
+    //- Number of DoFs in this cell
     label nDof_;
 
-    //- GaussField list of all basis functions
+    //- Basis GaussFields for all DoFs (scalar basis)
     List<GaussField<scalar>> basis_;
 
-    //- GaussField list of all derivative basis functions
+    //- Derivative basis GaussFields for all DoFs (vector basis)
     List<GaussField<vector>> dBasis_;
-
 
 public:
 
@@ -78,11 +77,13 @@ public:
     dgBasisField(const label cellID, const dgGeomMesh& mesh);
 
     // Member Functions
-        //- Compute all scalar basis GaussFields (for all DoFs)
+        //- Compute scalar basis GaussFields (for all DoFs)
         void computeBasisField();
 
-        //- Compute all derivative basis GaussFields (for all DoFs)
+        //- Compute derivative basis GaussFields (for all DoFs)
         void computeDBasisField();
+
+        // Access
 
         //- Return GaussField of the i-th basis function
         const GaussField<scalar>& getBasis(const label dof) const;
@@ -90,17 +91,14 @@ public:
         //- Return GaussField of the i-th derivative basis function
         const GaussField<vector>& getDBasis(const label dof) const;
 
-        //- Return nDof of the cell
-        label nDof() const
-        {
-            return nDof_;
-        }
+        //- Return number of DoF
+        inline label nDof() const { return nDof_; }
 };
 
-
-// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
-
 } // End namespace Foam
+
+// Include template-related inline implementation
+#include "dgBasisFieldI.H"
 
 #endif
 

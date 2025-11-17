@@ -52,7 +52,6 @@ SourceFiles
 #include "faceGaussField.H"
 #include "dofField.H"
 #include "dgGeomMesh.H"
-// #include "GaussFieldVectorI.H"
 
 namespace Foam
 {
@@ -66,140 +65,104 @@ class GaussField
 {
 private:
 
-    //- Pointer to the DoF field (read-only)
+    //- Pointer to DoF field (read-only, non-owning)
     const dofField<Type>* dofField_;
 
-    //- Cell ID associated with this field
+    //- Cell ID
     label cellID_;
 
-    //- Reference to the DG mesh
+    //- Pointer to DG mesh (non-owning)
     const dgGeomMesh* mesh_;
 
-    //- Gauss field values inside the cell
+    //- Cell Gauss values
     cellGaussField<Type> cellField_;
 
-    //- Gauss field values on faces of the cell
+    //- Face Gauss values
     faceGaussField<Type> faceField_;
 
 public:
 
-    // Constructors
+    // Constructors ----------------------------------------------------------
 
-        //- Default (empty) constructor
-        GaussField();
+    //- Default constructor
+    GaussField();
 
-        //- Construct from dofField, cellID and mesh
-        GaussField(const dofField<Type>* dofField, label cellID, const dgGeomMesh* mesh);
+    //- Construct from dofField, cellID and mesh
+    GaussField
+    (
+        const dofField<Type>* dofField,
+        label cellID,
+        const dgGeomMesh* mesh
+    );
 
-        //- Construct as container only (empty data)
-        GaussField(label cellID, const dgGeomMesh* mesh);
+    //- Construct container only
+    GaussField(label cellID, const dgGeomMesh* mesh);
 
-        //- Construct as container with initial value
-        GaussField(label cellID, const dgGeomMesh* mesh, const Type& initVal);
+    //- Construct container with initial value
+    GaussField(label cellID, const dgGeomMesh* mesh, const Type& initVal);
 
-        //- Copy constructor
-        GaussField(const GaussField<Type>& other);
+    //- Copy constructor
+    GaussField(const GaussField<Type>& other);
 
-    //- Assignment operator
+
+    // Assignment ------------------------------------------------------------
+
     GaussField<Type>& operator=(const GaussField<Type>& other);
-
-    //- Assign a constant value to all Gauss points
     GaussField<Type>& operator=(const Type& value);
 
-    // Member access
 
-        //- Return const pointer to geometric mesh
-        inline const dgGeomMesh* dgMesh() const 
-        {
-            if (!mesh_)
-            {
-                FatalErrorInFunction
-                    << "mesh_ pointer of GaussField is null" << abort(FatalError);
-            }
-            return mesh_;
-        }
+    // Access ---------------------------------------------------------------
 
-        //- Return reference to cellGaussField
-        inline cellGaussField<Type>& cellField() { return cellField_; }
+    inline const dgGeomMesh* dgMesh() const;
 
-        //- Return const reference to cellGaussField
-        inline const cellGaussField<Type>& cellField() const { return cellField_; }
+    inline label cellID() const { return cellID_; }
 
-        //- Return reference to faceGaussField
-        inline faceGaussField<Type>& faceField() { return faceField_; }
+    inline const dofField<Type>* dofFieldPtr() const { return dofField_; }
 
-        //- Return const reference to faceGaussField
-        inline const faceGaussField<Type>& faceField() const { return faceField_; }
+    inline cellGaussField<Type>& cellField()       { return cellField_; }
+    inline const cellGaussField<Type>& cellField() const { return cellField_; }
 
-        //- Return cell ID
-        inline label cellID() const { return cellID_; }
+    inline faceGaussField<Type>& faceField()       { return faceField_; }
+    inline const faceGaussField<Type>& faceField() const { return faceField_; }
 
-        //- Return const pointer to associated dofField (may be nullptr)
-        inline const dofField<Type>* dofFieldPtr() const { return dofField_; }
 
-    // Member Functions
+    // High-level operations ------------------------------------------------
 
-        //- Interpolate values at Gauss points from DOF using basis functions
-        void interpolateFromDof();
+    //- Interpolate values from DOF into Gauss points
+    void interpolateFromDof();
 
-        //- Overload << operator for printing
-        friend Ostream& operator<<(Ostream& os, const GaussField& gf)
-        {
-            os << "GaussField for cell " << gf.cellID() << ":\n";
-            os << "Cell Gauss Field:\n" << gf.cellField() << "\n";
-            os << "Face Gauss Field:\n" << gf.faceField() << "\n";
-            return os;
-        }
 
-        //- Assign value to volume Gauss point
-        inline Type& cellValueAt(const label nG)
-        {
-            return cellField_[nG];
-        } 
+    // Direct Gauss access --------------------------------------------------
 
-        //- Access value at volume Gauss point (const)
-        inline const Type& cellValueAt(const label nG) const
-        {
-            return cellField_[nG];
-        } 
+    inline Type& cellValueAt(label gpI);
+    inline const Type& cellValueAt(label gpI) const;
 
-        //- Assign value to face Gauss point (plus side), faceI is local face ID on list faces of the cell
-        inline Type& facePlusValueAt(const label faceI, const label gpI)
-        {
-            return faceField_.plusValueOnFace(faceI, gpI);
-        }
+    inline Type& facePlusValueAt(label faceI, label gpI);
+    inline Type& faceMinusValueAt(label faceI, label gpI);
 
-        //- Access value at face Gauss point (plus side, const), faceI is local face ID on list faces of the cell
-        inline const Type& facePlusValueAt(const label faceI, const label gpI) const
-        {
-            return faceField_.plusValue(faceI, gpI);
-        }
+    inline const Type& facePlusValueAt(label faceI, label gpI) const;
+    inline const Type& faceMinusValueAt(label faceI, label gpI) const;
 
-        //- Assign value to face Gauss point (minus side), faceI is local face ID on list faces of the cell
-        inline Type& faceMinusValueAt(const label faceI, const label gpI)
-        {
-            return faceField_.minusValueOnFace(faceI, gpI);
-        }
 
-        //- Access value at face Gauss point (minus side, const), faceI is local face ID on list faces of the cell
-        inline const Type& faceMinusValueAt(const label faceI, const label gpI) const
-        {
-            return faceField_.minusValue(faceI, gpI);
-        }
+    // Pretty print
+    friend Ostream& operator<<(Ostream& os, const GaussField& gf)
+    {
+        os << "GaussField for cell " << gf.cellID() << ":\n";
+        os << "Cell Gauss Field:\n" << gf.cellField() << "\n";
+        os << "Face Gauss Field:\n" << gf.faceField() << "\n";
+        return os;
+    }
 
-        //- Return cellGaussField
-        inline cellGaussField<Type>& getCellGaussField() { return cellField_; }
 
-        //- Return faceGaussField
-        inline faceGaussField<Type>& getFaceGaussField() { return faceField_; }
-
-    // Specialisations for vector type
+    // Vector specialisations
     GaussField<scalar> x() const;
     GaussField<scalar> y() const;
     GaussField<scalar> z() const;
+
     void setX(const GaussField<scalar>& fx);
     void setY(const GaussField<scalar>& fy);
     void setZ(const GaussField<scalar>& fz);
+
     void setXYZ
     (
         const GaussField<scalar>& fx,
@@ -207,18 +170,20 @@ public:
         const GaussField<scalar>& fz
     );
 
-    // Specialisations for scalar and vector type
-    void limitMax(const scalar maxVal);
-    void limitMin(const scalar minVal);
-    void limitRange(const scalar minVal, const scalar maxVal);
+    // Limiters
+    void limitMax(scalar maxVal);
+    void limitMin(scalar minVal);
+    void limitRange(scalar minVal, scalar maxVal);
 };
 
 } // End namespace Foam
 
-// Specialisations for vector type
+
+// * * * * * * * * Template implementation * * * * * * * *
+#include "GaussFieldI.H"
 #include "GaussFieldVectorI.H"
+#include "GaussFieldScalarI.H"
 
 #endif
 
-// ************************************************************************* //
 

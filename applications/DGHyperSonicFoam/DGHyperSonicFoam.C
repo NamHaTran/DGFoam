@@ -31,35 +31,7 @@ Group
     grpIncompressibleSolvers
 
 Description
-    Transient solver for incompressible, laminar flow of Newtonian fluids.
-
-    \heading Solver details
-    The solver uses the PISO algorithm to solve the continuity equation:
-
-        \f[
-            \div \vec{U} = 0
-        \f]
-
-    and momentum equation:
-
-        \f[
-            \ddt{\vec{U}}
-          + \div \left( \vec{U} \vec{U} \right)
-          - \div \left(\nu \grad \vec{U} \right)
-          = - \grad p
-        \f]
-
-    Where:
-    \vartable
-        \vec{U} | Velocity
-        p       | Pressure
-    \endvartable
-
-    \heading Required fields
-    \plaintable
-        U       | Velocity [m/s]
-        p       | Kinematic pressure, p/rho [m2/s2]
-    \endplaintable
+    
 
 \*---------------------------------------------------------------------------*/
 
@@ -72,13 +44,12 @@ Description
 
 // Test libs
 #include "dgGeneralBoundaryManager.H"
-//#include "cellDof.H"
-//#include "cellGaussField.H"
-//#include "faceGaussField.H"
 #include "GaussField.H"
 #include "dgField.H"
-
 #include "dgBasisField.H"
+
+// math libs
+#include "dgMath.H"
 
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
@@ -91,14 +62,8 @@ int main(int argc, char *argv[])
     #include "setRootCase.H"
 
     // *************************** OpenFOAM Initialization *************************** //
-    // This includes the OpenFOAM initialization, which sets up the environment,
-    // command line arguments, and the basic OpenFOAM data structures.
-    // These two create the time system (instance called runTime) and fvMesh (instance called mesh).
     #include "createTime.H"
     #include "createMesh.H"
-
-    // Create fields
-    //#include "createFields.H"
 
     // **************************** DGFoam Initialization **************************** //
     
@@ -109,36 +74,39 @@ int main(int argc, char *argv[])
     // Create the DG fields
     #include "createDGFields.H"
 
-    Info<< "\n--- Checking registered objects in mesh.thisDb() ---" << nl;
-
-    const objectRegistry& db = mesh.thisDb();
-    forAllConstIter(objectRegistry, db, iter)
-    {
-        Info<< "Registered object: " << iter()->name()
-            << " (type: " << iter()->type() << ")" << nl;
-    }
-
-    Info<< "----------------------------------------------------" << nl;
-
-
     // It's possible to iterate over every cell in a standard C++ for loop
     for (label cellI = 0; cellI < mesh.C().size(); cellI++)
     {
         Foam::dgBasisField basisField(cellI, dgMesh);
 
+        // Thermodynamic properties:
+        const scalar R = 287.0;          // Specific gas constant for air
+        const scalar gamma = 1.4;        // Specific heat ratio for air
+
+
         if (cellI == 0)
         {
-            Info << "Cell " << cellI << " basis functions at Gauss points:" << endl;
-            for (label dof = 0; dof < basisField.nDof(); ++dof)
-            {
-                Foam::GaussField<scalar> phi = basisField.getBasis(dof);
-                Foam::GaussField<vector> dPhi = basisField.getDBasis(dof);
+            // Test lookup dgField and use
+            const dgField<vector>& UDG = dgMesh.getFvMesh().lookupObject<dgField<vector>>("U");
 
-                Info << "//---------------------- DoF = " << dof << "---------------------//" << endl;
-                Info << "  phi: " << phi << endl;
-                Info << "  dPhi: " << dPhi << endl;
-                Info << "//-------------------------------------------//" << endl << endl;
-            }
+            GaussField<vector> UGauss = UDG.gaussFields()[cellI];
+
+            Info << "UGauss at cell " << cellI << ": " << UGauss << endl;
+
+            GaussField<scalar> pGauss = pField.gaussFields()[cellI];
+            GaussField<scalar> TGauss = TField.gaussFields()[cellI];
+
+            GaussField<scalar> rhoGauss = pGauss / (R * TGauss);
+            GaussField<scalar> eGauss = TGauss * gamma / (gamma - 1.0);
+            GaussField<scalar> aGauss = sqrt(gamma * pGauss / rhoGauss);
+            GaussField<scalar> machGauss = mag(UGauss) / aGauss;
+            GaussField<scalar> EGauss = eGauss + 0.5 * magSqr(UGauss);
+
+            Info << "rhoGauss at cell " << cellI << ": " << rhoGauss << endl;
+            Info << "eGauss at cell " << cellI << ": " << eGauss << endl;
+            Info << "aGauss at cell " << cellI << ": " << aGauss << endl;
+            Info << "machGauss at cell " << cellI << ": " << machGauss << endl;
+            Info << "EGauss at cell " << cellI << ": " << EGauss << endl;
 
             /*
             Foam::GaussField<tensor> T1
@@ -180,106 +148,6 @@ int main(int argc, char *argv[])
             */
         }
     }
-
-    // Each cell is constructed of faces - these may either be internal or constitute a
-    // boundary, or a patch in OpenFOAM terms; internal faces have an owner cell
-    // and a neighbour.
-    for (label faceI = 0; faceI < mesh.owner().size(); faceI++)
-        if (faceI%40 == 0)
-            Info << "Internal face " << faceI << " with centre at " << mesh.Cf()[faceI]
-                 << " with owner cell " << mesh.owner()[faceI]
-                 << " and neighbour " << mesh.neighbour()[faceI] << endl;
-    Info << endl;
-
-    // Boundary conditions may be accessed through the boundaryMesh object.
-    // In reality, each boundary face is also included in the constant/polyMesh/faces
-    // description. But, in that file, the internal faces are defined first.
-    // In addition, the constant/polyMesh/boundary file defines the starting faceI
-    // indices from which boundary face definitions start.
-    // OpenFOAM also provides a macro definition for for loops over all entries
-    // in a field or a list, which saves up on the amount of typing.
-    forAll(mesh.boundaryMesh(), patchI)
-        Info << "Patch " << patchI << ": " << mesh.boundary()[patchI].name() << " with "
-             << mesh.boundary()[patchI].Cf().size() << " faces. Starts at total face "
-             << mesh.boundary()[patchI].start() << endl;
-    Info << endl;
-
-    // Faces adjacent to boundaries may be accessed as follows.
-    // Also, a useful thing to know about a face is its normal vector and face area.
-    label patchFaceI(0);
-    forAll(mesh.boundaryMesh(), patchI)
-        Info << "Patch " << patchI << " has its face " << patchFaceI << " adjacent to cell "
-             << mesh.boundary()[patchI].patch().faceCells()[patchFaceI]
-             << ". It has normal vector " << mesh.boundary()[patchI].Sf()[patchFaceI]
-             << " and surface area " << mag(mesh.boundary()[patchI].Sf()[patchFaceI])
-             << endl;
-    Info << endl;
-
-    // For internal faces, method .Sf() can be called directly on the mesh instance.
-    // Moreover, there is a shorthand method .magSf() which returns the surface area
-    // as a scalar.
-    // For internal faces, the normal vector points from the owner to the neighbour
-    // and the owner has a smaller cellI index than the neighbour. For boundary faces,
-    // the normals always point outside of the domain (they have "imaginary" neighbours
-    // which do not exist).
-
-    // It is possible to look at the points making up each face in more detail.
-    // First, we define a few shorthands by getting references to the respective
-    // objects in the mesh. These are defined as constants since we do not aim to
-    // alter the mesh in any way.
-    // NOTE: these lists refer to the physical definition of the mesh and thus
-    // include boundary faces. Use can be made of the mesh.boundary()[patchI].Cf().size()
-    // and mesh.boundary()[patchI].start() methods to check whether the face is internal
-    // or lies on a boundary.
-    const faceList& fcs = mesh.faces();
-    const List<point>& pts = mesh.points();
-    const List<point>& cents = mesh.faceCentres();
-
-    forAll(fcs,faceI)
-        if (faceI%80==0)
-        {
-            if (faceI<mesh.Cf().size())
-                Info << "Internal face ";
-            else
-            {
-                forAll(mesh.boundary(),patchI)
-                    if ((mesh.boundary()[patchI].start()<= faceI) &&
-                        (faceI < mesh.boundary()[patchI].start()+mesh.boundary()[patchI].Cf().size()))
-                    {
-                        Info << "Face on patch " << patchI << ", faceI ";
-                        break; // exit the forAll loop prematurely
-                    }
-            }
-
-            Info << faceI << " with centre at " << cents[faceI]
-                 << " has " << fcs[faceI].size() << " vertices:";
-            forAll(fcs[faceI],vertexI)
-                // Note how fcs[faceI] holds the indices of points whose coordinates
-                // are stored in the pts list.
-                Info << " " << pts[fcs[faceI][vertexI]];
-            Info << endl;
-        }
-    Info << endl;
-
-    // In the original cavity tutorial, on which the test case is based,
-    // the frontAndBack boundary is defined as and "empty" type. This is a special
-    // BC case which may cause unexpected behaviour as its .Cf() field has size of 0.
-    // Type of a patch may be checked to avoid running into this problem if there
-    // is a substantial risk that an empty patch type will appear
-    label patchID(0);
-    const polyPatch& pp = mesh.boundaryMesh()[patchID];
-    if (isA<emptyPolyPatch>(pp))
-    {
-        // patch patchID is of type "empty".
-        Info << "You will not see this." << endl;
-    }
-
-    // Patches may also be retrieved from the mesh using their name. This could be
-    // useful if the user were to refer to a particular patch from a dictionary
-    // (like when you do when calculating forces on a particular patch).
-    word patchName("movingWall");
-    patchID = mesh.boundaryMesh().findPatchID(patchName);
-    Info << "Retrieved patch " << patchName << " at index " << patchID << " using its name only." << nl << endl;
 
     Info<< "End\n" << endl;
 

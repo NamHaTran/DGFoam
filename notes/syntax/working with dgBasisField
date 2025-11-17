@@ -1,0 +1,7 @@
+1. Working with dgBasisField
+1.1 Declare basisField for a cell
+Foam::dgBasisField basisField(cellI, dgMesh);
+
+1.2 Access to basis and its derivatives
+Foam::GaussField<scalar> phi = basisField.getBasis(dof);
+Foam::GaussField<vector> dPhi = basisField.getDBasis(dof);

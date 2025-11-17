@@ -44,14 +44,11 @@ SourceFiles
 #include "dgGeomCell.H"
 #include "cellDof.H"
 
-// Forward declaration
-class fieldsContext;
-
 namespace Foam
 {
 
 /*---------------------------------------------------------------------------*\
-                        Class cellGaussField Declaration
+                       Class cellGaussField Declaration
 \*---------------------------------------------------------------------------*/
 
 template<class Type>
@@ -62,11 +59,11 @@ private:
     //- Cell ID in the mesh
     label cellID_;
 
-    //- Reference to geometric mesh
-    const dgGeomMesh* dgMesh_ = nullptr;
+    //- Pointer to geometric mesh (non-owning)
+    const dgGeomMesh* dgMesh_;
 
-    //- Reference to the geometric cell
-    const dgGeomCell* cell_ = nullptr;
+    //- Pointer to geometric cell (non-owning)
+    const dgGeomCell* cell_;
 
     //- Number of Gauss points in this cell
     label nGauss_;
@@ -74,18 +71,21 @@ private:
     //- Number of DOFs in this cell
     label nDof_;
 
-    //- DOF values in this cell
+    //- Pointer to DOF container (non-owning)
     const cellDof<Type>* dof_;
 
-    //- Field values at Gauss points
+    //- Values at Gauss points
     List<Type> values_;
+
 
 public:
 
-    //- Default (empty) constructor
+    // Constructors ------------------------------------------------------------
+
+    //- Default constructor
     cellGaussField();
 
-    //- Constructor from DOF object
+    //- Construct from DG mesh + DOF pointer
     cellGaussField
     (
         const dgGeomMesh* dgMesh,
@@ -95,7 +95,7 @@ public:
     //- Copy constructor
     cellGaussField(const cellGaussField<Type>& other);
 
-    //- Initial value constructor
+    //- Construct with uniform initial value
     cellGaussField
     (
         const label cellID,
@@ -103,78 +103,86 @@ public:
         const Type& initVal
     );
 
-    //- Constructor without initial values
+    //- Construct with zero-initialised values
     cellGaussField
     (
         const label cellID,
         const dgGeomMesh* dgMesh
     );
 
-    //- Return reference to value at Gauss point
-    inline Type& operator[](const label gpI) { return values_[gpI]; }
+    // Access -----------------------------------------------------------------
 
-    //- Const access to value at Gauss point
-    inline const Type& operator[](const label gpI) const { return values_[gpI]; }
+    inline Type& operator[](const label gp)
+    {
+        return values_[gp];
+    }
 
-    //- Return number of Gauss points
-    inline label size() const { return nGauss_; }
+    inline const Type& operator[](const label gp) const
+    {
+        return values_[gp];
+    }
 
-    //- Return cell ID
-    inline label cellID() const { return cellID_; }
+    inline label size() const
+    {
+        return nGauss_;
+    }
 
-    //- Return const reference to geometric mesh
-    inline const dgGeomMesh* dgMesh() const 
+    inline label cellID() const
+    {
+        return cellID_;
+    }
+
+    inline const dgGeomMesh* dgMesh() const
     {
         if (!dgMesh_)
         {
-            FatalErrorInFunction
-                << "dgMesh_ pointer of cellGaussField is null" << abort(FatalError);
+            FatalErrorInFunction << "dgMesh_ is null" << abort(FatalError);
         }
         return dgMesh_;
     }
 
-    //- Interpolate values at Gauss points from DOF using basis functions
+    //- Interpolate DOF → Gauss values
     void interpolateFromDof();
 
-    //- Set the geometric mesh pointer
-    inline void setMesh(const dgGeomMesh& mesh)
-    {
-        if (dgMesh_)
-        {
-            WarningInFunction
-                << "dgMesh_ pointer is already set. Overwriting existing pointer." 
-                << nl << endl;
-        }
+    // Operators --------------------------------------------------------------
 
-        dgMesh_ = &mesh;
+    //- Copy assignment
+    cellGaussField<Type>& operator=
+    (
+        const cellGaussField<Type>& other
+    );
+
+    //- Assign constant value to all Gauss points
+    cellGaussField<Type>& operator=
+    (
+        const Type& value
+    );
+
+    // Printing ---------------------------------------------------------------
+
+    friend Ostream& operator<<
+    (
+        Ostream& os,
+        const cellGaussField<Type>& cgf
+    )
+    {
+        os << "cellGaussField for cell " << cgf.cellID() << ":\n";
+        for (label i = 0; i < cgf.size(); ++i)
+        {
+            os << "  Gauss point " << i << ": " << cgf[i] << nl;
+        }
+        return os;
     }
 
-    // Operators
-
-        //- Copy assignment operator
-        cellGaussField<Type>& operator=(const cellGaussField<Type>& other);
-
-        //- Assign a constant value to all Gauss points
-        cellGaussField<Type>& operator=(const Type& value);
-
-        //- Overload << operator for printing
-        friend Ostream& operator<<(Ostream& os, const cellGaussField& cgf)
-        {
-            os << "cellGaussField for cell " << cgf.cellID() << ":\n";
-            for (label i = 0; i < cgf.size(); ++i)
-            {
-                os << "  Gauss point " << i << ": " << cgf[i] << "\n";
-            }
-            return os;
-        }
-
-    // Specialisations for vector type
+    // Scalar/vector specialisations declared here
     cellGaussField<scalar> x() const;
     cellGaussField<scalar> y() const;
     cellGaussField<scalar> z() const;
+
     void setX(const cellGaussField<scalar>& fx);
     void setY(const cellGaussField<scalar>& fy);
     void setZ(const cellGaussField<scalar>& fz);
+
     void setXYZ
     (
         const cellGaussField<scalar>& fx,
@@ -182,7 +190,7 @@ public:
         const cellGaussField<scalar>& fz
     );
 
-    // Specialisations for scalar and vector type
+    // Limiting
     void limitMax(const scalar maxVal);
     void limitMin(const scalar minVal);
     void limitRange(const scalar minVal, const scalar maxVal);
@@ -190,10 +198,11 @@ public:
 
 } // End namespace Foam
 
-// Specialisations for scalar type
-#include "cellGaussFieldScalarI.H"
+// Template implementation
+#include "cellGaussFieldI.H"
 
-// Specialisations for vector type
+// Specialisations
+#include "cellGaussFieldScalarI.H"
 #include "cellGaussFieldVectorI.H"
 
 #endif

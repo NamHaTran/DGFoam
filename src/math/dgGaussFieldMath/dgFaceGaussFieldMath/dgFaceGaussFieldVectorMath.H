@@ -125,6 +125,20 @@ faceGaussField<scalar> mag
     return result;
 }
 
+// Squared Magnitude
+faceGaussField<scalar> magSqr
+(
+    const faceGaussField<vector>& A
+)
+{
+    faceGaussField<scalar> result(A.cellID(), A.dgMesh());
+    for (label gp = 0; gp < A.nGauss(); ++gp)
+    {
+        result.plusValueAt(gp)  = magSqr(A.plusValue(gp));
+        result.minusValueAt(gp) = magSqr(A.minusValue(gp));
+    }
+    return result;
+}
 
 // * * * * * * * * * * Vector - Tensor * * * * * * * * * * //
 

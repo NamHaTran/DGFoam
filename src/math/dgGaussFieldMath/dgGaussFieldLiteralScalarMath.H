@@ -283,6 +283,18 @@ inline GaussField<scalar> pow
     return result;
 }
 
+// sqrt(field<scalar>)
+inline GaussField<scalar> sqrt
+(
+    const GaussField<scalar>& A
+)
+{
+    GaussField<scalar> result(A);
+    result.cellField() = sqrt(A.cellField());
+    result.faceField() = sqrt(A.faceField());
+    return result;
+}
+
 // Comparison operators between GaussField<scalar> and literal scalar
 
 inline bool operator>

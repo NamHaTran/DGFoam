@@ -25,13 +25,13 @@ License
     along with OpenFOAM.  If not, see <http://www.gnu.org/licenses/>.
 
 Class
-    Foam::cellDof<Type>
+    Foam::dofField<Type>
 
 Description
     Store degrees of freedom (Dof) of given Type for a DG cell.
 
 SourceFiles
-    cellDof.C
+    dofField.C
 
 \*---------------------------------------------------------------------------*/
 
@@ -47,7 +47,7 @@ namespace Foam
 {
 
 /*---------------------------------------------------------------------------*\
-                       Class cellDof Declaration
+                         Class dofField Declaration
 \*---------------------------------------------------------------------------*/
 
 template<class Type>
@@ -55,27 +55,29 @@ class dofField
 {
 private:
 
-    //- Reference to DG mesh
+    //- Reference to DG geometric mesh
     const dgGeomMesh& dgMesh_;
 
-    //- List of cellDoFs
+    //- List of cellDoF objects (local DoF storage)
     List<cellDof<Type>> cellDofs_;
 
     //- Number of cells
     label nCells_;
 
-    //- List of volFields corresponding to each DoF index
+    //- List of OpenFOAM volFields, one field per DoF index
     List<autoPtr<GeometricField<Type, fvPatchField, volMesh>>> foamFields_;
 
-    //- Number of DoFs per cell
+    //- Number of DoFs for each cell
     List<label> dofPerCell_;
 
-    //- Maximum DoF among all cells
+    //- Maximum DoF across all cells
     label maxDoF_;
 
 public:
 
-    // Constructors
+    // Constructors ------------------------------------------------------------
+
+    //- Construct from field base name, mesh and read/write options
     dofField
     (
         const word& name,
@@ -85,21 +87,18 @@ public:
         const dgGeomMesh& mesh
     );
 
-    // Access
+    // Access -----------------------------------------------------------------
 
-    //- Return const access to cellDofs
     inline const List<cellDof<Type>>& cellDofList() const
     {
         return cellDofs_;
     }
 
-    //- Return non-const access to cellDofs
     inline List<cellDof<Type>>& cellDofList()
     {
         return cellDofs_;
     }
 
-    //- Access operator
     inline cellDof<Type>& operator[](const label i)
     {
         return cellDofs_[i];
@@ -110,7 +109,9 @@ public:
         return cellDofs_[i];
     }
 
-    //- Update volFields with current values in cellDof
+    // Member Functions --------------------------------------------------------
+
+    //- Update OpenFOAM volFields from DG DoF values
     void updateFoamFields();
 
     //- Write volFields to disk
@@ -118,6 +119,8 @@ public:
 };
 
 } // End namespace Foam
+
+#include "dofFieldI.H"
 
 #endif
 
