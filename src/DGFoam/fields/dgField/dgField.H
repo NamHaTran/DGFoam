@@ -42,7 +42,7 @@ SourceFiles
 #include "dofField.H"
 #include "GaussField.H"
 #include "dgGeomMesh.H"
-#include "dgGeneralBoundaryManager.H"
+//#include "dgGeneralBoundaryManager.H"
 #include "tensor.H"
 
 namespace Foam
@@ -79,7 +79,7 @@ public:
     //- Runtime type information
     TypeName("dgField");
 
-    // Constructors ------------------------------------------------------------
+    // * * * * * * * * * * * * * Constructor  * * * * * * * * * * * * * * * //
 
     dgField
     (
@@ -95,7 +95,7 @@ public:
     //- Destructor
     ~dgField();
 
-    // Member Functions --------------------------------------------------------
+    // * * * * * * * * * * * Member Functions * * * * * * * * * * * //
 
     //- Return true if this field has DOF data
     inline bool hasDof() const
@@ -142,7 +142,7 @@ public:
     inline label nCells() const
     {
         return gaussFields_.size();
-    }
+    } 
 
     /*
     inline void setBCManager(dgGeneralBoundaryManager<Type>* ptr)
@@ -159,6 +159,10 @@ public:
 
     //- Write data (minimal)
     bool writeData(Ostream& os) const;
+
+    // Assignment ------------------------------------------------------------
+    
+    dgField<Type>& operator=(const Type& value);
 };
 
 } // End namespace Foam

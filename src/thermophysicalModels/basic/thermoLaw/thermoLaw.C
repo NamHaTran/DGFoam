@@ -49,11 +49,15 @@ namespace Foam
 Foam::thermoLaw::thermoLaw
 (
     const word& name,
-    const dictionary& dict
+    const dictionary& dict,
+    const dgGeomMesh& mesh,
+    const eqnOfState& eos
 )
 :
     name_(name),
-    dict_(dict)
+    dict_(dict),
+    mesh_(mesh),
+    eos_(eos)
 {}
 
 
@@ -68,7 +72,9 @@ Foam::thermoLaw::thermoLaw
 Foam::autoPtr<Foam::thermoLaw> Foam::thermoLaw::New
 (
     const word& name,
-    const dictionary& dict
+    const dictionary& dict,
+    const dgGeomMesh& mesh,
+    const eqnOfState& eos
 )
 {
     // Find the matching constructor in the runtime table
@@ -84,20 +90,11 @@ Foam::autoPtr<Foam::thermoLaw> Foam::thermoLaw::New
     }
 
     // Construct and return the selected model
-    return cstrIter()(name, dict);
+    return cstrIter()(name, dict, mesh, eos);
 }
 
 
 // * * * * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * //
 
-Foam::scalar Foam::thermoLaw::a(const scalar) const
-{
-    FatalErrorInFunction
-        << "Speed of sound a(T) not implemented for thermoLaw type: " << name_
-        << exit(FatalError);
-
-    // Unreachable; return to satisfy compilers
-    return 0.0;
-}
 
 // ************************************************************************* //

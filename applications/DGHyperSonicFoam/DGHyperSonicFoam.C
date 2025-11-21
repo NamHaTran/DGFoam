@@ -37,9 +37,6 @@ Description
 
 #include "fvCFD.H"
 #include "pisoControl.H"
-#include "dgRefFace.H"
-#include "dgRefCell.H"
-#include "dgGeomCell.H"
 #include "dgGeomMesh.H"
 
 // Test libs
@@ -47,6 +44,7 @@ Description
 #include "GaussField.H"
 #include "dgField.H"
 #include "dgBasisField.H"
+#include "dgThermoConservative.H"
 
 // math libs
 #include "dgMath.H"
@@ -66,8 +64,6 @@ int main(int argc, char *argv[])
     #include "createMesh.H"
 
     // **************************** DGFoam Initialization **************************** //
-    
-    
     // Create the DG geometric mesh
     #include "createDGMesh.H"
 
@@ -79,73 +75,24 @@ int main(int argc, char *argv[])
     {
         Foam::dgBasisField basisField(cellI, dgMesh);
 
-        // Thermodynamic properties:
-        const scalar R = 287.0;          // Specific gas constant for air
-        const scalar gamma = 1.4;        // Specific heat ratio for air
-
-
         if (cellI == 0)
         {
-            // Test lookup dgField and use
-            const dgField<vector>& UDG = dgMesh.getFvMesh().lookupObject<dgField<vector>>("U");
+            const GaussField<scalar>& rhoG = rhoField.gaussFields()[cellI]; 
+            const GaussField<vector>& rhoUG = rhoUField.gaussFields()[cellI];
 
-            GaussField<vector> UGauss = UDG.gaussFields()[cellI];
-
-            Info << "UGauss at cell " << cellI << ": " << UGauss << endl;
-
-            GaussField<scalar> pGauss = pField.gaussFields()[cellI];
-            GaussField<scalar> TGauss = TField.gaussFields()[cellI];
-
-            GaussField<scalar> rhoGauss = pGauss / (R * TGauss);
-            GaussField<scalar> eGauss = TGauss * gamma / (gamma - 1.0);
-            GaussField<scalar> aGauss = sqrt(gamma * pGauss / rhoGauss);
-            GaussField<scalar> machGauss = mag(UGauss) / aGauss;
-            GaussField<scalar> EGauss = eGauss + 0.5 * magSqr(UGauss);
-
-            Info << "rhoGauss at cell " << cellI << ": " << rhoGauss << endl;
-            Info << "eGauss at cell " << cellI << ": " << eGauss << endl;
-            Info << "aGauss at cell " << cellI << ": " << aGauss << endl;
-            Info << "machGauss at cell " << cellI << ": " << machGauss << endl;
-            Info << "EGauss at cell " << cellI << ": " << EGauss << endl;
-
-            /*
-            Foam::GaussField<tensor> T1
-            (
-                cellI,
-                &dgMesh,
-                Foam::tensor
-                ( 1, 2, 3, 
-                4, 4, 5,
-                7, 3, 1 )
-            );
+            GaussField<vector>& UG = UField.gaussFields()[cellI];
             
-            Foam::GaussField<vector> V1
-            (
-                cellI,
-                &dgMesh,
-                Foam::vector(1, 2, 3)
-            );
+            // Calculate U from rhoU and rho
+            UG = rhoUG / rhoG;
 
-            Foam::GaussField<symmTensor> symmT1
-            (
-                cellI,
-                &dgMesh,
-                Foam::symmTensor(1.0, 0.2, 0.3, 2.0, 0.4, 3.0)
-            );
+            GaussField<scalar>& TG = thermo->T(cellI);
+            GaussField<scalar>& CvG = thermo->Cv(cellI);
+            GaussField<scalar>& muG = thermo->mu(cellI);
 
-            Foam::GaussField<symmTensor> symmT2 = symmT1*2.0;
-
-            Foam::GaussField<tensor> T2
-            (
-                cellI,
-                &dgMesh,
-                Foam::tensor
-
-                ( 1.0, 0.2, 0.3,
-                0.2, 2.0, 0.4,
-                0.3, 0.4, 3.0 )
-            );
-            */
+            Info << "U field : " << UG << endl;
+            Info << "T field : " << TG << endl;
+            Info << "Cv field : " << CvG << endl;
+            Info << "mu field : " << muG << endl;
         }
     }
 

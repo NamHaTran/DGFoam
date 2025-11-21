@@ -47,7 +47,7 @@ Description
 namespace Foam
 {
 // * * * * * * * * * * Scalar - Scalar * * * * * * * * * * //
-faceGaussField<scalar> operator+
+inline faceGaussField<scalar> operator+
 (
     const faceGaussField<scalar>& A,
     const faceGaussField<scalar>& B
@@ -62,7 +62,7 @@ faceGaussField<scalar> operator+
     return result;
 }
 
-faceGaussField<scalar> operator-
+inline faceGaussField<scalar> operator-
 (
     const faceGaussField<scalar>& A,
     const faceGaussField<scalar>& B
@@ -78,7 +78,7 @@ faceGaussField<scalar> operator-
 }
 
 
-faceGaussField<scalar> operator*
+inline faceGaussField<scalar> operator*
 (
     const faceGaussField<scalar>& A,
     const faceGaussField<scalar>& B
@@ -93,7 +93,7 @@ faceGaussField<scalar> operator*
     return result;
 }
 
-faceGaussField<scalar> operator/
+inline faceGaussField<scalar> operator/
 (
     const faceGaussField<scalar>& A,
     const faceGaussField<scalar>& B
@@ -111,7 +111,7 @@ faceGaussField<scalar> operator/
 
 // * * * * * * * * * * Scalar - Vector * * * * * * * * * * //
 
-faceGaussField<vector> operator*
+inline faceGaussField<vector> operator*
 (
     const faceGaussField<scalar>& A,
     const faceGaussField<vector>& B
@@ -126,7 +126,7 @@ faceGaussField<vector> operator*
     return result;
 }
 
-faceGaussField<vector> operator*
+inline faceGaussField<vector> operator*
 (
     const faceGaussField<vector>& A,
     const faceGaussField<scalar>& B
@@ -135,7 +135,7 @@ faceGaussField<vector> operator*
     return B * A;
 }
 
-faceGaussField<vector> operator/
+inline faceGaussField<vector> operator/
 (
     const faceGaussField<vector>& A,
     const faceGaussField<scalar>& B
@@ -153,7 +153,7 @@ faceGaussField<vector> operator/
 
 // * * * * * * * * * * Scalar - Tensor * * * * * * * * * * //
 
-faceGaussField<tensor> operator*
+inline faceGaussField<tensor> operator*
 (
     const faceGaussField<scalar>& A,
     const faceGaussField<tensor>& B
@@ -168,7 +168,7 @@ faceGaussField<tensor> operator*
     return result;
 }
 
-faceGaussField<tensor> operator*
+inline faceGaussField<tensor> operator*
 (
     const faceGaussField<tensor>& A,
     const faceGaussField<scalar>& B
@@ -177,7 +177,7 @@ faceGaussField<tensor> operator*
     return B * A;
 }
 
-faceGaussField<tensor> operator/
+inline faceGaussField<tensor> operator/
 (
     const faceGaussField<tensor>& A,
     const faceGaussField<scalar>& B
@@ -195,7 +195,7 @@ faceGaussField<tensor> operator/
 
 // * * * * * * * * * * Scalar - symmTensor * * * * * * * * //
 
-faceGaussField<symmTensor> operator*
+inline faceGaussField<symmTensor> operator*
 (
     const faceGaussField<scalar>& A,
     const faceGaussField<symmTensor>& B
@@ -210,7 +210,7 @@ faceGaussField<symmTensor> operator*
     return result;
 }
 
-faceGaussField<symmTensor> operator*
+inline faceGaussField<symmTensor> operator*
 (
     const faceGaussField<symmTensor>& A,
     const faceGaussField<scalar>& B
@@ -219,7 +219,7 @@ faceGaussField<symmTensor> operator*
     return B * A;
 }
 
-faceGaussField<symmTensor> operator/
+inline faceGaussField<symmTensor> operator/
 (
     const faceGaussField<symmTensor>& A,
     const faceGaussField<scalar>& B
@@ -237,7 +237,7 @@ faceGaussField<symmTensor> operator/
 
 // * * * * * * * * * * Scalar - sphericalTensor * * * * * * * * //
 
-faceGaussField<sphericalTensor> operator*
+inline faceGaussField<sphericalTensor> operator*
 (
     const faceGaussField<scalar>& A,
     const faceGaussField<sphericalTensor>& B
@@ -252,7 +252,7 @@ faceGaussField<sphericalTensor> operator*
     return result;
 }
 
-faceGaussField<sphericalTensor> operator*
+inline faceGaussField<sphericalTensor> operator*
 (
     const faceGaussField<sphericalTensor>& A,
     const faceGaussField<scalar>& B
@@ -261,7 +261,7 @@ faceGaussField<sphericalTensor> operator*
     return B * A;
 }
 
-faceGaussField<sphericalTensor> operator/
+inline faceGaussField<sphericalTensor> operator/
 (
     const faceGaussField<sphericalTensor>& A,
     const faceGaussField<scalar>& B

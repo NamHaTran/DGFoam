@@ -59,13 +59,13 @@ class constantCp
 private:
 
     //- Constant specific heat at constant pressure [J/(kg.K)]
-    GaussField<scalar> Cp_;
+    scalar Cp_;
 
     //- Specific gas constant (computed) [J/(kg.K)]
     scalar R_;
 
     //- Constant specific heat at constant volume (computed) [J/(kg.K)]
-    GaussField<scalar> Cv_;
+    scalar Cv_;
 
     //- Heat capacity ratio gamma = Cp/Cv [-]
     scalar gamma_;
@@ -76,30 +76,80 @@ public:
     TypeName("constantCp");
 
     //- Construct from root dictionary (reads subDicts 'thermodynamics' and 'specie')
-    constantCp(const word& name, const dictionary& rootDict);
+    constantCp
+    (
+        const word& name, 
+        const dictionary& rootDict, 
+        const dgGeomMesh& mesh,
+        const eqnOfState& eos
+    );
 
     //- Destructor
     virtual ~constantCp() = default;
 
     // Member Functions
 
-        //- Cp(T) [J/(kg.K)] – constant
-        GaussField<scalar> Cp(const GaussField<scalar>& T) const override;
+        //- Cp(T)
+        virtual void calcCp
+        (
+            const label cellI,
+            const GaussField<scalar>& T,
+            GaussField<scalar>& Cp
+        ) const override;
 
-        //- h(T) [J/kg] – using Cp
-        GaussField<scalar> h(const GaussField<scalar>& T) const override;
+        //- Cv(T)
+        virtual void calcCv
+        (
+            const label cellI,
+            const GaussField<scalar>& T,
+            GaussField<scalar>& Cv
+        ) const override;
 
-        //- e(T) [J/kg] – using Cv = Cp - R
-        GaussField<scalar> e(const GaussField<scalar>& T) const override;
+        //- gamma(T) = Cp / Cv
+        virtual void calcGamma
+        (
+            const label cellI,
+            const GaussField<scalar>& CpField,
+            const GaussField<scalar>& CvField,
+            GaussField<scalar>& gamma
+        ) const override;
 
-        //- Speed of sound
-        GaussField<scalar> a(const GaussField<scalar>& T) const override;
+        //- T from energy (e or h depending on energy model)
+        virtual void calcT
+        (
+            const label cellI,
+            const GaussField<scalar>& energy,
+            GaussField<scalar>& T
+        ) const override;
 
-        //- Accessors (useful for debugging/packing)
-        inline GaussField<scalar> Cp()    const { return Cp_;    }
-        inline GaussField<scalar> Cv()    const { return Cv_;    }
-        inline scalar R()     const { return R_;     }
-        inline scalar gamma() const { return gamma_; }
+        //- e(T)
+        virtual void calcInternalE
+        (
+            const label cellI,
+            const GaussField<scalar>& T,
+            GaussField<scalar>& e
+        ) const override;
+
+        //- h(T)
+        virtual void calcH
+        (
+            const label cellI,
+            const GaussField<scalar>& T,
+            GaussField<scalar>& h
+        ) const override;
+
+        //- Calculate speedOfSound
+        virtual void calcSpeedOfSound
+        (
+            const label cellI,
+            const GaussField<scalar>& T,
+            const GaussField<scalar>& gamma,
+            GaussField<scalar>& a
+        ) const override;
+
+        //- Set group
+        //- This model is in PerfectGasThermo
+        virtual bool isPerfectGasThermo() const override { return true; }
 };
 
 } // End namespace Foam

@@ -122,6 +122,20 @@ bool dgField<Type>::writeData(Ostream& os) const
     return true;
 }
 
+template<class Type>
+dgField<Type>& dgField<Type>::operator=
+(
+    const Type& value
+)
+{
+    const label nCells = mesh_.nCells();
+    for (label cellI = 0; cellI < nCells; ++cellI)
+    {
+        gaussFields_[cellI] = value;
+    }
+    return *this;
+}
+
 } // End namespace Foam
 
 #endif

@@ -130,7 +130,7 @@ GaussField<Type>::GaussField(const GaussField<Type>& other)
 // * * * * * * Assignment * * * * * //
 
 template<class Type>
-GaussField<Type>& GaussField<Type>::operator=
+inline GaussField<Type>& GaussField<Type>::operator=
 (
     const GaussField<Type>& other
 )
@@ -148,7 +148,7 @@ GaussField<Type>& GaussField<Type>::operator=
 
 
 template<class Type>
-GaussField<Type>& GaussField<Type>::operator=
+inline GaussField<Type>& GaussField<Type>::operator=
 (
     const Type& value
 )
@@ -211,9 +211,9 @@ inline const Type& GaussField<Type>::faceMinusValueAt(label f, label gp) const
     return faceField_.minusValue(f, gp);
 }
 
+// * * * * * * * * Member Functions * * * * * * * * //
 
-// * * * * * interpolate * * * * * //
-
+//- Interpolate from DOF values
 template<class Type>
 void GaussField<Type>::interpolateFromDof()
 {

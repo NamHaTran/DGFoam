@@ -28,103 +28,111 @@ License
 #include "Sutherland.H"
 #include "addToRunTimeSelectionTable.H"
 #include "IOstreams.H"
-#include <cmath>
 
 namespace Foam
 {
-
 // * * * * * * * * * * * * * * Static Data Members * * * * * * * * * * * * * //
 
 defineTypeNameAndDebug(Sutherland, 0);
-
-// Register derived into base transportLaw dictionary-ctor table
 addToRunTimeSelectionTable(transportLaw, Sutherland, dictionary);
-
 
 // * * * * * * * * * * * * * * * * Constructors  * * * * * * * * * * * * * * //
 
-// Construct from name/dict: set safe defaults then parse coeff_
-Foam::Sutherland::Sutherland
+Sutherland::Sutherland
 (
     const word& name,
-    const dictionary& dict
+    const dictionary& dict,
+    const dgGeomMesh& mesh,
+    const thermoLaw& thermo
 )
 :
-    transportLaw(name, dict),
-    As_(1.458e-5),      // default (air-like) [kg/(m·s)]
-    S_(110.4),          // default [K]
-    Pr0_(0.72)          // default [-]
+    transportLaw(name, dict, mesh, thermo),
+    As_(1.458e-5),
+    S_(110.4),
+    Pr0_(0.72)
 {
-    // Parse and validate dictionary coefficients
-    Foam::Sutherland::read();
+    read();
 }
-
 
 // * * * * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * //
 
-// mu(T) = muRef * (T/TRef)^(3/2) * (TRef + S)/(T + S)
-Foam::GaussField<scalar> Foam::Sutherland::mu(const GaussField<scalar>& T) const
+void Sutherland::calcMu
+(
+    const label cellI,
+    const GaussField<scalar>& T,
+    GaussField<scalar>& mu
+) const
 {
+    // μ = As * T^(3/2) / (T + S)
+
     // Guard: T must be positive
     if (T <= scalar(0))
     {
         FatalErrorInFunction
-            << "Temperature must be positive. T=" << T << nl
+            << "Non-positive temperature in Sutherland::calcMu()" << nl
             << exit(FatalError);
     }
 
-    const GaussField<scalar> denom = T + S_;
+    GaussField<scalar> denom(cellI, &mesh_);
+    denom = T + S_;   // S_ is scalar, auto-broadcast
 
-    // Guard: avoid division by zero
-    if (denom == scalar(0))
-    {
-        FatalErrorInFunction
-            << "Denominator (T + S) equals zero. T=" << T << ", S=" << S_ << nl
-            << exit(FatalError);
-    }
+    GaussField<scalar> T32(cellI, &mesh_);
+    T32 = pow(T, scalar(1.5));
 
-    const GaussField<scalar> muT = As_ * pow(T, scalar(1.5)) / denom;
-
-    return muT;
+    mu = (As_ * T32) / denom;
 }
 
-
-// Pr(T): constant Prandtl number
-Foam::GaussField<scalar> Foam::Sutherland::Pr(const GaussField<scalar>& T) const
+void Sutherland::calcKappa
+(
+    const label cellI,
+    const GaussField<scalar>& T,
+    GaussField<scalar>& kappa
+) const
 {
-    return Pr0_;
+    // classical: k = μ Cp / Pr
+    GaussField<scalar> mu(cellI, &mesh_);
+    calcMu(cellI, T, mu);
+
+    GaussField<scalar> Cp(cellI, &mesh_);
+    thermo_.calcCp(cellI, T, Cp);
+
+    // Pr constant
+    const scalar Pr = Pr0_;
+
+    kappa = (mu * Cp) / Pr;
 }
 
-
-// Read coefficients from coeff_ and validate
-void Foam::Sutherland::read()
+void Sutherland::calcPr
+(
+    const label cellI,
+    const GaussField<scalar>& T,
+    GaussField<scalar>& Pr
+) const
 {
-    // Expected keys in coeff_:
-    if (coeff_.found("As"))    { As_    = readScalar(coeff_.lookup("As"));    }
-    if (coeff_.found("S"))     { S_     = readScalar(coeff_.lookup("S"));     }
-    if (coeff_.found("Pr"))    { Pr0_   = readScalar(coeff_.lookup("Pr"));    }
-
-    // Basic validation
-    if (As_ <= scalar(0))
-    {
-        FatalErrorInFunction
-            << "As must be positive. As=" << As_ << nl
-            << exit(FatalError);
-    }
-    if (S_ <= scalar(0))
-    {
-        FatalErrorInFunction
-            << "S must be positive. S=" << S_ << nl
-            << exit(FatalError);
-    }
-    if (Pr0_ <= scalar(0))
-    {
-        FatalErrorInFunction
-            << "Pr must be positive. Pr=" << Pr0_ << nl
-            << exit(FatalError);
-    }
+    Pr = Pr0_;   // broadcast assignment to all Gauss points
 }
 
-// ************************************************************************* //
+void Sutherland::read()
+{
+    if (coeff_.found("As")) { As_  = readScalar(coeff_.lookup("As")); }
+    if (coeff_.found("S"))  { S_   = readScalar(coeff_.lookup("S")); }
+    if (coeff_.found("Pr")) { Pr0_ = readScalar(coeff_.lookup("Pr")); }
+
+    if (As_ <= 0)
+    {
+        FatalErrorInFunction
+            << "Invalid Sutherland 'As'. Must be > 0." << exit(FatalError);
+    }
+    if (S_ <= 0)
+    {
+        FatalErrorInFunction
+            << "Invalid Sutherland 'S'. Must be > 0." << exit(FatalError);
+    }
+    if (Pr0_ <= 0)
+    {
+        FatalErrorInFunction
+            << "Invalid Prandtl number. Must be > 0." << exit(FatalError);
+    }
+}
 
 } // End namespace Foam

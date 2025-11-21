@@ -27,12 +27,12 @@ Class
     Foam::Sutherland
 
 Description
-    Transport model using Sutherland's law:
-      mu(T) = muRef * (T/TRef)^(3/2) * (TRef + S)/(T + S)
+    Classical Sutherland-law transport model:
+    μ(T)  = As * T^(3/2) / (T + S)
+    Pr    = constant
+    κ(T)  = μ Cp / Pr      (classical Navier–Stokes)
 
-    - Pr(T) is treated as constant: Pr0.
-    - kappa(Cp,T) is computed by the base class:
-        kappa = mu(T) * Cp / Pr(T).
+    All evaluations are per-cell GaussField operations.
 
 SourceFiles
     Sutherland.C
@@ -45,7 +45,6 @@ SourceFiles
 #include "transportLaw.H"
 #include "word.H"
 #include "scalar.H"
-#include "GaussField.H"
 
 namespace Foam
 {
@@ -54,48 +53,71 @@ namespace Foam
                            Class Sutherland Declaration
 \*---------------------------------------------------------------------------*/
 
-class Sutherland : public transportLaw
+class Sutherland
+:
+    public transportLaw
 {
 private:
 
-    // Attributes
+    //- Sutherland coefficient [kg/(m·s·sqrt(K))]
+    scalar As_;
 
-        //- Sutherland constant [kg/(m*s*sqrt(K))]
-        scalar As_;
+    //- Sutherland temperature [K]
+    scalar S_;
 
-        //- Sutherland constant [K]
-        scalar S_;
-
-        //- Constant Prandtl number [-]
-        scalar Pr0_;
+    //- Constant Prandtl number [-]
+    scalar Pr0_;
 
 public:
 
     //- Runtime type information
     TypeName("Sutherland");
 
-    // Constructors
-
-        //- Construct from model name and dictionary; parse coefficients
-        Sutherland(const word& name, const dictionary& dict);
+    //- Construct from model name and dictionary
+    Sutherland
+    (
+        const word& name,
+        const dictionary& dict,
+        const dgGeomMesh& mesh,
+        const thermoLaw& thermo
+    );
 
     //- Destructor
-    ~Sutherland() override = default;
+    virtual ~Sutherland() = default;
 
-    // Member Functions
+    //- μ(T)
+    virtual void calcMu
+    (
+        const label cellI,
+        const GaussField<scalar>& T,
+        GaussField<scalar>& mu
+    ) const override;
 
-        //- Dynamic viscosity mu(T) via Sutherland correlation
-        GaussField<scalar> mu(const GaussField<scalar>& T) const override;
+    //- κ(T)
+    virtual void calcKappa
+    (
+        const label cellI,
+        const GaussField<scalar>& T,
+        GaussField<scalar>& kappa
+    ) const override;
 
-        //- Prandtl number (constant)
-        GaussField<scalar> Pr(const GaussField<scalar>& T) const override;
+    //- Pr(T)
+    virtual void calcPr
+    (
+        const label cellI,
+        const GaussField<scalar>& T,
+        GaussField<scalar>& Pr
+    ) const override;
 
-        //- Read/parse coefficients from coeff() and validate
-        void read() override;
+    virtual void read() override;
+
+    //- Set group
+    virtual bool isSutherlandTransportLaw() const override { return true; }
 };
 
 } // End namespace Foam
 
 #endif
+
 
 // ************************************************************************* //

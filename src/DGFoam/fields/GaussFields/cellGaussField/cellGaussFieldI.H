@@ -167,7 +167,7 @@ void cellGaussField<Type>::interpolateFromDof()
 
 // Copy assignment
 template<class Type>
-cellGaussField<Type>& cellGaussField<Type>::operator=
+inline cellGaussField<Type>& cellGaussField<Type>::operator=
 (
     const cellGaussField<Type>& other
 )
@@ -188,7 +188,7 @@ cellGaussField<Type>& cellGaussField<Type>::operator=
 
 // Assign uniform value
 template<class Type>
-cellGaussField<Type>& cellGaussField<Type>::operator=
+inline cellGaussField<Type>& cellGaussField<Type>::operator=
 (
     const Type& value
 )

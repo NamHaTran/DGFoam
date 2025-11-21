@@ -35,13 +35,15 @@ namespace Foam
 defineTypeNameAndDebug(energy, 0);
 defineRunTimeSelectionTable(energy, dictionary);
 
-energy::energy(const word& name, const dictionary& dict)
+energy::energy(const word& name, const dictionary& dict, const dgGeomMesh& mesh, const thermoLaw& thermo)
 :
     name_(name),
-    coeffs_(dict)
+    coeffs_(dict),
+    mesh_(mesh),
+    thermo_(thermo)
 {}
 
-autoPtr<energy> energy::New(const word& name, const dictionary& dict)
+autoPtr<energy> energy::New(const word& name, const dictionary& dict, const dgGeomMesh& mesh, const thermoLaw& thermo)
 {
     auto cstrIter = dictionaryConstructorTablePtr_->find(name);
 
@@ -53,7 +55,7 @@ autoPtr<energy> energy::New(const word& name, const dictionary& dict)
             << exit(FatalIOError);
     }
 
-    return cstrIter()(name, dict);
+    return cstrIter()(name, dict, mesh, thermo);
 }
 
 } // namespace Foam

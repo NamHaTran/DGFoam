@@ -47,7 +47,7 @@ namespace Foam
 // * * * * * * * * * * * Tensor utility functions * * * * * * * * * * * //
 
 //- Deviatoric part of tensor field
-GaussField<tensor> dev(const GaussField<tensor>& A)
+inline GaussField<tensor> dev(const GaussField<tensor>& A)
 {
     GaussField<tensor> result(A.cellID(), A.dgMesh());
     result.cellField() = dev(A.cellField());
@@ -56,7 +56,7 @@ GaussField<tensor> dev(const GaussField<tensor>& A)
 }
 
 //- Symmetric part of tensor field
-GaussField<symmTensor> symm(const GaussField<tensor>& A)
+inline GaussField<symmTensor> symm(const GaussField<tensor>& A)
 {
     GaussField<symmTensor> result(A.cellID(), A.dgMesh());
     result.cellField() = symm(A.cellField());
@@ -65,7 +65,7 @@ GaussField<symmTensor> symm(const GaussField<tensor>& A)
 }
 
 //- Skew-symmetric part of tensor field
-GaussField<tensor> skew(const GaussField<tensor>& A)
+inline GaussField<tensor> skew(const GaussField<tensor>& A)
 {
     GaussField<tensor> result(A.cellID(), A.dgMesh());
     result.cellField() = skew(A.cellField());
@@ -74,7 +74,7 @@ GaussField<tensor> skew(const GaussField<tensor>& A)
 }
 
 //- Transpose of tensor field
-GaussField<tensor> T(const GaussField<tensor>& A)
+inline GaussField<tensor> T(const GaussField<tensor>& A)
 {
     GaussField<tensor> result(A.cellID(), A.dgMesh());
     result.cellField() = T(A.cellField());
@@ -83,7 +83,7 @@ GaussField<tensor> T(const GaussField<tensor>& A)
 }
 
 //- Trace of tensor field
-GaussField<scalar> tr(const GaussField<tensor>& A)
+inline GaussField<scalar> tr(const GaussField<tensor>& A)
 {
     GaussField<scalar> result(A.cellID(), A.dgMesh());
     result.cellField() = tr(A.cellField());
@@ -92,7 +92,7 @@ GaussField<scalar> tr(const GaussField<tensor>& A)
 }
 
 //- Determinant of tensor field
-GaussField<scalar> det(const GaussField<tensor>& A)
+inline GaussField<scalar> det(const GaussField<tensor>& A)
 {
     GaussField<scalar> result(A.cellID(), A.dgMesh());
     result.cellField() = det(A.cellField());
@@ -101,7 +101,7 @@ GaussField<scalar> det(const GaussField<tensor>& A)
 }
 
 //- Inverse of tensor field
-GaussField<tensor> inv(const GaussField<tensor>& A)
+inline GaussField<tensor> inv(const GaussField<tensor>& A)
 {
     GaussField<tensor> result(A.cellID(), A.dgMesh());
     result.cellField() = inv(A.cellField());
@@ -112,7 +112,7 @@ GaussField<tensor> inv(const GaussField<tensor>& A)
 // * * * * * * * * * * * symmTensor utility functions * * * * * * * * * * * //
 
 //- Trace of symmTensor field
-GaussField<scalar> tr(const GaussField<symmTensor>& A)
+inline GaussField<scalar> tr(const GaussField<symmTensor>& A)
 {
     GaussField<scalar> result(A.cellID(), A.dgMesh());
     result.cellField() = tr(A.cellField());
@@ -121,7 +121,7 @@ GaussField<scalar> tr(const GaussField<symmTensor>& A)
 }
 
 //- Deviatoric part of symmTensor field
-GaussField<symmTensor> dev(const GaussField<symmTensor>& A)
+inline GaussField<symmTensor> dev(const GaussField<symmTensor>& A)
 {
     GaussField<symmTensor> result(A.cellID(), A.dgMesh());
     result.cellField() = dev(A.cellField());
@@ -130,7 +130,7 @@ GaussField<symmTensor> dev(const GaussField<symmTensor>& A)
 }
 
 //- Inverse of symmTensor field
-GaussField<tensor> inv(const GaussField<symmTensor>& A)
+inline GaussField<tensor> inv(const GaussField<symmTensor>& A)
 {
     GaussField<tensor> result(A.cellID(), A.dgMesh());
     result.cellField() = inv(A.cellField());
@@ -141,7 +141,7 @@ GaussField<tensor> inv(const GaussField<symmTensor>& A)
 // * * * * * * * * * * * tensor-tensor operators * * * * * * * * * * * * * //
 
 //- A + B
-GaussField<tensor> operator+
+inline GaussField<tensor> operator+
 (
     const GaussField<tensor>& A,
     const GaussField<tensor>& B
@@ -154,7 +154,7 @@ GaussField<tensor> operator+
 }
 
 //- A - B
-GaussField<tensor> operator-
+inline GaussField<tensor> operator-
 (
     const GaussField<tensor>& A,
     const GaussField<tensor>& B
@@ -168,7 +168,7 @@ GaussField<tensor> operator-
 
 //- A & B
 // Normal tensor product: row of A times column of B
-GaussField<tensor> operator&
+inline GaussField<tensor> operator&
 (
     const GaussField<tensor>& A,
     const GaussField<tensor>& B
@@ -181,7 +181,7 @@ GaussField<tensor> operator&
 }
 
 //- A && B
-GaussField<scalar> operator&&
+inline GaussField<scalar> operator&&
 (
     const GaussField<tensor>& A,
     const GaussField<tensor>& B
@@ -194,7 +194,7 @@ GaussField<scalar> operator&&
 }
 
 // tensor ± symmTensor
-GaussField<tensor> operator+
+inline GaussField<tensor> operator+
 (
     const GaussField<tensor>& A,
     const GaussField<symmTensor>& B
@@ -206,7 +206,7 @@ GaussField<tensor> operator+
     return result;
 }
 
-GaussField<tensor> operator-
+inline GaussField<tensor> operator-
 (
     const GaussField<tensor>& A,
     const GaussField<symmTensor>& B
@@ -219,7 +219,7 @@ GaussField<tensor> operator-
 }
 
 // Normal tensor product: row of A times column of B
-GaussField<tensor> operator&
+inline GaussField<tensor> operator&
 (
     const GaussField<tensor>& A,
     const GaussField<symmTensor>& B
@@ -232,7 +232,7 @@ GaussField<tensor> operator&
 }
 
 // Double contraction: element-element product and sum
-GaussField<scalar> operator&&
+inline GaussField<scalar> operator&&
 (
     const GaussField<tensor>& A,
     const GaussField<symmTensor>& B
@@ -245,7 +245,7 @@ GaussField<scalar> operator&&
 }
 
 // symmTensor ± tensor
-GaussField<tensor> operator+
+inline GaussField<tensor> operator+
 (
     const GaussField<symmTensor>& A,
     const GaussField<tensor>& B
@@ -254,7 +254,7 @@ GaussField<tensor> operator+
     return B + A;
 }
 
-GaussField<tensor> operator-
+inline GaussField<tensor> operator-
 (
     const GaussField<symmTensor>& A,
     const GaussField<tensor>& B
@@ -267,7 +267,7 @@ GaussField<tensor> operator-
 }
 
 // Normal tensor product: row of A times column of B
-GaussField<tensor> operator&
+inline GaussField<tensor> operator&
 (
     const GaussField<symmTensor>& A,
     const GaussField<tensor>& B
@@ -277,7 +277,7 @@ GaussField<tensor> operator&
 }
 
 // Double contraction: element-element product and sum
-GaussField<scalar> operator&&
+inline GaussField<scalar> operator&&
 (
     const GaussField<symmTensor>& A,
     const GaussField<tensor>& B
@@ -287,7 +287,7 @@ GaussField<scalar> operator&&
 }
 
 // symmTensor ± symmTensor
-GaussField<symmTensor> operator+
+inline GaussField<symmTensor> operator+
 (
     const GaussField<symmTensor>& A,
     const GaussField<symmTensor>& B
@@ -299,7 +299,7 @@ GaussField<symmTensor> operator+
     return result;
 }
 
-GaussField<symmTensor> operator-
+inline GaussField<symmTensor> operator-
 (
     const GaussField<symmTensor>& A,
     const GaussField<symmTensor>& B
@@ -312,7 +312,7 @@ GaussField<symmTensor> operator-
 }
 
 // Normal tensor product: row of A times column of B
-GaussField<tensor> operator&
+inline GaussField<tensor> operator&
 (
     const GaussField<symmTensor>& A,
     const GaussField<symmTensor>& B
@@ -325,7 +325,7 @@ GaussField<tensor> operator&
 }
 
 // Double contraction: element-element product and sum
-GaussField<scalar> operator&&
+inline GaussField<scalar> operator&&
 (
     const GaussField<symmTensor>& A,
     const GaussField<symmTensor>& B

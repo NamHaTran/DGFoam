@@ -51,7 +51,7 @@ Description
 namespace Foam
 {
 // * * * * * * * * * * Scalar - Scalar * * * * * * * * * * //
-GaussField<scalar> operator+
+inline GaussField<scalar> operator+
 (
     const GaussField<scalar>& A,
     const GaussField<scalar>& B
@@ -63,7 +63,7 @@ GaussField<scalar> operator+
     return result;
 }
 
-GaussField<scalar> operator-
+inline GaussField<scalar> operator-
 (
     const GaussField<scalar>& A,
     const GaussField<scalar>& B
@@ -76,7 +76,7 @@ GaussField<scalar> operator-
 }
 
 
-GaussField<scalar> operator*
+inline GaussField<scalar> operator*
 (
     const GaussField<scalar>& A,
     const GaussField<scalar>& B
@@ -88,7 +88,7 @@ GaussField<scalar> operator*
     return result;
 }
 
-GaussField<scalar> operator/
+inline GaussField<scalar> operator/
 (
     const GaussField<scalar>& A,
     const GaussField<scalar>& B
@@ -103,7 +103,7 @@ GaussField<scalar> operator/
 
 // * * * * * * * * * * Scalar - Vector * * * * * * * * * * //
 
-GaussField<vector> operator*
+inline GaussField<vector> operator*
 (
     const GaussField<scalar>& A,
     const GaussField<vector>& B
@@ -115,7 +115,7 @@ GaussField<vector> operator*
     return result;
 }
 
-GaussField<vector> operator*
+inline GaussField<vector> operator*
 (
     const GaussField<vector>& A,
     const GaussField<scalar>& B
@@ -124,7 +124,7 @@ GaussField<vector> operator*
     return B * A;
 }
 
-GaussField<vector> operator/
+inline GaussField<vector> operator/
 (
     const GaussField<vector>& A,
     const GaussField<scalar>& B
@@ -138,7 +138,7 @@ GaussField<vector> operator/
 
 // * * * * * * * * * * Scalar - Tensor * * * * * * * * * * //
 
-GaussField<tensor> operator*
+inline GaussField<tensor> operator*
 (
     const GaussField<scalar>& A,
     const GaussField<tensor>& B
@@ -150,7 +150,7 @@ GaussField<tensor> operator*
     return result;
 }
 
-GaussField<tensor> operator*
+inline GaussField<tensor> operator*
 (
     const GaussField<tensor>& A,
     const GaussField<scalar>& B
@@ -159,7 +159,7 @@ GaussField<tensor> operator*
     return B * A;
 }
 
-GaussField<tensor> operator/
+inline GaussField<tensor> operator/
 (
     const GaussField<tensor>& A,
     const GaussField<scalar>& B
@@ -173,7 +173,7 @@ GaussField<tensor> operator/
 
 // * * * * * * * * * * Scalar - symmTensor * * * * * * * * //
 
-GaussField<symmTensor> operator*
+inline GaussField<symmTensor> operator*
 (
     const GaussField<scalar>& A,
     const GaussField<symmTensor>& B
@@ -185,7 +185,7 @@ GaussField<symmTensor> operator*
     return result;
 }
 
-GaussField<symmTensor> operator*
+inline GaussField<symmTensor> operator*
 (
     const GaussField<symmTensor>& A,
     const GaussField<scalar>& B
@@ -194,7 +194,7 @@ GaussField<symmTensor> operator*
     return B * A;
 }
 
-GaussField<symmTensor> operator/
+inline GaussField<symmTensor> operator/
 (
     const GaussField<symmTensor>& A,
     const GaussField<scalar>& B
@@ -208,7 +208,7 @@ GaussField<symmTensor> operator/
 
 // * * * * * * * * * * Scalar - sphericalTensor * * * * * * * * //
 
-GaussField<sphericalTensor> operator*
+inline GaussField<sphericalTensor> operator*
 (
     const GaussField<scalar>& A,
     const GaussField<sphericalTensor>& B
@@ -220,7 +220,7 @@ GaussField<sphericalTensor> operator*
     return result;
 }
 
-GaussField<sphericalTensor> operator*
+inline GaussField<sphericalTensor> operator*
 (
     const GaussField<sphericalTensor>& A,
     const GaussField<scalar>& B
@@ -229,7 +229,7 @@ GaussField<sphericalTensor> operator*
     return B * A;
 }
 
-GaussField<sphericalTensor> operator/
+inline GaussField<sphericalTensor> operator/
 (
     const GaussField<sphericalTensor>& A,
     const GaussField<scalar>& B

@@ -53,7 +53,7 @@ namespace Foam
 
 //- Vector addition
 // Component by component
-GaussField<vector> operator+
+inline GaussField<vector> operator+
 (
     const GaussField<vector>& A,
     const GaussField<vector>& B
@@ -68,7 +68,7 @@ GaussField<vector> operator+
 
 //- Vector subtraction
 // Component by component
-GaussField<vector> operator-
+inline GaussField<vector> operator-
 (
     const GaussField<vector>& A,
     const GaussField<vector>& B
@@ -81,7 +81,7 @@ GaussField<vector> operator-
 }
 
 //- Vector cross product
-GaussField<vector> operator^
+inline GaussField<vector> operator^
 (
     const GaussField<vector>& A,
     const GaussField<vector>& B
@@ -94,7 +94,7 @@ GaussField<vector> operator^
 }
 
 //- Vector dot product
-GaussField<scalar> operator&
+inline GaussField<scalar> operator&
 (
     const GaussField<vector>& A,
     const GaussField<vector>& B
@@ -107,7 +107,7 @@ GaussField<scalar> operator&
 }
 
 //- Vector magnitude
-GaussField<scalar> mag
+inline GaussField<scalar> mag
 (
     const GaussField<vector>& A
 )
@@ -119,7 +119,7 @@ GaussField<scalar> mag
 }
 
 //- Vector squared magnitude
-GaussField<scalar> magSqr
+inline GaussField<scalar> magSqr
 (
     const GaussField<vector>& A
 )
@@ -134,7 +134,7 @@ GaussField<scalar> magSqr
 
 //- Vector & tensor
 // Dot product of vector with each column of the tensor
-GaussField<vector> operator&
+inline GaussField<vector> operator&
 (
     const GaussField<vector>& A,
     const GaussField<tensor>& B
@@ -148,7 +148,7 @@ GaussField<vector> operator&
 
 //- Tensor & vector
 // Dot product of each row of the tensor with the vector
-GaussField<vector> operator&
+inline GaussField<vector> operator&
 (
     const GaussField<tensor>& A,
     const GaussField<vector>& B
@@ -165,7 +165,7 @@ GaussField<vector> operator&
 
 //- Vector & symmTensor
 // Dot product of vector with each column of the symmTensor
-GaussField<vector> operator&
+inline GaussField<vector> operator&
 (
     const GaussField<vector>& A,
     const GaussField<symmTensor>& B
@@ -179,7 +179,7 @@ GaussField<vector> operator&
 
 //- symmTensor & vector
 // Dot product of each row of the symmTensor with the vector
-GaussField<vector> operator&
+inline GaussField<vector> operator&
 (
     const GaussField<symmTensor>& A,
     const GaussField<vector>& B
@@ -196,7 +196,7 @@ GaussField<vector> operator&
 
 //- Vector & sphericalTensor
 // Dot product of vector with each column of the sphericalTensor
-GaussField<vector> operator&
+inline GaussField<vector> operator&
 (
     const GaussField<vector>& A,
     const GaussField<sphericalTensor>& B
@@ -210,7 +210,7 @@ GaussField<vector> operator&
 
 //- sphericalTensor & vector
 // Dot product of each row of the sphericalTensor with the vector
-GaussField<vector> operator&
+inline GaussField<vector> operator&
 (
     const GaussField<sphericalTensor>& A,
     const GaussField<vector>& B

@@ -32,36 +32,69 @@ License
 namespace Foam
 {
 
-// * * * * * * * * * * * * * Static Data * * * * * * * * * * * * * * * //
+// * * * * * * * * * * * * * Static Data Members * * * * * * * * * * * * * //
 
 defineTypeNameAndDebug(sensibleInternalEnergy, 0);
 addToRunTimeSelectionTable(energy, sensibleInternalEnergy, dictionary);
 
-// * * * * * * * * * * * * * Constructors * * * * * * * * * * * * * * * //
 
-sensibleInternalEnergy::sensibleInternalEnergy
+// * * * * * * * * * * * * * Constructors  * * * * * * * * * * * * * * * * //
+
+Foam::sensibleInternalEnergy::sensibleInternalEnergy
 (
     const word& name,
-    const dictionary& dict
+    const dictionary& dict,
+    const dgGeomMesh& mesh,
+    const thermoLaw& thermo
 )
 :
-    energy(name, dict),
-    coeffDict_(dict)  // Store in case future coeffs are needed
+    energy(name, dict, mesh, thermo),
+    coeffDict_(dict)
 {}
 
 
-// * * * * * * * * * * * * * Member Functions * * * * * * * * * * * * * * //
+// * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * * * //
 
-GaussField<scalar> sensibleInternalEnergy::T
+void Foam::sensibleInternalEnergy::calcEnthalpy
 (
-    const GaussField<scalar>& he,
-    const GaussField<scalar>& Cv,
-    const GaussField<scalar>& Cp
+    const label cellI,
+    const GaussField<scalar>& T,
+    GaussField<scalar>& h
 ) const
 {
-    return he / Cv;
+    // Use thermoLaw to compute:
+    //     h = h(T)
+    thermo_.calcH(cellI, T, h);
 }
 
-} // namespace Foam
 
+void Foam::sensibleInternalEnergy::calcEnergy
+(
+    const label cellI,
+    const GaussField<scalar>& T,
+    GaussField<scalar>& e
+) const
+{
+    // Use thermoLaw to compute:
+    //     e = e(T)
+    thermo_.calcInternalE(cellI, T, e);
+}
+
+
+void Foam::sensibleInternalEnergy::calcTfromEnergy
+(
+    const label cellI,
+    const GaussField<scalar>& e,
+    GaussField<scalar>& T
+) const
+{
+    // Use thermoLaw to invert:
+    //     T = T(e)
+    thermo_.calcT(cellI, e, T);
+}
+
+
+// ************************************************************************* //
+
+} // End namespace Foam
 

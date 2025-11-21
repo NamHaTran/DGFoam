@@ -55,15 +55,26 @@ namespace Foam
 Foam::constantCp::constantCp
 (
     const word& name,
-    const dictionary& rootDict
+    const dictionary& rootDict,
+    const dgGeomMesh& mesh,
+    const eqnOfState& eos
 )
 :
-    thermoLaw(name, rootDict),
+    thermoLaw(name, rootDict, mesh, eos),
     Cp_(Zero),
     R_(Zero),
     Cv_(Zero),
     gamma_(Zero)
 {
+    // constantCp only compatible with IdealGas category of eqnOfState
+    if (!eos.isIdealGas())
+    {
+        FatalErrorInFunction
+            << "thermoLaw " << type() <<" requires an ideal-gas type eqnOfState."
+            << " Selected EOS: " << eos.type()
+            << exit(FatalError);
+    }
+
     // 1) Read Cp from 'thermodynamics' sub-dictionary
     if (!rootDict.found("thermodynamics"))
     {
@@ -132,27 +143,83 @@ Foam::constantCp::constantCp
 
 // * * * * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * //
 
-Foam::GaussField<scalar> Foam::constantCp::Cp(const GaussField<scalar>& T) const
+void Foam::constantCp::calcCp
+(
+    const label cellI,
+    const GaussField<scalar>& T,
+    GaussField<scalar>& Cp
+) const
 {
-    // Constant Cp model
-    GaussField<scalar> Cp (T.cellID(), T.dgMesh(), Cp_);
-    return Cp;
+    Cp = Cp_;   // broadcast to all Gauss points for this cell
 }
 
-Foam::GaussField<scalar> Foam::constantCp::h(const GaussField<scalar>& T) const
+
+void Foam::constantCp::calcCv
+(
+    const label cellI,
+    const GaussField<scalar>& T,
+    GaussField<scalar>& Cv
+) const
 {
-    // h(T) = Cp * T  (no reference offset here)
-    return h = Cp_ * T;
+    Cv = Cv_;
 }
 
-Foam::GaussField<scalar> Foam::constantCp::e(const GaussField<scalar>& T) const
+
+void Foam::constantCp::calcGamma
+(
+    const label cellI,
+    const GaussField<scalar>& CpField,
+    const GaussField<scalar>& CvField,
+    GaussField<scalar>& gamma
+) const
 {
-    // e(T) = Cv * T = (Cp - R) * T
-    return Cv_ * T;
+    gamma = gamma_;
 }
 
-Foam::GaussField<scalar> Foam::constantCp::a(const GaussField<scalar>& T) const
+
+void Foam::constantCp::calcT
+(
+    const label cellI,
+    const GaussField<scalar>& energy,
+    GaussField<scalar>& T
+) const
 {
-    return pow(gamma_ * R_ * T, 0.5);
+    // T = e/Cv  (energy model decides if energy is e or h)
+    T = energy / Cv_;
 }
-// ************************************************************************* //
+
+
+void Foam::constantCp::calcInternalE
+(
+    const label cellI,
+    const GaussField<scalar>& T,
+    GaussField<scalar>& e
+) const
+{
+    e = T * Cv_;
+}
+
+
+void Foam::constantCp::calcH
+(
+    const label cellI,
+    const GaussField<scalar>& T,
+    GaussField<scalar>& h
+) const
+{
+    h = T * Cp_;
+}
+
+
+void Foam::constantCp::calcSpeedOfSound
+(
+    const label cellI,
+    const GaussField<scalar>& T,
+    const GaussField<scalar>& gamma,
+    GaussField<scalar>& a
+) const
+{
+    a = sqrt(gamma * eos_.R() * T);
+}
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  * * * //

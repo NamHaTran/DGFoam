@@ -281,7 +281,7 @@ void Foam::faceGaussField<Type>::interpolateFromDof()
 
 // Assignment operator
 template<class Type>
-faceGaussField<Type>& faceGaussField<Type>::operator=
+inline faceGaussField<Type>& faceGaussField<Type>::operator=
 (
     const faceGaussField<Type>& other
 )
@@ -307,7 +307,7 @@ faceGaussField<Type>& faceGaussField<Type>::operator=
 
 // Assign uniform value
 template<class Type>
-faceGaussField<Type>& faceGaussField<Type>::operator=
+inline faceGaussField<Type>& faceGaussField<Type>::operator=
 (
     const Type& v
 )

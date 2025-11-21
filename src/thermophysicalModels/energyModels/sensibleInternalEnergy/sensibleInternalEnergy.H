@@ -48,14 +48,16 @@ namespace Foam
 {
 
 /*---------------------------------------------------------------------------*\
-                      Class sensibleInternalEnergy Declaration
+                 Class sensibleInternalEnergy Declaration
 \*---------------------------------------------------------------------------*/
 
-class sensibleInternalEnergy : public energy
+class sensibleInternalEnergy
+:
+    public energy
 {
 protected:
 
-    //- Optional: save coefficients for using in the future
+    //- Optional coefficient storage
     dictionary coeffDict_;
 
 public:
@@ -63,15 +65,48 @@ public:
     //- Runtime type information
     TypeName("sensibleInternalEnergy");
 
-    //- Constructor
-    sensibleInternalEnergy(const word& name, const dictionary& dict);
+    //- Construct from dictionary
+    sensibleInternalEnergy
+    (
+        const word& name,
+        const dictionary& dict,
+        const dgGeomMesh& mesh,
+        const thermoLaw& thermo
+    );
 
-    //- Override method: compute T from internal energy and Cv
-    GaussField<scalar> T(const GaussField<scalar>& he, const GaussField<scalar>& Cv, const GaussField<scalar>& Cp) const override;
+    // * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * * //
+
+    //- Compute enthalpy h(T)
+    virtual void calcEnthalpy
+    (
+        const label cellI,
+        const GaussField<scalar>& T,
+        GaussField<scalar>& h
+    ) const override;
+
+    //- Compute internal energy e(T)
+    virtual void calcEnergy
+    (
+        const label cellI,
+        const GaussField<scalar>& T,
+        GaussField<scalar>& e
+    ) const override;
+
+    //- Compute T(e)
+    virtual void calcTfromEnergy
+    (
+        const label cellI,
+        const GaussField<scalar>& e,
+        GaussField<scalar>& T
+    ) const override;
+
+    //- Set energy group
+    virtual bool energyInternal() const override { return true; }
 };
 
-} // namespace Foam
+} // End namespace Foam
 
 #endif
 
+// ************************************************************************* //
 

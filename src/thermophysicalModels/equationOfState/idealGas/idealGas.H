@@ -40,13 +40,12 @@ SourceFiles
 #define Foam_idealGas_H
 
 #include "eqnOfState.H"
-#include "GaussField.H"
 
 namespace Foam
 {
 
 /*---------------------------------------------------------------------------*\
-                          Class idealGas Declaration
+                           Class idealGas Declaration
 \*---------------------------------------------------------------------------*/
 
 class idealGas
@@ -55,7 +54,7 @@ class idealGas
 {
 private:
 
-    //- Specific gas constant [J/(kg.K)]
+    //- Gas constant R [J/(kg.K)]
     scalar R_;
 
 public:
@@ -63,25 +62,71 @@ public:
     //- Runtime type information
     TypeName("idealGas");
 
-    //- Construct from name and dictionary
-    idealGas(const word& name, const dictionary& dict);
+    //- Runtime selection table
+    declareRunTimeSelectionTable
+    (
+        autoPtr, idealGas, dictionary,
+        (const word& name, const dictionary& dict, const dgGeomMesh& mesh),
+        (name, dict, mesh)
+    );
+
+    //- Construct from dictionary
+    idealGas
+    (
+        const word& name,
+        const dictionary& dict,
+        const dgGeomMesh& mesh
+    );
 
     //- Destructor
     virtual ~idealGas() = default;
 
-    // Member Functions
+    //- Return gas constant R
+    inline scalar R() const override
+    {
+        return R_;
+    }
 
-        //- Return density [kg/m3] from T [K] and p [Pa]
-        virtual GaussField<scalar> rho(GaussField<scalar>& T, GaussField<scalar>& p) const override;
+    //==============================================================//
+    //         Implement ideal-gas specific thermodynamic relations
+    //==============================================================//
 
-        //- Return pressure [Pa] from rho [kg/m3] and T [K]
-        virtual GaussField<scalar> p(GaussField<scalar>& rho, GaussField<scalar>& T) const override;
+    //- rho = p / (R * T)
+    virtual void calcRhoFromPT
+    (
+        const label cellI,
+        const GaussField<scalar>& p,
+        const GaussField<scalar>& T,
+        GaussField<scalar>& rho
+    ) const override;
 
-        //- Return temperature [K] from rho [kg/m3] and p [Pa]
-        virtual GaussField<scalar> T(GaussField<scalar>& rho, GaussField<scalar>& p) const override;
+    //- p = rho * R * T
+    virtual void calcPFromRhoT
+    (
+        const label cellI,
+        const GaussField<scalar>& rho,
+        const GaussField<scalar>& T,
+        GaussField<scalar>& p
+    ) const override;
 
-        //- Return gas constant [J/(kg.K)]
-        virtual scalar R() const override;
+    //- T = p / (rho * R)
+    virtual void calcTFromPRho
+    (
+        const label cellI,
+        const GaussField<scalar>& p,
+        const GaussField<scalar>& rho,
+        GaussField<scalar>& T
+    ) const override;
+
+    //==============================================================//
+    //              Capability flags (ideal gas supports all)
+    //==============================================================//
+
+    virtual bool canCalcRhoFromPT()  const override { return true; }
+    virtual bool canCalcPFromRhoT()  const override { return true; }
+    virtual bool canCalcTFromPRho()  const override { return true; }
+
+    bool isIdealGas() const override { return true; }
 };
 
 } // End namespace Foam

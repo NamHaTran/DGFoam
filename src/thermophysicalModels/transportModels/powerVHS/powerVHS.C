@@ -36,133 +36,157 @@ namespace Foam
 
 defineTypeNameAndDebug(powerVHS, 0);
 
-// Register this derived model into transportLaw's dictionary-ctor table
+// Register this model into transportLaw dictionary table
 addToRunTimeSelectionTable(transportLaw, powerVHS, dictionary);
 
 
 // * * * * * * * * * * * * * * * * Constructors  * * * * * * * * * * * * * * //
 
-// Construct from name/dict, set safe defaults, then parse and precompute
 Foam::powerVHS::powerVHS
 (
     const word& name,
-    const dictionary& dict
+    const dictionary& dict,
+    const dgGeomMesh& mesh,
+    const thermoLaw& thermo
 )
 :
-    transportLaw(name, dict),
-    // Default coefficients (may be overridden in dict)
-    molMass_(28.0134),      // N2 ~ 28.0134 g/mol
-    dRef_(3.7e-10),         // m (ví dụ 3.7 Å)
-    TRef_(300.0),           // K
-    omega_(0.74),           // typically 0.74 for air-like gases
-    Pr0_(0.72),             // constant Prandtl number
-    kB_(1.380649e-23),      // J/K
-    NA_(6.02214076e23),     // 1/mol
-    muRef_(1.8e-5)          // seed; will be computed in read()
+    transportLaw(name, dict, mesh, thermo),
+    molMass_(28.0134),   // air-like (N2)
+    dRef_(3.7e-10),      // 3.7 Å
+    TRef_(300.0),
+    omega_(0.74),
+    Pr0_(0.72),
+    kB_(1.380649e-23),
+    NA_(6.02214076e23),
+    muRef_(1.8e-5)       // temporary seed (updated in read)
 {
-    Foam::powerVHS::read(); // parse coeffs + compute muRef_
+    powerVHS::read();
 }
 
 
 // * * * * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * //
 
-// Compute mu(T) using power law
-Foam::GaussField<scalar> Foam::powerVHS::mu(const GaussField<scalar>& T) const
+void Foam::powerVHS::calcMu
+(
+    const label cellI,
+    const GaussField<scalar>& T,
+    GaussField<scalar>& mu
+) const
 {
-    // Step: basic guard for temperature domain
+    // Guard: T must be positive everywhere in the cell
     if (T <= scalar(0))
     {
         FatalErrorInFunction
-            << "Temperature must be positive. T=" << T << nl
+            << "Temperature must be strictly positive in powerVHS::calcMu()." << nl
             << exit(FatalError);
     }
 
-    // Step: compute mu(T) = muRef_ * (T/TRef_)^omega_
-    const GaussField<scalar> theta = T/TRef_;
-    return muRef_ * pow(theta, omega_);
+    // μ = μRef * (T/TRef)^ω
+    GaussField<scalar> theta(cellI, &mesh_);
+    theta = T / TRef_;
+
+    GaussField<scalar> thetaW(cellI, &mesh_);
+    thetaW = pow(theta, omega_);
+
+    mu = muRef_ * thetaW;
 }
 
 
-// Return constant Prandtl number
-Foam::GaussField<scalar> Foam::powerVHS::Pr(const GaussField<scalar>& T) const
+void Foam::powerVHS::calcKappa
+(
+    const label cellI,
+    const GaussField<scalar>& T,
+    GaussField<scalar>& kappa
+) const
 {
-    GaussField<scalar> Pr0(T.cellID(), T.dgMesh(), Pr0_);
-    return Pr0;
+    // classical energy transport: κ = μ Cp / Pr
+  
+    GaussField<scalar> mu(cellI, &mesh_);
+    calcMu(cellI, T, mu);
+
+    GaussField<scalar> Cp(cellI, &mesh_);
+    thermo_.calcCp(cellI, T, Cp);
+
+    kappa = (mu * Cp) / Pr0_;
 }
 
 
-// Parse coefficients and precompute muRef_
+void Foam::powerVHS::calcPr
+(
+    const label cellI,
+    const GaussField<scalar>& T,
+    GaussField<scalar>& Pr
+) const
+{
+    Pr = Pr0_;   // broadcast to all Gauss points
+}
+
+
+// * * * * * * * * * * * * * * * * Read Coeffs  * * * * * * * * * * * * * * //
+
 void Foam::powerVHS::read()
 {
-    // * * * Parse user coefficients from coeff_ * * *
-    if (coeff_.found("molMass")) { molMass_ = readScalar(coeff_.lookup("molMass")); } // [g/mol]
-    if (coeff_.found("dRef"))    { dRef_    = readScalar(coeff_.lookup("dRef"));    } // [m]
-    if (coeff_.found("TRef"))    { TRef_    = readScalar(coeff_.lookup("TRef"));    } // [K]
-    if (coeff_.found("omega"))   { omega_   = readScalar(coeff_.lookup("omega"));   } // [-]
-    if (coeff_.found("Pr"))      { Pr0_     = readScalar(coeff_.lookup("Pr"));      } // [-]
+    // Parse input coefficients
+    if (coeff_.found("molMass")) molMass_ = readScalar(coeff_.lookup("molMass"));
+    if (coeff_.found("dRef"))    dRef_    = readScalar(coeff_.lookup("dRef"));
+    if (coeff_.found("TRef"))    TRef_    = readScalar(coeff_.lookup("TRef"));
+    if (coeff_.found("omega"))   omega_   = readScalar(coeff_.lookup("omega"));
+    if (coeff_.found("Pr"))      Pr0_     = readScalar(coeff_.lookup("Pr"));
 
-    // Optional overrides of constants
-    if (coeff_.found("kB")) { kB_ = readScalar(coeff_.lookup("kB")); } // [J/K]
-    if (coeff_.found("NA")) { NA_ = readScalar(coeff_.lookup("NA")); } // [1/mol]
+    if (coeff_.found("kB")) kB_ = readScalar(coeff_.lookup("kB"));
+    if (coeff_.found("NA")) NA_ = readScalar(coeff_.lookup("NA"));
 
-    // * * * Validate inputs * * *
-    if (molMass_ <= scalar(0))
-    {
-        FatalErrorInFunction << "molMass must be positive [g/mol]. molMass=" << molMass_ << nl
-                             << exit(FatalError);
-    }
-    if (dRef_ <= scalar(0))
-    {
-        FatalErrorInFunction << "dRef must be positive [m]. dRef=" << dRef_ << nl
-                             << exit(FatalError);
-    }
-    if (TRef_ <= scalar(0))
-    {
-        FatalErrorInFunction << "TRef must be positive [K]. TRef=" << TRef_ << nl
-                             << exit(FatalError);
-    }
-    if (Pr0_ <= scalar(0))
-    {
-        FatalErrorInFunction << "Pr must be positive. Pr=" << Pr0_ << nl
-                             << exit(FatalError);
-    }
 
-    // Denominator safety: (5 - 2*omega)*(7 - 2*omega) must be non-zero
-    const scalar a = (5 - 2*omega_);
-    const scalar b = (7 - 2*omega_);
+    // Validate
+    if (molMass_ <= 0)
+        FatalErrorInFunction << "molMass must be positive." << exit(FatalError);
+
+    if (dRef_ <= 0)
+        FatalErrorInFunction << "dRef must be positive." << exit(FatalError);
+
+    if (TRef_ <= 0)
+        FatalErrorInFunction << "TRef must be positive." << exit(FatalError);
+
+    if (Pr0_ <= 0)
+        FatalErrorInFunction << "Pr must be positive." << exit(FatalError);
+
+    // (5 - 2ω)(7 - 2ω) must not be zero
+    const scalar a = 5 - 2*omega_;
+    const scalar b = 7 - 2*omega_;
     const scalar denomAB = a*b;
+
     if (mag(denomAB) <= SMALL)
     {
         FatalErrorInFunction
-            << "(5 - 2*omega)*(7 - 2*omega) is near zero. omega=" << omega_ << nl
+            << "(5 - 2*omega)*(7 - 2*omega) is near zero." << nl
             << exit(FatalError);
     }
 
-    // * * * Precompute muRef_ * * *
-    // Step 1: convert molMass_ [g/mol] -> m [kg/molecule]
-    //         m = (molMass_*1e-3 [kg/mol]) / NA_ [1/mol]
+    // Compute molecular mass in kg/molecule
     const scalar m = (molMass_ * 1e-3) / NA_;
 
-    // Step 2: compute muRef with VHS formula
+    // Compute muRef via VHS formulation
     const scalar pi = constant::mathematical::pi;
-    const scalar num = 15.0 * std::sqrt(pi * m * kB_ * TRef_);
-    const scalar denom = 2.0 * pi * dRef_ * dRef_ * denomAB;
+
+    const scalar num =
+        15.0 * std::sqrt(pi * m * kB_ * TRef_);
+
+    const scalar denom =
+        2.0 * pi * dRef_ * dRef_ * denomAB;
 
     if (mag(denom) <= SMALL)
     {
         FatalErrorInFunction
-            << "Denominator in muRef formula is near zero. dRef=" << dRef_
-            << ", omega=" << omega_ << nl
+            << "Denominator in muRef formula is near zero." << nl
             << exit(FatalError);
     }
 
-    muRef_ = num/denom;
+    muRef_ = num / denom;
 
-    // Optional: sanity check
-    if (muRef_ <= scalar(0))
+    if (muRef_ <= 0)
     {
         FatalErrorInFunction
-            << "Computed muRef is non-positive. muRef=" << muRef_ << nl
+            << "Computed muRef is non-positive: " << muRef_ << nl
             << exit(FatalError);
     }
 }

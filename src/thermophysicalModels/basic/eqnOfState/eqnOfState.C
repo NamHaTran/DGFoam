@@ -48,11 +48,13 @@ namespace Foam
 Foam::eqnOfState::eqnOfState
 (
     const word& name,
-    const dictionary& dict
+    const dictionary& dict,
+    const dgGeomMesh& mesh
 )
 :
     name_(name),   // store model id for logging/debug
-    dict_(dict)    // retain coefficients dictionary (const view)
+    dict_(dict),   // retain coefficients dictionary (const view)
+    mesh_(mesh)
 {}
 
 
@@ -64,7 +66,8 @@ Foam::eqnOfState::eqnOfState
 Foam::autoPtr<Foam::eqnOfState> Foam::eqnOfState::New
 (
     const word& name,
-    const dictionary& dict
+    const dictionary& dict,
+    const dgGeomMesh& mesh
 )
 {
     // 1) Find constructor functor by key (model name)
@@ -81,7 +84,7 @@ Foam::autoPtr<Foam::eqnOfState> Foam::eqnOfState::New
     }
 
     // 3) Invoke constructor and return autoPtr
-    return cstrIter()(name, dict);
+    return cstrIter()(name, dict, mesh);
 }
 
 

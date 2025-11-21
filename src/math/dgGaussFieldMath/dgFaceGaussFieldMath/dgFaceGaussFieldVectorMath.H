@@ -46,7 +46,7 @@ namespace Foam
 {
 // * * * * * * * * * * Vector - Vector * * * * * * * * * * //
 // Sum of 2 vectors
-faceGaussField<vector> operator+
+inline faceGaussField<vector> operator+
 (
     const faceGaussField<vector>& A,
     const faceGaussField<vector>& B
@@ -62,7 +62,7 @@ faceGaussField<vector> operator+
 }
 
 // Difference of 2 vectors
-faceGaussField<vector> operator-
+inline faceGaussField<vector> operator-
 (
     const faceGaussField<vector>& A,
     const faceGaussField<vector>& B
@@ -78,7 +78,7 @@ faceGaussField<vector> operator-
 }
 
 // Cross product
-faceGaussField<vector> operator^
+inline faceGaussField<vector> operator^
 (
     const faceGaussField<vector>& A,
     const faceGaussField<vector>& B
@@ -94,7 +94,7 @@ faceGaussField<vector> operator^
 }
 
 // Dot product
-faceGaussField<scalar> operator&
+inline faceGaussField<scalar> operator&
 (
     const faceGaussField<vector>& A,
     const faceGaussField<vector>& B
@@ -111,7 +111,7 @@ faceGaussField<scalar> operator&
 
 // Magnitude
 
-faceGaussField<scalar> mag
+inline faceGaussField<scalar> mag
 (
     const faceGaussField<vector>& A
 )
@@ -126,7 +126,7 @@ faceGaussField<scalar> mag
 }
 
 // Squared Magnitude
-faceGaussField<scalar> magSqr
+inline faceGaussField<scalar> magSqr
 (
     const faceGaussField<vector>& A
 )

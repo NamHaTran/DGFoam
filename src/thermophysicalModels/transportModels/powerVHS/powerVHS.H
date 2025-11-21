@@ -72,36 +72,38 @@ namespace Foam
                            Class powerVHS Declaration
 \*---------------------------------------------------------------------------*/
 
-class powerVHS : public transportLaw
+class powerVHS
+:
+    public transportLaw
 {
 private:
 
-    // Coefficients (from dictionary)
+    // Coefficients read from dictionary
 
-        //- Molecular mass [g/mol] (converted to kg/molecule internally)
+        //- Molecular mass [g/mol] (converted internally to kg/molecule)
         scalar molMass_;
 
-        //- Reference hard-sphere diameter [m]
+        //- Reference diameter [m]
         scalar dRef_;
 
         //- Reference temperature [K]
         scalar TRef_;
 
-        //- Power-law exponent omega [-]
+        //- Power-law exponent ω [-]
         scalar omega_;
 
         //- Constant Prandtl number [-]
         scalar Pr0_;
 
-        //- Boltzmann constant [J/K] (optional override in dict)
+        //- Boltzmann constant [J/K] (optional override)
         scalar kB_;
 
-        //- Avogadro constant [1/mol] (optional override in dict)
+        //- Avogadro constant [1/mol] (optional override)
         scalar NA_;
 
-    // Derived/precomputed
+    // Derived values
 
-        //- Reference dynamic viscosity [kg/(m·s)] at TRef_
+        //- Reference viscosity at TRef [kg/(m·s)]
         scalar muRef_;
 
 public:
@@ -109,24 +111,50 @@ public:
     //- Runtime type information
     TypeName("powerVHS");
 
-    // Constructors
-
-        //- Construct from model name and dictionary; parse coefficients
-        powerVHS(const word& name, const dictionary& dict);
+    //- Construct from dictionary (reads + precomputes)
+    powerVHS
+    (
+        const word& name,
+        const dictionary& dict,
+        const dgGeomMesh& mesh,
+        const thermoLaw& thermo
+    );
 
     //- Destructor
     ~powerVHS() override = default;
 
-    // Member Functions
 
-        //- Dynamic viscosity mu(T) = muRef * (T/TRef)^omega
-        GaussField<scalar> mu(const GaussField<scalar>& T) const override;
+    // * * * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * //
 
-        //- Prandtl number (constant)
-        GaussField<scalar> Pr(const GaussField<scalar>& T) const override;
+    //- Dynamic viscosity μ(T)
+    virtual void calcMu
+    (
+        const label cellI,
+        const GaussField<scalar>& T,
+        GaussField<scalar>& mu
+    ) const override;
 
-        //- Read/parse coeff() and precompute muRef_
-        void read() override;
+    //- Thermal conductivity κ(T)
+    virtual void calcKappa
+    (
+        const label cellI,
+        const GaussField<scalar>& T,
+        GaussField<scalar>& kappa
+    ) const override;
+
+    //- Prandtl number (constant)
+    virtual void calcPr
+    (
+        const label cellI,
+        const GaussField<scalar>& T,
+        GaussField<scalar>& Pr
+    ) const override;
+
+    //- Read coefficients + compute μRef_
+    virtual void read() override;
+
+    //- Set group
+    virtual bool isKineticTransportLaw() const override { return true; }
 };
 
 } // End namespace Foam

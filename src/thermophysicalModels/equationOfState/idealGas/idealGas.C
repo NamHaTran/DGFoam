@@ -40,37 +40,60 @@ namespace Foam
 
 // * * * * * * * * * * * * * Constructors  * * * * * * * * * * * * * * * * * //
 
-Foam::idealGas::idealGas(const word& name, const dictionary& dict)
+Foam::idealGas::idealGas
+(
+    const word& name,
+    const dictionary& dict,
+    const dgGeomMesh& mesh
+)
 :
-    eqnOfState(name, dict),
-    // Get molWeight from dict and calculate R using R universal
+    eqnOfState(name, dict, mesh),
     R_
     (
-        constant::physicoChemical::R.value() /
-        readScalar(dict.subDict("specie").lookup("molWeight"))
+        constant::physicoChemical::R.value()
+      / readScalar(dict.subDict("specie").lookup("molWeight"))
     )
 {}
 
 
-// * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * * * * //
+// * * * * * * * * * * * * Member Functions * * * * * * * * * * * * * //
 
-Foam::GaussField<scalar> Foam::idealGas::rho(GaussField<scalar>& T, GaussField<scalar>& p) const
+// rho = p / (R * T)
+void Foam::idealGas::calcRhoFromPT
+(
+    const label cellI,
+    const GaussField<scalar>& p,
+    const GaussField<scalar>& T,
+    GaussField<scalar>& rho
+) const
 {
-    return p / (R_ * T);
+    rho = p / (R_ * T);
 }
 
-Foam::GaussField<scalar> Foam::idealGas::p(GaussField<scalar>& rho, GaussField<scalar>& T) const
+
+// p = rho * R * T
+void Foam::idealGas::calcPFromRhoT
+(
+    const label cellI,
+    const GaussField<scalar>& rho,
+    const GaussField<scalar>& T,
+    GaussField<scalar>& p
+) const
 {
-    return rho * R_ * T;
+    p = rho * (R_ * T);
 }
 
-Foam::GaussField<scalar> Foam::idealGas::T(GaussField<scalar>& rho, GaussField<scalar>& p) const
+
+// T = p / (rho * R)
+void Foam::idealGas::calcTFromPRho
+(
+    const label cellI,
+    const GaussField<scalar>& p,
+    const GaussField<scalar>& rho,
+    GaussField<scalar>& T
+) const
 {
-    return p / (rho * R_);
+    T = p / (rho * R_);
 }
 
-Foam::scalar Foam::idealGas::R() const
-{
-    return R_;
-}
 // ************************************************************************* //

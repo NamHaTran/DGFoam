@@ -51,11 +51,15 @@ namespace Foam
 Foam::transportLaw::transportLaw
 (
     const word& name,
-    const dictionary& dict
+    const dictionary& dict,
+    const dgGeomMesh& mesh,
+    const thermoLaw& thermo
 )
 :
     name_(name),
-    coeff_(dict)
+    coeff_(dict),
+    mesh_(mesh),
+    thermo_(thermo)
 {
     // Nothing else; derived classes call read() to parse coeff_ fields.
 }
@@ -71,7 +75,9 @@ Foam::transportLaw::transportLaw
 Foam::autoPtr<Foam::transportLaw> Foam::transportLaw::New
 (
     const word& name,
-    const dictionary& dict
+    const dictionary& dict,
+    const dgGeomMesh& mesh,
+    const thermoLaw& thermo
 )
 {
     // Find the matching constructor in the runtime table
@@ -87,25 +93,11 @@ Foam::autoPtr<Foam::transportLaw> Foam::transportLaw::New
     }
 
     // Construct and return the selected model
-    return cstrIter()(name, dict);
+    return cstrIter()(name, dict, mesh, thermo);
 }
 
 
 // * * * * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * //
-
-// Compute kappa from Cp, T, and Pr
-Foam::GaussField<scalar> Foam::transportLaw::kappa
-(
-    const GaussField<scalar>& Cp,
-    const GaussField<scalar>& T
-) const
-{
-    const GaussField<scalar>& muT = this->mu(T);
-    const GaussField<scalar>& Pr  = this->Pr(T);
-
-    return muT*Cp/Pr;
-}
-
 
 /*
  * read():
