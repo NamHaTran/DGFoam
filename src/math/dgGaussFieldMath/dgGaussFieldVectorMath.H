@@ -80,6 +80,19 @@ inline GaussField<vector> operator-
     return result;
 }
 
+//- Outer product of 2 vectors
+inline GaussField<tensor> operator*
+(
+    const GaussField<vector>& A,
+    const GaussField<vector>& B
+)
+{
+    GaussField<tensor> result(A.cellID(), A.dgMesh());
+    result.cellField() = A.cellField() * B.cellField();
+    result.faceField() = A.faceField() * B.faceField();
+    return result;
+}
+
 //- Vector cross product
 inline GaussField<vector> operator^
 (
@@ -127,18 +140,6 @@ inline GaussField<scalar> magSqr
     GaussField<scalar> result(A.cellID(), A.dgMesh());
     result.cellField() = magSqr(A.cellField());
     result.faceField() = magSqr(A.faceField());
-    return result;
-}
-
-//- Outer product of 2 vectors
-inline GaussField<tensor> outerProductField
-(
-    const GaussField<vector>& A
-)
-{
-    GaussField<tensor> result(A.cellID(), A.dgMesh());
-    result.cellField() = outerProductField(A.cellField(), B.cellField());
-    result.faceField() = outerProductField(A.faceField(), B.faceField());
     return result;
 }
 

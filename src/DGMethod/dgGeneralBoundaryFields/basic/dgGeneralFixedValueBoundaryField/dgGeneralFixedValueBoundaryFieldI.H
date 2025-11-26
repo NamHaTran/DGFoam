@@ -30,8 +30,6 @@ Class
 #ifndef dgGeneralFixedValueBoundaryFieldI_H
 #define dgGeneralFixedValueBoundaryFieldI_H
 
-#include "dgGeneralBoundaryField.H"
-
 namespace Foam
 {
 
@@ -40,12 +38,12 @@ namespace Foam
 template<class Type>
 dgGeneralFixedValueBoundaryField<Type>::dgGeneralFixedValueBoundaryField
 (
-    const word& name,
+    const fvPatch& patch,
     const dgGeomMesh& dgMesh,
     const dictionary& dict
 )
 :
-    dgGeneralBoundaryField<Type>(name, dgMesh, dict)
+    dgGeneralBoundaryField<Type>(patch, dgMesh, dict)
 {
     dict.lookup("value") >> value_;
 }

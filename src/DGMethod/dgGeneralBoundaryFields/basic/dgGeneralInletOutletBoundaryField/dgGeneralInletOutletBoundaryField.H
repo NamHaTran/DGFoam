@@ -75,7 +75,7 @@ protected:
     Type inletValue_;
 
     //- Velocity field name
-    word UName_;
+    word UName_ = "U";
 
     //- Velocity field
     const dgField<vector>& U_;
@@ -88,7 +88,7 @@ public:
     //- Constructor from name and dictionary
     dgGeneralInletOutletBoundaryField
     (
-        const word& name,
+        const fvPatch& patch,
         const dgGeomMesh& dgMesh,
         const dictionary& dict
     );
@@ -99,8 +99,8 @@ public:
         const label faceLocalID,
         const label localGauss,
         const vector& n,
-        const vector& minusValue,
-        vector& plusValue
+        const Type& minusValue,
+        Type& plusValue
     ) const override
     {
         const vector& Un = U_.gaussFields()[cellID].facePlusValueAt(faceLocalID,localGauss);
@@ -116,15 +116,30 @@ public:
         }
     }
 
+    //- Check patch type
+    void checkPatchType() const override
+    {
+        if (this->patch_.type() == "patch")
+        {
+            FatalErrorInFunction
+                << "Boundary condition " << type() <<" can only "
+                << "be applied to patch type: \n"
+                << "    " << "patch \n"
+                << "but patch "
+                << this->patch_.name() << " is of type " << this->patch_.type() << nl
+                << exit(FatalError);
+        }
+    }
+
 };
+
+} // End namespace Foam
 
 /*---------------------------------------------------------------------------*\
                   Include template implementation
 \*---------------------------------------------------------------------------*/
 
 #include "dgGeneralInletOutletBoundaryFieldI.H"
-
-} // End namespace Foam
 
 #endif
 // ************************************************************************* //

@@ -139,7 +139,7 @@ inline cellGaussField<scalar> magSqr
 }
 
 // Outer product of 2 vectors
-inline cellGaussField<tensor> outerProductField
+inline cellGaussField<tensor> operator*
 (
     const cellGaussField<vector>& A,
     const cellGaussField<vector>& B
@@ -149,7 +149,7 @@ inline cellGaussField<tensor> outerProductField
     
     for (label i = 0; i < A.size(); ++i)
     {
-        result[i] = outerProduct(A[i],B[i]);
+        result[i] = A[i] * B[i];
     }
     return result;
 }

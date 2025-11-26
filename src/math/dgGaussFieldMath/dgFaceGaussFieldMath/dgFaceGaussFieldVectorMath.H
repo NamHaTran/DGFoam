@@ -78,6 +78,22 @@ inline faceGaussField<vector> operator-
     return result;
 }
 
+// Outer product of 2 vectors
+inline faceGaussField<tensor> operator*
+(
+    const faceGaussField<vector>& A,
+    const faceGaussField<vector>& B
+)
+{
+    faceGaussField<tensor> result(A.cellID(), A.dgMesh());
+    for (label gp = 0; gp < A.nGauss(); ++gp)
+    {
+        result.plusValueAt(gp)  = A.plusValue(gp) * B.plusValue(gp);
+        result.minusValueAt(gp) = A.minusValue(gp) * B.minusValue(gp);
+    }
+    return result;
+}
+
 // Cross product
 inline faceGaussField<vector> operator^
 (
@@ -137,23 +153,6 @@ inline faceGaussField<scalar> magSqr
     {
         result.plusValueAt(gp)  = magSqr(A.plusValue(gp));
         result.minusValueAt(gp) = magSqr(A.minusValue(gp));
-    }
-    return result;
-}
-
-
-// Outer product of 2 vectors
-inline faceGaussField<tensor> outerProductField
-(
-    const faceGaussField<vector>& A,
-    const faceGaussField<vector>& B
-)
-{
-    faceGaussField<tensor> result(A.cellID(), A.dgMesh());
-    for (label gp = 0; gp < A.nGauss(); ++gp)
-    {
-        result.plusValueAt(gp)  = outerProduct(A.plusValue(gp), B.plusValue(gp));
-        result.minusValueAt(gp) = outerProduct(A.minusValue(gp), B.minusValue(gp));
     }
     return result;
 }

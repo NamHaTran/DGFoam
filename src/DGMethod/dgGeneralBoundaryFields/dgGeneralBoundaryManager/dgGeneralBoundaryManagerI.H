@@ -32,8 +32,8 @@ License
 template<class Type>
 Foam::dgGeneralBoundaryManager<Type>::dgGeneralBoundaryManager
 (
-    const dgGeomMesh& mesh,
-    const dictionary& fieldDict
+    const dictionary& fieldDict,
+    const dgGeomMesh& mesh
 )
 :
     mesh_(mesh)
@@ -101,8 +101,8 @@ Foam::dgGeneralBoundaryManager<Type>::dgGeneralBoundaryManager
 template<class Type>
 Foam::dgGeneralBoundaryManager<Type>::dgGeneralBoundaryManager
 (
-    const dgGeomMesh& mesh,
-    const IOobject& io
+    const IOobject& io,
+    const dgGeomMesh& mesh
 )
 :
     mesh_(mesh)
@@ -164,6 +164,9 @@ Foam::dgGeneralBoundaryManager<Type>::dgGeneralBoundaryManager
                 patchDict
             );
 
+        // Check validity of type
+        bc->checkPatchType();
+
         bConditions_.set(patchI, bc.ptr());
     }
 }
@@ -192,7 +195,7 @@ void dgGeneralBoundaryManager<Type>::updateValue
             const label patchID = faceField.getOwnerPatchID(faceI);
 
             //- Face unit normal vector
-            const vector n = faceField.faces()[faceI].normal();
+            const vector n = faceField.faces()[faceI]->normal();
 
             //- Loop over Gauss points on this face
             for (label g = 0; g < faceField.nGaussPerFace(); ++g)

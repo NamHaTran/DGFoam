@@ -27,6 +27,33 @@ Class
 
 Description
     Base class for runtime-selectable DG boundary conditions.
+    When creating a new boundary condition, please remember to override
+    checkPatchType() method. Below are the PolyPatch types in OpenFOAM
+
+    Physical boundary patches:
+    - polyPatch               : Standard physical patch (generic)
+    - wallPolyPatch           : Solid wall patch
+    - emptyPolyPatch          : 2D/1D degenerate patch (no normal direction)
+    - wedgePolyPatch          : Axisymmetric wedge patch
+    - symmetryPolyPatch       : Legacy symmetry patch
+    - symmetryPlanePolyPatch  : Modern symmetry patch
+    
+    Cyclic / periodic patches:
+    - cyclicPolyPatch         : Simple periodic patch
+    - cyclicAMIPolyPatch      : AMI periodic/rotating interface
+    
+    Region-coupling / mapping patches:
+    - mappedPolyPatch         : Generic mapped patch (1:1 mapping)
+    - mappedWallPolyPatch     : Mapped wall interface (CHT)
+    - regionCoupledPolyPatch  : Patch coupling two regions (matching faces)
+    - wallRegionCoupledPolyPatch : Region-coupled version of wall
+    
+    Parallel communication patch:
+    - processorPolyPatch      : MPI processor patch
+    
+    Mesh-motion and utility patches (less commonly used):
+    - faceZonePolyPatch       : Patch used for faceZone extrusions
+    - ggiPolyPatch (older FOAM) : GGI interface (predecessor to cyclicAMI)
 
 \*---------------------------------------------------------------------------*/
 
@@ -203,16 +230,20 @@ public:
             dict_.lookup("type") >> t;
             return t;
         }
+
+    // Check type
+        
+        //- Verify patch type compatibility
+        virtual void checkPatchType() const {}
 };
 
+} // End namespace Foam
 
 /*---------------------------------------------------------------------------*\
                   Include template implementation
 \*---------------------------------------------------------------------------*/
 
 #include "dgGeneralBoundaryFieldI.H"
-
-} // End namespace Foam
 
 #endif
 // ************************************************************************* //

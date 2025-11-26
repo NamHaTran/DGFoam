@@ -77,22 +77,23 @@ public:
     //- Constructor from name and dictionary
     dgGeneralZeroGradientBoundaryField
     (
-        const word& name,
+        const fvPatch& patch,
         const dgGeomMesh& dgMesh,
         const dictionary& dict
     );
 
     //- Destructor
     virtual ~dgGeneralZeroGradientBoundaryField() = default;
+
 };
+
+} // End namespace Foam
 
 /*---------------------------------------------------------------------------*\
                   Include template implementation
 \*---------------------------------------------------------------------------*/
 
 #include "dgGeneralZeroGradientBoundaryFieldI.H"
-
-} // End namespace Foam
 
 #endif
 

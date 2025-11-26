@@ -69,15 +69,15 @@ public:
         //- Construct from fvPatch + dgGeomMesh + dictionary of BC file
         dgGeneralBoundaryManager
         (
-            const dgGeomMesh& mesh,
-            const dictionary& fieldDict
+            const dictionary& fieldDict,
+            const dgGeomMesh& mesh
         );
 
         //- Construct from IOobject + dgGeomMesh
         dgGeneralBoundaryManager
         (
-            const dgGeomMesh& mesh,
-            const IOobject& io
+            const IOobject& io,
+            const dgGeomMesh& mesh
         );
 
     //- Destructor
@@ -102,6 +102,20 @@ public:
 
         //- Return internal field value
         inline const Type& internalValue() const { return internalValue_; }
+
+    // Core methods
+        
+        //- Update values on plus side according to boundary conditions
+        void updateValue
+        (
+            GaussField<Type>& GField
+        );
+
+        //- Update gradients on plus side according to boundary conditions
+        void updateGrad
+        (
+            GaussField<Type>& GField
+        );
 };
 
 #include "dgGeneralBoundaryManagerI.H"

@@ -38,12 +38,12 @@ namespace Foam
 template<class Type>
 dgGeneralZeroGradientBoundaryField<Type>::dgGeneralZeroGradientBoundaryField
 (
-    const word& name,
+    const fvPatch& patch,
     const dgGeomMesh& dgMesh,
     const dictionary& dict
 )
 :
-    dgGeneralBoundaryField<Type>(name, dgMesh, dict)
+    dgGeneralBoundaryField<Type>(patch, dgMesh, dict)
 {}
 
 

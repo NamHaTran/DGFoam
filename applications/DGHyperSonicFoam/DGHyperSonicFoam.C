@@ -39,15 +39,15 @@ Description
 #include "pisoControl.H"
 #include "dgGeomMesh.H"
 
-// Test libs
-#include "dgGeneralBoundaryManager.H"
-#include "GaussField.H"
+// DG libs (must have)
 #include "dgField.H"
-#include "dgBasisField.H"
+#include "dgMath.H"
+#include "dgGeneralBoundaryManager.H"
 #include "dgThermoConservative.H"
 
-// math libs
-#include "dgMath.H"
+
+// Test libs
+#include "dgBasisField.H"
 
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
@@ -75,25 +75,28 @@ int main(int argc, char *argv[])
     {
         Foam::dgBasisField basisField(cellI, dgMesh);
 
-        if (cellI == 0)
-        {
-            const GaussField<scalar>& rhoG = rhoField.gaussFields()[cellI]; 
-            const GaussField<vector>& rhoUG = rhoUField.gaussFields()[cellI];
+        // Declare Gauss fields
+        GaussField<vector>& UG = U.gaussFields()[cellI];
+        GaussField<scalar>& TG = T.gaussFields()[cellI];
+        GaussField<scalar>& pG = p.gaussFields()[cellI];
 
-            GaussField<vector>& UG = UField.gaussFields()[cellI];
-            
-            // Calculate U from rhoU and rho
-            UG = rhoUG / rhoG;
+        // Update ghost states
+        pBC->updateValue(pG);
+        TBC->updateValue(TG);
+        UBC->updateValue(UG);
 
-            GaussField<scalar>& TG = thermo->T(cellI);
-            GaussField<scalar>& CvG = thermo->Cv(cellI);
-            GaussField<scalar>& muG = thermo->mu(cellI);
+        // Update thermo
+        thermo->update(cellI);
 
-            Info << "U field : " << UG << endl;
-            Info << "T field : " << TG << endl;
-            Info << "Cv field : " << CvG << endl;
-            Info << "mu field : " << muG << endl;
-        }
+        const GaussField<scalar>& CvG = thermo->Cv().gaussFields()[cellI];
+        const GaussField<scalar>& muG = thermo->mu().gaussFields()[cellI];
+
+        Info << "T field : " << TG << endl;
+        Info << "p field : " << pG << endl;
+        Info << "U field : " << UG << endl;
+        Info << "Cv field : " << CvG << endl;
+        Info << "mu field : " << muG << endl;
+
     }
 
     Info<< "End\n" << endl;

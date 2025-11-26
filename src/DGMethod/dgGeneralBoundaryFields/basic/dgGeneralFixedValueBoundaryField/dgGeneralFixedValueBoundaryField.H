@@ -48,6 +48,7 @@ SourceFiles
 #define dgGeneralFixedValueBoundaryField_H
 
 #include "dgGeneralBoundaryField.H"
+#include "wallPolyPatch.H"
 
 namespace Foam
 {
@@ -72,7 +73,7 @@ public:
     //- Constructor from name and dictionary
     dgGeneralFixedValueBoundaryField
     (
-        const word& name,
+        const fvPatch& patch,
         const dgGeomMesh& dgMesh,
         const dictionary& dict
     );
@@ -87,21 +88,40 @@ public:
         const label faceLocalID,
         const label localGauss,
         const vector& n,
-        const vector& minusValue,
-        vector& plusValue
+        const Type& minusValue,
+        Type& plusValue
     ) const override
     {
         plusValue = 2 * value_ - minusValue;
     }
+
+    //- Check patch type
+    void checkPatchType() const override
+    {
+        if (
+            this->patch_.type() == "patch" &&
+            this->patch_.type() == "wall"
+        )
+        {
+            FatalErrorInFunction
+                << "Boundary condition " << type() <<" can only "
+                << "be applied to patch type: \n"
+                << "    " << "patch \n"
+                << "    " << "wall \n"
+                << "but patch "
+                << this->patch_.name() << " is of type " << this->patch_.type() << nl
+                << exit(FatalError);
+        }
+    }
 };
+
+} // End namespace Foam
 
 /*---------------------------------------------------------------------------*\
                   Include template implementation
 \*---------------------------------------------------------------------------*/
 
 #include "dgGeneralFixedValueBoundaryFieldI.H"
-
-} // End namespace Foam
 
 #endif
 // ************************************************************************* //

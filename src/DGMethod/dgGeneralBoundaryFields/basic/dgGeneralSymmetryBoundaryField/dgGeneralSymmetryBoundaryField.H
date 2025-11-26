@@ -54,6 +54,7 @@ SourceFiles
 #define dgGeneralSymmetryBoundaryField_H
 
 #include "dgGeneralBoundaryField.H"
+#include "symmetryPolyPatch.H"
 #include "vector.H"
 #include "tensor.H"
 #include "VectorSpace.H"
@@ -78,7 +79,7 @@ public:
     //- Constructor from name and dictionary
     dgGeneralSymmetryBoundaryField
     (
-        const word& name,
+        const fvPatch& patch,
         const dgGeomMesh& dgMesh,
         const dictionary& dict
     );
@@ -87,7 +88,7 @@ public:
     virtual ~dgGeneralSymmetryBoundaryField() = default;
 
     //- Member methods
-        void updateGhostStateValue
+        inline void updateGhostStateValue
         (
             const label cellID,
             const label faceLocalID,
@@ -100,7 +101,7 @@ public:
             plusValue = minusValue;
         }
 
-        void dgGeneralSymmetryBoundaryField<vector>::updateGhostStateValue
+        void updateGhostStateValue
         (
             const label cellID,
             const label faceLocalID,
@@ -124,7 +125,7 @@ public:
             vector& plusValue
         ) const override
         {
-            tensor R = tensor::I - 2.0 * outerProduct(n, n); // Reflection tensor
+            tensor R = tensor::I - 2.0 * n * n; // Reflection tensor
             plusValue = R & minusValue & R;
         }
 
@@ -151,19 +152,34 @@ public:
             vector& plusGrad
         ) const override
         {
-            tensor R = tensor::I - 2.0 * outerProduct(n, n); // Reflection tensor
+            tensor R = tensor::I - 2.0 * n * n; // Reflection tensor
             plusGrad = R & minusGrad & R;
         }
         */
+
+        //- Check patch type
+        void checkPatchType() const override
+        {
+            if (this->patch_.type() == "symmetry")
+            {
+                FatalErrorInFunction
+                    << "Boundary condition " << type() <<" can only "
+                    << "be applied to patch type: \n"
+                    << "    " << "symmetry \n"
+                    << "but patch "
+                    << this->patch_.name() << " is of type " << this->patch_.type() << nl
+                    << exit(FatalError);
+            }
+        }
 };
+
+} // End namespace Foam
 
 /*---------------------------------------------------------------------------*\
                   Include template implementation
 \*---------------------------------------------------------------------------*/
 
 #include "dgGeneralSymmetryBoundaryFieldI.H"
-
-} // End namespace Foam
 
 #endif
 

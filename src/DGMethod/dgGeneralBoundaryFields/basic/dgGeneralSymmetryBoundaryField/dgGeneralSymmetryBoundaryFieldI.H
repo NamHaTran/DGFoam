@@ -61,12 +61,12 @@ namespace Foam
 template<class Type>
 dgGeneralSymmetryBoundaryField<Type>::dgGeneralSymmetryBoundaryField
 (
-    const word& name,
+    const fvPatch& patch,
     const dgGeomMesh& dgMesh,
     const dictionary& dict
 )
 :
-    dgGeneralBoundaryField<Type>(name, dgMesh, dict)
+    dgGeneralBoundaryField<Type>(patch, dgMesh, dict)
 {}
 
 } // End namespace Foam

@@ -1,77 +1,19 @@
-Info<< "Creating conservatives fields\n" << endl;
+/* Process:
+    - Create conservatives fields: rho, rhoU, E
+    - Create primary fields: p, T, U
+    - Convert conservative to primary (only calculate U)
+    - Create thermo: thermo must be created AFTER creating fields because it needs to
+    look up the fields to calculate T and p
+*/
 
-dgField<scalar> rhoField
-(
-    IOobject
-    (
-        "rho",
-        runTime.timeName(),
-        mesh,
-        IOobject::MUST_READ,
-        IOobject::AUTO_WRITE
-    ),
-    dgMesh,
-    true
-);
+// Create conservative fields
+#include "createConservativeFields.H"
 
-dgField<vector> rhoUField
-(
-    IOobject
-    (
-        "rhoU",
-        runTime.timeName(),
-        mesh,
-        IOobject::MUST_READ,
-        IOobject::AUTO_WRITE
-    ),
-    dgMesh,
-    true
-);
+// Create primary fields
+#include "createPrimaryFields.H"
 
-dgField<scalar> EField
-(
-    IOobject
-    (
-        "E",
-        runTime.timeName(),
-        mesh,
-        IOobject::MUST_READ,
-        IOobject::AUTO_WRITE
-    ),
-    dgMesh,
-    true
-);
-
-Info<< "Creating primary fields\n" << endl;
-
-dgField<scalar> pField
-(
-    IOobject
-    (
-        "p",
-        runTime.timeName(),
-        mesh,
-        IOobject::NO_READ,
-        IOobject::AUTO_WRITE
-    ),
-    dgMesh,
-    false
-);
-
-dgField<vector> UField
-(
-    IOobject
-    (
-        "U",
-        runTime.timeName(),
-        mesh,
-        IOobject::NO_READ,
-        IOobject::AUTO_WRITE
-    ),
-    dgMesh,
-    false
-);
-
+// Convert conservative to primary (only calculate U)
+#include "conservativeToPrimary.H"
 
 // Declare thermo
 Info<< "Reading thermophysical properties\n" << endl;
@@ -93,4 +35,5 @@ dictionary thermoType(thermoDict.subDict("dgThermo"));
 word dgThermoTypeName(thermoType.lookup("type"));
 
 autoPtr<dgThermoConservative> thermo = dgThermoConservative::New(dgThermoTypeName, thermoDict, dgMesh);
+// T and p is calculated internally right after themo is constructed
 

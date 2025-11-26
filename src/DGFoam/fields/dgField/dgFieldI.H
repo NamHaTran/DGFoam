@@ -65,13 +65,16 @@ dgField<Type>::dgField
     if (hasDof)
     {
         // Create DOF container
-        dofPtr_ = new dofField<Type>
+        dofPtr_.reset
         (
-            io.name(),
-            io.instance(),
-            io.readOpt(),
-            io.writeOpt(),
-            mesh
+            new dofField<Type>
+            (
+                io.name(),
+                io.instance(),
+                io.readOpt(),
+                io.writeOpt(),
+                mesh
+            )
         );
 
         // Interpolate DOF → Gauss values
@@ -98,20 +101,6 @@ dgField<Type>::dgField
             << " (no DOF)." << nl;
     }
 }
-
-
-// * * * * * * * * * Destructor * * * * * * * * * //
-
-template<class Type>
-dgField<Type>::~dgField()
-{
-    if (hasDof_ && dofPtr_)
-    {
-        delete dofPtr_;
-        dofPtr_ = nullptr;
-    }
-}
-
 
 // * * * * * * * * * Member Functions  * * * * * * * * //
 

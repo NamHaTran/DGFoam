@@ -3,9 +3,10 @@ EXE_INC = \
     -I$(FOAM_SRC)/OpenFOAM/lnInclude \
     -I$(FOAM_SRC)/meshTools/lnInclude \
     -I$(FOAM_SRC)/finiteVolume/lnInclude \
-    -I$(DG_SRC)/DGFoam/lnInclude \
     -I$(DG_SRC)/math/lnInclude \
-    -I$(DG_SRC)/mesh/lnInclude
+    -I$(DG_SRC)/mesh/lnInclude \
+    -I$(DG_SRC)/DGFoam/lnInclude \
+    -I$(DG_SRC)/DGMethod/lnInclude
 
 LIB_LIBS = \
     -L$(DG_LIBBIN) \
@@ -14,5 +15,6 @@ LIB_LIBS = \
     -lfiniteVolume \
     -lDGFoam \
     -lDGMath \
-    -lDGMesh
+    -lDGMesh \
+    -lDGMethod
     

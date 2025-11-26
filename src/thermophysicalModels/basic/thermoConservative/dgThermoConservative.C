@@ -52,20 +52,6 @@ Foam::dgThermoConservative::dgThermoConservative
     transport_(nullptr),
     energy_(nullptr),
     R_(Zero),
-
-    T_
-    (
-        IOobject
-        (
-            "T",
-            mesh.getFvMesh().time().timeName(),
-            mesh.getFvMesh(),
-            IOobject::NO_READ,
-            IOobject::AUTO_WRITE
-        ),
-        mesh,
-        false     // Only conservative vars have DoF
-    ),
     Cp_
     (
         IOobject
@@ -198,6 +184,10 @@ Foam::dgThermoConservative::dgThermoConservative
     p_
     (
         mesh_.getFvMesh().lookupObjectRef<dgField<scalar>>("p")
+    ),
+    T_
+    (
+        mesh_.getFvMesh().lookupObjectRef<dgField<scalar>>("T")
     )
 {
     // No model construction here.

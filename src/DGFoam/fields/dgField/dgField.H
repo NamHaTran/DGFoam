@@ -42,7 +42,7 @@ SourceFiles
 #include "dofField.H"
 #include "GaussField.H"
 #include "dgGeomMesh.H"
-//#include "dgGeneralBoundaryManager.H"
+#include "dgGeneralBoundaryManager.H"
 #include "tensor.H"
 
 namespace Foam
@@ -66,13 +66,10 @@ private:
     bool hasDof_;
 
     //- Pointer to DOF field (null for primary fields)
-    dofField<Type>* dofPtr_;
+    autoPtr<dofField<Type>> dofPtr_;
 
     //- GaussField for every cell in the mesh
     List<GaussField<Type>> gaussFields_;
-
-    //- Pointer to boundary manager
-    // dgGeneralBoundaryManager<Type>* bcManagerPtr_;
 
 public:
 
@@ -91,9 +88,6 @@ public:
     //- No copy
     dgField(const dgField&) = delete;
     dgField& operator=(const dgField&) = delete;
-
-    //- Destructor
-    ~dgField();
 
     // * * * * * * * * * * * Member Functions * * * * * * * * * * * //
 
@@ -143,19 +137,6 @@ public:
     {
         return gaussFields_.size();
     } 
-
-    /*
-    inline void setBCManager(dgGeneralBoundaryManager<Type>* ptr)
-    {
-        bcManagerPtr_ = ptr;
-    }
-    
-
-    inline dgGeneralBoundaryManager<Type>* bcManager() const
-    {
-        return bcManagerPtr_;
-    }
-    */
 
     //- Write data (minimal)
     bool writeData(Ostream& os) const;

@@ -130,9 +130,6 @@ protected:
     //- Gas constant
     scalar R_;
 
-    //- Temperature field
-    dgField<scalar> T_;
-
     //- Cp and Cv
     dgField<scalar> Cp_;
     dgField<scalar> Cv_;
@@ -170,6 +167,9 @@ protected:
         
         //- p (to store result)
         dgField<scalar>& p_;
+
+        //- T (to store result)
+        dgField<scalar>& T_;
 
 public:
 
@@ -235,6 +235,7 @@ public:
     //- Gas constant
     inline scalar R() const { return R_; }
 
+    /*
     // Helper macro to generate field accessors (ref + const-ref)
     #define dgThermoConservative_FIELD_ACCESSOR(fieldName)                               \
         inline dgField<scalar>& fieldName() { return fieldName##_; }         \
@@ -244,7 +245,6 @@ public:
         inline const GaussField<scalar>& fieldName(const label cellID) const \
         { return fieldName##_.gaussFields()[cellID]; }
 
-    dgThermoConservative_FIELD_ACCESSOR(T)
     dgThermoConservative_FIELD_ACCESSOR(Cp)
     dgThermoConservative_FIELD_ACCESSOR(Cv)
     dgThermoConservative_FIELD_ACCESSOR(h)
@@ -256,6 +256,17 @@ public:
     dgThermoConservative_FIELD_ACCESSOR(gamma)
 
     #undef dgThermoConservative_FIELD_ACCESSOR
+    */
+
+    inline const dgField<scalar>& Cp() const { return Cp_; }
+    inline const dgField<scalar>& Cv() const { return Cv_; }
+    inline const dgField<scalar>& h() const { return h_; }
+    inline const dgField<scalar>& e() const { return e_; }
+    inline const dgField<scalar>& mu() const { return mu_; }
+    inline const dgField<scalar>& kappa() const { return kappa_; }
+    inline const dgField<scalar>& Pr() const { return Pr_; }
+    inline const dgField<scalar>& a() const { return a_; }
+    inline const dgField<scalar>& gamma() const { return gamma_; }
 };
 
 } // End namespace Foam

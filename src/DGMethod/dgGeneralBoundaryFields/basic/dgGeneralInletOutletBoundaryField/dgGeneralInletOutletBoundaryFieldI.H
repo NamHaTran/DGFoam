@@ -40,13 +40,13 @@ namespace Foam
 template<class Type>
 dgGeneralInletOutletBoundaryField<Type>::dgGeneralInletOutletBoundaryField
 (
-    const word& name,
+    const fvPatch& patch,
     const dgGeomMesh& dgMesh,
     const dictionary& dict
 )
 :
-    dgGeneralBoundaryField<Type>(name,dgMesh, dict),
-    UName_(dict.lookupOrDefault("U", "U")),
+    dgGeneralBoundaryField<Type>(patch, dgMesh, dict),
+    UName_(dict.lookupOrDefault("U", word("U"))),
     U_
     (
         dgMesh.getFvMesh().lookupObject<dgField<vector>>(UName_)

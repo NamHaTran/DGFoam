@@ -202,13 +202,13 @@ inline Type& GaussField<Type>::faceMinusValueAt(label f, label gp)
 template<class Type>
 inline const Type& GaussField<Type>::facePlusValueAt(label f, label gp) const
 {
-    return faceField_.plusValue(f, gp);
+    return faceField_.plusValueOnFace(f, gp);
 }
 
 template<class Type>
 inline const Type& GaussField<Type>::faceMinusValueAt(label f, label gp) const
 {
-    return faceField_.minusValue(f, gp);
+    return faceField_.minusValueOnFace(f, gp);
 }
 
 // * * * * * * * * Member Functions * * * * * * * * //

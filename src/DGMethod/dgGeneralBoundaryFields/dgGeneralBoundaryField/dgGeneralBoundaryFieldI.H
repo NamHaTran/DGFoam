@@ -57,8 +57,12 @@ Foam::dgGeneralBoundaryField<Type>::New
     const word bcType(dict.get<word>("type"));
 
     // Correct table iterator name (template-aware)
+    /*
     typename dgGeneralBoundaryField<Type>::dictionaryConstructorTable::iterator cstrIter =
         dgGeneralBoundaryField<Type>::dictionaryConstructorTablePtr_->find(bcType);
+    */
+    
+    auto cstrIter = dictionaryConstructorTablePtr_->find(bcType);
 
     if (!cstrIter.found())
     {
