@@ -130,6 +130,18 @@ inline GaussField<scalar> magSqr
     return result;
 }
 
+//- Outer product of 2 vectors
+inline GaussField<tensor> outerProductField
+(
+    const GaussField<vector>& A
+)
+{
+    GaussField<tensor> result(A.cellID(), A.dgMesh());
+    result.cellField() = outerProductField(A.cellField(), B.cellField());
+    result.faceField() = outerProductField(A.faceField(), B.faceField());
+    return result;
+}
+
 // * * * * * * * * * * * * Vector - Tensor * * * * * * * * * * * * //
 
 //- Vector & tensor

@@ -78,34 +78,19 @@ public:
     dgGeneralZeroGradientBoundaryField
     (
         const word& name,
+        const dgGeomMesh& dgMesh,
         const dictionary& dict
     );
 
     //- Destructor
     virtual ~dgGeneralZeroGradientBoundaryField() = default;
-
-    //- Update plus-side value using zero-gradient BC: U+ = U-, S+ = S-
-    virtual void updateValue
-    (
-        const label gaussID,
-        const vector& n,
-        const Type& minusValue,
-        const Type& minusGrad,
-        Type& plusValue,
-        Type& plusGrad
-    ) const override;
-
-    //- Update plus-side gradient (copy from minus side)
-    virtual void updateGrad
-    (
-        const label gaussID,
-        const vector& n,
-        const Type& minusValue,
-        const Type& minusGrad,
-        Type& plusValue,
-        Type& plusGrad
-    ) const override;
 };
+
+/*---------------------------------------------------------------------------*\
+                  Include template implementation
+\*---------------------------------------------------------------------------*/
+
+#include "dgGeneralZeroGradientBoundaryFieldI.H"
 
 } // End namespace Foam
 

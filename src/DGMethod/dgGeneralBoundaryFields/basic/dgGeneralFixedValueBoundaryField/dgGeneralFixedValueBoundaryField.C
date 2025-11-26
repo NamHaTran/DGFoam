@@ -37,56 +37,6 @@ namespace Foam
 
 makeDgGeneralBoundaryField(dgGeneralFixedValueBoundaryField);
 
-// * * * * * * * * * * * * * * Constructor  * * * * * * * * * * * * * * //
-
-template<class Type>
-dgGeneralFixedValueBoundaryField<Type>::dgGeneralFixedValueBoundaryField
-(
-    const word& name,
-    const dictionary& dict
-)
-:
-    dgGeneralBoundaryField<Type>(name, dict)
-{
-    dict.lookup("value") >> value_;
-}
-
-
-// * * * * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * //
-
-template<class Type>
-void dgGeneralFixedValueBoundaryField<Type>::updateValue
-(
-    const label gaussID,
-    const vector& n,
-    const Type& minusValue,
-    const Type& minusGrad,
-    Type& plusValue,
-    Type& plusGrad
-) const
-{
-    // Dirichlet condition: mirror around boundary value
-    plusValue = 2 * value_ - minusValue;
-}
-
-template<class Type>
-void dgGeneralFixedValueBoundaryField<Type>::updateGrad
-(
-    const label gaussID,
-    const vector& n,
-    const Type& minusValue,
-    const Type& minusGrad,
-    Type& plusValue,
-    Type& plusGrad
-) const
-{
-    // Gradient is unchanged
-    plusGrad = minusGrad;
-}
-
-// * * * * * * * * * * * * * * Template instantiation * * * * * * * * * * * * //
-// not necessary
-
 } // End namespace Foam
 
 // ************************************************************************* //

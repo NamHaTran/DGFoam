@@ -73,6 +73,7 @@ public:
     dgGeneralFixedValueBoundaryField
     (
         const word& name,
+        const dgGeomMesh& dgMesh,
         const dictionary& dict
     );
 
@@ -80,27 +81,25 @@ public:
     virtual ~dgGeneralFixedValueBoundaryField() = default;
 
     //- Update value at plus side using fixed value BC
-    virtual void updateValue
+    virtual void updateGhostStateValue
     (
-        const label gaussID,
+        const label cellID,
+        const label faceLocalID,
+        const label localGauss,
         const vector& n,
-        const Type& minusValue,
-        const Type& minusGrad,
-        Type& plusValue,
-        Type& plusGrad
-    ) const override;
-
-    //- Update gradient at plus side using mirror condition
-    virtual void updateGrad
-    (
-        const label gaussID,
-        const vector& n,
-        const Type& minusValue,
-        const Type& minusGrad,
-        Type& plusValue,
-        Type& plusGrad
-    ) const override;
+        const vector& minusValue,
+        vector& plusValue
+    ) const override
+    {
+        plusValue = 2 * value_ - minusValue;
+    }
 };
+
+/*---------------------------------------------------------------------------*\
+                  Include template implementation
+\*---------------------------------------------------------------------------*/
+
+#include "dgGeneralFixedValueBoundaryFieldI.H"
 
 } // End namespace Foam
 

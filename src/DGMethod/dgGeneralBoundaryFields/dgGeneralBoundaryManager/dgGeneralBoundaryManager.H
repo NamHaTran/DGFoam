@@ -33,11 +33,13 @@ Description
 #ifndef Foam_dgGeneralBoundaryManager_H
 #define Foam_dgGeneralBoundaryManager_H
 
+#include "dgGeomMesh.H"
+#include "fvPatch.H"
 #include "dictionary.H"
 #include "IOdictionary.H"
-#include "wordList.H"
 #include "PtrList.H"
 #include "dgGeneralBoundaryField.H"
+#include "dgField.H"
 
 namespace Foam
 {
@@ -51,50 +53,60 @@ class dgGeneralBoundaryManager
 {
 private:
 
-    //- List of boundary condition objects (one per patch)
+    //- Reference to dgGeomMesh (used for fvPatch access and field lookup)
+    const dgGeomMesh& mesh_;
+
+    //- List of boundary condition objects (one per fvPatch)
     PtrList<dgGeneralBoundaryField<Type>> bConditions_;
 
-    //- Internal field value (only supports 'uniform <value>')
+    //- Internal field value (currently only supports 'uniform <value>')
     Type internalValue_;
 
 public:
 
     // Constructors
 
-        //- Construct from dictionary, without context
-        dgGeneralBoundaryManager(const dictionary& fieldDict);
+        //- Construct from fvPatch + dgGeomMesh + dictionary of BC file
+        dgGeneralBoundaryManager
+        (
+            const dgGeomMesh& mesh,
+            const dictionary& fieldDict
+        );
 
-        //- Construct from IOobject
-        dgGeneralBoundaryManager(const IOobject& io);
+        //- Construct from IOobject + dgGeomMesh
+        dgGeneralBoundaryManager
+        (
+            const dgGeomMesh& mesh,
+            const IOobject& io
+        );
 
     //- Destructor
     ~dgGeneralBoundaryManager() = default;
 
-    // Access
+    // Access Functions
 
-        //- Return number of patches
+        //- Number of boundary patches
         inline label size() const { return bConditions_.size(); }
 
-        //- Access to boundary condition for patch i
+        //- Const access by patch index
         inline const dgGeneralBoundaryField<Type>& operator[](const label i) const
         {
             return bConditions_[i];
         }
 
-        //- Non-const access if needed
+        //- Non-const access
         inline dgGeneralBoundaryField<Type>& operator[](const label i)
         {
             return bConditions_[i];
         }
 
-        //- Return internal value
+        //- Return internal field value
         inline const Type& internalValue() const { return internalValue_; }
 };
 
+#include "dgGeneralBoundaryManagerI.H"
+
 } // End namespace Foam
 
-//#ifdef NoRepository
-//#include "dgGeneralBoundaryManager.C"
-//#endif
-
 #endif
+// ************************************************************************* //

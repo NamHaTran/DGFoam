@@ -27,7 +27,6 @@ License
 #include "dgGeneralInletOutletBoundaryField.H"
 #include "dgGeneralBoundaryFieldMacros.H"
 #include "addToRunTimeSelectionTable.H"
-#include "dictionary.H"
 
 namespace Foam
 {
@@ -35,70 +34,6 @@ namespace Foam
 // * * * * * * * * * * * * * * * * Instantiation * * * * * * * * * * * * * * //
 
 makeDgGeneralBoundaryField(dgGeneralInletOutletBoundaryField);
-
-// * * * * * * * * * * * * * * * Constructor * * * * * * * * * * * * * * * * //
-
-template<class Type>
-dgGeneralInletOutletBoundaryField<Type>::dgGeneralInletOutletBoundaryField
-(
-    const word& name,
-    const dictionary& dict
-)
-:
-    dgGeneralBoundaryField<Type>(name, dict)
-{
-    dict.readEntry("inletValue", inletValue_);
-}
-
-// * * * * * * * * * * * * * * updateValue * * * * * * * * * * * * * * * * //
-
-template<class Type>
-void dgGeneralInletOutletBoundaryField<Type>::updateValue
-(
-    const label gaussID,
-    const vector& n,
-    const Type& minusValue,
-    const Type& minusGrad,
-    Type& plusValue,
-    Type& plusGrad
-) const
-{
-    /*
-    const faceGaussField<vector>& V =
-        this->ctxPtr_->template lookupFaceField<vector>("U");
-
-    const vector& Vn = V.plusValue(gaussID);
-    scalar dotProd = Vn & n;
-
-    if (dotProd < 0)  // Inlet: flow into domain
-    {
-        plusValue = 2 * inletValue_ - minusValue;
-    }
-    else // Outlet: flow out of domain
-    {
-        plusValue = minusValue;
-    */
-}
-
-
-// * * * * * * * * * * * * * * updateGrad * * * * * * * * * * * * * * * * * //
-
-template<class Type>
-void dgGeneralInletOutletBoundaryField<Type>::updateGrad
-(
-    const label gaussID,
-    const vector& n,
-    const Type& minusValue,
-    const Type& minusGrad,
-    Type& plusValue,
-    Type& plusGrad
-) const
-{
-    plusGrad = minusGrad;
-}
-
-
-// * * * * * * * * * * * * * * End * * * * * * * * * * * * * * * * * * * * * //
 
 } // End namespace Foam
 

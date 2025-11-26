@@ -41,6 +41,7 @@ Description
 #include "tensor.H"
 #include "symmTensor.H"
 #include "sphericalTensor.H"
+#include "VectorSpace.H"
 
 namespace Foam
 {
@@ -136,6 +137,23 @@ inline faceGaussField<scalar> magSqr
     {
         result.plusValueAt(gp)  = magSqr(A.plusValue(gp));
         result.minusValueAt(gp) = magSqr(A.minusValue(gp));
+    }
+    return result;
+}
+
+
+// Outer product of 2 vectors
+inline faceGaussField<tensor> outerProductField
+(
+    const faceGaussField<vector>& A,
+    const faceGaussField<vector>& B
+)
+{
+    faceGaussField<tensor> result(A.cellID(), A.dgMesh());
+    for (label gp = 0; gp < A.nGauss(); ++gp)
+    {
+        result.plusValueAt(gp)  = outerProduct(A.plusValue(gp), B.plusValue(gp));
+        result.minusValueAt(gp) = outerProduct(A.minusValue(gp), B.minusValue(gp));
     }
     return result;
 }

@@ -35,15 +35,19 @@ Description
 
 #include "word.H"
 #include "dictionary.H"
-#include "vector.H"
 #include "autoPtr.H"
 #include "runTimeSelectionTables.H"
+#include "dgGeomMesh.H"
+#include "fvPatch.H"
 
 namespace Foam
 {
 
+// Forward declaration
+template<class Type> class faceGaussField;
+
 /*---------------------------------------------------------------------------*\
-                      Class dgGeneralBoundaryField Declaration
+                    Class dgGeneralBoundaryField Declaration
 \*---------------------------------------------------------------------------*/
 
 template<class Type>
@@ -51,86 +55,164 @@ class dgGeneralBoundaryField
 {
 protected:
 
-    // Attributes
+    //- Reference to fvPatch (geometry of patch)
+    const fvPatch& patch_;
 
-        //- Name of boundary patch
-        word name_;
+    //- Reference to DG geometric mesh (for DG-level cell/face connectivity)
+    const dgGeomMesh& dgMesh_;
 
-        //- Dictionary for this boundary
-        dictionary dict_;
+    //- Patch dictionary used to read BC parameters
+    const dictionary dict_;
 
 public:
 
-    //- Runtime type info
+    //- Runtime type information
     TypeName("dgGeneralBoundaryField");
 
-    //- Runtime selection support
+    //- Runtime selection table (dictionary constructor)
     declareRunTimeSelectionTable
     (
         autoPtr,
         dgGeneralBoundaryField,
         dictionary,
-        (const word& name, const dictionary& dict),
-        (name, dict)
+        (const fvPatch& patch, const dgGeomMesh& dgMesh, const dictionary& dict),
+        (patch, dgMesh, dict)
     );
 
     // Constructors
 
-        //- Construct from name and dictionary
-        dgGeneralBoundaryField(const word& name, const dictionary& dict);
+        //- Construct from fvPatch, dgGeomMesh, and dictionary
+        dgGeneralBoundaryField
+        (
+            const fvPatch& patch,
+            const dgGeomMesh& dgMesh,
+            const dictionary& dict
+        );
 
     //- Destructor
     virtual ~dgGeneralBoundaryField() = default;
 
-    // Factory
+    // Factory Method
 
-        //- Static factory method
         static autoPtr<dgGeneralBoundaryField<Type>> New
         (
-            const word& name,
+            const fvPatch& patch,
+            const dgGeomMesh& dgMesh,
             const dictionary& dict
         );
 
-    // Core interface
+    // Core Interface
 
-        //- Update '+' side value
-        virtual void updateValue
+        //- Update '+' side value at a DG cell boundary for Type scalar
+        virtual void updateGhostStateValue
         (
-            const label gaussID,
+            const label cellID,
+            const label faceLocalID,
+            const label localGauss,
             const vector& n,
-            const Type& minusValue,
-            const Type& minusGrad,
-            Type& plusValue,
-            Type& plusGrad
-        ) const = 0;
+            const scalar& minusValue,
+            scalar& plusValue
+        ) const
+        {
+            plusValue = minusValue;
+        }
 
-        //- Update '+' side gradient
-        virtual void updateGrad
+        //- Update '+' side value at a DG cell boundary for Type vector
+        virtual void updateGhostStateValue
         (
-            const label gaussID,
+            const label cellID,
+            const label faceLocalID,
+            const label localGauss,
             const vector& n,
-            const Type& minusValue,
-            const Type& minusGrad,
-            Type& plusValue,
-            Type& plusGrad
-        ) const = 0;
+            const vector& minusValue,
+            vector& plusValue
+        ) const
+        {
+            plusValue = minusValue;
+        }
 
-    // Access
+        //- Update '+' side value at a DG cell boundary for Type tensor
+        virtual void updateGhostStateValue
+        (
+            const label cellID,
+            const label faceLocalID,
+            const label localGauss,
+            const vector& n,
+            const tensor& minusValue,
+            tensor& plusValue
+        ) const
+        {
+            plusValue = minusValue;
+        }
 
-        //- Return the name of the patch
-        inline const word& name() const { return name_; }
+        //- Update '+' side gradient for Type scalar
+        virtual void updateGhostStateGrad
+        (
+            const label cellID,
+            const label faceLocalID,
+            const label localGauss,
+            const vector& n,
+            const scalar& minusGrad,
+            scalar& plusGrad
+        ) const
+        {
+            plusGrad = minusGrad;
+        }
 
-        // Getter type
+        //- Update '+' side gradient for Type vector
+        virtual void updateGhostStateGrad
+        (
+            const label cellID,
+            const label faceLocalID,
+            const label localGauss,
+            const vector& n,
+            const vector& minusGrad,
+            vector& plusGrad
+        ) const
+        {
+            plusGrad = minusGrad;
+        }
+
+        //- Update '+' side gradient for Type tensor
+        virtual void updateGhostStateGrad
+        (
+            const label cellID,
+            const label faceLocalID,
+            const label localGauss,
+            const vector& n,
+            const tensor& minusGrad,
+            tensor& plusGrad
+        ) const
+        {
+            plusGrad = minusGrad;
+        }
+
+    // Access Functions
+
+        inline const fvPatch& patch() const { return patch_; }
+
+        inline const dgGeomMesh& dgMesh() const { return dgMesh_; }
+
+        inline const dictionary& dict() const { return dict_; }
+
+        inline const word& name() const { return patch_.name(); }
+
         inline word BCtype() const
         {
-            word result;
-            this->dict_.lookup("type") >> result;
-            return result;
+            word t;
+            dict_.lookup("type") >> t;
+            return t;
         }
 };
+
+
+/*---------------------------------------------------------------------------*\
+                  Include template implementation
+\*---------------------------------------------------------------------------*/
+
+#include "dgGeneralBoundaryFieldI.H"
 
 } // End namespace Foam
 
 #endif
-
 // ************************************************************************* //

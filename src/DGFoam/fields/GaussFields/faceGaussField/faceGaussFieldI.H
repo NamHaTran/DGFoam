@@ -48,6 +48,7 @@ faceGaussField<Type>::faceGaussField()
     faces_(),
     cellsDof_(),
     gaussOffset_(),
+    ownerPatchIDs_(),
     plusValues_(),
     minusValues_()
 {}
@@ -78,11 +79,23 @@ faceGaussField<Type>::faceGaussField
     nGaussPerFace_ = faces_[0]->gaussPointsOwner().size();
     nGauss_ = nFaces_ * nGaussPerFace_;
 
+    // Get Gauss offset and face's owner patch's ID
     gaussOffset_.setSize(nFaces_);
+    ownerPatchIDs_.setSize(nFaces_);
     for (label f = 0; f < nFaces_; ++f)
     {
         gaussOffset_[f] = f * nGaussPerFace_;
+
+        if (faces_[f]->isBoundary())
+        {
+            ownerPatchIDs_[f] = faces_[f]->patchID();
+        }
+        else
+        {
+            ownerPatchIDs_[f] = -1;
+        }
     }
+
 
     plusValues_.setSize(nGauss_);
     minusValues_.setSize(nGauss_);
@@ -116,10 +129,21 @@ faceGaussField<Type>::faceGaussField
     nGaussPerFace_ = faces_[0]->gaussPointsOwner().size();
     nGauss_ = nFaces_ * nGaussPerFace_;
 
+    // Get Gauss offset and face's owner patch's ID
     gaussOffset_.setSize(nFaces_);
+    ownerPatchIDs_.setSize(nFaces_);
     for (label f = 0; f < nFaces_; ++f)
     {
         gaussOffset_[f] = f * nGaussPerFace_;
+
+        if (faces_[f]->isBoundary())
+        {
+            ownerPatchIDs_[f] = faces_[f]->patchID();
+        }
+        else
+        {
+            ownerPatchIDs_[f] = -1;
+        }
     }
 
     plusValues_.setSize(nGauss_, initVal);
@@ -151,10 +175,21 @@ faceGaussField<Type>::faceGaussField
     nGaussPerFace_ = faces_[0]->gaussPointsOwner().size();
     nGauss_ = nFaces_ * nGaussPerFace_;
 
+    // Get Gauss offset and face's owner patch's ID
     gaussOffset_.setSize(nFaces_);
+    ownerPatchIDs_.setSize(nFaces_);
     for (label f = 0; f < nFaces_; ++f)
     {
         gaussOffset_[f] = f * nGaussPerFace_;
+
+        if (faces_[f]->isBoundary())
+        {
+            ownerPatchIDs_[f] = faces_[f]->patchID();
+        }
+        else
+        {
+            ownerPatchIDs_[f] = -1;
+        }
     }
 
     plusValues_.setSize(nGauss_);
@@ -179,6 +214,7 @@ faceGaussField<Type>::faceGaussField
     faces_(other.faces_),
     cellsDof_(other.cellsDof_),
     gaussOffset_(other.gaussOffset_),
+    ownerPatchIDs_(other.ownerPatchIDs_),
     plusValues_(other.plusValues_),
     minusValues_(other.minusValues_)
 {}
@@ -298,6 +334,7 @@ inline faceGaussField<Type>& faceGaussField<Type>::operator=
     faces_         = other.faces_;
     cellsDof_      = other.cellsDof_;
     gaussOffset_   = other.gaussOffset_;
+    ownerPatchIDs_ = other.ownerPatchIDs_;
     plusValues_    = other.plusValues_;
     minusValues_   = other.minusValues_;
 

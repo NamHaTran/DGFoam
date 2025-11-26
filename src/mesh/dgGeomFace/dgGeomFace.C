@@ -79,6 +79,10 @@ Foam::dgGeomFace::dgGeomFace
         globalPoints_[i] = mesh_.points()[f[i]];
     }
 
+    // Get boundary information (if any)
+    patchID_ = Foam::findOwnerPatch(mesh_, faceID_);
+    isBoundary_ = (patchID_ != -1);
+
     processFlatAndSortedPoints();
 
     // Detect face type
@@ -502,4 +506,6 @@ void Foam::dgGeomFace::computeBasisAndDerivatives()
         neighborBasisData_ = refFace_->computeBasisAndDerivatives(neighborCellType_, neighborPos_);
     }
 }
+
+
 // ************************************************************************* //

@@ -39,6 +39,7 @@ SourceFiles
 #define Foam_dgCellGaussFieldVectorMath_H
 
 #include "cellGaussField.H"
+#include "VectorSpace.H"
 
 namespace Foam
 {
@@ -133,6 +134,22 @@ inline cellGaussField<scalar> magSqr
     for (label i = 0; i < A.size(); ++i)
     {
         result[i] = magSqr(A[i]);
+    }
+    return result;
+}
+
+// Outer product of 2 vectors
+inline cellGaussField<tensor> outerProductField
+(
+    const cellGaussField<vector>& A,
+    const cellGaussField<vector>& B
+)
+{
+    cellGaussField<tensor> result(A.cellID(), A.dgMesh());
+    
+    for (label i = 0; i < A.size(); ++i)
+    {
+        result[i] = outerProduct(A[i],B[i]);
     }
     return result;
 }

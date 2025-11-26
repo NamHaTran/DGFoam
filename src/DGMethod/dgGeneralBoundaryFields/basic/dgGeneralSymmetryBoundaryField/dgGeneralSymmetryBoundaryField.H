@@ -28,21 +28,6 @@ License
     - Implements a general symmetry boundary condition for scalar, vector, and
       tensor fields.
 
-    - For scalar fields:
-        * Value at the + side is equal to the - side.
-        * Gradient is preserved.
-
-    - For vector fields:
-        * Value is reflected across the plane normal to the boundary normal:
-              U+ = U- - 2(n·U-)n
-        * Gradient is also reflected accordingly:
-              S+ = S- - 2(n·S-)n
-
-    - For tensor fields:
-        * Value and gradient are both reflected using:
-              T+ = R·T-·R
-              R = I - 2(n⊗n)
-
     - This condition assumes the boundary is a symmetry plane:
         * No flux passes through the boundary.
         * Useful for reducing domain size in symmetric problems.
@@ -69,6 +54,9 @@ SourceFiles
 #define dgGeneralSymmetryBoundaryField_H
 
 #include "dgGeneralBoundaryField.H"
+#include "vector.H"
+#include "tensor.H"
+#include "VectorSpace.H"
 
 namespace Foam
 {
@@ -91,34 +79,89 @@ public:
     dgGeneralSymmetryBoundaryField
     (
         const word& name,
+        const dgGeomMesh& dgMesh,
         const dictionary& dict
     );
 
     //- Destructor
     virtual ~dgGeneralSymmetryBoundaryField() = default;
 
-    //- Update '+' value according to symmetry condition
-    virtual void updateValue
-    (
-        const label gaussID,
-        const vector& n,
-        const Type& minusValue,
-        const Type& minusGrad,
-        Type& plusValue,
-        Type& plusGrad
-    ) const override;
+    //- Member methods
+        void updateGhostStateValue
+        (
+            const label cellID,
+            const label faceLocalID,
+            const label localGauss,
+            const vector& n,
+            const scalar& minusValue,
+            scalar& plusValue
+        ) const override
+        {
+            plusValue = minusValue;
+        }
 
-    //- Update '+' gradient according to symmetry condition
-    virtual void updateGrad
-    (
-        const label gaussID,
-        const vector& n,
-        const Type& minusValue,
-        const Type& minusGrad,
-        Type& plusValue,
-        Type& plusGrad
-    ) const override;
+        void dgGeneralSymmetryBoundaryField<vector>::updateGhostStateValue
+        (
+            const label cellID,
+            const label faceLocalID,
+            const label localGauss,
+            const vector& n,
+            const vector& minusValue,
+            vector& plusValue
+        ) const override
+        {
+            plusValue = minusValue - 2 * (n & minusValue) * n;
+        }
+
+        /*
+        void dgGeneralSymmetryBoundaryField<tensor>::updateGhostStateValue
+        (
+            const label cellID,
+            const label faceLocalID,
+            const label localGauss,
+            const vector& n,
+            const vector& minusValue,
+            vector& plusValue
+        ) const override
+        {
+            tensor R = tensor::I - 2.0 * outerProduct(n, n); // Reflection tensor
+            plusValue = R & minusValue & R;
+        }
+
+        void dgGeneralSymmetryBoundaryField<vector>::updateGhostStateGrad
+        (
+            const label cellID,
+            const label faceLocalID,
+            const label localGauss,
+            const vector& n,
+            const vector& minusGrad,
+            vector& plusGrad
+        ) const override
+        {
+            plusGrad = minusGrad - 2 * (n & minusGrad) * n;
+        }
+
+        void dgGeneralSymmetryBoundaryField<tensor>::updateGhostStateGrad
+        (
+            const label cellID,
+            const label faceLocalID,
+            const label localGauss,
+            const vector& n,
+            const vector& minusGrad,
+            vector& plusGrad
+        ) const override
+        {
+            tensor R = tensor::I - 2.0 * outerProduct(n, n); // Reflection tensor
+            plusGrad = R & minusGrad & R;
+        }
+        */
 };
+
+/*---------------------------------------------------------------------------*\
+                  Include template implementation
+\*---------------------------------------------------------------------------*/
+
+#include "dgGeneralSymmetryBoundaryFieldI.H"
 
 } // End namespace Foam
 

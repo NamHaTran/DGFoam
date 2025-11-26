@@ -90,6 +90,9 @@ private:
     //- Per-face Gauss offset index
     List<label> gaussOffset_;
 
+    //- Per-face patchID (if any)
+    List<label> ownerPatchIDs_;
+
     //- Values on plus side (neighbour)
     List<Type> plusValues_;
 
@@ -143,20 +146,65 @@ public:
 
     inline label nFaces() const { return nFaces_; }
     inline label nGauss() const { return nGauss_; }
+    inline label nGaussPerFace() const { return nGaussPerFace_; }
 
+    // Access to list of dgGeomFace
+    inline const List<dgGeomFace*>& faces() const
+    {
+        return faces_;
+    }
+
+    // Access to value on plus side using its global Gauss id
     inline Type& plusValueAt(const label gi)       { return plusValues_[gi]; }
+
+    // Access to value on minus side using its global Gauss id
     inline Type& minusValueAt(const label gi)      { return minusValues_[gi]; }
+
+    // Access to value on plus side using its global Gauss id (const)
     inline const Type& plusValue(const label gi) const  { return plusValues_[gi]; }
+
+    // Access to value on minus side using its global Gauss id (const)
     inline const Type& minusValue(const label gi) const { return minusValues_[gi]; }
 
+    // Access to value of plus side base on local face id and local Gauss point ID on that face
     inline Type& plusValueOnFace(const label fI, const label gI)
     {
         return plusValues_[gaussOffset_[fI] + gI];
     }
 
+    inline const Type& plusValueOnFace(const label fI, const label gI) const
+    {
+        return plusValues_[gaussOffset_[fI] + gI];
+    }
+
+    // Access to value of minus side base on local face id and local Gauss point ID on that face
     inline Type& minusValueOnFace(const label fI, const label gI)
     {
         return minusValues_[gaussOffset_[fI] + gI];
+    }
+
+    inline const Type& minusValueOnFace(const label fI, const label gI) const
+    {
+        return minusValues_[gaussOffset_[fI] + gI];
+    }
+
+    // Check whether the face is boundary
+    inline bool isBoundary(const label fI) const
+    {
+        if (ownerPatchIDs_[fI] >= 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    // Get owner patch's id of face
+    inline label getOwnerPatchID(const label fI) const
+    {
+        return ownerPatchIDs_[fI];
     }
 
     // Set DOF pointers

@@ -35,54 +35,5 @@ namespace Foam
 
 makeDgGeneralBoundaryField(dgGeneralZeroGradientBoundaryField);
 
-// * * * * * * * * * * * * * Constructors * * * * * * * * * * * * * * //
-
-template<class Type>
-dgGeneralZeroGradientBoundaryField<Type>::dgGeneralZeroGradientBoundaryField
-(
-    const word& name,
-    const dictionary& dict
-)
-:
-    dgGeneralBoundaryField<Type>(name, dict)
-{}
-
-
-// * * * * * * * * * * * * * Member Functions * * * * * * * * * * * * * * //
-
-template<class Type>
-void dgGeneralZeroGradientBoundaryField<Type>::updateValue
-(
-    const label gaussID,
-    const vector& n,
-    const Type& minusValue,
-    const Type& minusGrad,
-    Type& plusValue,
-    Type& plusGrad
-) const
-{
-    plusValue = minusValue;
-    // gradient is left untouched
-}
-
-
-template<class Type>
-void dgGeneralZeroGradientBoundaryField<Type>::updateGrad
-(
-    const label gaussID,
-    const vector& n,
-    const Type& minusValue,
-    const Type& minusGrad,
-    Type& plusValue,
-    Type& plusGrad
-) const
-{
-    plusGrad = minusGrad;
-    // value is left untouched
-}
-
-
-// * * * * * * * * * * * * * Template Instantiation * * * * * * * * * * * * //
-
 } // End namespace Foam
 

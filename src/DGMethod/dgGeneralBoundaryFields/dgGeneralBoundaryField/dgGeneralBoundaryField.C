@@ -26,13 +26,14 @@ License
 
 #include "dgGeneralBoundaryField.H"
 #include "runTimeSelectionTables.H"
+#include "scalar.H"
 #include "vector.H"
 #include "tensor.H"
 
 namespace Foam
 {
 
-// * * * * * * * * * * * * * Static Data Members * * * * * * * * * * * * * //
+// * * * * * * * * * * * * * Static Data Members  * * * * * * * * * * * * * //
 
 defineNamedTemplateTypeNameAndDebug(dgGeneralBoundaryField<scalar>, 0);
 defineNamedTemplateTypeNameAndDebug(dgGeneralBoundaryField<vector>, 0);
@@ -41,51 +42,6 @@ defineNamedTemplateTypeNameAndDebug(dgGeneralBoundaryField<tensor>, 0);
 defineTemplateRunTimeSelectionTable(dgGeneralBoundaryField<scalar>, dictionary);
 defineTemplateRunTimeSelectionTable(dgGeneralBoundaryField<vector>, dictionary);
 defineTemplateRunTimeSelectionTable(dgGeneralBoundaryField<tensor>, dictionary);
-
-// * * * * * * * * * * * * * Constructors * * * * * * * * * * * * * * //
-
-template<class Type>
-Foam::dgGeneralBoundaryField<Type>::dgGeneralBoundaryField
-(
-    const word& name,
-    const dictionary& dict
-)
-:
-    name_(name),
-    dict_(dict)
-{}
-
-
-// * * * * * * * * * * * * * Factory Method * * * * * * * * * * * * * * //
-
-template<class Type>
-autoPtr<dgGeneralBoundaryField<Type>> Foam::dgGeneralBoundaryField<Type>::New
-(
-    const word& name,
-    const dictionary& dict
-)
-{
-    const word bcType(dict.get<word>("type"));
-    auto cstrIter = dictionaryConstructorTablePtr_->find(bcType);
-
-    if (!cstrIter.found())
-    {
-        FatalIOErrorInFunction(dict)
-            << "Unknown dgGeneralBoundaryField type: " << bcType << nl
-            << "Valid types are: "
-            << dictionaryConstructorTablePtr_->toc()
-            << exit(FatalIOError);
-    }
-
-    return cstrIter()(name, dict);
-}
-
-
-// * * * * * * * * * * * * * Template Instantiations * * * * * * * * * * * * //
-
-template class dgGeneralBoundaryField<scalar>;
-template class dgGeneralBoundaryField<vector>;
-template class dgGeneralBoundaryField<tensor>;
 
 } // End namespace Foam
 

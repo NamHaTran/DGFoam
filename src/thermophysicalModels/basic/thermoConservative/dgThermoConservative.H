@@ -49,6 +49,20 @@ Description
     This model is intended for DG compressible solvers and does not support
     primitive-variable formulations or incompressible models.
 
+    Below are availabie mapping between classes of dgThermoConservative
+     - IdealGas EOS → PerfectGasThermo / AbsoluteEnthalpy / Kinetic
+     - ThermalPerfectGas EOS → KineticThermo
+     - RealGas EOS → RealGasThermo
+     - Incompressible EOS → (not supported by DG conservative)
+
+     - PerfectGasThermo → Sutherland / Polynomial / Constant
+     - AbsoluteEnthalpyThermo → Sutherland / Polynomial / Constant
+     - RealGasThermo → RealGasTransportLaw
+     - KineticThermo → KineticTransportLaw / Constant
+
+     - All thermoLaw → energyInternal / energyEnthalpy
+     (But DG conservative uses only energyInternal)
+
 
 SourceFiles
     dgThermoConservative.C

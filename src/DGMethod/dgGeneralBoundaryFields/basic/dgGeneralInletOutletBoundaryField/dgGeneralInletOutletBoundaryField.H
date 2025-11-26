@@ -55,6 +55,7 @@ SourceFiles
 #define dgGeneralInletOutletBoundaryField_H
 
 #include "dgGeneralBoundaryField.H"
+#include "dgField.H"
 
 namespace Foam
 {
@@ -73,6 +74,12 @@ protected:
     //- Inlet value for Dirichlet BC
     Type inletValue_;
 
+    //- Velocity field name
+    word UName_;
+
+    //- Velocity field
+    const dgField<vector>& U_;
+
 public:
 
     //- Runtime type information
@@ -82,32 +89,40 @@ public:
     dgGeneralInletOutletBoundaryField
     (
         const word& name,
+        const dgGeomMesh& dgMesh,
         const dictionary& dict
     );
     
-    //- Update value at plus side
-    virtual void updateValue
+    virtual void updateGhostStateValue
     (
-        const label gaussID,
+        const label cellID,
+        const label faceLocalID,
+        const label localGauss,
         const vector& n,
-        const Type& minusValue,
-        const Type& minusGrad,
-        Type& plusValue,
-        Type& plusGrad
-    ) const override;
+        const vector& minusValue,
+        vector& plusValue
+    ) const override
+    {
+        const vector& Un = U_.gaussFields()[cellID].facePlusValueAt(faceLocalID,localGauss);
+        scalar dotProd = Un & n;
 
-    //- Update gradient at plus side
-    virtual void updateGrad
-    (
-        const label gaussID,
-        const vector& n,
-        const Type& minusValue,
-        const Type& minusGrad,
-        Type& plusValue,
-        Type& plusGrad
-    ) const override;
+        if (dotProd < 0)  // Inlet: flow into domain
+        {
+            plusValue = 2 * inletValue_ - minusValue;
+        }
+        else // Outlet: flow out of domain
+        {
+            plusValue = minusValue;
+        }
+    }
 
 };
+
+/*---------------------------------------------------------------------------*\
+                  Include template implementation
+\*---------------------------------------------------------------------------*/
+
+#include "dgGeneralInletOutletBoundaryFieldI.H"
 
 } // End namespace Foam
 

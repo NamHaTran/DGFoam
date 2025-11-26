@@ -45,6 +45,7 @@ SourceFiles
 #include "pointField.H"
 #include "scalarField.H"
 #include "dgRefFace.H"
+#include "dgGeomFaceTools.H"
 #include "volFields.H"
 #include "surfaceMesh.H"
 #include "dgFacePosition.H"
@@ -107,6 +108,14 @@ private:
         //- Basis data for the face
         Foam::basisData ownerBasisData_;
         Foam::basisData neighborBasisData_;
+
+        //- Boundary information
+            //- ID of patch that owns this face (boundary only)
+            //  -1 means internal face
+            label patchID_;
+
+            //- True if this face is a boundary face
+            bool isBoundary_;
 
 public:
 
@@ -196,7 +205,7 @@ public:
         //- Compute basis functions and derivatives for the face
         void computeBasisAndDerivatives();
 
-        // Mapping from reference to physical space for quad or tri face
+        //- Mapping from reference to physical space for quad or tri face
         void mappingFromRefToReal
         (
             const dgFaceType type,
@@ -204,6 +213,18 @@ public:
             const List<vector>& faceVertices,
             List<vector2D>& physicGaussP
         );
+
+        //- Check whether the face is boundary
+        inline bool isBoundary() const
+        {
+            return isBoundary_;
+        }
+
+        //- Return ID of patch containing face
+        inline label patchID() const
+        {
+            return patchID_;
+        }
     
     // Access to reference face data
 
