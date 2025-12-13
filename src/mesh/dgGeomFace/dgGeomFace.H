@@ -54,8 +54,6 @@ SourceFiles
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-class Foam::dgRefFace;
-
 namespace Foam
 {
 
@@ -224,6 +222,15 @@ public:
         inline label patchID() const
         {
             return patchID_;
+        }
+
+        //- Check whether the input cellID is owner
+        inline bool isOwner(const label cellID) const
+        {
+            if (cellID == mesh_.faceOwner()[faceID_])
+            return true;
+            else
+            return false;
         }
     
     // Access to reference face data

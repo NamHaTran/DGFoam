@@ -160,7 +160,7 @@ public:
         //- Check patch type
         void checkPatchType() const override
         {
-            if (this->patch_.type() == "symmetry")
+            if (this->patch_.type() != "symmetry")
             {
                 FatalErrorInFunction
                     << "Boundary condition " << type() <<" can only "

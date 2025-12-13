@@ -39,13 +39,12 @@ Foam::dgFluxSolver::dgFluxSolver
 (
     const word& name,
     const dictionary& dict,
-    const dgThermo& thermo
+    const dgGeomMesh& mesh
 )
 :
     name_(name),
     dict_(dict),
-    ctxPtr_(nullptr),
-    thermo_(thermo)
+    mesh_(mesh)
 {}
 
 
@@ -54,7 +53,7 @@ autoPtr<dgFluxSolver> Foam::dgFluxSolver::New
     const word& name,
     const word& fluxSolverType,
     const dictionary& dict,
-    const dgThermo& thermo
+    const dgGeomMesh& mesh
 )
 {
     auto cstrIter = dictionaryConstructorTablePtr_->find(fluxSolverType);
@@ -67,7 +66,7 @@ autoPtr<dgFluxSolver> Foam::dgFluxSolver::New
             << exit(FatalIOError);
     }
 
-    return cstrIter()(name, dict, thermo);
+    return cstrIter()(name, dict, mesh);
 }
 
 void Foam::dgFluxSolver::makeONB
@@ -83,6 +82,30 @@ void Foam::dgFluxSolver::makeONB
     scalar m = mag(t1) + SMALL;   // normalize with guard
     t1 /= m;
     t2 = n ^ t1;                  // right-handed basis
+}
+
+void Foam::dgFluxSolver::decomposeU
+(
+    const vector& U,
+    const vector& n,
+    vector& Un,
+    vector& Ut1,
+    vector& Ut2
+) const
+{
+    // Build orthonormal basis (n, t1, t2)
+    vector t1, t2;
+    makeONB(n, t1, t2);
+
+    // Components of U along basis directions
+    const scalar Un_scalar  = U & n;     // projection on n
+    const scalar Ut1_scalar = U & t1;    // projection on t1
+    const scalar Ut2_scalar = U & t2;    // projection on t2
+
+    // Convert back to vector form along the basis
+    Un  = Un_scalar  * n;
+    Ut1 = Ut1_scalar * t1;
+    Ut2 = Ut2_scalar * t2;
 }
 
 } // End namespace Foam

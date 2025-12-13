@@ -1,0 +1,54 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2412                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      UBC;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+internalField   uniform (2636.387 0 0);
+
+boundaryField
+{
+    inlet
+    {
+        type            generalFixedValue;
+	value           (2636.387 0 0);
+    }
+    outlet2
+    {
+        type            generalZeroGradient;
+    }
+    outlet1
+    {
+        type            generalZeroGradient;
+    }
+    wall
+    {
+        type            generalFixedValue;
+	value           (0 0 0);
+    }
+    symmetryBottom
+    {
+        type            generalSymmetry;
+    }
+    symmetryZ0
+    {
+        type            generalSymmetry;
+    }
+    symmetryZ05
+    {
+        type            generalSymmetry;
+    }
+}
+
+
+// ************************************************************************* //

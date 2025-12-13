@@ -49,8 +49,11 @@ faceGaussField<Type>::faceGaussField()
     cellsDof_(),
     gaussOffset_(),
     ownerPatchIDs_(),
+    n_(),
+    faceAreas_(),
     plusValues_(),
-    minusValues_()
+    minusValues_(),
+    flux_()
 {}
 
 
@@ -68,12 +71,16 @@ faceGaussField<Type>::faceGaussField
     facesID_(&(cell_->faces())),
     nFaces_(facesID_->size()),
     faces_(nFaces_),
-    cellsDof_(cellsDof)
+    cellsDof_(cellsDof),
+    n_(nFaces_),
+    faceAreas_(nFaces_)
 {
     // Collect pointers to faces
     for (label f = 0; f < nFaces_; ++f)
     {
         faces_[f] = mesh_->faces()[(*facesID_)[f]];
+        n_[f] = faces_[f]->normal();
+        faceAreas_[f] = faces_[f]->area();
     }
 
     nGaussPerFace_ = faces_[0]->gaussPointsOwner().size();
@@ -119,11 +126,14 @@ faceGaussField<Type>::faceGaussField
     facesID_(&(cell_->faces())),
     nFaces_(facesID_->size()),
     faces_(nFaces_),
-    cellsDof_(0)
+    cellsDof_(0),
+    n_(nFaces_),
+    faceAreas_(nFaces_)
 {
     for (label f = 0; f < nFaces_; ++f)
     {
         faces_[f] = mesh_->faces()[(*facesID_)[f]];
+        n_[f] = faces_[f]->normal();
     }
 
     nGaussPerFace_ = faces_[0]->gaussPointsOwner().size();
@@ -165,11 +175,14 @@ faceGaussField<Type>::faceGaussField
     facesID_(&(cell_->faces())),
     nFaces_(facesID_->size()),
     faces_(nFaces_),
-    cellsDof_(0)
+    cellsDof_(0),
+    n_(nFaces_),
+    faceAreas_(nFaces_)
 {
     for (label f = 0; f < nFaces_; ++f)
     {
         faces_[f] = mesh_->faces()[(*facesID_)[f]];
+        n_[f] = faces_[f]->normal();
     }
 
     nGaussPerFace_ = faces_[0]->gaussPointsOwner().size();
@@ -215,8 +228,11 @@ faceGaussField<Type>::faceGaussField
     cellsDof_(other.cellsDof_),
     gaussOffset_(other.gaussOffset_),
     ownerPatchIDs_(other.ownerPatchIDs_),
+    n_(other.n_),
+    faceAreas_(other.faceAreas_),
     plusValues_(other.plusValues_),
-    minusValues_(other.minusValues_)
+    minusValues_(other.minusValues_),
+    flux_(other.flux_)
 {}
 
 
@@ -232,7 +248,7 @@ void Foam::faceGaussField<Type>::interpolateFromDof()
         const label faceID = (*facesID_)[localFaceI];
         const label owner = mesh_->faceOwner()[faceID];
         const bool isOwner = (owner == cellID_);
-        const bool isBoundaryFace = (faceID >= mesh_->nInternalFaces());
+        bool isBoundaryFace = faces_[localFaceI]->isBoundary();
 
         const dgGeomFace& face = *faces_[localFaceI];
 
@@ -335,8 +351,11 @@ inline faceGaussField<Type>& faceGaussField<Type>::operator=
     cellsDof_      = other.cellsDof_;
     gaussOffset_   = other.gaussOffset_;
     ownerPatchIDs_ = other.ownerPatchIDs_;
+    n_             = other.n_;
+    faceAreas_     = other.faceAreas_;
     plusValues_    = other.plusValues_;
     minusValues_   = other.minusValues_;
+    flux_          = other.flux_;
 
     return *this;
 }

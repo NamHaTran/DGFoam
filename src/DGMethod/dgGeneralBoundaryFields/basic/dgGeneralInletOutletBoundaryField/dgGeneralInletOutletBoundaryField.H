@@ -119,7 +119,7 @@ public:
     //- Check patch type
     void checkPatchType() const override
     {
-        if (this->patch_.type() == "patch")
+        if (this->patch_.type() != "patch")
         {
             FatalErrorInFunction
                 << "Boundary condition " << type() <<" can only "

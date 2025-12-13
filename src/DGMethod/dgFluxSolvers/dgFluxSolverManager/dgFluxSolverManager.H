@@ -54,8 +54,8 @@ SourceFiles
 #include "word.H"
 #include "dictionary.H"
 #include "autoPtr.H"
+#include "dgGeomMesh.H"
 #include "dgFluxSolver.H"
-#include "dgThermo.H"
 
 namespace Foam
 {
@@ -72,6 +72,9 @@ class dgFluxSolverManager
 private:
 
     // Attributes
+
+        //- Mesh reference
+        const dgGeomMesh& mesh_;
 
         //- List of flux solver instances (one per configured term)
         PtrList<dgFluxSolver> fluxSolverList_;
@@ -93,7 +96,7 @@ public:
         dgFluxSolverManager
         (
             const dictionary& dgSchemesDict,
-            const dgThermo& thermo
+            const dgGeomMesh& mesh
         );
 
         //- Disallow default construction
@@ -104,9 +107,6 @@ public:
 
     // Member Functions
 
-        //- Set context for all managed solvers (including default if any)
-        void setContext(const fieldsContext& ctx);
-
         //- Number of configured (term-specific) solvers
         inline label size() const { return fluxSolverList_.size(); }
 
@@ -115,6 +115,20 @@ public:
 
         //- Access solver by term name; falls back to default or throws on missing
         const dgFluxSolver& solver(const word& term) const;
+
+        //- Reset flux solver
+        inline void reset()
+        {
+            forAll(fluxSolverList_, i)
+            {
+                fluxSolverList_[i].reset();
+            }
+
+            if (defaultFluxSolver_.valid())
+            {
+                defaultFluxSolver_.reset();
+            }
+        }
 
         //- Non-const access variant
         dgFluxSolver& solver(const word& term);

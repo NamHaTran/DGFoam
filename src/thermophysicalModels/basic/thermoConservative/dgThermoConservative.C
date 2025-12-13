@@ -42,6 +42,17 @@ Foam::dgThermoConservative::dgThermoConservative
     const dgGeomMesh& mesh
 )
 :
+    regIOobject
+    (
+        IOobject
+        (
+            "dgThermoConservative",                // object name
+            mesh.getFvMesh().time().constant(),    // instance (constant/)
+            mesh.getFvMesh().thisDb(),             // registry (like mesh)
+            IOobject::NO_READ,
+            IOobject::NO_WRITE
+        )
+    ),
     name_(name),
     dict_(dict),
     mesh_(mesh),
@@ -215,6 +226,11 @@ Foam::autoPtr<Foam::dgThermoConservative> Foam::dgThermoConservative::New
     }
 
     return cstrIter()(name, dict, mesh);
+}
+
+bool Foam::dgThermoConservative::writeData(Ostream& os) const
+{
+    return true;
 }
 
 } // End namespace Foam

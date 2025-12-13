@@ -93,11 +93,20 @@ private:
     //- Per-face patchID (if any)
     List<label> ownerPatchIDs_;
 
+    //- List normal vector
+    List<vector> n_;
+
+    //- List of face area
+    List<scalar> faceAreas_;
+
     //- Values on plus side (neighbour)
     List<Type> plusValues_;
 
     //- Values on minus side (owner)
     List<Type> minusValues_;
+
+    //- List flux
+    List<vector> flux_;
 
 public:
 
@@ -188,17 +197,33 @@ public:
         return minusValues_[gaussOffset_[fI] + gI];
     }
 
+    // Access list of minus/plus/flux values
+    inline const List<Type>& minusSide() const { return minusValues_; }
+    inline List<Type>& minusSide() { return minusValues_; }
+
+    inline const List<Type>& plusSide() const { return plusValues_; }
+    inline List<Type>& plusSide() { return plusValues_; }
+
+    inline const vector& fluxOnFace(const label fI, const label gI) const { return flux_[gaussOffset_[fI] + gI]; }
+
+    inline vector& fluxOnFace(const label fI, const label gI) { return flux_[gaussOffset_[fI] + gI]; }
+
+    // Access normal vector
+    inline const List<vector>& normals() const { return n_; }
+
+    // Access face area list
+    inline const List<scalar>& faceAreas() const { return faceAreas_; }
+
+    // Get global face ID from local faceID
+    inline label globalFaceID(const label fI) const { return (*facesID_)[fI]; }
+
     // Check whether the face is boundary
-    inline bool isBoundary(const label fI) const
-    {
-        if (ownerPatchIDs_[fI] >= 0)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+    inline bool isBoundary(const label fI) const { return faces_[fI]->isBoundary(); }
+
+    // Check whether the input cellID is owner of local faceID fI
+    inline bool isOwner(const label fI, const label cellID) const 
+    { 
+        return faces_[fI]->isOwner(cellID); 
     }
 
     // Get owner patch's id of face
@@ -225,6 +250,13 @@ public:
 
     //- Assign uniform value
     faceGaussField<Type>& operator=(const Type& v);
+
+    //- Initialize flux
+    inline void initFlux() 
+    { 
+        if (flux_.size() == 0)
+            flux_.setSize(nGauss_); 
+    }
 
     // Printing ---------------------------------------------------------------
 

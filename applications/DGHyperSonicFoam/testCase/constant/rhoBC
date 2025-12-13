@@ -10,52 +10,43 @@ FoamFile
     version     2.0;
     format      ascii;
     class       dictionary;
-    object      PDRblockMeshDict;
+    object      rhoBC;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-scale   0.1;
+internalField   uniform 2.8e-5;
 
-x
+boundaryField
 {
-    points  (0 1);
-    nCells  (20);
-    ratios  (1);
-}
-
-y
-{
-    points  (0 1);
-    nCells  (20);
-    ratios  (1);
-}
-
-z
-{
-    points  (0 0.1);
-    nCells  (1);
-    ratios  (1);
-}
-
-
-boundary
-(
-    movingWall
+    inlet
     {
-        type  wall;
-        faces (3);
+        type            generalZeroGradient;
     }
-    fixedWalls
+    outlet2
     {
-        type  wall;
-        faces (0 1 2);
+        type            generalZeroGradient;
     }
-    frontAndBack
+    outlet1
     {
-        type  empty;
-        faces (4 5);
+        type            generalZeroGradient;
     }
-);
+    wall
+    {
+        type            generalZeroGradient;
+    }
+    symmetryBottom
+    {
+        type            generalZeroGradient;
+    }
+    symmetryZ0
+    {
+        type            generalZeroGradient;
+    }
+    symmetryZ05
+    {
+        type            generalZeroGradient;
+    }
+}
 
 
 // ************************************************************************* //

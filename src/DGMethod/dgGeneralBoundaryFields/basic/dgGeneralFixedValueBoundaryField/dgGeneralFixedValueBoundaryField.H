@@ -99,8 +99,8 @@ public:
     void checkPatchType() const override
     {
         if (
-            this->patch_.type() == "patch" &&
-            this->patch_.type() == "wall"
+            this->patch_.type() != "patch" &&
+            this->patch_.type() != "wall"
         )
         {
             FatalErrorInFunction

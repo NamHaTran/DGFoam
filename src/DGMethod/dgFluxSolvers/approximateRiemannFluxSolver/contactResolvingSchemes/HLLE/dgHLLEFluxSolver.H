@@ -28,54 +28,44 @@ Class
     Foam::dgHLLEFluxSolver
 
 Description
-    HLLE (Harten–Lax–van Leer–Einfeldt) numerical flux for a single
-    conserved equation working on vector-valued physical fluxes.
+    HLLE (Harten–Lax–van Leer–Einfeldt) approximate Riemann solver.
 
-    Conventions
-    - Plus  = neighbour cell (N-side)
-    - Minus = owner cell (P-side)
-    - 'n' is the unit normal pointing from P to N.
-    - 'gaussID' is the local Gauss point index on the face.
-    - UR, UL are the conserved values on Plus (N) and Minus (P) sides.
+    This flux uses only the bounding wave speeds S_L and S_R to construct a
+    single intermediate state between the left (Minus/P-side) and right
+    (Plus/N-side) states. HLLE does not resolve the contact or shear waves,
+    and therefore produces a more diffusive but very robust and
+    positivity-preserving flux.
 
-    Inputs available at the face Gauss point
-    - From fieldsContext (face Gauss fields):
-      * rho^± : density (scalar),   U^± : velocity (vector),   p^± : pressure (scalar)
-    - From thermo (fluid properties handles):
-      * T^± = eqnOfState().T(rho^±, p^±)
-      * a^± = thermo().a(T^±)                // speed of sound
-      * gamma = thermo().gamma()             // ratio of specific heats (if needed)
+    Key properties
+    - Robust for strong shocks and large discontinuities.
+    - Positivity-preserving for density and pressure under standard CFL
+      conditions.
+    - No use of a contact wave → more diffusive than HLLC.
+    - No star-state reconstruction → simpler and cheaper to evaluate.
+    - Suitable for any conserved quantity (rho, rhoE, rhoU, scalar).
 
-    HLLE procedure (local 1D Riemann along n)
-    1. Local projection (to normal direction):
-       - f_R = FPlus  · n      // right  (Plus, N-side)  physical flux dotted with n
-       - f_L = FMinus · n      // left   (Minus, P-side)
-       - U_n^± = U^± · n       // normal velocities on each side
-    2. Acoustic speeds on each side using thermo:
-       - T^± = eqnOfState().T(rho^±, p^±)
-       - a^± = thermo().a(T^±)
-    3. Davis/Einfeldt wave-speed bounds:
-       - S_L = min( U_n^- - a^- , U_n^+ - a^+ )
-       - S_R = max( U_n^- + a^- , U_n^+ + a^+ )
-    4. HLLE normal numerical flux f_n:
-       - if S_L ≥ 0      : f_n = f_L
-       - else if S_R ≤ 0 : f_n = f_R
-       - else            : f_n = ( S_R f_L - S_L f_R + S_L S_R (U_R - U_L) ) / ( S_R - S_L )
-         where (U_R - U_L) is the jump of the conserved variable across the face.
-    5. Rotate back to Cartesian:
-       - flux = f_n * n        // tangential contributions vanish for the 1D Riemann solve
+    Procedure (local 1D Riemann problem along face normal n):
+    1. Project left and right physical fluxes onto n.
+    2. Compute left/right normal velocities and sound speeds.
+    3. Estimate wave speeds S_L and S_R using either:
+         * Davis (S_L = min(Un^- - a^-, Un^+ - a^+),
+                  S_R = max(Un^- + a^-, Un^+ + a^+)), or
+         * Roe–Einfeldt averaging for reduced numerical diffusion.
+    4. Construct the HLLE flux:
+          f_HLLE = f_L,                             if S_L >= 0
+                 = f_R,                             if S_R <= 0
+                 = ( S_R f_L - S_L f_R
+                     + S_L S_R (U_R - U_L) ) / (S_R - S_L), otherwise
+    5. For scalar equations the Cartesian flux is f_HLLE * n.
+       For vector/momentum equations the Cartesian flux is f_HLLE as a vector
+       obtained from the tensor flux projection; no multiplication by n.
 
-    Notes
-    - Ensure 'n' is a unit vector and oriented from P to N.
-    - This HLLE variant uses only side speeds (no Roe averaging), which is
-      robust (positivity-preserving for density/pressure under standard conditions).
-    - The conserved variable (UR/UL) must correspond to the equation being solved
-      (e.g. rho, rhoUx, rhoUy, rhoUz, rhoE, or a transported scalar).
-
-    References
-    - Hesthaven & Warburton, "Nodal Discontinuous Galerkin Methods", 2008.
-    - Toro, "Riemann Solvers and Numerical Methods for Fluid Dynamics", 3rd ed., 2009.
-    - Einfeldt (1988, 1991) positivity-preserving HLLE wave-speed estimates.
+    Notation
+    - Minus  = owner cell (P-side)
+    - Plus   = neighbour cell (N-side)
+    - n      = unit normal pointing P → N
+    - U_L/R  = conserved variables at Gauss point
+    - f_L/R  = physical normal fluxes projected onto n
 
 SourceFiles
     dgHLLEFluxSolver.C
@@ -85,75 +75,102 @@ SourceFiles
 #define Foam_dgHLLEFluxSolver_H
 
 #include "dgFluxSolver.H"
+#include "dgField.H"
 #include "vector.H"
+#include "tensor.H"
 
 namespace Foam
 {
-    template<class Type> class faceGaussField;
-}
 
-namespace Foam
-{
+template<class Type> class faceGaussField;
 
 /*---------------------------------------------------------------------------*\
-                        Class dgHLLEFluxSolver Declaration
+                           Class dgHLLEFluxSolver
 \*---------------------------------------------------------------------------*/
 
 class dgHLLEFluxSolver : public dgFluxSolver
 {
 public:
 
-    //- Wave-speed estimate types
+    //- Wave-speed estimate type
     enum speedEstimateType
     {
-        seDavis,        // S_L = min(Un^- - a^-, Un^+ - a^+), S_R = max(Un^- + a^-, Un^+ + a^+)
-        seRoeEinfeldt   // Roe averages (U_roe, H_roe, a_roe)
+        seDavis,        //!< Side speeds: Un ± a
+        seRoeEinfeldt   //!< Roe-averaged speeds
     };
 
 private:
-    // Attributes
 
-        //- Wave-speed estimate type
-        speedEstimateType speedEst_;
+    //- Primitive fields (references)
+        const dgField<scalar>& rho_;     //!< Density
+        const dgField<vector>& U_;       //!< Velocity
+        const dgField<scalar>& p_;       //!< Pressure
+        const dgField<scalar>& a_;       //!< Speed of sound
+        const dgField<scalar>& h_;       //!< Enthalpy
+        const dgField<scalar>& gamma_;   //!< Cp/Cv
+
+    //- Wavespeed selection
+    speedEstimateType speedEst_;
+
+
+    //- Compute S_L and S_R at Gauss point
+    void calcWaveSpeed
+    (
+        scalar& SL,
+        scalar& SR,
+
+        const scalar rhoL,
+        const scalar rhoR,
+        const vector& ULv,
+        const vector& URv,
+        const scalar pL,
+        const scalar pR,
+        const scalar aL,
+        const scalar aR,
+        const scalar gammaL,
+        const scalar gammaR,
+        const scalar hL,
+        const scalar hR,
+        const vector& n
+    ) const;
+
 
 public:
 
-    //- Runtime type name
+    //- Runtime type info
     TypeName("HLLE");
 
-    //- Construct from name, dictionary and thermo
+    //- Constructor
     dgHLLEFluxSolver
     (
         const word& name,
         const dictionary& dict,
-        const dgThermo& thermo
+        const dgGeomMesh& mesh
     );
 
     //- Destructor
     virtual ~dgHLLEFluxSolver() = default;
 
-    //- Compute numerical flux from Plus/Minus physical flux vectors
-    //  Input:
-    //    - gaussID : local Gauss point ID on face
-    //    - FPlus   : flux vector from neighbour cell (N-side)
-    //    - FMinus  : flux vector from owner cell (P-side)
-    //    - n       : face unit normal (points from P to N)
-    //    - UR      : conserved value on N-side at this Gauss point
-    //    - UL      : conserved value on P-side at this Gauss point
-    //  Output:
-    //    - flux    : numerical flux vector (Cartesian)
+    //- Scalar U, vector F
     virtual void computeFlux
     (
-        const label gaussID,
-        const vector& FPlus,
-        const vector& FMinus,
-        const scalar UR,
-        const scalar UL,
-        const vector& n,
-        vector& flux
-    ) const override;
+        const label cellID,
+        faceGaussField<vector>& F,
+        const faceGaussField<scalar>& U
+    ) override;
 
-    //- Reading method
+    //- Vector U, tensor F
+    virtual void computeFlux
+    (
+        const label cellID,
+        faceGaussField<tensor>& F,
+        const faceGaussField<vector>& U
+    ) override;
+
+    //- HLLE requires no caching → empty
+    virtual void reset() override {}
+
+    //- Read settings
     virtual void read(const dictionary& dict) override;
 };
 

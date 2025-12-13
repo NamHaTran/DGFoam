@@ -16,28 +16,53 @@ FoamFile
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-3
+7
 (
-    movingWall
+    inlet
     {
-        type            wall;
-        inGroups        1(wall);
-        nFaces          20;
-        startFace       760;
-    }
-    fixedWalls
-    {
-        type            wall;
-        inGroups        1(wall);
-        nFaces          60;
-        startFace       780;
-    }
-    frontAndBack
-    {
-        type            empty;
-        inGroups        1(empty);
+        type            patch;
         nFaces          800;
-        startFace       840;
+        startFace       92800;
+    }
+    outlet2
+    {
+        type            patch;
+        nFaces          800;
+        startFace       93600;
+    }
+    outlet1
+    {
+        type            patch;
+        nFaces          800;
+        startFace       94400;
+    }
+    wall
+    {
+        type            wall;
+        inGroups        1(wall);
+        nFaces          720;
+        startFace       95200;
+    }
+    symmetryBottom
+    {
+        type            symmetry;
+        inGroups        1(symmetry);
+        nFaces          80;
+        startFace       95920;
+    }
+    symmetryZ0
+    {
+        type            symmetry;
+        inGroups        1(symmetry);
+        nFaces          1600;
+        startFace       96000;
+    }
+    symmetryZ05
+    {
+        type            symmetry;
+        inGroups        1(symmetry);
+        nFaces          1600;
+        startFace       97600;
     }
 )
 

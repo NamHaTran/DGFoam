@@ -7,66 +7,51 @@
 \*---------------------------------------------------------------------------*/
 FoamFile
 {
-    version     2.0;
-    format      ascii;
-    class       dictionary;
-    object      blockMeshDict;
+	version  2.0;
+    format  ascii;
+    class  volVectorField;
+    location "0";
+    object  rhoU_0;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+dimensions [0 0 0 0 0 0 0];
+internalField   uniform (0.0741 0 0);
 
-scale   0.1;
-
-vertices
-(
-    (0 0 0)
-    (1 0 0)
-    (1 1 0)
-    (0 1 0)
-    (0 0 0.1)
-    (1 0 0.1)
-    (1 1 0.1)
-    (0 1 0.1)
-);
-
-blocks
-(
-    hex (0 1 2 3 4 5 6 7) (20 20 1) simpleGrading (1 1 1)
-);
-
-edges
-(
-);
-
-boundary
-(
-    movingWall
+boundaryField
+{
+    inlet
     {
-        type wall;
-        faces
-        (
-            (3 7 6 2)
-        );
+        type            calculated;
+	value           uniform (0.0741 0 0);
     }
-    fixedWalls
+    outlet2
     {
-        type wall;
-        faces
-        (
-            (0 4 7 3)
-            (2 6 5 1)
-            (1 5 4 0)
-        );
+        type            calculated;
+	value           uniform (0.0741 0 0);
     }
-    frontAndBack
+    outlet1
     {
-        type empty;
-        faces
-        (
-            (0 3 2 1)
-            (4 5 6 7)
-        );
+        type            calculated;
+	value           uniform (0.0741 0 0);
     }
-);
+    wall
+    {
+        type            calculated;
+	value           uniform (0.0741 0 0);
+    }
+    symmetryBottom
+    {
+        type            symmetry;
+    }
+    symmetryZ0
+    {
+        type            symmetry;
+    }
+    symmetryZ05
+    {
+        type            symmetry;
+    }
+}
 
 
 // ************************************************************************* //

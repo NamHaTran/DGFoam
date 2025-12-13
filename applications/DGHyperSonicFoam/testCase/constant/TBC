@@ -10,11 +10,45 @@ FoamFile
     version     2.0;
     format      ascii;
     class       dictionary;
-    object      transportProperties;
+    object      TBC;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-nu              0.01;
+internalField   uniform 200;
+
+boundaryField
+{
+    inlet
+    {
+        type            generalFixedValue;
+	value           200;
+    }
+    outlet2
+    {
+        type            generalZeroGradient;
+    }
+    outlet1
+    {
+        type            generalZeroGradient;
+    }
+    wall
+    {
+        type            generalFixedValue;
+	value           500;
+    }
+    symmetryBottom
+    {
+        type            generalSymmetry;
+    }
+    symmetryZ0
+    {
+        type            generalSymmetry;
+    }
+    symmetryZ05
+    {
+        type            generalSymmetry;
+    }
+}
 
 
 // ************************************************************************* //

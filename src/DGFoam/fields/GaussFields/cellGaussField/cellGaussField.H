@@ -141,6 +141,15 @@ public:
         return dgMesh_;
     }
 
+    inline const dgGeomCell* cell() const
+    {
+        if (!cell_)
+        {
+            FatalErrorInFunction << "cell_ is null" << abort(FatalError);
+        }
+        return cell_;
+    }
+
     //- Interpolate DOF → Gauss values
     void interpolateFromDof();
 

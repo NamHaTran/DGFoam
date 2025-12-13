@@ -4,37 +4,53 @@
 |  \\    /   O peration     | Version:  v2412                                 |
 |   \\  /    A nd           | Website:  www.openfoam.com                      |
 |    \\/     M anipulation  |                                                 |
+
+
 \*---------------------------------------------------------------------------*/
 FoamFile
 {
     version     2.0;
     format      ascii;
-    class       volScalarField;
-    object      p;
+    class       dictionary;
+    object      dgSchemes;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
-
-dimensions      [0 2 -2 0 0 0 0];
-
-internalField   uniform 0;
-
-boundaryField
+fluxSchemes
 {
-    movingWall
-    {
-        type            zeroGradient;
-    }
-
-    fixedWalls
-    {
-        type            zeroGradient;
-    }
-
-    frontAndBack
-    {
-        type            empty;
-    }
+	fluxSolvers
+	{
+		default         		central;
+		
+		massConvTermFlux		HLLC;
+		momentumConvTermFlux		LaxFriedrichs;
+		
+		/* Các flux khác bao gồm:
+		- auxiliaryFlux
+		- massDiffusiveFlux
+		- momentumDiffusiveFlux
+		- energyConvectiveFlux
+		- energyDiffusiveFlux
+		Vì không khai báo trong dict nên nhận scheme pureCentral
+		*/
+	}
+	
+	fluxSolversCoeffs
+	{
+		// Khai báo chi tiết cho các flux solver được dùng trong dict, ví dụ HLLE flux cần để user chọn speedEstimate method là roeEinfeldt hay davis
+		HLLCCoeffs
+		{
+			speedEstimate roeEinfeldt;
+		}
+		
+		LaxFriedrichsCoeffs
+		{
+			scaleByMach true;
+		}
+		
+		centralCoeffs
+		{
+			// nothing
+		}
+	}
 }
-
-
 // ************************************************************************* //

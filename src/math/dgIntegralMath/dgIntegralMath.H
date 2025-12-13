@@ -35,89 +35,111 @@ SourceFiles
 #ifndef Foam_dgIntegralMath_H
 #define Foam_dgIntegralMath_H
 
-#include "List.H"
-#include "scalar.H"
-#include "vector.H"
-#include "tensor.H"
+#include "cellGaussField.H"
+#include "faceGaussField.H"
+#include "dgGeomFace.H"
 
 namespace Foam
 {
 
-// Construct scalar integral from Gauss samples
-inline Foam::scalar gaussIntegral
-(
-    const List<scalar>& values,
-    const List<scalar>& weights
-)
+/*---------------------------------------------------------------------------*\
+             Volume integral:  ∫ F dV  ≈ Σ_g F(g) w(g)
+\*---------------------------------------------------------------------------*/
+inline scalar volumeIntegral(const cellGaussField<vector>& gradPhi, const cellGaussField<vector>& F)
 {
-    // Validate sizes
-    if (values.size() != weights.size())
+    scalar volInt = Zero;
+
+    const label nGauss = F.size();
+    const List<scalar>& w = F.cell()->weights();
+
+    // Cell has straight edges/faces, so Jacobian is constant (= cell volume)
+    const scalar cellVol = F.cell()->volume();
+
+    for (label g = 0; g < nGauss; ++g)
     {
-        FatalErrorInFunction
-            << "Size mismatch: values.size() = " << values.size()
-            << ", weights.size() = " << weights.size() << nl
-            << exit(FatalError);
+        volInt += cellVol * (gradPhi[g] & F[g]) * w[g];
     }
 
-    // Accumulate sum_i values[i] * weights[i]
-    scalar I = 0.0;
-    forAll(values, i)
+    return volInt;
+}
+
+inline vector volumeIntegral(const cellGaussField<vector>& gradPhi, const cellGaussField<tensor>& F)
+{
+    vector volInt = Zero;
+
+    const label nGauss = F.size();
+    const List<scalar>& w = F.cell()->weights();
+
+    // Cell has straight edges/faces, so Jacobian is constant (= cell volume)
+    const scalar cellVol = F.cell()->volume();
+
+    for (label g = 0; g < nGauss; ++g)
     {
-        I += values[i] * weights[i];
+        volInt += cellVol * (gradPhi[g] & F[g]) * w[g];
     }
-    return I;
+
+    return volInt;
+}
+
+/*---------------------------------------------------------------------------*\
+     Surface integral for vector flux:
+       F is vector, surface integral returns scalar
+       Integral = ∫ phi (F · n) dS ≈ Σ phi (F(g) & n) w(g)
+\*---------------------------------------------------------------------------*/
+inline scalar surfaceIntegral(const faceGaussField<scalar>& phi, const faceGaussField<vector>& F)
+{
+    scalar surfInt = 0.0;
+
+    const label nFaces = F.nFaces();
+
+    for (label faceI = 0; faceI < nFaces; ++faceI)
+    {
+        const vector n = F.faces()[faceI]->normal();
+        const label nGauss = F.nGaussPerFace();
+        const List<scalar>& w = F.faces()[faceI]->weights();
+
+        // Face has straight edges, so Jacobian is constant (= face area)
+        const scalar faceArea = F.faces()[faceI]->area();
+
+        for (label g = 0; g < nGauss; ++g)
+        {
+            // F(g) is vector ⇒ dot with n to get scalar flux
+            surfInt += faceArea * phi.minusValueOnFace(faceI, g) * (F.fluxOnFace(faceI, g) & n) * w[g];
+        }
+    }
+
+    return surfInt;
 }
 
 
-// Construct vector integral from Gauss samples (component-wise)
-inline Foam::vector gaussIntegral
-(
-    const List<vector>& values,
-    const List<scalar>& weights
-)
+/*---------------------------------------------------------------------------*\
+     Surface integral for tensor flux:
+       F is tensor, but F.fluxOnFace already returns T·n (a vector)
+       Surface integral returns vector:
+         ∫ (T·n) dS ≈ Σ (T·n)(g) w(g)
+\*---------------------------------------------------------------------------*/
+inline vector surfaceIntegral(const faceGaussField<scalar>& phi, const faceGaussField<tensor>& F)
 {
-    // Validate sizes
-    if (values.size() != weights.size())
+    vector surfInt = Zero;
+
+    const label nFaces = F.nFaces();
+
+    for (label faceI = 0; faceI < nFaces; ++faceI)
     {
-        FatalErrorInFunction
-            << "Size mismatch: values.size() = " << values.size()
-            << ", weights.size() = " << weights.size() << nl
-            << exit(FatalError);
+        const label nGauss = F.nGaussPerFace();
+        const List<scalar>& w = F.faces()[faceI]->weights();
+
+        // Face has straight edges, so Jacobian is constant (= face area)
+        const scalar faceArea = F.faces()[faceI]->area();
+
+        for (label g = 0; g < nGauss; ++g)
+        {
+            // fluxOnFace already returns T·n (vector)
+            surfInt += faceArea * phi.minusValueOnFace(faceI, g) * F.fluxOnFace(faceI, g) * w[g];
+        }
     }
 
-    // Accumulate sum_i values[i] * weights[i]
-    vector I(Zero);
-    forAll(values, i)
-    {
-        I += values[i] * weights[i];  // vector * scalar
-    }
-    return I;
-}
-
-
-// Construct tensor integral from Gauss samples (component-wise)
-inline Foam::tensor gaussIntegral
-(
-    const List<tensor>& values,
-    const List<scalar>& weights
-)
-{
-    // Validate sizes
-    if (values.size() != weights.size())
-    {
-        FatalErrorInFunction
-            << "Size mismatch: values.size() = " << values.size()
-            << ", weights.size() = " << weights.size() << nl
-            << exit(FatalError);
-    }
-
-    // Accumulate sum_i values[i] * weights[i]
-    tensor I(Zero);
-    forAll(values, i)
-    {
-        I += values[i] * weights[i];  // tensor * scalar
-    }
-    return I;
+    return surfInt;
 }
 
 } // End namespace Foam

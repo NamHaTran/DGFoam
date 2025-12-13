@@ -27,8 +27,7 @@ License
 #include "dgHLLEFluxSolver.H"
 #include "addToRunTimeSelectionTable.H"
 #include "error.H"
-#include "faceGaussField.H"
-#include "fieldsContext.H"
+#include <cmath>
 
 namespace Foam
 {
@@ -36,137 +35,264 @@ namespace Foam
 defineTypeNameAndDebug(dgHLLEFluxSolver, 0);
 addToRunTimeSelectionTable(dgFluxSolver, dgHLLEFluxSolver, dictionary);
 
-// * * * * * * * * * * * * * Constructors * * * * * * * * * * * * * * //
+
+// * * * * * * * * Constructors * * * * * * * * //
+
 Foam::dgHLLEFluxSolver::dgHLLEFluxSolver
 (
     const word& name,
     const dictionary& dict,
-    const dgThermo& thermo
+    const dgGeomMesh& mesh
 )
 :
-    dgFluxSolver(name, dict, thermo)
+    dgFluxSolver(name, dict, mesh),
+
+    rho_( mesh.getFvMesh().lookupObject<dgField<scalar>>("rho") ),
+    U_  ( mesh.getFvMesh().lookupObject<dgField<vector>>("U")   ),
+    p_  ( mesh.getFvMesh().lookupObject<dgField<scalar>>("p")   ),
+    a_  ( mesh.getFvMesh().lookupObject<dgField<scalar>>("a")   ),
+    h_  ( mesh.getFvMesh().lookupObject<dgField<scalar>>("h")   ),
+    gamma_( mesh.getFvMesh().lookupObject<dgField<scalar>>("gamma") )
 {
     read(dict);
 }
 
-// * * * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * * //
+
+// * * * * * * * * Read dictionary * * * * * * * //
 
 void Foam::dgHLLEFluxSolver::read(const dictionary& dict)
 {
     word s = dict.lookupOrDefault<word>("speedEstimate", "davis");
 
     if (s == "davis")
-    {
         speedEst_ = seDavis;
-    }
     else if (s == "roeEinfeldt")
-    {
         speedEst_ = seRoeEinfeldt;
-    }
     else
     {
-        WarningInFunction << "Unknown speedEstimate \"" << s
-                      << "\". Fallback to 'davis'." << nl;
+        WarningInFunction
+            << "Unknown speedEstimate \"" << s
+            << "\", using 'davis'." << nl;
+
         speedEst_ = seDavis;
     }
-    
 }
 
-void Foam::dgHLLEFluxSolver::computeFlux
+
+// * * * * * * * * Wave speed calculation * * * * * * * //
+
+void Foam::dgHLLEFluxSolver::calcWaveSpeed
 (
-    const label gaussID,
-    const vector& FPlus,   // N-side physical flux (Cartesian)
-    const vector& FMinus,  // P-side physical flux (Cartesian)
-    const scalar UR,       // conserved on N-side
-    const scalar UL,       // conserved on P-side
-    const vector& n,       // unit normal P -> N
-    vector& flux           // output Cartesian numerical flux
+    scalar& SL,
+    scalar& SR,
+
+    const scalar rhoL,
+    const scalar rhoR,
+    const vector& ULv,
+    const vector& URv,
+    const scalar pL,
+    const scalar pR,
+    const scalar aL,
+    const scalar aR,
+    const scalar gammaL,
+    const scalar gammaR,
+    const scalar hL,
+    const scalar hR,
+    const vector& n
 ) const
 {
-    // 0) Context check
-    if (!ctxPtr_)
-    {
-        FatalErrorInFunction
-            << "fieldsContext is null. Call setContext(...) before computeFlux."
-            << nl << exit(FatalError);
-    }
-
-    // 1) Primitive fields at Gauss point
-    const auto& rhoF = ctxPtr_->lookupFaceField<scalar>("rho");
-    const auto& UF   = ctxPtr_->lookupFaceField<vector>("U");
-    const auto& pF   = ctxPtr_->lookupFaceField<scalar>("p");
-
-    const scalar rhoR = rhoF.plusValue(gaussID);   // N-side (Plus)
-    const scalar rhoL = rhoF.minusValue(gaussID);  // P-side (Minus)
-    const vector URv  = UF.plusValue(gaussID);
-    const vector ULv  = UF.minusValue(gaussID);
-    const scalar pR   = pF.plusValue(gaussID);
-    const scalar pL   = pF.minusValue(gaussID);
-
-    // 2) Normal velocities & sound speeds
-    const scalar UnR = (URv & n);
     const scalar UnL = (ULv & n);
-
-    const scalar TR = thermo_.eos().T(rhoR, pR);
-    const scalar TL = thermo_.eos().T(rhoL, pL);
-    const scalar aR = thermo_.thermo().a(TR);
-    const scalar aL = thermo_.thermo().a(TL);
-
-    // 3) Wave-speed bounds
-    scalar SL(0), SR(0);
+    const scalar UnR = (URv & n);
 
     if (speedEst_ == seDavis)
     {
-        // Davis/Einfeldt (robust/positivity-friendly)
         SL = min(UnL - aL, UnR - aR);
         SR = max(UnL + aL, UnR + aR);
+        return;
     }
-    else // seRoeEinfeldt
+
+    // Roe-Einfeldt
+    const scalar sL = sqrt(max(rhoL, SMALL));
+    const scalar sR = sqrt(max(rhoR, SMALL));
+    const scalar denom = sL + sR + SMALL;
+
+    const vector Uroe = (sL*ULv + sR*URv) / denom;
+    const scalar UnRoe = (Uroe & n);
+
+    const scalar HL = hL + 0.5*magSqr(ULv);
+    const scalar HR = hR + 0.5*magSqr(URv);
+    const scalar Hroe = (sL*HL + sR*HR) / denom;
+
+    const scalar gm1L = gammaL - 1.0;
+    const scalar gm1R = gammaR - 1.0;
+
+    const scalar gm1Roe =
+    (
+        gm1L*HL + gm1R*HR
+    ) / max(HL + HR, SMALL);
+
+    const scalar aRoe2 =
+        max(gm1Roe*(Hroe - 0.5*magSqr(Uroe)), SMALL);
+
+    const scalar aRoe = sqrt(aRoe2);
+
+    SL = min(UnL - aL, UnRoe - aRoe);
+    SR = max(UnR + aR, UnRoe + aRoe);
+}
+
+
+// * * * * * * * * Scalar U, vector F * * * * * * * * //
+
+void Foam::dgHLLEFluxSolver::computeFlux
+(
+    const label cellID,
+    faceGaussField<vector>& F,
+    const faceGaussField<scalar>& U
+)
+{
+    const faceGaussField<scalar>& rhoF = rho_.gaussFields()[cellID].faceField();
+    const faceGaussField<vector>& UF   = U_.gaussFields()[cellID].faceField();
+    const faceGaussField<scalar>& pF   = p_.gaussFields()[cellID].faceField();
+    const faceGaussField<scalar>& aF   = a_.gaussFields()[cellID].faceField();
+    const faceGaussField<scalar>& hF   = h_.gaussFields()[cellID].faceField();
+    const faceGaussField<scalar>& gF   = gamma_.gaussFields()[cellID].faceField();
+
+    const label nFaces = F.nFaces();
+    const label nGauss = F.nGaussPerFace();
+
+    for (label fI = 0; fI < nFaces; ++fI)
     {
-        // Roe averages for U, H, a (less diffusive)
-        const scalar sL = ::sqrt(max(rhoL, SMALL));
-        const scalar sR = ::sqrt(max(rhoR, SMALL));
-        const scalar denom = sL + sR + SMALL;
+        const vector& n = F.normals()[fI];
 
-        const vector Uroe = (sL*ULv + sR*URv)/denom;
-        const scalar UnRoe = (Uroe & n);
+        for (label gI = 0; gI < nGauss; ++gI)
+        {
+            // Left/right states
+            scalar rhoL = rhoF.minusValueOnFace(fI, gI);
+            scalar rhoR = rhoF.plusValueOnFace(fI, gI);
 
-        const scalar Cp = thermo_.Cp();
-        const scalar hL = Cp*TL;
-        const scalar hR = Cp*TR;
-        const scalar HL = hL + 0.5*magSqr(ULv);
-        const scalar HR = hR + 0.5*magSqr(URv);
-        const scalar HRoe = (sL*HL + sR*HR)/denom;
+            vector ULv = UF.minusValueOnFace(fI, gI);
+            vector URv = UF.plusValueOnFace(fI, gI);
 
-        const scalar gamma = thermo_.gamma();
-        const scalar aRoe2 = max((gamma - 1.0)*(HRoe - 0.5*magSqr(Uroe)), 0.0);
-        const scalar aRoe  = ::sqrt(aRoe2);
+            scalar pL = pF.minusValueOnFace(fI, gI);
+            scalar pR = pF.plusValueOnFace(fI, gI);
 
-        SL = min(UnL - aL, UnRoe - aRoe);
-        SR = max(UnR + aR, UnRoe + aRoe);
+            scalar aL = aF.minusValueOnFace(fI, gI);
+            scalar aR = aF.plusValueOnFace(fI, gI);
+
+            scalar hL = hF.minusValueOnFace(fI, gI);
+            scalar hR = hF.plusValueOnFace(fI, gI);
+
+            scalar gL = gF.minusValueOnFace(fI, gI);
+            scalar gR = gF.plusValueOnFace(fI, gI);
+
+            scalar SL, SR;
+            calcWaveSpeed(SL, SR,
+                          rhoL, rhoR, ULv, URv, pL, pR,
+                          aL, aR, gL, gR, hL, hR, n);
+
+            const vector FL = F.minusValueOnFace(fI, gI);
+            const vector FR = F.plusValueOnFace(fI, gI);
+
+            const scalar fL = (FL & n);
+            const scalar fR = (FR & n);
+
+            const scalar UL = U.minusValueOnFace(fI, gI);
+            const scalar UR = U.plusValueOnFace(fI, gI);
+
+            scalar fn;
+
+            if (SL >= 0)
+                fn = fL;
+            else if (SR <= 0)
+                fn = fR;
+            else
+            {
+                fn = (SR*fL - SL*fR + SL*SR*(UR - UL))
+                   / (SR - SL + VSMALL);
+            }
+
+            F.fluxOnFace(fI, gI) = fn * n;
+        }
     }
+}
 
-    // 4) Physical normal fluxes (project F±)
-    const scalar fR = (FPlus  & n);  // right  (N)
-    const scalar fL = (FMinus & n);  // left   (P)
 
-    // 5) HLLE normal flux with jump (UR - UL)
-    scalar fn(0.0);
-    if (SL >= 0.0)
+// * * * * * * * * Vector U, tensor F * * * * * * * * //
+
+void Foam::dgHLLEFluxSolver::computeFlux
+(
+    const label cellID,
+    faceGaussField<tensor>& F,
+    const faceGaussField<vector>& U
+)
+{
+    const faceGaussField<scalar>& rhoF = rho_.gaussFields()[cellID].faceField();
+    const faceGaussField<vector>& UF   = U_.gaussFields()[cellID].faceField();
+    const faceGaussField<scalar>& pF   = p_.gaussFields()[cellID].faceField();
+    const faceGaussField<scalar>& aF   = a_.gaussFields()[cellID].faceField();
+    const faceGaussField<scalar>& hF   = h_.gaussFields()[cellID].faceField();
+    const faceGaussField<scalar>& gF   = gamma_.gaussFields()[cellID].faceField();
+
+    const label nFaces = F.nFaces();
+    const label nGauss = F.nGaussPerFace();
+
+    for (label fI = 0; fI < nFaces; ++fI)
     {
-        fn = fL;
-    }
-    else if (SR <= 0.0)
-    {
-        fn = fR;
-    }
-    else
-    {
-        fn = (SR*fL - SL*fR + SL*SR*(UR - UL)) / (SR - SL + SMALL);
-    }
+        const vector& n = F.normals()[fI];
 
-    // 6) Back to Cartesian (tangential components vanish in 1D Riemann)
-    flux = fn * n;
+        for (label gI = 0; gI < nGauss; ++gI)
+        {
+            scalar rhoL = rhoF.minusValueOnFace(fI, gI);
+            scalar rhoR = rhoF.plusValueOnFace(fI, gI);
+
+            vector ULv = UF.minusValueOnFace(fI, gI);
+            vector URv = UF.plusValueOnFace(fI, gI);
+
+            scalar pL = pF.minusValueOnFace(fI, gI);
+            scalar pR = pF.plusValueOnFace(fI, gI);
+
+            scalar aL = aF.minusValueOnFace(fI, gI);
+            scalar aR = aF.plusValueOnFace(fI, gI);
+
+            scalar hL = hF.minusValueOnFace(fI, gI);
+            scalar hR = hF.plusValueOnFace(fI, gI);
+
+            scalar gL = gF.minusValueOnFace(fI, gI);
+            scalar gR = gF.plusValueOnFace(fI, gI);
+
+            scalar SL, SR;
+            calcWaveSpeed(SL, SR,
+                          rhoL, rhoR, ULv, URv, pL, pR,
+                          aL, aR, gL, gR, hL, hR, n);
+
+            const tensor FL = F.minusValueOnFace(fI, gI);
+            const tensor FR = F.plusValueOnFace(fI, gI);
+
+            const vector fL = (FL & n);
+            const vector fR = (FR & n);
+
+            const vector UL = U.minusValueOnFace(fI, gI);
+            const vector UR = U.plusValueOnFace(fI, gI);
+
+            vector fn;
+
+            if (SL >= 0)
+                fn = fL;
+            else if (SR <= 0)
+                fn = fR;
+            else
+            {
+                fn =
+                (
+                    SR*fL - SL*fR + SL*SR*(UR - UL)
+                ) / (SR - SL + VSMALL);
+            }
+
+            // IMPORTANT:
+            // For vector U and tensor F, flux is a vector (do NOT multiply by n)
+            F.fluxOnFace(fI, gI) = fn;
+        }
+    }
 }
 
 } // End namespace Foam

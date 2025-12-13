@@ -69,7 +69,8 @@ SourceFiles
 #include "dictionary.H"
 #include "vector.H"
 #include "autoPtr.H"
-#include "dgThermo.H"   // Thermo interface for fluid properties
+#include "dgGeomMesh.H"
+#include "faceGaussField.H"
 
 namespace Foam
 {
@@ -103,11 +104,8 @@ protected:
         //- Configuration sub-dictionary for this solver
         dictionary dict_;
 
-        //- Pointer to fields context (for lookup/registration); may be null
-        const fieldsContext* ctxPtr_ = nullptr;
-
-        //- Reference to thermo object for fluid properties (non-owning)
-        const dgThermo& thermo_;
+        //- Mesh reference
+        const dgGeomMesh& mesh_;
 
         // Internal equation type used for interpreting UL/UR
         equationType eqnType_;
@@ -123,14 +121,14 @@ public:
         autoPtr,
         dgFluxSolver,
         dictionary,
-        (const word& name, const dictionary& dict, const dgThermo& thermo),
-        (name, dict, thermo)
+        (const word& name, const dictionary& dict, const dgGeomMesh& mesh),
+        (name, dict, mesh)
     );
 
     // Constructors
 
         //- Construct from name and dictionary
-        dgFluxSolver(const word& name, const dictionary& dict, const dgThermo& thermo);
+        dgFluxSolver(const word& name, const dictionary& dict, const dgGeomMesh& mesh);
 
         //- Disallow default construction
         dgFluxSolver() = delete;
@@ -146,16 +144,8 @@ public:
             const word& name,
             const word& fluxSolverType,
             const dictionary& dict,
-            const dgThermo& thermo
+            const dgGeomMesh& mesh
         );
-
-    // Context
-
-        //- Set the fields context (no ownership)
-        inline void setContext(const fieldsContext& ctx) { ctxPtr_ = &ctx; }
-
-        //- Get the fields context pointer (may be null)
-        inline const fieldsContext* context() const { return ctxPtr_; }
 
     // Access
 
@@ -169,29 +159,40 @@ public:
 
         //- Compute numerical flux from Plus/Minus physical flux vectors
         //  Input:
-        //    - gaussID : local Gauss point ID on face
-        //    - FPlus   : flux vector from neighbour cell (N-side)
-        //    - FMinus  : flux vector from owner cell (P-side)
-        //    - UR      : conservative variable scalar from neighbour cell
-        //    - UL      : conservative variable scalar from owner cell
-        //    - n       : face unit normal (points from P to N)
-        //  Output:
-        //    - flux    : numerical flux vector (Cartesian)
+        //    - cellID  : cellID of cell where flux is calculated
+        //    - F       : faceGaussField of field F
+        //    - U       : faceGaussField of U
         virtual void computeFlux
         (
-            const label gaussID,
-            const vector& FPlus,
-            const vector& FMinus,
-            const scalar UR,
-		    const scalar UL,
-            const vector& n,
-            vector& flux
-        ) const = 0;
+            const label cellID,
+            faceGaussField<vector>& F,
+            const faceGaussField<scalar>& U
+        ) = 0;
+
+        virtual void computeFlux
+        (
+            const label cellID,
+            faceGaussField<tensor>& F,
+            const faceGaussField<vector>& U
+        ) = 0;
+
+        //- Reset if necessary
+        virtual void reset() = 0;
 
     // Utility
         // - Construct orthonormal basis (n, t1, t2) from normal n
         //   (t1, t2 are tangential directions)
         void makeONB(const vector& n, vector& t1, vector& t2) const;
+
+        // - Decompose vector U to normal and 2 tangential components
+        void decomposeU
+        (
+            const vector& U,
+            const vector& n,
+            vector& Un,
+            vector& Ut1,
+            vector& Ut2
+        ) const;
 
         // - Reading method
         virtual void read(const dictionary& dict) = 0;

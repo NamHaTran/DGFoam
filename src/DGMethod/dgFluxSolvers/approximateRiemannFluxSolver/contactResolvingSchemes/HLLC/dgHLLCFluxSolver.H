@@ -28,70 +28,60 @@ Class
     Foam::dgHLLCFluxSolver
 
 Description
-    HLLC (Harten–Lax–van Leer–Contact) numerical flux for a single
-    conserved equation working on vector-valued physical fluxes.
+    HLLC (Harten–Lax–van Leer–Contact) approximate Riemann solver.
 
-    Conventions
-    - Plus  = neighbour cell (N-side)
-    - Minus = owner cell (P-side)
-    - 'n' is the unit normal pointing from P to N.
-    - 'gaussID' is the local Gauss point index on the face.
-    - UR, UL are the conserved values on Plus (N) and Minus (P) sides.
+    This flux restores the missing contact and shear waves that are removed in
+    the HLLE formulation. HLLC introduces a middle wave S* and two
+    reconstructed intermediate states (U*_L and U*_R), allowing accurate
+    resolution of contact discontinuities and tangential shear layers.
 
-    Inputs available at the face Gauss point
-    - From fieldsContext (face Gauss fields):
-      * rho^± : density (scalar),   U^± : velocity (vector),   p^± : pressure (scalar)
-    - From thermo (fluid properties handles):
-      * T^± = eqnOfState().T(rho^±, p^±)
-      * a^± = thermo().a(T^±)                // speed of sound
-      * gamma = thermo().gamma()             // ratio of specific heats (if needed)
+    Compared to HLLE:
+    - HLLC is significantly less diffusive.
+    - Captures contact discontinuities sharply.
+    - Preserves tangential velocity continuity (important for momentum flux).
+    - Requires computing a star region and wave strengths C_L, C_R.
 
-    HLLC procedure (local 1D Riemann along n)
-    1. Local projection to normal direction:
-       - f_R = FPlus  · n        // right  (Plus, N-side)  physical flux dotted with n
-       - f_L = FMinus · n        // left   (Minus, P-side)
-       - U_n^± = U^± · n         // normal velocity on each side
+    Procedure (local 1D Riemann problem along face normal n):
+    1. Project left and right physical fluxes onto n.
+    2. Compute left/right normal velocities and sound speeds.
+    3. Estimate wave speeds S_L and S_R using either:
+         * Davis side speeds, or
+         * Roe–Einfeldt averages (U_roe, H_roe, a_roe).
+    4. Compute the contact wave speed S* based on pressure and velocity jumps.
+    5. Compute the scaling coefficients:
+         C_L = rho_L (S_L - Un_L) / (S_L - S*)
+         C_R = rho_R (S_R - Un_R) / (S_R - S*)
+    6. Construct the intermediate star states U*_L and U*_R:
+         - For mass:     U* = C
+         - For momentum: U* = C ( S* n + U_t ), preserving tangential velocity
+         - For energy:   U* = C ( e + corrective term )
+         - For scalars:  U* = C q
+    7. Construct the flux in each region:
+         f = f_L,                               if S_L >= 0
+         f = f*_L,                              if S_L <= 0 <= S*
+         f = f*_R,                              if S* <= 0 <= S_R
+         f = f_R,                               if S_R <= 0
+       where f*_L and f*_R are star-region fluxes.
+    8. Cartesian flux:
+         * scalar equations → f * n
+         * momentum equations → f as a vector (no multiplication by n)
 
-    2. Acoustic speeds on each side using thermo:
-       - T^± = eqnOfState().T(rho^±, p^±)
-       - a^± = thermo().a(T^±)
+    Notation
+    - Minus  = owner cell (P-side)
+    - Plus   = neighbour cell (N-side)
+    - n      = unit normal pointing P → N
+    - U_L/R  = conserved variables at Gauss point
+    - f_L/R  = physical normal fluxes projected onto n
 
-    3. Wave-speed bounds (Davis or Roe-Einfeldt):
-       - S_L = min( U_n^- - a^- , Roe-estimate )
-       - S_R = max( U_n^+ + a^+ , Roe-estimate )
-
-    4. Contact wave speed (middle wave):
-       - S* = (p^+ - p^- + rho^-·U_n^-·(S_L - U_n^-) - rho^+·U_n^+·(S_R - U_n^+)) /
-              (rho^-·(S_L - U_n^-) - rho^+·(S_R - U_n^+))
-
-    5. Intermediate states (U*^±), depend on equationType:
-       - C^± = rho^±·(S_{±} - U_n^±) / (S_{±} - S*)
-       - U*_L, U*_R computed based on equation:
-         e.g. momentum → C^±·S*, energy → C^±·(e + φ), scalar → C^±·q
-
-    6. Intermediate fluxes (F*^±):
-       - F*_L = FMinus + S_L·(U*_L - UL)
-       - F*_R = FPlus  + S_R·(U*_R - UR)
-
-    7. HLLC normal numerical flux f_n:
-       - if S_L ≥ 0       : f_n = f_L
-       - else if S* ≥ 0   : f_n = F*_L · n
-       - else if S_R > 0  : f_n = F*_R · n
-       - else             : f_n = f_R
-
-    8. Rotate back to Cartesian:
-       - flux = f_n * n      // tangential parts vanish in 1D Riemann solve
-
-    Notes
-    - Ensure 'n' is a unit vector and oriented from P to N.
-    - HLLC restores contact and shear waves, and is less diffusive than HLLE.
-    - Conserved variable (UR/UL) must match the PDE being solved:
-      (e.g. rho, rhoU, rhoE, or scalar transported quantity).
+    Advantages
+    - Accurate contact resolution.
+    - Good shear preservation.
+    - Less diffusive than HLLE while retaining robustness.
 
     References
-    - Toro, "Riemann Solvers and Numerical Methods for Fluid Dynamics", 3rd ed., 2009.
-    - Harten, Lax, van Leer (1983), Einfeldt (1991)
-    - Hesthaven & Warburton, "Nodal Discontinuous Galerkin Methods", 2008.
+    - Toro (2009), “Riemann Solvers and Numerical Methods for Fluid Dynamics”
+    - Harten, Lax, van Leer (1983)
+    - Einfeldt (1991)
 
 SourceFiles
     dgHLLCFluxSolver.C
@@ -101,7 +91,9 @@ SourceFiles
 #define Foam_dgHLLCFluxSolver_H
 
 #include "dgFluxSolver.H"
+#include "dgField.H"
 #include "vector.H"
+#include "tensor.H"
 
 namespace Foam
 {
@@ -129,45 +121,86 @@ public:
 private:
     // Attributes
 
+        //- Reference to global fields
+            // Density
+            const dgField<scalar>& rho_;
+            // Velocity
+            const dgField<vector>& U_;
+            // Pressure
+            const dgField<scalar>& p_;
+            // Speed of sound
+            const dgField<scalar>& a_;
+            // Enthalpy
+            const dgField<scalar>& h_;
+            // Ratio Cp by Cv
+            const dgField<scalar>& gamma_;
+
         //- Wave-speed estimate type
         speedEstimateType speedEst_;
+
+        //- List intermediate states
+        List<List<scalar>> SL_list_;
+        List<List<scalar>> SR_list_;
+        List<List<scalar>> SStar_list_;
+        List<List<scalar>> CL_list_;
+        List<List<scalar>> CR_list_;
+
+        //- List of computed intermediate states flag
+        List<bool> isStateComputed_;
 
 public:
 
     //- Runtime type name
-    TypeName("HLLE");
+    TypeName("HLLC");
 
-    //- Construct from name, dictionary and thermo
+    //- Construct from name, dictionary and mesh
     dgHLLCFluxSolver
     (
         const word& name,
         const dictionary& dict,
-        const dgThermo& thermo
+        const dgGeomMesh& mesh
     );
 
     //- Destructor
     virtual ~dgHLLCFluxSolver() = default;
 
+    //- Calculate intermediate states
+    void calcIntermediateState
+    (
+        const label cellID,
+        const label localFaceID,
+        const label localGaussID,
+        const vector& n,
+
+        // Output
+        scalar& SL,
+        scalar& SR,
+        scalar& SStar,
+        scalar& CL,
+        scalar& CR
+    );
+
     //- Compute numerical flux from Plus/Minus physical flux vectors
     //  Input:
-    //    - gaussID : local Gauss point ID on face
-    //    - FPlus   : flux vector from neighbour cell (N-side)
-    //    - FMinus  : flux vector from owner cell (P-side)
-    //    - n       : face unit normal (points from P to N)
-    //    - UR      : conserved value on N-side at this Gauss point
-    //    - UL      : conserved value on P-side at this Gauss point
-    //  Output:
-    //    - flux    : numerical flux vector (Cartesian)
+    //    - cellID  : cellID of cell where flux is calculated
+    //    - F       : faceGaussField of field F
+    //    - U       : faceGaussField of U
     virtual void computeFlux
     (
-        const label gaussID,
-        const vector& FPlus,
-        const vector& FMinus,
-        const scalar UR,
-        const scalar UL,
-        const vector& n,
-        vector& flux
-    ) const override;
+        const label cellID,
+        faceGaussField<vector>& F,
+        const faceGaussField<scalar>& U
+    ) override;
+
+    virtual void computeFlux
+    (
+        const label cellID,
+        faceGaussField<tensor>& F,
+        const faceGaussField<vector>& U
+    ) override;
+
+    // Override reset() method
+    virtual void reset() override;
 
     //- Reading method
     virtual void read(const dictionary& dict) override;

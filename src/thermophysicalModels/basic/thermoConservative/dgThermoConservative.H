@@ -72,6 +72,7 @@ SourceFiles
 #ifndef Foam_dgThermoConservative_H
 #define Foam_dgThermoConservative_H
 
+#include "regIOobject.H"
 #include "dictionary.H"
 #include "dgGeomMesh.H"
 #include "dgField.H"
@@ -101,6 +102,8 @@ class energy;
 \*---------------------------------------------------------------------------*/
 
 class dgThermoConservative
+:
+    public regIOobject
 {
 protected:
 
@@ -267,6 +270,9 @@ public:
     inline const dgField<scalar>& Pr() const { return Pr_; }
     inline const dgField<scalar>& a() const { return a_; }
     inline const dgField<scalar>& gamma() const { return gamma_; }
+
+    // Override writeData of regIOobject
+    virtual bool writeData(Ostream& os) const override;
 };
 
 } // End namespace Foam

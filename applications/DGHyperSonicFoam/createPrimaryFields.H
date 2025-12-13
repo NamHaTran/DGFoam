@@ -74,6 +74,20 @@ autoPtr<dgGeneralBoundaryManager<scalar>> TBC
     new dgGeneralBoundaryManager<scalar>(TBCIO, dgMesh)
 );
 
+IOobject rhoBCIO
+(
+    "rhoBC",
+    runTime.constant(),
+    mesh,
+    IOobject::MUST_READ,
+    IOobject::NO_WRITE
+);
+
+autoPtr<dgGeneralBoundaryManager<scalar>> rhoBC
+(
+    new dgGeneralBoundaryManager<scalar>(rhoBCIO, dgMesh)
+);
+
 IOobject UBCIO
 (
     "UBC",
