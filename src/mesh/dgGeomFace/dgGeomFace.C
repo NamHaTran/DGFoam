@@ -367,7 +367,7 @@ void Foam::dgGeomFace::mappingFromRefToReal
 (
     const dgFaceType type,
     const List<vector>& gaussPoints,
-    const List<vector>& faceVertices,
+    const List<vector2D>& faceVertices,
     List<vector2D>& physicGaussP
 )
 {
@@ -406,10 +406,10 @@ void Foam::dgGeomFace::mappingFromRefToReal
             scalar C3 = 0.25 * (1.0 + eta1_flat) * (1.0 + eta2_flat);
             scalar C4 = 0.25 * (1.0 - eta1_flat) * (1.0 + eta2_flat);
 
-            const vector& v1 = faceVertices[0];
-            const vector& v2 = faceVertices[1];
-            const vector& v3 = faceVertices[2];
-            const vector& v4 = faceVertices[3];
+            const vector2D& v1 = faceVertices[0];
+            const vector2D& v2 = faceVertices[1];
+            const vector2D& v3 = faceVertices[2];
+            const vector2D& v4 = faceVertices[3];
 
             scalar x = C1 * v1.x() + C2 * v2.x() + C3 * v3.x() + C4 * v4.x();
             scalar y = C1 * v1.y() + C2 * v2.y() + C3 * v3.y() + C4 * v4.y();
@@ -422,9 +422,9 @@ void Foam::dgGeomFace::mappingFromRefToReal
             scalar C2 = 0.25 * (1.0 + eta1_flat) * (1.0 - eta2_flat);
             scalar C3 = 0.5  * (1.0 + eta2_flat);
 
-            const vector& v1 = faceVertices[0];
-            const vector& v2 = faceVertices[1];
-            const vector& v3 = faceVertices[2];
+            const vector2D& v1 = faceVertices[0];
+            const vector2D& v2 = faceVertices[1];
+            const vector2D& v3 = faceVertices[2];
 
             scalar x = C1 * v1.x() + C2 * v2.x() + C3 * v3.x();
             scalar y = C1 * v1.y() + C2 * v2.y() + C3 * v3.y();
@@ -454,29 +454,26 @@ void Foam::dgGeomFace::findGaussConnectivity()
         return;
     }
 
-    // Step 1: generate flippedPoints from globalPoints_
-    const label nPoints = globalPoints_.size();
-    List<vector> flippedPoints(nPoints);
+    // Step 1: generate flippedPoints from flattenedPoints_
+    const label nPoints = flattenedPoints_.size();
+    List<vector2D> flippedPoints(nPoints);
     for (label i = 0; i < nPoints; ++i)
     {
-        flippedPoints[i] = globalPoints_[nPoints - 1 - i];
+        flippedPoints[i] = flattenedPoints_[nPoints - 1 - i];
     }
 
-    // Step 2: get Gauss points on both sides
-    // const List<vector>& gaussOwner = gaussPointsOwner();
+    // Step 2: get Gauss points on neighbor side
     const List<vector>& gaussNeighbor = gaussPointsNeighbor();
 
     // Step 3: map to physical space
     List<vector2D> physicGaussOwner;
     List<vector2D> physicGaussNeighbor;
 
-    mappingFromRefToReal(type_, gaussOwner, globalPoints_, physicGaussOwner);
+    mappingFromRefToReal(type_, gaussOwner, flattenedPoints_, physicGaussOwner);
     mappingFromRefToReal(type_, gaussNeighbor, flippedPoints, physicGaussNeighbor);
 
     // Step 4: compare and find connectivity
     const scalar tol = 1e-10;
-    //const label nGauss = physicGaussOwner.size();
-    connectivity_.setSize(nGauss);
 
     for (label i = 0; i < nGauss; ++i)
     {
@@ -486,7 +483,11 @@ void Foam::dgGeomFace::findGaussConnectivity()
         {
             const vector2D& pN = physicGaussNeighbor[j];
 
-            if (mag(pO - pN) < tol)
+            if
+            (
+                mag(pO.x() - pN.x()) < tol &&
+                mag(pO.y() - pN.y()) < tol
+            )
             {
                 connectivity_[i] = j;
                 break;

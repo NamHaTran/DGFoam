@@ -208,7 +208,7 @@ public:
         (
             const dgFaceType type,
             const List<vector>& gaussPoints,
-            const List<vector>& faceVertices,
+            const List<vector2D>& faceVertices,
             List<vector2D>& physicGaussP
         );
 
