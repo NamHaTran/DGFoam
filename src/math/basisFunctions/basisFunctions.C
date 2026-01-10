@@ -34,6 +34,7 @@ License
 #include "scalar.H"
 #include "label.H"
 #include "List.H"
+#include "dgFacePosition.H"
 
 namespace Foam
 {
@@ -48,39 +49,47 @@ label getNumBasis(const label pOrder, const dgCellType type)
     {
         case dgCellType::HEX:
         {
-            for (label p = 0; p <= pOrder; ++p)
-                for (label q = 0; q <= pOrder; ++q)
-                    for (label r = 0; r <= pOrder; ++r)
+            for (label p = 1; p < pOrder+1; ++p)
+                for (label q = 1; q < pOrder+1; ++q)
+                    for (label r = 1; r < pOrder+1; ++r)
                         ++count;
             return count;
         }
 
         case dgCellType::PRISM:
         {
-            for (label p = 0; p <= pOrder; ++p)
-                for (label q = 0; q <= pOrder; ++q)
-                    for (label r = 0; r <= pOrder; ++r)
-                        if (q + r <= pOrder)
+            for (label p = 1; p < pOrder+1; ++p)
+                for (label q = 1; q < pOrder+1; ++q)
+                    for (label r = 1; r < pOrder+1; ++r)
+                        if (q + r < pOrder+1)
                             ++count;
             return count;
         }
 
         case dgCellType::PYRAMID:
         {
-            for (label p = 0; p <= pOrder; ++p)
-                for (label q = 0; q <= pOrder; ++q)
-                    for (label r = 0; r <= pOrder; ++r)
-                        if (p + q + r <= pOrder)
+            for (label p = 1; p < pOrder+1; ++p)
+                for (label q = 1; q < pOrder+1; ++q)
+                    for (label r = 1; r < pOrder+1; ++r)
+                        if (p + q + r < pOrder+1)
                             ++count;
             return count;
         }
 
         case dgCellType::TET:
         {
-            for (label p = 0; p <= pOrder; ++p)
-                for (label q = 0; q <= pOrder - p; ++q)
-                    for (label r = 0; r <= pOrder - p - q; ++r)
-                        ++count;
+            for (label p = 1; p < pOrder+1; ++p)
+                for (label q = 1; q < pOrder+1; ++q)
+                {
+                    if (p + q < pOrder+1)
+                    {
+                        for (label r = 1; r < pOrder+1; ++r)
+                        {
+                            if (p + q + r < pOrder+1)
+                            ++count;
+                        }
+                    }
+                }
             return count;
         }
 
@@ -96,7 +105,7 @@ label getNumBasis(const label pOrder, const dgCellType type)
     }
 }
 
-
+/*
 void computeBasisAndDerivatives
 (
     const scalar eta1,
@@ -135,9 +144,9 @@ void computeBasisAndDerivatives
                 << exit(FatalError);
     }
 }
+*/
 
-
-void computeHexBasisAndDerivatives
+void computeInteriorHexBasisAndDerivatives
 (
     const scalar eta1,
     const scalar eta2,
@@ -160,20 +169,22 @@ void computeHexBasisAndDerivatives
 
     label idx = 0;
 
-    for (label p = 0; p <= pOrder; ++p)
+    label polyDegree = pOrder+1;
+
+    for (label p = 1; p < polyDegree; ++p)
     {
-        scalar Pp   = jacobi(static_cast<unsigned>(p), 0.0, 0.0, eta1);
-        scalar dPp  = jacobi_prime(static_cast<unsigned>(p), 0.0, 0.0, eta1);
+        scalar Pp   = jacobi(static_cast<unsigned>(p-1), 1.0, 1.0, eta1);
+        scalar dPp  = jacobi_prime(static_cast<unsigned>(p-1), 1.0, 1.0, eta1);
 
-        for (label q = 0; q <= pOrder; ++q)
+        for (label q = 1; q < polyDegree; ++q)
         {
-            scalar Pq   = jacobi(static_cast<unsigned>(q), 0.0, 0.0, eta2);
-            scalar dPq  = jacobi_prime(static_cast<unsigned>(q), 0.0, 0.0, eta2);
+            scalar Pq   = jacobi(static_cast<unsigned>(q-1), 1.0, 1.0, eta2);
+            scalar dPq  = jacobi_prime(static_cast<unsigned>(q-1), 1.0, 1.0, eta2);
 
-            for (label r = 0; r <= pOrder; ++r)
+            for (label r = 1; r < polyDegree; ++r)
             {
-                scalar Pr   = jacobi(static_cast<unsigned>(r), 0.0, 0.0, eta3);
-                scalar dPr  = jacobi_prime(static_cast<unsigned>(r), 0.0, 0.0, eta3);
+                scalar Pr   = jacobi(static_cast<unsigned>(r-1), 1.0, 1.0, eta3);
+                scalar dPr  = jacobi_prime(static_cast<unsigned>(r-1), 1.0, 1.0, eta3);
 
                 basis[idx]        = Pp * Pq * Pr;
                 dBasis_deta1[idx] = dPp * Pq * Pr;
@@ -187,7 +198,7 @@ void computeHexBasisAndDerivatives
 }
 
 
-void computePrismBasisAndDerivatives
+void computeInteriorPrismBasisAndDerivatives
 (
     const scalar eta1,
     const scalar eta2,
@@ -210,15 +221,17 @@ void computePrismBasisAndDerivatives
 
     label idx = 0;
 
-    for (label p = 0; p <= pOrder; ++p)
-    {
-        scalar Pp     = jacobi(static_cast<unsigned>(p), 0.0, 0.0, eta1);
-        scalar dPp    = jacobi_prime(static_cast<unsigned>(p), 0.0, 0.0, eta1);
+    label polyDegree = pOrder+1;
 
-        for (label q = 0; q <= pOrder; ++q)
+    for (label p = 1; p < polyDegree; ++p)
+    {
+        scalar Pp     = jacobi(static_cast<unsigned>(p-1), 1.0, 1.0, eta1);
+        scalar dPp    = jacobi_prime(static_cast<unsigned>(p-1), 1.0, 1.0, eta1);
+
+        for (label q = 1; q < polyDegree; ++q)
         {
-            scalar Pq     = jacobi(static_cast<unsigned>(q), 0.0, 0.0, eta2);
-            scalar dPq    = jacobi_prime(static_cast<unsigned>(q), 0.0, 0.0, eta2);
+            scalar Pq     = jacobi(static_cast<unsigned>(q-1), 1.0, 1.0, eta2);
+            scalar dPq    = jacobi_prime(static_cast<unsigned>(q-1), 1.0, 1.0, eta2);
 
             const scalar oneMinusEta3 = 1.0 - eta3;
             const scalar oneMinusEta3PowP = std::pow(oneMinusEta3, p);
@@ -228,12 +241,12 @@ void computePrismBasisAndDerivatives
 
             const double alpha = 2 * q + 1;
 
-            for (label r = 0; r <= pOrder; ++r)
+            for (label r = 1; r < polyDegree; ++r)
             {
-                if (q + r <= pOrder)
+                if (q + r < polyDegree)
                 {
-                    scalar Pr    = jacobi(static_cast<unsigned>(r), alpha, 0.0, eta3);
-                    scalar dPr   = jacobi_prime(static_cast<unsigned>(r), alpha, 0.0, eta3);
+                    scalar Pr    = jacobi(static_cast<unsigned>(r-1), alpha, 1.0, eta3);
+                    scalar dPr   = jacobi_prime(static_cast<unsigned>(r-1), alpha, 1.0, eta3);
 
                     // Basis value
                     basis[idx] = Pp * Pq * oneMinusEta3PowP * Pr;
@@ -256,7 +269,7 @@ void computePrismBasisAndDerivatives
 }
 
 
-void computePyramidBasisAndDerivatives
+void computeInteriorPyramidBasisAndDerivatives
 (
     const scalar eta1,
     const scalar eta2,
@@ -279,15 +292,17 @@ void computePyramidBasisAndDerivatives
 
     label idx = 0;
 
-    for (label p = 0; p <= pOrder; ++p)
-    {
-        scalar Pp  = jacobi(static_cast<unsigned>(p), 0.0, 0.0, eta1);
-        scalar dPp = jacobi_prime(static_cast<unsigned>(p), 0.0, 0.0, eta1);
+    label polyDegree = pOrder+1;
 
-        for (label q = 0; q <= pOrder; ++q)
+    for (label p = 1; p < polyDegree; ++p)
+    {
+        scalar Pp  = jacobi(static_cast<unsigned>(p-1), 1.0, 1.0, eta1);
+        scalar dPp = jacobi_prime(static_cast<unsigned>(p-1), 1.0, 1.0, eta1);
+
+        for (label q = 1; q < polyDegree; ++q)
         {
-            scalar Pq  = jacobi(static_cast<unsigned>(q), 0.0, 0.0, eta2);
-            scalar dPq = jacobi_prime(static_cast<unsigned>(q), 0.0, 0.0, eta2);
+            scalar Pq  = jacobi(static_cast<unsigned>(q-1), 1.0, 1.0, eta2);
+            scalar dPq = jacobi_prime(static_cast<unsigned>(q-1), 1.0, 1.0, eta2);
 
             double exponent = p + q;
             scalar oneMinusEta3 = 1.0 - eta3;
@@ -296,13 +311,13 @@ void computePyramidBasisAndDerivatives
                 ? -exponent * std::pow(oneMinusEta3, exponent - 1)
                 : 0.0;
 
-            for (label r = 0; r <= pOrder; ++r)
+            for (label r = 1; r < polyDegree; ++r)
             {
-                if (p + q + r <= pOrder)
+                if (p + q + r < polyDegree)
                 {
                     double alpha = 2 * p + 2 * q + 1;
-                    scalar Pr   = jacobi(static_cast<unsigned>(r), alpha, 0.0, eta3);
-                    scalar dPr  = jacobi_prime(static_cast<unsigned>(r), alpha, 0.0, eta3);
+                    scalar Pr   = jacobi(static_cast<unsigned>(r-1), alpha, 1.0, eta3);
+                    scalar dPr  = jacobi_prime(static_cast<unsigned>(r-1), alpha, 1.0, eta3);
 
                     // Basis value
                     basis[idx] = Pp * Pq * powTerm * Pr;
@@ -324,7 +339,7 @@ void computePyramidBasisAndDerivatives
 }
 
 
-void computeTetBasisAndDerivatives
+void computeInteriorTetBasisAndDerivatives
 (
     const scalar eta1,
     const scalar eta2,
@@ -347,55 +362,372 @@ void computeTetBasisAndDerivatives
 
     label idx = 0;
 
-    for (label p = 0; p <= pOrder; ++p)
+    label polyDegree = pOrder+1;
+
+    for (label p = 1; p < polyDegree; ++p)
     {
-        scalar Pp  = jacobi(static_cast<unsigned>(p), 0.0, 0.0, eta1);
-        scalar dPp = jacobi_prime(static_cast<unsigned>(p), 0.0, 0.0, eta1);
+        scalar Pp  = jacobi(static_cast<unsigned>(p-1), 1.0, 1.0, eta1);
+        scalar dPp = jacobi_prime(static_cast<unsigned>(p-1), 1.0, 1.0, eta1);
 
         scalar oneMinusEta2 = 1.0 - eta2;
         scalar oneMinusEta2PowP = std::pow(oneMinusEta2, p);
         scalar dOneMinusEta2PowP = (p > 0) ? -p * std::pow(oneMinusEta2, p - 1) : 0.0;
 
-        for (label q = 0; q <= pOrder - p; ++q)
+        for (label q = 1; q < polyDegree; ++q)
         {
-            double alpha_q = 2 * p + 1;
-            scalar Pq     = jacobi(static_cast<unsigned>(q), alpha_q, 0.0, eta2);
-            scalar dPq    = jacobi_prime(static_cast<unsigned>(q), alpha_q, 0.0, eta2);
-
-            scalar oneMinusEta3 = 1.0 - eta3;
-            double pqSum = p + q;
-            scalar oneMinusEta3PowPQ = std::pow(oneMinusEta3, pqSum);
-            scalar dOneMinusEta3PowPQ = (pqSum > 0)
-                ? -pqSum * std::pow(oneMinusEta3, pqSum - 1)
-                : 0.0;
-
-            for (label r = 0; r <= pOrder - p - q; ++r)
+            if (p + q < polyDegree)
             {
-                double alpha_r = 2 * p + 2 * q + 1;
-                scalar Pr  = jacobi(static_cast<unsigned>(r), alpha_r, 0.0, eta3);
-                scalar dPr = jacobi_prime(static_cast<unsigned>(r), alpha_r, 0.0, eta3);
+                double alpha_q = 2 * p + 1;
+                scalar Pq     = jacobi(static_cast<unsigned>(q-1), alpha_q, 1.0, eta2);
+                scalar dPq    = jacobi_prime(static_cast<unsigned>(q-1), alpha_q, 1.0, eta2);
 
-                // Basis
-                basis[idx] = Pp * oneMinusEta2PowP * Pq * oneMinusEta3PowPQ * Pr;
+                scalar oneMinusEta3 = 1.0 - eta3;
+                double pqSum = p + q;
+                scalar oneMinusEta3PowPQ = std::pow(oneMinusEta3, pqSum);
+                scalar dOneMinusEta3PowPQ = (pqSum > 0)
+                    ? -pqSum * std::pow(oneMinusEta3, pqSum - 1)
+                    : 0.0;
 
-                // ∂φ/∂eta1
-                dBasis_deta1[idx] = dPp * oneMinusEta2PowP * Pq * oneMinusEta3PowPQ * Pr;
+                for (label r = 1; r < polyDegree; ++r)
+                {
+                    if (p + q + r < polyDegree)
+                    {
+                        double alpha_r = 2 * p + 2 * q + 1;
+                        scalar Pr  = jacobi(static_cast<unsigned>(r-1), alpha_r, 1.0, eta3);
+                        scalar dPr = jacobi_prime(static_cast<unsigned>(r-1), alpha_r, 1.0, eta3);
 
-                // ∂φ/∂eta2
+                        // Basis
+                        basis[idx] = Pp * oneMinusEta2PowP * Pq * oneMinusEta3PowPQ * Pr;
+
+                        // ∂φ/∂eta1
+                        dBasis_deta1[idx] = dPp * oneMinusEta2PowP * Pq * oneMinusEta3PowPQ * Pr;
+
+                        // ∂φ/∂eta2
+                        dBasis_deta2[idx] = Pp *
+                            (dOneMinusEta2PowP * Pq + oneMinusEta2PowP * dPq) *
+                            oneMinusEta3PowPQ * Pr;
+
+                        // ∂φ/∂eta3
+                        dBasis_deta3[idx] = Pp * oneMinusEta2PowP * Pq *
+                            (dOneMinusEta3PowPQ * Pr + oneMinusEta3PowPQ * dPr);
+
+                        ++idx;
+                    }
+                }
+            }
+        }
+    }
+}
+
+void computeInteriorTriBasisAndDerivatives
+(
+    const scalar eta1,
+    const scalar eta2,
+    const label pOrder,
+    List<scalar>& basis,
+    List<scalar>& dBasis_deta1,
+    List<scalar>& dBasis_deta2
+)
+{
+/*
+Note
+    The reference triangle is constructed by collapsing a reference
+    quadrilateral along the η₁ direction.
+
+    In this construction, the two vertices of the reference quadrilateral
+    are collapsed onto a single vertex along the η₁ axis, forming a
+    triangular reference element. As a result, the polynomial basis
+    is defined using a tensor-product structure with a collapse factor
+    in the η₂ direction.
+
+    When using this function, the reference coordinates must be provided
+    consistently with this collapse mapping:
+        - η₁ represents the coordinate along the collapsed direction
+          (the direction in which the quadrilateral is collapsed to form
+          the triangle).
+        - η₂ represents the coordinate along the remaining, non-collapsed
+          direction.
+
+    Providing (η₁, η₂) in a different order will lead to incorrect
+    evaluation of the triangular modal basis functions.
+*/
+
+    using boost::math::jacobi;
+    // using boost::math::jacobi_prime;
+
+    basis.setSize((pOrder-1)*pOrder/2);
+
+    label polyDegree = pOrder+1;
+    idx = 0;
+
+    for (label p = 1; p < polyDegree; ++p)
+    {
+        scalar Pp  = jacobi(static_cast<unsigned>(p-1), 1.0, 1.0, eta1);
+        scalar dPp = jacobi_prime(static_cast<unsigned>(p-1), 1.0, 1.0, eta1);
+        
+        const scalar oneMinusEta2 = 1.0 - eta2;
+        const scalar oneMinusEta2PowP = std::pow(oneMinusEta2, p);
+        const scalar dOneMinusEta2PowP = (p > 0)
+            ? -p * std::pow(oneMinusEta2, p - 1)
+            : 0.0;
+        
+        const double alpha = 2 * q + 1;
+
+        for (label q = 1; q < polyDegree; ++q)
+        {
+            if (p + q < polyDegree)
+            {
+                scalar Pq  = jacobi(static_cast<unsigned>(q-1), alpha, 1.0, eta2);
+                // Basis value
+                basis[idx] = Pp * oneMinusEta2PowP * Pq;
+                dBasis_deta1[idx] = dPp * oneMinusEta2PowP * Pq;
                 dBasis_deta2[idx] = Pp *
-                    (dOneMinusEta2PowP * Pq + oneMinusEta2PowP * dPq) *
-                    oneMinusEta3PowPQ * Pr;
-
-                // ∂φ/∂eta3
-                dBasis_deta3[idx] = Pp * oneMinusEta2PowP * Pq *
-                    (dOneMinusEta3PowPQ * Pr + oneMinusEta3PowPQ * dPr);
-
+                    (dOneMinusEta2PowP * Pq + oneMinusEta2PowP * dPq);
+                
                 ++idx;
             }
         }
     }
 }
 
+void computeInteriorQuadBasisAndDerivatives
+(
+    const scalar eta1,
+    const scalar eta2,
+    const label pOrder,
+    List<scalar>& basis,
+    List<scalar>& dBasis_deta1,
+    List<scalar>& dBasis_deta2
+)
+{
+    using boost::math::jacobi;
+    // using boost::math::jacobi_prime;
+
+    basis.setSize(pOrder*pOrder/2);
+
+    label polyDegree = pOrder+1;
+    idx = 0;
+    
+    for (label p = 1; p < polyDegree; ++p)
+    {
+        scalar Pp  = jacobi(static_cast<unsigned>(p-1), 1.0, 1.0, eta1);
+        scalar dPp    = jacobi_prime(static_cast<unsigned>(p-1), 1.0, 1.0, eta1);
+
+        for (label q = 1; q < polyDegree; ++q)
+        {
+            scalar Pq  = jacobi(static_cast<unsigned>(q-1), 1.0, 1.0, eta2);
+            scalar dPq    = jacobi_prime(static_cast<unsigned>(q-1), 1.0, 1.0, eta2);
+            // Basis value
+            basis[idx] = Pp * Pq;
+            dBasis_deta1[idx] = dPp * Pq;
+            dBasis_deta2[idx] = Pp * dPq;
+
+            ++idx;
+        }
+    }
+}
+
+void computeFaceBasisOfHex
+(
+    const scalar eta1,
+    const scalar eta2,
+    const scalar eta3,
+    const label pOrder,
+    const dgFacePosition pos,
+    List<scalar>& basis,
+    List<scalar>& dBasis_deta1,
+    List<scalar>& dBasis_deta2,
+    List<scalar>& dBasis_deta3
+)
+{
+    switch (pos)
+    {
+        case dgFacePosition::ABCD:
+            computeInteriorQuadBasisAndDerivatives(eta1, eta2, pOrder, basis, dBasis_deta1, dBasis_deta2);
+            dBasis_deta3.setSize(basis.size());
+            forAll(dBasis_deta3, i)
+                dBasis_deta3[i] = 0.0;
+            break;
+        case dgFacePosition::EFGH:
+            computeInteriorQuadBasisAndDerivatives(eta1, eta2, pOrder, basis, dBasis_deta1, dBasis_deta2);
+            dBasis_deta3.setSize(basis.size());
+            forAll(dBasis_deta3, i)
+                dBasis_deta3[i] = 0.0;
+            break;
+        case dgFacePosition::ABEF:
+            computeInteriorQuadBasisAndDerivatives(eta1, eta3, pOrder, basis, dBasis_deta1, dBasis_deta3);
+            dBasis_deta2.setSize(basis.size());
+            forAll(dBasis_deta2, i)
+                dBasis_deta2[i] = 0.0;
+            break;
+        case dgFacePosition::CDGH:
+            computeInteriorQuadBasisAndDerivatives(eta1, eta3, pOrder, basis, dBasis_deta1, dBasis_deta3);
+            dBasis_deta2.setSize(basis.size());
+            forAll(dBasis_deta2, i)
+                dBasis_deta2[i] = 0.0;
+            break;
+        case dgFacePosition::ACEG:
+            computeInteriorQuadBasisAndDerivatives(eta2, eta3, pOrder, basis, dBasis_deta2, dBasis_deta3);
+            dBasis_deta1.setSize(basis.size());
+            forAll(dBasis_deta1, i)
+                dBasis_deta1[i] = 0.0;
+            break;
+        case dgFacePosition::BDFH:
+            computeInteriorQuadBasisAndDerivatives(eta2, eta3, pOrder, basis, dBasis_deta2, dBasis_deta3);
+            dBasis_deta1.setSize(basis.size());
+            forAll(dBasis_deta1, i)
+                dBasis_deta1[i] = 0.0;
+            break;
+        default:
+            FatalErrorInFunction
+                << "Invalid dgFacePosition enum value."
+                << abort(FatalError);
+    }
+}
+
+void computeFaceBasisAndDerivativesOfPrism
+(
+    const scalar eta1,
+    const scalar eta2,
+    const scalar eta3,
+    const label pOrder,
+    const dgFacePositionOnPrism pos,
+    List<scalar>& basis,
+    List<scalar>& dBasis_deta1,
+    List<scalar>& dBasis_deta2,
+    List<scalar>& dBasis_deta3
+)
+{
+    switch (pos)
+    {
+        case dgFacePositionOnPrism::ABE:
+            computeInteriorTriBasisAndDerivatives(eta1, eta3, pOrder, basis, dBasis_deta1, dBasis_deta3);
+            dBasis_deta2.setSize(basis.size());
+            forAll(dBasis_deta2, i)
+                dBasis_deta2[i] = 0.0;
+            break;
+        case dgFacePositionOnPrism::CDF:
+            computeInteriorTriBasisAndDerivatives(eta1, eta3, pOrder, basis, dBasis_deta1, dBasis_deta3);
+            dBasis_deta2.setSize(basis.size());
+            forAll(dBasis_deta2, i)
+                dBasis_deta2[i] = 0.0;
+            break;
+        case dgFacePositionOnPrism::BCEF:
+            computeInteriorQuadBasisAndDerivatives(eta2, eta3, pOrder, basis, dBasis_deta2, dBasis_deta3);
+            dBasis_deta1.setSize(basis.size());
+            forAll(dBasis_deta1, i)
+                dBasis_deta1[i] = 0.0;
+            break;
+        case dgFacePositionOnPrism::ABCD:
+            computeInteriorQuadBasisAndDerivatives(eta1, eta2, pOrder, basis, dBasis_deta1, dBasis_deta2);
+            dBasis_deta3.setSize(basis.size());
+            forAll(dBasis_deta3, i)
+                dBasis_deta3[i] = 0.0;
+            break;
+        case dgFacePositionOnPrism::ADEF:
+            computeInteriorQuadBasisAndDerivatives(eta2, eta3, pOrder, basis, dBasis_deta2, dBasis_deta3);
+            dBasis_deta1.setSize(basis.size());
+            forAll(dBasis_deta1, i)
+                dBasis_deta1[i] = 0.0;
+            break;
+        default:
+            FatalErrorInFunction
+                << "Invalid dgFacePositionOnPrism enum value."
+                << abort(FatalError);
+    }
+}
+
+void computeFaceBasisAndDerivativesOfPyramid
+(
+    const scalar eta1,
+    const scalar eta2,
+    const scalar eta3,
+    const label pOrder,
+    const dgFacePositionOnPyramid pos,
+    List<scalar>& basis,
+    List<scalar>& dBasis_deta1,
+    List<scalar>& dBasis_deta2,
+    List<scalar>& dBasis_deta3
+)
+{
+    ABCD = 0,
+    ACE,
+    CDE,
+    BDE,
+    ABE,
+
+    switch (pos)
+    {
+        case dgFacePositionOnPyramid::ABCD:
+            computeInteriorQuadBasisAndDerivatives(eta1, eta2, pOrder, basis, dBasis_deta1, dBasis_deta2);
+            dBasis_deta3.setSize(basis.size());
+            forAll(dBasis_deta3, i)
+                dBasis_deta3[i] = 0.0;
+            break;
+        case dgFacePositionOnPyramid::ABE:
+            computeInteriorTriBasisAndDerivatives(eta1, eta3, pOrder, basis, dBasis_deta1, dBasis_deta3);
+            dBasis_deta2.setSize(basis.size());
+            forAll(dBasis_deta2, i)
+                dBasis_deta2[i] = 0.0;
+            break;
+        case dgFacePositionOnPyramid::CDE:
+            computeInteriorTriBasisAndDerivatives(eta1, eta3, pOrder, basis, dBasis_deta1, dBasis_deta3);
+            dBasis_deta2.setSize(basis.size());
+            forAll(dBasis_deta2, i)
+                dBasis_deta2[i] = 0.0;
+            break;
+        case dgFacePositionOnPyramid::ACE:
+            computeInteriorTriBasisAndDerivatives(eta2, eta3, pOrder, basis, dBasis_deta2, dBasis_deta3);
+            dBasis_deta1.setSize(basis.size());
+            forAll(dBasis_deta1, i)
+                dBasis_deta1[i] = 0.0;
+            break;
+        case dgFacePositionOnPyramid::BDE:
+            computeInteriorTriBasisAndDerivatives(eta2, eta3, pOrder, basis, dBasis_deta2, dBasis_deta3);
+            dBasis_deta1.setSize(basis.size());
+            forAll(dBasis_deta1, i)
+                dBasis_deta1[i] = 0.0;
+            break;
+        default:
+            FatalErrorInFunction
+                << "Invalid dgFacePositionOnPyramid enum value."
+                << abort(FatalError);
+    }
+}
+
+void computeFaceBasisAndDerivativesOfTet
+(
+    const scalar eta1,
+    const scalar eta2,
+    const scalar eta3,
+    const label pOrder,
+    const dgFacePositionOnTet pos,
+    List<scalar>& basis,
+    List<scalar>& dBasis_deta1,
+    List<scalar>& dBasis_deta2,
+    List<scalar>& dBasis_deta3
+)
+{
+    switch (pos)
+    {
+        case dgFacePositionOnTet::ABC:
+            computeInteriorTriBasisAndDerivatives(eta1, eta2, pOrder, basis);
+            break;
+        case dgFacePositionOnTet::ABE:
+            computeInteriorTriBasisAndDerivatives(eta1, eta3, pOrder, basis);
+            break;
+        case dgFacePositionOnTet::ACE:
+            computeInteriorTriBasisAndDerivatives(eta2, eta3, pOrder, basis);
+            break;
+        case dgFacePositionOnTet::BCE:
+            computeInteriorTriBasisAndDerivatives(eta2, eta3, pOrder, basis);
+            break;
+        default:
+            FatalErrorInFunction
+                << "Invalid dgFacePositionOnTet enum value."
+                << abort(FatalError);
+    }
+}
 
 } // namespace math
 } // namespace Foam

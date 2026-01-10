@@ -1,0 +1,121 @@
+\doxysection{create\+Primary\+Fields.\+H}
+\hypertarget{createPrimaryFields_8H_source}{}\label{createPrimaryFields_8H_source}\index{/home/nam-\/ha-\/tran/OpenFOAM/DGFoam/applications/solvers/compressible/DGHyperSonicFoam/createPrimaryFields.H@{/home/nam-\/ha-\/tran/OpenFOAM/DGFoam/applications/solvers/compressible/DGHyperSonicFoam/createPrimaryFields.H}}
+\mbox{\hyperlink{createPrimaryFields_8H}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ Info<<\ \textcolor{stringliteral}{"{}Creating\ primitive\ fields\(\backslash\)n"{}}\ <<\ endl;}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{comment}{//\ Only\ create\ pField\ and\ UField,\ all\ fields\ relating\ to\ thermo\ are}}
+\DoxyCodeLine{00004\ \textcolor{comment}{//\ processed\ internally\ inside\ thermo}}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ dgField<scalar>\ \mbox{\hyperlink{createPrimaryFields_8H_ad37d69387e92d6f1424be40cbca2fbec}{p}}}
+\DoxyCodeLine{00007\ (}
+\DoxyCodeLine{00008\ \ \ \ \ IOobject}
+\DoxyCodeLine{00009\ \ \ \ \ (}
+\DoxyCodeLine{00010\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}p"{}},}
+\DoxyCodeLine{00011\ \ \ \ \ \ \ \ \ runTime.timeName(),}
+\DoxyCodeLine{00012\ \ \ \ \ \ \ \ \ mesh,}
+\DoxyCodeLine{00013\ \ \ \ \ \ \ \ \ IOobject::NO\_READ,}
+\DoxyCodeLine{00014\ \ \ \ \ \ \ \ \ IOobject::AUTO\_WRITE}
+\DoxyCodeLine{00015\ \ \ \ \ ),}
+\DoxyCodeLine{00016\ \ \ \ \ dgMesh,}
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keyword}{false}}
+\DoxyCodeLine{00018\ );}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ dgField<scalar>\ \mbox{\hyperlink{createPrimaryFields_8H_a5b11ecf656fc672596a085cbdca53fae}{T}}}
+\DoxyCodeLine{00021\ (}
+\DoxyCodeLine{00022\ \ \ \ \ IOobject}
+\DoxyCodeLine{00023\ \ \ \ \ (}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}T"{}},}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ runTime.timeName(),}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ mesh,}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ IOobject::NO\_READ,}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ IOobject::AUTO\_WRITE}
+\DoxyCodeLine{00029\ \ \ \ \ ),}
+\DoxyCodeLine{00030\ \ \ \ \ dgMesh,}
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keyword}{false}}
+\DoxyCodeLine{00032\ );}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ dgField<vector>\ \mbox{\hyperlink{createPrimaryFields_8H_acaa7fe8168a3a866f1958b3663d384c6}{U}}}
+\DoxyCodeLine{00035\ (}
+\DoxyCodeLine{00036\ \ \ \ \ IOobject}
+\DoxyCodeLine{00037\ \ \ \ \ (}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}U"{}},}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ runTime.timeName(),}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ mesh,}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ IOobject::NO\_READ,}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ IOobject::AUTO\_WRITE}
+\DoxyCodeLine{00043\ \ \ \ \ ),}
+\DoxyCodeLine{00044\ \ \ \ \ dgMesh,}
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keyword}{false}}
+\DoxyCodeLine{00046\ );}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ \textcolor{comment}{//\ Declare\ boundary\ condition\ managers}}
+\DoxyCodeLine{00049\ IOobject\ \mbox{\hyperlink{createPrimaryFields_8H_aa840cbe83a3a0ff8e8669c570be12e36}{pBCIO}}}
+\DoxyCodeLine{00050\ (}
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{stringliteral}{"{}pBC"{}},}
+\DoxyCodeLine{00052\ \ \ \ \ runTime.constant(),}
+\DoxyCodeLine{00053\ \ \ \ \ mesh,}
+\DoxyCodeLine{00054\ \ \ \ \ IOobject::MUST\_READ,}
+\DoxyCodeLine{00055\ \ \ \ \ IOobject::NO\_WRITE}
+\DoxyCodeLine{00056\ );}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00058\ autoPtr<dgGeneralBoundaryManager<scalar>>\ \mbox{\hyperlink{createPrimaryFields_8H_ab66733eba70deaf15cd9dba4994bb0a9}{pBC}}}
+\DoxyCodeLine{00059\ (}
+\DoxyCodeLine{00060\ \ \ \ \ \textcolor{keyword}{new}\ dgGeneralBoundaryManager<scalar>(\mbox{\hyperlink{createPrimaryFields_8H_aa840cbe83a3a0ff8e8669c570be12e36}{pBCIO}},\ dgMesh)}
+\DoxyCodeLine{00061\ );}
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00063\ IOobject\ \mbox{\hyperlink{createPrimaryFields_8H_a2a440df9a9cef70adadbff5112cce14b}{TBCIO}}}
+\DoxyCodeLine{00064\ (}
+\DoxyCodeLine{00065\ \ \ \ \ \textcolor{stringliteral}{"{}TBC"{}},}
+\DoxyCodeLine{00066\ \ \ \ \ runTime.constant(),}
+\DoxyCodeLine{00067\ \ \ \ \ mesh,}
+\DoxyCodeLine{00068\ \ \ \ \ IOobject::MUST\_READ,}
+\DoxyCodeLine{00069\ \ \ \ \ IOobject::NO\_WRITE}
+\DoxyCodeLine{00070\ );}
+\DoxyCodeLine{00071\ }
+\DoxyCodeLine{00072\ autoPtr<dgGeneralBoundaryManager<scalar>>\ \mbox{\hyperlink{createPrimaryFields_8H_a34c06b68460d8bb341a2d2c0983ebe42}{TBC}}}
+\DoxyCodeLine{00073\ (}
+\DoxyCodeLine{00074\ \ \ \ \ \textcolor{keyword}{new}\ dgGeneralBoundaryManager<scalar>(\mbox{\hyperlink{createPrimaryFields_8H_a2a440df9a9cef70adadbff5112cce14b}{TBCIO}},\ dgMesh)}
+\DoxyCodeLine{00075\ );}
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00077\ IOobject\ \mbox{\hyperlink{createPrimaryFields_8H_a355766ea35245c7440a6efb70c32815e}{rhoBCIO}}}
+\DoxyCodeLine{00078\ (}
+\DoxyCodeLine{00079\ \ \ \ \ \textcolor{stringliteral}{"{}rhoBC"{}},}
+\DoxyCodeLine{00080\ \ \ \ \ runTime.constant(),}
+\DoxyCodeLine{00081\ \ \ \ \ mesh,}
+\DoxyCodeLine{00082\ \ \ \ \ IOobject::MUST\_READ,}
+\DoxyCodeLine{00083\ \ \ \ \ IOobject::NO\_WRITE}
+\DoxyCodeLine{00084\ );}
+\DoxyCodeLine{00085\ }
+\DoxyCodeLine{00086\ autoPtr<dgGeneralBoundaryManager<scalar>>\ \mbox{\hyperlink{createPrimaryFields_8H_a9770b66364511350114084472dcf9bb3}{rhoBC}}}
+\DoxyCodeLine{00087\ (}
+\DoxyCodeLine{00088\ \ \ \ \ \textcolor{keyword}{new}\ dgGeneralBoundaryManager<scalar>(\mbox{\hyperlink{createPrimaryFields_8H_a355766ea35245c7440a6efb70c32815e}{rhoBCIO}},\ dgMesh)}
+\DoxyCodeLine{00089\ );}
+\DoxyCodeLine{00090\ }
+\DoxyCodeLine{00091\ IOobject\ \mbox{\hyperlink{createPrimaryFields_8H_a0f9213c0d101cee4235e3ff7b8c36b12}{UBCIO}}}
+\DoxyCodeLine{00092\ (}
+\DoxyCodeLine{00093\ \ \ \ \ \textcolor{stringliteral}{"{}UBC"{}},}
+\DoxyCodeLine{00094\ \ \ \ \ runTime.constant(),}
+\DoxyCodeLine{00095\ \ \ \ \ mesh,}
+\DoxyCodeLine{00096\ \ \ \ \ IOobject::MUST\_READ,}
+\DoxyCodeLine{00097\ \ \ \ \ IOobject::NO\_WRITE}
+\DoxyCodeLine{00098\ );}
+\DoxyCodeLine{00099\ }
+\DoxyCodeLine{00100\ autoPtr<dgGeneralBoundaryManager<vector>>\ \mbox{\hyperlink{createPrimaryFields_8H_a11796c3cd008ccbf3a31743822f757d2}{UBC}}}
+\DoxyCodeLine{00101\ (}
+\DoxyCodeLine{00102\ \ \ \ \ \textcolor{keyword}{new}\ dgGeneralBoundaryManager<vector>(\mbox{\hyperlink{createPrimaryFields_8H_a0f9213c0d101cee4235e3ff7b8c36b12}{UBCIO}},\ dgMesh)}
+\DoxyCodeLine{00103\ );}
+\DoxyCodeLine{00104\ }
+\DoxyCodeLine{00105\ }
+\DoxyCodeLine{00106\ \textcolor{comment}{//\ Declare\ interface\ boundary\ condition\ manager}}
+\DoxyCodeLine{00107\ autoPtr<dgProcessorBoundaryManager<scalar>>\ \mbox{\hyperlink{createPrimaryFields_8H_a5df60594314379cce4a947f867c8ebd4}{scalarProcBC}}}
+\DoxyCodeLine{00108\ (}
+\DoxyCodeLine{00109\ \ \ \ \ \textcolor{keyword}{new}\ dgProcessorBoundaryManager<scalar>(dgMesh)}
+\DoxyCodeLine{00110\ );}
+\DoxyCodeLine{00111\ }
+\DoxyCodeLine{00112\ autoPtr<dgProcessorBoundaryManager<vector>>\ \mbox{\hyperlink{createPrimaryFields_8H_a6a8583f33a8c105e79c049c64e7de1da}{vectorProcBC}}}
+\DoxyCodeLine{00113\ (}
+\DoxyCodeLine{00114\ \ \ \ \ \textcolor{keyword}{new}\ dgProcessorBoundaryManager<vector>(dgMesh)}
+\DoxyCodeLine{00115\ );}
+
+\end{DoxyCode}

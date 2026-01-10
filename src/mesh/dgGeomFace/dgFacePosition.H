@@ -30,33 +30,37 @@ Class
 Description
     Enumeration for face positions used in Discontinuous Galerkin (DG) methods.
 
-    All cell types (tetrahedron, prism, pyramid, hexahedron) are collapsed from
-    a reference hexahedron. Each face on a physical cell is mapped to a face on
-    the reference cube so that Gauss points and basis functions can be reused.
+    The face positions are defined based on the vertex ordering convention
+    presented in the book:
 
-    Collapse transformation:
-      - Prism   : collapse η₁         → E ≈ F, G ≈ H
-      - Pyramid : collapse η₁, η₂     → E ≈ F ≈ G ≈ H
-      - Tet     : collapse η₁, η₂, η₃ → E ≈ F ≈ G ≈ H, and D ≈ C
+        Sherwin, S.J., Karniadakis, G.E.
+        "Spectral/hp Element Methods for Computational Fluid Dynamics",
+        2nd Edition, Oxford University Press, 2005.
 
-    OpenFOAM node indexing for hexahedron:
+    In this reference, each standard element (hexahedron, prism, pyramid,
+    tetrahedron) is defined in a reference coordinate system (ξ₁, ξ₂, ξ₃),
+    and the faces are identified according to the counter-clockwise (CCW)
+    ordering of their vertices when viewed from outside the element.
 
-        H(7) ----------- G(6)
-        /|              /|
-       / |             / |
-     E(4) ----------- F(5)
-      |  D(3) -------|-- C(2)     <-- collapse η₃ downward
-      | /            | /
-      |/             |/
-     A(0) -----------B(1)
+    The enumeration dgFacePosition encodes the relative position of a face
+    within a cell by matching the local vertex ordering of OpenFOAM cells
+    to the corresponding face definitions in the reference element used
+    in DG formulations.
 
-    Face ordering in OpenFOAM (point labels CCW from outside view):
-      Face 0 (left)  : 3 0 4 7 → D A E H → DAEH
-      Face 1 (right) : 1 2 6 5 → B C G F → BCGF
-      Face 2 (front) : 0 1 5 4 → A B F E → ABFE
-      Face 3 (back)  : 2 3 7 6 → C D H G → CDHG
-      Face 4 (top)   : 4 5 6 7 → E F G H → EFGH
-      Face 5 (bottom): 1 0 3 2 → D C B A → BADC
+    The vertex labels (A, B, C, D, E, F, G, H) and the local reference
+    coordinate directions (ξ₁, ξ₂, ξ₃) follow exactly the notation used
+    in the above reference, as illustrated in the standard-element figures
+    for:
+        - (a) Hexahedron
+        - (b) Prism
+        - (c) Pyramid
+        - (d) Tetrahedron
+
+    This consistent definition ensures that:
+        - Face-based basis functions are evaluated on the correct reference face
+        - Face normals and orientation are handled consistently
+        - Surface integrals in DG formulations are computed correctly
+    
 
 SourceFiles
     dgFacePosition.H
@@ -75,12 +79,12 @@ namespace Foam
 // Reference hexahedron face positions (OpenFOAM CCW ordering)
 enum class dgFacePosition
 {
-    DAEH = 0,  // (face 0)
-    BCGF,      // (face 1)
-    ABFE,      // (face 2)
-    CDHG,      // (face 3)
-    EFGH,      // (face 4)
-    BADC,      // (face 5)
+    ACEG = 0,  // (face 0)
+    BDFH,      // (face 1)
+    ABEF,      // (face 2)
+    CDGH,      // (face 3)
+    ABCD,      // (face 4)
+    EFGH,      // (face 5)
     NUM_POSITIONS,
     NONE       // No position (used for boundary faces)
 };
@@ -89,10 +93,10 @@ enum class dgFacePosition
 // Face enum for tetrahedron (collapsed from cube)
 enum class dgFacePositionOnTet
 {
-    DAE = 0,
-    BDE,
+    BCE = 0,
+    ACE,
     ABE,
-    BAD,
+    ABC,
     NUM_FACES,
     NONE       // No position (used for boundary faces)
 };
@@ -100,10 +104,10 @@ enum class dgFacePositionOnTet
 // Face enum for pyramid
 enum class dgFacePositionOnPyramid
 {
-    BADC = 0,
-    DAE,
+    ABCD = 0,
+    ACE,
     CDE,
-    BCE,
+    BDE,
     ABE,
     NUM_FACES,
     NONE       // No position (used for boundary faces)
@@ -112,11 +116,11 @@ enum class dgFacePositionOnPyramid
 // Face enum for prism
 enum class dgFacePositionOnPrism
 {
-    BAC = 0,
-    EFG,
-    CAEG,
-    BCGF,
-    ABFE,
+    ABE = 0,
+    CDF,
+    BCEF,
+    ABCD,
+    ADEF,
     NUM_FACES,
     NONE       // No position (used for boundary faces)
 };
@@ -127,17 +131,35 @@ inline dgFacePosition mapFacePositionFromTet(const dgFacePositionOnTet f)
 {
     switch (f)
     {
-        case dgFacePositionOnTet::DAE: return dgFacePosition::DAEH;
-        case dgFacePositionOnTet::BDE: return dgFacePosition::BCGF;
-        case dgFacePositionOnTet::ABE: return dgFacePosition::ABFE;
-        case dgFacePositionOnTet::BAD: return dgFacePosition::BADC;
+        case dgFacePositionOnTet::ACE: return dgFacePosition::ACEG;
+        case dgFacePositionOnTet::BCE: return dgFacePosition::BDFH;
+        case dgFacePositionOnTet::ABE: return dgFacePosition::ABEF;
+        case dgFacePositionOnTet::ABC: return dgFacePosition::ABCD;
         case dgFacePositionOnTet::NONE: return dgFacePosition::NONE;
         default:
             FatalErrorInFunction << "Invalid dgFacePositionOnTet enum" << abort(FatalError);
     }
 
     // Dummy
-    return dgFacePosition::DAEH; // Should never reach here
+    return dgFacePosition::ABCD; // Should never reach here
+}
+
+// Mapping from reference hexahedron face to tetrahedron face
+inline dgFacePositionOnTet mapFacePositionToTet(const dgFacePosition f)
+{
+    switch (f)
+    {
+        case dgFacePosition::ACEG: return dgFacePositionOnTet::ACE;
+        case dgFacePosition::BDFH: return dgFacePositionOnTet::BCE;
+        case dgFacePosition::ABEF: return dgFacePositionOnTet::ABE;
+        case dgFacePosition::ABCD: return dgFacePositionOnTet::ABC;
+        case dgFacePosition::NONE: return dgFacePositionOnTet::NONE;
+        default:
+            FatalErrorInFunction << "Invalid dgFacePosition enum" << abort(FatalError);
+    } 
+    
+    // Dummy
+    return dgFacePositionOnTet::ABC; // Should never reach here
 }
 
 
@@ -146,18 +168,36 @@ inline dgFacePosition mapFacePositionFromPyramid(const dgFacePositionOnPyramid f
 {
     switch (f)
     {
-        case dgFacePositionOnPyramid::DAE:  return dgFacePosition::DAEH;
-        case dgFacePositionOnPyramid::CDE:  return dgFacePosition::CDHG;
-        case dgFacePositionOnPyramid::BCE:  return dgFacePosition::BCGF;
-        case dgFacePositionOnPyramid::ABE:  return dgFacePosition::ABFE;
-        case dgFacePositionOnPyramid::BADC: return dgFacePosition::BADC;
+        case dgFacePositionOnPyramid::ACE:  return dgFacePosition::ACEG;
+        case dgFacePositionOnPyramid::CDE:  return dgFacePosition::CDGH;
+        case dgFacePositionOnPyramid::BDE:  return dgFacePosition::BDFH;
+        case dgFacePositionOnPyramid::ABE:  return dgFacePosition::ABEF;
+        case dgFacePositionOnPyramid::ABCD: return dgFacePosition::ABCD;
         case dgFacePositionOnPyramid::NONE: return dgFacePosition::NONE;
         default:
             FatalErrorInFunction << "Invalid dgFacePositionOnPyramid enum" << abort(FatalError);
     }
 
     // Dummy
-    return dgFacePosition::DAEH; // Should never reach here
+    return dgFacePosition::ABCD; // Should never reach here
+}
+
+// Mapping from reference hexahedron face to pyramid face
+inline dgFacePositionOnPyramid mapFacePositionToPyramid(const dgFacePosition f)
+{
+    switch (f)
+    {
+        case dgFacePosition::ACEG: return dgFacePositionOnPyramid::ACE;
+        case dgFacePosition::CDGH: return dgFacePositionOnPyramid::CDE;
+        case dgFacePosition::BDFH: return dgFacePositionOnPyramid::BDE;
+        case dgFacePosition::ABEF: return dgFacePositionOnPyramid::ABE;
+        case dgFacePosition::ABCD: return dgFacePositionOnPyramid::ABCD;
+        case dgFacePosition::NONE: return dgFacePositionOnPyramid::NONE;
+        default:
+            FatalErrorInFunction << "Invalid dgFacePosition enum" << abort(FatalError);
+    }
+    // Dummy
+    return dgFacePositionOnPyramid::ABCD; // Should never reach here
 }
 
 
@@ -166,32 +206,49 @@ inline dgFacePosition mapFacePositionFromPrism(const dgFacePositionOnPrism f)
 {
     switch (f)
     {
-        case dgFacePositionOnPrism::BAC:   return dgFacePosition::BADC;
-        case dgFacePositionOnPrism::EFG:   return dgFacePosition::EFGH;
-        case dgFacePositionOnPrism::CAEG:  return dgFacePosition::DAEH;
-        case dgFacePositionOnPrism::BCGF:  return dgFacePosition::BCGF;
-        case dgFacePositionOnPrism::ABFE:  return dgFacePosition::ABFE;
+        case dgFacePositionOnPrism::ABE:   return dgFacePosition::ABEF;
+        case dgFacePositionOnPrism::CDF:   return dgFacePosition::CDGH;
+        case dgFacePositionOnPrism::BCEF:  return dgFacePosition::BDFH;
+        case dgFacePositionOnPrism::ABCD:  return dgFacePosition::ABCD;
+        case dgFacePositionOnPrism::ADEF:  return dgFacePosition::ADEH;
         case dgFacePositionOnPrism::NONE:  return dgFacePosition::NONE;
         default:
             FatalErrorInFunction << "Invalid dgFacePositionOnPrism enum" << abort(FatalError);
     }
 
     // Dummy
-    return dgFacePosition::BADC; // Should never reach here
+    return dgFacePosition::ABCD; // Should never reach here
 }
 
+// Mapping from reference hexahedron face to prism face
+inline dgFacePositionOnPrism mapFacePositionToPrism(const dgFacePosition f)
+{
+    switch (f)
+    {
+        case dgFacePosition::ABEF:  return dgFacePositionOnPrism::ABE;
+        case dgFacePosition::CDGH:  return dgFacePositionOnPrism::CDF;
+        case dgFacePosition::BDFH:  return dgFacePositionOnPrism::BCEF;
+        case dgFacePosition::ABCD:  return dgFacePositionOnPrism::ABCD;
+        case dgFacePosition::ADEH:  return dgFacePositionOnPrism::ADEF;
+        case dgFacePosition::NONE:  return dgFacePositionOnPrism::NONE;
+        default:
+            FatalErrorInFunction << "Invalid dgFacePosition enum" << abort(FatalError);
+    }
+    // Dummy
+    return dgFacePositionOnPrism::ABCD; // Should never reach here
+}
 
 // Overload << operator for dgFacePosition
 inline Ostream& operator<<(Ostream& os, const dgFacePosition type)
 {
     switch (type)
     {
-        case dgFacePosition::BADC: return os << "BADC";
+        case dgFacePosition::ACEG: return os << "ACEG";
+        case dgFacePosition::BDFH: return os << "BDFH";
+        case dgFacePosition::ABEF: return os << "ABEF";
+        case dgFacePosition::CDGH: return os << "CDGH";
+        case dgFacePosition::ABCD: return os << "ABCD";
         case dgFacePosition::EFGH: return os << "EFGH";
-        case dgFacePosition::ABFE: return os << "ABFE";
-        case dgFacePosition::BCGF: return os << "BCGF";
-        case dgFacePosition::CDHG: return os << "CDHG";
-        case dgFacePosition::DAEH: return os << "DAEH";
         case dgFacePosition::NONE: return os << "NONE";
         default:                   return os << "UNKNOWN";
     }
@@ -205,10 +262,10 @@ inline dgFacePositionOnTet convertIdToPositionOnTet(label i)
 {
     switch (i)
     {
-        case 0: return dgFacePositionOnTet::DAE;
-        case 1: return dgFacePositionOnTet::BDE;
+        case 0: return dgFacePositionOnTet::BCE;
+        case 1: return dgFacePositionOnTet::ACE;
         case 2: return dgFacePositionOnTet::ABE;
-        case 3: return dgFacePositionOnTet::BAD;
+        case 3: return dgFacePositionOnTet::ABC;
         default:
             FatalErrorInFunction << "Invalid face index for tet: " << i << abort(FatalError);
     }
@@ -222,17 +279,17 @@ inline dgFacePositionOnPrism convertIdToPositionOnPrism(label i)
 {
     switch (i)
     {
-        case 0: return dgFacePositionOnPrism::BAC;
-        case 1: return dgFacePositionOnPrism::EFG;
-        case 2: return dgFacePositionOnPrism::CAEG;
-        case 3: return dgFacePositionOnPrism::BCGF;
-        case 4: return dgFacePositionOnPrism::ABFE;
+        case 0: return dgFacePositionOnPrism::ABE;
+        case 1: return dgFacePositionOnPrism::CDF;
+        case 2: return dgFacePositionOnPrism::BCEF;
+        case 3: return dgFacePositionOnPrism::ABCD;
+        case 4: return dgFacePositionOnPrism::ADEF;
         default:
             FatalErrorInFunction << "Invalid face index for prism: " << i << abort(FatalError);
     }
 
     // Dummy
-    return dgFacePositionOnPrism::BAC; // Should never reach here
+    return dgFacePositionOnPrism::ABE; // Should never reach here
 }
 
 // Convert face ID to position on pyramid
@@ -240,17 +297,17 @@ inline dgFacePositionOnPyramid convertIdToPositionOnPyramid(label i)
 {
     switch (i)
     {
-        case 0: return dgFacePositionOnPyramid::BADC;
-        case 1: return dgFacePositionOnPyramid::DAE;
+        case 0: return dgFacePositionOnPyramid::ABCD;
+        case 1: return dgFacePositionOnPyramid::ACE;
         case 2: return dgFacePositionOnPyramid::CDE;
-        case 3: return dgFacePositionOnPyramid::BCE;
+        case 3: return dgFacePositionOnPyramid::BDE;
         case 4: return dgFacePositionOnPyramid::ABE;
         default:
             FatalErrorInFunction << "Invalid face index for pyramid: " << i << abort(FatalError);
     }
 
     // Dummy
-    return dgFacePositionOnPyramid::BADC; // Should never reach here
+    return dgFacePositionOnPyramid::ABCD; // Should never reach here
 }
 
 // Convert face ID to position on hexahedron
@@ -258,18 +315,18 @@ inline dgFacePosition convertIdToPositionOnHex(label i)
 {
     switch (i)
     {
-        case 0: return dgFacePosition::DAEH;
-        case 1: return dgFacePosition::BCGF;
-        case 2: return dgFacePosition::ABFE;
-        case 3: return dgFacePosition::CDHG;
-        case 4: return dgFacePosition::EFGH;
-        case 5: return dgFacePosition::BADC;
+        case 0: return dgFacePosition::ACEG;
+        case 1: return dgFacePosition::BDFH;
+        case 2: return dgFacePosition::ABEF;
+        case 3: return dgFacePosition::CDGH;
+        case 4: return dgFacePosition::ABCD;
+        case 5: return dgFacePosition::EFGH;
         default:
             FatalErrorInFunction << "Invalid face index for hex: " << i << abort(FatalError);
     }
 
     // Dummy
-    return dgFacePosition::DAEH; // Should never reach here
+    return dgFacePosition::ABCD; // Should never reach here
 }
 
 } // End namespace Foam

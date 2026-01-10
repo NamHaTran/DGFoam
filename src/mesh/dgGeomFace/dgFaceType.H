@@ -25,11 +25,14 @@ License
     along with OpenFOAM.  If not, see <http://www.gnu.org/licenses/>.
 
 Class
+    dgFaceType
 
 Description
-    Just a face type enumeration for use in DG mesh handling.
+    Enumeration of supported DG face types.
 
-See also
+    This enum is used in DG mesh handling to distinguish between
+    triangular and quadrilateral faces in a topology-independent
+    manner.
 
 SourceFiles
     dgFaceType.H
@@ -39,14 +42,34 @@ SourceFiles
 #ifndef DGFACETYPE_H
 #define DGFACETYPE_H
 
+#include "IOstreams.H"
+
+/**
+ * \enum dgFaceType
+ * \brief DG face topology identifier
+ *
+ * \details
+ * Enumerates supported face types in the DG framework.
+ * The value is typically associated with a DG face to
+ * select appropriate basis functions and quadrature rules.
+ */
 enum class dgFaceType
 {
+    /** Triangular face */
     TRI,
+
+    /** Quadrilateral face */
     QUAD,
+
+    /** Invalid or unsupported face type */
     INVALID
 };
 
-//- Overwrite << operator
+/**
+ * \brief Stream output operator for dgFaceType
+ *
+ * Writes a human-readable string representation of the face type.
+ */
 inline Foam::Ostream& operator<<(Foam::Ostream& os, const dgFaceType type)
 {
     switch (type)
@@ -56,4 +79,5 @@ inline Foam::Ostream& operator<<(Foam::Ostream& os, const dgFaceType type)
         default:                return os << "UNKNOWN";
     }
 }
+
 #endif // DGFACETYPE_H

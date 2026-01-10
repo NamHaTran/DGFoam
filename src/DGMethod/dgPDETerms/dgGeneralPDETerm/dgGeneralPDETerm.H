@@ -1,11 +1,13 @@
 /*---------------------------------------------------------------------------*\
   =========                 |
-  \\      /  F ield         | DGFoam: Discontinuous Galerkin CFD Toolbox
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
    \\    /   O peration     |
-    \\  /    A nd           | GPU-friendly CFD solver framework
+    \\  /    A nd           | www.openfoam.com
      \\/     M anipulation  |
 -------------------------------------------------------------------------------
-
+    Copyright (C) 2015-2024 OpenCFD Ltd.
+    Copyright (C) 2024-2025 Ha Nam Tran
+-------------------------------------------------------------------------------
 License
     This file is part of DGFoam.
 
@@ -20,7 +22,7 @@ License
     for more details.
 
     You should have received a copy of the GNU General Public License
-    along with DGFoam.  If not, see <http://www.gnu.org/licenses/>.
+    along with OpenFOAM.  If not, see <http://www.gnu.org/licenses/>.
 
 Class
     Foam::dgGeneralPDETerm

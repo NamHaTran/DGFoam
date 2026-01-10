@@ -92,12 +92,12 @@ void Foam::dgRefFace::generateFaceGaussPointsAndWeights()
     label n1D = eta1D.size();
     nGauss_ = n1D * n1D;
 
-    gaussP_BADC_.setSize(nGauss_);
+    gaussP_ABCD_.setSize(nGauss_);
     gaussP_EFGH_.setSize(nGauss_);
-    gaussP_ABFE_.setSize(nGauss_);
-    gaussP_CDHG_.setSize(nGauss_);
-    gaussP_BCGF_.setSize(nGauss_);
-    gaussP_DAEH_.setSize(nGauss_);
+    gaussP_ABEF_.setSize(nGauss_);
+    gaussP_CDGH_.setSize(nGauss_);
+    gaussP_BDFH_.setSize(nGauss_);
+    gaussP_ACEG_.setSize(nGauss_);
     wGauss_.setSize(nGauss_);
 
     label idx = 0;
@@ -108,12 +108,12 @@ void Foam::dgRefFace::generateFaceGaussPointsAndWeights()
             scalar eta1 = eta1D[i];
             scalar eta2 = eta1D[j];
 
-            gaussP_BADC_[idx] = vector(eta1, eta2, -1.0);
+            gaussP_ABCD_[idx] = vector(eta1, eta2, -1.0);
             gaussP_EFGH_[idx] = vector(eta1, eta2,  1.0);
-            gaussP_ABFE_[idx] = vector(eta1, -1.0, eta2);
-            gaussP_CDHG_[idx] = vector(eta1,  1.0, eta2);
-            gaussP_DAEH_[idx] = vector(-1.0, eta1, eta2);
-            gaussP_BCGF_[idx] = vector( 1.0, eta1, eta2);
+            gaussP_ABEF_[idx] = vector(eta1, -1.0, eta2);
+            gaussP_CDGH_[idx] = vector(eta1,  1.0, eta2);
+            gaussP_ACEG_[idx] = vector(-1.0, eta1, eta2);
+            gaussP_BDFH_[idx] = vector( 1.0, eta1, eta2);
 
             wGauss_[idx] = w1D[i] * w1D[j];
             ++idx;
@@ -126,18 +126,18 @@ const Foam::List<Foam::vector>& Foam::dgRefFace::gaussPoints(const dgFacePositio
 {
     switch (pos)
     {
-        case dgFacePosition::BADC:
-            return gaussP_BADC_;
+        case dgFacePosition::ABCD:
+            return gaussP_ABCD_;
         case dgFacePosition::EFGH:
             return gaussP_EFGH_;
-        case dgFacePosition::ABFE:
-            return gaussP_ABFE_;
-        case dgFacePosition::CDHG:
-            return gaussP_CDHG_;
-        case dgFacePosition::DAEH:
-            return gaussP_DAEH_;
-        case dgFacePosition::BCGF:
-            return gaussP_BCGF_;
+        case dgFacePosition::ABEF:
+            return gaussP_ABEF_;
+        case dgFacePosition::CDGH:
+            return gaussP_CDGH_;
+        case dgFacePosition::ACEG:
+            return gaussP_ACEG_;
+        case dgFacePosition::BDFH:
+            return gaussP_BDFH_;
         default:
             FatalErrorInFunction
                 << "Invalid dgFacePosition enum value."
@@ -145,7 +145,7 @@ const Foam::List<Foam::vector>& Foam::dgRefFace::gaussPoints(const dgFacePositio
     }
 
     // Dummy
-    return gaussP_BADC_; // Should never reach here
+    return gaussP_ABCD_; // Should never reach here
 }
 
 Foam::basisData Foam::dgRefFace::computeBasisAndDerivatives
@@ -154,7 +154,7 @@ Foam::basisData Foam::dgRefFace::computeBasisAndDerivatives
     const dgFacePosition pos // Face position for which to compute basis functions
 )
 {
-    const label nBasis = Foam::math::getNumBasis(pOrder_, cellType);
+    // const label nBasis = Foam::math::getNumBasis(pOrder_, cellType);
 
     Foam::basisData basisData;
     basisData.basis.setSize(nGauss_);
@@ -164,46 +164,41 @@ Foam::basisData Foam::dgRefFace::computeBasisAndDerivatives
 
     for (label gp = 0; gp < nGauss_; ++gp)
     {
-        basisData.basis[gp].setSize(nBasis);
-        basisData.dBasis_dEta1[gp].setSize(nBasis);
-        basisData.dBasis_dEta2[gp].setSize(nBasis);
-        basisData.dBasis_dEta3[gp].setSize(nBasis);
-
         scalar eta1(0.0), eta2(0.0), eta3(0.0);
 
         // Get Gauss point coordinates based on face position
         // and compute basis functions and derivatives
         switch (pos)
         {
-            case dgFacePosition::BADC:
-                eta1 = gaussP_BADC_[gp].x();
-                eta2 = gaussP_BADC_[gp].y();
-                eta3 = gaussP_BADC_[gp].z();
+            case dgFacePosition::ABCD:
+                eta1 = gaussP_ABCD_[gp].x();
+                eta2 = gaussP_ABCD_[gp].y();
+                eta3 = gaussP_ABCD_[gp].z();
                 break;
             case dgFacePosition::EFGH:
                 eta1 = gaussP_EFGH_[gp].x();
                 eta2 = gaussP_EFGH_[gp].y();
                 eta3 = gaussP_EFGH_[gp].z();
                 break;
-            case dgFacePosition::ABFE:
-                eta1 = gaussP_ABFE_[gp].x();
-                eta2 = gaussP_ABFE_[gp].y();
-                eta3 = gaussP_ABFE_[gp].z();
+            case dgFacePosition::ABEF:
+                eta1 = gaussP_ABEF_[gp].x();
+                eta2 = gaussP_ABEF_[gp].y();
+                eta3 = gaussP_ABEF_[gp].z();
                 break;
-            case dgFacePosition::CDHG:
-                eta1 = gaussP_CDHG_[gp].x();
-                eta2 = gaussP_CDHG_[gp].y();
-                eta3 = gaussP_CDHG_[gp].z();
+            case dgFacePosition::CDGH:
+                eta1 = gaussP_CDGH_[gp].x();
+                eta2 = gaussP_CDGH_[gp].y();
+                eta3 = gaussP_CDGH_[gp].z();
                 break;
-            case dgFacePosition::DAEH:
-                eta1 = gaussP_DAEH_[gp].x();
-                eta2 = gaussP_DAEH_[gp].y();
-                eta3 = gaussP_DAEH_[gp].z();
+            case dgFacePosition::ACEG:
+                eta1 = gaussP_ACEG_[gp].x();
+                eta2 = gaussP_ACEG_[gp].y();
+                eta3 = gaussP_ACEG_[gp].z();
                 break;
-            case dgFacePosition::BCGF:
-                eta1 = gaussP_BCGF_[gp].x();
-                eta2 = gaussP_BCGF_[gp].y();
-                eta3 = gaussP_BCGF_[gp].z();
+            case dgFacePosition::BDFH:
+                eta1 = gaussP_BDFH_[gp].x();
+                eta2 = gaussP_BDFH_[gp].y();
+                eta3 = gaussP_BDFH_[gp].z();
                 break;
             default:
                 FatalErrorInFunction
@@ -214,8 +209,9 @@ Foam::basisData Foam::dgRefFace::computeBasisAndDerivatives
         switch (cellType)
         {
             case dgCellType::HEX:
-                Foam::math::computeHexBasisAndDerivatives(
+                Foam::math::computeFaceBasisAndDerivativesOfHex(
                     eta1, eta2, eta3, pOrder_,
+                    pos,
                     basisData.basis[gp],
                     basisData.dBasis_dEta1[gp],
                     basisData.dBasis_dEta2[gp],
@@ -224,8 +220,9 @@ Foam::basisData Foam::dgRefFace::computeBasisAndDerivatives
                 break;
 
             case dgCellType::PRISM:
-                Foam::math::computePrismBasisAndDerivatives(
+                Foam::math::computeFaceBasisAndDerivativesOfPrism(
                     eta1, eta2, eta3, pOrder_,
+                    mapFacePositionToPrism(pos),
                     basisData.basis[gp],
                     basisData.dBasis_dEta1[gp],
                     basisData.dBasis_dEta2[gp],
@@ -234,8 +231,9 @@ Foam::basisData Foam::dgRefFace::computeBasisAndDerivatives
                 break;
 
             case dgCellType::TET:
-                Foam::math::computeTetBasisAndDerivatives(
+                Foam::math::computeFaceBasisAndDerivativesOfTet(
                     eta1, eta2, eta3, pOrder_,
+                    mapFacePositionToTet(pos),
                     basisData.basis[gp],
                     basisData.dBasis_dEta1[gp],
                     basisData.dBasis_dEta2[gp],
@@ -244,8 +242,9 @@ Foam::basisData Foam::dgRefFace::computeBasisAndDerivatives
                 break;
 
             case dgCellType::PYRAMID:
-                Foam::math::computePyramidBasisAndDerivatives(
+                Foam::math::computeFaceBasisAndDerivativesOfPyramid(
                     eta1, eta2, eta3, pOrder_,
+                    mapFacePositionToPyramid(pos),
                     basisData.basis[gp],
                     basisData.dBasis_dEta1[gp],
                     basisData.dBasis_dEta2[gp],

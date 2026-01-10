@@ -22,257 +22,270 @@ License
     along with OpenFOAM.  If not, see <http://www.gnu.org/licenses/>.
 
 Class
-    Foam::dgThermoConservative
+    Foam::thermoLaw
 
 Description
-    Thermodynamics wrapper for DG solvers based on conservative variables.
-
-    This model reconstructs all primitive thermodynamic quantities from the
-    conserved fields (rho, rhoU, E) at each Gauss point of every DG element.
-    It provides temperature, pressure, internal energy, enthalpy, heat capacity
-    ratio, speed of sound, and transport properties in a fully cell-local and
-    Gauss-point-resolved manner.
-
-    dgThermoConservative is designed for compressible DG formulations using
-    the conservative form of the Navier–Stokes equations. The model supports
-    ideal-gas and thermal-perfect-gas equations of state, together with
-    compatible thermo/transport/energy laws (e.g. perfect-gas Cp(T), kinetic
-    VHS/VSS, Sutherland viscosity, power-law transport).
-
-    Typical usage:
-      - Reconstruct T, p, e, h, Cp, Cv, gamma, a
-        from (rho, rhoU, rhoE)
-      - Compute transport coefficients mu, kappa, Pr
-      - Provide cell-local thermo support for flux solvers, Riemann solvers,
-        limiters, viscous operators, and shock capturing schemes.
-
-    This model is intended for DG compressible solvers and does not support
-    primitive-variable formulations or incompressible models.
-
-    Below are availabie mapping between classes of dgThermoConservative
-     - IdealGas EOS → PerfectGasThermo / AbsoluteEnthalpy / Kinetic
-     - ThermalPerfectGas EOS → KineticThermo
-     - RealGas EOS → RealGasThermo
-     - Incompressible EOS → (not supported by DG conservative)
-
-     - PerfectGasThermo → Sutherland / Polynomial / Constant
-     - AbsoluteEnthalpyThermo → Sutherland / Polynomial / Constant
-     - RealGasThermo → RealGasTransportLaw
-     - KineticThermo → KineticTransportLaw / Constant
-
-     - All thermoLaw → energyInternal / energyEnthalpy
-     (But DG conservative uses only energyInternal)
-
+    Base class for thermodynamic laws used in DG thermophysical models.
 
 SourceFiles
-    dgThermoConservative.C
+    thermoLaw.C
 
 \*---------------------------------------------------------------------------*/
 
-#ifndef Foam_dgThermoConservative_H
-#define Foam_dgThermoConservative_H
+#ifndef Foam_thermoLaw_H
+#define Foam_thermoLaw_H
 
-#include "regIOobject.H"
 #include "dictionary.H"
-#include "dgGeomMesh.H"
-#include "dgField.H"
 #include "autoPtr.H"
 #include "runTimeSelectionTables.H"
-#include "word.H"
-#include "autoPtr.H"
 #include "scalar.H"
-#include "vector.H"
-#include "Ostream.H"
+#include "word.H"
+#include "GaussField.H"
 #include "dgGeomMesh.H"
 #include "eqnOfState.H"
-#include "thermoLaw.H"
-#include "transportLaw.H"
-#include "energy.H"
+#include "dgMath.H"
 
 namespace Foam
 {
 
-class eqnOfState;
-class thermoLaw;
-class transportLaw;
-class energy;
-
 /*---------------------------------------------------------------------------*\
-                       Class dgThermoConservative Declaration
+                       Class thermoLaw Declaration
 \*---------------------------------------------------------------------------*/
 
-class dgThermoConservative
-:
-    public regIOobject
+/**
+ * \class Foam::thermoLaw
+ * \brief Base class for thermodynamic laws in DG solvers
+ *
+ * \details
+ * thermoLaw defines the thermodynamic closure relations required by DG
+ * thermophysical models. It provides a unified interface for:
+ *
+ * - Converting between temperature and energy forms
+ *   \f$(e, h)\f$
+ * - Computing heat capacities \f$C_p(T)\f$, \f$C_v(T)\f$
+ * - Computing heat-capacity ratio \f$\gamma(T)\f$
+ * - Computing speed of sound \f$a(T)\f$
+ * - Evaluating internal energy and enthalpy at Gauss points
+ *
+ * All operations are performed locally at Gauss points of each DG cell,
+ * which is consistent with high-order discontinuous Galerkin formulations.
+ *
+ * \par Thermodynamic model categories
+ *
+ * \par Perfect-gas thermodynamics
+ * - \f$C_p(T)\f$ and \f$C_v(T)\f$ depend only on temperature
+ * - No formation enthalpy is included
+ * - \f$h(T) = \int C_p(T)\,\mathrm{d}T\f$
+ * - \f$e(T) = \int C_v(T)\,\mathrm{d}T\f$
+ * - Compatible with ideal-gas EOS: \f$p = \rho R T\f$
+ * - Used in compressible and high-temperature gas flows
+ *
+ * \par Absolute-enthalpy thermodynamics
+ * - Enthalpy includes chemical formation energy
+ * - \f$h(T) = h_f^0 + \int C_p(T)\,\mathrm{d}T\f$
+ * - Required for combustion and reacting flows
+ * - Works with ideal-gas or selected real-gas EOS
+ *
+ * \par Real-gas thermodynamics
+ * - \f$C_p\f$, \f$C_v\f$, \f$e\f$, and \f$h\f$ depend on both temperature
+ *   and density
+ * - Must be used together with real-gas EOS
+ * - Required for high-pressure and supercritical fluids
+ *
+ * \par Kinetic / rarefied-gas thermodynamics
+ * - Based on kinetic theory and molecular degrees of freedom
+ * - \f$e = \frac{f}{2} R T\f$
+ * - \f$h = \frac{f+2}{2} R T\f$
+ * - \f$C_p\f$ and \f$C_v\f$ follow kinetic DOF relations
+ * - Compatible with thermal-perfect-gas EOS
+ * - Used in rarefied gas and hypersonic applications
+ *
+ * \ingroup grpDGThermo
+ */
+class thermoLaw
 {
 protected:
 
-    //=== Attributes =========================================================//
-
-    //- Model type name
+    /** Model name (used for logging and diagnostics) */
     word name_;
 
-    //- Root dictionary (immutable snapshot)
+    /** Coefficient dictionary (immutable after construction) */
     const dictionary dict_;
 
-    //- Reference to geometric DG mesh (not owning)
+    /** Reference to DG geometric mesh (non-owning) */
     const dgGeomMesh& mesh_;
 
-    //- Owned EOS model
-    autoPtr<eqnOfState> eqnState_;
-
-    //- Owned thermo law
-    autoPtr<thermoLaw> thermo_;
-
-    //- Owned transport model
-    autoPtr<transportLaw> transport_;
-
-    //- Owned energy model
-    autoPtr<energy> energy_;
-
-    //- Gas constant
-    scalar R_;
-
-    //- Cp and Cv
-    dgField<scalar> Cp_;
-    dgField<scalar> Cv_;
-
-    //- Enthalpy
-    dgField<scalar> h_;
-
-    //- Internal energy
-    dgField<scalar> e_;
-
-    //- Dynamic viscosity
-    dgField<scalar> mu_;
-
-    //- Thermal conductivity
-    dgField<scalar> kappa_;
-
-    //- Prandtl number
-    dgField<scalar> Pr_;
-
-    //- Speed of sound
-    dgField<scalar> a_;
-
-    //- Heat capacity ratio
-    dgField<scalar> gamma_;
-
-    //- Conservative variables
-        //- rho
-        const dgField<scalar>& rho_;
-        
-        //- rhoU
-        const dgField<vector>& rhoU_;
-        
-        //- E
-        const dgField<scalar>& E_;
-        
-        //- p (to store result)
-        dgField<scalar>& p_;
-
-        //- T (to store result)
-        dgField<scalar>& T_;
+    /** Reference to equation-of-state model */
+    const eqnOfState& eos_;
 
 public:
 
-    //=== Runtime type information ==========================================//
+    //- Runtime type information
+    TypeName("thermoLaw");
 
-    TypeName("dgThermoConservative");
-
-    // Declare selection table
+    //- Runtime selection table
     declareRunTimeSelectionTable
     (
-        autoPtr,
-        dgThermoConservative,
-        dictionary,
-        (const word& name, const dictionary& dict, const dgGeomMesh& mesh),
-        (name, dict, mesh)
+        autoPtr, thermoLaw, dictionary,
+        (
+            const word& name,
+            const dictionary& dict,
+            const dgGeomMesh& mesh,
+            const eqnOfState& eos
+        ),
+        (name, dict, mesh, eos)
     );
 
-    //- Disallow default construction
-    dgThermoConservative() = delete;
-
-    //- Main constructor
-    dgThermoConservative
+    /**
+     * \brief Construct from model name and coefficient dictionary
+     *
+     * \param name Model name
+     * \param dict Coefficient dictionary
+     * \param mesh DG geometric mesh
+     * \param eos  Equation-of-state model
+     */
+    thermoLaw
     (
         const word& name,
         const dictionary& dict,
-        const dgGeomMesh& mesh
+        const dgGeomMesh& mesh,
+        const eqnOfState& eos
     );
 
-    //- Virtual destructor
-    virtual ~dgThermoConservative() = default;
+    /** Virtual destructor */
+    virtual ~thermoLaw() = default;
 
-    //- Construct from dictionary
-    static autoPtr<dgThermoConservative> New
+    /**
+     * \brief Runtime selector
+     *
+     * \param name Model name
+     * \param dict Coefficient dictionary
+     * \param mesh DG geometric mesh
+     * \param eos  Equation-of-state model
+     * \return Auto pointer to selected thermoLaw
+     */
+    static autoPtr<thermoLaw> New
     (
         const word& name,
         const dictionary& dict,
-        const dgGeomMesh& mesh
+        const dgGeomMesh& mesh,
+        const eqnOfState& eos
     );
 
+    //====================================================================//
+    //                   General thermodynamic interface
+    //====================================================================//
 
-    //=== Model Setup Interface =============================================//
+    /**
+     * \brief Compute temperature from energy
+     *
+     * Computes temperature \f$T\f$ from internal energy \f$e(T)\f$
+     * or enthalpy \f$h(T)\f$, depending on the specific thermoLaw model.
+     *
+     * \param cellI  Cell index
+     * \param energy Energy field (\f$e\f$ or \f$h\f$)
+     * \param T      Temperature field to be written
+     */
+    virtual void calcT
+    (
+        const label cellI,
+        const GaussField<scalar>& energy,
+        GaussField<scalar>& T
+    ) const = 0;
 
-    //- Construct EOS, thermo, transport, energy models (pure virtual)
-    virtual void initModels() = 0;
+    /**
+     * \brief Compute heat capacity at constant pressure
+     *
+     * Computes \f$C_p(T)\f$.
+     */
+    virtual void calcCp
+    (
+        const label cellI,
+        const GaussField<scalar>& T,
+        GaussField<scalar>& Cp
+    ) const = 0;
 
-    //- Optional validation for model combinations
-    virtual void validateModels() = 0;
+    /**
+     * \brief Compute heat capacity at constant volume
+     *
+     * Computes \f$C_v(T)\f$.
+     */
+    virtual void calcCv
+    (
+        const label cellI,
+        const GaussField<scalar>& T,
+        GaussField<scalar>& Cv
+    ) const = 0;
 
+    /**
+     * \brief Compute heat-capacity ratio
+     *
+     * Computes \f$\gamma = C_p / C_v\f$.
+     */
+    virtual void calcGamma
+    (
+        const label cellI,
+        const GaussField<scalar>& Cp,
+        const GaussField<scalar>& Cv,
+        GaussField<scalar>& gamma
+    ) const = 0;
 
-    //=== Core API ===========================================================//
+    /**
+     * \brief Compute internal energy
+     *
+     * Computes internal energy \f$e(T)\f$.
+     */
+    virtual void calcInternalE
+    (
+        const label cellI,
+        const GaussField<scalar>& T,
+        GaussField<scalar>& e
+    ) const = 0;
 
-    //- Update cell thermodynamics (pure virtual)
-    virtual void update(const label& cellID) = 0;
+    /**
+     * \brief Compute enthalpy
+     *
+     * Computes enthalpy \f$h(T)\f$.
+     */
+    virtual void calcH
+    (
+        const label cellI,
+        const GaussField<scalar>& T,
+        GaussField<scalar>& h
+    ) const = 0;
 
+    /**
+     * \brief Compute speed of sound
+     *
+     * Computes the speed of sound
+     * \f[
+     * a = \sqrt{\gamma R T}
+     * \f]
+     * or the corresponding real-gas / kinetic-theory expression.
+     */
+    virtual void calcSpeedOfSound
+    (
+        const label cellI,
+        const GaussField<scalar>& T,
+        const GaussField<scalar>& gamma,
+        GaussField<scalar>& a
+    ) const = 0;
 
-    //=== Accessors ==========================================================//
+    //====================================================================//
+    //                   ThermoLaw classification flags
+    //====================================================================//
 
-    //- EOS, thermo, transport
-    inline const eqnOfState& eos() const     { return eqnState_(); }
-    inline const thermoLaw& thermo() const   { return thermo_(); }
-    inline const transportLaw& transport() const { return transport_(); }
+        /** Perfect-gas thermo (temperature-dependent Cp, no formation energy) */
+        virtual bool isPerfectGasThermo() const { return false; }
 
-    //- Gas constant
-    inline scalar R() const { return R_; }
+        /** Absolute-enthalpy thermo (includes formation enthalpy) */
+        virtual bool isAbsoluteEnthalpyThermo() const { return false; }
 
-    /*
-    // Helper macro to generate field accessors (ref + const-ref)
-    #define dgThermoConservative_FIELD_ACCESSOR(fieldName)                               \
-        inline dgField<scalar>& fieldName() { return fieldName##_; }         \
-        inline const dgField<scalar>& fieldName() const { return fieldName##_; } \
-        inline GaussField<scalar>& fieldName(const label cellID)             \
-        { return fieldName##_.gaussFields()[cellID]; }                                     \
-        inline const GaussField<scalar>& fieldName(const label cellID) const \
-        { return fieldName##_.gaussFields()[cellID]; }
+        /** Real-gas thermo */
+        virtual bool isRealGasThermo() const { return false; }
 
-    dgThermoConservative_FIELD_ACCESSOR(Cp)
-    dgThermoConservative_FIELD_ACCESSOR(Cv)
-    dgThermoConservative_FIELD_ACCESSOR(h)
-    dgThermoConservative_FIELD_ACCESSOR(e)
-    dgThermoConservative_FIELD_ACCESSOR(mu)
-    dgThermoConservative_FIELD_ACCESSOR(kappa)
-    dgThermoConservative_FIELD_ACCESSOR(Pr)
-    dgThermoConservative_FIELD_ACCESSOR(a)
-    dgThermoConservative_FIELD_ACCESSOR(gamma)
-
-    #undef dgThermoConservative_FIELD_ACCESSOR
-    */
-
-    inline const dgField<scalar>& Cp() const { return Cp_; }
-    inline const dgField<scalar>& Cv() const { return Cv_; }
-    inline const dgField<scalar>& h() const { return h_; }
-    inline const dgField<scalar>& e() const { return e_; }
-    inline const dgField<scalar>& mu() const { return mu_; }
-    inline const dgField<scalar>& kappa() const { return kappa_; }
-    inline const dgField<scalar>& Pr() const { return Pr_; }
-    inline const dgField<scalar>& a() const { return a_; }
-    inline const dgField<scalar>& gamma() const { return gamma_; }
-
-    // Override writeData of regIOobject
-    virtual bool writeData(Ostream& os) const override;
+        /** Kinetic / rarefied-gas thermo */
+        virtual bool isKineticThermo() const { return false; }
 };
 
 } // End namespace Foam
@@ -280,4 +293,3 @@ public:
 #endif
 
 // ************************************************************************* //
-

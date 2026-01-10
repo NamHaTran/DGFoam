@@ -1,0 +1,1179 @@
+\doxysection{Foam\+::Gauss\+Field\texorpdfstring{$<$}{<} Type \texorpdfstring{$>$}{>} Class Template Reference}
+\hypertarget{classFoam_1_1GaussField}{}\label{classFoam_1_1GaussField}\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+
+
+Combined Gauss-\/point field for a DG cell.  
+
+
+
+
+{\ttfamily \#include $<$Gauss\+Field.\+H$>$}
+
+
+
+Collaboration diagram for Foam\+::Gauss\+Field\texorpdfstring{$<$}{<} Type \texorpdfstring{$>$}{>}\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=228pt]{classFoam_1_1GaussField__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classFoam_1_1GaussField_a962e524110de8fe842a07f16521c7086}{Gauss\+Field}} ()
+\begin{DoxyCompactList}\small\item\em Default constructor. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField_aafe9af988f6ce41635a31a4e055e8269}{Gauss\+Field}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dofField}{dof\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{classFoam_1_1dofField}{dof\+Field}}, \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1GaussField_a31e56407c32c582500c051353b1ead2a}{cell\+ID}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{classFoam_1_1GaussField}{mesh}})
+\begin{DoxyCompactList}\small\item\em Construct from DoF field. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField_ab7e56cc6cca1b62758b78ab3cffed7cf}{Gauss\+Field}} (\mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1GaussField_a31e56407c32c582500c051353b1ead2a}{cell\+ID}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{classFoam_1_1GaussField}{mesh}})
+\begin{DoxyCompactList}\small\item\em Construct empty \doxylink{classFoam_1_1GaussField}{Gauss\+Field} for a cell. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField_a89c7ed85dd3efb5f64d05c6931ba003c}{Gauss\+Field}} (\mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1GaussField_a31e56407c32c582500c051353b1ead2a}{cell\+ID}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{classFoam_1_1GaussField}{mesh}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{init\+Val}})
+\begin{DoxyCompactList}\small\item\em Construct \doxylink{classFoam_1_1GaussField}{Gauss\+Field} with uniform initial value. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField_a9388f7274db73bd46540ce699e90bb08}{Gauss\+Field}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{other}})
+\begin{DoxyCompactList}\small\item\em Copy constructor. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \& \mbox{\hyperlink{classFoam_1_1GaussField_ab3dffce19087f571ef95cceba074c1c2}{operator=}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{other}})
+\begin{DoxyCompactList}\small\item\em Copy assignment. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \& \mbox{\hyperlink{classFoam_1_1GaussField_ab46b9ddd1191fef2048295de79c87869}{operator=}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{value}})
+\begin{DoxyCompactList}\small\item\em Assign uniform value. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classFoam_1_1GaussField_ae7e0ea5ffec3700d696b7236780389ef}{dg\+Mesh}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\begin{DoxyCompactList}\small\item\em Return DG geometric mesh. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1GaussField_a31e56407c32c582500c051353b1ead2a}{cell\+ID}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\begin{DoxyCompactList}\small\item\em Return cell index. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dofField}{dof\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classFoam_1_1GaussField_a06361b0d120124469aa719b6c4aa5688}{dof\+Field\+Ptr}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\begin{DoxyCompactList}\small\item\em Return pointer to DoF field. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1cellGaussField}{cell\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \& \mbox{\hyperlink{classFoam_1_1GaussField_a50fbcbf2b466b2c03538549f32dd5a5e}{cell\+Field}} ()
+\begin{DoxyCompactList}\small\item\em Access cell Gauss field. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1cellGaussField}{cell\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \& \mbox{\hyperlink{classFoam_1_1GaussField_a82a4a57d6e7f9a1d53e314051c3b439c}{cell\+Field}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\begin{DoxyCompactList}\small\item\em Const access to cell Gauss field. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1faceGaussField}{face\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \& \mbox{\hyperlink{classFoam_1_1GaussField_a11bd1d315e54f3b9c65366000219d8a1}{face\+Field}} ()
+\begin{DoxyCompactList}\small\item\em Access face Gauss field. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1faceGaussField}{face\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \& \mbox{\hyperlink{classFoam_1_1GaussField_a11bf78799decb0a0d3b32a592b7a9db4}{face\+Field}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\begin{DoxyCompactList}\small\item\em Const access to face Gauss field. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1GaussField_af4174313645cecad5e8a05785cb0955b}{interpolate\+From\+Dof}} ()
+\begin{DoxyCompactList}\small\item\em Interpolate DOF values to Gauss points. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{Type}} \& \mbox{\hyperlink{classFoam_1_1GaussField_ae60e7ca60bf27fd26d291d41c9fc6ec2}{cell\+Value\+At}} (\mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1GaussField}{gpI}})
+\begin{DoxyCompactList}\small\item\em Access cell Gauss value by index. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} \& \mbox{\hyperlink{classFoam_1_1GaussField_a33713d74a3ae1db022aba73efbc3765a}{cell\+Value\+At}} (\mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1GaussField}{gpI}}) \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\begin{DoxyCompactList}\small\item\em Const access to cell Gauss value. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{Type}} \& \mbox{\hyperlink{classFoam_1_1GaussField_a396ecdd4262ce1f979ca4e93a91b55ee}{face\+Plus\+Value\+At}} (\mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1GaussField}{faceI}}, \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1GaussField}{gpI}})
+\begin{DoxyCompactList}\small\item\em Access plus-\/side face Gauss value. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{Type}} \& \mbox{\hyperlink{classFoam_1_1GaussField_a51cfbe38a04fac12ba9d8f73ce2ca890}{face\+Minus\+Value\+At}} (\mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1GaussField}{faceI}}, \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1GaussField}{gpI}})
+\begin{DoxyCompactList}\small\item\em Access minus-\/side face Gauss value. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} \& \mbox{\hyperlink{classFoam_1_1GaussField_a5fb0c9ab252adceaac9f50f072e8dc90}{face\+Plus\+Value\+At}} (\mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1GaussField}{faceI}}, \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1GaussField}{gpI}}) \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\begin{DoxyCompactList}\small\item\em Const access to plus-\/side face Gauss value. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} \& \mbox{\hyperlink{classFoam_1_1GaussField_a7af0b96b17afc0aa6345485d86ef46b3}{face\+Minus\+Value\+At}} (\mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1GaussField}{faceI}}, \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1GaussField}{gpI}}) \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\begin{DoxyCompactList}\small\item\em Const access to minus-\/side face Gauss value. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \mbox{\hyperlink{classFoam_1_1GaussField_a49c91fd2de86e400eb7bf30ed43b04fd}{x}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\begin{DoxyCompactList}\small\item\em Return x-\/component. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \mbox{\hyperlink{classFoam_1_1GaussField_af48b2954902727aadb60e75a5baf4cf3}{y}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\begin{DoxyCompactList}\small\item\em Return y-\/component. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \mbox{\hyperlink{classFoam_1_1GaussField_ac893a0f59b8435e95c03d2a35c6a2cc3}{z}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\begin{DoxyCompactList}\small\item\em Return z-\/component. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1GaussField_a31fa1a873ae9fc766e2828b036e49102}{setX}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{fx}})
+\begin{DoxyCompactList}\small\item\em Set x-\/component. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1GaussField_a517fcafe3668f5b6bd58599f976e7cd8}{setY}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{fy}})
+\begin{DoxyCompactList}\small\item\em Set y-\/component. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1GaussField_a64944c6bd9a672e6ee93c439f16d65ba}{setZ}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{fz}})
+\begin{DoxyCompactList}\small\item\em Set z-\/component. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1GaussField_acd864dbb993dbaf13c30feea745be601}{set\+XYZ}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{fx}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{fy}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{fz}})
+\begin{DoxyCompactList}\small\item\em Set all components. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1GaussField_a16ce06abdd0315f5eaf50a91096511b4}{limit\+Max}} (\mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} \mbox{\hyperlink{classFoam_1_1GaussField}{max\+Val}})
+\begin{DoxyCompactList}\small\item\em Limit maximum value. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1GaussField_a5110c0b5a4b45aaa26bc57d4d8b7a04f}{limit\+Min}} (\mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} \mbox{\hyperlink{classFoam_1_1GaussField}{min\+Val}})
+\begin{DoxyCompactList}\small\item\em Limit minimum value. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1GaussField_a6a8f9e71ceaa62059e604f5c7a923872}{limit\+Range}} (\mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} \mbox{\hyperlink{classFoam_1_1GaussField}{min\+Val}}, \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} \mbox{\hyperlink{classFoam_1_1GaussField}{max\+Val}})
+\begin{DoxyCompactList}\small\item\em Limit value range. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField_a962e524110de8fe842a07f16521c7086}{Gauss\+Field}} ()
+\begin{DoxyCompactList}\small\item\em Default constructor. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField_aafe9af988f6ce41635a31a4e055e8269}{Gauss\+Field}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dofField}{dof\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{classFoam_1_1dofField}{dof\+Field}}, \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1GaussField_a31e56407c32c582500c051353b1ead2a}{cell\+ID}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{classFoam_1_1GaussField}{mesh}})
+\begin{DoxyCompactList}\small\item\em Construct from DoF field. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField_ab7e56cc6cca1b62758b78ab3cffed7cf}{Gauss\+Field}} (\mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1GaussField_a31e56407c32c582500c051353b1ead2a}{cell\+ID}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{classFoam_1_1GaussField}{mesh}})
+\begin{DoxyCompactList}\small\item\em Construct empty \doxylink{classFoam_1_1GaussField}{Gauss\+Field} for a cell. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField_a89c7ed85dd3efb5f64d05c6931ba003c}{Gauss\+Field}} (\mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1GaussField_a31e56407c32c582500c051353b1ead2a}{cell\+ID}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{classFoam_1_1GaussField}{mesh}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{init\+Val}})
+\begin{DoxyCompactList}\small\item\em Construct \doxylink{classFoam_1_1GaussField}{Gauss\+Field} with uniform initial value. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField_a9388f7274db73bd46540ce699e90bb08}{Gauss\+Field}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{other}})
+\begin{DoxyCompactList}\small\item\em Copy constructor. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \& \mbox{\hyperlink{classFoam_1_1GaussField_ab3dffce19087f571ef95cceba074c1c2}{operator=}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{other}})
+\begin{DoxyCompactList}\small\item\em Copy assignment. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \& \mbox{\hyperlink{classFoam_1_1GaussField_ab46b9ddd1191fef2048295de79c87869}{operator=}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{value}})
+\begin{DoxyCompactList}\small\item\em Assign uniform value. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classFoam_1_1GaussField_ae7e0ea5ffec3700d696b7236780389ef}{dg\+Mesh}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\begin{DoxyCompactList}\small\item\em Return DG geometric mesh. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1GaussField_a31e56407c32c582500c051353b1ead2a}{cell\+ID}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\begin{DoxyCompactList}\small\item\em Return cell index. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dofField}{dof\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classFoam_1_1GaussField_a06361b0d120124469aa719b6c4aa5688}{dof\+Field\+Ptr}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\begin{DoxyCompactList}\small\item\em Return pointer to DoF field. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1cellGaussField}{cell\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \& \mbox{\hyperlink{classFoam_1_1GaussField_a50fbcbf2b466b2c03538549f32dd5a5e}{cell\+Field}} ()
+\begin{DoxyCompactList}\small\item\em Access cell Gauss field. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1cellGaussField}{cell\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \& \mbox{\hyperlink{classFoam_1_1GaussField_a82a4a57d6e7f9a1d53e314051c3b439c}{cell\+Field}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\begin{DoxyCompactList}\small\item\em Const access to cell Gauss field. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1faceGaussField}{face\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \& \mbox{\hyperlink{classFoam_1_1GaussField_a11bd1d315e54f3b9c65366000219d8a1}{face\+Field}} ()
+\begin{DoxyCompactList}\small\item\em Access face Gauss field. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1faceGaussField}{face\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \& \mbox{\hyperlink{classFoam_1_1GaussField_a11bf78799decb0a0d3b32a592b7a9db4}{face\+Field}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\begin{DoxyCompactList}\small\item\em Const access to face Gauss field. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1GaussField_af4174313645cecad5e8a05785cb0955b}{interpolate\+From\+Dof}} ()
+\begin{DoxyCompactList}\small\item\em Interpolate DOF values to Gauss points. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{Type}} \& \mbox{\hyperlink{classFoam_1_1GaussField_ae60e7ca60bf27fd26d291d41c9fc6ec2}{cell\+Value\+At}} (\mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1GaussField}{gpI}})
+\begin{DoxyCompactList}\small\item\em Access cell Gauss value by index. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} \& \mbox{\hyperlink{classFoam_1_1GaussField_a33713d74a3ae1db022aba73efbc3765a}{cell\+Value\+At}} (\mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1GaussField}{gpI}}) \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\begin{DoxyCompactList}\small\item\em Const access to cell Gauss value. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{Type}} \& \mbox{\hyperlink{classFoam_1_1GaussField_a396ecdd4262ce1f979ca4e93a91b55ee}{face\+Plus\+Value\+At}} (\mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1GaussField}{faceI}}, \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1GaussField}{gpI}})
+\begin{DoxyCompactList}\small\item\em Access plus-\/side face Gauss value. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{Type}} \& \mbox{\hyperlink{classFoam_1_1GaussField_a51cfbe38a04fac12ba9d8f73ce2ca890}{face\+Minus\+Value\+At}} (\mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1GaussField}{faceI}}, \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1GaussField}{gpI}})
+\begin{DoxyCompactList}\small\item\em Access minus-\/side face Gauss value. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} \& \mbox{\hyperlink{classFoam_1_1GaussField_a5fb0c9ab252adceaac9f50f072e8dc90}{face\+Plus\+Value\+At}} (\mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1GaussField}{faceI}}, \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1GaussField}{gpI}}) \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\begin{DoxyCompactList}\small\item\em Const access to plus-\/side face Gauss value. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} \& \mbox{\hyperlink{classFoam_1_1GaussField_a7af0b96b17afc0aa6345485d86ef46b3}{face\+Minus\+Value\+At}} (\mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1GaussField}{faceI}}, \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1GaussField}{gpI}}) \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\begin{DoxyCompactList}\small\item\em Const access to minus-\/side face Gauss value. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \mbox{\hyperlink{classFoam_1_1GaussField_a49c91fd2de86e400eb7bf30ed43b04fd}{x}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\begin{DoxyCompactList}\small\item\em Return x-\/component. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \mbox{\hyperlink{classFoam_1_1GaussField_af48b2954902727aadb60e75a5baf4cf3}{y}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\begin{DoxyCompactList}\small\item\em Return y-\/component. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \mbox{\hyperlink{classFoam_1_1GaussField_ac893a0f59b8435e95c03d2a35c6a2cc3}{z}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\begin{DoxyCompactList}\small\item\em Return z-\/component. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1GaussField_a31fa1a873ae9fc766e2828b036e49102}{setX}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{fx}})
+\begin{DoxyCompactList}\small\item\em Set x-\/component. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1GaussField_a517fcafe3668f5b6bd58599f976e7cd8}{setY}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{fy}})
+\begin{DoxyCompactList}\small\item\em Set y-\/component. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1GaussField_a64944c6bd9a672e6ee93c439f16d65ba}{setZ}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{fz}})
+\begin{DoxyCompactList}\small\item\em Set z-\/component. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1GaussField_acd864dbb993dbaf13c30feea745be601}{set\+XYZ}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{fx}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{fy}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{fz}})
+\begin{DoxyCompactList}\small\item\em Set all components. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1GaussField_a16ce06abdd0315f5eaf50a91096511b4}{limit\+Max}} (\mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} \mbox{\hyperlink{classFoam_1_1GaussField}{max\+Val}})
+\begin{DoxyCompactList}\small\item\em Limit maximum value. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1GaussField_a5110c0b5a4b45aaa26bc57d4d8b7a04f}{limit\+Min}} (\mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} \mbox{\hyperlink{classFoam_1_1GaussField}{min\+Val}})
+\begin{DoxyCompactList}\small\item\em Limit minimum value. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1GaussField_a6a8f9e71ceaa62059e604f5c7a923872}{limit\+Range}} (\mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} \mbox{\hyperlink{classFoam_1_1GaussField}{min\+Val}}, \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} \mbox{\hyperlink{classFoam_1_1GaussField}{max\+Val}})
+\begin{DoxyCompactList}\small\item\em Limit value range. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1GaussField_a49683d30e4e47effe7177bfe4f8bc315}{limit\+Max}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} \mbox{\hyperlink{classFoam_1_1GaussField}{max\+Val}})
+\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1GaussField_a2141711f5e938b4477657e7f7b220691}{limit\+Min}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} \mbox{\hyperlink{classFoam_1_1GaussField}{min\+Val}})
+\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1GaussField_a9105b84411470d12dfcbe254c4ad6bcd}{limit\+Range}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} \mbox{\hyperlink{classFoam_1_1GaussField}{min\+Val}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} \mbox{\hyperlink{classFoam_1_1GaussField}{max\+Val}})
+\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \mbox{\hyperlink{classFoam_1_1GaussField_ad515a92d24d2b252f4fadd7762ec3b75}{x}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \mbox{\hyperlink{classFoam_1_1GaussField_a7d49e6e39389d1d33bf9134299caf406}{y}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \mbox{\hyperlink{classFoam_1_1GaussField_ac6d297d20e9cf6a402cc244057300445}{z}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1GaussField_ab5588713be69c20a0f1894a852956821}{setX}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{fx}})
+\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1GaussField_a0dd5e2e3c0590ad2ab4c005b4771d618}{setY}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{fy}})
+\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1GaussField_a769c604ef0ade0395c5a2657dec43d6e}{setZ}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{fz}})
+\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1GaussField_a73cf2627132e5413a90675a290fb2aa3}{set\+XYZ}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{fx}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{fy}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{fz}})
+\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1GaussField_ae750ec9b675922cfb4b3720f38c0c8da}{limit\+Max}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} \mbox{\hyperlink{classFoam_1_1GaussField}{max\+Val}})
+\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1GaussField_a9b834a0e27955185a8e019d6c6daa4d3}{limit\+Min}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} \mbox{\hyperlink{classFoam_1_1GaussField}{min\+Val}})
+\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1GaussField_a37e2708faf40c40b521682c7c7a5e997}{limit\+Range}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} \mbox{\hyperlink{classFoam_1_1GaussField}{min\+Val}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} \mbox{\hyperlink{classFoam_1_1GaussField}{max\+Val}})
+\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1GaussField_a49683d30e4e47effe7177bfe4f8bc315}{limit\+Max}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} \mbox{\hyperlink{classFoam_1_1GaussField}{max\+Val}})
+\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1GaussField_a2141711f5e938b4477657e7f7b220691}{limit\+Min}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} \mbox{\hyperlink{classFoam_1_1GaussField}{min\+Val}})
+\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1GaussField_a9105b84411470d12dfcbe254c4ad6bcd}{limit\+Range}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} \mbox{\hyperlink{classFoam_1_1GaussField}{min\+Val}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} \mbox{\hyperlink{classFoam_1_1GaussField}{max\+Val}})
+\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \mbox{\hyperlink{classFoam_1_1GaussField_ad515a92d24d2b252f4fadd7762ec3b75}{x}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \mbox{\hyperlink{classFoam_1_1GaussField_a7d49e6e39389d1d33bf9134299caf406}{y}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \mbox{\hyperlink{classFoam_1_1GaussField_ac6d297d20e9cf6a402cc244057300445}{z}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1GaussField_ab5588713be69c20a0f1894a852956821}{setX}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{fx}})
+\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1GaussField_a0dd5e2e3c0590ad2ab4c005b4771d618}{setY}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{fy}})
+\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1GaussField_a769c604ef0ade0395c5a2657dec43d6e}{setZ}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{fz}})
+\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1GaussField_a73cf2627132e5413a90675a290fb2aa3}{set\+XYZ}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{fx}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{fy}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{fz}})
+\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1GaussField_ae750ec9b675922cfb4b3720f38c0c8da}{limit\+Max}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} \mbox{\hyperlink{classFoam_1_1GaussField}{max\+Val}})
+\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1GaussField_a9b834a0e27955185a8e019d6c6daa4d3}{limit\+Min}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} \mbox{\hyperlink{classFoam_1_1GaussField}{min\+Val}})
+\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1GaussField_a37e2708faf40c40b521682c7c7a5e997}{limit\+Range}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} \mbox{\hyperlink{classFoam_1_1GaussField}{min\+Val}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} \mbox{\hyperlink{classFoam_1_1GaussField}{max\+Val}})
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dofField}{dof\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classFoam_1_1GaussField_a647b6db0acf6685a7129e63b9c34a092}{dof\+Field\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Pointer to DoF field (read-\/only, non-\/owning) \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1GaussField_a938849a2c6069d93ad5b4a1926511fd9}{cell\+ID\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Cell index. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classFoam_1_1GaussField_a0bbe5d7cef3fc3e786da54ee51b67480}{mesh\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Pointer to DG geometric mesh (non-\/owning) \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1cellGaussField}{cell\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \mbox{\hyperlink{classFoam_1_1GaussField_a5a060a96c564d80b1a9864beef7388a4}{cell\+Field\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Gauss-\/point field inside the cell. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1faceGaussField}{face\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \mbox{\hyperlink{classFoam_1_1GaussField_a3f286fc28a24a2f78d6338791024a71a}{face\+Field\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Gauss-\/point field on cell faces. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{Ostream}} \& \mbox{\hyperlink{classFoam_1_1GaussField_aa3f4906f669b5b7ec65c760262fc9330}{operator$<$$<$}} (\mbox{\hyperlink{classFoam_1_1GaussField}{Ostream}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{os}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{gf}})
+\begin{DoxyCompactList}\small\item\em Stream output. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{Ostream}} \& \mbox{\hyperlink{classFoam_1_1GaussField_aa3f4906f669b5b7ec65c760262fc9330}{operator$<$$<$}} (\mbox{\hyperlink{classFoam_1_1GaussField}{Ostream}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{os}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{gf}})
+\begin{DoxyCompactList}\small\item\em Stream output. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$\mbox{\hyperlink{classFoam_1_1GaussField_a962e524110de8fe842a07f16521c7086}{class}} \mbox{\hyperlink{classFoam_1_1GaussField_a962e524110de8fe842a07f16521c7086}{Type}}$>$\newline
+class Foam\+::\+Gauss\+Field$<$ Type $>$}
+Combined Gauss-\/point field for a DG cell. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em Type} & Field value type (scalar, vector, tensor, etc.)\\
+\hline
+\end{DoxyTemplParams}
+\doxylink{classFoam_1_1GaussField}{Gauss\+Field} acts as a high-\/level container that combines\+:
+\begin{DoxyItemize}
+\item cell\+Gauss\+Field$<$\+Type$>$ for cell-\/interior Gauss points
+\item face\+Gauss\+Field$<$\+Type$>$ for Gauss points on cell faces
+\end{DoxyItemize}
+
+The class can be constructed\+:
+\begin{DoxyItemize}
+\item From a dof\+Field$<$\+Type$>$ to interpolate DOF values to Gauss points
+\item As an empty container to be filled later
+\item With a uniform initial value
+\end{DoxyItemize}
+
+\doxylink{classFoam_1_1GaussField}{Gauss\+Field} does not own mesh or DoF storage. All pointers are non-\/owning. It is intended to be stored per-\/cell inside higher-\/level DG field classes. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classFoam_1_1GaussField_a962e524110de8fe842a07f16521c7086}\label{classFoam_1_1GaussField_a962e524110de8fe842a07f16521c7086} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!GaussField@{GaussField}}
+\index{GaussField@{GaussField}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{GaussField()}{GaussField()}\hspace{0.1cm}{\footnotesize\ttfamily [1/10]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
+\mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::\+Gauss\+Field (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Default constructor. 
+
+\Hypertarget{classFoam_1_1GaussField_aafe9af988f6ce41635a31a4e055e8269}\label{classFoam_1_1GaussField_aafe9af988f6ce41635a31a4e055e8269} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!GaussField@{GaussField}}
+\index{GaussField@{GaussField}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{GaussField()}{GaussField()}\hspace{0.1cm}{\footnotesize\ttfamily [2/10]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
+\mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::\+Gauss\+Field (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dofField}{dof\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \texorpdfstring{$\ast$}{*}}]{dof\+Field,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{cell\+ID,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \texorpdfstring{$\ast$}{*}}]{mesh }\end{DoxyParamCaption})}
+
+
+
+Construct from DoF field. 
+
+The Gauss values are initialized by interpolating the DOF values of the given cell. \Hypertarget{classFoam_1_1GaussField_ab7e56cc6cca1b62758b78ab3cffed7cf}\label{classFoam_1_1GaussField_ab7e56cc6cca1b62758b78ab3cffed7cf} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!GaussField@{GaussField}}
+\index{GaussField@{GaussField}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{GaussField()}{GaussField()}\hspace{0.1cm}{\footnotesize\ttfamily [3/10]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
+\mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::\+Gauss\+Field (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{cell\+ID,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \texorpdfstring{$\ast$}{*}}]{mesh }\end{DoxyParamCaption})}
+
+
+
+Construct empty \doxylink{classFoam_1_1GaussField}{Gauss\+Field} for a cell. 
+
+\Hypertarget{classFoam_1_1GaussField_a89c7ed85dd3efb5f64d05c6931ba003c}\label{classFoam_1_1GaussField_a89c7ed85dd3efb5f64d05c6931ba003c} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!GaussField@{GaussField}}
+\index{GaussField@{GaussField}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{GaussField()}{GaussField()}\hspace{0.1cm}{\footnotesize\ttfamily [4/10]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
+\mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::\+Gauss\+Field (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{cell\+ID,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \texorpdfstring{$\ast$}{*}}]{mesh,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} \&}]{init\+Val }\end{DoxyParamCaption})}
+
+
+
+Construct \doxylink{classFoam_1_1GaussField}{Gauss\+Field} with uniform initial value. 
+
+\Hypertarget{classFoam_1_1GaussField_a9388f7274db73bd46540ce699e90bb08}\label{classFoam_1_1GaussField_a9388f7274db73bd46540ce699e90bb08} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!GaussField@{GaussField}}
+\index{GaussField@{GaussField}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{GaussField()}{GaussField()}\hspace{0.1cm}{\footnotesize\ttfamily [5/10]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
+\mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::\+Gauss\+Field (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \&}]{other }\end{DoxyParamCaption})}
+
+
+
+Copy constructor. 
+
+\Hypertarget{classFoam_1_1GaussField_a962e524110de8fe842a07f16521c7086}\label{classFoam_1_1GaussField_a962e524110de8fe842a07f16521c7086} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!GaussField@{GaussField}}
+\index{GaussField@{GaussField}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{GaussField()}{GaussField()}\hspace{0.1cm}{\footnotesize\ttfamily [6/10]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
+\mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::\+Gauss\+Field (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Default constructor. 
+
+\Hypertarget{classFoam_1_1GaussField_aafe9af988f6ce41635a31a4e055e8269}\label{classFoam_1_1GaussField_aafe9af988f6ce41635a31a4e055e8269} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!GaussField@{GaussField}}
+\index{GaussField@{GaussField}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{GaussField()}{GaussField()}\hspace{0.1cm}{\footnotesize\ttfamily [7/10]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
+\mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::\+Gauss\+Field (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dofField}{dof\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \texorpdfstring{$\ast$}{*}}]{dof\+Field,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{cell\+ID,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \texorpdfstring{$\ast$}{*}}]{mesh }\end{DoxyParamCaption})}
+
+
+
+Construct from DoF field. 
+
+The Gauss values are initialized by interpolating the DOF values of the given cell. \Hypertarget{classFoam_1_1GaussField_ab7e56cc6cca1b62758b78ab3cffed7cf}\label{classFoam_1_1GaussField_ab7e56cc6cca1b62758b78ab3cffed7cf} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!GaussField@{GaussField}}
+\index{GaussField@{GaussField}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{GaussField()}{GaussField()}\hspace{0.1cm}{\footnotesize\ttfamily [8/10]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
+\mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::\+Gauss\+Field (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{cell\+ID,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \texorpdfstring{$\ast$}{*}}]{mesh }\end{DoxyParamCaption})}
+
+
+
+Construct empty \doxylink{classFoam_1_1GaussField}{Gauss\+Field} for a cell. 
+
+\Hypertarget{classFoam_1_1GaussField_a89c7ed85dd3efb5f64d05c6931ba003c}\label{classFoam_1_1GaussField_a89c7ed85dd3efb5f64d05c6931ba003c} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!GaussField@{GaussField}}
+\index{GaussField@{GaussField}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{GaussField()}{GaussField()}\hspace{0.1cm}{\footnotesize\ttfamily [9/10]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
+\mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::\+Gauss\+Field (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{cell\+ID,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \texorpdfstring{$\ast$}{*}}]{mesh,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} \&}]{init\+Val }\end{DoxyParamCaption})}
+
+
+
+Construct \doxylink{classFoam_1_1GaussField}{Gauss\+Field} with uniform initial value. 
+
+\Hypertarget{classFoam_1_1GaussField_a9388f7274db73bd46540ce699e90bb08}\label{classFoam_1_1GaussField_a9388f7274db73bd46540ce699e90bb08} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!GaussField@{GaussField}}
+\index{GaussField@{GaussField}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{GaussField()}{GaussField()}\hspace{0.1cm}{\footnotesize\ttfamily [10/10]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
+\mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::\+Gauss\+Field (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \&}]{other }\end{DoxyParamCaption})}
+
+
+
+Copy constructor. 
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classFoam_1_1GaussField_ab3dffce19087f571ef95cceba074c1c2}\label{classFoam_1_1GaussField_ab3dffce19087f571ef95cceba074c1c2} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!operator=@{operator=}}
+\index{operator=@{operator=}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
+\mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \& \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\mbox{\hyperlink{classFoam_1_1GaussField_a962e524110de8fe842a07f16521c7086}{\+::operator}}= (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \&}]{other }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Copy assignment. 
+
+\Hypertarget{classFoam_1_1GaussField_ab46b9ddd1191fef2048295de79c87869}\label{classFoam_1_1GaussField_ab46b9ddd1191fef2048295de79c87869} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!operator=@{operator=}}
+\index{operator=@{operator=}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
+\mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \& \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\mbox{\hyperlink{classFoam_1_1GaussField_a962e524110de8fe842a07f16521c7086}{\+::operator}}= (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} \&}]{value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Assign uniform value. 
+
+\Hypertarget{classFoam_1_1GaussField_ae7e0ea5ffec3700d696b7236780389ef}\label{classFoam_1_1GaussField_ae7e0ea5ffec3700d696b7236780389ef} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!dgMesh@{dgMesh}}
+\index{dgMesh@{dgMesh}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{dgMesh()}{dgMesh()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
+\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::dg\+Mesh (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Return DG geometric mesh. 
+
+Fatal error if mesh pointer is null. \Hypertarget{classFoam_1_1GaussField_a31e56407c32c582500c051353b1ead2a}\label{classFoam_1_1GaussField_a31e56407c32c582500c051353b1ead2a} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!cellID@{cellID}}
+\index{cellID@{cellID}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{cellID()}{cellID()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
+\mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::cell\+ID (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Return cell index. 
+
+\Hypertarget{classFoam_1_1GaussField_a06361b0d120124469aa719b6c4aa5688}\label{classFoam_1_1GaussField_a06361b0d120124469aa719b6c4aa5688} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!dofFieldPtr@{dofFieldPtr}}
+\index{dofFieldPtr@{dofFieldPtr}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{dofFieldPtr()}{dofFieldPtr()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
+\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dofField}{dof\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::dof\+Field\+Ptr (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Return pointer to DoF field. 
+
+\Hypertarget{classFoam_1_1GaussField_a50fbcbf2b466b2c03538549f32dd5a5e}\label{classFoam_1_1GaussField_a50fbcbf2b466b2c03538549f32dd5a5e} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!cellField@{cellField}}
+\index{cellField@{cellField}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{cellField()}{cellField()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
+\mbox{\hyperlink{classFoam_1_1cellGaussField}{cell\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \& \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::cell\+Field (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Access cell Gauss field. 
+
+\Hypertarget{classFoam_1_1GaussField_a82a4a57d6e7f9a1d53e314051c3b439c}\label{classFoam_1_1GaussField_a82a4a57d6e7f9a1d53e314051c3b439c} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!cellField@{cellField}}
+\index{cellField@{cellField}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{cellField()}{cellField()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
+\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1cellGaussField}{cell\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \& \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::cell\+Field (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Const access to cell Gauss field. 
+
+\Hypertarget{classFoam_1_1GaussField_a11bd1d315e54f3b9c65366000219d8a1}\label{classFoam_1_1GaussField_a11bd1d315e54f3b9c65366000219d8a1} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!faceField@{faceField}}
+\index{faceField@{faceField}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{faceField()}{faceField()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
+\mbox{\hyperlink{classFoam_1_1faceGaussField}{face\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \& \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::face\+Field (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Access face Gauss field. 
+
+\Hypertarget{classFoam_1_1GaussField_a11bf78799decb0a0d3b32a592b7a9db4}\label{classFoam_1_1GaussField_a11bf78799decb0a0d3b32a592b7a9db4} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!faceField@{faceField}}
+\index{faceField@{faceField}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{faceField()}{faceField()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
+\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1faceGaussField}{face\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \& \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::face\+Field (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Const access to face Gauss field. 
+
+\Hypertarget{classFoam_1_1GaussField_af4174313645cecad5e8a05785cb0955b}\label{classFoam_1_1GaussField_af4174313645cecad5e8a05785cb0955b} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!interpolateFromDof@{interpolateFromDof}}
+\index{interpolateFromDof@{interpolateFromDof}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{interpolateFromDof()}{interpolateFromDof()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::interpolate\+From\+Dof (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Interpolate DOF values to Gauss points. 
+
+Updates both cell and face Gauss fields using the associated dof\+Field$<$\+Type$>$. \Hypertarget{classFoam_1_1GaussField_ae60e7ca60bf27fd26d291d41c9fc6ec2}\label{classFoam_1_1GaussField_ae60e7ca60bf27fd26d291d41c9fc6ec2} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!cellValueAt@{cellValueAt}}
+\index{cellValueAt@{cellValueAt}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{cellValueAt()}{cellValueAt()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
+\mbox{\hyperlink{classFoam_1_1GaussField}{Type}} \& \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::cell\+Value\+At (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{gpI }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Access cell Gauss value by index. 
+
+\Hypertarget{classFoam_1_1GaussField_a33713d74a3ae1db022aba73efbc3765a}\label{classFoam_1_1GaussField_a33713d74a3ae1db022aba73efbc3765a} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!cellValueAt@{cellValueAt}}
+\index{cellValueAt@{cellValueAt}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{cellValueAt()}{cellValueAt()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
+\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} \& \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::cell\+Value\+At (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{gpI }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Const access to cell Gauss value. 
+
+\Hypertarget{classFoam_1_1GaussField_a396ecdd4262ce1f979ca4e93a91b55ee}\label{classFoam_1_1GaussField_a396ecdd4262ce1f979ca4e93a91b55ee} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!facePlusValueAt@{facePlusValueAt}}
+\index{facePlusValueAt@{facePlusValueAt}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{facePlusValueAt()}{facePlusValueAt()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
+\mbox{\hyperlink{classFoam_1_1GaussField}{Type}} \& \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::face\+Plus\+Value\+At (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{faceI,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{gpI }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Access plus-\/side face Gauss value. 
+
+\Hypertarget{classFoam_1_1GaussField_a51cfbe38a04fac12ba9d8f73ce2ca890}\label{classFoam_1_1GaussField_a51cfbe38a04fac12ba9d8f73ce2ca890} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!faceMinusValueAt@{faceMinusValueAt}}
+\index{faceMinusValueAt@{faceMinusValueAt}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{faceMinusValueAt()}{faceMinusValueAt()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
+\mbox{\hyperlink{classFoam_1_1GaussField}{Type}} \& \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::face\+Minus\+Value\+At (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{faceI,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{gpI }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Access minus-\/side face Gauss value. 
+
+\Hypertarget{classFoam_1_1GaussField_a5fb0c9ab252adceaac9f50f072e8dc90}\label{classFoam_1_1GaussField_a5fb0c9ab252adceaac9f50f072e8dc90} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!facePlusValueAt@{facePlusValueAt}}
+\index{facePlusValueAt@{facePlusValueAt}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{facePlusValueAt()}{facePlusValueAt()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
+\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} \& \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::face\+Plus\+Value\+At (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{faceI,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{gpI }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Const access to plus-\/side face Gauss value. 
+
+\Hypertarget{classFoam_1_1GaussField_a7af0b96b17afc0aa6345485d86ef46b3}\label{classFoam_1_1GaussField_a7af0b96b17afc0aa6345485d86ef46b3} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!faceMinusValueAt@{faceMinusValueAt}}
+\index{faceMinusValueAt@{faceMinusValueAt}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{faceMinusValueAt()}{faceMinusValueAt()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
+\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} \& \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::face\+Minus\+Value\+At (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{faceI,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{gpI }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Const access to minus-\/side face Gauss value. 
+
+\Hypertarget{classFoam_1_1GaussField_a49c91fd2de86e400eb7bf30ed43b04fd}\label{classFoam_1_1GaussField_a49c91fd2de86e400eb7bf30ed43b04fd} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!x@{x}}
+\index{x@{x}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{x()}{x()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
+\mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::x (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Return x-\/component. 
+
+\Hypertarget{classFoam_1_1GaussField_af48b2954902727aadb60e75a5baf4cf3}\label{classFoam_1_1GaussField_af48b2954902727aadb60e75a5baf4cf3} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!y@{y}}
+\index{y@{y}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{y()}{y()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
+\mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::y (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Return y-\/component. 
+
+\Hypertarget{classFoam_1_1GaussField_ac893a0f59b8435e95c03d2a35c6a2cc3}\label{classFoam_1_1GaussField_ac893a0f59b8435e95c03d2a35c6a2cc3} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!z@{z}}
+\index{z@{z}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{z()}{z()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
+\mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::z (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Return z-\/component. 
+
+\Hypertarget{classFoam_1_1GaussField_a31fa1a873ae9fc766e2828b036e49102}\label{classFoam_1_1GaussField_a31fa1a873ae9fc766e2828b036e49102} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!setX@{setX}}
+\index{setX@{setX}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{setX()}{setX()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::setX (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{fx }\end{DoxyParamCaption})}
+
+
+
+Set x-\/component. 
+
+\Hypertarget{classFoam_1_1GaussField_a517fcafe3668f5b6bd58599f976e7cd8}\label{classFoam_1_1GaussField_a517fcafe3668f5b6bd58599f976e7cd8} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!setY@{setY}}
+\index{setY@{setY}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{setY()}{setY()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::setY (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{fy }\end{DoxyParamCaption})}
+
+
+
+Set y-\/component. 
+
+\Hypertarget{classFoam_1_1GaussField_a64944c6bd9a672e6ee93c439f16d65ba}\label{classFoam_1_1GaussField_a64944c6bd9a672e6ee93c439f16d65ba} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!setZ@{setZ}}
+\index{setZ@{setZ}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{setZ()}{setZ()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::setZ (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{fz }\end{DoxyParamCaption})}
+
+
+
+Set z-\/component. 
+
+\Hypertarget{classFoam_1_1GaussField_acd864dbb993dbaf13c30feea745be601}\label{classFoam_1_1GaussField_acd864dbb993dbaf13c30feea745be601} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!setXYZ@{setXYZ}}
+\index{setXYZ@{setXYZ}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{setXYZ()}{setXYZ()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::set\+XYZ (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{fx,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{fy,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{fz }\end{DoxyParamCaption})}
+
+
+
+Set all components. 
+
+\Hypertarget{classFoam_1_1GaussField_a16ce06abdd0315f5eaf50a91096511b4}\label{classFoam_1_1GaussField_a16ce06abdd0315f5eaf50a91096511b4} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!limitMax@{limitMax}}
+\index{limitMax@{limitMax}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{limitMax()}{limitMax()}\hspace{0.1cm}{\footnotesize\ttfamily [1/6]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::limit\+Max (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}}]{max\+Val }\end{DoxyParamCaption})}
+
+
+
+Limit maximum value. 
+
+\Hypertarget{classFoam_1_1GaussField_a5110c0b5a4b45aaa26bc57d4d8b7a04f}\label{classFoam_1_1GaussField_a5110c0b5a4b45aaa26bc57d4d8b7a04f} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!limitMin@{limitMin}}
+\index{limitMin@{limitMin}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{limitMin()}{limitMin()}\hspace{0.1cm}{\footnotesize\ttfamily [1/6]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::limit\+Min (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}}]{min\+Val }\end{DoxyParamCaption})}
+
+
+
+Limit minimum value. 
+
+\Hypertarget{classFoam_1_1GaussField_a6a8f9e71ceaa62059e604f5c7a923872}\label{classFoam_1_1GaussField_a6a8f9e71ceaa62059e604f5c7a923872} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!limitRange@{limitRange}}
+\index{limitRange@{limitRange}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{limitRange()}{limitRange()}\hspace{0.1cm}{\footnotesize\ttfamily [1/6]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::limit\+Range (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}}]{min\+Val,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}}]{max\+Val }\end{DoxyParamCaption})}
+
+
+
+Limit value range. 
+
+\Hypertarget{classFoam_1_1GaussField_ab3dffce19087f571ef95cceba074c1c2}\label{classFoam_1_1GaussField_ab3dffce19087f571ef95cceba074c1c2} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!operator=@{operator=}}
+\index{operator=@{operator=}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
+\mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \& \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\mbox{\hyperlink{classFoam_1_1GaussField_a962e524110de8fe842a07f16521c7086}{\+::operator}}= (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \&}]{other }\end{DoxyParamCaption})}
+
+
+
+Copy assignment. 
+
+\Hypertarget{classFoam_1_1GaussField_ab46b9ddd1191fef2048295de79c87869}\label{classFoam_1_1GaussField_ab46b9ddd1191fef2048295de79c87869} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!operator=@{operator=}}
+\index{operator=@{operator=}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
+\mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \& \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\mbox{\hyperlink{classFoam_1_1GaussField_a962e524110de8fe842a07f16521c7086}{\+::operator}}= (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} \&}]{value }\end{DoxyParamCaption})}
+
+
+
+Assign uniform value. 
+
+\Hypertarget{classFoam_1_1GaussField_ae7e0ea5ffec3700d696b7236780389ef}\label{classFoam_1_1GaussField_ae7e0ea5ffec3700d696b7236780389ef} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!dgMesh@{dgMesh}}
+\index{dgMesh@{dgMesh}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{dgMesh()}{dgMesh()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
+\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::dg\+Mesh (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Return DG geometric mesh. 
+
+Fatal error if mesh pointer is null. \Hypertarget{classFoam_1_1GaussField_a31e56407c32c582500c051353b1ead2a}\label{classFoam_1_1GaussField_a31e56407c32c582500c051353b1ead2a} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!cellID@{cellID}}
+\index{cellID@{cellID}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{cellID()}{cellID()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
+\mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::cell\+ID (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Return cell index. 
+
+\Hypertarget{classFoam_1_1GaussField_a06361b0d120124469aa719b6c4aa5688}\label{classFoam_1_1GaussField_a06361b0d120124469aa719b6c4aa5688} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!dofFieldPtr@{dofFieldPtr}}
+\index{dofFieldPtr@{dofFieldPtr}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{dofFieldPtr()}{dofFieldPtr()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
+\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dofField}{dof\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::dof\+Field\+Ptr (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Return pointer to DoF field. 
+
+\Hypertarget{classFoam_1_1GaussField_a50fbcbf2b466b2c03538549f32dd5a5e}\label{classFoam_1_1GaussField_a50fbcbf2b466b2c03538549f32dd5a5e} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!cellField@{cellField}}
+\index{cellField@{cellField}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{cellField()}{cellField()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
+\mbox{\hyperlink{classFoam_1_1cellGaussField}{cell\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \& \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::cell\+Field (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Access cell Gauss field. 
+
+\Hypertarget{classFoam_1_1GaussField_a82a4a57d6e7f9a1d53e314051c3b439c}\label{classFoam_1_1GaussField_a82a4a57d6e7f9a1d53e314051c3b439c} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!cellField@{cellField}}
+\index{cellField@{cellField}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{cellField()}{cellField()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
+\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1cellGaussField}{cell\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \& \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::cell\+Field (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Const access to cell Gauss field. 
+
+\Hypertarget{classFoam_1_1GaussField_a11bd1d315e54f3b9c65366000219d8a1}\label{classFoam_1_1GaussField_a11bd1d315e54f3b9c65366000219d8a1} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!faceField@{faceField}}
+\index{faceField@{faceField}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{faceField()}{faceField()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
+\mbox{\hyperlink{classFoam_1_1faceGaussField}{face\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \& \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::face\+Field (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Access face Gauss field. 
+
+\Hypertarget{classFoam_1_1GaussField_a11bf78799decb0a0d3b32a592b7a9db4}\label{classFoam_1_1GaussField_a11bf78799decb0a0d3b32a592b7a9db4} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!faceField@{faceField}}
+\index{faceField@{faceField}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{faceField()}{faceField()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
+\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1faceGaussField}{face\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \& \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::face\+Field (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Const access to face Gauss field. 
+
+\Hypertarget{classFoam_1_1GaussField_af4174313645cecad5e8a05785cb0955b}\label{classFoam_1_1GaussField_af4174313645cecad5e8a05785cb0955b} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!interpolateFromDof@{interpolateFromDof}}
+\index{interpolateFromDof@{interpolateFromDof}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{interpolateFromDof()}{interpolateFromDof()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::interpolate\+From\+Dof (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Interpolate DOF values to Gauss points. 
+
+Updates both cell and face Gauss fields using the associated dof\+Field$<$\+Type$>$. \Hypertarget{classFoam_1_1GaussField_ae60e7ca60bf27fd26d291d41c9fc6ec2}\label{classFoam_1_1GaussField_ae60e7ca60bf27fd26d291d41c9fc6ec2} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!cellValueAt@{cellValueAt}}
+\index{cellValueAt@{cellValueAt}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{cellValueAt()}{cellValueAt()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
+\mbox{\hyperlink{classFoam_1_1GaussField}{Type}} \& \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::cell\+Value\+At (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{gpI }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Access cell Gauss value by index. 
+
+\Hypertarget{classFoam_1_1GaussField_a33713d74a3ae1db022aba73efbc3765a}\label{classFoam_1_1GaussField_a33713d74a3ae1db022aba73efbc3765a} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!cellValueAt@{cellValueAt}}
+\index{cellValueAt@{cellValueAt}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{cellValueAt()}{cellValueAt()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
+\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} \& \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::cell\+Value\+At (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{gpI }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Const access to cell Gauss value. 
+
+\Hypertarget{classFoam_1_1GaussField_a396ecdd4262ce1f979ca4e93a91b55ee}\label{classFoam_1_1GaussField_a396ecdd4262ce1f979ca4e93a91b55ee} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!facePlusValueAt@{facePlusValueAt}}
+\index{facePlusValueAt@{facePlusValueAt}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{facePlusValueAt()}{facePlusValueAt()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
+\mbox{\hyperlink{classFoam_1_1GaussField}{Type}} \& \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::face\+Plus\+Value\+At (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{faceI,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{gpI }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Access plus-\/side face Gauss value. 
+
+\Hypertarget{classFoam_1_1GaussField_a51cfbe38a04fac12ba9d8f73ce2ca890}\label{classFoam_1_1GaussField_a51cfbe38a04fac12ba9d8f73ce2ca890} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!faceMinusValueAt@{faceMinusValueAt}}
+\index{faceMinusValueAt@{faceMinusValueAt}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{faceMinusValueAt()}{faceMinusValueAt()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
+\mbox{\hyperlink{classFoam_1_1GaussField}{Type}} \& \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::face\+Minus\+Value\+At (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{faceI,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{gpI }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Access minus-\/side face Gauss value. 
+
+\Hypertarget{classFoam_1_1GaussField_a5fb0c9ab252adceaac9f50f072e8dc90}\label{classFoam_1_1GaussField_a5fb0c9ab252adceaac9f50f072e8dc90} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!facePlusValueAt@{facePlusValueAt}}
+\index{facePlusValueAt@{facePlusValueAt}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{facePlusValueAt()}{facePlusValueAt()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
+\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} \& \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::face\+Plus\+Value\+At (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{faceI,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{gpI }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Const access to plus-\/side face Gauss value. 
+
+\Hypertarget{classFoam_1_1GaussField_a7af0b96b17afc0aa6345485d86ef46b3}\label{classFoam_1_1GaussField_a7af0b96b17afc0aa6345485d86ef46b3} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!faceMinusValueAt@{faceMinusValueAt}}
+\index{faceMinusValueAt@{faceMinusValueAt}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{faceMinusValueAt()}{faceMinusValueAt()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
+\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} \& \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::face\+Minus\+Value\+At (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{faceI,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{gpI }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Const access to minus-\/side face Gauss value. 
+
+\Hypertarget{classFoam_1_1GaussField_a49c91fd2de86e400eb7bf30ed43b04fd}\label{classFoam_1_1GaussField_a49c91fd2de86e400eb7bf30ed43b04fd} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!x@{x}}
+\index{x@{x}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{x()}{x()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
+\mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::x (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Return x-\/component. 
+
+\Hypertarget{classFoam_1_1GaussField_af48b2954902727aadb60e75a5baf4cf3}\label{classFoam_1_1GaussField_af48b2954902727aadb60e75a5baf4cf3} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!y@{y}}
+\index{y@{y}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{y()}{y()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
+\mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::y (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Return y-\/component. 
+
+\Hypertarget{classFoam_1_1GaussField_ac893a0f59b8435e95c03d2a35c6a2cc3}\label{classFoam_1_1GaussField_ac893a0f59b8435e95c03d2a35c6a2cc3} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!z@{z}}
+\index{z@{z}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{z()}{z()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
+\mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::z (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Return z-\/component. 
+
+\Hypertarget{classFoam_1_1GaussField_a31fa1a873ae9fc766e2828b036e49102}\label{classFoam_1_1GaussField_a31fa1a873ae9fc766e2828b036e49102} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!setX@{setX}}
+\index{setX@{setX}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{setX()}{setX()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::setX (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{fx }\end{DoxyParamCaption})}
+
+
+
+Set x-\/component. 
+
+\Hypertarget{classFoam_1_1GaussField_a517fcafe3668f5b6bd58599f976e7cd8}\label{classFoam_1_1GaussField_a517fcafe3668f5b6bd58599f976e7cd8} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!setY@{setY}}
+\index{setY@{setY}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{setY()}{setY()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::setY (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{fy }\end{DoxyParamCaption})}
+
+
+
+Set y-\/component. 
+
+\Hypertarget{classFoam_1_1GaussField_a64944c6bd9a672e6ee93c439f16d65ba}\label{classFoam_1_1GaussField_a64944c6bd9a672e6ee93c439f16d65ba} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!setZ@{setZ}}
+\index{setZ@{setZ}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{setZ()}{setZ()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::setZ (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{fz }\end{DoxyParamCaption})}
+
+
+
+Set z-\/component. 
+
+\Hypertarget{classFoam_1_1GaussField_acd864dbb993dbaf13c30feea745be601}\label{classFoam_1_1GaussField_acd864dbb993dbaf13c30feea745be601} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!setXYZ@{setXYZ}}
+\index{setXYZ@{setXYZ}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{setXYZ()}{setXYZ()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::set\+XYZ (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{fx,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{fy,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{fz }\end{DoxyParamCaption})}
+
+
+
+Set all components. 
+
+\Hypertarget{classFoam_1_1GaussField_a16ce06abdd0315f5eaf50a91096511b4}\label{classFoam_1_1GaussField_a16ce06abdd0315f5eaf50a91096511b4} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!limitMax@{limitMax}}
+\index{limitMax@{limitMax}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{limitMax()}{limitMax()}\hspace{0.1cm}{\footnotesize\ttfamily [2/6]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::limit\+Max (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}}]{max\+Val }\end{DoxyParamCaption})}
+
+
+
+Limit maximum value. 
+
+\Hypertarget{classFoam_1_1GaussField_a5110c0b5a4b45aaa26bc57d4d8b7a04f}\label{classFoam_1_1GaussField_a5110c0b5a4b45aaa26bc57d4d8b7a04f} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!limitMin@{limitMin}}
+\index{limitMin@{limitMin}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{limitMin()}{limitMin()}\hspace{0.1cm}{\footnotesize\ttfamily [2/6]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::limit\+Min (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}}]{min\+Val }\end{DoxyParamCaption})}
+
+
+
+Limit minimum value. 
+
+\Hypertarget{classFoam_1_1GaussField_a6a8f9e71ceaa62059e604f5c7a923872}\label{classFoam_1_1GaussField_a6a8f9e71ceaa62059e604f5c7a923872} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!limitRange@{limitRange}}
+\index{limitRange@{limitRange}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{limitRange()}{limitRange()}\hspace{0.1cm}{\footnotesize\ttfamily [2/6]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::limit\+Range (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}}]{min\+Val,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}}]{max\+Val }\end{DoxyParamCaption})}
+
+
+
+Limit value range. 
+
+\Hypertarget{classFoam_1_1GaussField_a49683d30e4e47effe7177bfe4f8bc315}\label{classFoam_1_1GaussField_a49683d30e4e47effe7177bfe4f8bc315} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!limitMax@{limitMax}}
+\index{limitMax@{limitMax}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{limitMax()}{limitMax()}\hspace{0.1cm}{\footnotesize\ttfamily [3/6]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$\+::limit\+Max (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}}]{max\+Val }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classFoam_1_1GaussField_a2141711f5e938b4477657e7f7b220691}\label{classFoam_1_1GaussField_a2141711f5e938b4477657e7f7b220691} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!limitMin@{limitMin}}
+\index{limitMin@{limitMin}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{limitMin()}{limitMin()}\hspace{0.1cm}{\footnotesize\ttfamily [3/6]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$\+::limit\+Min (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}}]{min\+Val }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classFoam_1_1GaussField_a9105b84411470d12dfcbe254c4ad6bcd}\label{classFoam_1_1GaussField_a9105b84411470d12dfcbe254c4ad6bcd} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!limitRange@{limitRange}}
+\index{limitRange@{limitRange}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{limitRange()}{limitRange()}\hspace{0.1cm}{\footnotesize\ttfamily [3/6]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$\+::limit\+Range (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}}]{min\+Val,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}}]{max\+Val }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classFoam_1_1GaussField_ad515a92d24d2b252f4fadd7762ec3b75}\label{classFoam_1_1GaussField_ad515a92d24d2b252f4fadd7762ec3b75} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!x@{x}}
+\index{x@{x}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{x()}{x()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$\+::x (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classFoam_1_1GaussField_a7d49e6e39389d1d33bf9134299caf406}\label{classFoam_1_1GaussField_a7d49e6e39389d1d33bf9134299caf406} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!y@{y}}
+\index{y@{y}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{y()}{y()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$\+::y (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classFoam_1_1GaussField_ac6d297d20e9cf6a402cc244057300445}\label{classFoam_1_1GaussField_ac6d297d20e9cf6a402cc244057300445} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!z@{z}}
+\index{z@{z}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{z()}{z()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$\+::z (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classFoam_1_1GaussField_ab5588713be69c20a0f1894a852956821}\label{classFoam_1_1GaussField_ab5588713be69c20a0f1894a852956821} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!setX@{setX}}
+\index{setX@{setX}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{setX()}{setX()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$\+::setX (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{fx }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classFoam_1_1GaussField_a0dd5e2e3c0590ad2ab4c005b4771d618}\label{classFoam_1_1GaussField_a0dd5e2e3c0590ad2ab4c005b4771d618} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!setY@{setY}}
+\index{setY@{setY}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{setY()}{setY()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$\+::setY (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{fy }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classFoam_1_1GaussField_a769c604ef0ade0395c5a2657dec43d6e}\label{classFoam_1_1GaussField_a769c604ef0ade0395c5a2657dec43d6e} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!setZ@{setZ}}
+\index{setZ@{setZ}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{setZ()}{setZ()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$\+::setZ (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{fz }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classFoam_1_1GaussField_a73cf2627132e5413a90675a290fb2aa3}\label{classFoam_1_1GaussField_a73cf2627132e5413a90675a290fb2aa3} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!setXYZ@{setXYZ}}
+\index{setXYZ@{setXYZ}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{setXYZ()}{setXYZ()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$\+::set\+XYZ (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{fx,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{fy,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{fz }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classFoam_1_1GaussField_ae750ec9b675922cfb4b3720f38c0c8da}\label{classFoam_1_1GaussField_ae750ec9b675922cfb4b3720f38c0c8da} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!limitMax@{limitMax}}
+\index{limitMax@{limitMax}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{limitMax()}{limitMax()}\hspace{0.1cm}{\footnotesize\ttfamily [4/6]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$\+::limit\+Max (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}}]{max\+Val }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classFoam_1_1GaussField_a9b834a0e27955185a8e019d6c6daa4d3}\label{classFoam_1_1GaussField_a9b834a0e27955185a8e019d6c6daa4d3} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!limitMin@{limitMin}}
+\index{limitMin@{limitMin}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{limitMin()}{limitMin()}\hspace{0.1cm}{\footnotesize\ttfamily [4/6]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$\+::limit\+Min (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}}]{min\+Val }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classFoam_1_1GaussField_a37e2708faf40c40b521682c7c7a5e997}\label{classFoam_1_1GaussField_a37e2708faf40c40b521682c7c7a5e997} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!limitRange@{limitRange}}
+\index{limitRange@{limitRange}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{limitRange()}{limitRange()}\hspace{0.1cm}{\footnotesize\ttfamily [4/6]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$\+::limit\+Range (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}}]{min\+Val,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}}]{max\+Val }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classFoam_1_1GaussField_a49683d30e4e47effe7177bfe4f8bc315}\label{classFoam_1_1GaussField_a49683d30e4e47effe7177bfe4f8bc315} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!limitMax@{limitMax}}
+\index{limitMax@{limitMax}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{limitMax()}{limitMax()}\hspace{0.1cm}{\footnotesize\ttfamily [5/6]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$\+::limit\+Max (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}}]{max\+Val }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classFoam_1_1GaussField_a2141711f5e938b4477657e7f7b220691}\label{classFoam_1_1GaussField_a2141711f5e938b4477657e7f7b220691} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!limitMin@{limitMin}}
+\index{limitMin@{limitMin}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{limitMin()}{limitMin()}\hspace{0.1cm}{\footnotesize\ttfamily [5/6]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$\+::limit\+Min (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}}]{min\+Val }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classFoam_1_1GaussField_a9105b84411470d12dfcbe254c4ad6bcd}\label{classFoam_1_1GaussField_a9105b84411470d12dfcbe254c4ad6bcd} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!limitRange@{limitRange}}
+\index{limitRange@{limitRange}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{limitRange()}{limitRange()}\hspace{0.1cm}{\footnotesize\ttfamily [5/6]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$\+::limit\+Range (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}}]{min\+Val,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}}]{max\+Val }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classFoam_1_1GaussField_ad515a92d24d2b252f4fadd7762ec3b75}\label{classFoam_1_1GaussField_ad515a92d24d2b252f4fadd7762ec3b75} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!x@{x}}
+\index{x@{x}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{x()}{x()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$\+::x (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classFoam_1_1GaussField_a7d49e6e39389d1d33bf9134299caf406}\label{classFoam_1_1GaussField_a7d49e6e39389d1d33bf9134299caf406} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!y@{y}}
+\index{y@{y}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{y()}{y()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$\+::y (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classFoam_1_1GaussField_ac6d297d20e9cf6a402cc244057300445}\label{classFoam_1_1GaussField_ac6d297d20e9cf6a402cc244057300445} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!z@{z}}
+\index{z@{z}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{z()}{z()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$\+::z (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classFoam_1_1GaussField_ab5588713be69c20a0f1894a852956821}\label{classFoam_1_1GaussField_ab5588713be69c20a0f1894a852956821} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!setX@{setX}}
+\index{setX@{setX}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{setX()}{setX()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$\+::setX (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{fx }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classFoam_1_1GaussField_a0dd5e2e3c0590ad2ab4c005b4771d618}\label{classFoam_1_1GaussField_a0dd5e2e3c0590ad2ab4c005b4771d618} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!setY@{setY}}
+\index{setY@{setY}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{setY()}{setY()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$\+::setY (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{fy }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classFoam_1_1GaussField_a769c604ef0ade0395c5a2657dec43d6e}\label{classFoam_1_1GaussField_a769c604ef0ade0395c5a2657dec43d6e} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!setZ@{setZ}}
+\index{setZ@{setZ}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{setZ()}{setZ()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$\+::setZ (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{fz }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classFoam_1_1GaussField_a73cf2627132e5413a90675a290fb2aa3}\label{classFoam_1_1GaussField_a73cf2627132e5413a90675a290fb2aa3} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!setXYZ@{setXYZ}}
+\index{setXYZ@{setXYZ}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{setXYZ()}{setXYZ()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$\+::set\+XYZ (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{fx,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{fy,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{fz }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classFoam_1_1GaussField_ae750ec9b675922cfb4b3720f38c0c8da}\label{classFoam_1_1GaussField_ae750ec9b675922cfb4b3720f38c0c8da} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!limitMax@{limitMax}}
+\index{limitMax@{limitMax}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{limitMax()}{limitMax()}\hspace{0.1cm}{\footnotesize\ttfamily [6/6]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$\+::limit\+Max (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}}]{max\+Val }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classFoam_1_1GaussField_a9b834a0e27955185a8e019d6c6daa4d3}\label{classFoam_1_1GaussField_a9b834a0e27955185a8e019d6c6daa4d3} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!limitMin@{limitMin}}
+\index{limitMin@{limitMin}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{limitMin()}{limitMin()}\hspace{0.1cm}{\footnotesize\ttfamily [6/6]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$\+::limit\+Min (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}}]{min\+Val }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{classFoam_1_1GaussField_a37e2708faf40c40b521682c7c7a5e997}\label{classFoam_1_1GaussField_a37e2708faf40c40b521682c7c7a5e997} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!limitRange@{limitRange}}
+\index{limitRange@{limitRange}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{limitRange()}{limitRange()}\hspace{0.1cm}{\footnotesize\ttfamily [6/6]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$\+::limit\+Range (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}}]{min\+Val,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}}]{max\+Val }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\doxysubsection{Friends And Related Symbol Documentation}
+\Hypertarget{classFoam_1_1GaussField_aa3f4906f669b5b7ec65c760262fc9330}\label{classFoam_1_1GaussField_aa3f4906f669b5b7ec65c760262fc9330} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!operator$<$$<$@{operator$<$$<$}}
+\index{operator$<$$<$@{operator$<$$<$}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{operator$<$$<$}{operator<<}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
+\mbox{\hyperlink{classFoam_1_1GaussField}{Ostream}} \& \mbox{\hyperlink{classFoam_1_1GaussField}{operator}}$<$$<$ (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{Ostream}} \&}]{os,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \&}]{gf }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [friend]}}
+
+
+
+Stream output. 
+
+\Hypertarget{classFoam_1_1GaussField_aa3f4906f669b5b7ec65c760262fc9330}\label{classFoam_1_1GaussField_aa3f4906f669b5b7ec65c760262fc9330} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!operator$<$$<$@{operator$<$$<$}}
+\index{operator$<$$<$@{operator$<$$<$}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{operator$<$$<$}{operator<<}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
+\mbox{\hyperlink{classFoam_1_1GaussField}{Ostream}} \& \mbox{\hyperlink{classFoam_1_1GaussField}{operator}}$<$$<$ (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{Ostream}} \&}]{os,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \&}]{gf }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [friend]}}
+
+
+
+Stream output. 
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classFoam_1_1GaussField_a647b6db0acf6685a7129e63b9c34a092}\label{classFoam_1_1GaussField_a647b6db0acf6685a7129e63b9c34a092} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!dofField\_@{dofField\_}}
+\index{dofField\_@{dofField\_}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{dofField\_}{dofField\_}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
+\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dofField}{dof\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::dof\+Field\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Pointer to DoF field (read-\/only, non-\/owning) 
+
+\Hypertarget{classFoam_1_1GaussField_a938849a2c6069d93ad5b4a1926511fd9}\label{classFoam_1_1GaussField_a938849a2c6069d93ad5b4a1926511fd9} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!cellID\_@{cellID\_}}
+\index{cellID\_@{cellID\_}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{cellID\_}{cellID\_}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
+\mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::cell\+ID\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Cell index. 
+
+\Hypertarget{classFoam_1_1GaussField_a0bbe5d7cef3fc3e786da54ee51b67480}\label{classFoam_1_1GaussField_a0bbe5d7cef3fc3e786da54ee51b67480} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!mesh\_@{mesh\_}}
+\index{mesh\_@{mesh\_}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{mesh\_}{mesh\_}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
+\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::mesh\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Pointer to DG geometric mesh (non-\/owning) 
+
+\Hypertarget{classFoam_1_1GaussField_a5a060a96c564d80b1a9864beef7388a4}\label{classFoam_1_1GaussField_a5a060a96c564d80b1a9864beef7388a4} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!cellField\_@{cellField\_}}
+\index{cellField\_@{cellField\_}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{cellField\_}{cellField\_}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
+\mbox{\hyperlink{classFoam_1_1cellGaussField}{cell\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::cell\+Field\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Gauss-\/point field inside the cell. 
+
+\Hypertarget{classFoam_1_1GaussField_a3f286fc28a24a2f78d6338791024a71a}\label{classFoam_1_1GaussField_a3f286fc28a24a2f78d6338791024a71a} 
+\index{Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}!faceField\_@{faceField\_}}
+\index{faceField\_@{faceField\_}!Foam::GaussField$<$ Type $>$@{Foam::GaussField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{faceField\_}{faceField\_}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
+\mbox{\hyperlink{classFoam_1_1faceGaussField}{face\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::face\+Field\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Gauss-\/point field on cell faces. 
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/nam-\/ha-\/tran/\+Open\+FOAM/\+DGFoam/src/\+DGFoam/fields/\+Gauss\+Fields/\+Gauss\+Field/\mbox{\hyperlink{fields_2GaussFields_2GaussField_2GaussField_8H}{Gauss\+Field.\+H}}\item 
+/home/nam-\/ha-\/tran/\+Open\+FOAM/\+DGFoam/src/\+DGFoam/ln\+Include/\mbox{\hyperlink{lnInclude_2GaussField_8H}{Gauss\+Field.\+H}}\item 
+/home/nam-\/ha-\/tran/\+Open\+FOAM/\+DGFoam/src/\+DGFoam/fields/\+Gauss\+Fields/\+Gauss\+Field/\mbox{\hyperlink{fields_2GaussFields_2GaussField_2GaussFieldI_8H}{Gauss\+Field\+I.\+H}}\item 
+/home/nam-\/ha-\/tran/\+Open\+FOAM/\+DGFoam/src/\+DGFoam/ln\+Include/\mbox{\hyperlink{lnInclude_2GaussFieldI_8H}{Gauss\+Field\+I.\+H}}\end{DoxyCompactItemize}

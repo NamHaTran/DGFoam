@@ -5,7 +5,7 @@
     \\  /    A nd           | www.openfoam.com
      \\/     M anipulation  |
 -------------------------------------------------------------------------------
-    Copyright (C) 2011-2016 OpenFOAM Foundation
+    Copyright (C) 2015-2024 OpenCFD Ltd.
     Copyright (C) 2024-2025 Ha Nam Tran
 -------------------------------------------------------------------------------
 License
@@ -28,8 +28,10 @@ Class
     Foam::dgBasisField
 
 Description
-    Stores precomputed GaussField of all basis functions and their derivatives
-    for a given cell in DG formulation.
+    Basis-function Gauss-field container for DG discretization.
+
+    Stores precomputed GaussField representations of all basis functions
+    and their derivatives for a single DG cell.
 
 SourceFiles
     dgBasisField.C
@@ -49,55 +51,107 @@ namespace Foam
                          Class dgBasisField Declaration
 \*---------------------------------------------------------------------------*/
 
+/**
+ * \class Foam::dgBasisField
+ * \brief Precomputed basis-function fields on Gauss points
+ *
+ * \details
+ * dgBasisField stores GaussField representations of all polynomial
+ * basis functions and their spatial derivatives associated with a
+ * single DG cell.
+ *
+ * The basis functions are evaluated at Gauss points inside the cell
+ * and on its faces using geometric information provided by dgGeomMesh.
+ *
+ * This class is typically used during DG residual assembly to evaluate
+ * volume and surface integrals efficiently without recomputing basis
+ * functions at runtime.
+ */
 class dgBasisField
 {
 private:
 
-    //- Reference to geometric DG mesh
-    const dgGeomMesh& mesh_;
+    //====================================================================//
+    //                           Data members
+    //====================================================================//
 
-    //- Cell ID associated with this basis field
-    const label cellID_;
+        /** Reference to the DG geometric mesh */
+        const dgGeomMesh& mesh_;
 
-    //- Local face labels of the current cell
-    labelList faceLabels_;
+        /** Cell index associated with this basis field */
+        const label cellID_;
 
-    //- Number of DoFs in this cell
-    label nDof_;
+        /** Local face labels of the cell */
+        labelList faceLabels_;
 
-    //- Basis GaussFields for all DoFs (scalar basis)
-    List<GaussField<scalar>> basis_;
+        /** Number of degrees of freedom in this cell */
+        label nDof_;
 
-    //- Derivative basis GaussFields for all DoFs (vector basis)
-    List<GaussField<vector>> dBasis_;
+        /** Scalar basis-function Gauss fields (one per DoF) */
+        List<GaussField<scalar>> basis_;
+
+        /** Derivative basis-function Gauss fields (one per DoF) */
+        List<GaussField<vector>> dBasis_;
 
 public:
 
-    //- Construct from cell ID and geometric mesh
-    dgBasisField(const label cellID, const dgGeomMesh& mesh);
+    //====================================================================//
+    //                           Constructors
+    //====================================================================//
 
-    // Member Functions
-        //- Compute scalar basis GaussFields (for all DoFs)
+        /**
+         * \brief Construct basis fields for a given cell
+         *
+         * Initializes internal storage based on the cell geometry
+         * and polynomial order defined in the DG mesh.
+         */
+        dgBasisField(const label cellID, const dgGeomMesh& mesh);
+
+    //====================================================================//
+    //                        Basis computation
+    //====================================================================//
+
+        /**
+         * \brief Compute scalar basis-function Gauss fields
+         *
+         * Computes GaussField representations of all scalar
+         * basis functions for the associated cell.
+         */
         void computeBasisField();
 
-        //- Compute derivative basis GaussFields (for all DoFs)
+        /**
+         * \brief Compute derivative basis-function Gauss fields
+         *
+         * Computes GaussField representations of spatial derivatives
+         * of all basis functions for the associated cell.
+         */
         void computeDBasisField();
 
-        // Access
+    //====================================================================//
+    //                           Access
+    //====================================================================//
 
-        //- Return GaussField of the i-th basis function
+        /**
+         * \brief Return GaussField of the specified basis function
+         *
+         * \param dof Degree-of-freedom index
+         */
         const GaussField<scalar>& getBasis(const label dof) const;
 
-        //- Return GaussField of the i-th derivative basis function
+        /**
+         * \brief Return GaussField of the specified derivative basis function
+         *
+         * \param dof Degree-of-freedom index
+         */
         const GaussField<vector>& getDBasis(const label dof) const;
 
-        //- Return number of DoF
+        /** Return number of degrees of freedom */
         inline label nDof() const { return nDof_; }
 };
 
 } // End namespace Foam
 
-// Include template-related inline implementation
+// Include inline implementation
 #include "dgBasisFieldI.H"
 
 #endif

@@ -1,0 +1,69 @@
+\doxysection{dg\+General\+Inlet\+Outlet\+Boundary\+Field\+I.\+H}
+\hypertarget{lnInclude_2dgGeneralInletOutletBoundaryFieldI_8H_source}{}\label{lnInclude_2dgGeneralInletOutletBoundaryFieldI_8H_source}\index{/home/nam-\/ha-\/tran/OpenFOAM/DGFoam/src/DGMethod/lnInclude/dgGeneralInletOutletBoundaryFieldI.H@{/home/nam-\/ha-\/tran/OpenFOAM/DGFoam/src/DGMethod/lnInclude/dgGeneralInletOutletBoundaryFieldI.H}}
+\mbox{\hyperlink{lnInclude_2dgGeneralInletOutletBoundaryFieldI_8H}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*\(\backslash\)}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ \ =========\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ \ \(\backslash\)\(\backslash\)\ \ \ \ \ \ /\ \ F\ ield\ \ \ \ \ \ \ \ \ |\ OpenFOAM:\ The\ Open\ Source\ CFD\ Toolbox}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ \ \ \(\backslash\)\(\backslash\)\ \ \ \ /\ \ \ O\ peration\ \ \ \ \ |}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ \ \ \ \(\backslash\)\(\backslash\)\ \ /\ \ \ \ A\ nd\ \ \ \ \ \ \ \ \ \ \ |\ www.openfoam.com}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ \ \ \ \ \(\backslash\)\(\backslash\)/\ \ \ \ \ M\ anipulation\ \ |}}
+\DoxyCodeLine{00007\ \textcolor{comment}{-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ \ \ \ Copyright\ (C)\ 2015-\/2024\ OpenCFD\ Ltd.}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ \ \ \ Copyright\ (C)\ 2024-\/2025\ Ha\ Nam\ Tran}}
+\DoxyCodeLine{00010\ \textcolor{comment}{-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00011\ \textcolor{comment}{License}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ \ \ \ This\ file\ is\ part\ of\ DGFoam.}}
+\DoxyCodeLine{00013\ \textcolor{comment}{}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ \ \ \ DGFoam\ is\ free\ software:\ you\ can\ redistribute\ it\ and/or\ modify\ it}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ \ \ \ under\ the\ terms\ of\ the\ GNU\ General\ Public\ License\ as\ published\ by}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ \ \ \ the\ Free\ Software\ Foundation,\ either\ version\ 3\ of\ the\ License,\ or}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ \ \ \ (at\ your\ option)\ any\ later\ version.}}
+\DoxyCodeLine{00018\ \textcolor{comment}{}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ \ \ \ DGFoam\ is\ distributed\ in\ the\ hope\ that\ it\ will\ be\ useful,\ but\ WITHOUT}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ \ \ \ ANY\ WARRANTY;\ without\ even\ the\ implied\ warranty\ of\ MERCHANTABILITY\ or}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ \ \ \ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE.\ \ See\ the\ GNU\ General\ Public\ License}}
+\DoxyCodeLine{00022\ \textcolor{comment}{\ \ \ \ for\ more\ details.}}
+\DoxyCodeLine{00023\ \textcolor{comment}{}}
+\DoxyCodeLine{00024\ \textcolor{comment}{\ \ \ \ You\ should\ have\ received\ a\ copy\ of\ the\ GNU\ General\ Public\ License}}
+\DoxyCodeLine{00025\ \textcolor{comment}{\ \ \ \ along\ with\ OpenFOAM.\ \ If\ not,\ see\ <http://www.gnu.org/licenses/>.}}
+\DoxyCodeLine{00026\ \textcolor{comment}{}}
+\DoxyCodeLine{00027\ \textcolor{comment}{Class}}
+\DoxyCodeLine{00028\ \textcolor{comment}{\ \ \ \ Foam::dgInletOutletBoundaryField}}
+\DoxyCodeLine{00029\ \textcolor{comment}{}}
+\DoxyCodeLine{00030\ \textcolor{comment}{\(\backslash\)*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \textcolor{preprocessor}{\#ifndef\ dgGeneralInletOutletBoundaryFieldI\_H}}
+\DoxyCodeLine{00033\ \textcolor{preprocessor}{\#define\ dgGeneralInletOutletBoundaryFieldI\_H}}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ \textcolor{preprocessor}{\#include\ "{}dgField.H"{}}}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespaceFoam}{Foam}}}
+\DoxyCodeLine{00038\ \{}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \textcolor{comment}{//\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ Constructor\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ //}}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Type>}
+\DoxyCodeLine{00043\ \mbox{\hyperlink{classFoam_1_1dgGeneralInletOutletBoundaryField_ae28f319bd39f465533efbe52fe8b8082}{dgGeneralInletOutletBoundaryField<Type>::dgGeneralInletOutletBoundaryField}}}
+\DoxyCodeLine{00044\ (}
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keyword}{const}\ fvPatch\&\ patch,}
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keyword}{const}\ dgGeomMesh\&\ dgMesh,}
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keyword}{const}\ dictionary\&\ dict}
+\DoxyCodeLine{00048\ )}
+\DoxyCodeLine{00049\ :}
+\DoxyCodeLine{00050\ \ \ \ \ dgGeneralBoundaryField<Type>(patch,\ dgMesh,\ dict),}
+\DoxyCodeLine{00051\ \ \ \ \ UName\_(dict.lookupOrDefault(\textcolor{stringliteral}{"{}U"{}},\ word(\textcolor{stringliteral}{"{}U"{}}))),}
+\DoxyCodeLine{00052\ \ \ \ \ U\_}
+\DoxyCodeLine{00053\ \ \ \ \ (}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ dgMesh.getFvMesh().lookupObject<dgField<vector>>(UName\_)}
+\DoxyCodeLine{00055\ \ \ \ \ )}
+\DoxyCodeLine{00056\ \{}
+\DoxyCodeLine{00057\ \ \ \ \ dict.readEntry(\textcolor{stringliteral}{"{}inletValue"{}},\ inletValue\_);}
+\DoxyCodeLine{00058\ \}}
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00060\ \}\ \textcolor{comment}{//\ End\ namespace\ Foam}}
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00062\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00063\ \textcolor{comment}{//\ *************************************************************************\ //}}
+
+\end{DoxyCode}

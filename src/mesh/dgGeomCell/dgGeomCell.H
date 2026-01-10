@@ -28,28 +28,17 @@ Class
     Foam::dgGeomCell
 
 Description
-    Geometric representation of a single cell in the mesh, tailored for use
-    with the Discontinuous Galerkin (DG) method.
+    Geometric representation of a single DG cell.
 
-    The dgGeomCell class manages the geometric data of a finite volume mesh
-    cell, including:
-      - Its topological and geometric face list
-      - Unique list of vertex coordinates
-      - Access to polyMesh-based quantities such as volume and centroid
-
-    During construction, the class initializes all dgGeomFace objects of the
-    cell using a shared dgRefFace, and stores the geometry required for
-    per-element numerical integration.
-
-    The class also provides access to reference data (basis functions,
-    Gauss points, weights) via a shared dgRefCell, which is used to evaluate
-    solution fields within the cell.
+    Stores topological and geometric information required for
+    Discontinuous Galerkin (DG) discretization, including connectivity,
+    vertex coordinates, and access to reference-cell data for numerical
+    integration.
 
 SourceFiles
     dgGeomCell.C
 
 \*---------------------------------------------------------------------------*/
-
 
 #ifndef Foam_dgGeomCell_H
 #define Foam_dgGeomCell_H
@@ -72,42 +61,72 @@ namespace Foam
                            Class dgGeomCell Declaration
 \*---------------------------------------------------------------------------*/
 
+/**
+ * \class Foam::dgGeomCell
+ * \brief Geometric container for a DG cell
+ *
+ * \details
+ * The dgGeomCell class represents the geometry of a single mesh cell
+ * tailored for Discontinuous Galerkin discretization.
+ *
+ * It provides:
+ * - Access to mesh-based quantities (volume, centroid)
+ * - Cell topology (faces, neighbors, vertices)
+ * - Access to reference-cell data (Gauss points, weights, basis functions)
+ *
+ * Geometry-specific face objects (dgGeomFace) are initialized using a
+ * shared reference face (dgRefFace). Reference-cell data is shared via
+ * dgRefCell to avoid duplication and ensure consistency.
+ *
+ * \ingroup grpDGMesh
+ */
 class dgGeomCell
 {
 private:
 
-    //- Cell ID in the mesh
+    //====================================================================//
+    //                        Data members
+    //====================================================================//
+
+    /** Cell index in the mesh */
     label cellID_;
 
-    //- Reference to the mesh
+    /** Reference to the finite-volume mesh */
     const fvMesh& mesh_;
 
-    //- Cell type
+    /** DG cell type */
     dgCellType type_;
 
-    //- Shared pointer to reference cell
+    /** Shared reference-cell data (basis, Gauss points, weights) */
     std::shared_ptr<dgRefCell> refCell_;
 
-    //- Shared pointer to reference face (used to create dgGeomFace)
+    /** Shared reference-face data used to construct dgGeomFace */
     std::shared_ptr<dgRefFace> refFace_;
 
-    //- List of face ids of the cell
+    /** List of face indices belonging to this cell */
     labelList faceLabels_;
 
-    //- List of neighboring cell ids of the cell
+    /** List of neighbouring cell indices */
     labelList neighborCellLabels_;
 
-    //- List of unique vertices of the cell
+    /** Unique list of vertex coordinates of the cell */
     pointField cellPoints_;
 
-    //- List of point labels in the cell (for ordered access)
+    /** Ordered list of vertex indices for consistent access */
     List<label> cellPointLabels_;
 
 public:
 
-    // Constructors
+    //====================================================================//
+    //                           Constructors
+    //====================================================================//
 
-        //- Construct from cell ID, mesh and reference cell/face
+        /**
+         * \brief Construct from mesh cell ID and reference data
+         *
+         * Initializes geometric connectivity and associates the cell
+         * with shared reference-cell and reference-face data.
+         */
         dgGeomCell
         (
             label cellID,
@@ -115,114 +134,123 @@ public:
             const std::shared_ptr<dgRefCell>& refCell
         );
 
-    //- Destructor
+    /** Destructor */
     ~dgGeomCell();
 
-    // Member Functions
+    //====================================================================//
+    //                        Topological access
+    //====================================================================//
 
-        //- Return the list of face ids of the cell
+        /** Return list of face indices of the cell */
         inline const labelList& faces() const
         {
             return faceLabels_;
         }
 
-        //- Return the list of neighboring cell ids of the cell
+        /** Return list of neighbouring cell indices */
         inline const labelList& neighborCells() const
         {
             return neighborCellLabels_;
         }
 
-        //- Return the number of faces in the cell
+        /** Return number of faces of the cell */
         inline label nFaces() const
         {
             return faceLabels_.size();
         }
 
-        //- Return list of unique cell points
+        /** Return unique vertex coordinates of the cell */
         inline const pointField& points() const
         {
             return cellPoints_;
         }
 
-        //- Return the number of unique points in the cell
+        /** Return number of unique vertices */
         inline label nPoints() const
         {
             return cellPoints_.size();
         }
 
-        //- Return cell centroid (from mesh)
+    //====================================================================//
+    //                    Mesh-based geometric data
+    //====================================================================//
+
+        /** Return cell centroid (from fvMesh) */
         point centre() const;
 
-        //- Return cell volume (from mesh)
+        /** Return cell volume (from fvMesh) */
         scalar volume() const;
 
-        //- Update face information based on the cell's geometry and mesh
+        /**
+         * \brief Update face geometry information
+         *
+         * Initializes or updates dgGeomFace objects associated with
+         * this cell based on mesh connectivity.
+         */
         void updateFaceInfo
         (
             List<dgGeomFace*>& faces
         );
 
-    // Access to reference cell data
+    //====================================================================//
+    //                 Reference-cell numerical data
+    //====================================================================//
 
-        //- Return Gauss points in reference cell
+        /** Return Gauss points in the reference cell */
         inline const List<vector>& gaussPoints() const
         {
             return refCell_->gaussPoints();
         }
 
-        //- Return number of Gauss points in reference cell
+        /** Return number of Gauss points */
         inline scalar nGauss() const
         {
             return refCell_->nGauss();
         }
 
-        //- Return weights of Gauss points
+        /** Return Gauss weights */
         inline const List<scalar>& weights() const
         {
             return refCell_->weights();
         }
 
-        //- Return basis functions at Gauss points
+        /** Return basis functions evaluated at Gauss points */
         inline const List<List<scalar>>& basis() const
         {
             return refCell_->basis();
         }
 
-        //- Return number of Dof in reference cell
+        /** Return number of degrees of freedom */
         inline scalar nDof() const
         {
             return refCell_->nDof();
         }
 
-        //- Return derivative of basis functions w.r.t η₁
+        /** Return derivative of basis functions w.r.t. \f$\eta_1\f$ */
         inline const List<List<scalar>>& dBasis_dEta1() const
         {
             return refCell_->dBasis_dEta1();
         }
 
-        //- Return derivative of basis functions w.r.t η₂
+        /** Return derivative of basis functions w.r.t. \f$\eta_2\f$ */
         inline const List<List<scalar>>& dBasis_dEta2() const
         {
             return refCell_->dBasis_dEta2();
         }
 
-        //- Return derivative of basis functions w.r.t η₃
+        /** Return derivative of basis functions w.r.t. \f$\eta_3\f$ */
         inline const List<List<scalar>>& dBasis_dEta3() const
         {
             return refCell_->dBasis_dEta3();
         }
 
-        //- Print debug information about the cell
+    //====================================================================//
+    //                           Utilities
+    //====================================================================//
+
+        /** Print debug information about the cell */
         void printDebugInfo() const;
 };
-
-// * * * * * * * * * * * * * * * Global Functions  * * * * * * * * * * * * * //
-
-
-
-// * * * * * * * * * * * * * * * Global Operators  * * * * * * * * * * * * * //
-
-
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 

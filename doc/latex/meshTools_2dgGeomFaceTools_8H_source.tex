@@ -1,0 +1,79 @@
+\doxysection{dg\+Geom\+Face\+Tools.\+H}
+\hypertarget{meshTools_2dgGeomFaceTools_8H_source}{}\label{meshTools_2dgGeomFaceTools_8H_source}\index{/home/nam-\/ha-\/tran/OpenFOAM/DGFoam/src/mesh/meshTools/dgGeomFaceTools.H@{/home/nam-\/ha-\/tran/OpenFOAM/DGFoam/src/mesh/meshTools/dgGeomFaceTools.H}}
+\mbox{\hyperlink{meshTools_2dgGeomFaceTools_8H}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*\(\backslash\)}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ \ =========\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ \ \(\backslash\)\(\backslash\)\ \ \ \ \ \ /\ \ F\ ield\ \ \ \ \ \ \ \ \ |\ OpenFOAM:\ The\ Open\ Source\ CFD\ Toolbox}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ \ \ \(\backslash\)\(\backslash\)\ \ \ \ /\ \ \ O\ peration\ \ \ \ \ |}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ \ \ \ \(\backslash\)\(\backslash\)\ \ /\ \ \ \ A\ nd\ \ \ \ \ \ \ \ \ \ \ |\ www.openfoam.com}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ \ \ \ \ \(\backslash\)\(\backslash\)/\ \ \ \ \ M\ anipulation\ \ |}}
+\DoxyCodeLine{00007\ \textcolor{comment}{-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ \ \ \ Copyright\ (C)\ 2011-\/2016\ OpenFOAM\ Foundation}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ \ \ \ Copyright\ (C)\ 2017-\/2023\ OpenCFD\ Ltd.}}
+\DoxyCodeLine{00010\ \textcolor{comment}{-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00011\ \textcolor{comment}{License}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ \ \ \ This\ file\ is\ part\ of\ OpenFOAM.}}
+\DoxyCodeLine{00013\ \textcolor{comment}{}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ \ \ \ OpenFOAM\ is\ free\ software:\ you\ can\ redistribute\ it\ and/or\ modify\ it}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ \ \ \ under\ the\ terms\ of\ the\ GNU\ General\ Public\ License\ as\ published\ by}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ \ \ \ the\ Free\ Software\ Foundation,\ either\ version\ 3\ of\ the\ License,\ or}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ \ \ \ (at\ your\ option)\ any\ later\ version.}}
+\DoxyCodeLine{00018\ \textcolor{comment}{}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ \ \ \ OpenFOAM\ is\ distributed\ in\ the\ hope\ that\ it\ will\ be\ useful,\ but\ WITHOUT}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ \ \ \ ANY\ WARRANTY;\ without\ even\ the\ implied\ warranty\ of\ MERCHANTABILITY\ or}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ \ \ \ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE.\ \ See\ the\ GNU\ General\ Public\ License}}
+\DoxyCodeLine{00022\ \textcolor{comment}{\ \ \ \ for\ more\ details.}}
+\DoxyCodeLine{00023\ \textcolor{comment}{}}
+\DoxyCodeLine{00024\ \textcolor{comment}{\ \ \ \ You\ should\ have\ received\ a\ copy\ of\ the\ GNU\ General\ Public\ License}}
+\DoxyCodeLine{00025\ \textcolor{comment}{\ \ \ \ along\ with\ OpenFOAM.\ \ If\ not,\ see\ <http://www.gnu.org/licenses/>.}}
+\DoxyCodeLine{00026\ \textcolor{comment}{}}
+\DoxyCodeLine{00027\ \textcolor{comment}{Class}}
+\DoxyCodeLine{00028\ \textcolor{comment}{}}
+\DoxyCodeLine{00029\ \textcolor{comment}{Description}}
+\DoxyCodeLine{00030\ \textcolor{comment}{\ \ \ \ Tools\ for\ dgGeomFace}}
+\DoxyCodeLine{00031\ \textcolor{comment}{}}
+\DoxyCodeLine{00032\ \textcolor{comment}{\(\backslash\)*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \textcolor{preprocessor}{\#ifndef\ Foam\_dgGeomFaceTools\_H}}
+\DoxyCodeLine{00035\ \textcolor{preprocessor}{\#define\ Foam\_dgGeomFaceTools\_H}}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ \textcolor{preprocessor}{\#include\ "{}fvMesh.H"{}}}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespaceFoam}{Foam}}}
+\DoxyCodeLine{00040\ \{}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*\(\backslash\)}}
+\DoxyCodeLine{00043\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Utility\ Functions\ for\ Face–Patch\ Mapping}}
+\DoxyCodeLine{00044\ \textcolor{comment}{\(\backslash\)*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*\(\backslash\)}}
+\DoxyCodeLine{00047\ \textcolor{comment}{\ \ \ \ Description}}
+\DoxyCodeLine{00048\ \textcolor{comment}{\ \ \ \ \ \ \ \ Return\ the\ patch\ ID\ that\ owns\ the\ given\ faceID.}}
+\DoxyCodeLine{00049\ \textcolor{comment}{}}
+\DoxyCodeLine{00050\ \textcolor{comment}{\ \ \ \ \ \ \ \ -\/\ If\ faceID\ belongs\ to\ an\ internal\ face\ (faceID\ <\ nInternalFaces),}}
+\DoxyCodeLine{00051\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ return\ -\/1.}}
+\DoxyCodeLine{00052\ \textcolor{comment}{\ \ \ \ \ \ \ \ -\/\ If\ boundary\ face,\ detect\ which\ fvPatch\ owns\ it\ using\ the\ fact\ that}}
+\DoxyCodeLine{00053\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ fvPatch\ stores\ a\ consecutive\ block\ of\ boundary\ faces:}}
+\DoxyCodeLine{00054\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ [start,\ start\ +\ size)}}
+\DoxyCodeLine{00055\ \textcolor{comment}{}}
+\DoxyCodeLine{00056\ \textcolor{comment}{\ \ \ \ \ \ \ \ This\ is\ the\ same\ logic\ OpenFOAM\ uses\ internally\ for\ patch\ ownership.}}
+\DoxyCodeLine{00057\ \textcolor{comment}{}}
+\DoxyCodeLine{00058\ \textcolor{comment}{\ \ \ \ Arguments}}
+\DoxyCodeLine{00059\ \textcolor{comment}{\ \ \ \ \ \ \ \ mesh\ \ \ :\ reference\ fvMesh\ providing\ boundary\ and\ internal\ face\ layout}}
+\DoxyCodeLine{00060\ \textcolor{comment}{\ \ \ \ \ \ \ \ faceID\ :\ global\ face\ ID\ in\ fvMesh.faces()}}
+\DoxyCodeLine{00061\ \textcolor{comment}{}}
+\DoxyCodeLine{00062\ \textcolor{comment}{\ \ \ \ Return}}
+\DoxyCodeLine{00063\ \textcolor{comment}{\ \ \ \ \ \ \ \ label\ :\ patch\ index,\ or\ -\/1\ for\ internal\ face}}
+\DoxyCodeLine{00064\ \textcolor{comment}{\(\backslash\)*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{00065\ \textcolor{keyword}{inline}\ label\ \mbox{\hyperlink{namespaceFoam_adf05a0f9c883e21dbefb5c82e779998b}{findOwnerPatch}}(\textcolor{keyword}{const}\ fvMesh\&\ mesh,\ \textcolor{keyword}{const}\ label\ faceID);}
+\DoxyCodeLine{00066\ }
+\DoxyCodeLine{00067\ \}\ \textcolor{comment}{//\ End\ namespace\ Foam}}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00069\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{meshTools_2dgGeomFaceToolsI_8H}{dgGeomFaceToolsI.H}}"{}}}
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00071\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00073\ \textcolor{comment}{//\ *************************************************************************\ //}}
+
+\end{DoxyCode}

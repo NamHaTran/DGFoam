@@ -70,12 +70,12 @@ inline vector volumeIntegral(const cellGaussField<vector>& gradPhi, const cellGa
     const label nGauss = F.size();
     const List<scalar>& w = F.cell()->weights();
 
-    // Cell has straight edges/faces, so Jacobian is constant (= cell volume)
+    // Cell has straight edges/faces, so Jacobian is constant (= cell volume / 8)
     const scalar cellVol = F.cell()->volume();
 
     for (label g = 0; g < nGauss; ++g)
     {
-        volInt += cellVol * (gradPhi[g] & F[g]) * w[g];
+        volInt += (cellVol / 8.0) * (gradPhi[g] & F[g]) * w[g];
     }
 
     return volInt;
@@ -98,13 +98,13 @@ inline scalar surfaceIntegral(const faceGaussField<scalar>& phi, const faceGauss
         const label nGauss = F.nGaussPerFace();
         const List<scalar>& w = F.faces()[faceI]->weights();
 
-        // Face has straight edges, so Jacobian is constant (= face area)
+        // Face has straight edges, so Jacobian is constant (= face area / 4)
         const scalar faceArea = F.faces()[faceI]->area();
 
         for (label g = 0; g < nGauss; ++g)
         {
             // F(g) is vector ⇒ dot with n to get scalar flux
-            surfInt += faceArea * phi.minusValueOnFace(faceI, g) * (F.fluxOnFace(faceI, g) & n) * w[g];
+            surfInt += (faceArea / 4.0) * phi.minusValueOnFace(faceI, g) * (F.fluxOnFace(faceI, g) & n) * w[g];
         }
     }
 
@@ -129,13 +129,13 @@ inline vector surfaceIntegral(const faceGaussField<scalar>& phi, const faceGauss
         const label nGauss = F.nGaussPerFace();
         const List<scalar>& w = F.faces()[faceI]->weights();
 
-        // Face has straight edges, so Jacobian is constant (= face area)
+        // Face has straight edges, so Jacobian is constant (= face area / 4)
         const scalar faceArea = F.faces()[faceI]->area();
 
         for (label g = 0; g < nGauss; ++g)
         {
             // fluxOnFace already returns T·n (vector)
-            surfInt += faceArea * phi.minusValueOnFace(faceI, g) * F.fluxOnFace(faceI, g) * w[g];
+            surfInt += (faceArea / 4.0) * phi.minusValueOnFace(faceI, g) * F.fluxOnFace(faceI, g) * w[g];
         }
     }
 

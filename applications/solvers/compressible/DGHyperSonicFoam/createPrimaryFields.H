@@ -101,3 +101,15 @@ autoPtr<dgGeneralBoundaryManager<vector>> UBC
 (
     new dgGeneralBoundaryManager<vector>(UBCIO, dgMesh)
 );
+
+
+// Declare interface boundary condition manager
+autoPtr<dgProcessorBoundaryManager<scalar>> scalarProcBC
+(
+    new dgProcessorBoundaryManager<scalar>(dgMesh)
+);
+
+autoPtr<dgProcessorBoundaryManager<vector>> vectorProcBC
+(
+    new dgProcessorBoundaryManager<vector>(dgMesh)
+);

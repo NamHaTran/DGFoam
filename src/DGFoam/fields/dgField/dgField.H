@@ -5,7 +5,7 @@
     \\  /    A nd           | www.openfoam.com
      \\/     M anipulation  |
 -------------------------------------------------------------------------------
-    Copyright (C) 2011-2016 OpenFOAM Foundation
+    Copyright (C) 2015-2024 OpenCFD Ltd.
     Copyright (C) 2024-2025 Ha Nam Tran
 -------------------------------------------------------------------------------
 License
@@ -28,10 +28,13 @@ Class
     Foam::dgField
 
 Description
-    DG field class storing DOF and GaussField data for the whole mesh.
+    Discontinuous Galerkin field container.
+
+    Stores degrees of freedom (DoF) and corresponding GaussField
+    representations for all cells in the mesh.
 
 SourceFiles
-    dgBasisField.C
+    dgField.C
 
 \*---------------------------------------------------------------------------*/
 
@@ -52,6 +55,26 @@ namespace Foam
                           Class dgField Declaration
 \*---------------------------------------------------------------------------*/
 
+/**
+ * \class Foam::dgField
+ * \brief DG field storing DoFs and Gauss-point values
+ *
+ * \tparam Type Field value type (e.g. scalar, vector, tensor)
+ *
+ * \details
+ * dgField represents a field discretized using the Discontinuous
+ * Galerkin method over the entire mesh.
+ *
+ * The class stores:
+ * - Degrees of freedom (DoF) per cell via dofField<Type>
+ * - Precomputed GaussField<Type> values for each cell
+ *
+ * A dgField may own a DoF field (primary DG variables) or act
+ * as an auxiliary field without DoFs (derived quantities).
+ *
+ * The class derives from regIOobject to integrate with OpenFOAM
+ * I/O and objectRegistry mechanisms.
+ */
 template<class Type>
 class dgField
 :
@@ -59,91 +82,129 @@ class dgField
 {
 private:
 
-    //- Reference to DG geometric mesh
-    const dgGeomMesh& mesh_;
+    //====================================================================//
+    //                           Data members
+    //====================================================================//
 
-    //- True if this field owns DOF data
-    bool hasDof_;
+        /** Reference to the DG geometric mesh */
+        const dgGeomMesh& mesh_;
 
-    //- Pointer to DOF field (null for primary fields)
-    autoPtr<dofField<Type>> dofPtr_;
+        /** Flag indicating whether this field owns DoF data */
+        bool hasDof_;
 
-    //- GaussField for every cell in the mesh
-    List<GaussField<Type>> gaussFields_;
+        /** Pointer to DoF field (null for DoF-less fields) */
+        autoPtr<dofField<Type>> dofPtr_;
+
+        /** GaussField values for each cell in the mesh */
+        List<GaussField<Type>> gaussFields_;
 
 public:
 
     //- Runtime type information
     TypeName("dgField");
 
-    // * * * * * * * * * * * * * Constructor  * * * * * * * * * * * * * * * //
+    //====================================================================//
+    //                           Constructors
+    //====================================================================//
 
-    dgField
-    (
-        const IOobject& io,
-        const dgGeomMesh& mesh,
-        bool hasDof = true
-    );
+        /**
+         * \brief Construct DG field
+         *
+         * Creates a DG field associated with a DG geometric mesh.
+         * Optionally allocates DoF storage.
+         */
+        dgField
+        (
+            const IOobject& io,
+            const dgGeomMesh& mesh,
+            bool hasDof = true
+        );
 
-    //- No copy
-    dgField(const dgField&) = delete;
-    dgField& operator=(const dgField&) = delete;
+        /** Copy construction is disabled */
+        dgField(const dgField&) = delete;
 
-    // * * * * * * * * * * * Member Functions * * * * * * * * * * * //
+        /** Copy assignment is disabled */
+        dgField& operator=(const dgField&) = delete;
 
-    //- Return true if this field has DOF data
-    inline bool hasDof() const
-    {
-        return dofPtr_ != nullptr;
-    }
+    //====================================================================//
+    //                           Access
+    //====================================================================//
 
-    //- Return non-const access to DOF field
-    inline dofField<Type>& dof()
-    {
-        if (!dofPtr_)
+        /** Return true if this field owns DoF data */
+        inline bool hasDof() const
         {
-            FatalErrorInFunction
-                << "Attempt to access non-existing DOF field"
-                << abort(FatalError);
+            return dofPtr_ != nullptr;
         }
-        return *dofPtr_;
-    }
 
-    //- Return const access to DOF field
-    inline const dofField<Type>& dof() const
-    {
-        if (!dofPtr_)
+        /**
+         * \brief Return non-const access to DoF field
+         *
+         * Fatal error if this field does not own DoF data.
+         */
+        inline dofField<Type>& dof()
         {
-            FatalErrorInFunction
-                << "Attempt to access non-existing DOF field"
-                << abort(FatalError);
+            if (!dofPtr_)
+            {
+                FatalErrorInFunction
+                    << "Attempt to access non-existing DOF field"
+                    << abort(FatalError);
+            }
+            return *dofPtr_;
         }
-        return *dofPtr_;
-    }
 
-    //- Return non-const access to GaussFields
-    inline List<GaussField<Type>>& gaussFields()
-    {
-        return gaussFields_;
-    }
+        /**
+         * \brief Return const access to DoF field
+         *
+         * Fatal error if this field does not own DoF data.
+         */
+        inline const dofField<Type>& dof() const
+        {
+            if (!dofPtr_)
+            {
+                FatalErrorInFunction
+                    << "Attempt to access non-existing DOF field"
+                    << abort(FatalError);
+            }
+            return *dofPtr_;
+        }
 
-    //- Return const access to GaussFields
-    inline const List<GaussField<Type>>& gaussFields() const
-    {
-        return gaussFields_;
-    }
+        /** Return non-const access to Gauss fields */
+        inline List<GaussField<Type>>& gaussFields()
+        {
+            return gaussFields_;
+        }
 
-    inline label nCells() const
-    {
-        return gaussFields_.size();
-    } 
+        /** Return const access to Gauss fields */
+        inline const List<GaussField<Type>>& gaussFields() const
+        {
+            return gaussFields_;
+        }
 
-    //- Write data (minimal)
-    bool writeData(Ostream& os) const;
+        /** Return number of cells */
+        inline label nCells() const
+        {
+            return gaussFields_.size();
+        }
 
-    // Assignment ------------------------------------------------------------
-    
-    dgField<Type>& operator=(const Type& value);
+    //====================================================================//
+    //                              I/O
+    //====================================================================//
+
+        /**
+         * \brief Write field data
+         *
+         * Writes field information via regIOobject.
+         */
+        bool writeData(Ostream& os) const;
+
+    //====================================================================//
+    //                           Assignment
+    //====================================================================//
+
+        /**
+         * \brief Assign uniform value to all Gauss fields
+         */
+        dgField<Type>& operator=(const Type& value);
 };
 
 } // End namespace Foam

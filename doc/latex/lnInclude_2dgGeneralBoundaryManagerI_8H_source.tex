@@ -1,0 +1,293 @@
+\doxysection{dg\+General\+Boundary\+Manager\+I.\+H}
+\hypertarget{lnInclude_2dgGeneralBoundaryManagerI_8H_source}{}\label{lnInclude_2dgGeneralBoundaryManagerI_8H_source}\index{/home/nam-\/ha-\/tran/OpenFOAM/DGFoam/src/DGMethod/lnInclude/dgGeneralBoundaryManagerI.H@{/home/nam-\/ha-\/tran/OpenFOAM/DGFoam/src/DGMethod/lnInclude/dgGeneralBoundaryManagerI.H}}
+\mbox{\hyperlink{lnInclude_2dgGeneralBoundaryManagerI_8H}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*\(\backslash\)}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ \ =========\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ \ \(\backslash\)\(\backslash\)\ \ \ \ \ \ /\ \ F\ ield\ \ \ \ \ \ \ \ \ |\ OpenFOAM:\ The\ Open\ Source\ CFD\ Toolbox}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ \ \ \(\backslash\)\(\backslash\)\ \ \ \ /\ \ \ O\ peration\ \ \ \ \ |}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ \ \ \ \(\backslash\)\(\backslash\)\ \ /\ \ \ \ A\ nd\ \ \ \ \ \ \ \ \ \ \ |\ www.openfoam.com}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ \ \ \ \ \(\backslash\)\(\backslash\)/\ \ \ \ \ M\ anipulation\ \ |}}
+\DoxyCodeLine{00007\ \textcolor{comment}{-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ \ \ \ Copyright\ (C)\ 2015-\/2024\ OpenCFD\ Ltd.}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ \ \ \ Copyright\ (C)\ 2024-\/2025\ Ha\ Nam\ Tran}}
+\DoxyCodeLine{00010\ \textcolor{comment}{-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00011\ \textcolor{comment}{License}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ \ \ \ This\ file\ is\ part\ of\ DGFoam.}}
+\DoxyCodeLine{00013\ \textcolor{comment}{}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ \ \ \ DGFoam\ is\ free\ software:\ you\ can\ redistribute\ it\ and/or\ modify\ it}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ \ \ \ under\ the\ terms\ of\ the\ GNU\ General\ Public\ License\ as\ published\ by}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ \ \ \ the\ Free\ Software\ Foundation,\ either\ version\ 3\ of\ the\ License,\ or}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ \ \ \ (at\ your\ option)\ any\ later\ version.}}
+\DoxyCodeLine{00018\ \textcolor{comment}{}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ \ \ \ DGFoam\ is\ distributed\ in\ the\ hope\ that\ it\ will\ be\ useful,\ but\ WITHOUT}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ \ \ \ ANY\ WARRANTY;\ without\ even\ the\ implied\ warranty\ of\ MERCHANTABILITY\ or}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ \ \ \ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE.\ \ See\ the\ GNU\ General\ Public\ License}}
+\DoxyCodeLine{00022\ \textcolor{comment}{\ \ \ \ for\ more\ details.}}
+\DoxyCodeLine{00023\ \textcolor{comment}{}}
+\DoxyCodeLine{00024\ \textcolor{comment}{\ \ \ \ You\ should\ have\ received\ a\ copy\ of\ the\ GNU\ General\ Public\ License}}
+\DoxyCodeLine{00025\ \textcolor{comment}{\ \ \ \ along\ with\ OpenFOAM.\ \ If\ not,\ see\ <http://www.gnu.org/licenses/>.}}
+\DoxyCodeLine{00026\ \textcolor{comment}{}}
+\DoxyCodeLine{00027\ \textcolor{comment}{\(\backslash\)*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \textcolor{preprocessor}{\#ifndef\ Foam\_dgGeneralBoundaryManagerI\_H}}
+\DoxyCodeLine{00030\ \textcolor{preprocessor}{\#define\ Foam\_dgGeneralBoundaryManagerI\_H}}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \textcolor{comment}{//\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ Constructors\ \ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ //}}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Type>}
+\DoxyCodeLine{00035\ \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryManager_a7d121ecb6c3aa2e60c2f422afaab11cb}{Foam::dgGeneralBoundaryManager<Type>::dgGeneralBoundaryManager}}}
+\DoxyCodeLine{00036\ (}
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keyword}{const}\ dictionary\&\ fieldDict,}
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keyword}{const}\ dgGeomMesh\&\ mesh}
+\DoxyCodeLine{00039\ )}
+\DoxyCodeLine{00040\ :}
+\DoxyCodeLine{00041\ \ \ \ \ mesh\_(mesh)}
+\DoxyCodeLine{00042\ \{}
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/\ Read\ internalField\ entry}}
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keyword}{const}\ entry*\ internalEntry\ =}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ fieldDict.findEntry(\textcolor{stringliteral}{"{}internalField"{}},\ keyType::LITERAL);}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keywordflow}{if}\ (!internalEntry)}
+\DoxyCodeLine{00048\ \ \ \ \ \{}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ FatalIOErrorInFunction(fieldDict)}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{}Missing\ 'internalField'\ entry\ in\ dictionary"{}}}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \ \ \ \ <<\ exit(FatalIOError);}
+\DoxyCodeLine{00052\ \ \ \ \ \}}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ \ \ \ \ ITstream\&\ is\ =\ \textcolor{keyword}{const\_cast<}entry*\textcolor{keyword}{>}(internalEntry)-\/>stream();}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ \ \ \ \ word\ fieldType;}
+\DoxyCodeLine{00057\ \ \ \ \ is\ >>\ fieldType;}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00059\ \ \ \ \ \textcolor{keywordflow}{if}\ (fieldType\ !=\ \textcolor{stringliteral}{"{}uniform"{}})}
+\DoxyCodeLine{00060\ \ \ \ \ \{}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ FatalIOErrorInFunction(fieldDict)}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{}Only\ 'uniform'\ internalField\ is\ supported.\ Got:\ "{}}}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \ \ \ \ <<\ fieldType\ <<\ exit(FatalIOError);}
+\DoxyCodeLine{00064\ \ \ \ \ \}}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00066\ \ \ \ \ is\ >>\ internalValue\_;}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00068\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/\ Read\ boundaryField}}
+\DoxyCodeLine{00069\ \ \ \ \ \textcolor{keyword}{const}\ dictionary\&\ bfDict\ =\ fieldDict.subDict(\textcolor{stringliteral}{"{}boundaryField"{}});}
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00071\ \ \ \ \ \textcolor{keyword}{const}\ fvBoundaryMesh\&\ patches\ =\ mesh\_.getFvMesh().boundary();}
+\DoxyCodeLine{00072\ \ \ \ \ \textcolor{keyword}{const}\ label\ nPatches\ =\ patches.size();}
+\DoxyCodeLine{00073\ }
+\DoxyCodeLine{00074\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ patchI\ =\ 0;\ patchI\ <\ nPatches;\ ++patchI)}
+\DoxyCodeLine{00075\ \ \ \ \ \{}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ fvPatch\&\ patch\ =\ patches[patchI];}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ word\&\ patchName\ =\ patch.name();}
+\DoxyCodeLine{00078\ }
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!bfDict.found(patchName))}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \ \ \ \ FatalIOErrorInFunction(fieldDict)}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{}BoundaryField\ entry\ missing\ for\ patch:\ "{}}}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ patchName\ <<\ exit(FatalIOError);}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00085\ }
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (dgBoundaryHelper::isGeneralPatch(patch))}
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ dictionary\&\ patchDict\ =\ bfDict.subDict(patchName);}
+\DoxyCodeLine{00089\ }
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \ \ \ \ bConditions\_.append}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \ \ \ \ (}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dgGeneralBoundaryField<Type>::New}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ patch,}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mesh\_,}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ patchDict}
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ )}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \ \ \ \ );}
+\DoxyCodeLine{00099\ }
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Check\ validity\ of\ type}}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \ \ \ \ bConditions\_.last()-\/>checkPatchType();}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00103\ \ \ \ \ \}}
+\DoxyCodeLine{00104\ }
+\DoxyCodeLine{00105\ \ \ \ \ bConditions\_.shrink();}
+\DoxyCodeLine{00106\ \}}
+\DoxyCodeLine{00107\ }
+\DoxyCodeLine{00108\ }
+\DoxyCodeLine{00109\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Type>}
+\DoxyCodeLine{00110\ \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryManager_a7d121ecb6c3aa2e60c2f422afaab11cb}{Foam::dgGeneralBoundaryManager<Type>::dgGeneralBoundaryManager}}}
+\DoxyCodeLine{00111\ (}
+\DoxyCodeLine{00112\ \ \ \ \ \textcolor{keyword}{const}\ IOobject\&\ io,}
+\DoxyCodeLine{00113\ \ \ \ \ \textcolor{keyword}{const}\ dgGeomMesh\&\ mesh}
+\DoxyCodeLine{00114\ )}
+\DoxyCodeLine{00115\ :}
+\DoxyCodeLine{00116\ \ \ \ \ mesh\_(mesh)}
+\DoxyCodeLine{00117\ \{}
+\DoxyCodeLine{00118\ \ \ \ \ IOdictionary\ fieldDict(io);}
+\DoxyCodeLine{00119\ }
+\DoxyCodeLine{00120\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/\ Read\ internalField\ entry}}
+\DoxyCodeLine{00121\ \ \ \ \ \textcolor{keyword}{const}\ entry*\ internalEntry\ =}
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ fieldDict.findEntry(\textcolor{stringliteral}{"{}internalField"{}},\ keyType::LITERAL);}
+\DoxyCodeLine{00123\ }
+\DoxyCodeLine{00124\ \ \ \ \ \textcolor{keywordflow}{if}\ (!internalEntry)}
+\DoxyCodeLine{00125\ \ \ \ \ \{}
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ FatalIOErrorInFunction(fieldDict)}
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{}Missing\ 'internalField'\ entry\ in\ dictionary"{}}}
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ \ \ \ \ <<\ exit(FatalIOError);}
+\DoxyCodeLine{00129\ \ \ \ \ \}}
+\DoxyCodeLine{00130\ }
+\DoxyCodeLine{00131\ \ \ \ \ ITstream\&\ is\ =\ \textcolor{keyword}{const\_cast<}entry*\textcolor{keyword}{>}(internalEntry)-\/>stream();}
+\DoxyCodeLine{00132\ }
+\DoxyCodeLine{00133\ \ \ \ \ word\ fieldType;}
+\DoxyCodeLine{00134\ \ \ \ \ is\ >>\ fieldType;}
+\DoxyCodeLine{00135\ }
+\DoxyCodeLine{00136\ \ \ \ \ \textcolor{keywordflow}{if}\ (fieldType\ !=\ \textcolor{stringliteral}{"{}uniform"{}})}
+\DoxyCodeLine{00137\ \ \ \ \ \{}
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ FatalIOErrorInFunction(fieldDict)}
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{}Only\ 'uniform'\ internalField\ is\ supported.\ Got:\ "{}}}
+\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ \ \ \ \ <<\ fieldType\ <<\ exit(FatalIOError);}
+\DoxyCodeLine{00141\ \ \ \ \ \}}
+\DoxyCodeLine{00142\ }
+\DoxyCodeLine{00143\ \ \ \ \ is\ >>\ internalValue\_;}
+\DoxyCodeLine{00144\ }
+\DoxyCodeLine{00145\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/\ Read\ boundaryField}}
+\DoxyCodeLine{00146\ \ \ \ \ \textcolor{keyword}{const}\ dictionary\&\ bfDict\ =\ fieldDict.subDict(\textcolor{stringliteral}{"{}boundaryField"{}});}
+\DoxyCodeLine{00147\ }
+\DoxyCodeLine{00148\ \ \ \ \ \textcolor{keyword}{const}\ fvBoundaryMesh\&\ patches\ =\ mesh\_.getFvMesh().boundary();}
+\DoxyCodeLine{00149\ \ \ \ \ \textcolor{keyword}{const}\ label\ nPatches\ =\ patches.size();}
+\DoxyCodeLine{00150\ }
+\DoxyCodeLine{00151\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ patchI\ =\ 0;\ patchI\ <\ nPatches;\ ++patchI)}
+\DoxyCodeLine{00152\ \ \ \ \ \{}
+\DoxyCodeLine{00153\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ fvPatch\&\ patch\ =\ patches[patchI];}
+\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ word\&\ patchName\ =\ patch.name();}
+\DoxyCodeLine{00155\ }
+\DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (dgBoundaryHelper::isGeneralPatch(patch))}
+\DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!bfDict.found(patchName))}
+\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ FatalIOErrorInFunction(fieldDict)}
+\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{}BoundaryField\ entry\ missing\ for\ patch:\ "{}}}
+\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ patchName\ <<\ exit(FatalIOError);}
+\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00164\ }
+\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ dictionary\&\ patchDict\ =\ bfDict.subDict(patchName);}
+\DoxyCodeLine{00166\ }
+\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ \ \ \ \ bConditions\_.append}
+\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ \ \ \ \ (}
+\DoxyCodeLine{00169\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dgGeneralBoundaryField<Type>::New}
+\DoxyCodeLine{00170\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (}
+\DoxyCodeLine{00171\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ patch,}
+\DoxyCodeLine{00172\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mesh\_,}
+\DoxyCodeLine{00173\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ patchDict}
+\DoxyCodeLine{00174\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ )}
+\DoxyCodeLine{00175\ \ \ \ \ \ \ \ \ \ \ \ \ );}
+\DoxyCodeLine{00176\ }
+\DoxyCodeLine{00177\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Check\ validity\ of\ type}}
+\DoxyCodeLine{00178\ \ \ \ \ \ \ \ \ \ \ \ \ bConditions\_.last()-\/>checkPatchType();}
+\DoxyCodeLine{00179\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00180\ \ \ \ \ \}}
+\DoxyCodeLine{00181\ }
+\DoxyCodeLine{00182\ \ \ \ \ bConditions\_.shrink();}
+\DoxyCodeLine{00183\ \}}
+\DoxyCodeLine{00184\ }
+\DoxyCodeLine{00185\ \textcolor{comment}{//\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ Member\ Functions\ \ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ //}}
+\DoxyCodeLine{00186\ }
+\DoxyCodeLine{00187\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Type>}
+\DoxyCodeLine{00188\ \textcolor{keywordtype}{void}\ dgGeneralBoundaryManager<Type>::updateValue}
+\DoxyCodeLine{00189\ (}
+\DoxyCodeLine{00190\ \ \ \ \ GaussField<Type>\&\ GField}
+\DoxyCodeLine{00191\ )}
+\DoxyCodeLine{00192\ \{}
+\DoxyCodeLine{00193\ \ \ \ \ \textcolor{comment}{//-\/\ Cell\ ID\ of\ this\ GaussField}}
+\DoxyCodeLine{00194\ \ \ \ \ \textcolor{keyword}{const}\ label\ cellID\ =\ GField.cellID();}
+\DoxyCodeLine{00195\ }
+\DoxyCodeLine{00196\ \ \ \ \ \textcolor{comment}{//-\/\ Reference\ to\ faceGaussField\ of\ this\ cell}}
+\DoxyCodeLine{00197\ \ \ \ \ faceGaussField<Type>\&\ faceField\ =\ GField.faceField();}
+\DoxyCodeLine{00198\ }
+\DoxyCodeLine{00199\ \ \ \ \ \textcolor{comment}{//-\/\ Loop\ over\ local\ faces\ of\ this\ cell}}
+\DoxyCodeLine{00200\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ faceI\ =\ 0;\ faceI\ <\ faceField.nFaces();\ ++faceI)}
+\DoxyCodeLine{00201\ \ \ \ \ \{}
+\DoxyCodeLine{00202\ \ \ \ \ \ \ \ \ \textcolor{comment}{//-\/\ Check\ if\ boundary\ face}}
+\DoxyCodeLine{00203\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (faceField.isBoundary(faceI))}
+\DoxyCodeLine{00204\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00205\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//-\/\ Get\ owner\ patch\ ID\ from\ faceGaussField}}
+\DoxyCodeLine{00206\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ label\ patchID\ =\ faceField.getOwnerPatchID(faceI);}
+\DoxyCodeLine{00207\ }
+\DoxyCodeLine{00208\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//-\/\ Skip\ non-\/general\ patches}}
+\DoxyCodeLine{00209\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!this-\/>\mbox{\hyperlink{namespaceFoam_1_1dgBoundaryHelper_ad336b0d03003430f2a70769a5a4ccaa3}{isGeneralPatch}}(patchID))}
+\DoxyCodeLine{00210\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00211\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00212\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00213\ }
+\DoxyCodeLine{00214\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//-\/\ Face\ unit\ normal\ vector}}
+\DoxyCodeLine{00215\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ vector\ n\ =\ faceField.faces()[faceI]-\/>normal();}
+\DoxyCodeLine{00216\ }
+\DoxyCodeLine{00217\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//-\/\ Loop\ over\ Gauss\ points\ on\ this\ face}}
+\DoxyCodeLine{00218\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ g\ =\ 0;\ g\ <\ faceField.nGaussPerFace();\ ++g)}
+\DoxyCodeLine{00219\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00220\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Type\&\ mVal\ =\ faceField.minusValueOnFace(faceI,\ g);}
+\DoxyCodeLine{00221\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Type\&\ \ \ \ \ \ \ pVal\ =\ faceField.plusValueOnFace(faceI,\ g);}
+\DoxyCodeLine{00222\ }
+\DoxyCodeLine{00223\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//-\/\ Call\ BC\ implementation}}
+\DoxyCodeLine{00224\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ bConditions\_[patchID]-\/>updateGhostStateValue}
+\DoxyCodeLine{00225\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (}
+\DoxyCodeLine{00226\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cellID,}
+\DoxyCodeLine{00227\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ faceI,\ \ \ \ \ \ \textcolor{comment}{//\ local\ face\ index}}
+\DoxyCodeLine{00228\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ g,\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Gauss\ point\ index}}
+\DoxyCodeLine{00229\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ n,\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ face\ normal}}
+\DoxyCodeLine{00230\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mVal,\ \ \ \ \ \ \ \textcolor{comment}{//\ interior\ state\ U-\/}}
+\DoxyCodeLine{00231\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pVal\ \ \ \ \ \ \ \ \textcolor{comment}{//\ ghost\ state\ U+\ (output)}}
+\DoxyCodeLine{00232\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ );}
+\DoxyCodeLine{00233\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00234\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00235\ \ \ \ \ \}}
+\DoxyCodeLine{00236\ \}}
+\DoxyCodeLine{00237\ }
+\DoxyCodeLine{00238\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Type>}
+\DoxyCodeLine{00239\ \textcolor{keywordtype}{void}\ dgGeneralBoundaryManager<Type>::updateGrad}
+\DoxyCodeLine{00240\ (}
+\DoxyCodeLine{00241\ \ \ \ \ GaussField<Type>\&\ GField}
+\DoxyCodeLine{00242\ )}
+\DoxyCodeLine{00243\ \{}
+\DoxyCodeLine{00244\ \ \ \ \ \textcolor{comment}{//-\/\ Cell\ ID\ of\ this\ GaussField}}
+\DoxyCodeLine{00245\ \ \ \ \ \textcolor{keyword}{const}\ label\ cellID\ =\ GField.cellID();}
+\DoxyCodeLine{00246\ }
+\DoxyCodeLine{00247\ \ \ \ \ \textcolor{comment}{//-\/\ Reference\ to\ faceGaussField\ of\ this\ cell}}
+\DoxyCodeLine{00248\ \ \ \ \ faceGaussField<Type>\&\ faceField\ =\ GField.faceField();}
+\DoxyCodeLine{00249\ }
+\DoxyCodeLine{00250\ \ \ \ \ \textcolor{comment}{//-\/\ Loop\ over\ local\ faces}}
+\DoxyCodeLine{00251\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ faceI\ =\ 0;\ faceI\ <\ faceField.nFaces();\ ++faceI)}
+\DoxyCodeLine{00252\ \ \ \ \ \{}
+\DoxyCodeLine{00253\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (faceField.isBoundary(faceI))}
+\DoxyCodeLine{00254\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00255\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ label\ patchID\ =\ faceField.getOwnerPatchID(faceI);}
+\DoxyCodeLine{00256\ }
+\DoxyCodeLine{00257\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//-\/\ Skip\ non-\/general\ patches}}
+\DoxyCodeLine{00258\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!this-\/>\mbox{\hyperlink{namespaceFoam_1_1dgBoundaryHelper_ad336b0d03003430f2a70769a5a4ccaa3}{isGeneralPatch}}(patchID))}
+\DoxyCodeLine{00259\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00260\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00261\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00262\ }
+\DoxyCodeLine{00263\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ vector\ n\ =\ faceField.faces()[faceI].normal();}
+\DoxyCodeLine{00264\ }
+\DoxyCodeLine{00265\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//-\/\ Loop\ over\ Gauss\ points}}
+\DoxyCodeLine{00266\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ g\ =\ 0;\ g\ <\ faceField.nGaussPerFace();\ ++g)}
+\DoxyCodeLine{00267\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00268\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Type\&\ mVal\ =\ faceField.minusValueOnFace(faceI,\ g);}
+\DoxyCodeLine{00269\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Type\&\ \ \ \ \ \ \ pVal\ =\ faceField.plusValueOnFace(faceI,\ g);}
+\DoxyCodeLine{00270\ }
+\DoxyCodeLine{00271\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//-\/\ Call\ gradient\ BC\ implementation}}
+\DoxyCodeLine{00272\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ bConditions\_[patchID].updateGhostStateGrad}
+\DoxyCodeLine{00273\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (}
+\DoxyCodeLine{00274\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cellID,}
+\DoxyCodeLine{00275\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ faceI,}
+\DoxyCodeLine{00276\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ g,}
+\DoxyCodeLine{00277\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ n,}
+\DoxyCodeLine{00278\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mVal,\ \ \ \textcolor{comment}{//\ input\ S-\/}}
+\DoxyCodeLine{00279\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pVal\ \ \ \ \textcolor{comment}{//\ output\ S+}}
+\DoxyCodeLine{00280\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ );}
+\DoxyCodeLine{00281\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00282\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00283\ \ \ \ \ \}}
+\DoxyCodeLine{00284\ \}}
+\DoxyCodeLine{00285\ }
+\DoxyCodeLine{00286\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00287\ \textcolor{comment}{//\ *************************************************************************\ //}}
+
+\end{DoxyCode}

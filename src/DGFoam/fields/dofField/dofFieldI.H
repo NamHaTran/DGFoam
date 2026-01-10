@@ -5,7 +5,7 @@
     \\  /    A nd           | www.openfoam.com
      \\/     M anipulation  |
 -------------------------------------------------------------------------------
-    Copyright (C) 2011-2016 OpenFOAM Foundation
+    Copyright (C) 2015-2024 OpenCFD Ltd.
     Copyright (C) 2024-2025 Ha Nam Tran
 -------------------------------------------------------------------------------
 License
@@ -144,6 +144,39 @@ dofField<Type>::dofField
         {
             local[d] = (*foamFields_[d])[c];
         }
+
+        cellDofs_[c] = cellDof<Type>(c, nDof, local);
+    }
+}
+
+template<class Type>
+dofField<Type>::dofField
+(
+    const dgGeomMesh& mesh
+)
+:
+    dgMesh_(mesh),
+    cellDofs_(),
+    nCells_(mesh.nCells()),
+    foamFields_(),
+    dofPerCell_(nCells_, 0),
+    maxDoF_(0)
+{
+    // Determine number of DoFs per cell and maxDoF_
+    for (label c = 0; c < nCells_; ++c)
+    {
+        const label nDof = mesh.cells()[c]->nDof();
+        dofPerCell_[c] = nDof;
+        maxDoF_ = max(maxDoF_, nDof);
+    }
+
+    // Create zero cellDofs_
+    cellDofs_.setSize(nCells_);
+
+    for (label c = 0; c < nCells_; ++c)
+    {
+        const label nDof = dofPerCell_[c];
+        List<Type> local(nDof, pTraits<Type>::zero);
 
         cellDofs_[c] = cellDof<Type>(c, nDof, local);
     }

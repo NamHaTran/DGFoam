@@ -29,49 +29,6 @@ Class
 
 Description
     Base class for Equation of State (single-phase).
-    - Constructible from a coefficients dictionary.
-    - Provides rho(T,p) and p(T,rho).
-
-    EOS Classification Notes
-    ------------------------
-
-    To ensure compatibility between eqnOfState models and thermoLaw models,
-    each EOS provides a set of classification flags. These flags allow higher-
-    level thermo models (e.g., constantCp, perfectGasThermo, vibrationalThermo)
-    to verify whether the selected EOS is physically compatible with their
-    assumptions.
-
-    EOS are grouped into the following categories:
-
-    1. Ideal-gas–type EOS (isIdealGas() = true)
-       - EOS of the form p = rho * R * T.
-       - Includes classic ideal gas and more advanced thermal-perfect gas
-         variants that keep the ideal-gas pressure relation but have Cp(T),
-         Cv(T), e(T), h(T) defined elsewhere via thermoLaw.
-       - Compatible with most thermoLaw models (constantCp, perfectGasThermo,
-         JANAF, vibrational models, polyatomic gas, etc.).
-
-    2. Incompressible EOS (isIncompressible() = true)
-       - Density is constant or independent of p and T.
-       - Pressure does not participate in thermodynamic relations.
-       - Only compatible with thermo models specifically designed for liquids
-         or incompressible fluids.
-
-    3. Real-gas EOS (isRealGas() = true)
-       - Non-ideal equations of state such as Peng–Robinson, Redlich–Kwong,
-         stiffened gas, or Van der Waals.
-       - Require thermo models that are derived for real-gas properties.
-
-    4. Kinetic-theory EOS (isKineticModel() = true)
-       - EOS derived from kinetic-theory (Boltzmann/ES-BGK), where pressure
-         may originate from the stress tensor rather than p = rho*R*T.
-       - Used for rarefied flows, micro-scale gas dynamics, or high-Kn models.
-
-    By default, all flags return false in the base class. Individual EOS
-    implementations override the appropriate flag(s) to identify their group.
-
-    Thermo models should check these flags in their constructors to ensure
-    that the selected EOS is physically consistent with the thermo model.
 
 SourceFiles
     eqnOfState.C
@@ -97,17 +54,67 @@ namespace Foam
                        Class eqnOfState Declaration
 \*---------------------------------------------------------------------------*/
 
+/**
+ * \class Foam::eqnOfState
+ * \brief Base class for single-phase equations of state
+ *
+ * \details
+ * This class defines the interface for single-phase equations of state (EOS)
+ * used in DGFoam. An EOS provides thermodynamic closure relations between
+ * pressure, temperature, and density, and supplies classification flags
+ * that allow thermo models to verify physical compatibility.
+ *
+ * \par EOS classification and compatibility
+ * To ensure consistency between EOS models and thermoLaw formulations,
+ * each EOS advertises a set of capability and classification flags.
+ * Higher-level thermo models must check these flags in their constructors
+ * to ensure that the selected EOS is physically compatible with their
+ * assumptions.
+ *
+ * EOS models are grouped into the following categories:
+ *
+ * \par Ideal-gas–type EOS
+ * - Identified by isIdealGas() returning true.
+ * - Pressure relation of the form: \f$ p = \rho R T \f$.
+ * - Includes classic ideal gas and thermal-perfect gas variants.
+ * - Thermodynamic properties (Cp, Cv, e, h) are provided by thermoLaw.
+ * - Compatible with most thermoLaw models.
+ *
+ * \par Incompressible EOS
+ * - Identified by isIncompressible() returning true.
+ * - Density is constant or independent of pressure and temperature.
+ * - Pressure does not participate in thermodynamic relations.
+ * - Only compatible with thermo models designed for liquids.
+ *
+ * \par Real-gas EOS
+ * - Identified by isRealGas() returning true.
+ * - Non-ideal equations of state (e.g. Peng–Robinson, Redlich–Kwong,
+ *   stiffened gas, Van der Waals).
+ * - Require thermo models derived for real-gas properties.
+ *
+ * \par Kinetic-theory EOS
+ * - Identified by isThermalPerfectGas() returning true.
+ * - EOS derived from kinetic theory (Boltzmann / ES-BGK).
+ * - Pressure may originate from stress rather than \f$ p = \rho R T \f$.
+ * - Used for rarefied or high-Knudsen-number flows.
+ *
+ * By default, all classification flags return false in this base class.
+ * Derived EOS models override the appropriate flags to identify their
+ * physical category.
+ *
+ * \ingroup grpDGThermo
+ */
 class eqnOfState
 {
 protected:
 
-    //- Model name (for logging/debug)
+    /** Model name (used for logging and diagnostics) */
     word name_;
 
-    //- Coefficients dictionary (owned/const view)
+    /** Coefficients dictionary (owned, immutable snapshot) */
     const dictionary dict_;
 
-    //- Reference to DG mesh (non-owning)
+    /** Reference to DG geometric mesh (non-owning) */
     const dgGeomMesh& mesh_;
 
 public:
@@ -115,15 +122,25 @@ public:
     //- Runtime type information
     TypeName("eqnOfState");
 
-    //- Runtime selection: construct from dictionary
+    //- Runtime selection table
     declareRunTimeSelectionTable
     (
         autoPtr, eqnOfState, dictionary,
-        (const word& name, const dictionary& dict, const dgGeomMesh& mesh),
+        (
+            const word& name,
+            const dictionary& dict,
+            const dgGeomMesh& mesh
+        ),
         (name, dict, mesh)
     );
 
-    //- Construct from model name and coefficients dictionary
+    /**
+     * \brief Construct from model name and coefficient dictionary
+     *
+     * \param name Model name
+     * \param dict Coefficient dictionary
+     * \param mesh DG geometric mesh
+     */
     eqnOfState
     (
         const word& name,
@@ -131,10 +148,19 @@ public:
         const dgGeomMesh& mesh
     );
 
-    //- Destructor
+    /** Virtual destructor */
     virtual ~eqnOfState() = default;
 
-    //- Factory: create eqnOfState from dictionary
+    /**
+     * \brief Runtime selector
+     *
+     * Construct an equation-of-state model from a dictionary entry.
+     *
+     * \param name Model name
+     * \param dict Coefficient dictionary
+     * \param mesh DG geometric mesh
+     * \return Auto pointer to selected EOS model
+     */
     static autoPtr<eqnOfState> New
     (
         const word& name,
@@ -143,25 +169,35 @@ public:
     );
 
     //====================================================================//
-    //        General EOS API (all EOS classes must provide these)
+    //                    General EOS interface
     //====================================================================//
 
-    //- Return gas constant R (returns 0 for incompressible models)
+    /**
+     * \brief Return gas constant R
+     *
+     * Returns zero for incompressible EOS models.
+     */
     virtual scalar R() const = 0;
 
 
     //====================================================================//
-    //   Fundamental thermodynamic relations (general Gaussian operations)
+    //           Fundamental thermodynamic relations (Gauss fields)
     //
-    //   These functions receive GaussField for p, T, rho and return the
-    //   corresponding Gaussian field for the selected cell.
-    //
-    //   NOTE:
-    //     Models that do not support a relation simply set the flag below
-    //     and dgThermo will not call these functions.
+    // These functions operate on GaussField quantities for a given cell.
+    // Models that do not support a particular relation must leave the
+    // default implementation, which triggers a fatal error.
     //====================================================================//
 
-    //--- Compute rho = rho(p, T)
+    /**
+     * \brief Compute density from pressure and temperature
+     *
+     * Computes \f$ \rho = \rho(p, T) \f$ at Gauss points of a cell.
+     *
+     * \param cellI Cell index
+     * \param p     Pressure field
+     * \param T     Temperature field
+     * \param rho   Density field to be written
+     */
     virtual void calcRhoFromPT
     (
         const label cellI,
@@ -175,7 +211,11 @@ public:
             << exit(FatalError);
     }
 
-    //--- Compute p = p(rho, T)
+    /**
+     * \brief Compute pressure from density and temperature
+     *
+     * Computes \f$ p = p(\rho, T) \f$ at Gauss points of a cell.
+     */
     virtual void calcPFromRhoT
     (
         const label cellI,
@@ -189,7 +229,11 @@ public:
             << exit(FatalError);
     }
 
-    //--- Compute T = T(p, rho)
+    /**
+     * \brief Compute temperature from pressure and density
+     *
+     * Computes \f$ T = T(p, \rho) \f$ at Gauss points of a cell.
+     */
     virtual void calcTFromPRho
     (
         const label cellI,
@@ -204,31 +248,31 @@ public:
     }
 
     //====================================================================//
-    //                EOS capability flags (very important)
-    //
-    //   Allow dgThermo to detect which relation is supported.
-    //   PerfectGas:   all true
-    //   Incompressible: all false, except rhoConst()
+    //                    EOS capability flags
     //====================================================================//
 
-    virtual bool canCalcRhoFromPT()  const { return false; }
-    virtual bool canCalcPFromRhoT()  const { return false; }
-    virtual bool canCalcTFromPRho()  const { return false; }
+    /** Return true if rho(p,T) is supported */
+    virtual bool canCalcRhoFromPT() const { return false; }
 
-    // Equation of state groups
+    /** Return true if p(rho,T) is supported */
+    virtual bool canCalcPFromRhoT() const { return false; }
 
-        //- Ideal-gas–based EOS
+    /** Return true if T(p,rho) is supported */
+    virtual bool canCalcTFromPRho() const { return false; }
+
+    // EOS classification flags
+
+        /** Ideal-gas–type EOS */
         virtual bool isIdealGas() const { return false; }
 
-        //- Incompressible EOS
+        /** Incompressible EOS */
         virtual bool isIncompressible() const { return false; }
 
-        //- Real-gas EOS
+        /** Real-gas EOS */
         virtual bool isRealGas() const { return false; }
 
-        //- Special EOS (kinetic/ES-BGK/stress-based)
+        /** Kinetic-theory / thermal-perfect EOS */
         virtual bool isThermalPerfectGas() const { return false; }
-
 };
 
 } // End namespace Foam

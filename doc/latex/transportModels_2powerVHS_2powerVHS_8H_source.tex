@@ -1,0 +1,132 @@
+\doxysection{power\+VHS.\+H}
+\hypertarget{transportModels_2powerVHS_2powerVHS_8H_source}{}\label{transportModels_2powerVHS_2powerVHS_8H_source}\index{/home/nam-\/ha-\/tran/OpenFOAM/DGFoam/src/thermophysicalModels/transportModels/powerVHS/powerVHS.H@{/home/nam-\/ha-\/tran/OpenFOAM/DGFoam/src/thermophysicalModels/transportModels/powerVHS/powerVHS.H}}
+\mbox{\hyperlink{transportModels_2powerVHS_2powerVHS_8H}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*\(\backslash\)}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ \ =========\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ \ \(\backslash\)\(\backslash\)\ \ \ \ \ \ /\ \ F\ ield\ \ \ \ \ \ \ \ \ |\ OpenFOAM:\ The\ Open\ Source\ CFD\ Toolbox}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ \ \ \(\backslash\)\(\backslash\)\ \ \ \ /\ \ \ O\ peration\ \ \ \ \ |}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ \ \ \ \(\backslash\)\(\backslash\)\ \ /\ \ \ \ A\ nd\ \ \ \ \ \ \ \ \ \ \ |\ www.openfoam.com}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ \ \ \ \ \(\backslash\)\(\backslash\)/\ \ \ \ \ M\ anipulation\ \ |}}
+\DoxyCodeLine{00007\ \textcolor{comment}{-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00008\ \textcolor{comment}{License}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ \ \ \ This\ file\ is\ part\ of\ OpenFOAM.}}
+\DoxyCodeLine{00010\ \textcolor{comment}{}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ \ \ \ OpenFOAM\ is\ free\ software:\ you\ can\ redistribute\ it\ and/or\ modify\ it}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ \ \ \ under\ the\ terms\ of\ the\ GNU\ General\ Public\ License\ as\ published\ by}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ \ \ \ the\ Free\ Software\ Foundation,\ either\ version\ 3\ of\ the\ License,\ or}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ \ \ \ (at\ your\ option)\ any\ later\ version.}}
+\DoxyCodeLine{00015\ \textcolor{comment}{}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ \ \ \ OpenFOAM\ is\ distributed\ in\ the\ hope\ that\ it\ will\ be\ useful,\ but\ WITHOUT}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ \ \ \ ANY\ WARRANTY;\ without\ even\ the\ implied\ warranty\ of\ MERCHANTABILITY\ or}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ \ \ \ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE.\ \ See\ the\ GNU\ General\ Public\ License}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ \ \ \ for\ more\ details.}}
+\DoxyCodeLine{00020\ \textcolor{comment}{}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ \ \ \ You\ should\ have\ received\ a\ copy\ of\ the\ GNU\ General\ Public\ License}}
+\DoxyCodeLine{00022\ \textcolor{comment}{\ \ \ \ along\ with\ OpenFOAM.\ \ If\ not,\ see\ <http://www.gnu.org/licenses/>.}}
+\DoxyCodeLine{00023\ \textcolor{comment}{}}
+\DoxyCodeLine{00024\ \textcolor{comment}{Class}}
+\DoxyCodeLine{00025\ \textcolor{comment}{\ \ \ \ Foam::powerVHS}}
+\DoxyCodeLine{00026\ \textcolor{comment}{}}
+\DoxyCodeLine{00027\ \textcolor{comment}{Description}}
+\DoxyCodeLine{00028\ \textcolor{comment}{\ \ \ \ Variable-\/Hard-\/Sphere\ (power-\/law)\ transport\ model.}}
+\DoxyCodeLine{00029\ \textcolor{comment}{}}
+\DoxyCodeLine{00030\ \textcolor{comment}{SourceFiles}}
+\DoxyCodeLine{00031\ \textcolor{comment}{\ \ \ \ powerVHS.C}}
+\DoxyCodeLine{00032\ \textcolor{comment}{}}
+\DoxyCodeLine{00033\ \textcolor{comment}{\(\backslash\)*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ \textcolor{preprocessor}{\#ifndef\ Foam\_powerVHS\_H}}
+\DoxyCodeLine{00036\ \textcolor{preprocessor}{\#define\ Foam\_powerVHS\_H}}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \textcolor{preprocessor}{\#include\ "{}transportLaw.H"{}}}
+\DoxyCodeLine{00039\ \textcolor{preprocessor}{\#include\ "{}word.H"{}}}
+\DoxyCodeLine{00040\ \textcolor{preprocessor}{\#include\ "{}scalar.H"{}}}
+\DoxyCodeLine{00041\ \textcolor{preprocessor}{\#include\ "{}GaussField.H"{}}}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespaceFoam}{Foam}}}
+\DoxyCodeLine{00044\ \{}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*\(\backslash\)}}
+\DoxyCodeLine{00047\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Class\ powerVHS\ Declaration}}
+\DoxyCodeLine{00048\ \textcolor{comment}{\(\backslash\)*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00118\ \textcolor{keyword}{class\ }powerVHS}
+\DoxyCodeLine{00119\ :}
+\DoxyCodeLine{00120\ \ \ \ \ \textcolor{keyword}{public}\ transportLaw}
+\DoxyCodeLine{00121\ \{}
+\DoxyCodeLine{00122\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00123\ }
+\DoxyCodeLine{00124\ \ \ \ \ \textcolor{comment}{//\ Coefficients\ read\ from\ dictionary}}
+\DoxyCodeLine{00125\ }
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ scalar\ \mbox{\hyperlink{classFoam_1_1powerVHS_a924e3caa74111bec604949b7ccccc2c5}{molMass\_}};}
+\DoxyCodeLine{00128\ }
+\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ scalar\ \mbox{\hyperlink{classFoam_1_1powerVHS_a835324d7de89fed4d60a35f346579266}{dRef\_}};}
+\DoxyCodeLine{00131\ }
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ scalar\ \mbox{\hyperlink{classFoam_1_1powerVHS_ac12d9cc23e796a996d18ec7cefb4fa6d}{TRef\_}};}
+\DoxyCodeLine{00134\ }
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ scalar\ \mbox{\hyperlink{classFoam_1_1powerVHS_a8c3078204711d4cf60eed2f43f4e9fb9}{omega\_}};}
+\DoxyCodeLine{00137\ }
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ scalar\ \mbox{\hyperlink{classFoam_1_1powerVHS_a54d8b830b6ad98f45208eedfba9e6ce3}{Pr0\_}};}
+\DoxyCodeLine{00140\ }
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ scalar\ \mbox{\hyperlink{classFoam_1_1powerVHS_a5f9e3f14db245463c0d3bc7b48ed3452}{kB\_}};}
+\DoxyCodeLine{00143\ }
+\DoxyCodeLine{00145\ \ \ \ \ \ \ \ \ scalar\ \mbox{\hyperlink{classFoam_1_1powerVHS_ab2cfce95e78c38e4f629dce27c195e79}{NA\_}};}
+\DoxyCodeLine{00146\ }
+\DoxyCodeLine{00147\ \ \ \ \ \textcolor{comment}{//\ Derived\ quantities}}
+\DoxyCodeLine{00148\ }
+\DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ scalar\ \mbox{\hyperlink{classFoam_1_1powerVHS_a7eeb7f2f98ee53b766547d920fe70826}{muRef\_}};}
+\DoxyCodeLine{00152\ }
+\DoxyCodeLine{00153\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00154\ }
+\DoxyCodeLine{00155\ \ \ \ \ \textcolor{comment}{//-\/\ Runtime\ type\ information}}
+\DoxyCodeLine{00156\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1powerVHS_ac0a76087eb871324da91df16f43eddcd}{TypeName}}(\textcolor{stringliteral}{"{}powerVHS"{}});}
+\DoxyCodeLine{00157\ }
+\DoxyCodeLine{00164\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1powerVHS_a1cdc764d9e0b4251f4e14d0eb6f988ed}{powerVHS}}}
+\DoxyCodeLine{00165\ \ \ \ \ (}
+\DoxyCodeLine{00166\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{word}}\&\ name,}
+\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}}\&\ dict,}
+\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dgGeomMesh}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{mesh}},}
+\DoxyCodeLine{00169\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1thermoLaw}{thermoLaw}}\&\ \mbox{\hyperlink{createDGFields_8H_a9925ad70d4a9bc708442f7d79d009002}{thermo}}}
+\DoxyCodeLine{00170\ \ \ \ \ );}
+\DoxyCodeLine{00171\ }
+\DoxyCodeLine{00173\ \ \ \ \ \textcolor{keyword}{virtual}\ \mbox{\hyperlink{classFoam_1_1powerVHS_adc204269f50978f02eabe1db72b96f63}{\string~powerVHS}}()\ \textcolor{keyword}{override}\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00174\ }
+\DoxyCodeLine{00175\ }
+\DoxyCodeLine{00176\ \ \ \ \ \textcolor{comment}{//====================================================================//}}
+\DoxyCodeLine{00177\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Transport-\/law\ interface}}
+\DoxyCodeLine{00178\ \ \ \ \ \textcolor{comment}{//====================================================================//}}
+\DoxyCodeLine{00179\ }
+\DoxyCodeLine{00189\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classFoam_1_1powerVHS_ade60e9f19a1addb80244604b4ae0d3d9}{calcMu}}}
+\DoxyCodeLine{00190\ \ \ \ \ (}
+\DoxyCodeLine{00191\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{cellI}},}
+\DoxyCodeLine{00192\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{GaussField<scalar>}}\&\ \mbox{\hyperlink{namespaceFoam_a5faf7f302ed6c6307e3668365456af74}{T}},}
+\DoxyCodeLine{00193\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{GaussField<scalar>}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{mu}}}
+\DoxyCodeLine{00194\ \ \ \ \ )\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00195\ }
+\DoxyCodeLine{00204\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classFoam_1_1powerVHS_adccb0473362e3b61df9acf96c78e02c0}{calcKappa}}}
+\DoxyCodeLine{00205\ \ \ \ \ (}
+\DoxyCodeLine{00206\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{cellI}},}
+\DoxyCodeLine{00207\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{GaussField<scalar>}}\&\ \mbox{\hyperlink{namespaceFoam_a5faf7f302ed6c6307e3668365456af74}{T}},}
+\DoxyCodeLine{00208\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{GaussField<scalar>}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{kappa}}}
+\DoxyCodeLine{00209\ \ \ \ \ )\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00210\ }
+\DoxyCodeLine{00219\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classFoam_1_1powerVHS_a47e4e9ff546b1b54f2a86d5a77ee636c}{calcPr}}}
+\DoxyCodeLine{00220\ \ \ \ \ (}
+\DoxyCodeLine{00221\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{cellI}},}
+\DoxyCodeLine{00222\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{GaussField<scalar>}}\&\ \mbox{\hyperlink{namespaceFoam_a5faf7f302ed6c6307e3668365456af74}{T}},}
+\DoxyCodeLine{00223\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{GaussField<scalar>}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{Pr}}}
+\DoxyCodeLine{00224\ \ \ \ \ )\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00225\ }
+\DoxyCodeLine{00229\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classFoam_1_1powerVHS_abcb1117489a49add4a1f9c4090fd828c}{read}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00230\ }
+\DoxyCodeLine{00234\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classFoam_1_1powerVHS_a92e8f5e45f3c40758dbf7c47003494ef}{isKineticTransportLaw}}()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};\ \}}
+\DoxyCodeLine{00235\ \};}
+\DoxyCodeLine{00236\ }
+\DoxyCodeLine{00237\ \}\ \textcolor{comment}{//\ End\ namespace\ Foam}}
+\DoxyCodeLine{00238\ }
+\DoxyCodeLine{00239\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00240\ }
+\DoxyCodeLine{00241\ \textcolor{comment}{//\ *************************************************************************\ //}}
+
+\end{DoxyCode}

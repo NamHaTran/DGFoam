@@ -1,0 +1,110 @@
+\doxysection{sensible\+Internal\+Energy.\+H}
+\hypertarget{lnInclude_2sensibleInternalEnergy_8H_source}{}\label{lnInclude_2sensibleInternalEnergy_8H_source}\index{/home/nam-\/ha-\/tran/OpenFOAM/DGFoam/src/thermophysicalModels/lnInclude/sensibleInternalEnergy.H@{/home/nam-\/ha-\/tran/OpenFOAM/DGFoam/src/thermophysicalModels/lnInclude/sensibleInternalEnergy.H}}
+\mbox{\hyperlink{lnInclude_2sensibleInternalEnergy_8H}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*\(\backslash\)}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ \ =========\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ \ \(\backslash\)\(\backslash\)\ \ \ \ \ \ /\ \ F\ ield\ \ \ \ \ \ \ \ \ |\ OpenFOAM:\ The\ Open\ Source\ CFD\ Toolbox}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ \ \ \(\backslash\)\(\backslash\)\ \ \ \ /\ \ \ O\ peration\ \ \ \ \ |}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ \ \ \ \(\backslash\)\(\backslash\)\ \ /\ \ \ \ A\ nd\ \ \ \ \ \ \ \ \ \ \ |\ www.openfoam.com}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ \ \ \ \ \(\backslash\)\(\backslash\)/\ \ \ \ \ M\ anipulation\ \ |}}
+\DoxyCodeLine{00007\ \textcolor{comment}{-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ \ \ \ Copyright\ (C)\ 2011-\/2016\ OpenFOAM\ Foundation}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ \ \ \ Copyright\ (C)\ 2017-\/2023\ OpenCFD\ Ltd.}}
+\DoxyCodeLine{00010\ \textcolor{comment}{-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00011\ \textcolor{comment}{License}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ \ \ \ This\ file\ is\ part\ of\ OpenFOAM.}}
+\DoxyCodeLine{00013\ \textcolor{comment}{}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ \ \ \ OpenFOAM\ is\ free\ software:\ you\ can\ redistribute\ it\ and/or\ modify\ it}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ \ \ \ under\ the\ terms\ of\ the\ GNU\ General\ Public\ License\ as\ published\ by}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ \ \ \ the\ Free\ Software\ Foundation,\ either\ version\ 3\ of\ the\ License,\ or}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ \ \ \ (at\ your\ option)\ any\ later\ version.}}
+\DoxyCodeLine{00018\ \textcolor{comment}{}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ \ \ \ OpenFOAM\ is\ distributed\ in\ the\ hope\ that\ it\ will\ be\ useful,\ but\ WITHOUT}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ \ \ \ ANY\ WARRANTY;\ without\ even\ the\ implied\ warranty\ of\ MERCHANTABILITY\ or}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ \ \ \ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE.\ \ See\ the\ GNU\ General\ Public\ License}}
+\DoxyCodeLine{00022\ \textcolor{comment}{\ \ \ \ for\ more\ details.}}
+\DoxyCodeLine{00023\ \textcolor{comment}{}}
+\DoxyCodeLine{00024\ \textcolor{comment}{\ \ \ \ You\ should\ have\ received\ a\ copy\ of\ the\ GNU\ General\ Public\ License}}
+\DoxyCodeLine{00025\ \textcolor{comment}{\ \ \ \ along\ with\ OpenFOAM.\ \ If\ not,\ see\ <http://www.gnu.org/licenses/>.}}
+\DoxyCodeLine{00026\ \textcolor{comment}{}}
+\DoxyCodeLine{00027\ \textcolor{comment}{Class}}
+\DoxyCodeLine{00028\ \textcolor{comment}{\ \ \ \ Foam::sensibleInternalEnergy}}
+\DoxyCodeLine{00029\ \textcolor{comment}{}}
+\DoxyCodeLine{00030\ \textcolor{comment}{Description}}
+\DoxyCodeLine{00031\ \textcolor{comment}{\ \ \ \ Sensible\ internal-\/energy\ model\ for\ DG\ thermodynamics.}}
+\DoxyCodeLine{00032\ \textcolor{comment}{}}
+\DoxyCodeLine{00033\ \textcolor{comment}{SourceFiles}}
+\DoxyCodeLine{00034\ \textcolor{comment}{\ \ \ \ sensibleInternalEnergy.C}}
+\DoxyCodeLine{00035\ \textcolor{comment}{}}
+\DoxyCodeLine{00036\ \textcolor{comment}{\(\backslash\)*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \textcolor{preprocessor}{\#ifndef\ Foam\_sensibleInternalEnergy\_H}}
+\DoxyCodeLine{00039\ \textcolor{preprocessor}{\#define\ Foam\_sensibleInternalEnergy\_H}}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{lnInclude_2energy_8H}{energy.H}}"{}}}
+\DoxyCodeLine{00042\ \textcolor{preprocessor}{\#include\ "{}word.H"{}}}
+\DoxyCodeLine{00043\ \textcolor{preprocessor}{\#include\ "{}dictionary.H"{}}}
+\DoxyCodeLine{00044\ \textcolor{preprocessor}{\#include\ "{}GaussField.H"{}}}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespaceFoam}{Foam}}}
+\DoxyCodeLine{00047\ \{}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*\(\backslash\)}}
+\DoxyCodeLine{00050\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Class\ sensibleInternalEnergy\ Declaration}}
+\DoxyCodeLine{00051\ \textcolor{comment}{\(\backslash\)*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00083\ \textcolor{keyword}{class\ }sensibleInternalEnergy}
+\DoxyCodeLine{00084\ :}
+\DoxyCodeLine{00085\ \ \ \ \ \textcolor{keyword}{public}\ energy}
+\DoxyCodeLine{00086\ \{}
+\DoxyCodeLine{00087\ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00088\ }
+\DoxyCodeLine{00090\ \ \ \ \ dictionary\ \mbox{\hyperlink{classFoam_1_1sensibleInternalEnergy_a5e31783df255d1a3590f4756b3ccbe46}{coeffDict\_}};}
+\DoxyCodeLine{00091\ }
+\DoxyCodeLine{00092\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00093\ }
+\DoxyCodeLine{00094\ \ \ \ \ \textcolor{comment}{//-\/\ Runtime\ type\ information}}
+\DoxyCodeLine{00095\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1sensibleInternalEnergy_a149693e9c17bb10e384ff0413ea52efd}{TypeName}}(\textcolor{stringliteral}{"{}sensibleInternalEnergy"{}});}
+\DoxyCodeLine{00096\ }
+\DoxyCodeLine{00105\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1sensibleInternalEnergy_a158fd7f00a5ad6274cd0858daeaebad7}{sensibleInternalEnergy}}}
+\DoxyCodeLine{00106\ \ \ \ \ (}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{word}}\&\ name,}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}}\&\ dict,}
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dgGeomMesh}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{mesh}},}
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1thermoLaw}{thermoLaw}}\&\ \mbox{\hyperlink{createDGFields_8H_a9925ad70d4a9bc708442f7d79d009002}{thermo}}}
+\DoxyCodeLine{00111\ \ \ \ \ );}
+\DoxyCodeLine{00112\ }
+\DoxyCodeLine{00113\ \ \ \ \ \textcolor{comment}{//\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ Member\ Functions\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ //}}
+\DoxyCodeLine{00114\ }
+\DoxyCodeLine{00127\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classFoam_1_1sensibleInternalEnergy_a9d992a3cfa3c50eafb09d9a13bbafe9a}{calcEnthalpy}}}
+\DoxyCodeLine{00128\ \ \ \ \ (}
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{cellI}},}
+\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{GaussField<scalar>}}\&\ \mbox{\hyperlink{namespaceFoam_a5faf7f302ed6c6307e3668365456af74}{T}},}
+\DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{GaussField<scalar>}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{h}}}
+\DoxyCodeLine{00132\ \ \ \ \ )\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00133\ }
+\DoxyCodeLine{00146\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classFoam_1_1sensibleInternalEnergy_abc94e615bbf229aedbe6b46408808faf}{calcEnergy}}}
+\DoxyCodeLine{00147\ \ \ \ \ (}
+\DoxyCodeLine{00148\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{cellI}},}
+\DoxyCodeLine{00149\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{GaussField<scalar>}}\&\ \mbox{\hyperlink{namespaceFoam_a5faf7f302ed6c6307e3668365456af74}{T}},}
+\DoxyCodeLine{00150\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{GaussField<scalar>}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{e}}}
+\DoxyCodeLine{00151\ \ \ \ \ )\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00152\ }
+\DoxyCodeLine{00165\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classFoam_1_1sensibleInternalEnergy_a70445c5dc5e1509db62a4c9264e1e798}{calcTfromEnergy}}}
+\DoxyCodeLine{00166\ \ \ \ \ (}
+\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{cellI}},}
+\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{GaussField<scalar>}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{e}},}
+\DoxyCodeLine{00169\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{GaussField<scalar>}}\&\ \mbox{\hyperlink{namespaceFoam_a5faf7f302ed6c6307e3668365456af74}{T}}}
+\DoxyCodeLine{00170\ \ \ \ \ )\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00171\ }
+\DoxyCodeLine{00177\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classFoam_1_1sensibleInternalEnergy_a6923105dc7a220fe338079e288444ff6}{energyInternal}}()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};\ \}}
+\DoxyCodeLine{00178\ \};}
+\DoxyCodeLine{00179\ }
+\DoxyCodeLine{00180\ \}\ \textcolor{comment}{//\ End\ namespace\ Foam}}
+\DoxyCodeLine{00181\ }
+\DoxyCodeLine{00182\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00183\ }
+\DoxyCodeLine{00184\ \textcolor{comment}{//\ *************************************************************************\ //}}
+
+\end{DoxyCode}

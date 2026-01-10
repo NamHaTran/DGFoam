@@ -1,0 +1,449 @@
+\doxysection{Foam\+::dg\+HLLEFlux\+Solver Class Reference}
+\hypertarget{classFoam_1_1dgHLLEFluxSolver}{}\label{classFoam_1_1dgHLLEFluxSolver}\index{Foam::dgHLLEFluxSolver@{Foam::dgHLLEFluxSolver}}
+
+
+{\ttfamily \#include $<$dg\+HLLEFlux\+Solver.\+H$>$}
+
+
+
+Inheritance diagram for Foam\+::dg\+HLLEFlux\+Solver\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=217pt]{classFoam_1_1dgHLLEFluxSolver__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Foam\+::dg\+HLLEFlux\+Solver\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classFoam_1_1dgHLLEFluxSolver__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{classFoam_1_1dgHLLEFluxSolver_a4451ee8ef3807320e7c6d55aa6e9be1e}{speed\+Estimate\+Type}} \{ \mbox{\hyperlink{classFoam_1_1dgHLLEFluxSolver_a4451ee8ef3807320e7c6d55aa6e9be1ea570ef83007f492d57ebe5e417a0ca487}{se\+Davis}}
+, \mbox{\hyperlink{classFoam_1_1dgHLLEFluxSolver_a4451ee8ef3807320e7c6d55aa6e9be1eaa536e429d88d9d6ba7cd5f0db08de86f}{se\+Roe\+Einfeldt}}
+, \mbox{\hyperlink{classFoam_1_1dgHLLEFluxSolver_a4451ee8ef3807320e7c6d55aa6e9be1ea570ef83007f492d57ebe5e417a0ca487}{se\+Davis}}
+, \mbox{\hyperlink{classFoam_1_1dgHLLEFluxSolver_a4451ee8ef3807320e7c6d55aa6e9be1eaa536e429d88d9d6ba7cd5f0db08de86f}{se\+Roe\+Einfeldt}}
+ \}
+\item 
+enum \mbox{\hyperlink{classFoam_1_1dgHLLEFluxSolver_a4451ee8ef3807320e7c6d55aa6e9be1e}{speed\+Estimate\+Type}} \{ \mbox{\hyperlink{classFoam_1_1dgHLLEFluxSolver_a4451ee8ef3807320e7c6d55aa6e9be1ea570ef83007f492d57ebe5e417a0ca487}{se\+Davis}}
+, \mbox{\hyperlink{classFoam_1_1dgHLLEFluxSolver_a4451ee8ef3807320e7c6d55aa6e9be1eaa536e429d88d9d6ba7cd5f0db08de86f}{se\+Roe\+Einfeldt}}
+, \mbox{\hyperlink{classFoam_1_1dgHLLEFluxSolver_a4451ee8ef3807320e7c6d55aa6e9be1ea570ef83007f492d57ebe5e417a0ca487}{se\+Davis}}
+, \mbox{\hyperlink{classFoam_1_1dgHLLEFluxSolver_a4451ee8ef3807320e7c6d55aa6e9be1eaa536e429d88d9d6ba7cd5f0db08de86f}{se\+Roe\+Einfeldt}}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Types inherited from \mbox{\hyperlink{classFoam_1_1dgFluxSolver}{Foam\+::dg\+Flux\+Solver}}}
+\begin{DoxyCompactItemize}
+\item 
+enum class \mbox{\hyperlink{classFoam_1_1dgFluxSolver_ac861a0350cf2f298fecfc97544af0572}{equation\+Type}} \{ \newline
+\mbox{\hyperlink{classFoam_1_1dgFluxSolver_ac861a0350cf2f298fecfc97544af0572a184b6e2175a62be0322600dfd9fdcb39}{mass\+Transport}}
+, \mbox{\hyperlink{classFoam_1_1dgFluxSolver_ac861a0350cf2f298fecfc97544af0572ab13bb6b4d6512ea3776b199e277b267f}{momentum\+Transport}}
+, \mbox{\hyperlink{classFoam_1_1dgFluxSolver_ac861a0350cf2f298fecfc97544af0572a3133169db610b44f06f0406a7450e5f2}{energy\+Transport}}
+, \mbox{\hyperlink{classFoam_1_1dgFluxSolver_ac861a0350cf2f298fecfc97544af0572a8c287215eefcc35dfe9f95e8380e011c}{scalar\+Transport}}
+, \newline
+\mbox{\hyperlink{classFoam_1_1dgFluxSolver_ac861a0350cf2f298fecfc97544af0572a184b6e2175a62be0322600dfd9fdcb39}{mass\+Transport}}
+, \mbox{\hyperlink{classFoam_1_1dgFluxSolver_ac861a0350cf2f298fecfc97544af0572ab13bb6b4d6512ea3776b199e277b267f}{momentum\+Transport}}
+, \mbox{\hyperlink{classFoam_1_1dgFluxSolver_ac861a0350cf2f298fecfc97544af0572a3133169db610b44f06f0406a7450e5f2}{energy\+Transport}}
+, \mbox{\hyperlink{classFoam_1_1dgFluxSolver_ac861a0350cf2f298fecfc97544af0572a8c287215eefcc35dfe9f95e8380e011c}{scalar\+Transport}}
+ \}
+\item 
+enum class \mbox{\hyperlink{classFoam_1_1dgFluxSolver_ac861a0350cf2f298fecfc97544af0572}{equation\+Type}} \{ \newline
+\mbox{\hyperlink{classFoam_1_1dgFluxSolver_ac861a0350cf2f298fecfc97544af0572a184b6e2175a62be0322600dfd9fdcb39}{mass\+Transport}}
+, \mbox{\hyperlink{classFoam_1_1dgFluxSolver_ac861a0350cf2f298fecfc97544af0572ab13bb6b4d6512ea3776b199e277b267f}{momentum\+Transport}}
+, \mbox{\hyperlink{classFoam_1_1dgFluxSolver_ac861a0350cf2f298fecfc97544af0572a3133169db610b44f06f0406a7450e5f2}{energy\+Transport}}
+, \mbox{\hyperlink{classFoam_1_1dgFluxSolver_ac861a0350cf2f298fecfc97544af0572a8c287215eefcc35dfe9f95e8380e011c}{scalar\+Transport}}
+, \newline
+\mbox{\hyperlink{classFoam_1_1dgFluxSolver_ac861a0350cf2f298fecfc97544af0572a184b6e2175a62be0322600dfd9fdcb39}{mass\+Transport}}
+, \mbox{\hyperlink{classFoam_1_1dgFluxSolver_ac861a0350cf2f298fecfc97544af0572ab13bb6b4d6512ea3776b199e277b267f}{momentum\+Transport}}
+, \mbox{\hyperlink{classFoam_1_1dgFluxSolver_ac861a0350cf2f298fecfc97544af0572a3133169db610b44f06f0406a7450e5f2}{energy\+Transport}}
+, \mbox{\hyperlink{classFoam_1_1dgFluxSolver_ac861a0350cf2f298fecfc97544af0572a8c287215eefcc35dfe9f95e8380e011c}{scalar\+Transport}}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classFoam_1_1dgHLLEFluxSolver_a170af24902400ec498f8a3c789c55edf}{Type\+Name}} ("{}HLLE"{})
+\item 
+\mbox{\hyperlink{classFoam_1_1dgHLLEFluxSolver_afbf0eb2eb34229bebbd97c61126656cc}{dg\+HLLEFlux\+Solver}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{word}} \&\mbox{\hyperlink{classFoam_1_1dgFluxSolver_a65f5c41742c90fc8ca26bc6220cdeea3}{name}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}} \&\mbox{\hyperlink{classFoam_1_1dgFluxSolver_af698821f76c9aa02a7b9f0ac651086a4}{dict}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{mesh}})
+\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1dgHLLEFluxSolver_a55d780005dc188b48c1d7a65fe65af87}{\texorpdfstring{$\sim$}{\string~}dg\+HLLEFlux\+Solver}} ()=\mbox{\hyperlink{classFoam_1_1GaussField}{default}}
+\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgHLLEFluxSolver_a225c3352bc3375e32401b2361e47e3c4}{compute\+Flux}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} cell\+ID, \mbox{\hyperlink{classFoam_1_1faceGaussField}{face\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{F}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1faceGaussField}{face\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{createPrimaryFields_8H_acaa7fe8168a3a866f1958b3663d384c6}{U}}) \mbox{\hyperlink{classFoam_1_1GaussField}{override}}
+\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgHLLEFluxSolver_a5c49bfbdb8219a32f2d88682fdc35d3e}{compute\+Flux}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} cell\+ID, \mbox{\hyperlink{classFoam_1_1faceGaussField}{face\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{tensor}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{F}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1faceGaussField}{face\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$ \&\mbox{\hyperlink{createPrimaryFields_8H_acaa7fe8168a3a866f1958b3663d384c6}{U}}) \mbox{\hyperlink{classFoam_1_1GaussField}{override}}
+\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgHLLEFluxSolver_a9747ba5f629d03206cbb406f0372896c}{reset}} () \mbox{\hyperlink{classFoam_1_1GaussField}{override}}
+\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgHLLEFluxSolver_a083f1cc62ef494e94cf7676b184d20d5}{read}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}} \&\mbox{\hyperlink{classFoam_1_1dgFluxSolver_af698821f76c9aa02a7b9f0ac651086a4}{dict}}) \mbox{\hyperlink{classFoam_1_1GaussField}{override}}
+\item 
+\mbox{\hyperlink{classFoam_1_1dgHLLEFluxSolver_a170af24902400ec498f8a3c789c55edf}{Type\+Name}} ("{}HLLE"{})
+\item 
+\mbox{\hyperlink{classFoam_1_1dgHLLEFluxSolver_afbf0eb2eb34229bebbd97c61126656cc}{dg\+HLLEFlux\+Solver}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{word}} \&\mbox{\hyperlink{classFoam_1_1dgFluxSolver_a65f5c41742c90fc8ca26bc6220cdeea3}{name}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}} \&\mbox{\hyperlink{classFoam_1_1dgFluxSolver_af698821f76c9aa02a7b9f0ac651086a4}{dict}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{mesh}})
+\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1dgHLLEFluxSolver_a55d780005dc188b48c1d7a65fe65af87}{\texorpdfstring{$\sim$}{\string~}dg\+HLLEFlux\+Solver}} ()=\mbox{\hyperlink{classFoam_1_1GaussField}{default}}
+\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgHLLEFluxSolver_accfb18f675c1cd797ee9c55d6fc5bc1e}{compute\+Flux}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} cell\+ID, \mbox{\hyperlink{classFoam_1_1faceGaussField}{face\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{F}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1faceGaussField}{face\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{createPrimaryFields_8H_acaa7fe8168a3a866f1958b3663d384c6}{U}}) \mbox{\hyperlink{classFoam_1_1GaussField}{override}}
+\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgHLLEFluxSolver_a5099752b8faa27181c6ec9c15f1b8d31}{compute\+Flux}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} cell\+ID, \mbox{\hyperlink{classFoam_1_1faceGaussField}{face\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{tensor}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{F}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1faceGaussField}{face\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$ \&\mbox{\hyperlink{createPrimaryFields_8H_acaa7fe8168a3a866f1958b3663d384c6}{U}}) \mbox{\hyperlink{classFoam_1_1GaussField}{override}}
+\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgHLLEFluxSolver_a9747ba5f629d03206cbb406f0372896c}{reset}} () \mbox{\hyperlink{classFoam_1_1GaussField}{override}}
+\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgHLLEFluxSolver_ad9a23b45f66ff957ea5c37f6aec23796}{read}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}} \&\mbox{\hyperlink{classFoam_1_1dgFluxSolver_af698821f76c9aa02a7b9f0ac651086a4}{dict}}) \mbox{\hyperlink{classFoam_1_1GaussField}{override}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classFoam_1_1dgFluxSolver}{Foam\+::dg\+Flux\+Solver}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classFoam_1_1dgFluxSolver_a7973a30716b8f174a3da0cb2968cd0a8}{Type\+Name}} ("{}dg\+Flux\+Solver"{})
+\item 
+\mbox{\hyperlink{classFoam_1_1dgFluxSolver_a134274fbdac274323f8764d10123f5f3}{declare\+Run\+Time\+Selection\+Table}} (\mbox{\hyperlink{classFoam_1_1GaussField}{auto\+Ptr}}, \mbox{\hyperlink{classFoam_1_1dgFluxSolver}{dg\+Flux\+Solver}}, \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}},(\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{word}} \&\mbox{\hyperlink{classFoam_1_1dgFluxSolver_a65f5c41742c90fc8ca26bc6220cdeea3}{name}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}} \&\mbox{\hyperlink{classFoam_1_1dgFluxSolver_af698821f76c9aa02a7b9f0ac651086a4}{dict}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{mesh}}),(\mbox{\hyperlink{classFoam_1_1dgFluxSolver_a65f5c41742c90fc8ca26bc6220cdeea3}{name}}, \mbox{\hyperlink{classFoam_1_1dgFluxSolver_af698821f76c9aa02a7b9f0ac651086a4}{dict}}, \mbox{\hyperlink{classFoam_1_1GaussField}{mesh}}))
+\item 
+\mbox{\hyperlink{classFoam_1_1dgFluxSolver_a8fd8ad0de1f63de00e9103405ba5e2aa}{dg\+Flux\+Solver}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{word}} \&\mbox{\hyperlink{classFoam_1_1dgFluxSolver_a65f5c41742c90fc8ca26bc6220cdeea3}{name}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}} \&\mbox{\hyperlink{classFoam_1_1dgFluxSolver_af698821f76c9aa02a7b9f0ac651086a4}{dict}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{mesh}})
+\item 
+\mbox{\hyperlink{classFoam_1_1dgFluxSolver_a714ac461d56251ba0656e504d53254a1}{dg\+Flux\+Solver}} ()=\mbox{\hyperlink{classFoam_1_1GaussField}{delete}}
+\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1dgFluxSolver_a04415b95f57d65f4dda993607cb7d9d6}{\texorpdfstring{$\sim$}{\string~}dg\+Flux\+Solver}} ()=\mbox{\hyperlink{classFoam_1_1GaussField}{default}}
+\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{word}} \& \mbox{\hyperlink{classFoam_1_1dgFluxSolver_a65f5c41742c90fc8ca26bc6220cdeea3}{name}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}} \& \mbox{\hyperlink{classFoam_1_1dgFluxSolver_af698821f76c9aa02a7b9f0ac651086a4}{dict}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgFluxSolver_a4fc7f98f8af77cfb24e847735313d7cf}{make\+ONB}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{n}}, \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{t1}}, \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{t2}}) \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgFluxSolver_aeb30b26b6e79cea0ea1fd639576841c0}{decomposeU}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&\mbox{\hyperlink{createPrimaryFields_8H_acaa7fe8168a3a866f1958b3663d384c6}{U}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{n}}, \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{Un}}, \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{Ut1}}, \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{Ut2}}) \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgFluxSolver_aa29c80d12bc940c6582afde7d48a45ae}{set\+Equation\+Type}} (\mbox{\hyperlink{classFoam_1_1dgFluxSolver_ac861a0350cf2f298fecfc97544af0572}{equation\+Type}} \mbox{\hyperlink{classFoam_1_1GaussField}{t}})
+\item 
+\mbox{\hyperlink{classFoam_1_1dgFluxSolver_ac861a0350cf2f298fecfc97544af0572}{equation\+Type}} \mbox{\hyperlink{classFoam_1_1dgFluxSolver_a09aac3f56d63fa367f9d2b3e3f897a4b}{get\+Equation\+Type}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\item 
+\mbox{\hyperlink{classFoam_1_1dgFluxSolver_a7973a30716b8f174a3da0cb2968cd0a8}{Type\+Name}} ("{}dg\+Flux\+Solver"{})
+\item 
+\mbox{\hyperlink{classFoam_1_1dgFluxSolver_a134274fbdac274323f8764d10123f5f3}{declare\+Run\+Time\+Selection\+Table}} (\mbox{\hyperlink{classFoam_1_1GaussField}{auto\+Ptr}}, \mbox{\hyperlink{classFoam_1_1dgFluxSolver}{dg\+Flux\+Solver}}, \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}},(\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{word}} \&\mbox{\hyperlink{classFoam_1_1dgFluxSolver_a65f5c41742c90fc8ca26bc6220cdeea3}{name}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}} \&\mbox{\hyperlink{classFoam_1_1dgFluxSolver_af698821f76c9aa02a7b9f0ac651086a4}{dict}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{mesh}}),(\mbox{\hyperlink{classFoam_1_1dgFluxSolver_a65f5c41742c90fc8ca26bc6220cdeea3}{name}}, \mbox{\hyperlink{classFoam_1_1dgFluxSolver_af698821f76c9aa02a7b9f0ac651086a4}{dict}}, \mbox{\hyperlink{classFoam_1_1GaussField}{mesh}}))
+\item 
+\mbox{\hyperlink{classFoam_1_1dgFluxSolver_a8fd8ad0de1f63de00e9103405ba5e2aa}{dg\+Flux\+Solver}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{word}} \&\mbox{\hyperlink{classFoam_1_1dgFluxSolver_a65f5c41742c90fc8ca26bc6220cdeea3}{name}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}} \&\mbox{\hyperlink{classFoam_1_1dgFluxSolver_af698821f76c9aa02a7b9f0ac651086a4}{dict}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{mesh}})
+\item 
+\mbox{\hyperlink{classFoam_1_1dgFluxSolver_a714ac461d56251ba0656e504d53254a1}{dg\+Flux\+Solver}} ()=\mbox{\hyperlink{classFoam_1_1GaussField}{delete}}
+\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1dgFluxSolver_a04415b95f57d65f4dda993607cb7d9d6}{\texorpdfstring{$\sim$}{\string~}dg\+Flux\+Solver}} ()=\mbox{\hyperlink{classFoam_1_1GaussField}{default}}
+\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{word}} \& \mbox{\hyperlink{classFoam_1_1dgFluxSolver_a65f5c41742c90fc8ca26bc6220cdeea3}{name}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}} \& \mbox{\hyperlink{classFoam_1_1dgFluxSolver_af698821f76c9aa02a7b9f0ac651086a4}{dict}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgFluxSolver_a4fc7f98f8af77cfb24e847735313d7cf}{make\+ONB}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{n}}, \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{t1}}, \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{t2}}) \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgFluxSolver_aeb30b26b6e79cea0ea1fd639576841c0}{decomposeU}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&\mbox{\hyperlink{createPrimaryFields_8H_acaa7fe8168a3a866f1958b3663d384c6}{U}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{n}}, \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{Un}}, \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{Ut1}}, \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{Ut2}}) \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgFluxSolver_aa29c80d12bc940c6582afde7d48a45ae}{set\+Equation\+Type}} (\mbox{\hyperlink{classFoam_1_1dgFluxSolver_ac861a0350cf2f298fecfc97544af0572}{equation\+Type}} \mbox{\hyperlink{classFoam_1_1GaussField}{t}})
+\item 
+\mbox{\hyperlink{classFoam_1_1dgFluxSolver_ac861a0350cf2f298fecfc97544af0572}{equation\+Type}} \mbox{\hyperlink{classFoam_1_1dgFluxSolver_a09aac3f56d63fa367f9d2b3e3f897a4b}{get\+Equation\+Type}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgHLLEFluxSolver_a0524725a894d1a8586ca1b69096ca8b8}{calc\+Wave\+Speed}} (\mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{SL}}, \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{SR}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} \mbox{\hyperlink{classFoam_1_1GaussField}{rhoL}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} \mbox{\hyperlink{classFoam_1_1GaussField}{rhoR}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{ULv}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{URv}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} \mbox{\hyperlink{classFoam_1_1GaussField}{pL}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} \mbox{\hyperlink{classFoam_1_1GaussField}{pR}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} \mbox{\hyperlink{classFoam_1_1GaussField}{aL}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} \mbox{\hyperlink{classFoam_1_1GaussField}{aR}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} \mbox{\hyperlink{classFoam_1_1GaussField}{gammaL}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} \mbox{\hyperlink{classFoam_1_1GaussField}{gammaR}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} \mbox{\hyperlink{classFoam_1_1GaussField}{hL}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} \mbox{\hyperlink{classFoam_1_1GaussField}{hR}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{n}}) \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgHLLEFluxSolver_a0524725a894d1a8586ca1b69096ca8b8}{calc\+Wave\+Speed}} (\mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{SL}}, \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{SR}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} \mbox{\hyperlink{classFoam_1_1GaussField}{rhoL}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} \mbox{\hyperlink{classFoam_1_1GaussField}{rhoR}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{ULv}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{URv}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} \mbox{\hyperlink{classFoam_1_1GaussField}{pL}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} \mbox{\hyperlink{classFoam_1_1GaussField}{pR}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} \mbox{\hyperlink{classFoam_1_1GaussField}{aL}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} \mbox{\hyperlink{classFoam_1_1GaussField}{aR}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} \mbox{\hyperlink{classFoam_1_1GaussField}{gammaL}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} \mbox{\hyperlink{classFoam_1_1GaussField}{gammaR}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} \mbox{\hyperlink{classFoam_1_1GaussField}{hL}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} \mbox{\hyperlink{classFoam_1_1GaussField}{hR}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{n}}) \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgField}{dg\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \& \mbox{\hyperlink{classFoam_1_1dgHLLEFluxSolver_a55d9b10eb73dd03ced7d33041203d0e9}{rho\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Density. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgField}{dg\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$ \& \mbox{\hyperlink{classFoam_1_1dgHLLEFluxSolver_a9af1eef99a262413000cdcd891bb6974}{U\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Velocity. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgField}{dg\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \& \mbox{\hyperlink{classFoam_1_1dgHLLEFluxSolver_a891c597e8e634a0437b9ac7fadc8588a}{p\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Pressure. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgField}{dg\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \& \mbox{\hyperlink{classFoam_1_1dgHLLEFluxSolver_a2a5c0b16e8e2d306a0bfa1016b9118dd}{a\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Speed of sound. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgField}{dg\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \& \mbox{\hyperlink{classFoam_1_1dgHLLEFluxSolver_a94006f627fe6f9902e6595139b0b232f}{h\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Enthalpy. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgField}{dg\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \& \mbox{\hyperlink{classFoam_1_1dgHLLEFluxSolver_ac6f56a6b1b426f70a33fa843877548cb}{gamma\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Cp/\+Cv. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1dgHLLEFluxSolver_a4451ee8ef3807320e7c6d55aa6e9be1e}{speed\+Estimate\+Type}} \mbox{\hyperlink{classFoam_1_1dgHLLEFluxSolver_a603b8dfb17f4865fcafd1d499a0f743f}{speed\+Est\+\_\+}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Static Public Member Functions inherited from \mbox{\hyperlink{classFoam_1_1dgFluxSolver}{Foam\+::dg\+Flux\+Solver}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{static}} \mbox{\hyperlink{classFoam_1_1GaussField}{auto\+Ptr}}$<$ \mbox{\hyperlink{classFoam_1_1dgFluxSolver}{dg\+Flux\+Solver}} $>$ \mbox{\hyperlink{classFoam_1_1dgFluxSolver_a4739349630624924584ae6ea0d7df763}{New}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{word}} \&\mbox{\hyperlink{classFoam_1_1dgFluxSolver_a65f5c41742c90fc8ca26bc6220cdeea3}{name}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{word}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{flux\+Solver\+Type}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}} \&\mbox{\hyperlink{classFoam_1_1dgFluxSolver_af698821f76c9aa02a7b9f0ac651086a4}{dict}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{mesh}})
+\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{static}} \mbox{\hyperlink{classFoam_1_1GaussField}{auto\+Ptr}}$<$ \mbox{\hyperlink{classFoam_1_1dgFluxSolver}{dg\+Flux\+Solver}} $>$ \mbox{\hyperlink{classFoam_1_1dgFluxSolver_a617cb61197710786b9c9da79f623ae38}{New}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{word}} \&\mbox{\hyperlink{classFoam_1_1dgFluxSolver_a65f5c41742c90fc8ca26bc6220cdeea3}{name}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{word}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{flux\+Solver\+Type}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}} \&\mbox{\hyperlink{classFoam_1_1dgFluxSolver_af698821f76c9aa02a7b9f0ac651086a4}{dict}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{mesh}})
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{classFoam_1_1dgFluxSolver}{Foam\+::dg\+Flux\+Solver}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{word}} \mbox{\hyperlink{classFoam_1_1dgFluxSolver_a940ac2708929c4b459605c642b5bfe9e}{name\+\_\+}}
+\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}} \mbox{\hyperlink{classFoam_1_1dgFluxSolver_aab4ed6bf78c423de92270601c10f5214}{dict\+\_\+}}
+\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \& \mbox{\hyperlink{classFoam_1_1dgFluxSolver_a0a5b03f6b3e59f91d5175d644b7118d6}{mesh\+\_\+}}
+\item 
+\mbox{\hyperlink{classFoam_1_1dgFluxSolver_ac861a0350cf2f298fecfc97544af0572}{equation\+Type}} \mbox{\hyperlink{classFoam_1_1dgFluxSolver_a01702ce212b866ad64127b8e304395ea}{eqn\+Type\+\_\+}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Enumeration Documentation}
+\Hypertarget{classFoam_1_1dgHLLEFluxSolver_a4451ee8ef3807320e7c6d55aa6e9be1e}\label{classFoam_1_1dgHLLEFluxSolver_a4451ee8ef3807320e7c6d55aa6e9be1e} 
+\index{Foam::dgHLLEFluxSolver@{Foam::dgHLLEFluxSolver}!speedEstimateType@{speedEstimateType}}
+\index{speedEstimateType@{speedEstimateType}!Foam::dgHLLEFluxSolver@{Foam::dgHLLEFluxSolver}}
+\doxysubsubsection{\texorpdfstring{speedEstimateType}{speedEstimateType}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{enum}} \mbox{\hyperlink{classFoam_1_1dgHLLEFluxSolver_a4451ee8ef3807320e7c6d55aa6e9be1e}{Foam\+::dg\+HLLEFlux\+Solver\+::speed\+Estimate\+Type}}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{seDavis@{seDavis}!Foam::dgHLLEFluxSolver@{Foam::dgHLLEFluxSolver}}\index{Foam::dgHLLEFluxSolver@{Foam::dgHLLEFluxSolver}!seDavis@{seDavis}}}\Hypertarget{classFoam_1_1dgHLLEFluxSolver_a4451ee8ef3807320e7c6d55aa6e9be1ea570ef83007f492d57ebe5e417a0ca487}\label{classFoam_1_1dgHLLEFluxSolver_a4451ee8ef3807320e7c6d55aa6e9be1ea570ef83007f492d57ebe5e417a0ca487} 
+se\+Davis&Side speeds\+: Un ± a. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{seRoeEinfeldt@{seRoeEinfeldt}!Foam::dgHLLEFluxSolver@{Foam::dgHLLEFluxSolver}}\index{Foam::dgHLLEFluxSolver@{Foam::dgHLLEFluxSolver}!seRoeEinfeldt@{seRoeEinfeldt}}}\Hypertarget{classFoam_1_1dgHLLEFluxSolver_a4451ee8ef3807320e7c6d55aa6e9be1eaa536e429d88d9d6ba7cd5f0db08de86f}\label{classFoam_1_1dgHLLEFluxSolver_a4451ee8ef3807320e7c6d55aa6e9be1eaa536e429d88d9d6ba7cd5f0db08de86f} 
+se\+Roe\+Einfeldt&Roe-\/averaged speeds. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{seDavis@{seDavis}!Foam::dgHLLEFluxSolver@{Foam::dgHLLEFluxSolver}}\index{Foam::dgHLLEFluxSolver@{Foam::dgHLLEFluxSolver}!seDavis@{seDavis}}}\Hypertarget{classFoam_1_1dgHLLEFluxSolver_a4451ee8ef3807320e7c6d55aa6e9be1ea570ef83007f492d57ebe5e417a0ca487}\label{classFoam_1_1dgHLLEFluxSolver_a4451ee8ef3807320e7c6d55aa6e9be1ea570ef83007f492d57ebe5e417a0ca487} 
+se\+Davis&Side speeds\+: Un ± a. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{seRoeEinfeldt@{seRoeEinfeldt}!Foam::dgHLLEFluxSolver@{Foam::dgHLLEFluxSolver}}\index{Foam::dgHLLEFluxSolver@{Foam::dgHLLEFluxSolver}!seRoeEinfeldt@{seRoeEinfeldt}}}\Hypertarget{classFoam_1_1dgHLLEFluxSolver_a4451ee8ef3807320e7c6d55aa6e9be1eaa536e429d88d9d6ba7cd5f0db08de86f}\label{classFoam_1_1dgHLLEFluxSolver_a4451ee8ef3807320e7c6d55aa6e9be1eaa536e429d88d9d6ba7cd5f0db08de86f} 
+se\+Roe\+Einfeldt&Roe-\/averaged speeds. \\
+\hline
+
+\end{DoxyEnumFields}
+\Hypertarget{classFoam_1_1dgHLLEFluxSolver_a4451ee8ef3807320e7c6d55aa6e9be1e}\label{classFoam_1_1dgHLLEFluxSolver_a4451ee8ef3807320e7c6d55aa6e9be1e} 
+\index{Foam::dgHLLEFluxSolver@{Foam::dgHLLEFluxSolver}!speedEstimateType@{speedEstimateType}}
+\index{speedEstimateType@{speedEstimateType}!Foam::dgHLLEFluxSolver@{Foam::dgHLLEFluxSolver}}
+\doxysubsubsection{\texorpdfstring{speedEstimateType}{speedEstimateType}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{enum}} \mbox{\hyperlink{classFoam_1_1dgHLLEFluxSolver_a4451ee8ef3807320e7c6d55aa6e9be1e}{Foam\+::dg\+HLLEFlux\+Solver\+::speed\+Estimate\+Type}}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{seDavis@{seDavis}!Foam::dgHLLEFluxSolver@{Foam::dgHLLEFluxSolver}}\index{Foam::dgHLLEFluxSolver@{Foam::dgHLLEFluxSolver}!seDavis@{seDavis}}}\Hypertarget{classFoam_1_1dgHLLEFluxSolver_a4451ee8ef3807320e7c6d55aa6e9be1ea570ef83007f492d57ebe5e417a0ca487}\label{classFoam_1_1dgHLLEFluxSolver_a4451ee8ef3807320e7c6d55aa6e9be1ea570ef83007f492d57ebe5e417a0ca487} 
+se\+Davis&Side speeds\+: Un ± a. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{seRoeEinfeldt@{seRoeEinfeldt}!Foam::dgHLLEFluxSolver@{Foam::dgHLLEFluxSolver}}\index{Foam::dgHLLEFluxSolver@{Foam::dgHLLEFluxSolver}!seRoeEinfeldt@{seRoeEinfeldt}}}\Hypertarget{classFoam_1_1dgHLLEFluxSolver_a4451ee8ef3807320e7c6d55aa6e9be1eaa536e429d88d9d6ba7cd5f0db08de86f}\label{classFoam_1_1dgHLLEFluxSolver_a4451ee8ef3807320e7c6d55aa6e9be1eaa536e429d88d9d6ba7cd5f0db08de86f} 
+se\+Roe\+Einfeldt&Roe-\/averaged speeds. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{seDavis@{seDavis}!Foam::dgHLLEFluxSolver@{Foam::dgHLLEFluxSolver}}\index{Foam::dgHLLEFluxSolver@{Foam::dgHLLEFluxSolver}!seDavis@{seDavis}}}\Hypertarget{classFoam_1_1dgHLLEFluxSolver_a4451ee8ef3807320e7c6d55aa6e9be1ea570ef83007f492d57ebe5e417a0ca487}\label{classFoam_1_1dgHLLEFluxSolver_a4451ee8ef3807320e7c6d55aa6e9be1ea570ef83007f492d57ebe5e417a0ca487} 
+se\+Davis&Side speeds\+: Un ± a. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{seRoeEinfeldt@{seRoeEinfeldt}!Foam::dgHLLEFluxSolver@{Foam::dgHLLEFluxSolver}}\index{Foam::dgHLLEFluxSolver@{Foam::dgHLLEFluxSolver}!seRoeEinfeldt@{seRoeEinfeldt}}}\Hypertarget{classFoam_1_1dgHLLEFluxSolver_a4451ee8ef3807320e7c6d55aa6e9be1eaa536e429d88d9d6ba7cd5f0db08de86f}\label{classFoam_1_1dgHLLEFluxSolver_a4451ee8ef3807320e7c6d55aa6e9be1eaa536e429d88d9d6ba7cd5f0db08de86f} 
+se\+Roe\+Einfeldt&Roe-\/averaged speeds. \\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classFoam_1_1dgHLLEFluxSolver_afbf0eb2eb34229bebbd97c61126656cc}\label{classFoam_1_1dgHLLEFluxSolver_afbf0eb2eb34229bebbd97c61126656cc} 
+\index{Foam::dgHLLEFluxSolver@{Foam::dgHLLEFluxSolver}!dgHLLEFluxSolver@{dgHLLEFluxSolver}}
+\index{dgHLLEFluxSolver@{dgHLLEFluxSolver}!Foam::dgHLLEFluxSolver@{Foam::dgHLLEFluxSolver}}
+\doxysubsubsection{\texorpdfstring{dgHLLEFluxSolver()}{dgHLLEFluxSolver()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Foam\+::dg\+HLLEFlux\+Solver\+::dg\+HLLEFlux\+Solver (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{word}} \&}]{name,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}} \&}]{dict,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \&}]{mesh }\end{DoxyParamCaption})}
+
+\Hypertarget{classFoam_1_1dgHLLEFluxSolver_a55d780005dc188b48c1d7a65fe65af87}\label{classFoam_1_1dgHLLEFluxSolver_a55d780005dc188b48c1d7a65fe65af87} 
+\index{Foam::dgHLLEFluxSolver@{Foam::dgHLLEFluxSolver}!````~dgHLLEFluxSolver@{\texorpdfstring{$\sim$}{\string~}dgHLLEFluxSolver}}
+\index{````~dgHLLEFluxSolver@{\texorpdfstring{$\sim$}{\string~}dgHLLEFluxSolver}!Foam::dgHLLEFluxSolver@{Foam::dgHLLEFluxSolver}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}dgHLLEFluxSolver()}{\string~dgHLLEFluxSolver()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} Foam\+::dg\+HLLEFlux\+Solver\+::\texorpdfstring{$\sim$}{\string~}dg\+HLLEFlux\+Solver (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}, {\ttfamily [default]}}
+
+\Hypertarget{classFoam_1_1dgHLLEFluxSolver_afbf0eb2eb34229bebbd97c61126656cc}\label{classFoam_1_1dgHLLEFluxSolver_afbf0eb2eb34229bebbd97c61126656cc} 
+\index{Foam::dgHLLEFluxSolver@{Foam::dgHLLEFluxSolver}!dgHLLEFluxSolver@{dgHLLEFluxSolver}}
+\index{dgHLLEFluxSolver@{dgHLLEFluxSolver}!Foam::dgHLLEFluxSolver@{Foam::dgHLLEFluxSolver}}
+\doxysubsubsection{\texorpdfstring{dgHLLEFluxSolver()}{dgHLLEFluxSolver()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Foam\+::dg\+HLLEFlux\+Solver\+::dg\+HLLEFlux\+Solver (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{word}} \&}]{name,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}} \&}]{dict,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \&}]{mesh }\end{DoxyParamCaption})}
+
+\Hypertarget{classFoam_1_1dgHLLEFluxSolver_a55d780005dc188b48c1d7a65fe65af87}\label{classFoam_1_1dgHLLEFluxSolver_a55d780005dc188b48c1d7a65fe65af87} 
+\index{Foam::dgHLLEFluxSolver@{Foam::dgHLLEFluxSolver}!````~dgHLLEFluxSolver@{\texorpdfstring{$\sim$}{\string~}dgHLLEFluxSolver}}
+\index{````~dgHLLEFluxSolver@{\texorpdfstring{$\sim$}{\string~}dgHLLEFluxSolver}!Foam::dgHLLEFluxSolver@{Foam::dgHLLEFluxSolver}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}dgHLLEFluxSolver()}{\string~dgHLLEFluxSolver()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} Foam\+::dg\+HLLEFlux\+Solver\+::\texorpdfstring{$\sim$}{\string~}dg\+HLLEFlux\+Solver (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}, {\ttfamily [default]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classFoam_1_1dgHLLEFluxSolver_a0524725a894d1a8586ca1b69096ca8b8}\label{classFoam_1_1dgHLLEFluxSolver_a0524725a894d1a8586ca1b69096ca8b8} 
+\index{Foam::dgHLLEFluxSolver@{Foam::dgHLLEFluxSolver}!calcWaveSpeed@{calcWaveSpeed}}
+\index{calcWaveSpeed@{calcWaveSpeed}!Foam::dgHLLEFluxSolver@{Foam::dgHLLEFluxSolver}}
+\doxysubsubsection{\texorpdfstring{calcWaveSpeed()}{calcWaveSpeed()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{void}} Foam\+::dg\+HLLEFlux\+Solver\+::calc\+Wave\+Speed (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} \&}]{SL,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} \&}]{SR,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}}]{rhoL,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}}]{rhoR,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&}]{ULv,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&}]{URv,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}}]{pL,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}}]{pR,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}}]{aL,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}}]{aR,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}}]{gammaL,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}}]{gammaR,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}}]{hL,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}}]{hR,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&}]{n }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{classFoam_1_1dgHLLEFluxSolver_a170af24902400ec498f8a3c789c55edf}\label{classFoam_1_1dgHLLEFluxSolver_a170af24902400ec498f8a3c789c55edf} 
+\index{Foam::dgHLLEFluxSolver@{Foam::dgHLLEFluxSolver}!TypeName@{TypeName}}
+\index{TypeName@{TypeName}!Foam::dgHLLEFluxSolver@{Foam::dgHLLEFluxSolver}}
+\doxysubsubsection{\texorpdfstring{TypeName()}{TypeName()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Foam\+::dg\+HLLEFlux\+Solver\+::\+Type\+Name (\begin{DoxyParamCaption}\item[{"{}HLLE"{}}]{ }\end{DoxyParamCaption})}
+
+\Hypertarget{classFoam_1_1dgHLLEFluxSolver_a225c3352bc3375e32401b2361e47e3c4}\label{classFoam_1_1dgHLLEFluxSolver_a225c3352bc3375e32401b2361e47e3c4} 
+\index{Foam::dgHLLEFluxSolver@{Foam::dgHLLEFluxSolver}!computeFlux@{computeFlux}}
+\index{computeFlux@{computeFlux}!Foam::dgHLLEFluxSolver@{Foam::dgHLLEFluxSolver}}
+\doxysubsubsection{\texorpdfstring{computeFlux()}{computeFlux()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{void}} Foam\+::dg\+HLLEFlux\+Solver\+::compute\+Flux (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{cell\+ID,  }\item[{\mbox{\hyperlink{classFoam_1_1faceGaussField}{face\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$ \&}]{F,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1faceGaussField}{face\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{U }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classFoam_1_1dgFluxSolver_a818e96c113a2634cc92278d07576fd45}{Foam\+::dg\+Flux\+Solver}}.
+
+\Hypertarget{classFoam_1_1dgHLLEFluxSolver_a5c49bfbdb8219a32f2d88682fdc35d3e}\label{classFoam_1_1dgHLLEFluxSolver_a5c49bfbdb8219a32f2d88682fdc35d3e} 
+\index{Foam::dgHLLEFluxSolver@{Foam::dgHLLEFluxSolver}!computeFlux@{computeFlux}}
+\index{computeFlux@{computeFlux}!Foam::dgHLLEFluxSolver@{Foam::dgHLLEFluxSolver}}
+\doxysubsubsection{\texorpdfstring{computeFlux()}{computeFlux()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{void}} Foam\+::dg\+HLLEFlux\+Solver\+::compute\+Flux (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{cell\+ID,  }\item[{\mbox{\hyperlink{classFoam_1_1faceGaussField}{face\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{tensor}} $>$ \&}]{F,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1faceGaussField}{face\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$ \&}]{U }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classFoam_1_1dgFluxSolver_ae1a701c051676d77d2c8ecc5afb2989d}{Foam\+::dg\+Flux\+Solver}}.
+
+\Hypertarget{classFoam_1_1dgHLLEFluxSolver_a9747ba5f629d03206cbb406f0372896c}\label{classFoam_1_1dgHLLEFluxSolver_a9747ba5f629d03206cbb406f0372896c} 
+\index{Foam::dgHLLEFluxSolver@{Foam::dgHLLEFluxSolver}!reset@{reset}}
+\index{reset@{reset}!Foam::dgHLLEFluxSolver@{Foam::dgHLLEFluxSolver}}
+\doxysubsubsection{\texorpdfstring{reset()}{reset()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{void}} Foam\+::dg\+HLLEFlux\+Solver\+::reset (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classFoam_1_1dgFluxSolver_a4f531350dfae3874165829e63725a8a7}{Foam\+::dg\+Flux\+Solver}}.
+
+\Hypertarget{classFoam_1_1dgHLLEFluxSolver_a083f1cc62ef494e94cf7676b184d20d5}\label{classFoam_1_1dgHLLEFluxSolver_a083f1cc62ef494e94cf7676b184d20d5} 
+\index{Foam::dgHLLEFluxSolver@{Foam::dgHLLEFluxSolver}!read@{read}}
+\index{read@{read}!Foam::dgHLLEFluxSolver@{Foam::dgHLLEFluxSolver}}
+\doxysubsubsection{\texorpdfstring{read()}{read()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{void}} Foam\+::dg\+HLLEFlux\+Solver\+::read (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}} \&}]{dict }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classFoam_1_1dgFluxSolver_a4ebea0b463d5b9d8747e52ff693276ce}{Foam\+::dg\+Flux\+Solver}}.
+
+\Hypertarget{classFoam_1_1dgHLLEFluxSolver_a0524725a894d1a8586ca1b69096ca8b8}\label{classFoam_1_1dgHLLEFluxSolver_a0524725a894d1a8586ca1b69096ca8b8} 
+\index{Foam::dgHLLEFluxSolver@{Foam::dgHLLEFluxSolver}!calcWaveSpeed@{calcWaveSpeed}}
+\index{calcWaveSpeed@{calcWaveSpeed}!Foam::dgHLLEFluxSolver@{Foam::dgHLLEFluxSolver}}
+\doxysubsubsection{\texorpdfstring{calcWaveSpeed()}{calcWaveSpeed()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{void}} Foam\+::dg\+HLLEFlux\+Solver\+::calc\+Wave\+Speed (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} \&}]{SL,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} \&}]{SR,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}}]{rhoL,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}}]{rhoR,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&}]{ULv,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&}]{URv,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}}]{pL,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}}]{pR,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}}]{aL,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}}]{aR,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}}]{gammaL,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}}]{gammaR,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}}]{hL,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}}]{hR,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&}]{n }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{classFoam_1_1dgHLLEFluxSolver_a170af24902400ec498f8a3c789c55edf}\label{classFoam_1_1dgHLLEFluxSolver_a170af24902400ec498f8a3c789c55edf} 
+\index{Foam::dgHLLEFluxSolver@{Foam::dgHLLEFluxSolver}!TypeName@{TypeName}}
+\index{TypeName@{TypeName}!Foam::dgHLLEFluxSolver@{Foam::dgHLLEFluxSolver}}
+\doxysubsubsection{\texorpdfstring{TypeName()}{TypeName()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Foam\+::dg\+HLLEFlux\+Solver\+::\+Type\+Name (\begin{DoxyParamCaption}\item[{"{}HLLE"{}}]{ }\end{DoxyParamCaption})}
+
+\Hypertarget{classFoam_1_1dgHLLEFluxSolver_accfb18f675c1cd797ee9c55d6fc5bc1e}\label{classFoam_1_1dgHLLEFluxSolver_accfb18f675c1cd797ee9c55d6fc5bc1e} 
+\index{Foam::dgHLLEFluxSolver@{Foam::dgHLLEFluxSolver}!computeFlux@{computeFlux}}
+\index{computeFlux@{computeFlux}!Foam::dgHLLEFluxSolver@{Foam::dgHLLEFluxSolver}}
+\doxysubsubsection{\texorpdfstring{computeFlux()}{computeFlux()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{void}} Foam\+::dg\+HLLEFlux\+Solver\+::compute\+Flux (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{cell\+ID,  }\item[{\mbox{\hyperlink{classFoam_1_1faceGaussField}{face\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$ \&}]{F,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1faceGaussField}{face\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{U }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classFoam_1_1dgFluxSolver_a818e96c113a2634cc92278d07576fd45}{Foam\+::dg\+Flux\+Solver}}.
+
+\Hypertarget{classFoam_1_1dgHLLEFluxSolver_a5099752b8faa27181c6ec9c15f1b8d31}\label{classFoam_1_1dgHLLEFluxSolver_a5099752b8faa27181c6ec9c15f1b8d31} 
+\index{Foam::dgHLLEFluxSolver@{Foam::dgHLLEFluxSolver}!computeFlux@{computeFlux}}
+\index{computeFlux@{computeFlux}!Foam::dgHLLEFluxSolver@{Foam::dgHLLEFluxSolver}}
+\doxysubsubsection{\texorpdfstring{computeFlux()}{computeFlux()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{void}} Foam\+::dg\+HLLEFlux\+Solver\+::compute\+Flux (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{cell\+ID,  }\item[{\mbox{\hyperlink{classFoam_1_1faceGaussField}{face\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{tensor}} $>$ \&}]{F,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1faceGaussField}{face\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$ \&}]{U }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classFoam_1_1dgFluxSolver_ae1a701c051676d77d2c8ecc5afb2989d}{Foam\+::dg\+Flux\+Solver}}.
+
+\Hypertarget{classFoam_1_1dgHLLEFluxSolver_a9747ba5f629d03206cbb406f0372896c}\label{classFoam_1_1dgHLLEFluxSolver_a9747ba5f629d03206cbb406f0372896c} 
+\index{Foam::dgHLLEFluxSolver@{Foam::dgHLLEFluxSolver}!reset@{reset}}
+\index{reset@{reset}!Foam::dgHLLEFluxSolver@{Foam::dgHLLEFluxSolver}}
+\doxysubsubsection{\texorpdfstring{reset()}{reset()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{void}} Foam\+::dg\+HLLEFlux\+Solver\+::reset (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classFoam_1_1dgFluxSolver_a4f531350dfae3874165829e63725a8a7}{Foam\+::dg\+Flux\+Solver}}.
+
+\Hypertarget{classFoam_1_1dgHLLEFluxSolver_ad9a23b45f66ff957ea5c37f6aec23796}\label{classFoam_1_1dgHLLEFluxSolver_ad9a23b45f66ff957ea5c37f6aec23796} 
+\index{Foam::dgHLLEFluxSolver@{Foam::dgHLLEFluxSolver}!read@{read}}
+\index{read@{read}!Foam::dgHLLEFluxSolver@{Foam::dgHLLEFluxSolver}}
+\doxysubsubsection{\texorpdfstring{read()}{read()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{void}} Foam\+::dg\+HLLEFlux\+Solver\+::read (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}} \&}]{dict }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classFoam_1_1dgFluxSolver_a4ebea0b463d5b9d8747e52ff693276ce}{Foam\+::dg\+Flux\+Solver}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classFoam_1_1dgHLLEFluxSolver_a55d9b10eb73dd03ced7d33041203d0e9}\label{classFoam_1_1dgHLLEFluxSolver_a55d9b10eb73dd03ced7d33041203d0e9} 
+\index{Foam::dgHLLEFluxSolver@{Foam::dgHLLEFluxSolver}!rho\_@{rho\_}}
+\index{rho\_@{rho\_}!Foam::dgHLLEFluxSolver@{Foam::dgHLLEFluxSolver}}
+\doxysubsubsection{\texorpdfstring{rho\_}{rho\_}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgField}{dg\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \& Foam\+::dg\+HLLEFlux\+Solver\+::rho\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Density. 
+
+\Hypertarget{classFoam_1_1dgHLLEFluxSolver_a9af1eef99a262413000cdcd891bb6974}\label{classFoam_1_1dgHLLEFluxSolver_a9af1eef99a262413000cdcd891bb6974} 
+\index{Foam::dgHLLEFluxSolver@{Foam::dgHLLEFluxSolver}!U\_@{U\_}}
+\index{U\_@{U\_}!Foam::dgHLLEFluxSolver@{Foam::dgHLLEFluxSolver}}
+\doxysubsubsection{\texorpdfstring{U\_}{U\_}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgField}{dg\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$ \& Foam\+::dg\+HLLEFlux\+Solver\+::\+U\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Velocity. 
+
+\Hypertarget{classFoam_1_1dgHLLEFluxSolver_a891c597e8e634a0437b9ac7fadc8588a}\label{classFoam_1_1dgHLLEFluxSolver_a891c597e8e634a0437b9ac7fadc8588a} 
+\index{Foam::dgHLLEFluxSolver@{Foam::dgHLLEFluxSolver}!p\_@{p\_}}
+\index{p\_@{p\_}!Foam::dgHLLEFluxSolver@{Foam::dgHLLEFluxSolver}}
+\doxysubsubsection{\texorpdfstring{p\_}{p\_}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgField}{dg\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \& Foam\+::dg\+HLLEFlux\+Solver\+::p\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Pressure. 
+
+\Hypertarget{classFoam_1_1dgHLLEFluxSolver_a2a5c0b16e8e2d306a0bfa1016b9118dd}\label{classFoam_1_1dgHLLEFluxSolver_a2a5c0b16e8e2d306a0bfa1016b9118dd} 
+\index{Foam::dgHLLEFluxSolver@{Foam::dgHLLEFluxSolver}!a\_@{a\_}}
+\index{a\_@{a\_}!Foam::dgHLLEFluxSolver@{Foam::dgHLLEFluxSolver}}
+\doxysubsubsection{\texorpdfstring{a\_}{a\_}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgField}{dg\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \& Foam\+::dg\+HLLEFlux\+Solver\+::a\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Speed of sound. 
+
+\Hypertarget{classFoam_1_1dgHLLEFluxSolver_a94006f627fe6f9902e6595139b0b232f}\label{classFoam_1_1dgHLLEFluxSolver_a94006f627fe6f9902e6595139b0b232f} 
+\index{Foam::dgHLLEFluxSolver@{Foam::dgHLLEFluxSolver}!h\_@{h\_}}
+\index{h\_@{h\_}!Foam::dgHLLEFluxSolver@{Foam::dgHLLEFluxSolver}}
+\doxysubsubsection{\texorpdfstring{h\_}{h\_}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgField}{dg\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \& Foam\+::dg\+HLLEFlux\+Solver\+::h\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Enthalpy. 
+
+\Hypertarget{classFoam_1_1dgHLLEFluxSolver_ac6f56a6b1b426f70a33fa843877548cb}\label{classFoam_1_1dgHLLEFluxSolver_ac6f56a6b1b426f70a33fa843877548cb} 
+\index{Foam::dgHLLEFluxSolver@{Foam::dgHLLEFluxSolver}!gamma\_@{gamma\_}}
+\index{gamma\_@{gamma\_}!Foam::dgHLLEFluxSolver@{Foam::dgHLLEFluxSolver}}
+\doxysubsubsection{\texorpdfstring{gamma\_}{gamma\_}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgField}{dg\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \& Foam\+::dg\+HLLEFlux\+Solver\+::gamma\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Cp/\+Cv. 
+
+\Hypertarget{classFoam_1_1dgHLLEFluxSolver_a603b8dfb17f4865fcafd1d499a0f743f}\label{classFoam_1_1dgHLLEFluxSolver_a603b8dfb17f4865fcafd1d499a0f743f} 
+\index{Foam::dgHLLEFluxSolver@{Foam::dgHLLEFluxSolver}!speedEst\_@{speedEst\_}}
+\index{speedEst\_@{speedEst\_}!Foam::dgHLLEFluxSolver@{Foam::dgHLLEFluxSolver}}
+\doxysubsubsection{\texorpdfstring{speedEst\_}{speedEst\_}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1dgHLLEFluxSolver_a4451ee8ef3807320e7c6d55aa6e9be1e}{speed\+Estimate\+Type}} Foam\+::dg\+HLLEFlux\+Solver\+::speed\+Est\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/nam-\/ha-\/tran/\+Open\+FOAM/\+DGFoam/src/\+DGMethod/dg\+Flux\+Solvers/approximate\+Riemann\+Flux\+Solver/contact\+Resolving\+Schemes/\+HLLE/\mbox{\hyperlink{dgFluxSolvers_2approximateRiemannFluxSolver_2contactResolvingSchemes_2HLLE_2dgHLLEFluxSolver_8H}{dg\+HLLEFlux\+Solver.\+H}}\item 
+/home/nam-\/ha-\/tran/\+Open\+FOAM/\+DGFoam/src/\+DGMethod/ln\+Include/\mbox{\hyperlink{lnInclude_2dgHLLEFluxSolver_8H}{dg\+HLLEFlux\+Solver.\+H}}\item 
+/home/nam-\/ha-\/tran/\+Open\+FOAM/\+DGFoam/src/\+DGMethod/dg\+Flux\+Solvers/approximate\+Riemann\+Flux\+Solver/contact\+Resolving\+Schemes/\+HLLE/\mbox{\hyperlink{dgFluxSolvers_2approximateRiemannFluxSolver_2contactResolvingSchemes_2HLLE_2dgHLLEFluxSolver_8C}{dg\+HLLEFlux\+Solver.\+C}}\item 
+/home/nam-\/ha-\/tran/\+Open\+FOAM/\+DGFoam/src/\+DGMethod/ln\+Include/\mbox{\hyperlink{lnInclude_2dgHLLEFluxSolver_8C}{dg\+HLLEFlux\+Solver.\+C}}\end{DoxyCompactItemize}

@@ -1,0 +1,103 @@
+/*---------------------------------------------------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     |
+    \\  /    A nd           | www.openfoam.com
+     \\/     M anipulation  |
+-------------------------------------------------------------------------------
+    Copyright (C) 2015-2024 OpenCFD Ltd.
+    Copyright (C) 2024-2025 Ha Nam Tran
+-------------------------------------------------------------------------------
+License
+    This file is part of DGFoam.
+
+    DGFoam is free software: you can redistribute it and/or modify it
+    under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    DGFoam is distributed in the hope that it will be useful, but WITHOUT
+    ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+    FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+    for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with OpenFOAM.  If not, see <http://www.gnu.org/licenses/>.
+
+Class
+    Foam::dgGeneralZeroGradientBoundaryField
+
+Description
+    Implements a zero-gradient (Neumann-type) general boundary condition for 
+    Discontinuous Galerkin methods.
+
+    This condition assumes that the field has zero normal derivative across the 
+    boundary face. It is implemented by mirroring the internal value to the 
+    outside:
+
+        U⁺ = U⁻
+        ∇U⁺ = ∇U⁻
+
+    where:
+        - U⁻: solution inside the domain
+        - U⁺: ghost value used for flux computation
+        - ∇U⁻: gradient inside the domain
+        - ∇U⁺: gradient used for flux evaluation on ghost side
+
+    Typical use:
+        - Outlet boundaries
+        - Symmetry planes (for scalar fields)
+        - Free-slip walls (when velocity gradient is zero)
+
+SourceFiles
+    dgGeneralZeroGradientBoundaryField.C
+
+\*---------------------------------------------------------------------------*/
+
+#ifndef dgGeneralZeroGradientBoundaryField_H
+#define dgGeneralZeroGradientBoundaryField_H
+
+#include "dgGeneralBoundaryField.H"
+
+namespace Foam
+{
+
+/*---------------------------------------------------------------------------*\
+           Class dgGeneralZeroGradientBoundaryField Declaration
+\*---------------------------------------------------------------------------*/
+
+template<class Type>
+class dgGeneralZeroGradientBoundaryField
+:
+    public dgGeneralBoundaryField<Type>
+{
+public:
+
+    //- Runtime type information
+    TypeName("generalZeroGradient");
+
+    //- Constructor from name and dictionary
+    dgGeneralZeroGradientBoundaryField
+    (
+        const fvPatch& patch,
+        const dgGeomMesh& dgMesh,
+        const dictionary& dict
+    );
+
+    //- Destructor
+    virtual ~dgGeneralZeroGradientBoundaryField() = default;
+
+};
+
+} // End namespace Foam
+
+/*---------------------------------------------------------------------------*\
+                  Include template implementation
+\*---------------------------------------------------------------------------*/
+
+#include "dgGeneralZeroGradientBoundaryFieldI.H"
+
+#endif
+
+// ************************************************************************* //
+

@@ -1,0 +1,141 @@
+\doxysection{fields\+Context.\+H}
+\hypertarget{lnInclude_2fieldsContext_8H_source}{}\label{lnInclude_2fieldsContext_8H_source}\index{/home/nam-\/ha-\/tran/OpenFOAM/DGFoam/src/DGFoam/lnInclude/fieldsContext.H@{/home/nam-\/ha-\/tran/OpenFOAM/DGFoam/src/DGFoam/lnInclude/fieldsContext.H}}
+\mbox{\hyperlink{lnInclude_2fieldsContext_8H}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*\(\backslash\)}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ \ =========\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ \ \(\backslash\)\(\backslash\)\ \ \ \ \ \ /\ \ F\ ield\ \ \ \ \ \ \ \ \ |\ OpenFOAM:\ The\ Open\ Source\ CFD\ Toolbox}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ \ \ \(\backslash\)\(\backslash\)\ \ \ \ /\ \ \ O\ peration\ \ \ \ \ |}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ \ \ \ \(\backslash\)\(\backslash\)\ \ /\ \ \ \ A\ nd\ \ \ \ \ \ \ \ \ \ \ |\ www.openfoam.com}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ \ \ \ \ \(\backslash\)\(\backslash\)/\ \ \ \ \ M\ anipulation\ \ |}}
+\DoxyCodeLine{00007\ \textcolor{comment}{-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ \ \ \ Copyright\ (C)}}
+\DoxyCodeLine{00009\ \textcolor{comment}{-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00010\ \textcolor{comment}{License}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ \ \ \ This\ file\ is\ part\ of\ OpenFOAM.}}
+\DoxyCodeLine{00012\ \textcolor{comment}{}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ \ \ \ OpenFOAM\ is\ free\ software:\ you\ can\ redistribute\ it\ and/or\ modify\ it}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ \ \ \ under\ the\ terms\ of\ the\ GNU\ General\ Public\ License\ as\ published\ by}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ \ \ \ the\ Free\ Software\ Foundation,\ either\ version\ 3\ of\ the\ License,\ or}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ \ \ \ (at\ your\ option)\ any\ later\ version.}}
+\DoxyCodeLine{00017\ \textcolor{comment}{}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ \ \ \ OpenFOAM\ is\ distributed\ in\ the\ hope\ that\ it\ will\ be\ useful,\ but\ WITHOUT}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ \ \ \ ANY\ WARRANTY;\ without\ even\ the\ implied\ warranty\ of\ MERCHANTABILITY\ or}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ \ \ \ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE.\ \ See\ the\ GNU\ General\ Public\ License}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ \ \ \ for\ more\ details.}}
+\DoxyCodeLine{00022\ \textcolor{comment}{}}
+\DoxyCodeLine{00023\ \textcolor{comment}{\ \ \ \ You\ should\ have\ received\ a\ copy\ of\ the\ GNU\ General\ Public\ License}}
+\DoxyCodeLine{00024\ \textcolor{comment}{\ \ \ \ along\ with\ OpenFOAM.\ \ If\ not,\ see\ <http://www.gnu.org/licenses/>.}}
+\DoxyCodeLine{00025\ \textcolor{comment}{}}
+\DoxyCodeLine{00026\ \textcolor{comment}{Class}}
+\DoxyCodeLine{00027\ \textcolor{comment}{\ \ \ \ Foam::fieldsContext}}
+\DoxyCodeLine{00028\ \textcolor{comment}{}}
+\DoxyCodeLine{00029\ \textcolor{comment}{Description}}
+\DoxyCodeLine{00030\ \textcolor{comment}{\ \ \ \ Context\ class\ to\ register\ and\ lookup\ cellGaussField\ and\ faceGaussField}}
+\DoxyCodeLine{00031\ \textcolor{comment}{\ \ \ \ using\ string\ names.\ Stores\ internal\ pointers\ so\ fields\ can\ be\ shared\ and}}
+\DoxyCodeLine{00032\ \textcolor{comment}{\ \ \ \ accessed\ during\ runtime\ with\ updated\ values.}}
+\DoxyCodeLine{00033\ \textcolor{comment}{}}
+\DoxyCodeLine{00034\ \textcolor{comment}{\ \ \ \ Supports\ multiple\ data\ types\ (scalar,\ vector,\ tensor,\ etc.)\ via\ template}}
+\DoxyCodeLine{00035\ \textcolor{comment}{\ \ \ \ mechanism.}}
+\DoxyCodeLine{00036\ \textcolor{comment}{}}
+\DoxyCodeLine{00037\ \textcolor{comment}{\ \ \ \ Example\ usage:}}
+\DoxyCodeLine{00038\ \textcolor{comment}{}}
+\DoxyCodeLine{00039\ \textcolor{comment}{\ \ \ \ \ \ \ \ fieldsContext\ ctx;}}
+\DoxyCodeLine{00040\ \textcolor{comment}{}}
+\DoxyCodeLine{00041\ \textcolor{comment}{\ \ \ \ \ \ \ \ cellGaussField<vector>\ U(...);}}
+\DoxyCodeLine{00042\ \textcolor{comment}{\ \ \ \ \ \ \ \ faceGaussField<scalar>\ TWall(...);}}
+\DoxyCodeLine{00043\ \textcolor{comment}{}}
+\DoxyCodeLine{00044\ \textcolor{comment}{\ \ \ \ \ \ \ \ ctx.regis(U,\ "{}U"{});}}
+\DoxyCodeLine{00045\ \textcolor{comment}{\ \ \ \ \ \ \ \ ctx.regis(TWall,\ "{}TWall"{});}}
+\DoxyCodeLine{00046\ \textcolor{comment}{}}
+\DoxyCodeLine{00047\ \textcolor{comment}{\ \ \ \ \ \ \ \ const\ cellGaussField<vector>\&\ Uref\ =\ ctx.lookupCellField<vector>("{}U"{});}}
+\DoxyCodeLine{00048\ \textcolor{comment}{\ \ \ \ \ \ \ \ const\ faceGaussField<scalar>\&\ TwRef\ =\ ctx.lookupFaceField<scalar>("{}TWall"{});}}
+\DoxyCodeLine{00049\ \textcolor{comment}{}}
+\DoxyCodeLine{00050\ \textcolor{comment}{SourceFiles}}
+\DoxyCodeLine{00051\ \textcolor{comment}{\ \ \ \ fieldsContext.C}}
+\DoxyCodeLine{00052\ \textcolor{comment}{}}
+\DoxyCodeLine{00053\ \textcolor{comment}{\(\backslash\)*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00055\ \textcolor{preprocessor}{\#ifndef\ Foam\_fieldsContext\_H}}
+\DoxyCodeLine{00056\ \textcolor{preprocessor}{\#define\ Foam\_fieldsContext\_H}}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00058\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{lnInclude_2cellGaussField_8H}{cellGaussField.H}}"{}}}
+\DoxyCodeLine{00059\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{lnInclude_2faceGaussField_8H}{faceGaussField.H}}"{}}}
+\DoxyCodeLine{00060\ \textcolor{preprocessor}{\#include\ "{}HashTable.H"{}}}
+\DoxyCodeLine{00061\ \textcolor{preprocessor}{\#include\ "{}word.H"{}}}
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00063\ \textcolor{comment}{//\ Forward\ declaration}}
+\DoxyCodeLine{00064\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Type>}
+\DoxyCodeLine{00065\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classcellGaussField}{cellGaussField}};}
+\DoxyCodeLine{00066\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Type>}
+\DoxyCodeLine{00067\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classfaceGaussField}{faceGaussField}};}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00069\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespaceFoam}{Foam}}}
+\DoxyCodeLine{00070\ \{}
+\DoxyCodeLine{00071\ }
+\DoxyCodeLine{00072\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*\(\backslash\)}}
+\DoxyCodeLine{00073\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Class\ fieldsContext\ Declaration}}
+\DoxyCodeLine{00074\ \textcolor{comment}{\(\backslash\)*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00076\ \textcolor{keyword}{class\ }fieldsContext}
+\DoxyCodeLine{00077\ \{}
+\DoxyCodeLine{00078\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00079\ }
+\DoxyCodeLine{00080\ \ \ \ \ \textcolor{comment}{//-\/\ Field\ location:\ cell\ or\ face}}
+\DoxyCodeLine{00081\ \ \ \ \ \textcolor{keyword}{enum}\ \mbox{\hyperlink{classFoam_1_1fieldsContext_a9612d9a774db887eb20819f1a34e66f9}{fieldType}}}
+\DoxyCodeLine{00082\ \ \ \ \ \{}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1fieldsContext_a9612d9a774db887eb20819f1a34e66f9a7fca4fa187ad54133a55220942220328}{CELL\_FIELD}},}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1fieldsContext_a9612d9a774db887eb20819f1a34e66f9a6001ead7476fd9d45a5bcf5abc345590}{FACE\_FIELD}}}
+\DoxyCodeLine{00085\ \ \ \ \ \};}
+\DoxyCodeLine{00086\ }
+\DoxyCodeLine{00087\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00088\ }
+\DoxyCodeLine{00089\ \ \ \ \ \textcolor{comment}{//-\/\ Template\ alias\ for\ cell\ field\ map}}
+\DoxyCodeLine{00090\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Type>}
+\DoxyCodeLine{00091\ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{classFoam_1_1GaussField}{CellFieldMap}}\ =\ \mbox{\hyperlink{classFoam_1_1GaussField}{HashTable<const\ cellGaussField<Type>}}*>;}
+\DoxyCodeLine{00092\ }
+\DoxyCodeLine{00093\ \ \ \ \ \textcolor{comment}{//-\/\ Template\ alias\ for\ face\ field\ map}}
+\DoxyCodeLine{00094\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Type>}
+\DoxyCodeLine{00095\ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{classFoam_1_1GaussField}{FaceFieldMap}}\ =\ \mbox{\hyperlink{classFoam_1_1GaussField}{HashTable<const\ faceGaussField<Type>}}*>;}
+\DoxyCodeLine{00096\ }
+\DoxyCodeLine{00097\ \ \ \ \ \textcolor{comment}{//-\/\ Generic\ maps\ storing\ pointer-\/to-\/maps\ using\ type\ string\ as\ key}}
+\DoxyCodeLine{00098\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{HashTable<void*>}}\ \mbox{\hyperlink{classFoam_1_1fieldsContext_a875776456fc6974211c1abdcde989d93}{cellFieldMaps\_}};}
+\DoxyCodeLine{00099\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{HashTable<void*>}}\ \mbox{\hyperlink{classFoam_1_1fieldsContext_a4e090cae512b8da42406cb51c1ee7c3f}{faceFieldMaps\_}};}
+\DoxyCodeLine{00100\ }
+\DoxyCodeLine{00101\ \ \ \ \ \textcolor{comment}{//-\/\ Helper:\ generate\ key\ string\ from\ Type}}
+\DoxyCodeLine{00102\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Type>}
+\DoxyCodeLine{00103\ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{classFoam_1_1GaussField}{word}}\ \mbox{\hyperlink{classFoam_1_1fieldsContext_a788e530c46fc830824384c17aa1d778c}{typeKey}}();}
+\DoxyCodeLine{00104\ }
+\DoxyCodeLine{00105\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00106\ }
+\DoxyCodeLine{00107\ \ \ \ \ \textcolor{comment}{//-\/\ Default\ constructor}}
+\DoxyCodeLine{00108\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1fieldsContext_ae831d3a17a2091c7c7bfdc15a6744a77}{fieldsContext}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00109\ }
+\DoxyCodeLine{00110\ \ \ \ \ \textcolor{comment}{//-\/\ Register\ a\ cellGaussField}}
+\DoxyCodeLine{00111\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Type>}
+\DoxyCodeLine{00112\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classFoam_1_1fieldsContext_aaa64bc52336586467c807f2b6f307710}{regis}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{cellGaussField<Type>}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{field}},\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{word}}\&\ name);}
+\DoxyCodeLine{00113\ }
+\DoxyCodeLine{00114\ \ \ \ \ \textcolor{comment}{//-\/\ Register\ a\ faceGaussField}}
+\DoxyCodeLine{00115\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Type>}
+\DoxyCodeLine{00116\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classFoam_1_1fieldsContext_a88428c4bff643e3dedb2d83a6027cc7a}{regis}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{faceGaussField<Type>}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{field}},\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{word}}\&\ name);}
+\DoxyCodeLine{00117\ }
+\DoxyCodeLine{00118\ \ \ \ \ \textcolor{comment}{//-\/\ Lookup\ cell\ field}}
+\DoxyCodeLine{00119\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Type>}
+\DoxyCodeLine{00120\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{cellGaussField<Type>}}\&\ \mbox{\hyperlink{classFoam_1_1fieldsContext_a14fad5a2ba5d4b504acdc1916d49b080}{lookupCellField}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{word}}\&\ name)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00121\ }
+\DoxyCodeLine{00122\ \ \ \ \ \textcolor{comment}{//-\/\ Lookup\ face\ field}}
+\DoxyCodeLine{00123\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Type>}
+\DoxyCodeLine{00124\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{faceGaussField<Type>}}\&\ \mbox{\hyperlink{classFoam_1_1fieldsContext_ad1a12efee6763ec2e196be00aaa7dd10}{lookupFaceField}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{word}}\&\ name)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00125\ \};}
+\DoxyCodeLine{00126\ }
+\DoxyCodeLine{00127\ \}\ \textcolor{comment}{//\ End\ namespace\ Foam}}
+\DoxyCodeLine{00128\ }
+\DoxyCodeLine{00129\ \textcolor{comment}{//\#ifdef\ NoRepository}}
+\DoxyCodeLine{00130\ \textcolor{comment}{//\ \ \ \ \#include\ "{}fieldsContext.C"{}}}
+\DoxyCodeLine{00131\ \textcolor{comment}{//\#endif}}
+\DoxyCodeLine{00132\ }
+\DoxyCodeLine{00133\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00134\ }
+\DoxyCodeLine{00135\ \textcolor{comment}{//\ *************************************************************************\ //}}
+
+\end{DoxyCode}

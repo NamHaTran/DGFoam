@@ -5,7 +5,7 @@
     \\  /    A nd           | www.openfoam.com
      \\/     M anipulation  |
 -------------------------------------------------------------------------------
-    Copyright (C) 2011-2016 OpenFOAM Foundation
+    Copyright (C) 2015-2024 OpenCFD Ltd.
     Copyright (C) 2024-2025 Ha Nam Tran
 -------------------------------------------------------------------------------
 License
@@ -28,7 +28,10 @@ Class
     Foam::cellDof<Type>
 
 Description
-    Store degrees of freedom (Dof) of given Type for a DG cell.
+    Container for degrees of freedom (DoF) of a DG cell.
+
+    Stores all polynomial degrees of freedom associated with a single
+    DG cell for a given field type.
 
 SourceFiles
     cellDof.C
@@ -53,31 +56,64 @@ namespace Foam
                         Class cellDof Declaration
 \*---------------------------------------------------------------------------*/
 
+/**
+ * \class Foam::cellDof
+ * \brief Degree-of-freedom container for a DG cell
+ *
+ * \tparam Type Field value type (e.g. scalar, vector, tensor)
+ *
+ * \details
+ * cellDof stores all degrees of freedom (DoF) associated with a single
+ * DG cell for a given field type.
+ *
+ * The DoFs typically correspond to coefficients of polynomial basis
+ * functions defined on the reference cell and mapped to physical space.
+ *
+ * This class is intentionally lightweight and contains no geometric
+ * information; it is purely a data container used by higher-level DG
+ * field and solver classes.
+ */
 template<class Type>
 class cellDof
 {
 private:
 
-    //- Cell ID in the mesh
-    label cellID_;
+    //====================================================================//
+    //                           Data members
+    //====================================================================//
 
-    //- Number of degrees of freedom stored in this cell
-    label nDof_;
+        /** Cell index in the mesh */
+        label cellID_;
 
-    //- List of DoF values
-    List<Type> dof_;
+        /** Number of degrees of freedom stored in this cell */
+        label nDof_;
+
+        /** List of degree-of-freedom values */
+        List<Type> dof_;
 
 public:
 
-    // Constructors
+    //====================================================================//
+    //                           Constructors
+    //====================================================================//
 
-        //- Default constructor (required for List<T> containers)
+        /**
+         * \brief Default constructor
+         *
+         * Required for List<cellDof<Type>> containers.
+         */
         cellDof();
 
-        //- Copy constructor
+        /**
+         * \brief Copy constructor
+         */
         cellDof(const cellDof<Type>& other);
 
-        //- Construct from cell ID and an input DoF list
+        /**
+         * \brief Construct from cell ID and DoF values
+         *
+         * Copies the provided DoF values into internal storage.
+         */
         cellDof
         (
             const label cellID,
@@ -85,42 +121,50 @@ public:
             const UList<Type>& inputDof
         );
 
-    //- Assignment operator
-    cellDof<Type>& operator=(const cellDof<Type>& other);
+    //====================================================================//
+    //                         Assignment
+    //====================================================================//
 
-    // Access
+        /**
+         * \brief Copy assignment operator
+         */
+        cellDof<Type>& operator=(const cellDof<Type>& other);
 
-        //- Return non-const access to DoF list
+    //====================================================================//
+    //                           Access
+    //====================================================================//
+
+        /** Return non-const access to DoF list */
         inline List<Type>& dof()
         {
             return dof_;
         }
 
-        //- Return const access to DoF list
+        /** Return const access to DoF list */
         inline const List<Type>& dof() const
         {
             return dof_;
         }
 
-        //- Return number of DoF in this cell
+        /** Return number of DoFs in this cell */
         inline label nDof() const
         {
             return nDof_;
         }
 
-        //- Return cell ID
+        /** Return cell index */
         inline label cellID() const
         {
             return cellID_;
         }
 
-        //- Non-const element access
+        /** Non-const access to i-th DoF */
         inline Type& operator[](const label i)
         {
             return dof_[i];
         }
 
-        //- Const element access
+        /** Const access to i-th DoF */
         inline const Type& operator[](const label i) const
         {
             return dof_[i];
@@ -134,4 +178,3 @@ public:
 #endif
 
 // ************************************************************************* //
-

@@ -1,0 +1,394 @@
+\doxysection{dg\+Face\+Gauss\+Field\+Scalar\+Math.\+H}
+\hypertarget{lnInclude_2dgFaceGaussFieldScalarMath_8H_source}{}\label{lnInclude_2dgFaceGaussFieldScalarMath_8H_source}\index{/home/nam-\/ha-\/tran/OpenFOAM/DGFoam/src/math/lnInclude/dgFaceGaussFieldScalarMath.H@{/home/nam-\/ha-\/tran/OpenFOAM/DGFoam/src/math/lnInclude/dgFaceGaussFieldScalarMath.H}}
+\mbox{\hyperlink{lnInclude_2dgFaceGaussFieldScalarMath_8H}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*\(\backslash\)}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ \ =========\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ \ \(\backslash\)\(\backslash\)\ \ \ \ \ \ /\ \ F\ ield\ \ \ \ \ \ \ \ \ |\ OpenFOAM:\ The\ Open\ Source\ CFD\ Toolbox}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ \ \ \(\backslash\)\(\backslash\)\ \ \ \ /\ \ \ O\ peration\ \ \ \ \ |}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ \ \ \ \(\backslash\)\(\backslash\)\ \ /\ \ \ \ A\ nd\ \ \ \ \ \ \ \ \ \ \ |\ www.openfoam.com}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ \ \ \ \ \(\backslash\)\(\backslash\)/\ \ \ \ \ M\ anipulation\ \ |}}
+\DoxyCodeLine{00007\ \textcolor{comment}{-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ \ \ \ Copyright\ (C)\ 2011-\/2016\ OpenFOAM\ Foundation}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ \ \ \ Copyright\ (C)\ 2021-\/2025\ OpenCFD\ Ltd.}}
+\DoxyCodeLine{00010\ \textcolor{comment}{-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00011\ \textcolor{comment}{License}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ \ \ \ This\ file\ is\ part\ of\ OpenFOAM.}}
+\DoxyCodeLine{00013\ \textcolor{comment}{}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ \ \ \ OpenFOAM\ is\ free\ software:\ you\ can\ redistribute\ it\ and/or\ modify\ it}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ \ \ \ under\ the\ terms\ of\ the\ GNU\ General\ Public\ License\ as\ published\ by}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ \ \ \ the\ Free\ Software\ Foundation,\ either\ version\ 3\ of\ the\ License,\ or}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ \ \ \ (at\ your\ option)\ any\ later\ version.}}
+\DoxyCodeLine{00018\ \textcolor{comment}{}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ \ \ \ OpenFOAM\ is\ distributed\ in\ the\ hope\ that\ it\ will\ be\ useful,\ but\ WITHOUT}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ \ \ \ ANY\ WARRANTY;\ without\ even\ the\ implied\ warranty\ of\ MERCHANTABILITY\ or}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ \ \ \ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE.\ \ See\ the\ GNU\ General\ Public\ License}}
+\DoxyCodeLine{00022\ \textcolor{comment}{\ \ \ \ for\ more\ details.}}
+\DoxyCodeLine{00023\ \textcolor{comment}{}}
+\DoxyCodeLine{00024\ \textcolor{comment}{\ \ \ \ You\ should\ have\ received\ a\ copy\ of\ the\ GNU\ General\ Public\ License}}
+\DoxyCodeLine{00025\ \textcolor{comment}{\ \ \ \ along\ with\ OpenFOAM.\ \ If\ not,\ see\ <http://www.gnu.org/licenses/>.}}
+\DoxyCodeLine{00026\ \textcolor{comment}{}}
+\DoxyCodeLine{00027\ \textcolor{comment}{Description}}
+\DoxyCodeLine{00028\ \textcolor{comment}{\ \ \ \ Operator\ overloads\ between\ faceGaussField<T>\ types:}}
+\DoxyCodeLine{00029\ \textcolor{comment}{\ \ \ \ -\/\ scalar\ -\/\ scalar}}
+\DoxyCodeLine{00030\ \textcolor{comment}{\ \ \ \ -\/\ scalar\ -\/\ vector}}
+\DoxyCodeLine{00031\ \textcolor{comment}{\ \ \ \ -\/\ scalar\ -\/\ tensor}}
+\DoxyCodeLine{00032\ \textcolor{comment}{\ \ \ \ -\/\ scalar\ -\/\ symmTensor}}
+\DoxyCodeLine{00033\ \textcolor{comment}{\ \ \ \ -\/\ scalar\ -\/\ sphericalTensor}}
+\DoxyCodeLine{00034\ \textcolor{comment}{}}
+\DoxyCodeLine{00035\ \textcolor{comment}{\(\backslash\)*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ \textcolor{preprocessor}{\#ifndef\ Foam\_dgFaceGaussFieldScalarMath\_H}}
+\DoxyCodeLine{00038\ \textcolor{preprocessor}{\#define\ Foam\_dgFaceGaussFieldScalarMath\_H}}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \textcolor{preprocessor}{\#include\ "{}faceGaussField.H"{}}}
+\DoxyCodeLine{00041\ \textcolor{preprocessor}{\#include\ "{}scalar.H"{}}}
+\DoxyCodeLine{00042\ \textcolor{preprocessor}{\#include\ "{}vector.H"{}}}
+\DoxyCodeLine{00043\ \textcolor{preprocessor}{\#include\ "{}tensor.H"{}}}
+\DoxyCodeLine{00044\ \textcolor{preprocessor}{\#include\ "{}symmTensor.H"{}}}
+\DoxyCodeLine{00045\ \textcolor{preprocessor}{\#include\ "{}sphericalTensor.H"{}}}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespaceFoam}{Foam}}}
+\DoxyCodeLine{00048\ \{}
+\DoxyCodeLine{00049\ \textcolor{comment}{//\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ Scalar\ -\/\ Scalar\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ //}}
+\DoxyCodeLine{00050\ \textcolor{keyword}{inline}\ faceGaussField<scalar>\ \textcolor{keyword}{operator}+}
+\DoxyCodeLine{00051\ (}
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keyword}{const}\ faceGaussField<scalar>\&\ A,}
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keyword}{const}\ faceGaussField<scalar>\&\ B}
+\DoxyCodeLine{00054\ )}
+\DoxyCodeLine{00055\ \{}
+\DoxyCodeLine{00056\ \ \ \ \ faceGaussField<scalar>\ result(A.cellID(),\ A.dgMesh());}
+\DoxyCodeLine{00057\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ gp\ =\ 0;\ gp\ <\ A.nGauss();\ ++gp)}
+\DoxyCodeLine{00058\ \ \ \ \ \{}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ result.plusValueAt(gp)\ \ =\ A.plusValue(gp)\ +\ B.plusValue(gp);}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ result.minusValueAt(gp)\ =\ A.minusValue(gp)\ +\ B.minusValue(gp);}
+\DoxyCodeLine{00061\ \ \ \ \ \}}
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00063\ \}}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00065\ \textcolor{keyword}{inline}\ faceGaussField<scalar>\ \textcolor{keyword}{operator}-\/}
+\DoxyCodeLine{00066\ (}
+\DoxyCodeLine{00067\ \ \ \ \ \textcolor{keyword}{const}\ faceGaussField<scalar>\&\ A,}
+\DoxyCodeLine{00068\ \ \ \ \ \textcolor{keyword}{const}\ faceGaussField<scalar>\&\ B}
+\DoxyCodeLine{00069\ )}
+\DoxyCodeLine{00070\ \{}
+\DoxyCodeLine{00071\ \ \ \ \ faceGaussField<scalar>\ result(A.cellID(),\ A.dgMesh());}
+\DoxyCodeLine{00072\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ gp\ =\ 0;\ gp\ <\ A.nGauss();\ ++gp)}
+\DoxyCodeLine{00073\ \ \ \ \ \{}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ result.plusValueAt(gp)\ \ =\ A.plusValue(gp)\ -\/\ B.plusValue(gp);}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ result.minusValueAt(gp)\ =\ A.minusValue(gp)\ -\/\ B.minusValue(gp);}
+\DoxyCodeLine{00076\ \ \ \ \ \}}
+\DoxyCodeLine{00077\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00078\ \}}
+\DoxyCodeLine{00079\ }
+\DoxyCodeLine{00080\ }
+\DoxyCodeLine{00081\ \textcolor{keyword}{inline}\ faceGaussField<scalar>\ \textcolor{keyword}{operator}*}
+\DoxyCodeLine{00082\ (}
+\DoxyCodeLine{00083\ \ \ \ \ \textcolor{keyword}{const}\ faceGaussField<scalar>\&\ A,}
+\DoxyCodeLine{00084\ \ \ \ \ \textcolor{keyword}{const}\ faceGaussField<scalar>\&\ B}
+\DoxyCodeLine{00085\ )}
+\DoxyCodeLine{00086\ \{}
+\DoxyCodeLine{00087\ \ \ \ \ faceGaussField<scalar>\ result(A.cellID(),\ A.dgMesh());}
+\DoxyCodeLine{00088\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ gp\ =\ 0;\ gp\ <\ A.nGauss();\ ++gp)}
+\DoxyCodeLine{00089\ \ \ \ \ \{}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ result.plusValueAt(gp)\ \ =\ A.plusValue(gp)\ *\ B.plusValue(gp);}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ result.minusValueAt(gp)\ =\ A.minusValue(gp)\ *\ B.minusValue(gp);}
+\DoxyCodeLine{00092\ \ \ \ \ \}}
+\DoxyCodeLine{00093\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00094\ \}}
+\DoxyCodeLine{00095\ }
+\DoxyCodeLine{00096\ \textcolor{keyword}{inline}\ faceGaussField<scalar>\ \textcolor{keyword}{operator}/}
+\DoxyCodeLine{00097\ (}
+\DoxyCodeLine{00098\ \ \ \ \ \textcolor{keyword}{const}\ faceGaussField<scalar>\&\ A,}
+\DoxyCodeLine{00099\ \ \ \ \ \textcolor{keyword}{const}\ faceGaussField<scalar>\&\ B}
+\DoxyCodeLine{00100\ )}
+\DoxyCodeLine{00101\ \{}
+\DoxyCodeLine{00102\ \ \ \ \ faceGaussField<scalar>\ result(A.cellID(),\ A.dgMesh());}
+\DoxyCodeLine{00103\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ gp\ =\ 0;\ gp\ <\ A.nGauss();\ ++gp)}
+\DoxyCodeLine{00104\ \ \ \ \ \{}
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ result.plusValueAt(gp)\ \ =\ A.plusValue(gp)\ /\ B.plusValue(gp);}
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ result.minusValueAt(gp)\ =\ A.minusValue(gp)\ /\ B.minusValue(gp);}
+\DoxyCodeLine{00107\ \ \ \ \ \}}
+\DoxyCodeLine{00108\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00109\ \}}
+\DoxyCodeLine{00110\ }
+\DoxyCodeLine{00111\ }
+\DoxyCodeLine{00112\ \textcolor{comment}{//\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ Scalar\ -\/\ Vector\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ //}}
+\DoxyCodeLine{00113\ }
+\DoxyCodeLine{00114\ \textcolor{keyword}{inline}\ faceGaussField<vector>\ \textcolor{keyword}{operator}*}
+\DoxyCodeLine{00115\ (}
+\DoxyCodeLine{00116\ \ \ \ \ \textcolor{keyword}{const}\ faceGaussField<scalar>\&\ A,}
+\DoxyCodeLine{00117\ \ \ \ \ \textcolor{keyword}{const}\ faceGaussField<vector>\&\ B}
+\DoxyCodeLine{00118\ )}
+\DoxyCodeLine{00119\ \{}
+\DoxyCodeLine{00120\ \ \ \ \ faceGaussField<vector>\ result(B.cellID(),\ B.dgMesh());}
+\DoxyCodeLine{00121\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ gp\ =\ 0;\ gp\ <\ A.nGauss();\ ++gp)}
+\DoxyCodeLine{00122\ \ \ \ \ \{}
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ result.plusValueAt(gp)\ \ =\ A.plusValue(gp)\ *\ B.plusValue(gp);}
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ result.minusValueAt(gp)\ =\ A.minusValue(gp)\ *\ B.minusValue(gp);}
+\DoxyCodeLine{00125\ \ \ \ \ \}}
+\DoxyCodeLine{00126\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00127\ \}}
+\DoxyCodeLine{00128\ }
+\DoxyCodeLine{00129\ \textcolor{keyword}{inline}\ faceGaussField<vector>\ \textcolor{keyword}{operator}*}
+\DoxyCodeLine{00130\ (}
+\DoxyCodeLine{00131\ \ \ \ \ \textcolor{keyword}{const}\ faceGaussField<vector>\&\ A,}
+\DoxyCodeLine{00132\ \ \ \ \ \textcolor{keyword}{const}\ faceGaussField<scalar>\&\ B}
+\DoxyCodeLine{00133\ )}
+\DoxyCodeLine{00134\ \{}
+\DoxyCodeLine{00135\ \ \ \ \ \textcolor{keywordflow}{return}\ B\ *\ A;}
+\DoxyCodeLine{00136\ \}}
+\DoxyCodeLine{00137\ }
+\DoxyCodeLine{00138\ \textcolor{keyword}{inline}\ faceGaussField<vector>\ \textcolor{keyword}{operator}/}
+\DoxyCodeLine{00139\ (}
+\DoxyCodeLine{00140\ \ \ \ \ \textcolor{keyword}{const}\ faceGaussField<vector>\&\ A,}
+\DoxyCodeLine{00141\ \ \ \ \ \textcolor{keyword}{const}\ faceGaussField<scalar>\&\ B}
+\DoxyCodeLine{00142\ )}
+\DoxyCodeLine{00143\ \{}
+\DoxyCodeLine{00144\ \ \ \ \ faceGaussField<vector>\ result(A.cellID(),\ A.dgMesh());}
+\DoxyCodeLine{00145\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ gp\ =\ 0;\ gp\ <\ A.nGauss();\ ++gp)}
+\DoxyCodeLine{00146\ \ \ \ \ \{}
+\DoxyCodeLine{00147\ \ \ \ \ \ \ \ \ result.plusValueAt(gp)\ \ =\ A.plusValue(gp)\ /\ B.plusValue(gp);}
+\DoxyCodeLine{00148\ \ \ \ \ \ \ \ \ result.minusValueAt(gp)\ =\ A.minusValue(gp)\ /\ B.minusValue(gp);}
+\DoxyCodeLine{00149\ \ \ \ \ \}}
+\DoxyCodeLine{00150\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00151\ \}}
+\DoxyCodeLine{00152\ }
+\DoxyCodeLine{00153\ }
+\DoxyCodeLine{00154\ \textcolor{comment}{//\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ Scalar\ -\/\ Tensor\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ //}}
+\DoxyCodeLine{00155\ }
+\DoxyCodeLine{00156\ \textcolor{keyword}{inline}\ faceGaussField<tensor>\ \textcolor{keyword}{operator}*}
+\DoxyCodeLine{00157\ (}
+\DoxyCodeLine{00158\ \ \ \ \ \textcolor{keyword}{const}\ faceGaussField<scalar>\&\ A,}
+\DoxyCodeLine{00159\ \ \ \ \ \textcolor{keyword}{const}\ faceGaussField<tensor>\&\ B}
+\DoxyCodeLine{00160\ )}
+\DoxyCodeLine{00161\ \{}
+\DoxyCodeLine{00162\ \ \ \ \ faceGaussField<tensor>\ result(B.cellID(),\ B.dgMesh());}
+\DoxyCodeLine{00163\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ gp\ =\ 0;\ gp\ <\ A.nGauss();\ ++gp)}
+\DoxyCodeLine{00164\ \ \ \ \ \{}
+\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ result.plusValueAt(gp)\ \ =\ A.plusValue(gp)\ *\ B.plusValue(gp);}
+\DoxyCodeLine{00166\ \ \ \ \ \ \ \ \ result.minusValueAt(gp)\ =\ A.minusValue(gp)\ *\ B.minusValue(gp);}
+\DoxyCodeLine{00167\ \ \ \ \ \}}
+\DoxyCodeLine{00168\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00169\ \}}
+\DoxyCodeLine{00170\ }
+\DoxyCodeLine{00171\ \textcolor{keyword}{inline}\ faceGaussField<tensor>\ \textcolor{keyword}{operator}*}
+\DoxyCodeLine{00172\ (}
+\DoxyCodeLine{00173\ \ \ \ \ \textcolor{keyword}{const}\ faceGaussField<tensor>\&\ A,}
+\DoxyCodeLine{00174\ \ \ \ \ \textcolor{keyword}{const}\ faceGaussField<scalar>\&\ B}
+\DoxyCodeLine{00175\ )}
+\DoxyCodeLine{00176\ \{}
+\DoxyCodeLine{00177\ \ \ \ \ \textcolor{keywordflow}{return}\ B\ *\ A;}
+\DoxyCodeLine{00178\ \}}
+\DoxyCodeLine{00179\ }
+\DoxyCodeLine{00180\ \textcolor{keyword}{inline}\ faceGaussField<tensor>\ \textcolor{keyword}{operator}/}
+\DoxyCodeLine{00181\ (}
+\DoxyCodeLine{00182\ \ \ \ \ \textcolor{keyword}{const}\ faceGaussField<tensor>\&\ A,}
+\DoxyCodeLine{00183\ \ \ \ \ \textcolor{keyword}{const}\ faceGaussField<scalar>\&\ B}
+\DoxyCodeLine{00184\ )}
+\DoxyCodeLine{00185\ \{}
+\DoxyCodeLine{00186\ \ \ \ \ faceGaussField<tensor>\ result(A.cellID(),\ A.dgMesh());}
+\DoxyCodeLine{00187\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ gp\ =\ 0;\ gp\ <\ A.nGauss();\ ++gp)}
+\DoxyCodeLine{00188\ \ \ \ \ \{}
+\DoxyCodeLine{00189\ \ \ \ \ \ \ \ \ result.plusValueAt(gp)\ \ =\ A.plusValue(gp)\ /\ B.plusValue(gp);}
+\DoxyCodeLine{00190\ \ \ \ \ \ \ \ \ result.minusValueAt(gp)\ =\ A.minusValue(gp)\ /\ B.minusValue(gp);}
+\DoxyCodeLine{00191\ \ \ \ \ \}}
+\DoxyCodeLine{00192\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00193\ \}}
+\DoxyCodeLine{00194\ }
+\DoxyCodeLine{00195\ }
+\DoxyCodeLine{00196\ \textcolor{comment}{//\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ Scalar\ -\/\ symmTensor\ *\ *\ *\ *\ *\ *\ *\ *\ //}}
+\DoxyCodeLine{00197\ }
+\DoxyCodeLine{00198\ \textcolor{keyword}{inline}\ faceGaussField<symmTensor>\ \textcolor{keyword}{operator}*}
+\DoxyCodeLine{00199\ (}
+\DoxyCodeLine{00200\ \ \ \ \ \textcolor{keyword}{const}\ faceGaussField<scalar>\&\ A,}
+\DoxyCodeLine{00201\ \ \ \ \ \textcolor{keyword}{const}\ faceGaussField<symmTensor>\&\ B}
+\DoxyCodeLine{00202\ )}
+\DoxyCodeLine{00203\ \{}
+\DoxyCodeLine{00204\ \ \ \ \ faceGaussField<symmTensor>\ result(B.cellID(),\ B.dgMesh());}
+\DoxyCodeLine{00205\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ gp\ =\ 0;\ gp\ <\ A.nGauss();\ ++gp)}
+\DoxyCodeLine{00206\ \ \ \ \ \{}
+\DoxyCodeLine{00207\ \ \ \ \ \ \ \ \ result.plusValueAt(gp)\ \ =\ A.plusValue(gp)\ *\ B.plusValue(gp);}
+\DoxyCodeLine{00208\ \ \ \ \ \ \ \ \ result.minusValueAt(gp)\ =\ A.minusValue(gp)\ *\ B.minusValue(gp);}
+\DoxyCodeLine{00209\ \ \ \ \ \}}
+\DoxyCodeLine{00210\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00211\ \}}
+\DoxyCodeLine{00212\ }
+\DoxyCodeLine{00213\ \textcolor{keyword}{inline}\ faceGaussField<symmTensor>\ \textcolor{keyword}{operator}*}
+\DoxyCodeLine{00214\ (}
+\DoxyCodeLine{00215\ \ \ \ \ \textcolor{keyword}{const}\ faceGaussField<symmTensor>\&\ A,}
+\DoxyCodeLine{00216\ \ \ \ \ \textcolor{keyword}{const}\ faceGaussField<scalar>\&\ B}
+\DoxyCodeLine{00217\ )}
+\DoxyCodeLine{00218\ \{}
+\DoxyCodeLine{00219\ \ \ \ \ \textcolor{keywordflow}{return}\ B\ *\ A;}
+\DoxyCodeLine{00220\ \}}
+\DoxyCodeLine{00221\ }
+\DoxyCodeLine{00222\ \textcolor{keyword}{inline}\ faceGaussField<symmTensor>\ \textcolor{keyword}{operator}/}
+\DoxyCodeLine{00223\ (}
+\DoxyCodeLine{00224\ \ \ \ \ \textcolor{keyword}{const}\ faceGaussField<symmTensor>\&\ A,}
+\DoxyCodeLine{00225\ \ \ \ \ \textcolor{keyword}{const}\ faceGaussField<scalar>\&\ B}
+\DoxyCodeLine{00226\ )}
+\DoxyCodeLine{00227\ \{}
+\DoxyCodeLine{00228\ \ \ \ \ faceGaussField<symmTensor>\ result(A.cellID(),\ A.dgMesh());}
+\DoxyCodeLine{00229\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ gp\ =\ 0;\ gp\ <\ A.nGauss();\ ++gp)}
+\DoxyCodeLine{00230\ \ \ \ \ \{}
+\DoxyCodeLine{00231\ \ \ \ \ \ \ \ \ result.plusValueAt(gp)\ \ =\ A.plusValue(gp)\ /\ B.plusValue(gp);}
+\DoxyCodeLine{00232\ \ \ \ \ \ \ \ \ result.minusValueAt(gp)\ =\ A.minusValue(gp)\ /\ B.minusValue(gp);}
+\DoxyCodeLine{00233\ \ \ \ \ \}}
+\DoxyCodeLine{00234\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00235\ \}}
+\DoxyCodeLine{00236\ }
+\DoxyCodeLine{00237\ }
+\DoxyCodeLine{00238\ \textcolor{comment}{//\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ Scalar\ -\/\ sphericalTensor\ *\ *\ *\ *\ *\ *\ *\ *\ //}}
+\DoxyCodeLine{00239\ }
+\DoxyCodeLine{00240\ \textcolor{keyword}{inline}\ faceGaussField<sphericalTensor>\ \textcolor{keyword}{operator}*}
+\DoxyCodeLine{00241\ (}
+\DoxyCodeLine{00242\ \ \ \ \ \textcolor{keyword}{const}\ faceGaussField<scalar>\&\ A,}
+\DoxyCodeLine{00243\ \ \ \ \ \textcolor{keyword}{const}\ faceGaussField<sphericalTensor>\&\ B}
+\DoxyCodeLine{00244\ )}
+\DoxyCodeLine{00245\ \{}
+\DoxyCodeLine{00246\ \ \ \ \ faceGaussField<sphericalTensor>\ result(A.cellID(),\ A.dgMesh());}
+\DoxyCodeLine{00247\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ gp\ =\ 0;\ gp\ <\ A.nGauss();\ ++gp)}
+\DoxyCodeLine{00248\ \ \ \ \ \{}
+\DoxyCodeLine{00249\ \ \ \ \ \ \ \ \ result.plusValueAt(gp)\ \ =\ A.plusValue(gp)\ *\ B.plusValue(gp);}
+\DoxyCodeLine{00250\ \ \ \ \ \ \ \ \ result.minusValueAt(gp)\ =\ A.minusValue(gp)\ *\ B.minusValue(gp);}
+\DoxyCodeLine{00251\ \ \ \ \ \}}
+\DoxyCodeLine{00252\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00253\ \}}
+\DoxyCodeLine{00254\ }
+\DoxyCodeLine{00255\ \textcolor{keyword}{inline}\ faceGaussField<sphericalTensor>\ \textcolor{keyword}{operator}*}
+\DoxyCodeLine{00256\ (}
+\DoxyCodeLine{00257\ \ \ \ \ \textcolor{keyword}{const}\ faceGaussField<sphericalTensor>\&\ A,}
+\DoxyCodeLine{00258\ \ \ \ \ \textcolor{keyword}{const}\ faceGaussField<scalar>\&\ B}
+\DoxyCodeLine{00259\ )}
+\DoxyCodeLine{00260\ \{}
+\DoxyCodeLine{00261\ \ \ \ \ \textcolor{keywordflow}{return}\ B\ *\ A;}
+\DoxyCodeLine{00262\ \}}
+\DoxyCodeLine{00263\ }
+\DoxyCodeLine{00264\ \textcolor{keyword}{inline}\ faceGaussField<sphericalTensor>\ \textcolor{keyword}{operator}/}
+\DoxyCodeLine{00265\ (}
+\DoxyCodeLine{00266\ \ \ \ \ \textcolor{keyword}{const}\ faceGaussField<sphericalTensor>\&\ A,}
+\DoxyCodeLine{00267\ \ \ \ \ \textcolor{keyword}{const}\ faceGaussField<scalar>\&\ B}
+\DoxyCodeLine{00268\ )}
+\DoxyCodeLine{00269\ \{}
+\DoxyCodeLine{00270\ \ \ \ \ faceGaussField<sphericalTensor>\ result(A.cellID(),\ A.dgMesh());}
+\DoxyCodeLine{00271\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ gp\ =\ 0;\ gp\ <\ A.nGauss();\ ++gp)}
+\DoxyCodeLine{00272\ \ \ \ \ \{}
+\DoxyCodeLine{00273\ \ \ \ \ \ \ \ \ result.plusValueAt(gp)\ \ =\ A.plusValue(gp)\ /\ B.plusValue(gp);}
+\DoxyCodeLine{00274\ \ \ \ \ \ \ \ \ result.minusValueAt(gp)\ =\ A.minusValue(gp)\ /\ B.minusValue(gp);}
+\DoxyCodeLine{00275\ \ \ \ \ \}}
+\DoxyCodeLine{00276\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00277\ \}}
+\DoxyCodeLine{00278\ }
+\DoxyCodeLine{00279\ \textcolor{comment}{//\ Comparison\ operators\ between\ faceGaussField<scalar>}}
+\DoxyCodeLine{00280\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \textcolor{keyword}{operator}<}
+\DoxyCodeLine{00281\ (}
+\DoxyCodeLine{00282\ \ \ \ \ \textcolor{keyword}{const}\ faceGaussField<scalar>\&\ A,}
+\DoxyCodeLine{00283\ \ \ \ \ \textcolor{keyword}{const}\ faceGaussField<scalar>\&\ B}
+\DoxyCodeLine{00284\ )}
+\DoxyCodeLine{00285\ \{}
+\DoxyCodeLine{00286\ \ \ \ \ \textcolor{keywordflow}{if}\ (A.nGauss()\ !=\ B.nGauss())\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00287\ }
+\DoxyCodeLine{00288\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ gp\ =\ 0;\ gp\ <\ A.nGauss();\ ++gp)}
+\DoxyCodeLine{00289\ \ \ \ \ \{}
+\DoxyCodeLine{00290\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!((A.plusValue(gp)\ <\ B.plusValue(gp))\ \&\&}
+\DoxyCodeLine{00291\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (A.minusValue(gp)\ <\ B.minusValue(gp))))}
+\DoxyCodeLine{00292\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00293\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00294\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00295\ \ \ \ \ \}}
+\DoxyCodeLine{00296\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00297\ \}}
+\DoxyCodeLine{00298\ }
+\DoxyCodeLine{00299\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \textcolor{keyword}{operator}<=}
+\DoxyCodeLine{00300\ (}
+\DoxyCodeLine{00301\ \ \ \ \ \textcolor{keyword}{const}\ faceGaussField<scalar>\&\ A,}
+\DoxyCodeLine{00302\ \ \ \ \ \textcolor{keyword}{const}\ faceGaussField<scalar>\&\ B}
+\DoxyCodeLine{00303\ )}
+\DoxyCodeLine{00304\ \{}
+\DoxyCodeLine{00305\ \ \ \ \ \textcolor{keywordflow}{if}\ (A.nGauss()\ !=\ B.nGauss())\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00306\ }
+\DoxyCodeLine{00307\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ gp\ =\ 0;\ gp\ <\ A.nGauss();\ ++gp)}
+\DoxyCodeLine{00308\ \ \ \ \ \{}
+\DoxyCodeLine{00309\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!((A.plusValue(gp)\ <=\ B.plusValue(gp))\ \&\&}
+\DoxyCodeLine{00310\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (A.minusValue(gp)\ <=\ B.minusValue(gp))))}
+\DoxyCodeLine{00311\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00312\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00313\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00314\ \ \ \ \ \}}
+\DoxyCodeLine{00315\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00316\ \}}
+\DoxyCodeLine{00317\ }
+\DoxyCodeLine{00318\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \textcolor{keyword}{operator}>}
+\DoxyCodeLine{00319\ (}
+\DoxyCodeLine{00320\ \ \ \ \ \textcolor{keyword}{const}\ faceGaussField<scalar>\&\ A,}
+\DoxyCodeLine{00321\ \ \ \ \ \textcolor{keyword}{const}\ faceGaussField<scalar>\&\ B}
+\DoxyCodeLine{00322\ )}
+\DoxyCodeLine{00323\ \{}
+\DoxyCodeLine{00324\ \ \ \ \ \textcolor{keywordflow}{if}\ (A.nGauss()\ !=\ B.nGauss())\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00325\ }
+\DoxyCodeLine{00326\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ gp\ =\ 0;\ gp\ <\ A.nGauss();\ ++gp)}
+\DoxyCodeLine{00327\ \ \ \ \ \{}
+\DoxyCodeLine{00328\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!((A.plusValue(gp)\ >\ B.plusValue(gp))\ \&\&}
+\DoxyCodeLine{00329\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (A.minusValue(gp)\ >\ B.minusValue(gp))))}
+\DoxyCodeLine{00330\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00331\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00332\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00333\ \ \ \ \ \}}
+\DoxyCodeLine{00334\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00335\ \}}
+\DoxyCodeLine{00336\ }
+\DoxyCodeLine{00337\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \textcolor{keyword}{operator}>=}
+\DoxyCodeLine{00338\ (}
+\DoxyCodeLine{00339\ \ \ \ \ \textcolor{keyword}{const}\ faceGaussField<scalar>\&\ A,}
+\DoxyCodeLine{00340\ \ \ \ \ \textcolor{keyword}{const}\ faceGaussField<scalar>\&\ B}
+\DoxyCodeLine{00341\ )}
+\DoxyCodeLine{00342\ \{}
+\DoxyCodeLine{00343\ \ \ \ \ \textcolor{keywordflow}{if}\ (A.nGauss()\ !=\ B.nGauss())\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00344\ }
+\DoxyCodeLine{00345\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ gp\ =\ 0;\ gp\ <\ A.nGauss();\ ++gp)}
+\DoxyCodeLine{00346\ \ \ \ \ \{}
+\DoxyCodeLine{00347\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!((A.plusValue(gp)\ >=\ B.plusValue(gp))\ \&\&}
+\DoxyCodeLine{00348\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (A.minusValue(gp)\ >=\ B.minusValue(gp))))}
+\DoxyCodeLine{00349\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00350\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00351\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00352\ \ \ \ \ \}}
+\DoxyCodeLine{00353\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00354\ \}}
+\DoxyCodeLine{00355\ }
+\DoxyCodeLine{00356\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \textcolor{keyword}{operator}==}
+\DoxyCodeLine{00357\ (}
+\DoxyCodeLine{00358\ \ \ \ \ \textcolor{keyword}{const}\ faceGaussField<scalar>\&\ A,}
+\DoxyCodeLine{00359\ \ \ \ \ \textcolor{keyword}{const}\ faceGaussField<scalar>\&\ B}
+\DoxyCodeLine{00360\ )}
+\DoxyCodeLine{00361\ \{}
+\DoxyCodeLine{00362\ \ \ \ \ \textcolor{keywordflow}{if}\ (A.nGauss()\ !=\ B.nGauss())\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00363\ }
+\DoxyCodeLine{00364\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ gp\ =\ 0;\ gp\ <\ A.nGauss();\ ++gp)}
+\DoxyCodeLine{00365\ \ \ \ \ \{}
+\DoxyCodeLine{00366\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!((A.plusValue(gp)\ ==\ B.plusValue(gp))\ \&\&}
+\DoxyCodeLine{00367\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (A.minusValue(gp)\ ==\ B.minusValue(gp))))}
+\DoxyCodeLine{00368\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00369\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00370\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00371\ \ \ \ \ \}}
+\DoxyCodeLine{00372\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00373\ \}}
+\DoxyCodeLine{00374\ }
+\DoxyCodeLine{00375\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \textcolor{keyword}{operator}!=}
+\DoxyCodeLine{00376\ (}
+\DoxyCodeLine{00377\ \ \ \ \ \textcolor{keyword}{const}\ faceGaussField<scalar>\&\ A,}
+\DoxyCodeLine{00378\ \ \ \ \ \textcolor{keyword}{const}\ faceGaussField<scalar>\&\ B}
+\DoxyCodeLine{00379\ )}
+\DoxyCodeLine{00380\ \{}
+\DoxyCodeLine{00381\ \ \ \ \ \textcolor{keywordflow}{return}\ !(A\ ==\ B);}
+\DoxyCodeLine{00382\ \}}
+\DoxyCodeLine{00383\ }
+\DoxyCodeLine{00384\ \}\ \textcolor{comment}{//\ End\ namespace\ Foam}}
+\DoxyCodeLine{00385\ }
+\DoxyCodeLine{00386\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00387\ }
+\DoxyCodeLine{00388\ \textcolor{comment}{//\ *************************************************************************\ //}}
+
+\end{DoxyCode}

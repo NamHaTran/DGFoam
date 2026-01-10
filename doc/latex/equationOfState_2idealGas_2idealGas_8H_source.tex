@@ -1,0 +1,140 @@
+\doxysection{ideal\+Gas.\+H}
+\hypertarget{equationOfState_2idealGas_2idealGas_8H_source}{}\label{equationOfState_2idealGas_2idealGas_8H_source}\index{/home/nam-\/ha-\/tran/OpenFOAM/DGFoam/src/thermophysicalModels/equationOfState/idealGas/idealGas.H@{/home/nam-\/ha-\/tran/OpenFOAM/DGFoam/src/thermophysicalModels/equationOfState/idealGas/idealGas.H}}
+\mbox{\hyperlink{equationOfState_2idealGas_2idealGas_8H}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*\(\backslash\)}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ \ =========\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ \ \(\backslash\)\(\backslash\)\ \ \ \ \ \ /\ \ F\ ield\ \ \ \ \ \ \ \ \ |\ OpenFOAM:\ The\ Open\ Source\ CFD\ Toolbox}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ \ \ \(\backslash\)\(\backslash\)\ \ \ \ /\ \ \ O\ peration\ \ \ \ \ |}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ \ \ \ \(\backslash\)\(\backslash\)\ \ /\ \ \ \ A\ nd\ \ \ \ \ \ \ \ \ \ \ |\ www.openfoam.com}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ \ \ \ \ \(\backslash\)\(\backslash\)/\ \ \ \ \ M\ anipulation\ \ |}}
+\DoxyCodeLine{00007\ \textcolor{comment}{-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ \ \ \ Copyright\ (C)\ 2011-\/2016\ OpenFOAM\ Foundation}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ \ \ \ Copyright\ (C)\ 2017-\/2023\ OpenCFD\ Ltd.}}
+\DoxyCodeLine{00010\ \textcolor{comment}{-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00011\ \textcolor{comment}{License}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ \ \ \ This\ file\ is\ part\ of\ OpenFOAM.}}
+\DoxyCodeLine{00013\ \textcolor{comment}{}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ \ \ \ OpenFOAM\ is\ free\ software:\ you\ can\ redistribute\ it\ and/or\ modify\ it}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ \ \ \ under\ the\ terms\ of\ the\ GNU\ General\ Public\ License\ as\ published\ by}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ \ \ \ the\ Free\ Software\ Foundation,\ either\ version\ 3\ of\ the\ License,\ or}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ \ \ \ (at\ your\ option)\ any\ later\ version.}}
+\DoxyCodeLine{00018\ \textcolor{comment}{}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ \ \ \ OpenFOAM\ is\ distributed\ in\ the\ hope\ that\ it\ will\ be\ useful,\ but\ WITHOUT}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ \ \ \ ANY\ WARRANTY;\ without\ even\ the\ implied\ warranty\ of\ MERCHANTABILITY\ or}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ \ \ \ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE.\ \ See\ the\ GNU\ General\ Public\ License}}
+\DoxyCodeLine{00022\ \textcolor{comment}{\ \ \ \ for\ more\ details.}}
+\DoxyCodeLine{00023\ \textcolor{comment}{}}
+\DoxyCodeLine{00024\ \textcolor{comment}{\ \ \ \ You\ should\ have\ received\ a\ copy\ of\ the\ GNU\ General\ Public\ License}}
+\DoxyCodeLine{00025\ \textcolor{comment}{\ \ \ \ along\ with\ OpenFOAM.\ \ If\ not,\ see\ <http://www.gnu.org/licenses/>.}}
+\DoxyCodeLine{00026\ \textcolor{comment}{}}
+\DoxyCodeLine{00027\ \textcolor{comment}{Class}}
+\DoxyCodeLine{00028\ \textcolor{comment}{\ \ \ \ Foam::idealGas}}
+\DoxyCodeLine{00029\ \textcolor{comment}{}}
+\DoxyCodeLine{00030\ \textcolor{comment}{Description}}
+\DoxyCodeLine{00031\ \textcolor{comment}{\ \ \ \ Ideal-\/gas\ equation\ of\ state.}}
+\DoxyCodeLine{00032\ \textcolor{comment}{}}
+\DoxyCodeLine{00033\ \textcolor{comment}{SourceFiles}}
+\DoxyCodeLine{00034\ \textcolor{comment}{\ \ \ \ idealGas.C}}
+\DoxyCodeLine{00035\ \textcolor{comment}{}}
+\DoxyCodeLine{00036\ \textcolor{comment}{\(\backslash\)*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \textcolor{preprocessor}{\#ifndef\ Foam\_idealGas\_H}}
+\DoxyCodeLine{00039\ \textcolor{preprocessor}{\#define\ Foam\_idealGas\_H}}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \textcolor{preprocessor}{\#include\ "{}eqnOfState.H"{}}}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespaceFoam}{Foam}}}
+\DoxyCodeLine{00044\ \{}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*\(\backslash\)}}
+\DoxyCodeLine{00047\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Class\ idealGas\ Declaration}}
+\DoxyCodeLine{00048\ \textcolor{comment}{\(\backslash\)*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00080\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classFoam_1_1idealGas}{idealGas}}}
+\DoxyCodeLine{00081\ :}
+\DoxyCodeLine{00082\ \ \ \ \ \textcolor{keyword}{public}\ \mbox{\hyperlink{classFoam_1_1eqnOfState}{eqnOfState}}}
+\DoxyCodeLine{00083\ \{}
+\DoxyCodeLine{00084\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00085\ }
+\DoxyCodeLine{00087\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}\ \mbox{\hyperlink{classFoam_1_1idealGas_a91e37bde88aa402dc5169bdda401995f}{R\_}};}
+\DoxyCodeLine{00088\ }
+\DoxyCodeLine{00089\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00090\ }
+\DoxyCodeLine{00091\ \ \ \ \ \textcolor{comment}{//-\/\ Runtime\ type\ information}}
+\DoxyCodeLine{00092\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1idealGas_ae82fc6073662b0235e4a9d2c9b919d06}{TypeName}}(\textcolor{stringliteral}{"{}idealGas"{}});}
+\DoxyCodeLine{00093\ }
+\DoxyCodeLine{00094\ \ \ \ \ \textcolor{comment}{//-\/\ Runtime\ selection\ table}}
+\DoxyCodeLine{00095\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1idealGas_a8f2923a2b460bca4ba6926f7a88bd251}{declareRunTimeSelectionTable}}}
+\DoxyCodeLine{00096\ \ \ \ \ (}
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{autoPtr}},\ \mbox{\hyperlink{classFoam_1_1idealGas}{idealGas}},\ \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}},}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ (}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{word}}\&\ name,}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}}\&\ dict,}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dgGeomMesh}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{mesh}}}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ ),}
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ (name,\ dict,\ \mbox{\hyperlink{classFoam_1_1GaussField}{mesh}})}
+\DoxyCodeLine{00104\ \ \ \ \ );}
+\DoxyCodeLine{00105\ }
+\DoxyCodeLine{00115\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1idealGas}{idealGas}}}
+\DoxyCodeLine{00116\ \ \ \ \ (}
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{word}}\&\ name,}
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}}\&\ dict,}
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dgGeomMesh}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{mesh}}}
+\DoxyCodeLine{00120\ \ \ \ \ );}
+\DoxyCodeLine{00121\ }
+\DoxyCodeLine{00123\ \ \ \ \ \textcolor{keyword}{virtual}\ \mbox{\hyperlink{classFoam_1_1idealGas_a3518d4360ce1ce86d6e7beade2abdae4}{\string~idealGas}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00124\ }
+\DoxyCodeLine{00130\ \ \ \ \ \textcolor{keyword}{inline}\ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}\ \mbox{\hyperlink{classFoam_1_1idealGas_a7a246d21dd7c0d7b5b121ed8b6bbea59}{R}}()\textcolor{keyword}{\ const\ override}}
+\DoxyCodeLine{00131\ \textcolor{keyword}{\ \ \ \ }\{}
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classFoam_1_1idealGas_a91e37bde88aa402dc5169bdda401995f}{R\_}};}
+\DoxyCodeLine{00133\ \ \ \ \ \}}
+\DoxyCodeLine{00134\ }
+\DoxyCodeLine{00135\ \ \ \ \ \textcolor{comment}{//==============================================================//}}
+\DoxyCodeLine{00136\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ Ideal-\/gas\ thermodynamic\ relations}}
+\DoxyCodeLine{00137\ \ \ \ \ \textcolor{comment}{//==============================================================//}}
+\DoxyCodeLine{00138\ }
+\DoxyCodeLine{00147\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classFoam_1_1idealGas_a86fa5a5c8915562bb6ff52e58fdb219c}{calcRhoFromPT}}}
+\DoxyCodeLine{00148\ \ \ \ \ (}
+\DoxyCodeLine{00149\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{cellI}},}
+\DoxyCodeLine{00150\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{GaussField<scalar>}}\&\ \mbox{\hyperlink{createPrimaryFields_8H_ad37d69387e92d6f1424be40cbca2fbec}{p}},}
+\DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{GaussField<scalar>}}\&\ \mbox{\hyperlink{namespaceFoam_a5faf7f302ed6c6307e3668365456af74}{T}},}
+\DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{GaussField<scalar>}}\&\ \mbox{\hyperlink{createConservativeFields_8H_a55f60da5082eca5d9645759eba7abd98}{rho}}}
+\DoxyCodeLine{00153\ \ \ \ \ )\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00154\ }
+\DoxyCodeLine{00163\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classFoam_1_1idealGas_a4cb43ce4718b44356eb61c6a9b858819}{calcPFromRhoT}}}
+\DoxyCodeLine{00164\ \ \ \ \ (}
+\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{cellI}},}
+\DoxyCodeLine{00166\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{GaussField<scalar>}}\&\ \mbox{\hyperlink{createConservativeFields_8H_a55f60da5082eca5d9645759eba7abd98}{rho}},}
+\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{GaussField<scalar>}}\&\ \mbox{\hyperlink{namespaceFoam_a5faf7f302ed6c6307e3668365456af74}{T}},}
+\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{GaussField<scalar>}}\&\ \mbox{\hyperlink{createPrimaryFields_8H_ad37d69387e92d6f1424be40cbca2fbec}{p}}}
+\DoxyCodeLine{00169\ \ \ \ \ )\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00170\ }
+\DoxyCodeLine{00179\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classFoam_1_1idealGas_a452ba917bb70980807806c5077fb7e79}{calcTFromPRho}}}
+\DoxyCodeLine{00180\ \ \ \ \ (}
+\DoxyCodeLine{00181\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{cellI}},}
+\DoxyCodeLine{00182\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{GaussField<scalar>}}\&\ \mbox{\hyperlink{createPrimaryFields_8H_ad37d69387e92d6f1424be40cbca2fbec}{p}},}
+\DoxyCodeLine{00183\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{GaussField<scalar>}}\&\ \mbox{\hyperlink{createConservativeFields_8H_a55f60da5082eca5d9645759eba7abd98}{rho}},}
+\DoxyCodeLine{00184\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{GaussField<scalar>}}\&\ \mbox{\hyperlink{namespaceFoam_a5faf7f302ed6c6307e3668365456af74}{T}}}
+\DoxyCodeLine{00185\ \ \ \ \ )\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00186\ }
+\DoxyCodeLine{00187\ \ \ \ \ \textcolor{comment}{//==============================================================//}}
+\DoxyCodeLine{00188\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ Capability\ flags}}
+\DoxyCodeLine{00189\ \ \ \ \ \textcolor{comment}{//==============================================================//}}
+\DoxyCodeLine{00190\ }
+\DoxyCodeLine{00192\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classFoam_1_1idealGas_a2ca9b5548e826e94de1188d62d6078fe}{canCalcRhoFromPT}}()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};\ \}}
+\DoxyCodeLine{00193\ }
+\DoxyCodeLine{00195\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classFoam_1_1idealGas_afe70c39372a63474e3522510a5780456}{canCalcPFromRhoT}}()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};\ \}}
+\DoxyCodeLine{00196\ }
+\DoxyCodeLine{00198\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classFoam_1_1idealGas_a37d8f423c6552da1206d3994e6c1b5ce}{canCalcTFromPRho}}()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};\ \}}
+\DoxyCodeLine{00199\ }
+\DoxyCodeLine{00201\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classFoam_1_1idealGas_a13217f8be4087537ea9304d94dedd7a7}{isIdealGas}}()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};\ \}}
+\DoxyCodeLine{00202\ \};}
+\DoxyCodeLine{00203\ }
+\DoxyCodeLine{00204\ \}\ \textcolor{comment}{//\ End\ namespace\ Foam}}
+\DoxyCodeLine{00205\ }
+\DoxyCodeLine{00206\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00207\ }
+\DoxyCodeLine{00208\ \textcolor{comment}{//\ *************************************************************************\ //}}
+
+\end{DoxyCode}

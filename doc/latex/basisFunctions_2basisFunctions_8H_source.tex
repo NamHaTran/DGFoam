@@ -1,0 +1,234 @@
+\doxysection{basis\+Functions.\+H}
+\hypertarget{basisFunctions_2basisFunctions_8H_source}{}\label{basisFunctions_2basisFunctions_8H_source}\index{/home/nam-\/ha-\/tran/OpenFOAM/DGFoam/src/math/basisFunctions/basisFunctions.H@{/home/nam-\/ha-\/tran/OpenFOAM/DGFoam/src/math/basisFunctions/basisFunctions.H}}
+\mbox{\hyperlink{basisFunctions_2basisFunctions_8H}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*\(\backslash\)}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ \ =========\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ \ \(\backslash\)\(\backslash\)\ \ \ \ \ \ /\ \ F\ ield\ \ \ \ \ \ \ \ \ |\ OpenFOAM:\ The\ Open\ Source\ CFD\ Toolbox}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ \ \ \(\backslash\)\(\backslash\)\ \ \ \ /\ \ \ O\ peration\ \ \ \ \ |}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ \ \ \ \(\backslash\)\(\backslash\)\ \ /\ \ \ \ A\ nd\ \ \ \ \ \ \ \ \ \ \ |\ www.openfoam.com}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ \ \ \ \ \(\backslash\)\(\backslash\)/\ \ \ \ \ M\ anipulation\ \ |}}
+\DoxyCodeLine{00007\ \textcolor{comment}{-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ \ \ \ Copyright\ (C)\ 2011-\/2016\ OpenFOAM\ Foundation}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ \ \ \ Copyright\ (C)\ 2017-\/2023\ OpenCFD\ Ltd.}}
+\DoxyCodeLine{00010\ \textcolor{comment}{-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00011\ \textcolor{comment}{License}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ \ \ \ This\ file\ is\ part\ of\ OpenFOAM.}}
+\DoxyCodeLine{00013\ \textcolor{comment}{}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ \ \ \ OpenFOAM\ is\ free\ software:\ you\ can\ redistribute\ it\ and/or\ modify\ it}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ \ \ \ under\ the\ terms\ of\ the\ GNU\ General\ Public\ License\ as\ published\ by}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ \ \ \ the\ Free\ Software\ Foundation,\ either\ version\ 3\ of\ the\ License,\ or}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ \ \ \ (at\ your\ option)\ any\ later\ version.}}
+\DoxyCodeLine{00018\ \textcolor{comment}{}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ \ \ \ OpenFOAM\ is\ distributed\ in\ the\ hope\ that\ it\ will\ be\ useful,\ but\ WITHOUT}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ \ \ \ ANY\ WARRANTY;\ without\ even\ the\ implied\ warranty\ of\ MERCHANTABILITY\ or}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ \ \ \ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE.\ \ See\ the\ GNU\ General\ Public\ License}}
+\DoxyCodeLine{00022\ \textcolor{comment}{\ \ \ \ for\ more\ details.}}
+\DoxyCodeLine{00023\ \textcolor{comment}{}}
+\DoxyCodeLine{00024\ \textcolor{comment}{\ \ \ \ You\ should\ have\ received\ a\ copy\ of\ the\ GNU\ General\ Public\ License}}
+\DoxyCodeLine{00025\ \textcolor{comment}{\ \ \ \ along\ with\ OpenFOAM.\ \ If\ not,\ see\ <http://www.gnu.org/licenses/>.}}
+\DoxyCodeLine{00026\ \textcolor{comment}{}}
+\DoxyCodeLine{00027\ \textcolor{comment}{Class}}
+\DoxyCodeLine{00028\ \textcolor{comment}{}}
+\DoxyCodeLine{00029\ \textcolor{comment}{Description}}
+\DoxyCodeLine{00030\ \textcolor{comment}{\ \ \ \ A\ collection\ of\ utilities\ for\ evaluating\ orthogonal\ basis\ functions\ and}}
+\DoxyCodeLine{00031\ \textcolor{comment}{\ \ \ \ their\ derivatives\ on\ reference\ 2D\ faces\ (triangle\ and\ quadrilateral),}}
+\DoxyCodeLine{00032\ \textcolor{comment}{\ \ \ \ for\ use\ in\ Discontinuous\ Galerkin\ (DG)\ methods.}}
+\DoxyCodeLine{00033\ \textcolor{comment}{}}
+\DoxyCodeLine{00034\ \textcolor{comment}{\ \ \ \ Supports:}}
+\DoxyCodeLine{00035\ \textcolor{comment}{\ \ \ \ -\/\ Dubiner\ basis\ for\ triangular\ faces\ (collapsed\ coordinate\ system)}}
+\DoxyCodeLine{00036\ \textcolor{comment}{\ \ \ \ -\/\ Tensor-\/product\ Legendre\ basis\ for\ quadrilateral\ faces}}
+\DoxyCodeLine{00037\ \textcolor{comment}{}}
+\DoxyCodeLine{00038\ \textcolor{comment}{See\ also}}
+\DoxyCodeLine{00039\ \textcolor{comment}{}}
+\DoxyCodeLine{00040\ \textcolor{comment}{SourceFiles}}
+\DoxyCodeLine{00041\ \textcolor{comment}{\ \ \ \ basisFunctions.C}}
+\DoxyCodeLine{00042\ \textcolor{comment}{}}
+\DoxyCodeLine{00043\ \textcolor{comment}{\(\backslash\)*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ \textcolor{preprocessor}{\#ifndef\ basisFunctions\_H}}
+\DoxyCodeLine{00046\ \textcolor{preprocessor}{\#define\ basisFunctions\_H}}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ \textcolor{preprocessor}{\#include\ "{}dgCellType.H"{}}}
+\DoxyCodeLine{00049\ \textcolor{preprocessor}{\#include\ "{}scalar.H"{}}}
+\DoxyCodeLine{00050\ \textcolor{preprocessor}{\#include\ "{}label.H"{}}}
+\DoxyCodeLine{00051\ \textcolor{preprocessor}{\#include\ "{}List.H"{}}}
+\DoxyCodeLine{00052\ \textcolor{preprocessor}{\#include\ "{}error.H"{}}\ \ \textcolor{comment}{//\ For\ FatalErrorInFunction}}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespaceFoam}{Foam}}}
+\DoxyCodeLine{00055\ \{}
+\DoxyCodeLine{00056\ \textcolor{keyword}{namespace\ }math}
+\DoxyCodeLine{00057\ \{}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00059\ \textcolor{comment}{//\ Return\ number\ of\ basis\ functions\ for\ given\ cell\ type\ and\ polynomial\ order}}
+\DoxyCodeLine{00060\ label\ \mbox{\hyperlink{namespaceFoam_1_1math_a04fa93888e444ebfdc081b54eba0751c}{getNumBasis}}(\textcolor{keyword}{const}\ label\ pOrder,\ \textcolor{keyword}{const}\ dgCellType\ type);}
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00062\ \textcolor{comment}{//\ Evaluate\ basis\ functions\ at\ a\ 3D\ point\ (eta1,\ eta2,\ eta3)}}
+\DoxyCodeLine{00063\ \textcolor{comment}{//\ and\ their\ derivatives\ ∂φ/∂eta1,\ ∂φ/∂eta2,\ ∂φ/∂eta3}}
+\DoxyCodeLine{00064\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00065\ \textcolor{comment}{void\ computeBasisAndDerivatives}}
+\DoxyCodeLine{00066\ \textcolor{comment}{(}}
+\DoxyCodeLine{00067\ \textcolor{comment}{\ \ \ \ const\ scalar\ eta1,}}
+\DoxyCodeLine{00068\ \textcolor{comment}{\ \ \ \ const\ scalar\ eta2,}}
+\DoxyCodeLine{00069\ \textcolor{comment}{\ \ \ \ const\ scalar\ eta3,}}
+\DoxyCodeLine{00070\ \textcolor{comment}{\ \ \ \ const\ label\ pOrder,}}
+\DoxyCodeLine{00071\ \textcolor{comment}{\ \ \ \ const\ dgCellType\ type,}}
+\DoxyCodeLine{00072\ \textcolor{comment}{\ \ \ \ List<scalar>\&\ basis,}}
+\DoxyCodeLine{00073\ \textcolor{comment}{\ \ \ \ List<scalar>\&\ dBasis\_deta1,}}
+\DoxyCodeLine{00074\ \textcolor{comment}{\ \ \ \ List<scalar>\&\ dBasis\_deta2,}}
+\DoxyCodeLine{00075\ \textcolor{comment}{\ \ \ \ List<scalar>\&\ dBasis\_deta3}}
+\DoxyCodeLine{00076\ \textcolor{comment}{);}}
+\DoxyCodeLine{00077\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00078\ }
+\DoxyCodeLine{00079\ \textcolor{comment}{//\ Evaluate\ basis\ functions\ and\ derivatives\ for\ hexagonal\ cells}}
+\DoxyCodeLine{00080\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespaceFoam_1_1math_aaf1e10aee0d4f6553f1f587277d3ee92}{computeInteriorHexBasisAndDerivatives}}}
+\DoxyCodeLine{00081\ (}
+\DoxyCodeLine{00082\ \ \ \ \ \textcolor{keyword}{const}\ scalar\ eta1,}
+\DoxyCodeLine{00083\ \ \ \ \ \textcolor{keyword}{const}\ scalar\ eta2,}
+\DoxyCodeLine{00084\ \ \ \ \ \textcolor{keyword}{const}\ scalar\ eta3,}
+\DoxyCodeLine{00085\ \ \ \ \ \textcolor{keyword}{const}\ label\ pOrder,}
+\DoxyCodeLine{00086\ \ \ \ \ List<scalar>\&\ basis,}
+\DoxyCodeLine{00087\ \ \ \ \ List<scalar>\&\ dBasis\_deta1,}
+\DoxyCodeLine{00088\ \ \ \ \ List<scalar>\&\ dBasis\_deta2,}
+\DoxyCodeLine{00089\ \ \ \ \ List<scalar>\&\ dBasis\_deta3}
+\DoxyCodeLine{00090\ );}
+\DoxyCodeLine{00091\ }
+\DoxyCodeLine{00092\ \textcolor{comment}{//\ Evaluate\ basis\ functions\ and\ derivatives\ for\ prism\ cells}}
+\DoxyCodeLine{00093\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespaceFoam_1_1math_a35d580b05715628337c3c61c0b5bdc8d}{computeInteriorPrismBasisAndDerivatives}}}
+\DoxyCodeLine{00094\ (}
+\DoxyCodeLine{00095\ \ \ \ \ \textcolor{keyword}{const}\ scalar\ eta1,}
+\DoxyCodeLine{00096\ \ \ \ \ \textcolor{keyword}{const}\ scalar\ eta2,}
+\DoxyCodeLine{00097\ \ \ \ \ \textcolor{keyword}{const}\ scalar\ eta3,}
+\DoxyCodeLine{00098\ \ \ \ \ \textcolor{keyword}{const}\ label\ pOrder,}
+\DoxyCodeLine{00099\ \ \ \ \ List<scalar>\&\ basis,}
+\DoxyCodeLine{00100\ \ \ \ \ List<scalar>\&\ dBasis\_deta1,}
+\DoxyCodeLine{00101\ \ \ \ \ List<scalar>\&\ dBasis\_deta2,}
+\DoxyCodeLine{00102\ \ \ \ \ List<scalar>\&\ dBasis\_deta3}
+\DoxyCodeLine{00103\ );}
+\DoxyCodeLine{00104\ }
+\DoxyCodeLine{00105\ \textcolor{comment}{//\ Evaluate\ basis\ functions\ and\ derivatives\ for\ pyramid\ cells}}
+\DoxyCodeLine{00106\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespaceFoam_1_1math_ac4f7b1c2763e6d4514b58ed4c61f4481}{computeInteriorPyramidBasisAndDerivatives}}}
+\DoxyCodeLine{00107\ (}
+\DoxyCodeLine{00108\ \ \ \ \ \textcolor{keyword}{const}\ scalar\ eta1,}
+\DoxyCodeLine{00109\ \ \ \ \ \textcolor{keyword}{const}\ scalar\ eta2,}
+\DoxyCodeLine{00110\ \ \ \ \ \textcolor{keyword}{const}\ scalar\ eta3,}
+\DoxyCodeLine{00111\ \ \ \ \ \textcolor{keyword}{const}\ label\ pOrder,}
+\DoxyCodeLine{00112\ \ \ \ \ List<scalar>\&\ basis,}
+\DoxyCodeLine{00113\ \ \ \ \ List<scalar>\&\ dBasis\_deta1,}
+\DoxyCodeLine{00114\ \ \ \ \ List<scalar>\&\ dBasis\_deta2,}
+\DoxyCodeLine{00115\ \ \ \ \ List<scalar>\&\ dBasis\_deta3}
+\DoxyCodeLine{00116\ );}
+\DoxyCodeLine{00117\ }
+\DoxyCodeLine{00118\ \textcolor{comment}{//\ Evaluate\ basis\ functions\ and\ derivatives\ for\ tetrahedral\ cells}}
+\DoxyCodeLine{00119\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespaceFoam_1_1math_aa56f31b73445cf77848fe2cc43844db6}{computeInteriorTetBasisAndDerivatives}}}
+\DoxyCodeLine{00120\ (}
+\DoxyCodeLine{00121\ \ \ \ \ \textcolor{keyword}{const}\ scalar\ eta1,}
+\DoxyCodeLine{00122\ \ \ \ \ \textcolor{keyword}{const}\ scalar\ eta2,}
+\DoxyCodeLine{00123\ \ \ \ \ \textcolor{keyword}{const}\ scalar\ eta3,}
+\DoxyCodeLine{00124\ \ \ \ \ \textcolor{keyword}{const}\ label\ pOrder,}
+\DoxyCodeLine{00125\ \ \ \ \ List<scalar>\&\ basis,}
+\DoxyCodeLine{00126\ \ \ \ \ List<scalar>\&\ dBasis\_deta1,}
+\DoxyCodeLine{00127\ \ \ \ \ List<scalar>\&\ dBasis\_deta2,}
+\DoxyCodeLine{00128\ \ \ \ \ List<scalar>\&\ dBasis\_deta3}
+\DoxyCodeLine{00129\ );}
+\DoxyCodeLine{00130\ }
+\DoxyCodeLine{00131\ \textcolor{comment}{//\ Evaluate\ basis\ functions\ and\ derivatives\ for\ polyhedral\ cells}}
+\DoxyCodeLine{00132\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespaceFoam_1_1math_a0fce7ef02eee0c12fe2a15c76f83d5fc}{computeInteriorPolyBasisAndDerivatives}}}
+\DoxyCodeLine{00133\ (}
+\DoxyCodeLine{00134\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{eta1}},}
+\DoxyCodeLine{00135\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{eta2}},}
+\DoxyCodeLine{00136\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{eta3}},}
+\DoxyCodeLine{00137\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ pOrder,}
+\DoxyCodeLine{00138\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{List<scalar>}}\&\ basis,}
+\DoxyCodeLine{00139\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{List<scalar>}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{dBasis\_deta1}},}
+\DoxyCodeLine{00140\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{List<scalar>}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{dBasis\_deta2}},}
+\DoxyCodeLine{00141\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{List<scalar>}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{dBasis\_deta3}}}
+\DoxyCodeLine{00142\ );}
+\DoxyCodeLine{00143\ }
+\DoxyCodeLine{00144\ \textcolor{comment}{//\ Evaluate\ basis\ functions\ for\ triangular\ faces}}
+\DoxyCodeLine{00145\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespaceFoam_1_1math_a04f4e523bc897b5b9c110e4b86259c1b}{computeInteriorTriBasis}}}
+\DoxyCodeLine{00146\ (}
+\DoxyCodeLine{00147\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{eta1}},}
+\DoxyCodeLine{00148\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{eta2}},}
+\DoxyCodeLine{00149\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ pOrder,}
+\DoxyCodeLine{00150\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{List<scalar>}}\&\ basis,}
+\DoxyCodeLine{00151\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{List<scalar>}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{dBasis\_deta1}},}
+\DoxyCodeLine{00152\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{List<scalar>}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{dBasis\_deta2}}}
+\DoxyCodeLine{00153\ );}
+\DoxyCodeLine{00154\ }
+\DoxyCodeLine{00155\ \textcolor{comment}{//\ Evaluate\ basis\ functions\ for\ quadrilateral\ faces}}
+\DoxyCodeLine{00156\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespaceFoam_1_1math_ace1dc050d7fc4f687ee167de5a0149fd}{computeInteriorQuadBasis}}}
+\DoxyCodeLine{00157\ (}
+\DoxyCodeLine{00158\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{eta1}},}
+\DoxyCodeLine{00159\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{eta2}},}
+\DoxyCodeLine{00160\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ pOrder,}
+\DoxyCodeLine{00161\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{List<scalar>}}\&\ basis,}
+\DoxyCodeLine{00162\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{List<scalar>}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{dBasis\_deta1}},}
+\DoxyCodeLine{00163\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{List<scalar>}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{dBasis\_deta2}}}
+\DoxyCodeLine{00164\ );}
+\DoxyCodeLine{00165\ }
+\DoxyCodeLine{00166\ \textcolor{comment}{//\ Evaluate\ basis\ functions\ on\ hex\ faces}}
+\DoxyCodeLine{00167\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespaceFoam_1_1math_a9b124557ae794fe6decd276ed2a4c6ed}{computeFaceBasisAndDerivativesOfHex}}}
+\DoxyCodeLine{00168\ (}
+\DoxyCodeLine{00169\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{eta1}},}
+\DoxyCodeLine{00170\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{eta2}},}
+\DoxyCodeLine{00171\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{eta3}},}
+\DoxyCodeLine{00172\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ pOrder,}
+\DoxyCodeLine{00173\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682}{dgFacePosition}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{pos}},}
+\DoxyCodeLine{00174\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{List<scalar>}}\&\ basis,}
+\DoxyCodeLine{00175\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{List<scalar>}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{dBasis\_deta1}},}
+\DoxyCodeLine{00176\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{List<scalar>}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{dBasis\_deta2}},}
+\DoxyCodeLine{00177\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{List<scalar>}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{dBasis\_deta3}}}
+\DoxyCodeLine{00178\ );}
+\DoxyCodeLine{00179\ }
+\DoxyCodeLine{00180\ \textcolor{comment}{//\ Evaluate\ basis\ functions\ on\ prism\ faces}}
+\DoxyCodeLine{00181\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespaceFoam_1_1math_ace24350f815c82e78aac1f1b6be4a702}{computeFaceBasisAndDerivativesOfPrism}}}
+\DoxyCodeLine{00182\ (}
+\DoxyCodeLine{00183\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{eta1}},}
+\DoxyCodeLine{00184\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{eta2}},}
+\DoxyCodeLine{00185\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{eta3}},}
+\DoxyCodeLine{00186\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ pOrder,}
+\DoxyCodeLine{00187\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_a49389e037db4de91988ad16f0f8f1b54}{dgFacePositionOnPrism}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{pos}},}
+\DoxyCodeLine{00188\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{List<scalar>}}\&\ basis,}
+\DoxyCodeLine{00189\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{List<scalar>}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{dBasis\_deta1}},}
+\DoxyCodeLine{00190\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{List<scalar>}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{dBasis\_deta2}},}
+\DoxyCodeLine{00191\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{List<scalar>}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{dBasis\_deta3}}}
+\DoxyCodeLine{00192\ );}
+\DoxyCodeLine{00193\ }
+\DoxyCodeLine{00194\ \textcolor{comment}{//\ Evaluate\ basis\ functions\ on\ pyramid\ faces}}
+\DoxyCodeLine{00195\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespaceFoam_1_1math_ad87ad154fc16164013103c1d3b6c129a}{computeFaceBasisAndDerivativesOfPyramid}}}
+\DoxyCodeLine{00196\ (}
+\DoxyCodeLine{00197\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{eta1}},}
+\DoxyCodeLine{00198\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{eta2}},}
+\DoxyCodeLine{00199\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{eta3}},}
+\DoxyCodeLine{00200\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ pOrder,}
+\DoxyCodeLine{00201\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_a5ce8f1f2e5f71c182a4138cf34a3186d}{dgFacePositionOnPyramid}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{pos}},}
+\DoxyCodeLine{00202\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{List<scalar>}}\&\ basis,}
+\DoxyCodeLine{00203\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{List<scalar>}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{dBasis\_deta1}},}
+\DoxyCodeLine{00204\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{List<scalar>}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{dBasis\_deta2}},}
+\DoxyCodeLine{00205\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{List<scalar>}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{dBasis\_deta3}}}
+\DoxyCodeLine{00206\ );}
+\DoxyCodeLine{00207\ }
+\DoxyCodeLine{00208\ \textcolor{comment}{//\ Evaluate\ basis\ functions\ on\ tetrahedral\ faces}}
+\DoxyCodeLine{00209\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespaceFoam_1_1math_a82f87b46f9ba8ac2f86999a36bd022bd}{computeFaceBasisAndDerivativesOfTet}}}
+\DoxyCodeLine{00210\ (}
+\DoxyCodeLine{00211\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{eta1}},}
+\DoxyCodeLine{00212\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{eta2}},}
+\DoxyCodeLine{00213\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{eta3}},}
+\DoxyCodeLine{00214\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ pOrder,}
+\DoxyCodeLine{00215\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_a33894f55b12411460eaf759f2cc29cad}{dgFacePositionOnTet}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{pos}},}
+\DoxyCodeLine{00216\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{List<scalar>}}\&\ basis,}
+\DoxyCodeLine{00217\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{List<scalar>}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{dBasis\_deta1}},}
+\DoxyCodeLine{00218\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{List<scalar>}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{dBasis\_deta2}},}
+\DoxyCodeLine{00219\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{List<scalar>}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{dBasis\_deta3}}}
+\DoxyCodeLine{00220\ );}
+\DoxyCodeLine{00221\ }
+\DoxyCodeLine{00222\ \}\ \textcolor{comment}{//\ namespace\ math}}
+\DoxyCodeLine{00223\ \}\ \textcolor{comment}{//\ namespace\ Foam}}
+\DoxyCodeLine{00224\ }
+\DoxyCodeLine{00225\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00226\ }
+\DoxyCodeLine{00227\ \textcolor{comment}{//\ *************************************************************************\ //}}
+\DoxyCodeLine{00228\ }
+
+\end{DoxyCode}

@@ -5,7 +5,8 @@
     \\  /    A nd           | www.openfoam.com
      \\/     M anipulation  |
 -------------------------------------------------------------------------------
-    Copyright (C) YEAR by YOUR NAME
+    Copyright (C) 2015-2024 OpenCFD Ltd.
+    Copyright (C) 2024-2025 Ha Nam Tran
 -------------------------------------------------------------------------------
 License
     This file is part of OpenFOAM.

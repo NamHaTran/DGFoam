@@ -1,0 +1,146 @@
+\doxysection{dg\+Lax\+Friedrichs\+Flux\+Solver.\+H}
+\hypertarget{lnInclude_2dgLaxFriedrichsFluxSolver_8H_source}{}\label{lnInclude_2dgLaxFriedrichsFluxSolver_8H_source}\index{/home/nam-\/ha-\/tran/OpenFOAM/DGFoam/src/DGMethod/lnInclude/dgLaxFriedrichsFluxSolver.H@{/home/nam-\/ha-\/tran/OpenFOAM/DGFoam/src/DGMethod/lnInclude/dgLaxFriedrichsFluxSolver.H}}
+\mbox{\hyperlink{lnInclude_2dgLaxFriedrichsFluxSolver_8H}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*\(\backslash\)}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ \ =========\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ \ \(\backslash\)\(\backslash\)\ \ \ \ \ \ /\ \ F\ ield\ \ \ \ \ \ \ \ \ |\ OpenFOAM:\ The\ Open\ Source\ CFD\ Toolbox}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ \ \ \(\backslash\)\(\backslash\)\ \ \ \ /\ \ \ O\ peration\ \ \ \ \ |}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ \ \ \ \(\backslash\)\(\backslash\)\ \ /\ \ \ \ A\ nd\ \ \ \ \ \ \ \ \ \ \ |\ www.openfoam.com}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ \ \ \ \ \(\backslash\)\(\backslash\)/\ \ \ \ \ M\ anipulation\ \ |}}
+\DoxyCodeLine{00007\ \textcolor{comment}{-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ \ \ \ Copyright\ (C)\ 2015-\/2024\ OpenCFD\ Ltd.}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ \ \ \ Copyright\ (C)\ 2024-\/2025\ Ha\ Nam\ Tran}}
+\DoxyCodeLine{00010\ \textcolor{comment}{-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00011\ \textcolor{comment}{License}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ \ \ \ This\ file\ is\ part\ of\ DGFoam.}}
+\DoxyCodeLine{00013\ \textcolor{comment}{}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ \ \ \ DGFoam\ is\ free\ software:\ you\ can\ redistribute\ it\ and/or\ modify\ it}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ \ \ \ under\ the\ terms\ of\ the\ GNU\ General\ Public\ License\ as\ published\ by}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ \ \ \ the\ Free\ Software\ Foundation,\ either\ version\ 3\ of\ the\ License,\ or}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ \ \ \ (at\ your\ option)\ any\ later\ version.}}
+\DoxyCodeLine{00018\ \textcolor{comment}{}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ \ \ \ DGFoam\ is\ distributed\ in\ the\ hope\ that\ it\ will\ be\ useful,\ but\ WITHOUT}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ \ \ \ ANY\ WARRANTY;\ without\ even\ the\ implied\ warranty\ of\ MERCHANTABILITY\ or}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ \ \ \ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE.\ \ See\ the\ GNU\ General\ Public\ License}}
+\DoxyCodeLine{00022\ \textcolor{comment}{\ \ \ \ for\ more\ details.}}
+\DoxyCodeLine{00023\ \textcolor{comment}{}}
+\DoxyCodeLine{00024\ \textcolor{comment}{\ \ \ \ You\ should\ have\ received\ a\ copy\ of\ the\ GNU\ General\ Public\ License}}
+\DoxyCodeLine{00025\ \textcolor{comment}{\ \ \ \ along\ with\ OpenFOAM.\ \ If\ not,\ see\ <http://www.gnu.org/licenses/>.}}
+\DoxyCodeLine{00026\ \textcolor{comment}{}}
+\DoxyCodeLine{00027\ \textcolor{comment}{Class}}
+\DoxyCodeLine{00028\ \textcolor{comment}{\ \ \ \ Foam::dgHLLCFluxSolver}}
+\DoxyCodeLine{00029\ \textcolor{comment}{}}
+\DoxyCodeLine{00030\ \textcolor{comment}{Description}}
+\DoxyCodeLine{00031\ \textcolor{comment}{\ \ \ \ Local\ Lax–Friedrichs\ /\ Rusanov\ numerical\ flux.}}
+\DoxyCodeLine{00032\ \textcolor{comment}{}}
+\DoxyCodeLine{00033\ \textcolor{comment}{\ \ \ \ Numerical\ flux:}}
+\DoxyCodeLine{00034\ \textcolor{comment}{\ \ \ \ \ \ \ \ h(U+,\ U-\/,\ n)\ =}}
+\DoxyCodeLine{00035\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ 0.5*(F(U+)\ +\ F(U-\/))·n}}
+\DoxyCodeLine{00036\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ -\/\ 0.5*C*(U+\ -\/\ U-\/)}}
+\DoxyCodeLine{00037\ \textcolor{comment}{}}
+\DoxyCodeLine{00038\ \textcolor{comment}{\ \ \ \ with\ dissipation\ coefficient:}}
+\DoxyCodeLine{00039\ \textcolor{comment}{\ \ \ \ \ \ \ \ C\ =\ max(\ |U\_n\string^-\/|\ +\ a\string^-\/\ ,\ |U\_n\string^+|\ +\ a\string^+\ )}}
+\DoxyCodeLine{00040\ \textcolor{comment}{}}
+\DoxyCodeLine{00041\ \textcolor{comment}{\ \ \ \ Optional:}}
+\DoxyCodeLine{00042\ \textcolor{comment}{\ \ \ \ \ \ \ \ If\ 'scaleByMach\ =\ true'\ in\ dictionary:}}
+\DoxyCodeLine{00043\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ C\ =\ |U\_n|\ +\ a/M\ \ \ \ \ where\ \ M\ =\ |U\_n|/a}}
+\DoxyCodeLine{00044\ \textcolor{comment}{}}
+\DoxyCodeLine{00045\ \textcolor{comment}{\ \ \ \ Notes:}}
+\DoxyCodeLine{00046\ \textcolor{comment}{\ \ \ \ -\/\ For\ scalar\ transport:\ Cartesian\ flux\ =\ fn\ *\ n}}
+\DoxyCodeLine{00047\ \textcolor{comment}{\ \ \ \ -\/\ For\ momentum\ transport:\ output\ flux\ is\ a\ vector,\ not\ multiplied\ by\ n}}
+\DoxyCodeLine{00048\ \textcolor{comment}{}}
+\DoxyCodeLine{00049\ \textcolor{comment}{SourceFiles}}
+\DoxyCodeLine{00050\ \textcolor{comment}{\ \ \ \ dgHLLCFluxSolver.C}}
+\DoxyCodeLine{00051\ \textcolor{comment}{\(\backslash\)*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00053\ \textcolor{preprocessor}{\#ifndef\ Foam\_dgLaxFriedrichsFluxSolver\_H}}
+\DoxyCodeLine{00054\ \textcolor{preprocessor}{\#define\ Foam\_dgLaxFriedrichsFluxSolver\_H}}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{lnInclude_2dgFluxSolver_8H}{dgFluxSolver.H}}"{}}}
+\DoxyCodeLine{00057\ \textcolor{preprocessor}{\#include\ "{}dgField.H"{}}}
+\DoxyCodeLine{00058\ \textcolor{preprocessor}{\#include\ "{}vector.H"{}}}
+\DoxyCodeLine{00059\ \textcolor{preprocessor}{\#include\ "{}tensor.H"{}}}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00061\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespaceFoam}{Foam}}}
+\DoxyCodeLine{00062\ \{}
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Type>\ \textcolor{keyword}{class\ }faceGaussField;}
+\DoxyCodeLine{00064\ \}}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00066\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*\(\backslash\)}}
+\DoxyCodeLine{00067\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Class\ dgLaxFriedrichsFluxSolver\ Declaration}}
+\DoxyCodeLine{00068\ \textcolor{comment}{\(\backslash\)*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00070\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespaceFoam}{Foam}}}
+\DoxyCodeLine{00071\ \{}
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00073\ \textcolor{keyword}{class\ }dgLaxFriedrichsFluxSolver\ :\ \textcolor{keyword}{public}\ dgFluxSolver}
+\DoxyCodeLine{00074\ \{}
+\DoxyCodeLine{00075\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00077\ \ \ \ \ \textcolor{comment}{//-\/\ Velocity\ field}}
+\DoxyCodeLine{00078\ \ \ \ \ \textcolor{keyword}{const}\ dgField<vector>\&\ \mbox{\hyperlink{classFoam_1_1dgLaxFriedrichsFluxSolver_aa47fbf51fc143c0ef8c307e4abefc165}{U\_}};}
+\DoxyCodeLine{00079\ }
+\DoxyCodeLine{00080\ \ \ \ \ \textcolor{comment}{//-\/\ Speed\ of\ sound\ field}}
+\DoxyCodeLine{00081\ \ \ \ \ \textcolor{keyword}{const}\ dgField<scalar>\&\ \mbox{\hyperlink{classFoam_1_1dgLaxFriedrichsFluxSolver_ace9a6cf90cf52d1ea215598bfbb7588f}{a\_}};}
+\DoxyCodeLine{00082\ }
+\DoxyCodeLine{00083\ \ \ \ \ \textcolor{comment}{//-\/\ Enable\ Mach-\/based\ dissipation\ model}}
+\DoxyCodeLine{00084\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classFoam_1_1dgLaxFriedrichsFluxSolver_a95ef67c7bb8ae02201275ea226dc37e3}{scaleByMach\_}};}
+\DoxyCodeLine{00085\ }
+\DoxyCodeLine{00086\ }
+\DoxyCodeLine{00087\ \ \ \ \ \textcolor{comment}{//-\/\ Compute\ dissipation\ coefficient\ C}}
+\DoxyCodeLine{00088\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}\ \mbox{\hyperlink{classFoam_1_1dgLaxFriedrichsFluxSolver_a8165bb486e760033f856a7bc6cf0085f}{calcDissipationCoeff}}}
+\DoxyCodeLine{00089\ \ \ \ \ (}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{ULv}},}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{URv}},}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{aL}},}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{aR}},}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{n}}}
+\DoxyCodeLine{00095\ \ \ \ \ )\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00096\ }
+\DoxyCodeLine{00097\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00098\ }
+\DoxyCodeLine{00099\ \ \ \ \ \textcolor{comment}{//-\/\ Runtime\ type\ name}}
+\DoxyCodeLine{00100\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1dgLaxFriedrichsFluxSolver_a3ace4155d010023938c937c9ced4ec70}{TypeName}}(\textcolor{stringliteral}{"{}LaxFriedrichs"{}});}
+\DoxyCodeLine{00101\ }
+\DoxyCodeLine{00102\ \ \ \ \ \textcolor{comment}{//-\/\ Construct\ from\ name,\ dictionary\ and\ mesh}}
+\DoxyCodeLine{00103\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1dgLaxFriedrichsFluxSolver_aa3a86806982922dfac7ac24c66e6876c}{dgLaxFriedrichsFluxSolver}}}
+\DoxyCodeLine{00104\ \ \ \ \ (}
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{word}}\&\ \mbox{\hyperlink{classFoam_1_1dgFluxSolver_a65f5c41742c90fc8ca26bc6220cdeea3}{name}},}
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}}\&\ \mbox{\hyperlink{classFoam_1_1dgFluxSolver_af698821f76c9aa02a7b9f0ac651086a4}{dict}},}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dgGeomMesh}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{mesh}}}
+\DoxyCodeLine{00108\ \ \ \ \ );}
+\DoxyCodeLine{00109\ }
+\DoxyCodeLine{00110\ \ \ \ \ \textcolor{keyword}{virtual}\ \mbox{\hyperlink{classFoam_1_1dgLaxFriedrichsFluxSolver_ab335afd6f86988898c8d43a0afb8c4be}{\string~dgLaxFriedrichsFluxSolver}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00111\ }
+\DoxyCodeLine{00112\ }
+\DoxyCodeLine{00113\ \ \ \ \ \textcolor{comment}{//-\/\ Scalar\ U,\ vector\ F}}
+\DoxyCodeLine{00114\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classFoam_1_1dgLaxFriedrichsFluxSolver_a4e07c80e5634b104d8a27ca2a967ccee}{computeFlux}}}
+\DoxyCodeLine{00115\ \ \ \ \ (}
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ cellID,}
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{faceGaussField<vector>}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{F}},}
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{faceGaussField<scalar>}}\&\ \mbox{\hyperlink{createPrimaryFields_8H_acaa7fe8168a3a866f1958b3663d384c6}{U}}}
+\DoxyCodeLine{00119\ \ \ \ \ )\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00120\ }
+\DoxyCodeLine{00121\ \ \ \ \ \textcolor{comment}{//-\/\ Vector\ U,\ tensor\ F}}
+\DoxyCodeLine{00122\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classFoam_1_1dgLaxFriedrichsFluxSolver_a7077c530163d30a97c3590bfb69fa715}{computeFlux}}}
+\DoxyCodeLine{00123\ \ \ \ \ (}
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ cellID,}
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{faceGaussField<tensor>}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{F}},}
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{faceGaussField<vector>}}\&\ \mbox{\hyperlink{createPrimaryFields_8H_acaa7fe8168a3a866f1958b3663d384c6}{U}}}
+\DoxyCodeLine{00127\ \ \ \ \ )\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00128\ }
+\DoxyCodeLine{00129\ \ \ \ \ \textcolor{comment}{//-\/\ No\ caching\ required}}
+\DoxyCodeLine{00130\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classFoam_1_1dgLaxFriedrichsFluxSolver_ab056ecd7e1aff9d41bd8a1a300201f5d}{reset}}()\textcolor{keyword}{\ override\ }\{\}}
+\DoxyCodeLine{00131\ }
+\DoxyCodeLine{00132\ \ \ \ \ \textcolor{comment}{//-\/\ Read\ dictionary}}
+\DoxyCodeLine{00133\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classFoam_1_1dgLaxFriedrichsFluxSolver_abea0a8c6798477d5d4d32ff745430be6}{read}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}}\&\ \mbox{\hyperlink{classFoam_1_1dgFluxSolver_af698821f76c9aa02a7b9f0ac651086a4}{dict}})\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00134\ \};}
+\DoxyCodeLine{00135\ }
+\DoxyCodeLine{00136\ \}\ \textcolor{comment}{//\ End\ namespace\ Foam}}
+\DoxyCodeLine{00137\ }
+\DoxyCodeLine{00138\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00139\ }
+\DoxyCodeLine{00140\ \textcolor{comment}{//\ *************************************************************************\ //}}
+
+\end{DoxyCode}

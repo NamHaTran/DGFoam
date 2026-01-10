@@ -25,32 +25,7 @@ Class
     Foam::powerVHS
 
 Description
-    Variable-Hard-Sphere (power-law) viscosity model:
-      - mu(T) = muRef * (T/TRef)^omega
-      - muRef = 15*sqrt(pi*m*kB*TRef) / [ 2*pi*dRef^2*(5-2*omega)*(7-2*omega) ]
-      - Pr(T) = Pr0 (constant)
-      - kappa(Cp,T) is computed in base transportLaw: mu(T)*Cp/Pr(T)
-
-    Notes:
-      - molMass is in g/mol (converted internally).
-      - dRef in [m]; TRef in [K]; kB in [J/K]; NA in [1/mol].
-
-    Example:
-    transportCoeffs
-    {
-        type     powerVHS;
-
-        // Required
-        molMass  28.0134;     // [g/mol] N2
-        dRef     3.7e-10;     // [m]
-        TRef     300;         // [K]
-        omega    0.74;        // [-]
-        Pr       0.72;        // [-]
-
-        // Optional overrides
-        // kB    1.380649e-23;   // [J/K]
-        // NA    6.02214076e23;  // [1/mol]
-    }
+    Variable-Hard-Sphere (power-law) transport model.
 
 SourceFiles
     powerVHS.C
@@ -69,9 +44,77 @@ namespace Foam
 {
 
 /*---------------------------------------------------------------------------*\
-                           Class powerVHS Declaration
+                        Class powerVHS Declaration
 \*---------------------------------------------------------------------------*/
 
+/**
+ * \class Foam::powerVHS
+ * \brief Variable-Hard-Sphere (VHS) power-law viscosity model
+ *
+ * \details
+ * powerVHS implements the Variable-Hard-Sphere (VHS) model with a power-law
+ * temperature dependence of viscosity:
+ *
+ * \f[
+ *   \mu(T) = \mu_{\mathrm{ref}}
+ *            \left(\frac{T}{T_{\mathrm{ref}}}\right)^{\omega}
+ * \f]
+ *
+ * The reference viscosity is computed from kinetic theory as:
+ *
+ * \f[
+ *   \mu_{\mathrm{ref}} =
+ *   \frac{15 \sqrt{\pi m k_B T_{\mathrm{ref}}}}
+ *        {2 \pi d_{\mathrm{ref}}^2
+ *         (5 - 2\omega)(7 - 2\omega)}
+ * \f]
+ *
+ * where:
+ * \li \f$m\f$ is the molecular mass
+ * \li \f$k_B\f$ is the Boltzmann constant
+ * \li \f$d_{\mathrm{ref}}\f$ is the reference molecular diameter
+ * \li \f$T_{\mathrm{ref}}\f$ is the reference temperature
+ * \li \f$\omega\f$ is the VHS power-law exponent
+ *
+ * The Prandtl number is assumed constant:
+ * \f[
+ *   \mathrm{Pr}(T) = \mathrm{Pr}_0
+ * \f]
+ *
+ * Thermal conductivity is computed in the base transportLaw as:
+ * \f[
+ *   \kappa(T) = \frac{\mu(T)\,C_p(T)}{\mathrm{Pr}(T)}
+ * \f]
+ *
+ * \par Notes
+ * \li Molecular mass is read in \f$\mathrm{g/mol}\f$ and converted internally
+ *     to \f$\mathrm{kg/molecule}\f$
+ * \li \f$d_{\mathrm{ref}}\f$ is specified in \f$\mathrm{m}\f$
+ * \li \f$T_{\mathrm{ref}}\f$ is specified in \f$\mathrm{K}\f$
+ * \li \f$k_B\f$ is specified in \f$\mathrm{J/K}\f$
+ * \li \f$N_A\f$ is specified in \f$\mathrm{mol^{-1}}\f$
+ *
+ * \par Example
+ * \code
+ * transportCoeffs
+ * {
+ *     type     powerVHS;
+ *
+ *     // Required
+ *     molMass  28.0134;     // [g/mol] N2
+ *     dRef     3.7e-10;     // [m]
+ *     TRef     300;         // [K]
+ *     omega    0.74;        // [-]
+ *     Pr       0.72;        // [-]
+ *
+ *     // Optional overrides
+ *     // kB    1.380649e-23;   // [J/K]
+ *     // NA    6.02214076e23;  // [1/mol]
+ * }
+ * \endcode
+ *
+ * \ingroup grpDGThermo
+ */
 class powerVHS
 :
     public transportLaw
@@ -80,30 +123,31 @@ private:
 
     // Coefficients read from dictionary
 
-        //- Molecular mass [g/mol] (converted internally to kg/molecule)
+        /** Molecular mass \f$m\f$ [g/mol] (converted internally) */
         scalar molMass_;
 
-        //- Reference diameter [m]
+        /** Reference molecular diameter \f$d_{\mathrm{ref}}\f$ [m] */
         scalar dRef_;
 
-        //- Reference temperature [K]
+        /** Reference temperature \f$T_{\mathrm{ref}}\f$ [K] */
         scalar TRef_;
 
-        //- Power-law exponent ω [-]
+        /** VHS power-law exponent \f$\omega\f$ [-] */
         scalar omega_;
 
-        //- Constant Prandtl number [-]
+        /** Constant Prandtl number \f$\mathrm{Pr}_0\f$ [-] */
         scalar Pr0_;
 
-        //- Boltzmann constant [J/K] (optional override)
+        /** Boltzmann constant \f$k_B\f$ [J/K] (optional override) */
         scalar kB_;
 
-        //- Avogadro constant [1/mol] (optional override)
+        /** Avogadro constant \f$N_A\f$ [mol^{-1}] (optional override) */
         scalar NA_;
 
-    // Derived values
+    // Derived quantities
 
-        //- Reference viscosity at TRef [kg/(m·s)]
+        /** Reference viscosity \f$\mu_{\mathrm{ref}}\f$ at \f$T_{\mathrm{ref}}\f$
+            [kg/(m·s)] */
         scalar muRef_;
 
 public:
@@ -111,7 +155,12 @@ public:
     //- Runtime type information
     TypeName("powerVHS");
 
-    //- Construct from dictionary (reads + precomputes)
+    /**
+     * \brief Construct from dictionary
+     *
+     * Reads transport coefficients and pre-computes
+     * the reference viscosity \f$\mu_{\mathrm{ref}}\f$.
+     */
     powerVHS
     (
         const word& name,
@@ -120,13 +169,23 @@ public:
         const thermoLaw& thermo
     );
 
-    //- Destructor
-    ~powerVHS() override = default;
+    /** Virtual destructor */
+    virtual ~powerVHS() override = default;
 
 
-    // * * * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * //
+    //====================================================================//
+    //                   Transport-law interface
+    //====================================================================//
 
-    //- Dynamic viscosity μ(T)
+    /**
+     * \brief Compute dynamic viscosity
+     *
+     * Computes:
+     * \f[
+     *   \mu(T) = \mu_{\mathrm{ref}}
+     *            \left(\frac{T}{T_{\mathrm{ref}}}\right)^{\omega}
+     * \f]
+     */
     virtual void calcMu
     (
         const label cellI,
@@ -134,7 +193,14 @@ public:
         GaussField<scalar>& mu
     ) const override;
 
-    //- Thermal conductivity κ(T)
+    /**
+     * \brief Compute thermal conductivity
+     *
+     * Uses:
+     * \f[
+     *   \kappa(T) = \frac{\mu(T)\,C_p(T)}{\mathrm{Pr}_0}
+     * \f]
+     */
     virtual void calcKappa
     (
         const label cellI,
@@ -142,7 +208,14 @@ public:
         GaussField<scalar>& kappa
     ) const override;
 
-    //- Prandtl number (constant)
+    /**
+     * \brief Return Prandtl number
+     *
+     * Returns constant:
+     * \f[
+     *   \mathrm{Pr}(T) = \mathrm{Pr}_0
+     * \f]
+     */
     virtual void calcPr
     (
         const label cellI,
@@ -150,10 +223,14 @@ public:
         GaussField<scalar>& Pr
     ) const override;
 
-    //- Read coefficients + compute μRef_
+    /**
+     * \brief Read coefficients and pre-compute reference viscosity
+     */
     virtual void read() override;
 
-    //- Set group
+    /**
+     * \brief Identify kinetic-theory transport model
+     */
     virtual bool isKineticTransportLaw() const override { return true; }
 };
 

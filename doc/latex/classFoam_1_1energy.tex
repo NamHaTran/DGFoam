@@ -1,0 +1,497 @@
+\doxysection{Foam\+::energy Class Reference}
+\hypertarget{classFoam_1_1energy}{}\label{classFoam_1_1energy}\index{Foam::energy@{Foam::energy}}
+
+
+Base class for energy models in DGFoam.  
+
+
+
+
+{\ttfamily \#include $<$energy.\+H$>$}
+
+
+
+Inheritance diagram for Foam\+::energy\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=241pt]{classFoam_1_1energy__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Foam\+::energy\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=315pt]{classFoam_1_1energy__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classFoam_1_1energy_aec2265e71d15a67b8ac6be3a93783d20}{Type\+Name}} ("{}energy"{})
+\item 
+\mbox{\hyperlink{classFoam_1_1energy_a8bc08c9729815eefcbade61cd2dc035b}{declare\+Run\+Time\+Selection\+Table}} (\mbox{\hyperlink{classFoam_1_1GaussField}{auto\+Ptr}}, \mbox{\hyperlink{classFoam_1_1energy}{energy}}, \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}},(\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{word}} \&name, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}} \&dict, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{mesh}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1thermoLaw}{thermo\+Law}} \&\mbox{\hyperlink{createDGFields_8H_a9925ad70d4a9bc708442f7d79d009002}{thermo}}),(name, dict, \mbox{\hyperlink{classFoam_1_1GaussField}{mesh}}, \mbox{\hyperlink{createDGFields_8H_a9925ad70d4a9bc708442f7d79d009002}{thermo}}))
+\item 
+\mbox{\hyperlink{classFoam_1_1energy_a4f53bdb65dd342760ea86e1a59227c0f}{energy}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{word}} \&name, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}} \&dict, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{mesh}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1thermoLaw}{thermo\+Law}} \&\mbox{\hyperlink{createDGFields_8H_a9925ad70d4a9bc708442f7d79d009002}{thermo}})
+\begin{DoxyCompactList}\small\item\em Construct from name, dictionary, mesh, and \doxylink{classFoam_1_1thermoLaw}{thermo\+Law}. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1energy_ab26bdfdb9545eaec78c661b34038129d}{\texorpdfstring{$\sim$}{\string~}energy}} ()=\mbox{\hyperlink{classFoam_1_1GaussField}{default}}
+\begin{DoxyCompactList}\small\item\em Virtual destructor. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1energy_a858187cb78cb8d99e089e2efee1a9b71}{calc\+Enthalpy}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1GaussField}{cellI}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{namespaceFoam_a5faf7f302ed6c6307e3668365456af74}{T}}, \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{h}}) \mbox{\hyperlink{classFoam_1_1GaussField}{const}} =0
+\begin{DoxyCompactList}\small\item\em Compute enthalpy from temperature. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1energy_a55295b1588cca58258c0c7d612993245}{calc\+Energy}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1GaussField}{cellI}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{namespaceFoam_a5faf7f302ed6c6307e3668365456af74}{T}}, \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{createConservativeFields_8H_a3f370753d9872dffe05120a7a166ba5b}{E}}) \mbox{\hyperlink{classFoam_1_1GaussField}{const}} =0
+\begin{DoxyCompactList}\small\item\em Compute energy variable (e or h depending on model) \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1energy_ab83cf5079bafb029556bd3f9623a53df}{calc\+Tfrom\+Energy}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1GaussField}{cellI}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{createConservativeFields_8H_a3f370753d9872dffe05120a7a166ba5b}{E}}, \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{namespaceFoam_a5faf7f302ed6c6307e3668365456af74}{T}}) \mbox{\hyperlink{classFoam_1_1GaussField}{const}} =0
+\begin{DoxyCompactList}\small\item\em Compute temperature from energy (energy inversion) \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{bool}} \mbox{\hyperlink{classFoam_1_1energy_a6f430501fb3bfdf3d62619c75b21157b}{energy\+Internal}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\begin{DoxyCompactList}\small\item\em Return true if the model is internal-\/energy based. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{bool}} \mbox{\hyperlink{classFoam_1_1energy_a3e08c28e0e3a949caf05f6374f408199}{energy\+Enthalpy}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\begin{DoxyCompactList}\small\item\em Return true if the model is enthalpy-\/based. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1energy_aec2265e71d15a67b8ac6be3a93783d20}{Type\+Name}} ("{}energy"{})
+\item 
+\mbox{\hyperlink{classFoam_1_1energy_a8bc08c9729815eefcbade61cd2dc035b}{declare\+Run\+Time\+Selection\+Table}} (\mbox{\hyperlink{classFoam_1_1GaussField}{auto\+Ptr}}, \mbox{\hyperlink{classFoam_1_1energy}{energy}}, \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}},(\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{word}} \&name, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}} \&dict, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{mesh}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1thermoLaw}{thermo\+Law}} \&\mbox{\hyperlink{createDGFields_8H_a9925ad70d4a9bc708442f7d79d009002}{thermo}}),(name, dict, \mbox{\hyperlink{classFoam_1_1GaussField}{mesh}}, \mbox{\hyperlink{createDGFields_8H_a9925ad70d4a9bc708442f7d79d009002}{thermo}}))
+\item 
+\mbox{\hyperlink{classFoam_1_1energy_a4f53bdb65dd342760ea86e1a59227c0f}{energy}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{word}} \&name, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}} \&dict, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{mesh}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1thermoLaw}{thermo\+Law}} \&\mbox{\hyperlink{createDGFields_8H_a9925ad70d4a9bc708442f7d79d009002}{thermo}})
+\begin{DoxyCompactList}\small\item\em Construct from name, dictionary, mesh, and \doxylink{classFoam_1_1thermoLaw}{thermo\+Law}. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1energy_ab26bdfdb9545eaec78c661b34038129d}{\texorpdfstring{$\sim$}{\string~}energy}} ()=\mbox{\hyperlink{classFoam_1_1GaussField}{default}}
+\begin{DoxyCompactList}\small\item\em Virtual destructor. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1energy_a858187cb78cb8d99e089e2efee1a9b71}{calc\+Enthalpy}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1GaussField}{cellI}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{namespaceFoam_a5faf7f302ed6c6307e3668365456af74}{T}}, \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{h}}) \mbox{\hyperlink{classFoam_1_1GaussField}{const}} =0
+\begin{DoxyCompactList}\small\item\em Compute enthalpy from temperature. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1energy_a55295b1588cca58258c0c7d612993245}{calc\+Energy}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1GaussField}{cellI}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{namespaceFoam_a5faf7f302ed6c6307e3668365456af74}{T}}, \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{createConservativeFields_8H_a3f370753d9872dffe05120a7a166ba5b}{E}}) \mbox{\hyperlink{classFoam_1_1GaussField}{const}} =0
+\begin{DoxyCompactList}\small\item\em Compute energy variable (e or h depending on model) \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1energy_ab83cf5079bafb029556bd3f9623a53df}{calc\+Tfrom\+Energy}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1GaussField}{cellI}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{createConservativeFields_8H_a3f370753d9872dffe05120a7a166ba5b}{E}}, \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{namespaceFoam_a5faf7f302ed6c6307e3668365456af74}{T}}) \mbox{\hyperlink{classFoam_1_1GaussField}{const}} =0
+\begin{DoxyCompactList}\small\item\em Compute temperature from energy (energy inversion) \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{bool}} \mbox{\hyperlink{classFoam_1_1energy_a6f430501fb3bfdf3d62619c75b21157b}{energy\+Internal}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\begin{DoxyCompactList}\small\item\em Return true if the model is internal-\/energy based. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{bool}} \mbox{\hyperlink{classFoam_1_1energy_a3e08c28e0e3a949caf05f6374f408199}{energy\+Enthalpy}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\begin{DoxyCompactList}\small\item\em Return true if the model is enthalpy-\/based. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{static}} \mbox{\hyperlink{classFoam_1_1GaussField}{auto\+Ptr}}$<$ \mbox{\hyperlink{classFoam_1_1energy}{energy}} $>$ \mbox{\hyperlink{classFoam_1_1energy_add330c12174e04b63ceb5c33f8bef341}{New}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{word}} \&name, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}} \&dict, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{mesh}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1thermoLaw}{thermo\+Law}} \&\mbox{\hyperlink{createDGFields_8H_a9925ad70d4a9bc708442f7d79d009002}{thermo}})
+\begin{DoxyCompactList}\small\item\em Runtime selector. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{static}} \mbox{\hyperlink{classFoam_1_1GaussField}{auto\+Ptr}}$<$ \mbox{\hyperlink{classFoam_1_1energy}{energy}} $>$ \mbox{\hyperlink{classFoam_1_1energy_ad312e55b7e378f4bc92b1be519a99e26}{New}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{word}} \&name, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}} \&dict, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{mesh}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1thermoLaw}{thermo\+Law}} \&\mbox{\hyperlink{createDGFields_8H_a9925ad70d4a9bc708442f7d79d009002}{thermo}})
+\begin{DoxyCompactList}\small\item\em Runtime selector. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{word}} \mbox{\hyperlink{classFoam_1_1energy_a1da4ff326bd4f6fd3587c816fb019b5a}{name\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Model name (used for logging and diagnostics) \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}} \mbox{\hyperlink{classFoam_1_1energy_a196e297d7caf016e0eea6385994ab918}{coeffs\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Coefficient dictionary snapshot. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \& \mbox{\hyperlink{classFoam_1_1energy_adb84c7480f0cd270b281f96bbdde1401}{mesh\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Reference to DG geometric mesh (non-\/owning) \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1thermoLaw}{thermo\+Law}} \& \mbox{\hyperlink{classFoam_1_1energy_a44d93eaa08a1a35b408cc2efc519adf4}{thermo\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Reference to \doxylink{classFoam_1_1thermoLaw}{thermo\+Law} (non-\/owning) \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Base class for energy models in DGFoam. 
+
+Energy models define which thermodynamic energy variable is evolved by the DG solver and provide consistent conversions between temperature and energy representations.
+
+Two categories of energy formulations are supported\+:
+
+
+\begin{DoxyEnumerate}
+\item Internal-\/energy based models
+\end{DoxyEnumerate}
+\begin{DoxyItemize}
+\item The conserved variable is the sensible internal energy e(\+T).
+\item Temperature is obtained from e(\+T) using \doxylink{classFoam_1_1thermoLaw}{thermo\+Law} relations.
+\item Enthalpy is computed as\+: h = e + p/rho.
+\item No formation enthalpy is included.
+\item Suitable for compressible flows, shock-\/capturing, DG solvers, and real-\/gas thermodynamics.
+\end{DoxyItemize}
+\begin{DoxyEnumerate}
+\item Enthalpy-\/based models
+\end{DoxyEnumerate}
+\begin{DoxyItemize}
+\item The conserved variable is the sensible enthalpy h(\+T).
+\item Temperature is obtained from h(\+T).
+\item Internal energy is computed as\+: e = h -\/ p/rho.
+\item Required when transport or chemistry formulations are expressed naturally in terms of enthalpy.
+\end{DoxyItemize}
+
+This base class provides a common interface for all energy models and supports runtime selection via dictionaries. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classFoam_1_1energy_a4f53bdb65dd342760ea86e1a59227c0f}\label{classFoam_1_1energy_a4f53bdb65dd342760ea86e1a59227c0f} 
+\index{Foam::energy@{Foam::energy}!energy@{energy}}
+\index{energy@{energy}!Foam::energy@{Foam::energy}}
+\doxysubsubsection{\texorpdfstring{energy()}{energy()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Foam\+::energy\+::energy (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{word}} \&}]{name,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}} \&}]{dict,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \&}]{mesh,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1thermoLaw}{thermo\+Law}} \&}]{thermo }\end{DoxyParamCaption})}
+
+
+
+Construct from name, dictionary, mesh, and \doxylink{classFoam_1_1thermoLaw}{thermo\+Law}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & Model name \\
+\hline
+{\em dict} & Coefficient dictionary \\
+\hline
+{\em mesh} & DG geometric mesh \\
+\hline
+{\em thermo} & Thermodynamic law \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classFoam_1_1energy_ab26bdfdb9545eaec78c661b34038129d}\label{classFoam_1_1energy_ab26bdfdb9545eaec78c661b34038129d} 
+\index{Foam::energy@{Foam::energy}!````~energy@{\texorpdfstring{$\sim$}{\string~}energy}}
+\index{````~energy@{\texorpdfstring{$\sim$}{\string~}energy}!Foam::energy@{Foam::energy}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}energy()}{\string~energy()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} Foam\+::energy\+::\texorpdfstring{$\sim$}{\string~}energy (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}, {\ttfamily [default]}}
+
+
+
+Virtual destructor. 
+
+\Hypertarget{classFoam_1_1energy_a4f53bdb65dd342760ea86e1a59227c0f}\label{classFoam_1_1energy_a4f53bdb65dd342760ea86e1a59227c0f} 
+\index{Foam::energy@{Foam::energy}!energy@{energy}}
+\index{energy@{energy}!Foam::energy@{Foam::energy}}
+\doxysubsubsection{\texorpdfstring{energy()}{energy()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Foam\+::energy\+::energy (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{word}} \&}]{name,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}} \&}]{dict,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \&}]{mesh,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1thermoLaw}{thermo\+Law}} \&}]{thermo }\end{DoxyParamCaption})}
+
+
+
+Construct from name, dictionary, mesh, and \doxylink{classFoam_1_1thermoLaw}{thermo\+Law}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & Model name \\
+\hline
+{\em dict} & Coefficient dictionary \\
+\hline
+{\em mesh} & DG geometric mesh \\
+\hline
+{\em thermo} & Thermodynamic law \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classFoam_1_1energy_ab26bdfdb9545eaec78c661b34038129d}\label{classFoam_1_1energy_ab26bdfdb9545eaec78c661b34038129d} 
+\index{Foam::energy@{Foam::energy}!````~energy@{\texorpdfstring{$\sim$}{\string~}energy}}
+\index{````~energy@{\texorpdfstring{$\sim$}{\string~}energy}!Foam::energy@{Foam::energy}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}energy()}{\string~energy()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} Foam\+::energy\+::\texorpdfstring{$\sim$}{\string~}energy (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}, {\ttfamily [default]}}
+
+
+
+Virtual destructor. 
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classFoam_1_1energy_aec2265e71d15a67b8ac6be3a93783d20}\label{classFoam_1_1energy_aec2265e71d15a67b8ac6be3a93783d20} 
+\index{Foam::energy@{Foam::energy}!TypeName@{TypeName}}
+\index{TypeName@{TypeName}!Foam::energy@{Foam::energy}}
+\doxysubsubsection{\texorpdfstring{TypeName()}{TypeName()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Foam\+::energy\+::\+Type\+Name (\begin{DoxyParamCaption}\item[{"{}energy"{}}]{ }\end{DoxyParamCaption})}
+
+\Hypertarget{classFoam_1_1energy_a8bc08c9729815eefcbade61cd2dc035b}\label{classFoam_1_1energy_a8bc08c9729815eefcbade61cd2dc035b} 
+\index{Foam::energy@{Foam::energy}!declareRunTimeSelectionTable@{declareRunTimeSelectionTable}}
+\index{declareRunTimeSelectionTable@{declareRunTimeSelectionTable}!Foam::energy@{Foam::energy}}
+\doxysubsubsection{\texorpdfstring{declareRunTimeSelectionTable()}{declareRunTimeSelectionTable()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Foam\+::energy\+::declare\+Run\+Time\+Selection\+Table (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{auto\+Ptr}}}]{,  }\item[{\mbox{\hyperlink{classFoam_1_1energy}{energy}}}]{,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}}}]{,  }\item[{(\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{word}} \&name, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}} \&dict, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{mesh}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1thermoLaw}{thermo\+Law}} \&\mbox{\hyperlink{createDGFields_8H_a9925ad70d4a9bc708442f7d79d009002}{thermo}})}]{,  }\item[{(name, dict, \mbox{\hyperlink{classFoam_1_1GaussField}{mesh}}, \mbox{\hyperlink{createDGFields_8H_a9925ad70d4a9bc708442f7d79d009002}{thermo}})}]{ }\end{DoxyParamCaption})}
+
+\Hypertarget{classFoam_1_1energy_add330c12174e04b63ceb5c33f8bef341}\label{classFoam_1_1energy_add330c12174e04b63ceb5c33f8bef341} 
+\index{Foam::energy@{Foam::energy}!New@{New}}
+\index{New@{New}!Foam::energy@{Foam::energy}}
+\doxysubsubsection{\texorpdfstring{New()}{New()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{auto\+Ptr}}$<$ \mbox{\hyperlink{classFoam_1_1energy}{energy}} $>$ Foam\+::energy\+::\+New (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{word}} \&}]{name,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}} \&}]{dict,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \&}]{mesh,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1thermoLaw}{thermo\+Law}} \&}]{thermo }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Runtime selector. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & Model name \\
+\hline
+{\em dict} & Coefficient dictionary \\
+\hline
+{\em mesh} & DG geometric mesh \\
+\hline
+{\em thermo} & Thermodynamic law \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Auto pointer to selected energy model 
+\end{DoxyReturn}
+\Hypertarget{classFoam_1_1energy_a858187cb78cb8d99e089e2efee1a9b71}\label{classFoam_1_1energy_a858187cb78cb8d99e089e2efee1a9b71} 
+\index{Foam::energy@{Foam::energy}!calcEnthalpy@{calcEnthalpy}}
+\index{calcEnthalpy@{calcEnthalpy}!Foam::energy@{Foam::energy}}
+\doxysubsubsection{\texorpdfstring{calcEnthalpy()}{calcEnthalpy()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{void}} Foam\+::energy\+::calc\+Enthalpy (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{cellI,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{T,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{h }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Compute enthalpy from temperature. 
+
+The computed enthalpy is written directly into the output field for the specified cell.
+
+
+\begin{DoxyParams}{Parameters}
+{\em cellI} & Cell index \\
+\hline
+{\em T} & Temperature field at Gauss points \\
+\hline
+{\em h} & Enthalpy field to be written \\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \mbox{\hyperlink{classFoam_1_1sensibleInternalEnergy_ae4ef350853e4e5c10daa03a33fc0e2fa}{Foam\+::sensible\+Internal\+Energy}}, and \mbox{\hyperlink{classFoam_1_1sensibleInternalEnergy_a9d992a3cfa3c50eafb09d9a13bbafe9a}{Foam\+::sensible\+Internal\+Energy}}.
+
+\Hypertarget{classFoam_1_1energy_a55295b1588cca58258c0c7d612993245}\label{classFoam_1_1energy_a55295b1588cca58258c0c7d612993245} 
+\index{Foam::energy@{Foam::energy}!calcEnergy@{calcEnergy}}
+\index{calcEnergy@{calcEnergy}!Foam::energy@{Foam::energy}}
+\doxysubsubsection{\texorpdfstring{calcEnergy()}{calcEnergy()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{void}} Foam\+::energy\+::calc\+Energy (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{cellI,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{T,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{E }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Compute energy variable (e or h depending on model) 
+
+
+\begin{DoxyParams}{Parameters}
+{\em cellI} & Cell index \\
+\hline
+{\em T} & Temperature field at Gauss points \\
+\hline
+{\em E} & Energy field to be written \\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \mbox{\hyperlink{classFoam_1_1sensibleInternalEnergy_a9db7b0b0599d92299b5860d351fd957a}{Foam\+::sensible\+Internal\+Energy}}, and \mbox{\hyperlink{classFoam_1_1sensibleInternalEnergy_abc94e615bbf229aedbe6b46408808faf}{Foam\+::sensible\+Internal\+Energy}}.
+
+\Hypertarget{classFoam_1_1energy_ab83cf5079bafb029556bd3f9623a53df}\label{classFoam_1_1energy_ab83cf5079bafb029556bd3f9623a53df} 
+\index{Foam::energy@{Foam::energy}!calcTfromEnergy@{calcTfromEnergy}}
+\index{calcTfromEnergy@{calcTfromEnergy}!Foam::energy@{Foam::energy}}
+\doxysubsubsection{\texorpdfstring{calcTfromEnergy()}{calcTfromEnergy()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{void}} Foam\+::energy\+::calc\+Tfrom\+Energy (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{cellI,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{E,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{T }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Compute temperature from energy (energy inversion) 
+
+
+\begin{DoxyParams}{Parameters}
+{\em cellI} & Cell index \\
+\hline
+{\em E} & Energy field at Gauss points \\
+\hline
+{\em T} & Temperature field to be written \\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \mbox{\hyperlink{classFoam_1_1sensibleInternalEnergy_ad7e1e940f0d1df3d7336e96f38151ae1}{Foam\+::sensible\+Internal\+Energy}}, and \mbox{\hyperlink{classFoam_1_1sensibleInternalEnergy_a70445c5dc5e1509db62a4c9264e1e798}{Foam\+::sensible\+Internal\+Energy}}.
+
+\Hypertarget{classFoam_1_1energy_a6f430501fb3bfdf3d62619c75b21157b}\label{classFoam_1_1energy_a6f430501fb3bfdf3d62619c75b21157b} 
+\index{Foam::energy@{Foam::energy}!energyInternal@{energyInternal}}
+\index{energyInternal@{energyInternal}!Foam::energy@{Foam::energy}}
+\doxysubsubsection{\texorpdfstring{energyInternal()}{energyInternal()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{bool}} Foam\+::energy\+::energy\+Internal (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Return true if the model is internal-\/energy based. 
+
+
+
+Reimplemented in \mbox{\hyperlink{classFoam_1_1sensibleInternalEnergy_a6923105dc7a220fe338079e288444ff6}{Foam\+::sensible\+Internal\+Energy}}, and \mbox{\hyperlink{classFoam_1_1sensibleInternalEnergy_a6923105dc7a220fe338079e288444ff6}{Foam\+::sensible\+Internal\+Energy}}.
+
+\Hypertarget{classFoam_1_1energy_a3e08c28e0e3a949caf05f6374f408199}\label{classFoam_1_1energy_a3e08c28e0e3a949caf05f6374f408199} 
+\index{Foam::energy@{Foam::energy}!energyEnthalpy@{energyEnthalpy}}
+\index{energyEnthalpy@{energyEnthalpy}!Foam::energy@{Foam::energy}}
+\doxysubsubsection{\texorpdfstring{energyEnthalpy()}{energyEnthalpy()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{bool}} Foam\+::energy\+::energy\+Enthalpy (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Return true if the model is enthalpy-\/based. 
+
+\Hypertarget{classFoam_1_1energy_aec2265e71d15a67b8ac6be3a93783d20}\label{classFoam_1_1energy_aec2265e71d15a67b8ac6be3a93783d20} 
+\index{Foam::energy@{Foam::energy}!TypeName@{TypeName}}
+\index{TypeName@{TypeName}!Foam::energy@{Foam::energy}}
+\doxysubsubsection{\texorpdfstring{TypeName()}{TypeName()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Foam\+::energy\+::\+Type\+Name (\begin{DoxyParamCaption}\item[{"{}energy"{}}]{ }\end{DoxyParamCaption})}
+
+\Hypertarget{classFoam_1_1energy_a8bc08c9729815eefcbade61cd2dc035b}\label{classFoam_1_1energy_a8bc08c9729815eefcbade61cd2dc035b} 
+\index{Foam::energy@{Foam::energy}!declareRunTimeSelectionTable@{declareRunTimeSelectionTable}}
+\index{declareRunTimeSelectionTable@{declareRunTimeSelectionTable}!Foam::energy@{Foam::energy}}
+\doxysubsubsection{\texorpdfstring{declareRunTimeSelectionTable()}{declareRunTimeSelectionTable()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Foam\+::energy\+::declare\+Run\+Time\+Selection\+Table (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{auto\+Ptr}}}]{,  }\item[{\mbox{\hyperlink{classFoam_1_1energy}{energy}}}]{,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}}}]{,  }\item[{(\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{word}} \&name, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}} \&dict, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{mesh}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1thermoLaw}{thermo\+Law}} \&\mbox{\hyperlink{createDGFields_8H_a9925ad70d4a9bc708442f7d79d009002}{thermo}})}]{,  }\item[{(name, dict, \mbox{\hyperlink{classFoam_1_1GaussField}{mesh}}, \mbox{\hyperlink{createDGFields_8H_a9925ad70d4a9bc708442f7d79d009002}{thermo}})}]{ }\end{DoxyParamCaption})}
+
+\Hypertarget{classFoam_1_1energy_ad312e55b7e378f4bc92b1be519a99e26}\label{classFoam_1_1energy_ad312e55b7e378f4bc92b1be519a99e26} 
+\index{Foam::energy@{Foam::energy}!New@{New}}
+\index{New@{New}!Foam::energy@{Foam::energy}}
+\doxysubsubsection{\texorpdfstring{New()}{New()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{static}} \mbox{\hyperlink{classFoam_1_1GaussField}{auto\+Ptr}}$<$ \mbox{\hyperlink{classFoam_1_1energy}{energy}} $>$ Foam\+::energy\+::\+New (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{word}} \&}]{name,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}} \&}]{dict,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \&}]{mesh,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1thermoLaw}{thermo\+Law}} \&}]{thermo }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Runtime selector. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & Model name \\
+\hline
+{\em dict} & Coefficient dictionary \\
+\hline
+{\em mesh} & DG geometric mesh \\
+\hline
+{\em thermo} & Thermodynamic law \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Auto pointer to selected energy model 
+\end{DoxyReturn}
+\Hypertarget{classFoam_1_1energy_a858187cb78cb8d99e089e2efee1a9b71}\label{classFoam_1_1energy_a858187cb78cb8d99e089e2efee1a9b71} 
+\index{Foam::energy@{Foam::energy}!calcEnthalpy@{calcEnthalpy}}
+\index{calcEnthalpy@{calcEnthalpy}!Foam::energy@{Foam::energy}}
+\doxysubsubsection{\texorpdfstring{calcEnthalpy()}{calcEnthalpy()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{void}} Foam\+::energy\+::calc\+Enthalpy (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{cellI,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{T,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{h }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Compute enthalpy from temperature. 
+
+The computed enthalpy is written directly into the output field for the specified cell.
+
+
+\begin{DoxyParams}{Parameters}
+{\em cellI} & Cell index \\
+\hline
+{\em T} & Temperature field at Gauss points \\
+\hline
+{\em h} & Enthalpy field to be written \\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \mbox{\hyperlink{classFoam_1_1sensibleInternalEnergy_ae4ef350853e4e5c10daa03a33fc0e2fa}{Foam\+::sensible\+Internal\+Energy}}, and \mbox{\hyperlink{classFoam_1_1sensibleInternalEnergy_a9d992a3cfa3c50eafb09d9a13bbafe9a}{Foam\+::sensible\+Internal\+Energy}}.
+
+\Hypertarget{classFoam_1_1energy_a55295b1588cca58258c0c7d612993245}\label{classFoam_1_1energy_a55295b1588cca58258c0c7d612993245} 
+\index{Foam::energy@{Foam::energy}!calcEnergy@{calcEnergy}}
+\index{calcEnergy@{calcEnergy}!Foam::energy@{Foam::energy}}
+\doxysubsubsection{\texorpdfstring{calcEnergy()}{calcEnergy()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{void}} Foam\+::energy\+::calc\+Energy (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{cellI,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{T,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{E }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Compute energy variable (e or h depending on model) 
+
+
+\begin{DoxyParams}{Parameters}
+{\em cellI} & Cell index \\
+\hline
+{\em T} & Temperature field at Gauss points \\
+\hline
+{\em E} & Energy field to be written \\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \mbox{\hyperlink{classFoam_1_1sensibleInternalEnergy_a9db7b0b0599d92299b5860d351fd957a}{Foam\+::sensible\+Internal\+Energy}}, and \mbox{\hyperlink{classFoam_1_1sensibleInternalEnergy_abc94e615bbf229aedbe6b46408808faf}{Foam\+::sensible\+Internal\+Energy}}.
+
+\Hypertarget{classFoam_1_1energy_ab83cf5079bafb029556bd3f9623a53df}\label{classFoam_1_1energy_ab83cf5079bafb029556bd3f9623a53df} 
+\index{Foam::energy@{Foam::energy}!calcTfromEnergy@{calcTfromEnergy}}
+\index{calcTfromEnergy@{calcTfromEnergy}!Foam::energy@{Foam::energy}}
+\doxysubsubsection{\texorpdfstring{calcTfromEnergy()}{calcTfromEnergy()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{void}} Foam\+::energy\+::calc\+Tfrom\+Energy (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{cellI,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{E,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{T }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Compute temperature from energy (energy inversion) 
+
+
+\begin{DoxyParams}{Parameters}
+{\em cellI} & Cell index \\
+\hline
+{\em E} & Energy field at Gauss points \\
+\hline
+{\em T} & Temperature field to be written \\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \mbox{\hyperlink{classFoam_1_1sensibleInternalEnergy_ad7e1e940f0d1df3d7336e96f38151ae1}{Foam\+::sensible\+Internal\+Energy}}, and \mbox{\hyperlink{classFoam_1_1sensibleInternalEnergy_a70445c5dc5e1509db62a4c9264e1e798}{Foam\+::sensible\+Internal\+Energy}}.
+
+\Hypertarget{classFoam_1_1energy_a6f430501fb3bfdf3d62619c75b21157b}\label{classFoam_1_1energy_a6f430501fb3bfdf3d62619c75b21157b} 
+\index{Foam::energy@{Foam::energy}!energyInternal@{energyInternal}}
+\index{energyInternal@{energyInternal}!Foam::energy@{Foam::energy}}
+\doxysubsubsection{\texorpdfstring{energyInternal()}{energyInternal()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{bool}} Foam\+::energy\+::energy\+Internal (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Return true if the model is internal-\/energy based. 
+
+
+
+Reimplemented in \mbox{\hyperlink{classFoam_1_1sensibleInternalEnergy_a6923105dc7a220fe338079e288444ff6}{Foam\+::sensible\+Internal\+Energy}}, and \mbox{\hyperlink{classFoam_1_1sensibleInternalEnergy_a6923105dc7a220fe338079e288444ff6}{Foam\+::sensible\+Internal\+Energy}}.
+
+\Hypertarget{classFoam_1_1energy_a3e08c28e0e3a949caf05f6374f408199}\label{classFoam_1_1energy_a3e08c28e0e3a949caf05f6374f408199} 
+\index{Foam::energy@{Foam::energy}!energyEnthalpy@{energyEnthalpy}}
+\index{energyEnthalpy@{energyEnthalpy}!Foam::energy@{Foam::energy}}
+\doxysubsubsection{\texorpdfstring{energyEnthalpy()}{energyEnthalpy()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{bool}} Foam\+::energy\+::energy\+Enthalpy (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Return true if the model is enthalpy-\/based. 
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classFoam_1_1energy_a1da4ff326bd4f6fd3587c816fb019b5a}\label{classFoam_1_1energy_a1da4ff326bd4f6fd3587c816fb019b5a} 
+\index{Foam::energy@{Foam::energy}!name\_@{name\_}}
+\index{name\_@{name\_}!Foam::energy@{Foam::energy}}
+\doxysubsubsection{\texorpdfstring{name\_}{name\_}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{word}} Foam\+::energy\+::name\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Model name (used for logging and diagnostics) 
+
+\Hypertarget{classFoam_1_1energy_a196e297d7caf016e0eea6385994ab918}\label{classFoam_1_1energy_a196e297d7caf016e0eea6385994ab918} 
+\index{Foam::energy@{Foam::energy}!coeffs\_@{coeffs\_}}
+\index{coeffs\_@{coeffs\_}!Foam::energy@{Foam::energy}}
+\doxysubsubsection{\texorpdfstring{coeffs\_}{coeffs\_}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}} Foam\+::energy\+::coeffs\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Coefficient dictionary snapshot. 
+
+\Hypertarget{classFoam_1_1energy_adb84c7480f0cd270b281f96bbdde1401}\label{classFoam_1_1energy_adb84c7480f0cd270b281f96bbdde1401} 
+\index{Foam::energy@{Foam::energy}!mesh\_@{mesh\_}}
+\index{mesh\_@{mesh\_}!Foam::energy@{Foam::energy}}
+\doxysubsubsection{\texorpdfstring{mesh\_}{mesh\_}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \& Foam\+::energy\+::mesh\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Reference to DG geometric mesh (non-\/owning) 
+
+\Hypertarget{classFoam_1_1energy_a44d93eaa08a1a35b408cc2efc519adf4}\label{classFoam_1_1energy_a44d93eaa08a1a35b408cc2efc519adf4} 
+\index{Foam::energy@{Foam::energy}!thermo\_@{thermo\_}}
+\index{thermo\_@{thermo\_}!Foam::energy@{Foam::energy}}
+\doxysubsubsection{\texorpdfstring{thermo\_}{thermo\_}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1thermoLaw}{thermo\+Law}} \& Foam\+::energy\+::thermo\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Reference to \doxylink{classFoam_1_1thermoLaw}{thermo\+Law} (non-\/owning) 
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/nam-\/ha-\/tran/\+Open\+FOAM/\+DGFoam/src/thermophysical\+Models/basic/energy/\mbox{\hyperlink{basic_2energy_2energy_8H}{energy.\+H}}\item 
+/home/nam-\/ha-\/tran/\+Open\+FOAM/\+DGFoam/src/thermophysical\+Models/ln\+Include/\mbox{\hyperlink{lnInclude_2energy_8H}{energy.\+H}}\item 
+/home/nam-\/ha-\/tran/\+Open\+FOAM/\+DGFoam/src/thermophysical\+Models/basic/energy/\mbox{\hyperlink{basic_2energy_2energy_8C}{energy.\+C}}\item 
+/home/nam-\/ha-\/tran/\+Open\+FOAM/\+DGFoam/src/thermophysical\+Models/ln\+Include/\mbox{\hyperlink{lnInclude_2energy_8C}{energy.\+C}}\end{DoxyCompactItemize}

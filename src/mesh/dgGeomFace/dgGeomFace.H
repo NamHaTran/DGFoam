@@ -28,9 +28,13 @@ Class
     Foam::dgGeomFace
 
 Description
-    Geometric face of DG.
+    Geometric representation of a DG face.
 
-See also
+    This class stores geometric and topological information associated
+    with a mesh face for Discontinuous Galerkin (DG) discretization,
+    including face orientation, reference-face mapping, Gauss-point
+    connectivity, and basis-function data on both owner and neighbour
+    sides.
 
 SourceFiles
     dgGeomFace.C
@@ -61,68 +65,92 @@ namespace Foam
                            Class dgGeomFace Declaration
 \*---------------------------------------------------------------------------*/
 
+/**
+ * \class Foam::dgGeomFace
+ * \brief Geometric face data for DG discretization
+ *
+ * \details
+ * dgGeomFace represents a single mesh face in the DG framework.
+ * It provides:
+ * - Access to geometric quantities (area, normal, centre)
+ * - Face orientation relative to owner and neighbour cells
+ * - Mapping between reference and physical face coordinates
+ * - Gauss-point connectivity and basis-function data for surface integrals
+ *
+ * The face uses shared reference-face data (dgRefFace) to evaluate
+ * basis functions and quadrature rules consistently across all faces
+ * of the same type.
+ */
 class dgGeomFace
 {
 private:
 
-    // Attributes
+    //====================================================================//
+    //                           Data members
+    //====================================================================//
 
-        //- face ID in the mesh
+        /** Face index in the fvMesh */
         label faceID_;
 
-        //- Fave type
+        /** DG face type (TRI or QUAD) */
         dgFaceType type_;
 
-        //- Reference to the face (list of point indices)
-        const fvMesh& mesh_; 
+        /** Reference to the finite-volume mesh */
+        const fvMesh& mesh_;
 
-        //- Shared reference face data (precomputed basis, Gauss points, weights)
-        std::shared_ptr<dgRefFace> refFace_;  
-        
-        //- Points list
+        /** Shared reference-face data (basis, Gauss points, weights) */
+        std::shared_ptr<dgRefFace> refFace_;
+
+        /** Global face vertex coordinates */
         List<vector> globalPoints_;
-        
-        //- Face position in owner
+
+        /** Face position in the owner cell reference element */
         dgFacePosition ownerPos_;
 
-        //- Face position in neighbor
+        /** Face position in the neighbour cell reference element */
         dgFacePosition neighborPos_;
 
-        //- Type of owner cell
+        /** Owner cell type */
         dgCellType ownerCellType_;
 
-        //- Type of neighbor cell
+        /** Neighbour cell type */
         dgCellType neighborCellType_;
 
-        //- Global point IDs sorted in counter-clockwise order
-        // List<label> sortedPointLabels_;
-
-        //- Flattened 2D coordinates of the points
+        /** Flattened 2D coordinates of face vertices */
         List<vector2D> flattenedPoints_;
 
-        //- Gauss point connectivity of owner and neighbor
+        /** Gauss-point connectivity between owner and neighbour */
         List<label> connectivity_;
 
-        //- Basis data for the face
+        /** Basis-function data on the owner side */
         Foam::basisData ownerBasisData_;
+
+        /** Basis-function data on the neighbour side */
         Foam::basisData neighborBasisData_;
 
-        //- Boundary information
-            //- ID of patch that owns this face (boundary only)
-            //  -1 means internal face
+        //====================== Boundary information ======================//
+
+            /** Patch index owning this face (-1 for internal faces) */
             label patchID_;
 
-            //- True if this face is a boundary face
+            /** True if this face lies on a boundary */
             bool isBoundary_;
+
+            /** True if this face lies on a processor patch */
+            bool isProcessorPatch_;
 
 public:
 
-    // Constructors
+    //====================================================================//
+    //                           Constructors
+    //====================================================================//
 
-        //- Default constructor
+        /** Default constructor */
         dgGeomFace();
 
-        //- Constructor from face and mesh
+        /**
+         * \brief Construct from face ID, mesh, and reference-face data
+         */
         dgGeomFace
         (
             label faceID,
@@ -130,80 +158,76 @@ public:
             const std::shared_ptr<dgRefFace>& refFace
         );
 
-        //- Copy constructor
+        /** Copy constructor */
         dgGeomFace(const dgGeomFace& other);
 
-    //- Destructor
+    /** Destructor */
     ~dgGeomFace() = default;
 
-    // Member Functions
-        //- Return number of points in the face
+    //====================================================================//
+    //                         Geometric access
+    //====================================================================//
+
+        /** Return number of vertices of the face */
         label size() const;
 
-        //- Return reference to point labels (from face)
+        /** Return underlying OpenFOAM face */
         const face& baseFace() const;
 
-        //- Return coordinates of the i-th point on the face
+        /** Return coordinate of the i-th face vertex */
         const point& getPoint(label i) const;
 
-        //- Return face center (calls face::centre internally)
+        /** Return face centroid */
         point centre() const;
 
-        //- Return normal vector of the face (flat face assumed)
+        /** Return face unit normal (planar assumption) */
         vector normal() const;
 
-        //- Return area normal vector of the face
+        /** Return area-normal vector */
         vector areaNormal() const;
 
-        //- Return face area
+        /** Return face area */
         scalar area() const;
 
-        //- Return face ID
-        inline const label& id() const
-        {
-            return faceID_;
-        }
+        /** Return face index */
+        inline const label& id() const { return faceID_; }
 
-        //- Flatten face points to 2D using face normal
+    //====================================================================//
+    //                       Face processing utilities
+    //====================================================================//
+
+        /** Flatten face vertices into a local 2D coordinate system */
         void flattenFace();
 
-        //- Sort flattened face points in counter-clockwise order
-        // void sortPointsCCW();
-
-        //- Perform flattening, sorting and store data
+        /**
+         * \brief Perform face flattening and ordering
+         *
+         * Computes flattened coordinates and prepares data required
+         * for basis-function evaluation on the face.
+         */
         void processFlatAndSortedPoints();
 
-        //- Set face position in owner
-        inline void setOwnerPos(const dgFacePosition pos)
-        {
-            ownerPos_ = pos;
-        }
+        /** Set face position in owner cell */
+        inline void setOwnerPos(const dgFacePosition pos) { ownerPos_ = pos; }
 
-        //- Set face position in neighbor
-        inline void setNeighborPos(const dgFacePosition pos)
-        {
-            neighborPos_ = pos;
-        }
+        /** Set face position in neighbour cell */
+        inline void setNeighborPos(const dgFacePosition pos) { neighborPos_ = pos; }
 
-        //- Set owner cell type
-        inline void setOwnerCellType(const dgCellType type)
-        {
-            ownerCellType_ = type;
-        }
+        /** Set owner cell type */
+        inline void setOwnerCellType(const dgCellType type) { ownerCellType_ = type; }
 
-        //- Set neighbor cell type
-        inline void setNeighborCellType(const dgCellType type)
-        {
-            neighborCellType_ = type;
-        }
+        /** Set neighbour cell type */
+        inline void setNeighborCellType(const dgCellType type) { neighborCellType_ = type; }
 
-        // Compute connectivity between Gauss points from owner and neighbor
+        /** Compute Gauss-point connectivity between owner and neighbour */
         void findGaussConnectivity();
 
-        //- Compute basis functions and derivatives for the face
+        /** Compute basis functions and derivatives on the face */
         void computeBasisAndDerivatives();
 
-        //- Mapping from reference to physical space for quad or tri face
+        /**
+         * \brief Map Gauss points from reference to physical face
+         */
         void mappingFromRefToReal
         (
             const dgFaceType type,
@@ -212,137 +236,127 @@ public:
             List<vector2D>& physicGaussP
         );
 
-        //- Check whether the face is boundary
-        inline bool isBoundary() const
-        {
-            return isBoundary_;
-        }
+    //====================================================================//
+    //                          Boundary queries
+    //====================================================================//
 
-        //- Return ID of patch containing face
-        inline label patchID() const
-        {
-            return patchID_;
-        }
+        /** Return true if this face is a boundary face */
+        inline bool isBoundary() const { return isBoundary_; }
 
-        //- Check whether the input cellID is owner
+        /** Return patch index of the face */
+        inline label patchID() const { return patchID_; }
+
+        /** Check if the given cell is the owner of this face */
         inline bool isOwner(const label cellID) const
         {
-            if (cellID == mesh_.faceOwner()[faceID_])
-            return true;
-            else
-            return false;
+            return (cellID == mesh_.faceOwner()[faceID_]);
         }
-    
-    // Access to reference face data
 
-        //- Return Gauss points in reference face base on position on the owner
+    //====================================================================//
+    //                    Reference-face data access
+    //====================================================================//
+
+        /** Return Gauss points on owner-side reference face */
         inline const List<vector>& gaussPointsOwner() const
         {
             return refFace_->gaussPoints(ownerPos_);
         }
 
-        //- Return Gauss points in reference face base on position on the neighbor
+        /** Return Gauss points on neighbour-side reference face */
         inline const List<vector>& gaussPointsNeighbor() const
         {
             return refFace_->gaussPoints(neighborPos_);
         }
 
-        //- Return weights of Gauss points
+        /** Return Gauss quadrature weights */
         inline const List<scalar>& weights() const
         {
             return refFace_->weights();
         }
 
-        //- Return sorted point labels in counter-clockwise order
-        /*
-        inline const List<label>& sortedLabels() const
-        {
-            return sortedPointLabels_;
-        }
-        */
-
-        //- Return flattened 2D coordinates of the points
+        /** Return flattened 2D face coordinates */
         inline const List<vector2D>& flatCoords() const
         {
             return flattenedPoints_;
         }
 
-        //- Return face owner list from fvMesh
+        /** Return fvMesh face-owner list */
         inline const labelList& faceOwner() const { return mesh_.faceOwner(); }
 
-        //- Return number of internal faces from fvMesh
+        /** Return number of internal faces */
         inline label nInternalFaces() const { return mesh_.nInternalFaces(); }
 
-        //- Return face connectivity
-        inline const List<label>& connectivity() const
-        {
-            return connectivity_;
-        }
+        /** Return Gauss-point connectivity */
+        inline const List<label>& connectivity() const { return connectivity_; }
 
-        //- Return owner basis function
+        /** Return owner-side basis functions */
         inline const List<List<scalar>>& ownerBasis() const
         {
             return ownerBasisData_.basis;
         }
 
-        //- Return neighbor basis function
+        /** Return neighbour-side basis functions */
         inline const List<List<scalar>>& neighborBasis() const
         {
             return neighborBasisData_.basis;
         }
 
-        //- Return owner basis derivatives
+        /** Return owner-side basis derivatives */
         inline const List<List<scalar>>& owner_dBasis_dEta1() const
         {
             return ownerBasisData_.dBasis_dEta1;
-        };
+        }
         inline const List<List<scalar>>& owner_dBasis_dEta2() const
         {
             return ownerBasisData_.dBasis_dEta2;
-        };
+        }
         inline const List<List<scalar>>& owner_dBasis_dEta3() const
         {
             return ownerBasisData_.dBasis_dEta3;
-        };
+        }
 
-        //- Return neighbor basis derivatives
+        /** Return neighbour-side basis derivatives */
         inline const List<List<scalar>>& neighbor_dBasis_dEta1() const
         {
             return neighborBasisData_.dBasis_dEta1;
-        };
+        }
         inline const List<List<scalar>>& neighbor_dBasis_dEta2() const
         {
             return neighborBasisData_.dBasis_dEta2;
-        };
+        }
         inline const List<List<scalar>>& neighbor_dBasis_dEta3() const
         {
             return neighborBasisData_.dBasis_dEta3;
-        };
+        }
 
-    //- Operator overload
-    
-        // Copy assignment
+    //====================================================================//
+    //                        Parallel processing
+    //====================================================================//
+
+        /** Mark this face as a processor-patch face */
+        inline void setProcessorPatch(const bool isProcPatch)
+        {
+            isProcessorPatch_ = isProcPatch;
+        }
+
+        /** Set Gauss-point connectivity for processor-patch faces */
+        inline void setConnectivity(const List<label>& conn)
+        {
+            connectivity_ = conn;
+        }
+
+    //====================================================================//
+    //                          Operators & debug
+    //====================================================================//
+
+        /** Copy assignment operator */
         dgGeomFace& operator=(const dgGeomFace& other);
 
-    //- Print debug information about the face
+        /** Print debug information */
         void printDebugInfo() const;
 };
-// * * * * * * * * * * * * * * * Global Functions  * * * * * * * * * * * * * //
-
-
-
-// * * * * * * * * * * * * * * * Global Operators  * * * * * * * * * * * * * //
-
-
-
-// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
 } // End namespace Foam
-
-// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
-
-
-// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
 #endif
 

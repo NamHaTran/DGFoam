@@ -105,7 +105,7 @@ int main(int argc, char *argv[])
     {
         const label procID = processorIDs[pI];
 
-        Info<< nl << "Processing processor " << procID << nl;
+        Info<< "Processing processor " << procID << nl;
 
         const fileName polyMeshDir =
             runTime.path()
@@ -201,14 +201,16 @@ int main(int argc, char *argv[])
             const label myProc =
                 readLabel(dict.lookup("myProcNo"));
 
-            const label neighbProc =
-                readLabel(dict.lookup("neighbProcNo"));
+            //const label neighbProc =
+            //    readLabel(dict.lookup("neighbProcNo"));
 
+            /*
             Info<< "  Processor patch: " << e.keyword() << nl
                 << "    myProc      = " << myProc << nl
                 << "    neighbProc  = " << neighbProc << nl
                 << "    startFace   = " << startFace << nl
                 << "    nFaces      = " << nFaces << nl;
+            */
 
             if (myProc != procID)
             {
@@ -233,7 +235,7 @@ int main(int argc, char *argv[])
                 {
                     // Negative ID means face is owned by neighbor processor
                     // Must convert to positive ID before accessing global mesh
-                    globalFaceID = -globalFaceID - 1;
+                    globalFaceID = -globalFaceID;
                 }
 
                 // Owner cell on processor mesh
@@ -287,9 +289,8 @@ int main(int argc, char *argv[])
             << "|  \\    /   O peration     | Version:  2412                                  |\n"
             << "|   \\  /    A nd           | Website:  www.openfoam.com                      |\n"
             << "|    \\/     M anipulation  |                                                 |\n"
-            << "\\*---------------------------------------------------------------------------*/\n";
-
-        os  << "FoamFile\n"
+            << "\\*---------------------------------------------------------------------------*/\n"
+            << "FoamFile\n"
             << "{\n"
             << "    version     2.0;\n"
             << "    format      ascii;\n"

@@ -1,1 +1,1 @@
-../dgGeneralBoundaryFields/basic/dgGeneralSymmetryBoundaryField/dgGeneralSymmetryBoundaryFieldI.H
+../dgBoundaryFields/dgGeneralBoundaryFields/basic/dgGeneralSymmetryBoundaryField/dgGeneralSymmetryBoundaryFieldI.H

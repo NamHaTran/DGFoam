@@ -39,6 +39,9 @@ License
 #include "processorPolyPatch.H"
 #include "DynamicList.H"
 
+#include "IOobject.H"
+#include "Pstream.H"
+
 // * * * * * * * * * * * * * * * * Constructors  * * * * * * * * * * * * * * //
 
 // Construct from fvMesh and polynomial order
@@ -122,6 +125,9 @@ Foam::dgGeomMesh::dgGeomMesh
 
     // Get boundary faces
     getBoundaryFaces();
+
+    // Assign face connectivity to processor patches if running in parallel
+    assignFaceConnectivityToProcPatches();
 }
 
 
@@ -160,8 +166,8 @@ void Foam::dgGeomMesh::getBoundaryFaces()
     {
         const polyPatch& pp = patches[patchI];
 
-        // Skip patches of type 'empty' (used in 2D) and 'processor' (used in parallel)
-        if (isA<emptyPolyPatch>(pp) || isA<processorPolyPatch>(pp))
+        // Skip patches of type 'empty' (used in 2D)
+        if (isA<emptyPolyPatch>(pp))
         {
             continue;
         }
@@ -197,8 +203,8 @@ Foam::label Foam::dgGeomMesh::getPatchID(const label faceID) const
     {
         const polyPatch& pp = patches[patchI];
 
-        // Skip 'empty' and 'processor' patch types
-        if (isA<emptyPolyPatch>(pp) || isA<processorPolyPatch>(pp))
+        // Skip 'empty' patch type
+        if (isA<emptyPolyPatch>(pp))
         {
             continue;
         }
@@ -247,4 +253,53 @@ Foam::label Foam::dgGeomMesh::getLocalFaceID
     return faceID - start;
 }
 
+void Foam::dgGeomMesh::assignFaceConnectivityToProcPatches()
+{
+    // Read dgFaceConnectivity when running in parallel
+    labelListList dgFaceConnectivity;
+
+    if (Foam::Pstream::parRun())
+    {
+        IOList<labelList> dgFaceConnectivity
+        (
+            IOobject
+            (
+                "dgFaceConnectivity",
+                mesh_.time().constant()/"polyMesh",
+                mesh_,
+                IOobject::MUST_READ,
+                IOobject::NO_WRITE
+            )
+        );
+
+        // Get polyBoundaryMesh
+        const polyBoundaryMesh& patches = mesh_.boundaryMesh();
+
+        // Loop over processor patches
+        forAll(patches, patchI)
+        {
+            const polyPatch& pp = patches[patchI];
+
+            // Skip patches of type 'empty' (used in 2D)
+            if (!isA<processorPolyPatch>(pp))
+            {
+                continue;
+            }
+
+            // Get the starting global face ID of this patch
+            const label start = pp.start();
+
+            // Get the number of faces in this patch
+            const label size = pp.size();
+
+            // Assign connectivity to each face on this processor patch
+            for (label i = 0; i < size; ++i)
+            {
+                const label faceID = start + i;
+                faces_[faceID]->setProcessorPatch(true);
+                faces_[faceID]->setConnectivity(dgFaceConnectivity[faceID]);
+            }
+        }
+    }
+}
 // ************************************************************************* //

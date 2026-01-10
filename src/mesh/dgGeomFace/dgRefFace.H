@@ -25,58 +25,14 @@ License
     along with OpenFOAM.  If not, see <http://www.gnu.org/licenses/>.
 
 Class
-    Foam::face
+    Foam::dgRefFace
 
 Description
-    The dgRefFace class represents a reference face element used in
-    the Discontinuous Galerkin (DG) method for 3D finite volume meshes.
+    Reference-face definition for DG discretization.
 
-    It provides the Gauss integration points (eta1, eta2), weights, and
-    polynomial basis functions and their derivatives with respect to eta1
-    and eta2 on the reference face.
-
-    This class supports different face types (e.g. triangle, quadrilateral),
-    and is initialized based on the polynomial order and face type.
-
-    The computed basis and integration data are later used by the actual
-    geometric face classes (dgGeomFace) to evaluate physical fluxes,
-    Jacobians, and perform numerical integration over faces.
-
-                            H ----------- G
-                           /|          / |
-                          / |         /  |
-                         E --------- F   |
-                         |  |        |   |
-                         |  D -------|-- C
-                         | /         |  /
-                         |/          | /
-                         A --------- B
-
-    Standard hex cell node ordering (OpenFOAM cellShape order):
-    Vertices:
-        0: A    1: B    2: C    3: D
-        4: E    5: F    6: G    7: H
-
-    Faces (with standard ordering used in DG and reference coordinates):
-        0: A-B-C-D     (bottom)     → eta3 = -1
-        1: E-F-G-H     (top)        → eta3 =  1
-        2: A-B-F-E     (front)      → eta2 = -1
-        3: D-C-G-H     (back)       → eta2 =  1
-        4: A-D-H-E     (left)       → eta1 = -1
-        5: B-C-G-F     (right)      → eta1 =  1
-
-    Coordinate axis:
-         z
-         |
-         |__ y
-        /
-       x
-
-    Notes:
-    - Each face is written in counter-clockwise order when viewed from outside the cell.
-    - This ordering is consistent with standard reference face mappings for tensor-product basis on the reference cube [-1,1]^3.
-
-See also
+    Provides Gauss quadrature points, weights, and basis-function data
+    on reference faces of 3D elements following standard DG reference
+    element conventions.
 
 SourceFiles
     dgRefFace.C
@@ -102,99 +58,161 @@ namespace Foam
                         Struct basisData Declaration
 \*---------------------------------------------------------------------------*/
 
-//- Store basis functions and their derivatives at Gauss points
+/**
+ * \struct basisData
+ * \brief Basis-function data on a reference face
+ *
+ * \details
+ * Stores basis-function values and their derivatives evaluated
+ * at Gauss quadrature points on a reference face.
+ *
+ * The derivatives are expressed with respect to the reference
+ * coordinates \f$\eta_1\f$, \f$\eta_2\f$, and \f$\eta_3\f$.
+ */
 struct basisData
 {
-    //- Values of basis function at Gauss points
+    /** Basis-function values at Gauss points */
     List<List<scalar>> basis;
 
-    //- Derivative with respect to eta1
+    /** Derivatives w.r.t. \f$\eta_1\f$ */
     List<List<scalar>> dBasis_dEta1;
 
-    //- Derivative with respect to eta2
+    /** Derivatives w.r.t. \f$\eta_2\f$ */
     List<List<scalar>> dBasis_dEta2;
 
-    //- Derivative with respect to eta3
+    /** Derivatives w.r.t. \f$\eta_3\f$ */
     List<List<scalar>> dBasis_dEta3;
 };
+
 
 /*---------------------------------------------------------------------------*\
                            Class dgRefFace Declaration
 \*---------------------------------------------------------------------------*/
 
+/**
+ * \class Foam::dgRefFace
+ * \brief Reference-face data for DG surface integration
+ *
+ * \details
+ * dgRefFace represents a reference face element used in
+ * Discontinuous Galerkin discretization of 3D meshes.
+ *
+ * The class provides:
+ * - Gauss quadrature points and weights on reference faces
+ * - Face-position-dependent mappings in the reference cube
+ * - Basis functions and their derivatives evaluated on faces
+ *
+ * The reference faces follow the vertex ordering and orientation
+ * conventions described in:
+ *
+ * Sherwin, S.J., Karniadakis, G.E.,
+ * "Spectral/hp Element Methods for Computational Fluid Dynamics",
+ * 2nd Edition, Oxford University Press, 2005.
+ *
+ * Data stored in this class is shared among all geometric faces
+ * of the same polynomial order to avoid redundant computation.
+ */
 class dgRefFace
 {
 private:
 
-    // Attributes
+    //====================================================================//
+    //                           Data members
+    //====================================================================//
 
-        // Polynomial order
+        /** Polynomial order of the DG approximation */
         label pOrder_;
 
-        // Number of Gauss points
+        /** Number of Gauss quadrature points */
         label nGauss_;
 
-        // Gauss weights
+        /** Gauss quadrature weights (shared for all faces) */
         List<scalar> wGauss_;
 
-        // Transformed Gauss points for each reference face in reference cube
-        List<vector> gaussP_BADC_;
+        /** Gauss points on face ABCD in reference cube */
+        List<vector> gaussP_ABCD_;
+
+        /** Gauss points on face EFGH in reference cube */
         List<vector> gaussP_EFGH_;
-        List<vector> gaussP_ABFE_;
-        List<vector> gaussP_CDHG_;
-        List<vector> gaussP_BCGF_;
-        List<vector> gaussP_DAEH_;
+
+        /** Gauss points on face ABEF in reference cube */
+        List<vector> gaussP_ABEF_;
+
+        /** Gauss points on face CDGH in reference cube */
+        List<vector> gaussP_CDGH_;
+
+        /** Gauss points on face BDFH in reference cube */
+        List<vector> gaussP_BDFH_;
+
+        /** Gauss points on face ACEG in reference cube */
+        List<vector> gaussP_ACEG_;
 
 public:
 
-    // Constructors
+    //====================================================================//
+    //                           Constructors
+    //====================================================================//
 
-        //- Construct from polynomial order
+        /**
+         * \brief Construct reference-face data
+         *
+         * Initializes Gauss quadrature rules for the specified
+         * polynomial order.
+         */
         dgRefFace(const label pOrder);
 
-        //- Destructor
-        ~dgRefFace() = default;
+    /** Destructor */
+    ~dgRefFace() = default;
 
-    // Member Functions
+    //====================================================================//
+    //                         Access functions
+    //====================================================================//
 
-        //- Return polynomial order
+        /** Return polynomial order */
         inline label order() const { return pOrder_; }
 
-        //- Return number of Gauss points
+        /** Return number of Gauss points */
         inline label nGauss() const { return nGauss_; }
 
-        //- Return Gauss weights (shared for all faces)
+        /** Return Gauss quadrature weights */
         inline const List<scalar>& weights() const { return wGauss_; }
 
-        //- Return Gauss points for a given face position
+        /**
+         * \brief Return Gauss points for a given face position
+         *
+         * The returned Gauss points are expressed in the
+         * reference-cube coordinate system.
+         */
         const List<vector>& gaussPoints(const dgFacePosition facePos) const;
 
-        //- Generate Gauss points and weights based on face type and polynomial order
+    //====================================================================//
+    //                      Internal generation
+    //====================================================================//
+
+        /**
+         * \brief Generate Gauss points and weights for all face positions
+         *
+         * Generates quadrature rules on reference faces based on
+         * the polynomial order.
+         */
         void generateFaceGaussPointsAndWeights();
 
-        //- Compute basis and derivatives for all face positions
+        /**
+         * \brief Compute basis functions and derivatives on a reference face
+         *
+         * Computes basis-function values and their derivatives
+         * for the specified cell type and face position.
+         */
         Foam::basisData computeBasisAndDerivatives
         (
-            const dgCellType cellType, // Cell type for basis functions
-            const dgFacePosition pos // Face position for which to compute basis functions
+            const dgCellType cellType,
+            const dgFacePosition pos
         );
 };
-// * * * * * * * * * * * * * * * Global Functions  * * * * * * * * * * * * * //
-
-
-
-// * * * * * * * * * * * * * * * Global Operators  * * * * * * * * * * * * * //
-
-
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
 } // End namespace Foam
-
-// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
-
-
-// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
 #endif
 

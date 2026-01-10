@@ -1,0 +1,19 @@
+\doxysection{conservative\+To\+Primary.\+H}
+\hypertarget{conservativeToPrimary_8H_source}{}\label{conservativeToPrimary_8H_source}\index{/home/nam-\/ha-\/tran/OpenFOAM/DGFoam/applications/solvers/compressible/DGHyperSonicFoam/conservativeToPrimary.H@{/home/nam-\/ha-\/tran/OpenFOAM/DGFoam/applications/solvers/compressible/DGHyperSonicFoam/conservativeToPrimary.H}}
+\mbox{\hyperlink{conservativeToPrimary_8H}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ T\ and\ p\ is\ calculated\ inside\ thermo,\ no\ need\ to\ care}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ only\ calculate\ U}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{keywordflow}{for}\ (label\ cellI\ =\ 0;\ cellI\ <\ mesh.C().size();\ cellI++)}
+\DoxyCodeLine{00005\ \{}
+\DoxyCodeLine{00006\ \ \ \ \ \textcolor{keyword}{const}\ GaussField<scalar>\&\ rhoG\ =\ \mbox{\hyperlink{createConservativeFields_8H_a55f60da5082eca5d9645759eba7abd98}{rho}}.gaussFields()[cellI];\ }
+\DoxyCodeLine{00007\ \ \ \ \ \textcolor{keyword}{const}\ GaussField<vector>\&\ rhoUG\ =\ \mbox{\hyperlink{createConservativeFields_8H_a4f450f5e1994b9626ccd4ea0964b1918}{rhoU}}.\mbox{\hyperlink{classFoam_1_1dgField_ac98f80b7843c6fd1e04aefff2547521b}{gaussFields}}()[cellI];}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \ \ \ \ GaussField<vector>\&\ UG\ =\ \mbox{\hyperlink{createPrimaryFields_8H_acaa7fe8168a3a866f1958b3663d384c6}{U}}.\mbox{\hyperlink{classFoam_1_1dgField_ac98f80b7843c6fd1e04aefff2547521b}{gaussFields}}()[cellI];}
+\DoxyCodeLine{00010\ \ \ \ \ }
+\DoxyCodeLine{00011\ \ \ \ \ \textcolor{comment}{//\ Calculate\ U\ from\ rhoU\ and\ rho}}
+\DoxyCodeLine{00012\ \ \ \ \ UG\ =\ rhoUG\ /\ rhoG;}
+\DoxyCodeLine{00013\ \}}
+
+\end{DoxyCode}

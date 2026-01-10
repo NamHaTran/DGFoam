@@ -1,0 +1,248 @@
+\doxysection{dg\+Gauss\+Field\+Vector\+Math.\+H}
+\hypertarget{lnInclude_2dgGaussFieldVectorMath_8H_source}{}\label{lnInclude_2dgGaussFieldVectorMath_8H_source}\index{/home/nam-\/ha-\/tran/OpenFOAM/DGFoam/src/math/lnInclude/dgGaussFieldVectorMath.H@{/home/nam-\/ha-\/tran/OpenFOAM/DGFoam/src/math/lnInclude/dgGaussFieldVectorMath.H}}
+\mbox{\hyperlink{lnInclude_2dgGaussFieldVectorMath_8H}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*\(\backslash\)}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ \ =========\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ \ \(\backslash\)\(\backslash\)\ \ \ \ \ \ /\ \ F\ ield\ \ \ \ \ \ \ \ \ |\ OpenFOAM:\ The\ Open\ Source\ CFD\ Toolbox}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ \ \ \(\backslash\)\(\backslash\)\ \ \ \ /\ \ \ O\ peration\ \ \ \ \ |}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ \ \ \ \(\backslash\)\(\backslash\)\ \ /\ \ \ \ A\ nd\ \ \ \ \ \ \ \ \ \ \ |\ www.openfoam.com}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ \ \ \ \ \(\backslash\)\(\backslash\)/\ \ \ \ \ M\ anipulation\ \ |}}
+\DoxyCodeLine{00007\ \textcolor{comment}{-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ \ \ \ Copyright\ (C)\ 2011-\/2016\ OpenFOAM\ Foundation}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ \ \ \ Copyright\ (C)\ 2021-\/2025\ OpenCFD\ Ltd.}}
+\DoxyCodeLine{00010\ \textcolor{comment}{-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00011\ \textcolor{comment}{License}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ \ \ \ This\ file\ is\ part\ of\ OpenFOAM.}}
+\DoxyCodeLine{00013\ \textcolor{comment}{}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ \ \ \ OpenFOAM\ is\ free\ software:\ you\ can\ redistribute\ it\ and/or\ modify\ it}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ \ \ \ under\ the\ terms\ of\ the\ GNU\ General\ Public\ License\ as\ published\ by}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ \ \ \ the\ Free\ Software\ Foundation,\ either\ version\ 3\ of\ the\ License,\ or}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ \ \ \ (at\ your\ option)\ any\ later\ version.}}
+\DoxyCodeLine{00018\ \textcolor{comment}{}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ \ \ \ OpenFOAM\ is\ distributed\ in\ the\ hope\ that\ it\ will\ be\ useful,\ but\ WITHOUT}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ \ \ \ ANY\ WARRANTY;\ without\ even\ the\ implied\ warranty\ of\ MERCHANTABILITY\ or}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ \ \ \ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE.\ \ See\ the\ GNU\ General\ Public\ License}}
+\DoxyCodeLine{00022\ \textcolor{comment}{\ \ \ \ for\ more\ details.}}
+\DoxyCodeLine{00023\ \textcolor{comment}{}}
+\DoxyCodeLine{00024\ \textcolor{comment}{\ \ \ \ You\ should\ have\ received\ a\ copy\ of\ the\ GNU\ General\ Public\ License}}
+\DoxyCodeLine{00025\ \textcolor{comment}{\ \ \ \ along\ with\ OpenFOAM.\ \ If\ not,\ see\ <http://www.gnu.org/licenses/>.}}
+\DoxyCodeLine{00026\ \textcolor{comment}{}}
+\DoxyCodeLine{00027\ \textcolor{comment}{Description}}
+\DoxyCodeLine{00028\ \textcolor{comment}{\ \ \ \ Operator\ overloads\ and\ utility\ functions\ for\ GaussField<vector>:}}
+\DoxyCodeLine{00029\ \textcolor{comment}{\ \ \ \ -\/\ vector\ ±\ vector}}
+\DoxyCodeLine{00030\ \textcolor{comment}{\ \ \ \ -\/\ vector\ \string^\ vector}}
+\DoxyCodeLine{00031\ \textcolor{comment}{\ \ \ \ -\/\ mag(vector)}}
+\DoxyCodeLine{00032\ \textcolor{comment}{\ \ \ \ -\/\ vector\ \&\ tensor\ /\ symmTensor\ /\ sphericalTensor}}
+\DoxyCodeLine{00033\ \textcolor{comment}{}}
+\DoxyCodeLine{00034\ \textcolor{comment}{\(\backslash\)*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \textcolor{preprocessor}{\#ifndef\ Foam\_dgGaussFieldVectorMath\_H}}
+\DoxyCodeLine{00037\ \textcolor{preprocessor}{\#define\ Foam\_dgGaussFieldVectorMath\_H}}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \textcolor{preprocessor}{\#include\ "{}cellGaussField.H"{}}}
+\DoxyCodeLine{00040\ \textcolor{preprocessor}{\#include\ "{}GaussField.H"{}}}
+\DoxyCodeLine{00041\ \textcolor{preprocessor}{\#include\ "{}GaussField.H"{}}}
+\DoxyCodeLine{00042\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{lnInclude_2dgFaceGaussFieldVectorMath_8H}{dgFaceGaussFieldVectorMath.H}}"{}}}
+\DoxyCodeLine{00043\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{lnInclude_2dgCellGaussFieldVectorMath_8H}{dgCellGaussFieldVectorMath.H}}"{}}}
+\DoxyCodeLine{00044\ \textcolor{preprocessor}{\#include\ "{}vector.H"{}}}
+\DoxyCodeLine{00045\ \textcolor{preprocessor}{\#include\ "{}tensor.H"{}}}
+\DoxyCodeLine{00046\ \textcolor{preprocessor}{\#include\ "{}symmTensor.H"{}}}
+\DoxyCodeLine{00047\ \textcolor{preprocessor}{\#include\ "{}sphericalTensor.H"{}}}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespaceFoam}{Foam}}}
+\DoxyCodeLine{00050\ \{}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00052\ \textcolor{comment}{//\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ Vector\ -\/\ Vector\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ //}}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ \textcolor{comment}{//-\/\ Vector\ addition}}
+\DoxyCodeLine{00055\ \textcolor{comment}{//\ Component\ by\ component}}
+\DoxyCodeLine{00056\ \textcolor{keyword}{inline}\ GaussField<vector>\ \textcolor{keyword}{operator}+}
+\DoxyCodeLine{00057\ (}
+\DoxyCodeLine{00058\ \ \ \ \ \textcolor{keyword}{const}\ GaussField<vector>\&\ A,}
+\DoxyCodeLine{00059\ \ \ \ \ \textcolor{keyword}{const}\ GaussField<vector>\&\ B}
+\DoxyCodeLine{00060\ )}
+\DoxyCodeLine{00061\ \{}
+\DoxyCodeLine{00062\ \ \ \ \ GaussField<vector>\ result(A);}
+\DoxyCodeLine{00063\ \ \ \ \ result.cellField()\ =\ A.cellField()\ +\ B.cellField();}
+\DoxyCodeLine{00064\ \ \ \ \ result.faceField()\ =\ A.faceField()\ +\ B.faceField();}
+\DoxyCodeLine{00065\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00066\ \}}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00069\ \textcolor{comment}{//-\/\ Vector\ subtraction}}
+\DoxyCodeLine{00070\ \textcolor{comment}{//\ Component\ by\ component}}
+\DoxyCodeLine{00071\ \textcolor{keyword}{inline}\ GaussField<vector>\ \textcolor{keyword}{operator}-\/}
+\DoxyCodeLine{00072\ (}
+\DoxyCodeLine{00073\ \ \ \ \ \textcolor{keyword}{const}\ GaussField<vector>\&\ A,}
+\DoxyCodeLine{00074\ \ \ \ \ \textcolor{keyword}{const}\ GaussField<vector>\&\ B}
+\DoxyCodeLine{00075\ )}
+\DoxyCodeLine{00076\ \{}
+\DoxyCodeLine{00077\ \ \ \ \ GaussField<vector>\ result(A);}
+\DoxyCodeLine{00078\ \ \ \ \ result.cellField()\ =\ A.cellField()\ -\/\ B.cellField();}
+\DoxyCodeLine{00079\ \ \ \ \ result.faceField()\ =\ A.faceField()\ -\/\ B.faceField();}
+\DoxyCodeLine{00080\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00081\ \}}
+\DoxyCodeLine{00082\ }
+\DoxyCodeLine{00083\ \textcolor{comment}{//-\/\ Outer\ product\ of\ 2\ vectors}}
+\DoxyCodeLine{00084\ \textcolor{keyword}{inline}\ GaussField<tensor>\ \textcolor{keyword}{operator}*}
+\DoxyCodeLine{00085\ (}
+\DoxyCodeLine{00086\ \ \ \ \ \textcolor{keyword}{const}\ GaussField<vector>\&\ A,}
+\DoxyCodeLine{00087\ \ \ \ \ \textcolor{keyword}{const}\ GaussField<vector>\&\ B}
+\DoxyCodeLine{00088\ )}
+\DoxyCodeLine{00089\ \{}
+\DoxyCodeLine{00090\ \ \ \ \ GaussField<tensor>\ result(A.cellID(),\ A.dgMesh());}
+\DoxyCodeLine{00091\ \ \ \ \ result.cellField()\ =\ A.cellField()\ *\ B.cellField();}
+\DoxyCodeLine{00092\ \ \ \ \ result.faceField()\ =\ A.faceField()\ *\ B.faceField();}
+\DoxyCodeLine{00093\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00094\ \}}
+\DoxyCodeLine{00095\ }
+\DoxyCodeLine{00096\ \textcolor{comment}{//-\/\ Vector\ cross\ product}}
+\DoxyCodeLine{00097\ \textcolor{keyword}{inline}\ GaussField<vector>\ \textcolor{keyword}{operator}\string^}
+\DoxyCodeLine{00098\ (}
+\DoxyCodeLine{00099\ \ \ \ \ \textcolor{keyword}{const}\ GaussField<vector>\&\ A,}
+\DoxyCodeLine{00100\ \ \ \ \ \textcolor{keyword}{const}\ GaussField<vector>\&\ B}
+\DoxyCodeLine{00101\ )}
+\DoxyCodeLine{00102\ \{}
+\DoxyCodeLine{00103\ \ \ \ \ GaussField<vector>\ result(A);}
+\DoxyCodeLine{00104\ \ \ \ \ result.cellField()\ =\ A.cellField()\ \string^\ B.cellField();}
+\DoxyCodeLine{00105\ \ \ \ \ result.faceField()\ =\ A.faceField()\ \string^\ B.faceField();}
+\DoxyCodeLine{00106\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00107\ \}}
+\DoxyCodeLine{00108\ }
+\DoxyCodeLine{00109\ \textcolor{comment}{//-\/\ Vector\ dot\ product}}
+\DoxyCodeLine{00110\ \textcolor{keyword}{inline}\ GaussField<scalar>\ \textcolor{keyword}{operator}\&}
+\DoxyCodeLine{00111\ (}
+\DoxyCodeLine{00112\ \ \ \ \ \textcolor{keyword}{const}\ GaussField<vector>\&\ A,}
+\DoxyCodeLine{00113\ \ \ \ \ \textcolor{keyword}{const}\ GaussField<vector>\&\ B}
+\DoxyCodeLine{00114\ )}
+\DoxyCodeLine{00115\ \{}
+\DoxyCodeLine{00116\ \ \ \ \ GaussField<scalar>\ result(A.cellID(),\ A.dgMesh());}
+\DoxyCodeLine{00117\ \ \ \ \ result.cellField()\ =\ A.cellField()\ \&\ B.cellField();}
+\DoxyCodeLine{00118\ \ \ \ \ result.faceField()\ =\ A.faceField()\ \&\ B.faceField();}
+\DoxyCodeLine{00119\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00120\ \}}
+\DoxyCodeLine{00121\ }
+\DoxyCodeLine{00122\ \textcolor{comment}{//-\/\ Vector\ magnitude}}
+\DoxyCodeLine{00123\ \textcolor{keyword}{inline}\ GaussField<scalar>\ \mbox{\hyperlink{namespaceFoam_a5915c981c21128d92bdcfba4bc64c4d3}{mag}}}
+\DoxyCodeLine{00124\ (}
+\DoxyCodeLine{00125\ \ \ \ \ \textcolor{keyword}{const}\ GaussField<vector>\&\ A}
+\DoxyCodeLine{00126\ )}
+\DoxyCodeLine{00127\ \{}
+\DoxyCodeLine{00128\ \ \ \ \ GaussField<scalar>\ result(A.cellID(),\ A.dgMesh());}
+\DoxyCodeLine{00129\ \ \ \ \ result.cellField()\ =\ \mbox{\hyperlink{namespaceFoam_a5915c981c21128d92bdcfba4bc64c4d3}{mag}}(A.cellField());}
+\DoxyCodeLine{00130\ \ \ \ \ result.faceField()\ =\ \mbox{\hyperlink{namespaceFoam_a5915c981c21128d92bdcfba4bc64c4d3}{mag}}(A.faceField());}
+\DoxyCodeLine{00131\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00132\ \}}
+\DoxyCodeLine{00133\ }
+\DoxyCodeLine{00134\ \textcolor{comment}{//-\/\ Vector\ squared\ magnitude}}
+\DoxyCodeLine{00135\ \textcolor{keyword}{inline}\ GaussField<scalar>\ \mbox{\hyperlink{namespaceFoam_a9bee5d4569402eb8c69ab534e3c99a92}{magSqr}}}
+\DoxyCodeLine{00136\ (}
+\DoxyCodeLine{00137\ \ \ \ \ \textcolor{keyword}{const}\ GaussField<vector>\&\ A}
+\DoxyCodeLine{00138\ )}
+\DoxyCodeLine{00139\ \{}
+\DoxyCodeLine{00140\ \ \ \ \ GaussField<scalar>\ result(A.cellID(),\ A.dgMesh());}
+\DoxyCodeLine{00141\ \ \ \ \ result.cellField()\ =\ \mbox{\hyperlink{namespaceFoam_a9bee5d4569402eb8c69ab534e3c99a92}{magSqr}}(A.cellField());}
+\DoxyCodeLine{00142\ \ \ \ \ result.faceField()\ =\ \mbox{\hyperlink{namespaceFoam_a9bee5d4569402eb8c69ab534e3c99a92}{magSqr}}(A.faceField());}
+\DoxyCodeLine{00143\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00144\ \}}
+\DoxyCodeLine{00145\ }
+\DoxyCodeLine{00146\ \textcolor{comment}{//\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ Vector\ -\/\ Tensor\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ //}}
+\DoxyCodeLine{00147\ }
+\DoxyCodeLine{00148\ \textcolor{comment}{//-\/\ Vector\ \&\ tensor}}
+\DoxyCodeLine{00149\ \textcolor{comment}{//\ Dot\ product\ of\ vector\ with\ each\ column\ of\ the\ tensor}}
+\DoxyCodeLine{00150\ \textcolor{keyword}{inline}\ GaussField<vector>\ \textcolor{keyword}{operator}\&}
+\DoxyCodeLine{00151\ (}
+\DoxyCodeLine{00152\ \ \ \ \ \textcolor{keyword}{const}\ GaussField<vector>\&\ A,}
+\DoxyCodeLine{00153\ \ \ \ \ \textcolor{keyword}{const}\ GaussField<tensor>\&\ B}
+\DoxyCodeLine{00154\ )}
+\DoxyCodeLine{00155\ \{}
+\DoxyCodeLine{00156\ \ \ \ \ GaussField<vector>\ result(A.cellID(),\ A.dgMesh());}
+\DoxyCodeLine{00157\ \ \ \ \ result.cellField()\ =\ A.cellField()\ \&\ B.cellField();}
+\DoxyCodeLine{00158\ \ \ \ \ result.faceField()\ =\ A.faceField()\ \&\ B.faceField();}
+\DoxyCodeLine{00159\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00160\ \}}
+\DoxyCodeLine{00161\ }
+\DoxyCodeLine{00162\ \textcolor{comment}{//-\/\ Tensor\ \&\ vector}}
+\DoxyCodeLine{00163\ \textcolor{comment}{//\ Dot\ product\ of\ each\ row\ of\ the\ tensor\ with\ the\ vector}}
+\DoxyCodeLine{00164\ \textcolor{keyword}{inline}\ GaussField<vector>\ \textcolor{keyword}{operator}\&}
+\DoxyCodeLine{00165\ (}
+\DoxyCodeLine{00166\ \ \ \ \ \textcolor{keyword}{const}\ GaussField<tensor>\&\ A,}
+\DoxyCodeLine{00167\ \ \ \ \ \textcolor{keyword}{const}\ GaussField<vector>\&\ B}
+\DoxyCodeLine{00168\ )}
+\DoxyCodeLine{00169\ \{}
+\DoxyCodeLine{00170\ \ \ \ \ GaussField<vector>\ result(A.cellID(),\ A.dgMesh());}
+\DoxyCodeLine{00171\ \ \ \ \ result.cellField()\ =\ A.cellField()\ \&\ B.cellField();}
+\DoxyCodeLine{00172\ \ \ \ \ result.faceField()\ =\ A.faceField()\ \&\ B.faceField();}
+\DoxyCodeLine{00173\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00174\ \}}
+\DoxyCodeLine{00175\ }
+\DoxyCodeLine{00176\ }
+\DoxyCodeLine{00177\ \textcolor{comment}{//\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ Vector\ -\/\ symmTensor\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ //}}
+\DoxyCodeLine{00178\ }
+\DoxyCodeLine{00179\ \textcolor{comment}{//-\/\ Vector\ \&\ symmTensor}}
+\DoxyCodeLine{00180\ \textcolor{comment}{//\ Dot\ product\ of\ vector\ with\ each\ column\ of\ the\ symmTensor}}
+\DoxyCodeLine{00181\ \textcolor{keyword}{inline}\ GaussField<vector>\ \textcolor{keyword}{operator}\&}
+\DoxyCodeLine{00182\ (}
+\DoxyCodeLine{00183\ \ \ \ \ \textcolor{keyword}{const}\ GaussField<vector>\&\ A,}
+\DoxyCodeLine{00184\ \ \ \ \ \textcolor{keyword}{const}\ GaussField<symmTensor>\&\ B}
+\DoxyCodeLine{00185\ )}
+\DoxyCodeLine{00186\ \{}
+\DoxyCodeLine{00187\ \ \ \ \ GaussField<vector>\ result(A.cellID(),\ A.dgMesh());}
+\DoxyCodeLine{00188\ \ \ \ \ result.cellField()\ =\ A.cellField()\ \&\ B.cellField();}
+\DoxyCodeLine{00189\ \ \ \ \ result.faceField()\ =\ A.faceField()\ \&\ B.faceField();}
+\DoxyCodeLine{00190\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00191\ \}}
+\DoxyCodeLine{00192\ }
+\DoxyCodeLine{00193\ \textcolor{comment}{//-\/\ symmTensor\ \&\ vector}}
+\DoxyCodeLine{00194\ \textcolor{comment}{//\ Dot\ product\ of\ each\ row\ of\ the\ symmTensor\ with\ the\ vector}}
+\DoxyCodeLine{00195\ \textcolor{keyword}{inline}\ GaussField<vector>\ \textcolor{keyword}{operator}\&}
+\DoxyCodeLine{00196\ (}
+\DoxyCodeLine{00197\ \ \ \ \ \textcolor{keyword}{const}\ GaussField<symmTensor>\&\ A,}
+\DoxyCodeLine{00198\ \ \ \ \ \textcolor{keyword}{const}\ GaussField<vector>\&\ B}
+\DoxyCodeLine{00199\ )}
+\DoxyCodeLine{00200\ \{}
+\DoxyCodeLine{00201\ \ \ \ \ GaussField<vector>\ result(A.cellID(),\ A.dgMesh());}
+\DoxyCodeLine{00202\ \ \ \ \ result.cellField()\ =\ A.cellField()\ \&\ B.cellField();}
+\DoxyCodeLine{00203\ \ \ \ \ result.faceField()\ =\ A.faceField()\ \&\ B.faceField();}
+\DoxyCodeLine{00204\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00205\ \}}
+\DoxyCodeLine{00206\ }
+\DoxyCodeLine{00207\ }
+\DoxyCodeLine{00208\ \textcolor{comment}{//\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ Vector\ -\/\ sphericalTensor\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ //}}
+\DoxyCodeLine{00209\ }
+\DoxyCodeLine{00210\ \textcolor{comment}{//-\/\ Vector\ \&\ sphericalTensor}}
+\DoxyCodeLine{00211\ \textcolor{comment}{//\ Dot\ product\ of\ vector\ with\ each\ column\ of\ the\ sphericalTensor}}
+\DoxyCodeLine{00212\ \textcolor{keyword}{inline}\ GaussField<vector>\ \textcolor{keyword}{operator}\&}
+\DoxyCodeLine{00213\ (}
+\DoxyCodeLine{00214\ \ \ \ \ \textcolor{keyword}{const}\ GaussField<vector>\&\ A,}
+\DoxyCodeLine{00215\ \ \ \ \ \textcolor{keyword}{const}\ GaussField<sphericalTensor>\&\ B}
+\DoxyCodeLine{00216\ )}
+\DoxyCodeLine{00217\ \{}
+\DoxyCodeLine{00218\ \ \ \ \ GaussField<vector>\ result(A.cellID(),\ A.dgMesh());}
+\DoxyCodeLine{00219\ \ \ \ \ result.cellField()\ =\ A.cellField()\ \&\ B.cellField();}
+\DoxyCodeLine{00220\ \ \ \ \ result.faceField()\ =\ A.faceField()\ \&\ B.faceField();}
+\DoxyCodeLine{00221\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00222\ \}}
+\DoxyCodeLine{00223\ }
+\DoxyCodeLine{00224\ \textcolor{comment}{//-\/\ sphericalTensor\ \&\ vector}}
+\DoxyCodeLine{00225\ \textcolor{comment}{//\ Dot\ product\ of\ each\ row\ of\ the\ sphericalTensor\ with\ the\ vector}}
+\DoxyCodeLine{00226\ \textcolor{keyword}{inline}\ GaussField<vector>\ \textcolor{keyword}{operator}\&}
+\DoxyCodeLine{00227\ (}
+\DoxyCodeLine{00228\ \ \ \ \ \textcolor{keyword}{const}\ GaussField<sphericalTensor>\&\ A,}
+\DoxyCodeLine{00229\ \ \ \ \ \textcolor{keyword}{const}\ GaussField<vector>\&\ B}
+\DoxyCodeLine{00230\ )}
+\DoxyCodeLine{00231\ \{}
+\DoxyCodeLine{00232\ \ \ \ \ GaussField<vector>\ result(A.cellID(),\ A.dgMesh());}
+\DoxyCodeLine{00233\ \ \ \ \ result.cellField()\ =\ A.cellField()\ \&\ B.cellField();}
+\DoxyCodeLine{00234\ \ \ \ \ result.faceField()\ =\ A.faceField()\ \&\ B.faceField();}
+\DoxyCodeLine{00235\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00236\ \}}
+\DoxyCodeLine{00237\ }
+\DoxyCodeLine{00238\ \}\ \textcolor{comment}{//\ End\ namespace\ Foam}}
+\DoxyCodeLine{00239\ }
+\DoxyCodeLine{00240\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00241\ }
+\DoxyCodeLine{00242\ \textcolor{comment}{//\ *************************************************************************\ //}}
+
+\end{DoxyCode}

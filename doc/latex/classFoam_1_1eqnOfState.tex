@@ -1,0 +1,643 @@
+\doxysection{Foam\+::eqn\+Of\+State Class Reference}
+\hypertarget{classFoam_1_1eqnOfState}{}\label{classFoam_1_1eqnOfState}\index{Foam::eqnOfState@{Foam::eqnOfState}}
+
+
+Base class for single-\/phase equations of state.  
+
+
+
+
+{\ttfamily \#include $<$eqn\+Of\+State.\+H$>$}
+
+
+
+Inheritance diagram for Foam\+::eqn\+Of\+State\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=184pt]{classFoam_1_1eqnOfState__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Foam\+::eqn\+Of\+State\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=197pt]{classFoam_1_1eqnOfState__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classFoam_1_1eqnOfState_a575d0c1f27f62cee8894288d5cfc0675}{Type\+Name}} ("{}eqn\+Of\+State"{})
+\item 
+\mbox{\hyperlink{classFoam_1_1eqnOfState_a06dbce827f310e6846d1134710d2c708}{declare\+Run\+Time\+Selection\+Table}} (\mbox{\hyperlink{classFoam_1_1GaussField}{auto\+Ptr}}, \mbox{\hyperlink{classFoam_1_1eqnOfState}{eqn\+Of\+State}}, \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}},(\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{word}} \&name, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}} \&dict, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{mesh}}),(name, dict, \mbox{\hyperlink{classFoam_1_1GaussField}{mesh}}))
+\item 
+\mbox{\hyperlink{classFoam_1_1eqnOfState_a8d6daf002f8e7df049f04f0324742d07}{eqn\+Of\+State}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{word}} \&name, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}} \&dict, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{mesh}})
+\begin{DoxyCompactList}\small\item\em Construct from model name and coefficient dictionary. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1eqnOfState_a401a22020e90030be1248683fc0074d7}{\texorpdfstring{$\sim$}{\string~}eqn\+Of\+State}} ()=\mbox{\hyperlink{classFoam_1_1GaussField}{default}}
+\begin{DoxyCompactList}\small\item\em Virtual destructor. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} \mbox{\hyperlink{classFoam_1_1eqnOfState_a2fcf2ce66d3f2a5c924c396156ece28c}{R}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}} =0
+\begin{DoxyCompactList}\small\item\em Return gas constant R. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1eqnOfState_a522e27c192b854c825fdf6680ec42ef6}{calc\+Rho\+From\+PT}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1GaussField}{cellI}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{createPrimaryFields_8H_ad37d69387e92d6f1424be40cbca2fbec}{p}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{namespaceFoam_a5faf7f302ed6c6307e3668365456af74}{T}}, \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{createConservativeFields_8H_a55f60da5082eca5d9645759eba7abd98}{rho}}) \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\begin{DoxyCompactList}\small\item\em Compute density from pressure and temperature. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1eqnOfState_a65f54ba85805d32858e1397f16c71c67}{calc\+PFrom\+RhoT}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1GaussField}{cellI}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{createConservativeFields_8H_a55f60da5082eca5d9645759eba7abd98}{rho}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{namespaceFoam_a5faf7f302ed6c6307e3668365456af74}{T}}, \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{createPrimaryFields_8H_ad37d69387e92d6f1424be40cbca2fbec}{p}}) \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\begin{DoxyCompactList}\small\item\em Compute pressure from density and temperature. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1eqnOfState_ab66dce55045f7d82adcc73a81004888a}{calc\+TFrom\+PRho}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1GaussField}{cellI}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{createPrimaryFields_8H_ad37d69387e92d6f1424be40cbca2fbec}{p}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{createConservativeFields_8H_a55f60da5082eca5d9645759eba7abd98}{rho}}, \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{namespaceFoam_a5faf7f302ed6c6307e3668365456af74}{T}}) \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\begin{DoxyCompactList}\small\item\em Compute temperature from pressure and density. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{bool}} \mbox{\hyperlink{classFoam_1_1eqnOfState_a3291a187ff233d34e8fc78fd9a1fbca6}{can\+Calc\+Rho\+From\+PT}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\begin{DoxyCompactList}\small\item\em Return true if rho(p,\+T) is supported. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{bool}} \mbox{\hyperlink{classFoam_1_1eqnOfState_a8cd5ba40878162951db68ce90e4a46ae}{can\+Calc\+PFrom\+RhoT}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\begin{DoxyCompactList}\small\item\em Return true if p(rho,\+T) is supported. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{bool}} \mbox{\hyperlink{classFoam_1_1eqnOfState_ac78add49a308131d2843c620930fce74}{can\+Calc\+TFrom\+PRho}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\begin{DoxyCompactList}\small\item\em Return true if T(p,rho) is supported. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{bool}} \mbox{\hyperlink{classFoam_1_1eqnOfState_a0d4f0890fe5145ecaa8bdb16897773e4}{is\+Ideal\+Gas}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\begin{DoxyCompactList}\small\item\em Ideal-\/gas–type EOS. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{bool}} \mbox{\hyperlink{classFoam_1_1eqnOfState_ae9c9acc43e32e77440222dc2b2d3ec8a}{is\+Incompressible}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\begin{DoxyCompactList}\small\item\em Incompressible EOS. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{bool}} \mbox{\hyperlink{classFoam_1_1eqnOfState_a4e8808415e2f46a0e000e9d5337565f2}{is\+Real\+Gas}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\begin{DoxyCompactList}\small\item\em Real-\/gas EOS. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{bool}} \mbox{\hyperlink{classFoam_1_1eqnOfState_a5cdac2918c31d6362f277a19dba79d08}{is\+Thermal\+Perfect\+Gas}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\begin{DoxyCompactList}\small\item\em Kinetic-\/theory / thermal-\/perfect EOS. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1eqnOfState_a575d0c1f27f62cee8894288d5cfc0675}{Type\+Name}} ("{}eqn\+Of\+State"{})
+\item 
+\mbox{\hyperlink{classFoam_1_1eqnOfState_a06dbce827f310e6846d1134710d2c708}{declare\+Run\+Time\+Selection\+Table}} (\mbox{\hyperlink{classFoam_1_1GaussField}{auto\+Ptr}}, \mbox{\hyperlink{classFoam_1_1eqnOfState}{eqn\+Of\+State}}, \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}},(\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{word}} \&name, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}} \&dict, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{mesh}}),(name, dict, \mbox{\hyperlink{classFoam_1_1GaussField}{mesh}}))
+\item 
+\mbox{\hyperlink{classFoam_1_1eqnOfState_a8d6daf002f8e7df049f04f0324742d07}{eqn\+Of\+State}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{word}} \&name, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}} \&dict, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{mesh}})
+\begin{DoxyCompactList}\small\item\em Construct from model name and coefficient dictionary. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1eqnOfState_a401a22020e90030be1248683fc0074d7}{\texorpdfstring{$\sim$}{\string~}eqn\+Of\+State}} ()=\mbox{\hyperlink{classFoam_1_1GaussField}{default}}
+\begin{DoxyCompactList}\small\item\em Virtual destructor. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} \mbox{\hyperlink{classFoam_1_1eqnOfState_a2fcf2ce66d3f2a5c924c396156ece28c}{R}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}} =0
+\begin{DoxyCompactList}\small\item\em Return gas constant R. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1eqnOfState_a522e27c192b854c825fdf6680ec42ef6}{calc\+Rho\+From\+PT}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1GaussField}{cellI}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{createPrimaryFields_8H_ad37d69387e92d6f1424be40cbca2fbec}{p}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{namespaceFoam_a5faf7f302ed6c6307e3668365456af74}{T}}, \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{createConservativeFields_8H_a55f60da5082eca5d9645759eba7abd98}{rho}}) \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\begin{DoxyCompactList}\small\item\em Compute density from pressure and temperature. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1eqnOfState_a65f54ba85805d32858e1397f16c71c67}{calc\+PFrom\+RhoT}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1GaussField}{cellI}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{createConservativeFields_8H_a55f60da5082eca5d9645759eba7abd98}{rho}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{namespaceFoam_a5faf7f302ed6c6307e3668365456af74}{T}}, \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{createPrimaryFields_8H_ad37d69387e92d6f1424be40cbca2fbec}{p}}) \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\begin{DoxyCompactList}\small\item\em Compute pressure from density and temperature. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1eqnOfState_ab66dce55045f7d82adcc73a81004888a}{calc\+TFrom\+PRho}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1GaussField}{cellI}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{createPrimaryFields_8H_ad37d69387e92d6f1424be40cbca2fbec}{p}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{createConservativeFields_8H_a55f60da5082eca5d9645759eba7abd98}{rho}}, \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{namespaceFoam_a5faf7f302ed6c6307e3668365456af74}{T}}) \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\begin{DoxyCompactList}\small\item\em Compute temperature from pressure and density. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{bool}} \mbox{\hyperlink{classFoam_1_1eqnOfState_a3291a187ff233d34e8fc78fd9a1fbca6}{can\+Calc\+Rho\+From\+PT}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\begin{DoxyCompactList}\small\item\em Return true if rho(p,\+T) is supported. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{bool}} \mbox{\hyperlink{classFoam_1_1eqnOfState_a8cd5ba40878162951db68ce90e4a46ae}{can\+Calc\+PFrom\+RhoT}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\begin{DoxyCompactList}\small\item\em Return true if p(rho,\+T) is supported. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{bool}} \mbox{\hyperlink{classFoam_1_1eqnOfState_ac78add49a308131d2843c620930fce74}{can\+Calc\+TFrom\+PRho}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\begin{DoxyCompactList}\small\item\em Return true if T(p,rho) is supported. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{bool}} \mbox{\hyperlink{classFoam_1_1eqnOfState_a0d4f0890fe5145ecaa8bdb16897773e4}{is\+Ideal\+Gas}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\begin{DoxyCompactList}\small\item\em Ideal-\/gas–type EOS. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{bool}} \mbox{\hyperlink{classFoam_1_1eqnOfState_ae9c9acc43e32e77440222dc2b2d3ec8a}{is\+Incompressible}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\begin{DoxyCompactList}\small\item\em Incompressible EOS. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{bool}} \mbox{\hyperlink{classFoam_1_1eqnOfState_a4e8808415e2f46a0e000e9d5337565f2}{is\+Real\+Gas}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\begin{DoxyCompactList}\small\item\em Real-\/gas EOS. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{bool}} \mbox{\hyperlink{classFoam_1_1eqnOfState_a5cdac2918c31d6362f277a19dba79d08}{is\+Thermal\+Perfect\+Gas}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\begin{DoxyCompactList}\small\item\em Kinetic-\/theory / thermal-\/perfect EOS. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{static}} \mbox{\hyperlink{classFoam_1_1GaussField}{auto\+Ptr}}$<$ \mbox{\hyperlink{classFoam_1_1eqnOfState}{eqn\+Of\+State}} $>$ \mbox{\hyperlink{classFoam_1_1eqnOfState_a226d8532861303103b8aa48a452b2498}{New}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{word}} \&name, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}} \&dict, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{mesh}})
+\begin{DoxyCompactList}\small\item\em Runtime selector. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{static}} \mbox{\hyperlink{classFoam_1_1GaussField}{auto\+Ptr}}$<$ \mbox{\hyperlink{classFoam_1_1eqnOfState}{eqn\+Of\+State}} $>$ \mbox{\hyperlink{classFoam_1_1eqnOfState_a3710c15c3bbc59edc3379443876e6100}{New}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{word}} \&name, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}} \&dict, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{mesh}})
+\begin{DoxyCompactList}\small\item\em Runtime selector. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{word}} \mbox{\hyperlink{classFoam_1_1eqnOfState_a2705e42632aec45b98827f341b07a467}{name\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Model name (used for logging and diagnostics) \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}} \mbox{\hyperlink{classFoam_1_1eqnOfState_ab7c53e663dda7bef3d493a6dac5e14ff}{dict\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Coefficients dictionary (owned, immutable snapshot) \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \& \mbox{\hyperlink{classFoam_1_1eqnOfState_ad70826abcd1926c0c49c81de632912b1}{mesh\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Reference to DG geometric mesh (non-\/owning) \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Base class for single-\/phase equations of state. 
+
+This class defines the interface for single-\/phase equations of state (EOS) used in DGFoam. An EOS provides thermodynamic closure relations between pressure, temperature, and density, and supplies classification flags that allow thermo models to verify physical compatibility.
+
+\begin{DoxyParagraph}{EOS classification and compatibility}
+To ensure consistency between EOS models and \doxylink{classFoam_1_1thermoLaw}{thermo\+Law} formulations, each EOS advertises a set of capability and classification flags. Higher-\/level thermo models must check these flags in their constructors to ensure that the selected EOS is physically compatible with their assumptions.
+\end{DoxyParagraph}
+EOS models are grouped into the following categories\+:
+
+\begin{DoxyParagraph}{Ideal-\/gas–type EOS}
+
+\begin{DoxyItemize}
+\item Identified by \doxylink{classFoam_1_1eqnOfState_a0d4f0890fe5145ecaa8bdb16897773e4}{is\+Ideal\+Gas()} returning true.
+\item Pressure relation of the form\+: $ p = \rho R T $.
+\item Includes classic ideal gas and thermal-\/perfect gas variants.
+\item Thermodynamic properties (Cp, Cv, e, h) are provided by \doxylink{classFoam_1_1thermoLaw}{thermo\+Law}.
+\item Compatible with most \doxylink{classFoam_1_1thermoLaw}{thermo\+Law} models.
+\end{DoxyItemize}
+\end{DoxyParagraph}
+\begin{DoxyParagraph}{Incompressible EOS}
+
+\begin{DoxyItemize}
+\item Identified by \doxylink{classFoam_1_1eqnOfState_ae9c9acc43e32e77440222dc2b2d3ec8a}{is\+Incompressible()} returning true.
+\item Density is constant or independent of pressure and temperature.
+\item Pressure does not participate in thermodynamic relations.
+\item Only compatible with thermo models designed for liquids.
+\end{DoxyItemize}
+\end{DoxyParagraph}
+\begin{DoxyParagraph}{Real-\/gas EOS}
+
+\begin{DoxyItemize}
+\item Identified by \doxylink{classFoam_1_1eqnOfState_a4e8808415e2f46a0e000e9d5337565f2}{is\+Real\+Gas()} returning true.
+\item Non-\/ideal equations of state (e.\+g. Peng–\+Robinson, Redlich–\+Kwong, stiffened gas, Van der Waals).
+\item Require thermo models derived for real-\/gas properties.
+\end{DoxyItemize}
+\end{DoxyParagraph}
+\begin{DoxyParagraph}{Kinetic-\/theory EOS}
+
+\begin{DoxyItemize}
+\item Identified by \doxylink{classFoam_1_1eqnOfState_a5cdac2918c31d6362f277a19dba79d08}{is\+Thermal\+Perfect\+Gas()} returning true.
+\item EOS derived from kinetic theory (Boltzmann / ES-\/\+BGK).
+\item Pressure may originate from stress rather than $ p = \rho R T $.
+\item Used for rarefied or high-\/\+Knudsen-\/number flows.
+\end{DoxyItemize}
+\end{DoxyParagraph}
+By default, all classification flags return false in this base class. Derived EOS models override the appropriate flags to identify their physical category. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classFoam_1_1eqnOfState_a8d6daf002f8e7df049f04f0324742d07}\label{classFoam_1_1eqnOfState_a8d6daf002f8e7df049f04f0324742d07} 
+\index{Foam::eqnOfState@{Foam::eqnOfState}!eqnOfState@{eqnOfState}}
+\index{eqnOfState@{eqnOfState}!Foam::eqnOfState@{Foam::eqnOfState}}
+\doxysubsubsection{\texorpdfstring{eqnOfState()}{eqnOfState()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Foam\+::eqn\+Of\+State\+::eqn\+Of\+State (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{word}} \&}]{name,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}} \&}]{dict,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \&}]{mesh }\end{DoxyParamCaption})}
+
+
+
+Construct from model name and coefficient dictionary. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & Model name \\
+\hline
+{\em dict} & Coefficient dictionary \\
+\hline
+{\em mesh} & DG geometric mesh \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classFoam_1_1eqnOfState_a401a22020e90030be1248683fc0074d7}\label{classFoam_1_1eqnOfState_a401a22020e90030be1248683fc0074d7} 
+\index{Foam::eqnOfState@{Foam::eqnOfState}!````~eqnOfState@{\texorpdfstring{$\sim$}{\string~}eqnOfState}}
+\index{````~eqnOfState@{\texorpdfstring{$\sim$}{\string~}eqnOfState}!Foam::eqnOfState@{Foam::eqnOfState}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}eqnOfState()}{\string~eqnOfState()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} Foam\+::eqn\+Of\+State\+::\texorpdfstring{$\sim$}{\string~}eqn\+Of\+State (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}, {\ttfamily [default]}}
+
+
+
+Virtual destructor. 
+
+\Hypertarget{classFoam_1_1eqnOfState_a8d6daf002f8e7df049f04f0324742d07}\label{classFoam_1_1eqnOfState_a8d6daf002f8e7df049f04f0324742d07} 
+\index{Foam::eqnOfState@{Foam::eqnOfState}!eqnOfState@{eqnOfState}}
+\index{eqnOfState@{eqnOfState}!Foam::eqnOfState@{Foam::eqnOfState}}
+\doxysubsubsection{\texorpdfstring{eqnOfState()}{eqnOfState()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Foam\+::eqn\+Of\+State\+::eqn\+Of\+State (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{word}} \&}]{name,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}} \&}]{dict,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \&}]{mesh }\end{DoxyParamCaption})}
+
+
+
+Construct from model name and coefficient dictionary. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & Model name \\
+\hline
+{\em dict} & Coefficient dictionary \\
+\hline
+{\em mesh} & DG geometric mesh \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classFoam_1_1eqnOfState_a401a22020e90030be1248683fc0074d7}\label{classFoam_1_1eqnOfState_a401a22020e90030be1248683fc0074d7} 
+\index{Foam::eqnOfState@{Foam::eqnOfState}!````~eqnOfState@{\texorpdfstring{$\sim$}{\string~}eqnOfState}}
+\index{````~eqnOfState@{\texorpdfstring{$\sim$}{\string~}eqnOfState}!Foam::eqnOfState@{Foam::eqnOfState}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}eqnOfState()}{\string~eqnOfState()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} Foam\+::eqn\+Of\+State\+::\texorpdfstring{$\sim$}{\string~}eqn\+Of\+State (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}, {\ttfamily [default]}}
+
+
+
+Virtual destructor. 
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classFoam_1_1eqnOfState_a575d0c1f27f62cee8894288d5cfc0675}\label{classFoam_1_1eqnOfState_a575d0c1f27f62cee8894288d5cfc0675} 
+\index{Foam::eqnOfState@{Foam::eqnOfState}!TypeName@{TypeName}}
+\index{TypeName@{TypeName}!Foam::eqnOfState@{Foam::eqnOfState}}
+\doxysubsubsection{\texorpdfstring{TypeName()}{TypeName()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Foam\+::eqn\+Of\+State\+::\+Type\+Name (\begin{DoxyParamCaption}\item[{"{}eqn\+Of\+State"{}}]{ }\end{DoxyParamCaption})}
+
+\Hypertarget{classFoam_1_1eqnOfState_a06dbce827f310e6846d1134710d2c708}\label{classFoam_1_1eqnOfState_a06dbce827f310e6846d1134710d2c708} 
+\index{Foam::eqnOfState@{Foam::eqnOfState}!declareRunTimeSelectionTable@{declareRunTimeSelectionTable}}
+\index{declareRunTimeSelectionTable@{declareRunTimeSelectionTable}!Foam::eqnOfState@{Foam::eqnOfState}}
+\doxysubsubsection{\texorpdfstring{declareRunTimeSelectionTable()}{declareRunTimeSelectionTable()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Foam\+::eqn\+Of\+State\+::declare\+Run\+Time\+Selection\+Table (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{auto\+Ptr}}}]{,  }\item[{\mbox{\hyperlink{classFoam_1_1eqnOfState}{eqn\+Of\+State}}}]{,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}}}]{,  }\item[{(\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{word}} \&name, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}} \&dict, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{mesh}})}]{,  }\item[{(name, dict, \mbox{\hyperlink{classFoam_1_1GaussField}{mesh}})}]{ }\end{DoxyParamCaption})}
+
+\Hypertarget{classFoam_1_1eqnOfState_a226d8532861303103b8aa48a452b2498}\label{classFoam_1_1eqnOfState_a226d8532861303103b8aa48a452b2498} 
+\index{Foam::eqnOfState@{Foam::eqnOfState}!New@{New}}
+\index{New@{New}!Foam::eqnOfState@{Foam::eqnOfState}}
+\doxysubsubsection{\texorpdfstring{New()}{New()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::auto\+Ptr}}$<$ \mbox{\hyperlink{classFoam_1_1eqnOfState}{Foam\+::eqn\+Of\+State}} $>$ Foam\+::eqn\+Of\+State\+::\+New (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{word}} \&}]{name,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}} \&}]{dict,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \&}]{mesh }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Runtime selector. 
+
+Construct an equation-\/of-\/state model from a dictionary entry.
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & Model name \\
+\hline
+{\em dict} & Coefficient dictionary \\
+\hline
+{\em mesh} & DG geometric mesh \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Auto pointer to selected EOS model 
+\end{DoxyReturn}
+\Hypertarget{classFoam_1_1eqnOfState_a2fcf2ce66d3f2a5c924c396156ece28c}\label{classFoam_1_1eqnOfState_a2fcf2ce66d3f2a5c924c396156ece28c} 
+\index{Foam::eqnOfState@{Foam::eqnOfState}!R@{R}}
+\index{R@{R}!Foam::eqnOfState@{Foam::eqnOfState}}
+\doxysubsubsection{\texorpdfstring{R()}{R()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} Foam\+::eqn\+Of\+State\+::R (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Return gas constant R. 
+
+Returns zero for incompressible EOS models. 
+
+Implemented in \mbox{\hyperlink{classFoam_1_1idealGas_a7a246d21dd7c0d7b5b121ed8b6bbea59}{Foam\+::ideal\+Gas}}, and \mbox{\hyperlink{classFoam_1_1idealGas_a7a246d21dd7c0d7b5b121ed8b6bbea59}{Foam\+::ideal\+Gas}}.
+
+\Hypertarget{classFoam_1_1eqnOfState_a522e27c192b854c825fdf6680ec42ef6}\label{classFoam_1_1eqnOfState_a522e27c192b854c825fdf6680ec42ef6} 
+\index{Foam::eqnOfState@{Foam::eqnOfState}!calcRhoFromPT@{calcRhoFromPT}}
+\index{calcRhoFromPT@{calcRhoFromPT}!Foam::eqnOfState@{Foam::eqnOfState}}
+\doxysubsubsection{\texorpdfstring{calcRhoFromPT()}{calcRhoFromPT()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{void}} Foam\+::eqn\+Of\+State\+::calc\+Rho\+From\+PT (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{cellI,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{p,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{T,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{rho }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Compute density from pressure and temperature. 
+
+Computes $ \rho = \rho(p, T) $ at Gauss points of a cell.
+
+
+\begin{DoxyParams}{Parameters}
+{\em cellI} & Cell index \\
+\hline
+{\em p} & Pressure field \\
+\hline
+{\em T} & Temperature field \\
+\hline
+{\em rho} & Density field to be written \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented in \mbox{\hyperlink{classFoam_1_1idealGas_a86fa5a5c8915562bb6ff52e58fdb219c}{Foam\+::ideal\+Gas}}, and \mbox{\hyperlink{classFoam_1_1idealGas_a89a573b91a31ce9a090a165ac3682e71}{Foam\+::ideal\+Gas}}.
+
+\Hypertarget{classFoam_1_1eqnOfState_a65f54ba85805d32858e1397f16c71c67}\label{classFoam_1_1eqnOfState_a65f54ba85805d32858e1397f16c71c67} 
+\index{Foam::eqnOfState@{Foam::eqnOfState}!calcPFromRhoT@{calcPFromRhoT}}
+\index{calcPFromRhoT@{calcPFromRhoT}!Foam::eqnOfState@{Foam::eqnOfState}}
+\doxysubsubsection{\texorpdfstring{calcPFromRhoT()}{calcPFromRhoT()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{void}} Foam\+::eqn\+Of\+State\+::calc\+PFrom\+RhoT (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{cellI,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{rho,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{T,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{p }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Compute pressure from density and temperature. 
+
+Computes $ p = p(\rho, T) $ at Gauss points of a cell. 
+
+Reimplemented in \mbox{\hyperlink{classFoam_1_1idealGas_a4cb43ce4718b44356eb61c6a9b858819}{Foam\+::ideal\+Gas}}, and \mbox{\hyperlink{classFoam_1_1idealGas_a41649fd5126ddcc64b7a65b511a3ada0}{Foam\+::ideal\+Gas}}.
+
+\Hypertarget{classFoam_1_1eqnOfState_ab66dce55045f7d82adcc73a81004888a}\label{classFoam_1_1eqnOfState_ab66dce55045f7d82adcc73a81004888a} 
+\index{Foam::eqnOfState@{Foam::eqnOfState}!calcTFromPRho@{calcTFromPRho}}
+\index{calcTFromPRho@{calcTFromPRho}!Foam::eqnOfState@{Foam::eqnOfState}}
+\doxysubsubsection{\texorpdfstring{calcTFromPRho()}{calcTFromPRho()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{void}} Foam\+::eqn\+Of\+State\+::calc\+TFrom\+PRho (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{cellI,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{p,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{rho,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{T }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Compute temperature from pressure and density. 
+
+Computes $ T = T(p, \rho) $ at Gauss points of a cell. 
+
+Reimplemented in \mbox{\hyperlink{classFoam_1_1idealGas_a452ba917bb70980807806c5077fb7e79}{Foam\+::ideal\+Gas}}, and \mbox{\hyperlink{classFoam_1_1idealGas_a4c8bf2ce8706e734b5362a094a7a220e}{Foam\+::ideal\+Gas}}.
+
+\Hypertarget{classFoam_1_1eqnOfState_a3291a187ff233d34e8fc78fd9a1fbca6}\label{classFoam_1_1eqnOfState_a3291a187ff233d34e8fc78fd9a1fbca6} 
+\index{Foam::eqnOfState@{Foam::eqnOfState}!canCalcRhoFromPT@{canCalcRhoFromPT}}
+\index{canCalcRhoFromPT@{canCalcRhoFromPT}!Foam::eqnOfState@{Foam::eqnOfState}}
+\doxysubsubsection{\texorpdfstring{canCalcRhoFromPT()}{canCalcRhoFromPT()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{bool}} Foam\+::eqn\+Of\+State\+::can\+Calc\+Rho\+From\+PT (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Return true if rho(p,\+T) is supported. 
+
+
+
+Reimplemented in \mbox{\hyperlink{classFoam_1_1idealGas_a2ca9b5548e826e94de1188d62d6078fe}{Foam\+::ideal\+Gas}}, and \mbox{\hyperlink{classFoam_1_1idealGas_a2ca9b5548e826e94de1188d62d6078fe}{Foam\+::ideal\+Gas}}.
+
+\Hypertarget{classFoam_1_1eqnOfState_a8cd5ba40878162951db68ce90e4a46ae}\label{classFoam_1_1eqnOfState_a8cd5ba40878162951db68ce90e4a46ae} 
+\index{Foam::eqnOfState@{Foam::eqnOfState}!canCalcPFromRhoT@{canCalcPFromRhoT}}
+\index{canCalcPFromRhoT@{canCalcPFromRhoT}!Foam::eqnOfState@{Foam::eqnOfState}}
+\doxysubsubsection{\texorpdfstring{canCalcPFromRhoT()}{canCalcPFromRhoT()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{bool}} Foam\+::eqn\+Of\+State\+::can\+Calc\+PFrom\+RhoT (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Return true if p(rho,\+T) is supported. 
+
+
+
+Reimplemented in \mbox{\hyperlink{classFoam_1_1idealGas_afe70c39372a63474e3522510a5780456}{Foam\+::ideal\+Gas}}, and \mbox{\hyperlink{classFoam_1_1idealGas_afe70c39372a63474e3522510a5780456}{Foam\+::ideal\+Gas}}.
+
+\Hypertarget{classFoam_1_1eqnOfState_ac78add49a308131d2843c620930fce74}\label{classFoam_1_1eqnOfState_ac78add49a308131d2843c620930fce74} 
+\index{Foam::eqnOfState@{Foam::eqnOfState}!canCalcTFromPRho@{canCalcTFromPRho}}
+\index{canCalcTFromPRho@{canCalcTFromPRho}!Foam::eqnOfState@{Foam::eqnOfState}}
+\doxysubsubsection{\texorpdfstring{canCalcTFromPRho()}{canCalcTFromPRho()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{bool}} Foam\+::eqn\+Of\+State\+::can\+Calc\+TFrom\+PRho (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Return true if T(p,rho) is supported. 
+
+
+
+Reimplemented in \mbox{\hyperlink{classFoam_1_1idealGas_a37d8f423c6552da1206d3994e6c1b5ce}{Foam\+::ideal\+Gas}}, and \mbox{\hyperlink{classFoam_1_1idealGas_a37d8f423c6552da1206d3994e6c1b5ce}{Foam\+::ideal\+Gas}}.
+
+\Hypertarget{classFoam_1_1eqnOfState_a0d4f0890fe5145ecaa8bdb16897773e4}\label{classFoam_1_1eqnOfState_a0d4f0890fe5145ecaa8bdb16897773e4} 
+\index{Foam::eqnOfState@{Foam::eqnOfState}!isIdealGas@{isIdealGas}}
+\index{isIdealGas@{isIdealGas}!Foam::eqnOfState@{Foam::eqnOfState}}
+\doxysubsubsection{\texorpdfstring{isIdealGas()}{isIdealGas()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{bool}} Foam\+::eqn\+Of\+State\+::is\+Ideal\+Gas (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Ideal-\/gas–type EOS. 
+
+
+
+Reimplemented in \mbox{\hyperlink{classFoam_1_1idealGas_a13217f8be4087537ea9304d94dedd7a7}{Foam\+::ideal\+Gas}}, and \mbox{\hyperlink{classFoam_1_1idealGas_a13217f8be4087537ea9304d94dedd7a7}{Foam\+::ideal\+Gas}}.
+
+\Hypertarget{classFoam_1_1eqnOfState_ae9c9acc43e32e77440222dc2b2d3ec8a}\label{classFoam_1_1eqnOfState_ae9c9acc43e32e77440222dc2b2d3ec8a} 
+\index{Foam::eqnOfState@{Foam::eqnOfState}!isIncompressible@{isIncompressible}}
+\index{isIncompressible@{isIncompressible}!Foam::eqnOfState@{Foam::eqnOfState}}
+\doxysubsubsection{\texorpdfstring{isIncompressible()}{isIncompressible()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{bool}} Foam\+::eqn\+Of\+State\+::is\+Incompressible (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Incompressible EOS. 
+
+\Hypertarget{classFoam_1_1eqnOfState_a4e8808415e2f46a0e000e9d5337565f2}\label{classFoam_1_1eqnOfState_a4e8808415e2f46a0e000e9d5337565f2} 
+\index{Foam::eqnOfState@{Foam::eqnOfState}!isRealGas@{isRealGas}}
+\index{isRealGas@{isRealGas}!Foam::eqnOfState@{Foam::eqnOfState}}
+\doxysubsubsection{\texorpdfstring{isRealGas()}{isRealGas()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{bool}} Foam\+::eqn\+Of\+State\+::is\+Real\+Gas (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Real-\/gas EOS. 
+
+\Hypertarget{classFoam_1_1eqnOfState_a5cdac2918c31d6362f277a19dba79d08}\label{classFoam_1_1eqnOfState_a5cdac2918c31d6362f277a19dba79d08} 
+\index{Foam::eqnOfState@{Foam::eqnOfState}!isThermalPerfectGas@{isThermalPerfectGas}}
+\index{isThermalPerfectGas@{isThermalPerfectGas}!Foam::eqnOfState@{Foam::eqnOfState}}
+\doxysubsubsection{\texorpdfstring{isThermalPerfectGas()}{isThermalPerfectGas()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{bool}} Foam\+::eqn\+Of\+State\+::is\+Thermal\+Perfect\+Gas (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Kinetic-\/theory / thermal-\/perfect EOS. 
+
+\Hypertarget{classFoam_1_1eqnOfState_a575d0c1f27f62cee8894288d5cfc0675}\label{classFoam_1_1eqnOfState_a575d0c1f27f62cee8894288d5cfc0675} 
+\index{Foam::eqnOfState@{Foam::eqnOfState}!TypeName@{TypeName}}
+\index{TypeName@{TypeName}!Foam::eqnOfState@{Foam::eqnOfState}}
+\doxysubsubsection{\texorpdfstring{TypeName()}{TypeName()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Foam\+::eqn\+Of\+State\+::\+Type\+Name (\begin{DoxyParamCaption}\item[{"{}eqn\+Of\+State"{}}]{ }\end{DoxyParamCaption})}
+
+\Hypertarget{classFoam_1_1eqnOfState_a06dbce827f310e6846d1134710d2c708}\label{classFoam_1_1eqnOfState_a06dbce827f310e6846d1134710d2c708} 
+\index{Foam::eqnOfState@{Foam::eqnOfState}!declareRunTimeSelectionTable@{declareRunTimeSelectionTable}}
+\index{declareRunTimeSelectionTable@{declareRunTimeSelectionTable}!Foam::eqnOfState@{Foam::eqnOfState}}
+\doxysubsubsection{\texorpdfstring{declareRunTimeSelectionTable()}{declareRunTimeSelectionTable()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Foam\+::eqn\+Of\+State\+::declare\+Run\+Time\+Selection\+Table (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{auto\+Ptr}}}]{,  }\item[{\mbox{\hyperlink{classFoam_1_1eqnOfState}{eqn\+Of\+State}}}]{,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}}}]{,  }\item[{(\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{word}} \&name, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}} \&dict, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{mesh}})}]{,  }\item[{(name, dict, \mbox{\hyperlink{classFoam_1_1GaussField}{mesh}})}]{ }\end{DoxyParamCaption})}
+
+\Hypertarget{classFoam_1_1eqnOfState_a3710c15c3bbc59edc3379443876e6100}\label{classFoam_1_1eqnOfState_a3710c15c3bbc59edc3379443876e6100} 
+\index{Foam::eqnOfState@{Foam::eqnOfState}!New@{New}}
+\index{New@{New}!Foam::eqnOfState@{Foam::eqnOfState}}
+\doxysubsubsection{\texorpdfstring{New()}{New()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{static}} \mbox{\hyperlink{classFoam_1_1GaussField}{auto\+Ptr}}$<$ \mbox{\hyperlink{classFoam_1_1eqnOfState}{eqn\+Of\+State}} $>$ Foam\+::eqn\+Of\+State\+::\+New (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{word}} \&}]{name,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}} \&}]{dict,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \&}]{mesh }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Runtime selector. 
+
+Construct an equation-\/of-\/state model from a dictionary entry.
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & Model name \\
+\hline
+{\em dict} & Coefficient dictionary \\
+\hline
+{\em mesh} & DG geometric mesh \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Auto pointer to selected EOS model 
+\end{DoxyReturn}
+\Hypertarget{classFoam_1_1eqnOfState_a2fcf2ce66d3f2a5c924c396156ece28c}\label{classFoam_1_1eqnOfState_a2fcf2ce66d3f2a5c924c396156ece28c} 
+\index{Foam::eqnOfState@{Foam::eqnOfState}!R@{R}}
+\index{R@{R}!Foam::eqnOfState@{Foam::eqnOfState}}
+\doxysubsubsection{\texorpdfstring{R()}{R()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} Foam\+::eqn\+Of\+State\+::R (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Return gas constant R. 
+
+Returns zero for incompressible EOS models. 
+
+Implemented in \mbox{\hyperlink{classFoam_1_1idealGas_a7a246d21dd7c0d7b5b121ed8b6bbea59}{Foam\+::ideal\+Gas}}, and \mbox{\hyperlink{classFoam_1_1idealGas_a7a246d21dd7c0d7b5b121ed8b6bbea59}{Foam\+::ideal\+Gas}}.
+
+\Hypertarget{classFoam_1_1eqnOfState_a522e27c192b854c825fdf6680ec42ef6}\label{classFoam_1_1eqnOfState_a522e27c192b854c825fdf6680ec42ef6} 
+\index{Foam::eqnOfState@{Foam::eqnOfState}!calcRhoFromPT@{calcRhoFromPT}}
+\index{calcRhoFromPT@{calcRhoFromPT}!Foam::eqnOfState@{Foam::eqnOfState}}
+\doxysubsubsection{\texorpdfstring{calcRhoFromPT()}{calcRhoFromPT()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{void}} Foam\+::eqn\+Of\+State\+::calc\+Rho\+From\+PT (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{cellI,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{p,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{T,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{rho }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Compute density from pressure and temperature. 
+
+Computes $ \rho = \rho(p, T) $ at Gauss points of a cell.
+
+
+\begin{DoxyParams}{Parameters}
+{\em cellI} & Cell index \\
+\hline
+{\em p} & Pressure field \\
+\hline
+{\em T} & Temperature field \\
+\hline
+{\em rho} & Density field to be written \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented in \mbox{\hyperlink{classFoam_1_1idealGas_a86fa5a5c8915562bb6ff52e58fdb219c}{Foam\+::ideal\+Gas}}, and \mbox{\hyperlink{classFoam_1_1idealGas_a89a573b91a31ce9a090a165ac3682e71}{Foam\+::ideal\+Gas}}.
+
+\Hypertarget{classFoam_1_1eqnOfState_a65f54ba85805d32858e1397f16c71c67}\label{classFoam_1_1eqnOfState_a65f54ba85805d32858e1397f16c71c67} 
+\index{Foam::eqnOfState@{Foam::eqnOfState}!calcPFromRhoT@{calcPFromRhoT}}
+\index{calcPFromRhoT@{calcPFromRhoT}!Foam::eqnOfState@{Foam::eqnOfState}}
+\doxysubsubsection{\texorpdfstring{calcPFromRhoT()}{calcPFromRhoT()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{void}} Foam\+::eqn\+Of\+State\+::calc\+PFrom\+RhoT (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{cellI,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{rho,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{T,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{p }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Compute pressure from density and temperature. 
+
+Computes $ p = p(\rho, T) $ at Gauss points of a cell. 
+
+Reimplemented in \mbox{\hyperlink{classFoam_1_1idealGas_a4cb43ce4718b44356eb61c6a9b858819}{Foam\+::ideal\+Gas}}, and \mbox{\hyperlink{classFoam_1_1idealGas_a41649fd5126ddcc64b7a65b511a3ada0}{Foam\+::ideal\+Gas}}.
+
+\Hypertarget{classFoam_1_1eqnOfState_ab66dce55045f7d82adcc73a81004888a}\label{classFoam_1_1eqnOfState_ab66dce55045f7d82adcc73a81004888a} 
+\index{Foam::eqnOfState@{Foam::eqnOfState}!calcTFromPRho@{calcTFromPRho}}
+\index{calcTFromPRho@{calcTFromPRho}!Foam::eqnOfState@{Foam::eqnOfState}}
+\doxysubsubsection{\texorpdfstring{calcTFromPRho()}{calcTFromPRho()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{void}} Foam\+::eqn\+Of\+State\+::calc\+TFrom\+PRho (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{cellI,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{p,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{rho,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{T }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Compute temperature from pressure and density. 
+
+Computes $ T = T(p, \rho) $ at Gauss points of a cell. 
+
+Reimplemented in \mbox{\hyperlink{classFoam_1_1idealGas_a452ba917bb70980807806c5077fb7e79}{Foam\+::ideal\+Gas}}, and \mbox{\hyperlink{classFoam_1_1idealGas_a4c8bf2ce8706e734b5362a094a7a220e}{Foam\+::ideal\+Gas}}.
+
+\Hypertarget{classFoam_1_1eqnOfState_a3291a187ff233d34e8fc78fd9a1fbca6}\label{classFoam_1_1eqnOfState_a3291a187ff233d34e8fc78fd9a1fbca6} 
+\index{Foam::eqnOfState@{Foam::eqnOfState}!canCalcRhoFromPT@{canCalcRhoFromPT}}
+\index{canCalcRhoFromPT@{canCalcRhoFromPT}!Foam::eqnOfState@{Foam::eqnOfState}}
+\doxysubsubsection{\texorpdfstring{canCalcRhoFromPT()}{canCalcRhoFromPT()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{bool}} Foam\+::eqn\+Of\+State\+::can\+Calc\+Rho\+From\+PT (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Return true if rho(p,\+T) is supported. 
+
+
+
+Reimplemented in \mbox{\hyperlink{classFoam_1_1idealGas_a2ca9b5548e826e94de1188d62d6078fe}{Foam\+::ideal\+Gas}}, and \mbox{\hyperlink{classFoam_1_1idealGas_a2ca9b5548e826e94de1188d62d6078fe}{Foam\+::ideal\+Gas}}.
+
+\Hypertarget{classFoam_1_1eqnOfState_a8cd5ba40878162951db68ce90e4a46ae}\label{classFoam_1_1eqnOfState_a8cd5ba40878162951db68ce90e4a46ae} 
+\index{Foam::eqnOfState@{Foam::eqnOfState}!canCalcPFromRhoT@{canCalcPFromRhoT}}
+\index{canCalcPFromRhoT@{canCalcPFromRhoT}!Foam::eqnOfState@{Foam::eqnOfState}}
+\doxysubsubsection{\texorpdfstring{canCalcPFromRhoT()}{canCalcPFromRhoT()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{bool}} Foam\+::eqn\+Of\+State\+::can\+Calc\+PFrom\+RhoT (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Return true if p(rho,\+T) is supported. 
+
+
+
+Reimplemented in \mbox{\hyperlink{classFoam_1_1idealGas_afe70c39372a63474e3522510a5780456}{Foam\+::ideal\+Gas}}, and \mbox{\hyperlink{classFoam_1_1idealGas_afe70c39372a63474e3522510a5780456}{Foam\+::ideal\+Gas}}.
+
+\Hypertarget{classFoam_1_1eqnOfState_ac78add49a308131d2843c620930fce74}\label{classFoam_1_1eqnOfState_ac78add49a308131d2843c620930fce74} 
+\index{Foam::eqnOfState@{Foam::eqnOfState}!canCalcTFromPRho@{canCalcTFromPRho}}
+\index{canCalcTFromPRho@{canCalcTFromPRho}!Foam::eqnOfState@{Foam::eqnOfState}}
+\doxysubsubsection{\texorpdfstring{canCalcTFromPRho()}{canCalcTFromPRho()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{bool}} Foam\+::eqn\+Of\+State\+::can\+Calc\+TFrom\+PRho (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Return true if T(p,rho) is supported. 
+
+
+
+Reimplemented in \mbox{\hyperlink{classFoam_1_1idealGas_a37d8f423c6552da1206d3994e6c1b5ce}{Foam\+::ideal\+Gas}}, and \mbox{\hyperlink{classFoam_1_1idealGas_a37d8f423c6552da1206d3994e6c1b5ce}{Foam\+::ideal\+Gas}}.
+
+\Hypertarget{classFoam_1_1eqnOfState_a0d4f0890fe5145ecaa8bdb16897773e4}\label{classFoam_1_1eqnOfState_a0d4f0890fe5145ecaa8bdb16897773e4} 
+\index{Foam::eqnOfState@{Foam::eqnOfState}!isIdealGas@{isIdealGas}}
+\index{isIdealGas@{isIdealGas}!Foam::eqnOfState@{Foam::eqnOfState}}
+\doxysubsubsection{\texorpdfstring{isIdealGas()}{isIdealGas()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{bool}} Foam\+::eqn\+Of\+State\+::is\+Ideal\+Gas (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Ideal-\/gas–type EOS. 
+
+
+
+Reimplemented in \mbox{\hyperlink{classFoam_1_1idealGas_a13217f8be4087537ea9304d94dedd7a7}{Foam\+::ideal\+Gas}}, and \mbox{\hyperlink{classFoam_1_1idealGas_a13217f8be4087537ea9304d94dedd7a7}{Foam\+::ideal\+Gas}}.
+
+\Hypertarget{classFoam_1_1eqnOfState_ae9c9acc43e32e77440222dc2b2d3ec8a}\label{classFoam_1_1eqnOfState_ae9c9acc43e32e77440222dc2b2d3ec8a} 
+\index{Foam::eqnOfState@{Foam::eqnOfState}!isIncompressible@{isIncompressible}}
+\index{isIncompressible@{isIncompressible}!Foam::eqnOfState@{Foam::eqnOfState}}
+\doxysubsubsection{\texorpdfstring{isIncompressible()}{isIncompressible()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{bool}} Foam\+::eqn\+Of\+State\+::is\+Incompressible (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Incompressible EOS. 
+
+\Hypertarget{classFoam_1_1eqnOfState_a4e8808415e2f46a0e000e9d5337565f2}\label{classFoam_1_1eqnOfState_a4e8808415e2f46a0e000e9d5337565f2} 
+\index{Foam::eqnOfState@{Foam::eqnOfState}!isRealGas@{isRealGas}}
+\index{isRealGas@{isRealGas}!Foam::eqnOfState@{Foam::eqnOfState}}
+\doxysubsubsection{\texorpdfstring{isRealGas()}{isRealGas()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{bool}} Foam\+::eqn\+Of\+State\+::is\+Real\+Gas (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Real-\/gas EOS. 
+
+\Hypertarget{classFoam_1_1eqnOfState_a5cdac2918c31d6362f277a19dba79d08}\label{classFoam_1_1eqnOfState_a5cdac2918c31d6362f277a19dba79d08} 
+\index{Foam::eqnOfState@{Foam::eqnOfState}!isThermalPerfectGas@{isThermalPerfectGas}}
+\index{isThermalPerfectGas@{isThermalPerfectGas}!Foam::eqnOfState@{Foam::eqnOfState}}
+\doxysubsubsection{\texorpdfstring{isThermalPerfectGas()}{isThermalPerfectGas()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{bool}} Foam\+::eqn\+Of\+State\+::is\+Thermal\+Perfect\+Gas (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Kinetic-\/theory / thermal-\/perfect EOS. 
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classFoam_1_1eqnOfState_a2705e42632aec45b98827f341b07a467}\label{classFoam_1_1eqnOfState_a2705e42632aec45b98827f341b07a467} 
+\index{Foam::eqnOfState@{Foam::eqnOfState}!name\_@{name\_}}
+\index{name\_@{name\_}!Foam::eqnOfState@{Foam::eqnOfState}}
+\doxysubsubsection{\texorpdfstring{name\_}{name\_}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{word}} Foam\+::eqn\+Of\+State\+::name\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Model name (used for logging and diagnostics) 
+
+\Hypertarget{classFoam_1_1eqnOfState_ab7c53e663dda7bef3d493a6dac5e14ff}\label{classFoam_1_1eqnOfState_ab7c53e663dda7bef3d493a6dac5e14ff} 
+\index{Foam::eqnOfState@{Foam::eqnOfState}!dict\_@{dict\_}}
+\index{dict\_@{dict\_}!Foam::eqnOfState@{Foam::eqnOfState}}
+\doxysubsubsection{\texorpdfstring{dict\_}{dict\_}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}} Foam\+::eqn\+Of\+State\+::dict\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Coefficients dictionary (owned, immutable snapshot) 
+
+\Hypertarget{classFoam_1_1eqnOfState_ad70826abcd1926c0c49c81de632912b1}\label{classFoam_1_1eqnOfState_ad70826abcd1926c0c49c81de632912b1} 
+\index{Foam::eqnOfState@{Foam::eqnOfState}!mesh\_@{mesh\_}}
+\index{mesh\_@{mesh\_}!Foam::eqnOfState@{Foam::eqnOfState}}
+\doxysubsubsection{\texorpdfstring{mesh\_}{mesh\_}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \& Foam\+::eqn\+Of\+State\+::mesh\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Reference to DG geometric mesh (non-\/owning) 
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/nam-\/ha-\/tran/\+Open\+FOAM/\+DGFoam/src/thermophysical\+Models/basic/eqn\+Of\+State/\mbox{\hyperlink{basic_2eqnOfState_2eqnOfState_8H}{eqn\+Of\+State.\+H}}\item 
+/home/nam-\/ha-\/tran/\+Open\+FOAM/\+DGFoam/src/thermophysical\+Models/ln\+Include/\mbox{\hyperlink{lnInclude_2eqnOfState_8H}{eqn\+Of\+State.\+H}}\item 
+/home/nam-\/ha-\/tran/\+Open\+FOAM/\+DGFoam/src/thermophysical\+Models/basic/eqn\+Of\+State/\mbox{\hyperlink{basic_2eqnOfState_2eqnOfState_8C}{eqn\+Of\+State.\+C}}\item 
+/home/nam-\/ha-\/tran/\+Open\+FOAM/\+DGFoam/src/thermophysical\+Models/ln\+Include/\mbox{\hyperlink{lnInclude_2eqnOfState_8C}{eqn\+Of\+State.\+C}}\end{DoxyCompactItemize}

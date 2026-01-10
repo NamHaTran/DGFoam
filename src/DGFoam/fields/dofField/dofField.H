@@ -5,7 +5,7 @@
     \\  /    A nd           | www.openfoam.com
      \\/     M anipulation  |
 -------------------------------------------------------------------------------
-    Copyright (C) 2011-2016 OpenFOAM Foundation
+    Copyright (C) 2015-2024 OpenCFD Ltd.
     Copyright (C) 2024-2025 Ha Nam Tran
 -------------------------------------------------------------------------------
 License
@@ -28,7 +28,10 @@ Class
     Foam::dofField<Type>
 
 Description
-    Store degrees of freedom (Dof) of given Type for a DG cell.
+    Degree-of-freedom field for DG discretization.
+
+    Stores all cell-wise degrees of freedom and provides a bridge
+    between DG DoF storage and OpenFOAM volField representation.
 
 SourceFiles
     dofField.C
@@ -50,72 +53,132 @@ namespace Foam
                          Class dofField Declaration
 \*---------------------------------------------------------------------------*/
 
+/**
+ * \class Foam::dofField
+ * \brief DG degree-of-freedom field
+ *
+ * \tparam Type Field value type (e.g. scalar, vector, tensor)
+ *
+ * \details
+ * dofField stores degrees of freedom (DoFs) for all cells in a DG mesh.
+ *
+ * The class maintains:
+ * - Cell-local DoF storage via cellDof<Type>
+ * - A set of OpenFOAM volFields, one per DoF index
+ *
+ * The OpenFOAM volFields allow DG DoF data to be written to disk,
+ * visualized, or post-processed using standard OpenFOAM tools.
+ *
+ * The class does not perform any numerical operations; it only
+ * manages data storage and synchronization between DG and FV views.
+ */
 template<class Type>
 class dofField
 {
 private:
 
-    //- Reference to DG geometric mesh
-    const dgGeomMesh& dgMesh_;
+    //====================================================================//
+    //                           Data members
+    //====================================================================//
 
-    //- List of cellDoF objects (local DoF storage)
-    List<cellDof<Type>> cellDofs_;
+        /** Reference to DG geometric mesh */
+        const dgGeomMesh& dgMesh_;
 
-    //- Number of cells
-    label nCells_;
+        /** Cell-local DoF storage */
+        List<cellDof<Type>> cellDofs_;
 
-    //- List of OpenFOAM volFields, one field per DoF index
-    List<autoPtr<GeometricField<Type, fvPatchField, volMesh>>> foamFields_;
+        /** Number of cells in the mesh */
+        label nCells_;
 
-    //- Number of DoFs for each cell
-    List<label> dofPerCell_;
+        /**
+         * OpenFOAM volFields corresponding to each DoF index.
+         *
+         * Each volField stores one DoF component over all cells.
+         */
+        List<autoPtr<GeometricField<Type, fvPatchField, volMesh>>> foamFields_;
 
-    //- Maximum DoF across all cells
-    label maxDoF_;
+        /** Number of DoFs per cell */
+        List<label> dofPerCell_;
+
+        /** Maximum number of DoFs across all cells */
+        label maxDoF_;
 
 public:
 
-    // Constructors ------------------------------------------------------------
+    //====================================================================//
+    //                           Constructors
+    //====================================================================//
 
-    //- Construct from field base name, mesh and read/write options
-    dofField
-    (
-        const word& name,
-        const fileName& instance,
-        IOobject::readOption rOpt,
-        IOobject::writeOption wOpt,
-        const dgGeomMesh& mesh
-    );
+        /**
+         * \brief Construct from field name and I/O options
+         *
+         * Creates OpenFOAM volFields corresponding to DG DoFs
+         * and reads data according to the provided IOobject options.
+         */
+        dofField
+        (
+            const word& name,
+            const fileName& instance,
+            IOobject::readOption rOpt,
+            IOobject::writeOption wOpt,
+            const dgGeomMesh& mesh
+        );
 
-    // Access -----------------------------------------------------------------
+        /**
+         * \brief Construct zero-initialized DoF field
+         *
+         * Creates an empty DoF field associated with the given
+         * DG geometric mesh.
+         */
+        dofField
+        (
+            const dgGeomMesh& mesh
+        );
 
-    inline const List<cellDof<Type>>& cellDofList() const
-    {
-        return cellDofs_;
-    }
+    //====================================================================//
+    //                              Access
+    //====================================================================//
 
-    inline List<cellDof<Type>>& cellDofList()
-    {
-        return cellDofs_;
-    }
+        /** Return const access to cell DoF list */
+        inline const List<cellDof<Type>>& cellDofList() const
+        {
+            return cellDofs_;
+        }
 
-    inline cellDof<Type>& operator[](const label i)
-    {
-        return cellDofs_[i];
-    }
+        /** Return non-const access to cell DoF list */
+        inline List<cellDof<Type>>& cellDofList()
+        {
+            return cellDofs_;
+        }
 
-    inline const cellDof<Type>& operator[](const label i) const
-    {
-        return cellDofs_[i];
-    }
+        /** Return non-const access to DoFs of a given cell */
+        inline cellDof<Type>& operator[](const label i)
+        {
+            return cellDofs_[i];
+        }
 
-    // Member Functions --------------------------------------------------------
+        /** Return const access to DoFs of a given cell */
+        inline const cellDof<Type>& operator[](const label i) const
+        {
+            return cellDofs_[i];
+        }
 
-    //- Update OpenFOAM volFields from DG DoF values
-    void updateFoamFields();
+    //====================================================================//
+    //                         Synchronization
+    //====================================================================//
 
-    //- Write volFields to disk
-    void write() const;
+        /**
+         * \brief Update OpenFOAM volFields from DG DoF values
+         *
+         * Copies cell-local DG DoF values into the corresponding
+         * OpenFOAM volFields.
+         */
+        void updateFoamFields();
+
+        /**
+         * \brief Write OpenFOAM volFields to disk
+         */
+        void write() const;
 };
 
 } // End namespace Foam

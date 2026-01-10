@@ -1,0 +1,33 @@
+\doxysection{/home/nam-\/ha-\/tran/\+Open\+FOAM/\+DGFoam/applications/solvers/compressible/\+DGHyper\+Sonic\+Foam/create\+DGFields.H File Reference}
+\hypertarget{createDGFields_8H}{}\label{createDGFields_8H}\index{/home/nam-\/ha-\/tran/OpenFOAM/DGFoam/applications/solvers/compressible/DGHyperSonicFoam/createDGFields.H@{/home/nam-\/ha-\/tran/OpenFOAM/DGFoam/applications/solvers/compressible/DGHyperSonicFoam/createDGFields.H}}
+{\ttfamily \#include "{}create\+Conservative\+Fields.\+H"{}}\newline
+{\ttfamily \#include "{}create\+Primary\+Fields.\+H"{}}\newline
+{\ttfamily \#include "{}conservative\+To\+Primary.\+H"{}}\newline
+Include dependency graph for create\+DGFields.\+H\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{createDGFields_8H__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=265pt]{createDGFields_8H__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+Info$<$$<$ "{}Reading thermophysical properties\textbackslash{}n"{}$<$$<$ endl;IOdictionary thermo\+Dict(IOobject("{}thermophysical\+Properties"{}, run\+Time.\+constant(), mesh, IOobject\+::\+MUST\+\_\+\+READ, IOobject\+::\+NO\+\_\+\+WRITE));dictionary thermo\+Type(thermo\+Dict.\+sub\+Dict("{}dg\+Thermo"{}));word dg\+Thermo\+Type\+Name(thermo\+Type.\+lookup("{}type"{}));auto\+Ptr$<$ dg\+Thermo\+Conservative $>$ \mbox{\hyperlink{createDGFields_8H_a9925ad70d4a9bc708442f7d79d009002}{thermo}} = dg\+Thermo\+Conservative\+::\+New(dg\+Thermo\+Type\+Name, thermo\+Dict, dg\+Mesh)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Variable Documentation}
+\Hypertarget{createDGFields_8H_a9925ad70d4a9bc708442f7d79d009002}\label{createDGFields_8H_a9925ad70d4a9bc708442f7d79d009002} 
+\index{createDGFields.H@{createDGFields.H}!thermo@{thermo}}
+\index{thermo@{thermo}!createDGFields.H@{createDGFields.H}}
+\doxysubsubsection{\texorpdfstring{thermo}{thermo}}
+{\footnotesize\ttfamily Info$<$$<$ "{}Reading thermophysical properties\textbackslash{}n"{} $<$$<$ endl;IOdictionary thermo\+Dict( IOobject ( "{}thermophysical\+Properties"{}, run\+Time.\+constant(), mesh, IOobject\+::\+MUST\+\_\+\+READ, IOobject\+::\+NO\+\_\+\+WRITE ));dictionary thermo\+Type(thermo\+Dict.\+sub\+Dict("{}dg\+Thermo"{}));word dg\+Thermo\+Type\+Name(thermo\+Type.\+lookup("{}type"{}));auto\+Ptr$<$dg\+Thermo\+Conservative$>$ thermo = dg\+Thermo\+Conservative\+::\+New(dg\+Thermo\+Type\+Name, thermo\+Dict, dg\+Mesh)}
+

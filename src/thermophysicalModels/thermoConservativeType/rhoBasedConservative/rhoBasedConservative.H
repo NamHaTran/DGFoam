@@ -27,14 +27,6 @@ Class
 Description
     Conservative thermodynamics model for DG compressible solvers.
 
-    Reconstructs all primitive thermo quantities (T, p, e, h, Cp, Cv, gamma,
-    a, mu, kappa, Pr) at each Gauss point from the conservative fields
-    rho, rhoU, and E. Supports ideal-gas and thermal-perfect-gas EOS and
-    compatible thermo/transport/energy laws.
-
-    Intended for DG solvers using the conservative Navier–Stokes formulation.
-    Not applicable to primitive-variable or incompressible formulations.
-
 SourceFiles
     rhoBasedConservative.C
 
@@ -53,9 +45,42 @@ namespace Foam
 {
 
 /*---------------------------------------------------------------------------*\
-                    Class rhoBasedConservative Declaration
+                  Class rhoBasedConservative Declaration
 \*---------------------------------------------------------------------------*/
 
+/**
+ * \class Foam::rhoBasedConservative
+ * \brief Density-based conservative thermodynamics for DG solvers
+ *
+ * \details
+ * rhoBasedConservative reconstructs all primitive thermodynamic quantities
+ * at Gauss points from the conservative variables
+ * \f$(\rho, \rho\mathbf{U}, E)\f$.
+ *
+ * The reconstructed quantities include:
+ * \li Temperature \f$T\f$
+ * \li Pressure \f$p\f$
+ * \li Internal energy \f$e\f$
+ * \li Enthalpy \f$h\f$
+ * \li Heat capacities \f$C_p\f$, \f$C_v\f$
+ * \li Heat-capacity ratio \f$\gamma\f$
+ * \li Speed of sound \f$a\f$
+ * \li Transport properties \f$\mu\f$, \f$\kappa\f$, \f$\mathrm{Pr}\f$
+ *
+ * All operations are performed locally at Gauss points of each DG cell,
+ * which is consistent with high-order discontinuous Galerkin discretizations.
+ *
+ * \par Supported model combinations
+ * \li Ideal-gas and thermal-perfect-gas equations of state
+ * \li Compatible thermoLaw, transportLaw, and energy models
+ *
+ * \par Limitations
+ * \li Intended for conservative Navier–Stokes formulations
+ * \li Not applicable to primitive-variable formulations
+ * \li Not applicable to incompressible models
+ *
+ * \ingroup grpDGThermo
+ */
 class rhoBasedConservative
 :
     public dgThermoConservative
@@ -65,23 +90,32 @@ public:
     //- Runtime type information
     TypeName("rhoBasedConservative");
 
-    //- Runtime selection
+    //- Runtime selection table
     declareRunTimeSelectionTable
     (
         autoPtr,
         rhoBasedConservative,
         dictionary,
-        (const word& name, const dictionary& dict, const dgGeomMesh& mesh),
+        (
+            const word& name,
+            const dictionary& dict,
+            const dgGeomMesh& mesh
+        ),
         (name, dict, mesh)
     );
 
-
     // Constructors
 
-        //- Disallow default constructor
+        /** Disallow default construction */
         rhoBasedConservative() = delete;
 
-        //- Construct from name, dictionary and DG mesh
+        /**
+         * \brief Construct from name, dictionary, and DG mesh
+         *
+         * \param name Model name
+         * \param dict Coefficient dictionary
+         * \param mesh DG geometric mesh
+         */
         rhoBasedConservative
         (
             const word& name,
@@ -89,24 +123,39 @@ public:
             const dgGeomMesh& mesh
         );
 
-    //- Destructor
+    /** Virtual destructor */
     virtual ~rhoBasedConservative() = default;
 
 
     // Model setup interface
 
-        //- Construct EOS, thermo, transport and energy models
+        /**
+         * \brief Construct EOS, thermo, transport, and energy models
+         *
+         * Creates all sub-models required to reconstruct the thermodynamic
+         * state from conservative variables.
+         */
         virtual void initModels() override;
 
-        //- Validate model combination (EOS/thermo/transport/energy)
+        /**
+         * \brief Validate model combination
+         *
+         * Checks physical and mathematical consistency between the selected
+         * EOS, thermoLaw, transportLaw, and energy models.
+         */
         virtual void validateModels() override;
 
 
     // Core API
 
-        //- Update thermo state (cell-wise interface)
-        //  - For now this forwards to correct(), more optimized
-        //    per-cell version can be added later if needed
+        /**
+         * \brief Update thermodynamic state for a given cell
+         *
+         * Reconstructs all primitive thermodynamic quantities at Gauss points
+         * for the specified cell.
+         *
+         * \param cellID Cell index
+         */
         virtual void update(const label& cellID) override;
 };
 

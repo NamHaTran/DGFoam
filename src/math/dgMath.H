@@ -35,8 +35,11 @@ Description
 // For gaussIntegral
 #include "dgIntegralMath.H"
 
-// Face Gauss Field math
+// For Gauss Field math
 #include "dgGaussFieldMath.H"
+
+// For cellDof math
+#include "dgCellDofMath .H"
 
 #endif
 

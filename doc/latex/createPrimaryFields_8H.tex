@@ -1,0 +1,119 @@
+\doxysection{/home/nam-\/ha-\/tran/\+Open\+FOAM/\+DGFoam/applications/solvers/compressible/\+DGHyper\+Sonic\+Foam/create\+Primary\+Fields.H File Reference}
+\hypertarget{createPrimaryFields_8H}{}\label{createPrimaryFields_8H}\index{/home/nam-\/ha-\/tran/OpenFOAM/DGFoam/applications/solvers/compressible/DGHyperSonicFoam/createPrimaryFields.H@{/home/nam-\/ha-\/tran/OpenFOAM/DGFoam/applications/solvers/compressible/DGHyperSonicFoam/createPrimaryFields.H}}
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=265pt]{createPrimaryFields_8H__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+Info$<$$<$ "{}Creating primitive fields\textbackslash{}n"{}$<$$<$ endl;dg\+Field$<$ scalar $>$ \mbox{\hyperlink{createPrimaryFields_8H_ad37d69387e92d6f1424be40cbca2fbec}{p}} (IOobject("{}p"{}, run\+Time.\+time\+Name(), mesh, IOobject\+::\+NO\+\_\+\+READ, IOobject\+::\+AUTO\+\_\+\+WRITE), dg\+Mesh, false)
+\item 
+dg\+Field$<$ scalar $>$ \mbox{\hyperlink{createPrimaryFields_8H_a5b11ecf656fc672596a085cbdca53fae}{T}} (IOobject("{}T"{}, run\+Time.\+time\+Name(), mesh, IOobject\+::\+NO\+\_\+\+READ, IOobject\+::\+AUTO\+\_\+\+WRITE), dg\+Mesh, false)
+\item 
+dg\+Field$<$ vector $>$ \mbox{\hyperlink{createPrimaryFields_8H_acaa7fe8168a3a866f1958b3663d384c6}{U}} (IOobject("{}U"{}, run\+Time.\+time\+Name(), mesh, IOobject\+::\+NO\+\_\+\+READ, IOobject\+::\+AUTO\+\_\+\+WRITE), dg\+Mesh, false)
+\item 
+IOobject \mbox{\hyperlink{createPrimaryFields_8H_aa840cbe83a3a0ff8e8669c570be12e36}{p\+BCIO}} ("{}p\+BC"{}, run\+Time.\+constant(), mesh, IOobject\+::\+MUST\+\_\+\+READ, IOobject\+::\+NO\+\_\+\+WRITE)
+\item 
+auto\+Ptr$<$ dg\+General\+Boundary\+Manager$<$ scalar $>$ $>$ \mbox{\hyperlink{createPrimaryFields_8H_ab66733eba70deaf15cd9dba4994bb0a9}{p\+BC}} (new dg\+General\+Boundary\+Manager$<$ scalar $>$(\mbox{\hyperlink{createPrimaryFields_8H_aa840cbe83a3a0ff8e8669c570be12e36}{p\+BCIO}}, dg\+Mesh))
+\item 
+IOobject \mbox{\hyperlink{createPrimaryFields_8H_a2a440df9a9cef70adadbff5112cce14b}{TBCIO}} ("{}TBC"{}, run\+Time.\+constant(), mesh, IOobject\+::\+MUST\+\_\+\+READ, IOobject\+::\+NO\+\_\+\+WRITE)
+\item 
+auto\+Ptr$<$ dg\+General\+Boundary\+Manager$<$ scalar $>$ $>$ \mbox{\hyperlink{createPrimaryFields_8H_a34c06b68460d8bb341a2d2c0983ebe42}{TBC}} (new dg\+General\+Boundary\+Manager$<$ scalar $>$(\mbox{\hyperlink{createPrimaryFields_8H_a2a440df9a9cef70adadbff5112cce14b}{TBCIO}}, dg\+Mesh))
+\item 
+IOobject \mbox{\hyperlink{createPrimaryFields_8H_a355766ea35245c7440a6efb70c32815e}{rho\+BCIO}} ("{}rho\+BC"{}, run\+Time.\+constant(), mesh, IOobject\+::\+MUST\+\_\+\+READ, IOobject\+::\+NO\+\_\+\+WRITE)
+\item 
+auto\+Ptr$<$ dg\+General\+Boundary\+Manager$<$ scalar $>$ $>$ \mbox{\hyperlink{createPrimaryFields_8H_a9770b66364511350114084472dcf9bb3}{rho\+BC}} (new dg\+General\+Boundary\+Manager$<$ scalar $>$(\mbox{\hyperlink{createPrimaryFields_8H_a355766ea35245c7440a6efb70c32815e}{rho\+BCIO}}, dg\+Mesh))
+\item 
+IOobject \mbox{\hyperlink{createPrimaryFields_8H_a0f9213c0d101cee4235e3ff7b8c36b12}{UBCIO}} ("{}UBC"{}, run\+Time.\+constant(), mesh, IOobject\+::\+MUST\+\_\+\+READ, IOobject\+::\+NO\+\_\+\+WRITE)
+\item 
+auto\+Ptr$<$ dg\+General\+Boundary\+Manager$<$ vector $>$ $>$ \mbox{\hyperlink{createPrimaryFields_8H_a11796c3cd008ccbf3a31743822f757d2}{UBC}} (new dg\+General\+Boundary\+Manager$<$ vector $>$(\mbox{\hyperlink{createPrimaryFields_8H_a0f9213c0d101cee4235e3ff7b8c36b12}{UBCIO}}, dg\+Mesh))
+\item 
+auto\+Ptr$<$ dg\+Processor\+Boundary\+Manager$<$ scalar $>$ $>$ \mbox{\hyperlink{createPrimaryFields_8H_a5df60594314379cce4a947f867c8ebd4}{scalar\+Proc\+BC}} (new dg\+Processor\+Boundary\+Manager$<$ scalar $>$(dg\+Mesh))
+\item 
+auto\+Ptr$<$ dg\+Processor\+Boundary\+Manager$<$ vector $>$ $>$ \mbox{\hyperlink{createPrimaryFields_8H_a6a8583f33a8c105e79c049c64e7de1da}{vector\+Proc\+BC}} (new dg\+Processor\+Boundary\+Manager$<$ vector $>$(dg\+Mesh))
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{createPrimaryFields_8H_ad37d69387e92d6f1424be40cbca2fbec}\label{createPrimaryFields_8H_ad37d69387e92d6f1424be40cbca2fbec} 
+\index{createPrimaryFields.H@{createPrimaryFields.H}!p@{p}}
+\index{p@{p}!createPrimaryFields.H@{createPrimaryFields.H}}
+\doxysubsubsection{\texorpdfstring{p()}{p()}}
+{\footnotesize\ttfamily Info$<$$<$ "{}Creating primitive fields\textbackslash{}n"{}$<$$<$ endl;dg\+Field$<$ scalar $>$ p (\begin{DoxyParamCaption}\item[{IOobject("{}p"{}, run\+Time.\+time\+Name(), mesh, IOobject\+::\+NO\+\_\+\+READ, IOobject\+::\+AUTO\+\_\+\+WRITE)}]{,  }\item[{dg\+Mesh}]{,  }\item[{false}]{ }\end{DoxyParamCaption})}
+
+\Hypertarget{createPrimaryFields_8H_a5b11ecf656fc672596a085cbdca53fae}\label{createPrimaryFields_8H_a5b11ecf656fc672596a085cbdca53fae} 
+\index{createPrimaryFields.H@{createPrimaryFields.H}!T@{T}}
+\index{T@{T}!createPrimaryFields.H@{createPrimaryFields.H}}
+\doxysubsubsection{\texorpdfstring{T()}{T()}}
+{\footnotesize\ttfamily dg\+Field$<$ scalar $>$ T (\begin{DoxyParamCaption}\item[{IOobject("{}T"{}, run\+Time.\+time\+Name(), mesh, IOobject\+::\+NO\+\_\+\+READ, IOobject\+::\+AUTO\+\_\+\+WRITE)}]{,  }\item[{dg\+Mesh}]{,  }\item[{false}]{ }\end{DoxyParamCaption})}
+
+\Hypertarget{createPrimaryFields_8H_acaa7fe8168a3a866f1958b3663d384c6}\label{createPrimaryFields_8H_acaa7fe8168a3a866f1958b3663d384c6} 
+\index{createPrimaryFields.H@{createPrimaryFields.H}!U@{U}}
+\index{U@{U}!createPrimaryFields.H@{createPrimaryFields.H}}
+\doxysubsubsection{\texorpdfstring{U()}{U()}}
+{\footnotesize\ttfamily dg\+Field$<$ vector $>$ U (\begin{DoxyParamCaption}\item[{IOobject("{}U"{}, run\+Time.\+time\+Name(), mesh, IOobject\+::\+NO\+\_\+\+READ, IOobject\+::\+AUTO\+\_\+\+WRITE)}]{,  }\item[{dg\+Mesh}]{,  }\item[{false}]{ }\end{DoxyParamCaption})}
+
+\Hypertarget{createPrimaryFields_8H_aa840cbe83a3a0ff8e8669c570be12e36}\label{createPrimaryFields_8H_aa840cbe83a3a0ff8e8669c570be12e36} 
+\index{createPrimaryFields.H@{createPrimaryFields.H}!pBCIO@{pBCIO}}
+\index{pBCIO@{pBCIO}!createPrimaryFields.H@{createPrimaryFields.H}}
+\doxysubsubsection{\texorpdfstring{pBCIO()}{pBCIO()}}
+{\footnotesize\ttfamily IOobject p\+BCIO (\begin{DoxyParamCaption}\item[{"{}p\+BC"{}}]{,  }\item[{run\+Time.}]{constant(),  }\item[{mesh}]{,  }\item[{IOobject\+::\+MUST\+\_\+\+READ}]{,  }\item[{IOobject\+::\+NO\+\_\+\+WRITE}]{ }\end{DoxyParamCaption})}
+
+\Hypertarget{createPrimaryFields_8H_ab66733eba70deaf15cd9dba4994bb0a9}\label{createPrimaryFields_8H_ab66733eba70deaf15cd9dba4994bb0a9} 
+\index{createPrimaryFields.H@{createPrimaryFields.H}!pBC@{pBC}}
+\index{pBC@{pBC}!createPrimaryFields.H@{createPrimaryFields.H}}
+\doxysubsubsection{\texorpdfstring{pBC()}{pBC()}}
+{\footnotesize\ttfamily auto\+Ptr$<$ dg\+General\+Boundary\+Manager$<$ scalar $>$ $>$ p\+BC (\begin{DoxyParamCaption}\item[{new dg\+General\+Boundary\+Manager$<$ scalar $>$}]{p\+BCIO, dg\+Mesh }\end{DoxyParamCaption})}
+
+\Hypertarget{createPrimaryFields_8H_a2a440df9a9cef70adadbff5112cce14b}\label{createPrimaryFields_8H_a2a440df9a9cef70adadbff5112cce14b} 
+\index{createPrimaryFields.H@{createPrimaryFields.H}!TBCIO@{TBCIO}}
+\index{TBCIO@{TBCIO}!createPrimaryFields.H@{createPrimaryFields.H}}
+\doxysubsubsection{\texorpdfstring{TBCIO()}{TBCIO()}}
+{\footnotesize\ttfamily IOobject TBCIO (\begin{DoxyParamCaption}\item[{"{}TBC"{}}]{,  }\item[{run\+Time.}]{constant(),  }\item[{mesh}]{,  }\item[{IOobject\+::\+MUST\+\_\+\+READ}]{,  }\item[{IOobject\+::\+NO\+\_\+\+WRITE}]{ }\end{DoxyParamCaption})}
+
+\Hypertarget{createPrimaryFields_8H_a34c06b68460d8bb341a2d2c0983ebe42}\label{createPrimaryFields_8H_a34c06b68460d8bb341a2d2c0983ebe42} 
+\index{createPrimaryFields.H@{createPrimaryFields.H}!TBC@{TBC}}
+\index{TBC@{TBC}!createPrimaryFields.H@{createPrimaryFields.H}}
+\doxysubsubsection{\texorpdfstring{TBC()}{TBC()}}
+{\footnotesize\ttfamily auto\+Ptr$<$ dg\+General\+Boundary\+Manager$<$ scalar $>$ $>$ TBC (\begin{DoxyParamCaption}\item[{new dg\+General\+Boundary\+Manager$<$ scalar $>$}]{TBCIO, dg\+Mesh }\end{DoxyParamCaption})}
+
+\Hypertarget{createPrimaryFields_8H_a355766ea35245c7440a6efb70c32815e}\label{createPrimaryFields_8H_a355766ea35245c7440a6efb70c32815e} 
+\index{createPrimaryFields.H@{createPrimaryFields.H}!rhoBCIO@{rhoBCIO}}
+\index{rhoBCIO@{rhoBCIO}!createPrimaryFields.H@{createPrimaryFields.H}}
+\doxysubsubsection{\texorpdfstring{rhoBCIO()}{rhoBCIO()}}
+{\footnotesize\ttfamily IOobject rho\+BCIO (\begin{DoxyParamCaption}\item[{"{}rho\+BC"{}}]{,  }\item[{run\+Time.}]{constant(),  }\item[{mesh}]{,  }\item[{IOobject\+::\+MUST\+\_\+\+READ}]{,  }\item[{IOobject\+::\+NO\+\_\+\+WRITE}]{ }\end{DoxyParamCaption})}
+
+\Hypertarget{createPrimaryFields_8H_a9770b66364511350114084472dcf9bb3}\label{createPrimaryFields_8H_a9770b66364511350114084472dcf9bb3} 
+\index{createPrimaryFields.H@{createPrimaryFields.H}!rhoBC@{rhoBC}}
+\index{rhoBC@{rhoBC}!createPrimaryFields.H@{createPrimaryFields.H}}
+\doxysubsubsection{\texorpdfstring{rhoBC()}{rhoBC()}}
+{\footnotesize\ttfamily auto\+Ptr$<$ dg\+General\+Boundary\+Manager$<$ scalar $>$ $>$ rho\+BC (\begin{DoxyParamCaption}\item[{new dg\+General\+Boundary\+Manager$<$ scalar $>$}]{rho\+BCIO, dg\+Mesh }\end{DoxyParamCaption})}
+
+\Hypertarget{createPrimaryFields_8H_a0f9213c0d101cee4235e3ff7b8c36b12}\label{createPrimaryFields_8H_a0f9213c0d101cee4235e3ff7b8c36b12} 
+\index{createPrimaryFields.H@{createPrimaryFields.H}!UBCIO@{UBCIO}}
+\index{UBCIO@{UBCIO}!createPrimaryFields.H@{createPrimaryFields.H}}
+\doxysubsubsection{\texorpdfstring{UBCIO()}{UBCIO()}}
+{\footnotesize\ttfamily IOobject UBCIO (\begin{DoxyParamCaption}\item[{"{}UBC"{}}]{,  }\item[{run\+Time.}]{constant(),  }\item[{mesh}]{,  }\item[{IOobject\+::\+MUST\+\_\+\+READ}]{,  }\item[{IOobject\+::\+NO\+\_\+\+WRITE}]{ }\end{DoxyParamCaption})}
+
+\Hypertarget{createPrimaryFields_8H_a11796c3cd008ccbf3a31743822f757d2}\label{createPrimaryFields_8H_a11796c3cd008ccbf3a31743822f757d2} 
+\index{createPrimaryFields.H@{createPrimaryFields.H}!UBC@{UBC}}
+\index{UBC@{UBC}!createPrimaryFields.H@{createPrimaryFields.H}}
+\doxysubsubsection{\texorpdfstring{UBC()}{UBC()}}
+{\footnotesize\ttfamily auto\+Ptr$<$ dg\+General\+Boundary\+Manager$<$ vector $>$ $>$ UBC (\begin{DoxyParamCaption}\item[{new dg\+General\+Boundary\+Manager$<$ vector $>$}]{UBCIO, dg\+Mesh }\end{DoxyParamCaption})}
+
+\Hypertarget{createPrimaryFields_8H_a5df60594314379cce4a947f867c8ebd4}\label{createPrimaryFields_8H_a5df60594314379cce4a947f867c8ebd4} 
+\index{createPrimaryFields.H@{createPrimaryFields.H}!scalarProcBC@{scalarProcBC}}
+\index{scalarProcBC@{scalarProcBC}!createPrimaryFields.H@{createPrimaryFields.H}}
+\doxysubsubsection{\texorpdfstring{scalarProcBC()}{scalarProcBC()}}
+{\footnotesize\ttfamily auto\+Ptr$<$ dg\+Processor\+Boundary\+Manager$<$ scalar $>$ $>$ scalar\+Proc\+BC (\begin{DoxyParamCaption}\item[{new dg\+Processor\+Boundary\+Manager$<$ scalar $>$}]{dg\+Mesh }\end{DoxyParamCaption})}
+
+\Hypertarget{createPrimaryFields_8H_a6a8583f33a8c105e79c049c64e7de1da}\label{createPrimaryFields_8H_a6a8583f33a8c105e79c049c64e7de1da} 
+\index{createPrimaryFields.H@{createPrimaryFields.H}!vectorProcBC@{vectorProcBC}}
+\index{vectorProcBC@{vectorProcBC}!createPrimaryFields.H@{createPrimaryFields.H}}
+\doxysubsubsection{\texorpdfstring{vectorProcBC()}{vectorProcBC()}}
+{\footnotesize\ttfamily auto\+Ptr$<$ dg\+Processor\+Boundary\+Manager$<$ vector $>$ $>$ vector\+Proc\+BC (\begin{DoxyParamCaption}\item[{new dg\+Processor\+Boundary\+Manager$<$ vector $>$}]{dg\+Mesh }\end{DoxyParamCaption})}
+

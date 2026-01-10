@@ -1,0 +1,225 @@
+\doxysection{transport\+Law.\+H}
+\hypertarget{basic_2transportLaw_2transportLaw_8H_source}{}\label{basic_2transportLaw_2transportLaw_8H_source}\index{/home/nam-\/ha-\/tran/OpenFOAM/DGFoam/src/thermophysicalModels/basic/transportLaw/transportLaw.H@{/home/nam-\/ha-\/tran/OpenFOAM/DGFoam/src/thermophysicalModels/basic/transportLaw/transportLaw.H}}
+\mbox{\hyperlink{basic_2transportLaw_2transportLaw_8H}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*\(\backslash\)}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ \ =========\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ \ \(\backslash\)\(\backslash\)\ \ \ \ \ \ /\ \ F\ ield\ \ \ \ \ \ \ \ \ |\ OpenFOAM:\ The\ Open\ Source\ CFD\ Toolbox}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ \ \ \(\backslash\)\(\backslash\)\ \ \ \ /\ \ \ O\ peration\ \ \ \ \ |}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ \ \ \ \(\backslash\)\(\backslash\)\ \ /\ \ \ \ A\ nd\ \ \ \ \ \ \ \ \ \ \ |\ www.openfoam.com}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ \ \ \ \ \(\backslash\)\(\backslash\)/\ \ \ \ \ M\ anipulation\ \ |}}
+\DoxyCodeLine{00007\ \textcolor{comment}{-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ \ \ \ Copyright\ (C)\ 2011-\/2016\ OpenFOAM\ Foundation}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ \ \ \ Copyright\ (C)\ 2021-\/2025\ OpenCFD\ Ltd.}}
+\DoxyCodeLine{00010\ \textcolor{comment}{-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00011\ \textcolor{comment}{License}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ \ \ \ This\ file\ is\ part\ of\ OpenFOAM.}}
+\DoxyCodeLine{00013\ \textcolor{comment}{}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ \ \ \ OpenFOAM\ is\ free\ software:\ you\ can\ redistribute\ it\ and/or\ modify\ it}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ \ \ \ under\ the\ terms\ of\ the\ GNU\ General\ Public\ License\ as\ published\ by}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ \ \ \ the\ Free\ Software\ Foundation,\ either\ version\ 3\ of\ the\ License,\ or}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ \ \ \ (at\ your\ option)\ any\ later\ version.}}
+\DoxyCodeLine{00018\ \textcolor{comment}{}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ \ \ \ OpenFOAM\ is\ distributed\ in\ the\ hope\ that\ it\ will\ be\ useful,\ but\ WITHOUT}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ \ \ \ ANY\ WARRANTY;\ without\ even\ the\ implied\ warranty\ of\ MERCHANTABILITY\ or}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ \ \ \ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE.\ \ See\ the\ GNU\ General\ Public\ License}}
+\DoxyCodeLine{00022\ \textcolor{comment}{\ \ \ \ for\ more\ details.}}
+\DoxyCodeLine{00023\ \textcolor{comment}{}}
+\DoxyCodeLine{00024\ \textcolor{comment}{\ \ \ \ You\ should\ have\ received\ a\ copy\ of\ the\ GNU\ General\ Public\ License}}
+\DoxyCodeLine{00025\ \textcolor{comment}{\ \ \ \ along\ with\ OpenFOAM.\ \ If\ not,\ see\ <http://www.gnu.org/licenses/>.}}
+\DoxyCodeLine{00026\ \textcolor{comment}{}}
+\DoxyCodeLine{00027\ \textcolor{comment}{Class}}
+\DoxyCodeLine{00028\ \textcolor{comment}{\ \ \ \ Foam::transportLaw}}
+\DoxyCodeLine{00029\ \textcolor{comment}{}}
+\DoxyCodeLine{00030\ \textcolor{comment}{Description}}
+\DoxyCodeLine{00031\ \textcolor{comment}{\ \ \ \ Transport\ laws\ define\ the\ molecular\ transport\ properties\ used\ in\ the}}
+\DoxyCodeLine{00032\ \textcolor{comment}{\ \ \ \ DG\ thermophysical\ system.\ They\ provide\ consistent\ evaluation\ of\ dynamic}}
+\DoxyCodeLine{00033\ \textcolor{comment}{\ \ \ \ viscosity\ μ(T,ρ),\ thermal\ conductivity\ κ(T,ρ),\ Prandtl\ number,\ and}}
+\DoxyCodeLine{00034\ \textcolor{comment}{\ \ \ \ related\ transport\ quantities\ at\ Gauss\ points.}}
+\DoxyCodeLine{00035\ \textcolor{comment}{}}
+\DoxyCodeLine{00036\ \textcolor{comment}{\ \ \ \ Transport\ models\ are\ grouped\ into\ the\ following\ categories:}}
+\DoxyCodeLine{00037\ \textcolor{comment}{}}
+\DoxyCodeLine{00038\ \textcolor{comment}{\ \ \ \ 1.\ Constant-\/transport\ models}}
+\DoxyCodeLine{00039\ \textcolor{comment}{\ \ \ \ -\/\ μ,\ κ,\ and\ Pr\ are\ constant.}}
+\DoxyCodeLine{00040\ \textcolor{comment}{\ \ \ \ -\/\ No\ dependence\ on\ temperature\ or\ density.}}
+\DoxyCodeLine{00041\ \textcolor{comment}{\ \ \ \ -\/\ Useful\ for\ verification\ cases,\ laminar\ flows,\ and\ GPU-\/optimized}}
+\DoxyCodeLine{00042\ \textcolor{comment}{\ \ \ \ simulations.}}
+\DoxyCodeLine{00043\ \textcolor{comment}{\ \ \ \ -\/\ Compatible\ with\ all\ thermo\ and\ EOS\ models.}}
+\DoxyCodeLine{00044\ \textcolor{comment}{}}
+\DoxyCodeLine{00045\ \textcolor{comment}{\ \ \ \ 2.\ Sutherland-\/type\ ideal-\/gas\ transport}}
+\DoxyCodeLine{00046\ \textcolor{comment}{\ \ \ \ -\/\ Viscosity\ follows\ Sutherland's\ law:}}
+\DoxyCodeLine{00047\ \textcolor{comment}{\ \ \ \ μ\ =\ μ₀\ (T/T₀)\string^(3/2)\ (T₀\ +\ S)\ /\ (T\ +\ S).}}
+\DoxyCodeLine{00048\ \textcolor{comment}{\ \ \ \ -\/\ Thermal\ conductivity\ is\ computed\ via\ μ\ Cp\ /\ Pr.}}
+\DoxyCodeLine{00049\ \textcolor{comment}{\ \ \ \ -\/\ Valid\ for\ ideal\ gases\ at\ moderate\ temperatures.}}
+\DoxyCodeLine{00050\ \textcolor{comment}{\ \ \ \ -\/\ Compatible\ with\ perfect-\/gas\ thermo\ and\ ideal-\/gas\ or}}
+\DoxyCodeLine{00051\ \textcolor{comment}{\ \ \ \ thermal-\/perfect-\/gas\ EOS.}}
+\DoxyCodeLine{00052\ \textcolor{comment}{}}
+\DoxyCodeLine{00053\ \textcolor{comment}{\ \ \ \ 3.\ Polynomial\ /\ power-\/law\ transport}}
+\DoxyCodeLine{00054\ \textcolor{comment}{\ \ \ \ -\/\ Transport\ properties\ vary\ with\ temperature\ using\ empirical}}
+\DoxyCodeLine{00055\ \textcolor{comment}{\ \ \ \ correlations,\ e.g.:}}
+\DoxyCodeLine{00056\ \textcolor{comment}{\ \ \ \ μ(T)\ =\ a₀\ +\ a₁\ T\ +\ a₂\ T²\ +\ ...,}}
+\DoxyCodeLine{00057\ \textcolor{comment}{\ \ \ \ μ(T)\ =\ a\ T\string^b.}}
+\DoxyCodeLine{00058\ \textcolor{comment}{\ \ \ \ -\/\ Suitable\ for\ high-\/temperature\ gases,\ combustion,\ and\ fluids}}
+\DoxyCodeLine{00059\ \textcolor{comment}{\ \ \ \ where\ viscosity\ changes\ strongly\ with\ temperature.}}
+\DoxyCodeLine{00060\ \textcolor{comment}{\ \ \ \ -\/\ Works\ with\ perfect-\/gas,\ constant-\/CpCv,\ absolute-\/enthalpy,}}
+\DoxyCodeLine{00061\ \textcolor{comment}{\ \ \ \ and\ selected\ real-\/gas\ thermo\ models.}}
+\DoxyCodeLine{00062\ \textcolor{comment}{}}
+\DoxyCodeLine{00063\ \textcolor{comment}{\ \ \ \ 4.\ Real-\/gas\ transport}}
+\DoxyCodeLine{00064\ \textcolor{comment}{\ \ \ \ -\/\ μ\ and\ κ\ depend\ on\ both\ temperature\ and\ density:}}
+\DoxyCodeLine{00065\ \textcolor{comment}{\ \ \ \ μ\ =\ μ(T,\ ρ),\ \ \ κ\ =\ κ(T,\ ρ).}}
+\DoxyCodeLine{00066\ \textcolor{comment}{\ \ \ \ -\/\ Required\ for\ supercritical\ fluids,\ hydrocarbons,\ cryogenic}}
+\DoxyCodeLine{00067\ \textcolor{comment}{\ \ \ \ fluids,\ and\ high-\/pressure\ real\ gases.}}
+\DoxyCodeLine{00068\ \textcolor{comment}{\ \ \ \ -\/\ Must\ be\ used\ together\ with\ real-\/gas\ EOS\ models}}
+\DoxyCodeLine{00069\ \textcolor{comment}{\ \ \ \ (Peng–Robinson,\ SRK,\ RK,\ etc.).}}
+\DoxyCodeLine{00070\ \textcolor{comment}{}}
+\DoxyCodeLine{00071\ \textcolor{comment}{\ \ \ \ 5.\ Kinetic\ /\ rarefied-\/gas\ transport\ (VHS/VSS/BGK/ES-\/BGK)}}
+\DoxyCodeLine{00072\ \textcolor{comment}{\ \ \ \ -\/\ Based\ on\ kinetic\ theory\ of\ gases.}}
+\DoxyCodeLine{00073\ \textcolor{comment}{\ \ \ \ -\/\ Viscosity\ and\ thermal\ conductivity\ follow\ power-\/law\ relations:}}
+\DoxyCodeLine{00074\ \textcolor{comment}{\ \ \ \ μ\ ∝\ T\string^ω,}}
+\DoxyCodeLine{00075\ \textcolor{comment}{\ \ \ \ κ\ =\ μ\ Cp\ /\ Pr.}}
+\DoxyCodeLine{00076\ \textcolor{comment}{\ \ \ \ -\/\ Includes\ molecular\ parameters\ (collision\ diameter,\ molecular}}
+\DoxyCodeLine{00077\ \textcolor{comment}{\ \ \ \ mass,\ Boltzmann\ constant).}}
+\DoxyCodeLine{00078\ \textcolor{comment}{\ \ \ \ -\/\ Required\ for\ rarefied-\/gas\ flows,\ high-\/altitude\ aerothermodynamics,}}
+\DoxyCodeLine{00079\ \textcolor{comment}{\ \ \ \ and\ BGK-\/type\ models.}}
+\DoxyCodeLine{00080\ \textcolor{comment}{\ \ \ \ -\/\ Compatible\ with\ kinetic\ thermo\ and\ thermal-\/perfect-\/gas\ EOS.}}
+\DoxyCodeLine{00081\ \textcolor{comment}{}}
+\DoxyCodeLine{00082\ \textcolor{comment}{SourceFiles}}
+\DoxyCodeLine{00083\ \textcolor{comment}{\ \ \ \ transportLaw.C}}
+\DoxyCodeLine{00084\ \textcolor{comment}{}}
+\DoxyCodeLine{00085\ \textcolor{comment}{\(\backslash\)*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{00086\ }
+\DoxyCodeLine{00087\ \textcolor{preprocessor}{\#ifndef\ Foam\_transportLaw\_H}}
+\DoxyCodeLine{00088\ \textcolor{preprocessor}{\#define\ Foam\_transportLaw\_H}}
+\DoxyCodeLine{00089\ }
+\DoxyCodeLine{00090\ \textcolor{preprocessor}{\#include\ "{}dictionary.H"{}}}
+\DoxyCodeLine{00091\ \textcolor{preprocessor}{\#include\ "{}autoPtr.H"{}}}
+\DoxyCodeLine{00092\ \textcolor{preprocessor}{\#include\ "{}runTimeSelectionTables.H"{}}}
+\DoxyCodeLine{00093\ \textcolor{preprocessor}{\#include\ "{}scalar.H"{}}}
+\DoxyCodeLine{00094\ \textcolor{preprocessor}{\#include\ "{}word.H"{}}}
+\DoxyCodeLine{00095\ \textcolor{preprocessor}{\#include\ "{}GaussField.H"{}}}
+\DoxyCodeLine{00096\ \textcolor{preprocessor}{\#include\ "{}dgGeomMesh.H"{}}}
+\DoxyCodeLine{00097\ \textcolor{preprocessor}{\#include\ "{}dgMath.H"{}}}
+\DoxyCodeLine{00098\ \textcolor{preprocessor}{\#include\ "{}thermoLaw.H"{}}}
+\DoxyCodeLine{00099\ }
+\DoxyCodeLine{00100\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespaceFoam}{Foam}}}
+\DoxyCodeLine{00101\ \{}
+\DoxyCodeLine{00102\ }
+\DoxyCodeLine{00103\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*\(\backslash\)}}
+\DoxyCodeLine{00104\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Class\ transportLaw\ Declaration}}
+\DoxyCodeLine{00105\ \textcolor{comment}{\(\backslash\)*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{00106\ }
+\DoxyCodeLine{00107\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classFoam_1_1transportLaw}{transportLaw}}}
+\DoxyCodeLine{00108\ \{}
+\DoxyCodeLine{00109\ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00110\ }
+\DoxyCodeLine{00111\ \ \ \ \ \textcolor{comment}{//-\/\ Name\ of\ the\ model\ (for\ logging/debugging)}}
+\DoxyCodeLine{00112\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{word}}\ \mbox{\hyperlink{classFoam_1_1transportLaw_a834b0e9ca3351ca8ffee48f17018b2c2}{name\_}};}
+\DoxyCodeLine{00113\ }
+\DoxyCodeLine{00114\ \ \ \ \ \textcolor{comment}{//-\/\ Coefficient\ dictionary\ snapshot\ (immutable\ after\ construction)}}
+\DoxyCodeLine{00115\ \ \ \ \ \textcolor{comment}{//\ \ Always\ set\ from\ input\ dict;\ never\ empty\ by\ design.}}
+\DoxyCodeLine{00116\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}}\ \mbox{\hyperlink{classFoam_1_1transportLaw_a1caff737ca4620445c9fa1a7615fb152}{coeff\_}};}
+\DoxyCodeLine{00117\ }
+\DoxyCodeLine{00118\ \ \ \ \ \textcolor{comment}{//-\/\ Reference\ to\ DG\ mesh\ (non-\/owning)}}
+\DoxyCodeLine{00119\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dgGeomMesh}}\&\ \mbox{\hyperlink{classFoam_1_1transportLaw_aece30e1a20fef0b6483a3ae6fd2bfd01}{mesh\_}};}
+\DoxyCodeLine{00120\ }
+\DoxyCodeLine{00121\ \ \ \ \ \textcolor{comment}{//-\/\ Reference\ to\ thermoLaw}}
+\DoxyCodeLine{00122\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1thermoLaw}{thermoLaw}}\&\ \mbox{\hyperlink{classFoam_1_1transportLaw_a2f70c28af6cfc3b0bc49211c58c204db}{thermo\_}};}
+\DoxyCodeLine{00123\ }
+\DoxyCodeLine{00124\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00125\ }
+\DoxyCodeLine{00126\ \ \ \ \ \textcolor{comment}{//-\/\ Runtime\ type\ information}}
+\DoxyCodeLine{00127\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1transportLaw_a114a3c15f27535884fc640195c59f094}{TypeName}}(\textcolor{stringliteral}{"{}transportLaw"{}});}
+\DoxyCodeLine{00128\ }
+\DoxyCodeLine{00129\ \ \ \ \ \textcolor{comment}{//-\/\ Runtime\ selection\ table\ for\ dictionary-\/based\ construction}}
+\DoxyCodeLine{00130\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1transportLaw_ada1ee215fe45f31b928526b5096c7291}{declareRunTimeSelectionTable}}}
+\DoxyCodeLine{00131\ \ \ \ \ (}
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{autoPtr}},\ \mbox{\hyperlink{classFoam_1_1transportLaw}{transportLaw}},\ \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}},}
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ (}
+\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{word}}\&\ name,\ }
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}}\&\ dict,\ }
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dgGeomMesh}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{mesh}},}
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1thermoLaw}{thermoLaw}}\&\ \mbox{\hyperlink{createDGFields_8H_a9925ad70d4a9bc708442f7d79d009002}{thermo}}}
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ ),}
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ (name,\ dict,\ \mbox{\hyperlink{classFoam_1_1GaussField}{mesh}},\ \mbox{\hyperlink{createDGFields_8H_a9925ad70d4a9bc708442f7d79d009002}{thermo}})}
+\DoxyCodeLine{00140\ \ \ \ \ );}
+\DoxyCodeLine{00141\ }
+\DoxyCodeLine{00142\ \ \ \ \ \textcolor{comment}{//-\/\ Construct\ from\ model\ name\ and\ coefficient\ dictionary}}
+\DoxyCodeLine{00143\ \ \ \ \ \textcolor{comment}{//\ \ *\ Store\ name\_\ and\ coeff\_\ (no\ validation\ here).}}
+\DoxyCodeLine{00144\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1transportLaw_a36acd0da4907383f6f9de9879c98c752}{transportLaw}}}
+\DoxyCodeLine{00145\ \ \ \ \ (}
+\DoxyCodeLine{00146\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{word}}\&\ name,\ }
+\DoxyCodeLine{00147\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}}\&\ dict,\ }
+\DoxyCodeLine{00148\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dgGeomMesh}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{mesh}},}
+\DoxyCodeLine{00149\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1thermoLaw}{thermoLaw}}\&\ \mbox{\hyperlink{createDGFields_8H_a9925ad70d4a9bc708442f7d79d009002}{thermo}}}
+\DoxyCodeLine{00150\ \ \ \ \ );}
+\DoxyCodeLine{00151\ }
+\DoxyCodeLine{00152\ \ \ \ \ \textcolor{comment}{//-\/\ Disallow\ default\ construction}}
+\DoxyCodeLine{00153\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1transportLaw_a36acd0da4907383f6f9de9879c98c752}{transportLaw}}()\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00154\ }
+\DoxyCodeLine{00155\ \ \ \ \ \textcolor{comment}{//-\/\ Virtual\ destructor}}
+\DoxyCodeLine{00156\ \ \ \ \ \textcolor{keyword}{virtual}\ \mbox{\hyperlink{classFoam_1_1transportLaw_a60847990252efa87d96c80a5dae3832c}{\string~transportLaw}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00157\ }
+\DoxyCodeLine{00158\ \ \ \ \ \textcolor{comment}{//-\/\ Selector:\ create\ a\ transportLaw\ from\ name\ and\ dictionary}}
+\DoxyCodeLine{00159\ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{classFoam_1_1GaussField}{autoPtr<transportLaw>}}\ \mbox{\hyperlink{classFoam_1_1transportLaw_a51dcc79b0772d56ec337365572542ae4}{New}}}
+\DoxyCodeLine{00160\ \ \ \ \ (}
+\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{word}}\&\ name,\ }
+\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}}\&\ dict,\ }
+\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dgGeomMesh}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{mesh}},}
+\DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1thermoLaw}{thermoLaw}}\&\ \mbox{\hyperlink{createDGFields_8H_a9925ad70d4a9bc708442f7d79d009002}{thermo}}}
+\DoxyCodeLine{00165\ \ \ \ \ );}
+\DoxyCodeLine{00166\ }
+\DoxyCodeLine{00167\ \ \ \ \ \textcolor{comment}{//\ Accessors}}
+\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ \textcolor{comment}{//-\/\ Compute\ viscosity\ μ(T)\ [kg/(m·s)]}}
+\DoxyCodeLine{00169\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classFoam_1_1transportLaw_aa92f6a66ed2b5a9c3ae277fc89adb6d3}{calcMu}}}
+\DoxyCodeLine{00170\ \ \ \ \ \ \ \ \ (}
+\DoxyCodeLine{00171\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{cellI}},}
+\DoxyCodeLine{00172\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{GaussField<scalar>}}\&\ \mbox{\hyperlink{namespaceFoam_a5faf7f302ed6c6307e3668365456af74}{T}},}
+\DoxyCodeLine{00173\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{GaussField<scalar>}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{mu}}}
+\DoxyCodeLine{00174\ \ \ \ \ \ \ \ \ )\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{00175\ }
+\DoxyCodeLine{00176\ \ \ \ \ \ \ \ \ \textcolor{comment}{//-\/\ Compute\ thermal\ conductivity\ κ(T)\ [W/(m·K)]}}
+\DoxyCodeLine{00177\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classFoam_1_1transportLaw_a064ee71a1bc9bfff56f81674768d1c2e}{calcKappa}}}
+\DoxyCodeLine{00178\ \ \ \ \ \ \ \ \ (}
+\DoxyCodeLine{00179\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{cellI}},}
+\DoxyCodeLine{00180\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{GaussField<scalar>}}\&\ \mbox{\hyperlink{namespaceFoam_a5faf7f302ed6c6307e3668365456af74}{T}},}
+\DoxyCodeLine{00181\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{GaussField<scalar>}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{kappa}}}
+\DoxyCodeLine{00182\ \ \ \ \ \ \ \ \ )\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{00183\ }
+\DoxyCodeLine{00184\ \ \ \ \ \ \ \ \ \textcolor{comment}{//-\/\ Compute\ Prandtl\ number\ Pr(T)}}
+\DoxyCodeLine{00185\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classFoam_1_1transportLaw_abdae4830f14fd4ddc2b1dd08c5d1330f}{calcPr}}}
+\DoxyCodeLine{00186\ \ \ \ \ \ \ \ \ (}
+\DoxyCodeLine{00187\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{cellI}},}
+\DoxyCodeLine{00188\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{GaussField<scalar>}}\&\ \mbox{\hyperlink{namespaceFoam_a5faf7f302ed6c6307e3668365456af74}{T}},}
+\DoxyCodeLine{00189\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{GaussField<scalar>}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{Pr}}}
+\DoxyCodeLine{00190\ \ \ \ \ \ \ \ \ )\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{00191\ }
+\DoxyCodeLine{00192\ \ \ \ \ \textcolor{comment}{//\ I/O}}
+\DoxyCodeLine{00193\ \ \ \ \ \ \ \ \ \textcolor{comment}{//-\/\ Read\ coefficients\ (default\ =\ do\ nothing)}}
+\DoxyCodeLine{00194\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classFoam_1_1transportLaw_aea1e31e8178680c731a005c4bad6a9ba}{read}}();}
+\DoxyCodeLine{00195\ }
+\DoxyCodeLine{00196\ \ \ \ \ \textcolor{comment}{//\ Transport\ law\ groups}}
+\DoxyCodeLine{00197\ }
+\DoxyCodeLine{00198\ \ \ \ \ \ \ \ \ \textcolor{comment}{//-\/\ Constant\ transport}}
+\DoxyCodeLine{00199\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classFoam_1_1transportLaw_a0625e87d08a373a45069ff5e353b3fcc}{isConstantTransportLaw}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};\ \}}
+\DoxyCodeLine{00200\ }
+\DoxyCodeLine{00201\ \ \ \ \ \ \ \ \ \textcolor{comment}{//-\/\ Sutherland’s\ law\ (ideal-\/gas\ viscosity)}}
+\DoxyCodeLine{00202\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classFoam_1_1transportLaw_a059d69d27fe00936a8be2529dd985580}{isSutherlandTransportLaw}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};\ \}}
+\DoxyCodeLine{00203\ }
+\DoxyCodeLine{00204\ \ \ \ \ \ \ \ \ \textcolor{comment}{//-\/\ Polynomial/Power-\/law\ transport}}
+\DoxyCodeLine{00205\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classFoam_1_1transportLaw_a7e97711314c7ac1ea83bc937ca85a901}{isPolynomialTransportLaw}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};\ \}}
+\DoxyCodeLine{00206\ }
+\DoxyCodeLine{00207\ \ \ \ \ \ \ \ \ \textcolor{comment}{//-\/\ Real-\/gas\ transport}}
+\DoxyCodeLine{00208\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classFoam_1_1transportLaw_ac913fc8a211a3f36291a90cac59687d7}{isRealGasTransportLaw}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};\ \}}
+\DoxyCodeLine{00209\ }
+\DoxyCodeLine{00210\ \ \ \ \ \ \ \ \ \textcolor{comment}{//-\/\ Kinetic\ /\ Rarefied\ transport}}
+\DoxyCodeLine{00211\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classFoam_1_1transportLaw_ac3dd2b5918c70d40f2935af1ce999447}{isKineticTransportLaw}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};\ \}}
+\DoxyCodeLine{00212\ }
+\DoxyCodeLine{00213\ \};}
+\DoxyCodeLine{00214\ }
+\DoxyCodeLine{00215\ \}\ \textcolor{comment}{//\ End\ namespace\ Foam}}
+\DoxyCodeLine{00216\ }
+\DoxyCodeLine{00217\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00218\ }
+\DoxyCodeLine{00219\ \textcolor{comment}{//\ *************************************************************************\ //}}
+
+\end{DoxyCode}

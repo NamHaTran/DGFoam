@@ -28,8 +28,7 @@ Class
     Foam::idealGas
 
 Description
-    Ideal gas equation of state:
-        p = rho * R * T
+    Ideal-gas equation of state.
 
 SourceFiles
     idealGas.C
@@ -45,16 +44,46 @@ namespace Foam
 {
 
 /*---------------------------------------------------------------------------*\
-                           Class idealGas Declaration
+                        Class idealGas Declaration
 \*---------------------------------------------------------------------------*/
 
+/**
+ * \class Foam::idealGas
+ * \brief Ideal-gas equation of state
+ *
+ * \details
+ * idealGas implements the classical ideal-gas equation of state:
+ *
+ * \f[
+ *   p = \rho R T
+ * \f]
+ *
+ * where:
+ * - \f$p\f$ is the thermodynamic pressure
+ * - \f$\rho\f$ is the density
+ * - \f$T\f$ is the temperature
+ * - \f$R\f$ is the specific gas constant
+ *
+ * This EOS:
+ * - Assumes calorically or thermally perfect gas behaviour
+ * - Is compatible with perfect-gas and thermal-perfect-gas thermo laws
+ * - Provides all fundamental thermodynamic relations required by
+ *   dgThermoConservative
+ *
+ * \par Supported relations
+ * \li \f$\rho = \frac{p}{R T}\f$
+ * \li \f$p = \rho R T\f$
+ * \li \f$T = \frac{p}{\rho R}\f$
+ *
+ * \ingroup grpDGThermo
+ */
 class idealGas
 :
     public eqnOfState
 {
 private:
 
-    //- Gas constant R [J/(kg.K)]
+    /** Specific gas constant \f$R\f$ [J/(kg·K)] */
     scalar R_;
 
 public:
@@ -66,11 +95,23 @@ public:
     declareRunTimeSelectionTable
     (
         autoPtr, idealGas, dictionary,
-        (const word& name, const dictionary& dict, const dgGeomMesh& mesh),
+        (
+            const word& name,
+            const dictionary& dict,
+            const dgGeomMesh& mesh
+        ),
         (name, dict, mesh)
     );
 
-    //- Construct from dictionary
+    /**
+     * \brief Construct from dictionary
+     *
+     * Reads the gas constant \f$R\f$ from the coefficient dictionary.
+     *
+     * \param name Model name
+     * \param dict Coefficient dictionary
+     * \param mesh DG geometric mesh
+     */
     idealGas
     (
         const word& name,
@@ -78,20 +119,31 @@ public:
         const dgGeomMesh& mesh
     );
 
-    //- Destructor
+    /** Virtual destructor */
     virtual ~idealGas() = default;
 
-    //- Return gas constant R
+    /**
+     * \brief Return specific gas constant
+     *
+     * \return Gas constant \f$R\f$
+     */
     inline scalar R() const override
     {
         return R_;
     }
 
     //==============================================================//
-    //         Implement ideal-gas specific thermodynamic relations
+    //        Ideal-gas thermodynamic relations
     //==============================================================//
 
-    //- rho = p / (R * T)
+    /**
+     * \brief Compute density from pressure and temperature
+     *
+     * Computes:
+     * \f[
+     *   \rho = \frac{p}{R T}
+     * \f]
+     */
     virtual void calcRhoFromPT
     (
         const label cellI,
@@ -100,7 +152,14 @@ public:
         GaussField<scalar>& rho
     ) const override;
 
-    //- p = rho * R * T
+    /**
+     * \brief Compute pressure from density and temperature
+     *
+     * Computes:
+     * \f[
+     *   p = \rho R T
+     * \f]
+     */
     virtual void calcPFromRhoT
     (
         const label cellI,
@@ -109,7 +168,14 @@ public:
         GaussField<scalar>& p
     ) const override;
 
-    //- T = p / (rho * R)
+    /**
+     * \brief Compute temperature from pressure and density
+     *
+     * Computes:
+     * \f[
+     *   T = \frac{p}{\rho R}
+     * \f]
+     */
     virtual void calcTFromPRho
     (
         const label cellI,
@@ -119,14 +185,20 @@ public:
     ) const override;
 
     //==============================================================//
-    //              Capability flags (ideal gas supports all)
+    //              Capability flags
     //==============================================================//
 
-    virtual bool canCalcRhoFromPT()  const override { return true; }
-    virtual bool canCalcPFromRhoT()  const override { return true; }
-    virtual bool canCalcTFromPRho()  const override { return true; }
+    /** Ideal gas supports \f$\rho(p,T)\f$ */
+    virtual bool canCalcRhoFromPT() const override { return true; }
 
-    bool isIdealGas() const override { return true; }
+    /** Ideal gas supports \f$p(\rho,T)\f$ */
+    virtual bool canCalcPFromRhoT() const override { return true; }
+
+    /** Ideal gas supports \f$T(p,\rho)\f$ */
+    virtual bool canCalcTFromPRho() const override { return true; }
+
+    /** Identify ideal-gas EOS */
+    virtual bool isIdealGas() const override { return true; }
 };
 
 } // End namespace Foam

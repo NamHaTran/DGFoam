@@ -5,8 +5,8 @@
     \\  /    A nd           | www.openfoam.com
      \\/     M anipulation  |
 -------------------------------------------------------------------------------
-    Copyright (C) 2011-2016 OpenFOAM Foundation
-    Copyright (C) 2021-2025 OpenCFD Ltd.
+    Copyright (C) 2015-2024 OpenCFD Ltd.
+    Copyright (C) 2024-2025 Ha Nam Tran
 -------------------------------------------------------------------------------
 License
     This file is part of OpenFOAM.
@@ -28,7 +28,10 @@ Class
     Foam::cellGaussField
 
 Description
-    Field values at Gauss points in a DG cell.
+    Gauss-point field values for a DG cell.
+
+    Stores field values evaluated at Gauss integration points
+    within a single DG cell.
 
 SourceFiles
     cellGaussField.C
@@ -51,158 +54,254 @@ namespace Foam
                        Class cellGaussField Declaration
 \*---------------------------------------------------------------------------*/
 
+/**
+ * \class Foam::cellGaussField
+ * \brief Field values at Gauss points of a DG cell
+ *
+ * \tparam Type Field value type (e.g. scalar, vector, tensor)
+ *
+ * \details
+ * cellGaussField stores field values evaluated at Gauss integration
+ * points inside a single DG cell.
+ *
+ * The values are typically obtained by interpolating cell-local
+ * degrees of freedom (DoF) using basis functions provided by the
+ * DG geometric cell.
+ *
+ * This class does not own geometric data or DoF storage; it holds
+ * non-owning pointers to dgGeomMesh, dgGeomCell, and cellDof<Type>.
+ */
 template<class Type>
 class cellGaussField
 {
 private:
 
-    //- Cell ID in the mesh
-    label cellID_;
+    //====================================================================//
+    //                           Data members
+    //====================================================================//
 
-    //- Pointer to geometric mesh (non-owning)
-    const dgGeomMesh* dgMesh_;
+        /** Cell index in the mesh */
+        label cellID_;
 
-    //- Pointer to geometric cell (non-owning)
-    const dgGeomCell* cell_;
+        /** Pointer to DG geometric mesh (non-owning) */
+        const dgGeomMesh* dgMesh_;
 
-    //- Number of Gauss points in this cell
-    label nGauss_;
+        /** Pointer to DG geometric cell (non-owning) */
+        const dgGeomCell* cell_;
 
-    //- Number of DOFs in this cell
-    label nDof_;
+        /** Number of Gauss points in this cell */
+        label nGauss_;
 
-    //- Pointer to DOF container (non-owning)
-    const cellDof<Type>* dof_;
+        /** Number of degrees of freedom in this cell */
+        label nDof_;
 
-    //- Values at Gauss points
-    List<Type> values_;
+        /** Pointer to cell-local DoF container (non-owning) */
+        const cellDof<Type>* dof_;
+
+        /** Values at Gauss integration points */
+        List<Type> values_;
 
 
 public:
 
-    // Constructors ------------------------------------------------------------
+    //====================================================================//
+    //                           Constructors
+    //====================================================================//
 
-    //- Default constructor
-    cellGaussField();
+        /**
+         * \brief Default constructor
+         *
+         * Required for List containers.
+         */
+        cellGaussField();
 
-    //- Construct from DG mesh + DOF pointer
-    cellGaussField
-    (
-        const dgGeomMesh* dgMesh,
-        const cellDof<Type>* dof
-    );
+        /**
+         * \brief Construct from DG mesh and DoF pointer
+         *
+         * Initializes Gauss-point storage based on the cell geometry
+         * and DoF information.
+         */
+        cellGaussField
+        (
+            const dgGeomMesh* dgMesh,
+            const cellDof<Type>* dof
+        );
 
-    //- Copy constructor
-    cellGaussField(const cellGaussField<Type>& other);
+        /**
+         * \brief Copy constructor
+         */
+        cellGaussField(const cellGaussField<Type>& other);
 
-    //- Construct with uniform initial value
-    cellGaussField
-    (
-        const label cellID,
-        const dgGeomMesh* dgMesh,
-        const Type& initVal
-    );
+        /**
+         * \brief Construct with uniform initial value
+         */
+        cellGaussField
+        (
+            const label cellID,
+            const dgGeomMesh* dgMesh,
+            const Type& initVal
+        );
 
-    //- Construct with zero-initialised values
-    cellGaussField
-    (
-        const label cellID,
-        const dgGeomMesh* dgMesh
-    );
+        /**
+         * \brief Construct with zero-initialized values
+         */
+        cellGaussField
+        (
+            const label cellID,
+            const dgGeomMesh* dgMesh
+        );
 
-    // Access -----------------------------------------------------------------
+    //====================================================================//
+    //                              Access
+    //====================================================================//
 
-    inline Type& operator[](const label gp)
-    {
-        return values_[gp];
-    }
-
-    inline const Type& operator[](const label gp) const
-    {
-        return values_[gp];
-    }
-
-    inline label size() const
-    {
-        return nGauss_;
-    }
-
-    inline label cellID() const
-    {
-        return cellID_;
-    }
-
-    inline const dgGeomMesh* dgMesh() const
-    {
-        if (!dgMesh_)
+        /** Non-const access to Gauss-point value */
+        inline Type& operator[](const label gp)
         {
-            FatalErrorInFunction << "dgMesh_ is null" << abort(FatalError);
+            return values_[gp];
         }
-        return dgMesh_;
-    }
 
-    inline const dgGeomCell* cell() const
-    {
-        if (!cell_)
+        /** Const access to Gauss-point value */
+        inline const Type& operator[](const label gp) const
         {
-            FatalErrorInFunction << "cell_ is null" << abort(FatalError);
+            return values_[gp];
         }
-        return cell_;
-    }
 
-    //- Interpolate DOF → Gauss values
-    void interpolateFromDof();
-
-    // Operators --------------------------------------------------------------
-
-    //- Copy assignment
-    cellGaussField<Type>& operator=
-    (
-        const cellGaussField<Type>& other
-    );
-
-    //- Assign constant value to all Gauss points
-    cellGaussField<Type>& operator=
-    (
-        const Type& value
-    );
-
-    // Printing ---------------------------------------------------------------
-
-    friend Ostream& operator<<
-    (
-        Ostream& os,
-        const cellGaussField<Type>& cgf
-    )
-    {
-        os << "cellGaussField for cell " << cgf.cellID() << ":\n";
-        for (label i = 0; i < cgf.size(); ++i)
+        /** Return number of Gauss points */
+        inline label size() const
         {
-            os << "  Gauss point " << i << ": " << cgf[i] << nl;
+            return nGauss_;
         }
-        return os;
-    }
 
-    // Scalar/vector specialisations declared here
-    cellGaussField<scalar> x() const;
-    cellGaussField<scalar> y() const;
-    cellGaussField<scalar> z() const;
+        /** Return cell index */
+        inline label cellID() const
+        {
+            return cellID_;
+        }
 
-    void setX(const cellGaussField<scalar>& fx);
-    void setY(const cellGaussField<scalar>& fy);
-    void setZ(const cellGaussField<scalar>& fz);
+        /**
+         * \brief Return DG geometric mesh
+         *
+         * Fatal error if pointer is null.
+         */
+        inline const dgGeomMesh* dgMesh() const
+        {
+            if (!dgMesh_)
+            {
+                FatalErrorInFunction << "dgMesh_ is null" << abort(FatalError);
+            }
+            return dgMesh_;
+        }
 
-    void setXYZ
-    (
-        const cellGaussField<scalar>& fx,
-        const cellGaussField<scalar>& fy,
-        const cellGaussField<scalar>& fz
-    );
+        /**
+         * \brief Return DG geometric cell
+         *
+         * Fatal error if pointer is null.
+         */
+        inline const dgGeomCell* cell() const
+        {
+            if (!cell_)
+            {
+                FatalErrorInFunction << "cell_ is null" << abort(FatalError);
+            }
+            return cell_;
+        }
 
-    // Limiting
-    void limitMax(const scalar maxVal);
-    void limitMin(const scalar minVal);
-    void limitRange(const scalar minVal, const scalar maxVal);
+    //====================================================================//
+    //                        Interpolation
+    //====================================================================//
+
+        /**
+         * \brief Interpolate DoF values to Gauss points
+         *
+         * Evaluates field values at Gauss points using basis functions
+         * and the associated DoF values.
+         */
+        void interpolateFromDof();
+
+    //====================================================================//
+    //                           Operators
+    //====================================================================//
+
+        /**
+         * \brief Copy assignment
+         */
+        cellGaussField<Type>& operator=
+        (
+            const cellGaussField<Type>& other
+        );
+
+        /**
+         * \brief Assign uniform value to all Gauss points
+         */
+        cellGaussField<Type>& operator=
+        (
+            const Type& value
+        );
+
+    //====================================================================//
+    //                             Output
+    //====================================================================//
+
+        /**
+         * \brief Stream output of Gauss-point values
+         */
+        friend Ostream& operator<<
+        (
+            Ostream& os,
+            const cellGaussField<Type>& cgf
+        )
+        {
+            os << "cellGaussField for cell " << cgf.cellID() << ":\n";
+            for (label i = 0; i < cgf.size(); ++i)
+            {
+                os << "  Gauss point " << i << ": " << cgf[i] << nl;
+            }
+            return os;
+        }
+
+    //====================================================================//
+    //                    Component access (vector fields)
+    //====================================================================//
+
+        /** Return x-component as scalar Gauss field */
+        cellGaussField<scalar> x() const;
+
+        /** Return y-component as scalar Gauss field */
+        cellGaussField<scalar> y() const;
+
+        /** Return z-component as scalar Gauss field */
+        cellGaussField<scalar> z() const;
+
+        /** Set x-component from scalar Gauss field */
+        void setX(const cellGaussField<scalar>& fx);
+
+        /** Set y-component from scalar Gauss field */
+        void setY(const cellGaussField<scalar>& fy);
+
+        /** Set z-component from scalar Gauss field */
+        void setZ(const cellGaussField<scalar>& fz);
+
+        /** Set all components from scalar Gauss fields */
+        void setXYZ
+        (
+            const cellGaussField<scalar>& fx,
+            const cellGaussField<scalar>& fy,
+            const cellGaussField<scalar>& fz
+        );
+
+    //====================================================================//
+    //                              Limiting
+    //====================================================================//
+
+        /** Limit maximum value */
+        void limitMax(const scalar maxVal);
+
+        /** Limit minimum value */
+        void limitMin(const scalar minVal);
+
+        /** Limit value range */
+        void limitRange(const scalar minVal, const scalar maxVal);
 };
 
 } // End namespace Foam
@@ -217,4 +316,3 @@ public:
 #endif
 
 // ************************************************************************* //
-

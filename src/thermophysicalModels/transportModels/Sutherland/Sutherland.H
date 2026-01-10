@@ -5,15 +5,13 @@
     \\  /    A nd           | www.openfoam.com
      \\/     M anipulation  |
 -------------------------------------------------------------------------------
-    Copyright
--------------------------------------------------------------------------------
 License
     This file is part of OpenFOAM.
 
     OpenFOAM is free software: you can redistribute it and/or modify it
-    under the terms of the GNU General Public License as published by the
-    Free Software Foundation, either version 3 of the License, or (at your
-    option) any later version.
+    under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
 
     OpenFOAM is distributed in the hope that it will be useful, but WITHOUT
     ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
@@ -27,12 +25,7 @@ Class
     Foam::Sutherland
 
 Description
-    Classical Sutherland-law transport model:
-    μ(T)  = As * T^(3/2) / (T + S)
-    Pr    = constant
-    κ(T)  = μ Cp / Pr      (classical Navier–Stokes)
-
-    All evaluations are per-cell GaussField operations.
+    Classical Sutherland-law transport model.
 
 SourceFiles
     Sutherland.C
@@ -50,30 +43,63 @@ namespace Foam
 {
 
 /*---------------------------------------------------------------------------*\
-                           Class Sutherland Declaration
+                        Class Sutherland Declaration
 \*---------------------------------------------------------------------------*/
 
+/**
+ * \class Foam::Sutherland
+ * \brief Classical Sutherland-law viscosity model
+ *
+ * \details
+ * Implements the classical Sutherland law for temperature-dependent
+ * dynamic viscosity:
+ *
+ * \f[
+ *   \mu(T) = A_s \frac{T^{3/2}}{T + S}
+ * \f]
+ *
+ * The Prandtl number is assumed constant:
+ * \f[
+ *   \mathrm{Pr}(T) = \mathrm{Pr}_0
+ * \f]
+ *
+ * Thermal conductivity is evaluated as:
+ * \f[
+ *   \kappa(T) = \frac{\mu(T)\,C_p(T)}{\mathrm{Pr}_0}
+ * \f]
+ *
+ * All evaluations are performed on per-cell GaussField data.
+ *
+ * \ingroup grpDGThermo
+ */
 class Sutherland
 :
     public transportLaw
 {
 private:
 
-    //- Sutherland coefficient [kg/(m·s·sqrt(K))]
-    scalar As_;
+    // Coefficients read from dictionary
 
-    //- Sutherland temperature [K]
-    scalar S_;
+        /** Sutherland coefficient \f$A_s\f$
+            [kg/(m·s·\sqrt{K})] */
+        scalar As_;
 
-    //- Constant Prandtl number [-]
-    scalar Pr0_;
+        /** Sutherland temperature \f$S\f$ [K] */
+        scalar S_;
+
+        /** Constant Prandtl number \f$\mathrm{Pr}_0\f$ [-] */
+        scalar Pr0_;
 
 public:
 
     //- Runtime type information
     TypeName("Sutherland");
 
-    //- Construct from model name and dictionary
+    /**
+     * \brief Construct from dictionary
+     *
+     * Reads Sutherland coefficients and constant Prandtl number.
+     */
     Sutherland
     (
         const word& name,
@@ -82,10 +108,22 @@ public:
         const thermoLaw& thermo
     );
 
-    //- Destructor
+    /** Virtual destructor */
     virtual ~Sutherland() = default;
 
-    //- μ(T)
+
+    //====================================================================//
+    //                   Transport-law interface
+    //====================================================================//
+
+    /**
+     * \brief Compute dynamic viscosity
+     *
+     * Evaluates:
+     * \f[
+     *   \mu(T) = A_s \frac{T^{3/2}}{T + S}
+     * \f]
+     */
     virtual void calcMu
     (
         const label cellI,
@@ -93,7 +131,14 @@ public:
         GaussField<scalar>& mu
     ) const override;
 
-    //- κ(T)
+    /**
+     * \brief Compute thermal conductivity
+     *
+     * Uses:
+     * \f[
+     *   \kappa(T) = \frac{\mu(T)\,C_p(T)}{\mathrm{Pr}_0}
+     * \f]
+     */
     virtual void calcKappa
     (
         const label cellI,
@@ -101,7 +146,14 @@ public:
         GaussField<scalar>& kappa
     ) const override;
 
-    //- Pr(T)
+    /**
+     * \brief Return Prandtl number
+     *
+     * Returns constant:
+     * \f[
+     *   \mathrm{Pr}(T) = \mathrm{Pr}_0
+     * \f]
+     */
     virtual void calcPr
     (
         const label cellI,
@@ -109,15 +161,19 @@ public:
         GaussField<scalar>& Pr
     ) const override;
 
+    /**
+     * \brief Read coefficients from dictionary
+     */
     virtual void read() override;
 
-    //- Set group
+    /**
+     * \brief Identify Sutherland transport model
+     */
     virtual bool isSutherlandTransportLaw() const override { return true; }
 };
 
 } // End namespace Foam
 
 #endif
-
 
 // ************************************************************************* //

@@ -1,0 +1,161 @@
+\doxysection{dg\+General\+PDETerm.\+H}
+\hypertarget{dgPDETerms_2dgGeneralPDETerm_2dgGeneralPDETerm_8H_source}{}\label{dgPDETerms_2dgGeneralPDETerm_2dgGeneralPDETerm_8H_source}\index{/home/nam-\/ha-\/tran/OpenFOAM/DGFoam/src/DGMethod/dgPDETerms/dgGeneralPDETerm/dgGeneralPDETerm.H@{/home/nam-\/ha-\/tran/OpenFOAM/DGFoam/src/DGMethod/dgPDETerms/dgGeneralPDETerm/dgGeneralPDETerm.H}}
+\mbox{\hyperlink{dgPDETerms_2dgGeneralPDETerm_2dgGeneralPDETerm_8H}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*\(\backslash\)}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ \ =========\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ \ \(\backslash\)\(\backslash\)\ \ \ \ \ \ /\ \ F\ ield\ \ \ \ \ \ \ \ \ |\ OpenFOAM:\ The\ Open\ Source\ CFD\ Toolbox}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ \ \ \(\backslash\)\(\backslash\)\ \ \ \ /\ \ \ O\ peration\ \ \ \ \ |}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ \ \ \ \(\backslash\)\(\backslash\)\ \ /\ \ \ \ A\ nd\ \ \ \ \ \ \ \ \ \ \ |\ www.openfoam.com}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ \ \ \ \ \(\backslash\)\(\backslash\)/\ \ \ \ \ M\ anipulation\ \ |}}
+\DoxyCodeLine{00007\ \textcolor{comment}{-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ \ \ \ Copyright\ (C)\ 2015-\/2024\ OpenCFD\ Ltd.}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ \ \ \ Copyright\ (C)\ 2024-\/2025\ Ha\ Nam\ Tran}}
+\DoxyCodeLine{00010\ \textcolor{comment}{-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00011\ \textcolor{comment}{License}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ \ \ \ This\ file\ is\ part\ of\ DGFoam.}}
+\DoxyCodeLine{00013\ \textcolor{comment}{}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ \ \ \ DGFoam\ is\ free\ software:\ you\ can\ redistribute\ it\ and/or\ modify\ it}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ \ \ \ under\ the\ terms\ of\ the\ GNU\ General\ Public\ License\ as\ published\ by}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ \ \ \ the\ Free\ Software\ Foundation,\ either\ version\ 3\ of\ the\ License,\ or}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ \ \ \ (at\ your\ option)\ any\ later\ version.}}
+\DoxyCodeLine{00018\ \textcolor{comment}{}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ \ \ \ DGFoam\ is\ distributed\ in\ the\ hope\ that\ it\ will\ be\ useful,\ but\ WITHOUT}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ \ \ \ ANY\ WARRANTY;\ without\ even\ the\ implied\ warranty\ of\ MERCHANTABILITY\ or}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ \ \ \ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE.\ \ See\ the\ GNU\ General\ Public\ License}}
+\DoxyCodeLine{00022\ \textcolor{comment}{\ \ \ \ for\ more\ details.}}
+\DoxyCodeLine{00023\ \textcolor{comment}{}}
+\DoxyCodeLine{00024\ \textcolor{comment}{\ \ \ \ You\ should\ have\ received\ a\ copy\ of\ the\ GNU\ General\ Public\ License}}
+\DoxyCodeLine{00025\ \textcolor{comment}{\ \ \ \ along\ with\ OpenFOAM.\ \ If\ not,\ see\ <http://www.gnu.org/licenses/>.}}
+\DoxyCodeLine{00026\ \textcolor{comment}{}}
+\DoxyCodeLine{00027\ \textcolor{comment}{Class}}
+\DoxyCodeLine{00028\ \textcolor{comment}{\ \ \ \ Foam::dgGeneralPDETerm}}
+\DoxyCodeLine{00029\ \textcolor{comment}{}}
+\DoxyCodeLine{00030\ \textcolor{comment}{Description}}
+\DoxyCodeLine{00031\ \textcolor{comment}{\ \ \ \ General\ DG\ PDE\ term\ for\ residual\ assembly.\ Handles\ operators\ of\ the\ form:}}
+\DoxyCodeLine{00032\ \textcolor{comment}{}}
+\DoxyCodeLine{00033\ \textcolor{comment}{\ \ \ \ \ \ \ \ Ri\ =\ -\/\ ∫\ grad(phi\_i)\ :\ F\ dV}}
+\DoxyCodeLine{00034\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ +\ ∫\ phi\_i\ (F\_flux\ ·\ n)\ dS}}
+\DoxyCodeLine{00035\ \textcolor{comment}{}}
+\DoxyCodeLine{00036\ \textcolor{comment}{\ \ \ \ where:}}
+\DoxyCodeLine{00037\ \textcolor{comment}{\ \ \ \ \ \ \ \ -\/\ UType\ =\ scalar\ \ and\ FType\ =\ vector}}
+\DoxyCodeLine{00038\ \textcolor{comment}{\ \ \ \ \ \ \ \ -\/\ UType\ =\ vector\ \ and\ FType\ =\ tensor}}
+\DoxyCodeLine{00039\ \textcolor{comment}{}}
+\DoxyCodeLine{00040\ \textcolor{comment}{\ \ \ \ F\ may\ be\ convective,\ diffusive,\ reacting,\ or\ any\ flux\ supplied\ by\ the\ user.}}
+\DoxyCodeLine{00041\ \textcolor{comment}{}}
+\DoxyCodeLine{00042\ \textcolor{comment}{SourceFiles}}
+\DoxyCodeLine{00043\ \textcolor{comment}{\ \ \ \ dgGeneralPDETerm.C}}
+\DoxyCodeLine{00044\ \textcolor{comment}{\(\backslash\)*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \textcolor{preprocessor}{\#ifndef\ Foam\_dgGeneralPDETerm\_H}}
+\DoxyCodeLine{00047\ \textcolor{preprocessor}{\#define\ Foam\_dgGeneralPDETerm\_H}}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ \textcolor{preprocessor}{\#include\ "{}word.H"{}}}
+\DoxyCodeLine{00050\ \textcolor{preprocessor}{\#include\ "{}List.H"{}}}
+\DoxyCodeLine{00051\ \textcolor{preprocessor}{\#include\ "{}label.H"{}}}
+\DoxyCodeLine{00052\ \textcolor{preprocessor}{\#include\ "{}pTraits.H"{}}}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ \textcolor{preprocessor}{\#include\ "{}dgGeomMesh.H"{}}}
+\DoxyCodeLine{00055\ \textcolor{preprocessor}{\#include\ "{}dgBasisField.H"{}}}
+\DoxyCodeLine{00056\ \textcolor{preprocessor}{\#include\ "{}GaussField.H"{}}}
+\DoxyCodeLine{00057\ \textcolor{preprocessor}{\#include\ "{}dgFluxSolverManager.H"{}}}
+\DoxyCodeLine{00058\ \textcolor{preprocessor}{\#include\ "{}dgMath.H"{}}}
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00060\ \textcolor{preprocessor}{\#include\ <type\_traits>}}
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00062\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespaceFoam}{Foam}}}
+\DoxyCodeLine{00063\ \{}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00065\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*\(\backslash\)}}
+\DoxyCodeLine{00066\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Class\ dgGeneralPDETerm\ Declaration}}
+\DoxyCodeLine{00067\ \textcolor{comment}{\(\backslash\)*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00069\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ UType,\ \textcolor{keyword}{class}\ FType>}
+\DoxyCodeLine{00070\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classFoam_1_1dgGeneralPDETerm}{dgGeneralPDETerm}}}
+\DoxyCodeLine{00071\ \{}
+\DoxyCodeLine{00072\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00073\ }
+\DoxyCodeLine{00074\ \ \ \ \ \textcolor{comment}{//-\/\ Name\ of\ this\ PDE\ term\ (used\ to\ fetch\ correct\ flux\ solver)}}
+\DoxyCodeLine{00075\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{word}}\ \mbox{\hyperlink{classFoam_1_1dgGeneralPDETerm_a34a9456ee2e860eed1c42b205bb9d9b5}{termName\_}};}
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00077\ \ \ \ \ \textcolor{comment}{//-\/\ Equation\ type}}
+\DoxyCodeLine{00078\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1dgFluxSolver_ac861a0350cf2f298fecfc97544af0572}{dgFluxSolver::equationType}}\ \mbox{\hyperlink{classFoam_1_1dgGeneralPDETerm_abfe4fd642952df397cd63ed85a18ba87}{eqnType\_}};}
+\DoxyCodeLine{00079\ }
+\DoxyCodeLine{00080\ \ \ \ \ \textcolor{comment}{//-\/\ Cell\ index}}
+\DoxyCodeLine{00081\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ \mbox{\hyperlink{classFoam_1_1dgGeneralPDETerm_a84a99e91e4d9406788c6e644d823b1bb}{cellID\_}};}
+\DoxyCodeLine{00082\ }
+\DoxyCodeLine{00083\ \ \ \ \ \textcolor{comment}{//-\/\ Reference\ to\ DG\ mesh}}
+\DoxyCodeLine{00084\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dgGeomMesh}}\&\ \mbox{\hyperlink{classFoam_1_1dgGeneralPDETerm_a037f6bfedbe5ecf576f7d9038dd2da33}{dgMesh\_}};}
+\DoxyCodeLine{00085\ }
+\DoxyCodeLine{00086\ \ \ \ \ \textcolor{comment}{//-\/\ Basis\ functions\ for\ this\ cell}}
+\DoxyCodeLine{00087\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1dgBasisField}{dgBasisField}}\ \mbox{\hyperlink{classFoam_1_1dgGeneralPDETerm_ab16b78af7f060a2bd5407caf2f2d296c}{basis\_}};}
+\DoxyCodeLine{00088\ }
+\DoxyCodeLine{00089\ \ \ \ \ \textcolor{comment}{//-\/\ Solution\ field}}
+\DoxyCodeLine{00090\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{GaussField<UType>}}\&\ \mbox{\hyperlink{classFoam_1_1dgGeneralPDETerm_a69230ab8b16a53f5f6383e5af27db35a}{U\_}};}
+\DoxyCodeLine{00091\ }
+\DoxyCodeLine{00092\ \ \ \ \ \textcolor{comment}{//-\/\ Flux\ field\ (will\ be\ overwritten\ by\ flux\ solvers)}}
+\DoxyCodeLine{00093\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{GaussField<FType>}}\&\ \mbox{\hyperlink{classFoam_1_1dgGeneralPDETerm_a9d0450b82e3cfc4564069f664f63c3b2}{F\_}};}
+\DoxyCodeLine{00094\ }
+\DoxyCodeLine{00095\ \ \ \ \ \textcolor{comment}{//-\/\ Flux\ solver\ manager}}
+\DoxyCodeLine{00096\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1dgFluxSolverManager}{dgFluxSolverManager}}\&\ \mbox{\hyperlink{classFoam_1_1dgGeneralPDETerm_a4468ee8ffcee03b95f200daab2098098}{fluxSolver\_}};}
+\DoxyCodeLine{00097\ }
+\DoxyCodeLine{00098\ \ \ \ \ \textcolor{comment}{//-\/\ Number\ of\ DoFs\ in\ this\ cell}}
+\DoxyCodeLine{00099\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ \mbox{\hyperlink{classFoam_1_1dgGeneralPDETerm_a36a452e565dcea082f117b2dc52a23f9}{nDof\_}};}
+\DoxyCodeLine{00100\ }
+\DoxyCodeLine{00101\ \ \ \ \ \textcolor{comment}{//-\/\ Residual\ per\ DoF}}
+\DoxyCodeLine{00102\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{List<UType>}}\ \mbox{\hyperlink{classFoam_1_1dgGeneralPDETerm_aa05ea55aa7663bf57ffc9d0f59754336}{R\_}};}
+\DoxyCodeLine{00103\ }
+\DoxyCodeLine{00104\ }
+\DoxyCodeLine{00105\ \ \ \ \ \textcolor{comment}{//-\/\ Compile-\/time\ type\ check}}
+\DoxyCodeLine{00106\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classFoam_1_1dgGeneralPDETerm_a0713b3ac251c38e5af3ea4e67aeb850d}{checkTypes}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00107\ }
+\DoxyCodeLine{00108\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00109\ }
+\DoxyCodeLine{00110\ \ \ \ \ \textcolor{comment}{//\ Constructors}}
+\DoxyCodeLine{00111\ }
+\DoxyCodeLine{00112\ \ \ \ \ \textcolor{comment}{//-\/\ Construct\ from\ mesh,\ term\ name,\ and\ fields}}
+\DoxyCodeLine{00113\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1dgGeneralPDETerm}{dgGeneralPDETerm}}}
+\DoxyCodeLine{00114\ \ \ \ \ (}
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{word}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{termName}},}
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1dgFluxSolver_ac861a0350cf2f298fecfc97544af0572}{dgFluxSolver::equationType}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{eqnType}},}
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ cellID,}
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dgGeomMesh}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{mesh}},}
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{GaussField<UType>}}\&\ \mbox{\hyperlink{createPrimaryFields_8H_acaa7fe8168a3a866f1958b3663d384c6}{U}},}
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{GaussField<FType>}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{F}},}
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1dgFluxSolverManager}{dgFluxSolverManager}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{fluxSolver}}}
+\DoxyCodeLine{00122\ \ \ \ \ );}
+\DoxyCodeLine{00123\ }
+\DoxyCodeLine{00124\ \ \ \ \ \textcolor{comment}{//-\/\ Destructor}}
+\DoxyCodeLine{00125\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1dgGeneralPDETerm_aaeaf280d5f7c5f9d805b6fd9eac32107}{\string~dgGeneralPDETerm}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00126\ }
+\DoxyCodeLine{00127\ }
+\DoxyCodeLine{00128\ \ \ \ \ \textcolor{comment}{//\ Member\ Functions}}
+\DoxyCodeLine{00129\ }
+\DoxyCodeLine{00130\ \ \ \ \ \textcolor{comment}{//-\/\ Return\ number\ of\ DoFs}}
+\DoxyCodeLine{00131\ \ \ \ \ \textcolor{keyword}{inline}\ \mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ \mbox{\hyperlink{classFoam_1_1dgGeneralPDETerm_a7b9097212c83062ba54e37d2d28745d7}{nDof}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classFoam_1_1dgGeneralPDETerm_a36a452e565dcea082f117b2dc52a23f9}{nDof\_}};\ \}}
+\DoxyCodeLine{00132\ }
+\DoxyCodeLine{00133\ \ \ \ \ \textcolor{comment}{//-\/\ Return\ residual\ (const)}}
+\DoxyCodeLine{00134\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{List<UType>}}\&\ \mbox{\hyperlink{classFoam_1_1dgGeneralPDETerm_a4de1b24cfdda7b71c4147afa96ce837a}{R}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classFoam_1_1dgGeneralPDETerm_aa05ea55aa7663bf57ffc9d0f59754336}{R\_}};\ \}}
+\DoxyCodeLine{00135\ }
+\DoxyCodeLine{00136\ \ \ \ \ \textcolor{comment}{//-\/\ Return\ residual\ (mutable)}}
+\DoxyCodeLine{00137\ \ \ \ \ \textcolor{keyword}{inline}\ \mbox{\hyperlink{classFoam_1_1GaussField}{List<UType>}}\&\ \mbox{\hyperlink{classFoam_1_1dgGeneralPDETerm_a33fb2f0e96775b5857b071cdc72fc77c}{R}}()\ \{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classFoam_1_1dgGeneralPDETerm_aa05ea55aa7663bf57ffc9d0f59754336}{R\_}};\ \}}
+\DoxyCodeLine{00138\ }
+\DoxyCodeLine{00139\ \ \ \ \ \textcolor{comment}{//-\/\ Compute\ numerical\ flux\ using\ the\ dgFluxSolverManager}}
+\DoxyCodeLine{00140\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classFoam_1_1dgGeneralPDETerm_a3f5d88b1a330b1860b070054283f09c3}{updateFlux}}();}
+\DoxyCodeLine{00141\ }
+\DoxyCodeLine{00142\ \ \ \ \ \textcolor{comment}{//-\/\ Compute\ volume\ +\ surface\ contributions\ to\ residual}}
+\DoxyCodeLine{00143\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classFoam_1_1dgGeneralPDETerm_abab32003212bb5e043f4a5f86de1c266}{calcResidual}}();}
+\DoxyCodeLine{00144\ \};}
+\DoxyCodeLine{00145\ }
+\DoxyCodeLine{00146\ }
+\DoxyCodeLine{00147\ \}\ \textcolor{comment}{//\ End\ namespace\ Foam}}
+\DoxyCodeLine{00148\ }
+\DoxyCodeLine{00149\ \textcolor{preprocessor}{\#ifdef\ NoRepository}}
+\DoxyCodeLine{00150\ \textcolor{preprocessor}{\ \ \ \ \#include\ "{}dgGeneralPDETermI.H"{}}}
+\DoxyCodeLine{00151\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00152\ }
+\DoxyCodeLine{00153\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00154\ }
+\DoxyCodeLine{00155\ \textcolor{comment}{//\ *************************************************************************\ //}}
+
+\end{DoxyCode}

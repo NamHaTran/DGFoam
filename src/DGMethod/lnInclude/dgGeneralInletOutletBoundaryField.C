@@ -1,1 +1,1 @@
-../dgGeneralBoundaryFields/basic/dgGeneralInletOutletBoundaryField/dgGeneralInletOutletBoundaryField.C
+../dgBoundaryFields/dgGeneralBoundaryFields/basic/dgGeneralInletOutletBoundaryField/dgGeneralInletOutletBoundaryField.C

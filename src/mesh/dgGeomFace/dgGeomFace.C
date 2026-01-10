@@ -35,7 +35,6 @@ License
 #include "pointField.H"
 #include "mathematicalConstants.H"
 
-
 #include <cmath>
 
 // * * * * * * * * * * * * * * Static Data Members * * * * * * * * * * * * * //
@@ -49,7 +48,10 @@ Foam::dgGeomFace::dgGeomFace()
 :
     faceID_(-1),
     mesh_(*static_cast<fvMesh*>(nullptr)), // placeholder invalid ref
-    refFace_(nullptr)
+    refFace_(nullptr),
+    patchID_(-1),
+    isBoundary_(false),
+    isProcessorPatch_(false)
 {}
 
 // Construct from face and mesh
@@ -62,7 +64,10 @@ Foam::dgGeomFace::dgGeomFace
 :
     faceID_(faceID),
     mesh_(mesh),
-    refFace_(refFace)
+    refFace_(refFace),
+    patchID_(-1),
+    isBoundary_(false),
+    isProcessorPatch_(false)
 {
     // Get face from faceID_
     const face& f = mesh_.faces()[faceID_];
@@ -116,7 +121,10 @@ Foam::dgGeomFace::dgGeomFace(const dgGeomFace& other)
     flattenedPoints_(other.flattenedPoints_),
     connectivity_(other.connectivity_),
     ownerBasisData_(other.ownerBasisData_),
-    neighborBasisData_(other.neighborBasisData_)
+    neighborBasisData_(other.neighborBasisData_),
+    patchID_(other.patchID_),
+    isBoundary_(other.isBoundary_),
+    isProcessorPatch_(other.isProcessorPatch_)
 {
 
 }
@@ -196,6 +204,9 @@ Foam::dgGeomFace& Foam::dgGeomFace::operator=(const dgGeomFace& other)
         connectivity_     = other.connectivity_;
         ownerBasisData_   = other.ownerBasisData_;
         neighborBasisData_ = other.neighborBasisData_;
+        patchID_          = other.patchID_;
+        isBoundary_       = other.isBoundary_;
+        isProcessorPatch_ = other.isProcessorPatch_;
     }
     return *this;
 }

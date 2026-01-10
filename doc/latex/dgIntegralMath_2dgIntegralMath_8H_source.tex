@@ -1,0 +1,156 @@
+\doxysection{dg\+Integral\+Math.\+H}
+\hypertarget{dgIntegralMath_2dgIntegralMath_8H_source}{}\label{dgIntegralMath_2dgIntegralMath_8H_source}\index{/home/nam-\/ha-\/tran/OpenFOAM/DGFoam/src/math/dgIntegralMath/dgIntegralMath.H@{/home/nam-\/ha-\/tran/OpenFOAM/DGFoam/src/math/dgIntegralMath/dgIntegralMath.H}}
+\mbox{\hyperlink{dgIntegralMath_2dgIntegralMath_8H}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*\(\backslash\)}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ \ =========\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ \ \(\backslash\)\(\backslash\)\ \ \ \ \ \ /\ \ F\ ield\ \ \ \ \ \ \ \ \ |\ OpenFOAM:\ The\ Open\ Source\ CFD\ Toolbox}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ \ \ \(\backslash\)\(\backslash\)\ \ \ \ /\ \ \ O\ peration\ \ \ \ \ |}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ \ \ \ \(\backslash\)\(\backslash\)\ \ /\ \ \ \ A\ nd\ \ \ \ \ \ \ \ \ \ \ |\ www.openfoam.com}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ \ \ \ \ \(\backslash\)\(\backslash\)/\ \ \ \ \ M\ anipulation\ \ |}}
+\DoxyCodeLine{00007\ \textcolor{comment}{-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ \ \ \ Copyright\ (C)\ 2011-\/2016\ OpenFOAM\ Foundation}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ \ \ \ Copyright\ (C)\ 2017-\/2023\ OpenCFD\ Ltd.}}
+\DoxyCodeLine{00010\ \textcolor{comment}{-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00011\ \textcolor{comment}{License}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ \ \ \ This\ file\ is\ part\ of\ OpenFOAM.}}
+\DoxyCodeLine{00013\ \textcolor{comment}{}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ \ \ \ OpenFOAM\ is\ free\ software:\ you\ can\ redistribute\ it\ and/or\ modify\ it}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ \ \ \ under\ the\ terms\ of\ the\ GNU\ General\ Public\ License\ as\ published\ by}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ \ \ \ the\ Free\ Software\ Foundation,\ either\ version\ 3\ of\ the\ License,\ or}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ \ \ \ (at\ your\ option)\ any\ later\ version.}}
+\DoxyCodeLine{00018\ \textcolor{comment}{}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ \ \ \ OpenFOAM\ is\ distributed\ in\ the\ hope\ that\ it\ will\ be\ useful,\ but\ WITHOUT}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ \ \ \ ANY\ WARRANTY;\ without\ even\ the\ implied\ warranty\ of\ MERCHANTABILITY\ or}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ \ \ \ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE.\ \ See\ the\ GNU\ General\ Public\ License}}
+\DoxyCodeLine{00022\ \textcolor{comment}{\ \ \ \ for\ more\ details.}}
+\DoxyCodeLine{00023\ \textcolor{comment}{}}
+\DoxyCodeLine{00024\ \textcolor{comment}{\ \ \ \ You\ should\ have\ received\ a\ copy\ of\ the\ GNU\ General\ Public\ License}}
+\DoxyCodeLine{00025\ \textcolor{comment}{\ \ \ \ along\ with\ OpenFOAM.\ \ If\ not,\ see\ <http://www.gnu.org/licenses/>.}}
+\DoxyCodeLine{00026\ \textcolor{comment}{}}
+\DoxyCodeLine{00027\ \textcolor{comment}{Class}}
+\DoxyCodeLine{00028\ \textcolor{comment}{}}
+\DoxyCodeLine{00029\ \textcolor{comment}{Description}}
+\DoxyCodeLine{00030\ \textcolor{comment}{\ \ \ \ Mathematical\ utilities\ for\ calculating\ integral.}}
+\DoxyCodeLine{00031\ \textcolor{comment}{SourceFiles}}
+\DoxyCodeLine{00032\ \textcolor{comment}{}}
+\DoxyCodeLine{00033\ \textcolor{comment}{\(\backslash\)*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ \textcolor{preprocessor}{\#ifndef\ Foam\_dgIntegralMath\_H}}
+\DoxyCodeLine{00036\ \textcolor{preprocessor}{\#define\ Foam\_dgIntegralMath\_H}}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \textcolor{preprocessor}{\#include\ "{}cellGaussField.H"{}}}
+\DoxyCodeLine{00039\ \textcolor{preprocessor}{\#include\ "{}faceGaussField.H"{}}}
+\DoxyCodeLine{00040\ \textcolor{preprocessor}{\#include\ "{}dgGeomFace.H"{}}}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespaceFoam}{Foam}}}
+\DoxyCodeLine{00043\ \{}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*\(\backslash\)}}
+\DoxyCodeLine{00046\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ Volume\ integral:\ \ ∫\ F\ dV\ \ ≈\ Σ\_g\ F(g)\ w(g)}}
+\DoxyCodeLine{00047\ \textcolor{comment}{\(\backslash\)*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{00048\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}\ \mbox{\hyperlink{namespaceFoam_abb4da9f774dc94a34630ee9ed788ec81}{volumeIntegral}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{cellGaussField<vector>}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{gradPhi}},\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{cellGaussField<vector>}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{F}})}
+\DoxyCodeLine{00049\ \{}
+\DoxyCodeLine{00050\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{volInt}}\ =\ \mbox{\hyperlink{classFoam_1_1GaussField}{Zero}};}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ nGauss\ =\ \mbox{\hyperlink{classFoam_1_1GaussField}{F}}.size();}
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{List<scalar>}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{w}}\ =\ \mbox{\hyperlink{classFoam_1_1GaussField}{F}}.cell()-\/>weights();}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00055\ \ \ \ \ \textcolor{comment}{//\ Cell\ has\ straight\ edges/faces,\ so\ Jacobian\ is\ constant\ (=\ cell\ volume)}}
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{cellVol}}\ =\ \mbox{\hyperlink{classFoam_1_1GaussField}{F}}.cell()-\/>volume();}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00058\ \ \ \ \ \textcolor{keywordflow}{for}\ (\mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{g}}\ =\ 0;\ \mbox{\hyperlink{classFoam_1_1GaussField}{g}}\ <\ nGauss;\ ++\mbox{\hyperlink{classFoam_1_1GaussField}{g}})}
+\DoxyCodeLine{00059\ \ \ \ \ \{}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{volInt}}\ +=\ \mbox{\hyperlink{classFoam_1_1GaussField}{cellVol}}\ *\ (\mbox{\hyperlink{classFoam_1_1GaussField}{gradPhi}}[\mbox{\hyperlink{classFoam_1_1GaussField}{g}}]\ \&\ \mbox{\hyperlink{classFoam_1_1GaussField}{F}}[\mbox{\hyperlink{classFoam_1_1GaussField}{g}}])\ *\ \mbox{\hyperlink{classFoam_1_1GaussField}{w}}[\mbox{\hyperlink{classFoam_1_1GaussField}{g}}];}
+\DoxyCodeLine{00061\ \ \ \ \ \}}
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classFoam_1_1GaussField}{volInt}};}
+\DoxyCodeLine{00064\ \}}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00066\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}}\ \mbox{\hyperlink{namespaceFoam_abb4da9f774dc94a34630ee9ed788ec81}{volumeIntegral}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{cellGaussField<vector>}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{gradPhi}},\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{cellGaussField<tensor>}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{F}})}
+\DoxyCodeLine{00067\ \{}
+\DoxyCodeLine{00068\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{volInt}}\ =\ \mbox{\hyperlink{classFoam_1_1GaussField}{Zero}};}
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00070\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ nGauss\ =\ \mbox{\hyperlink{classFoam_1_1GaussField}{F}}.size();}
+\DoxyCodeLine{00071\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{List<scalar>}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{w}}\ =\ \mbox{\hyperlink{classFoam_1_1GaussField}{F}}.cell()-\/>weights();}
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00073\ \ \ \ \ \textcolor{comment}{//\ Cell\ has\ straight\ edges/faces,\ so\ Jacobian\ is\ constant\ (=\ cell\ volume\ /\ 8)}}
+\DoxyCodeLine{00074\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{cellVol}}\ =\ \mbox{\hyperlink{classFoam_1_1GaussField}{F}}.cell()-\/>volume();}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00076\ \ \ \ \ \textcolor{keywordflow}{for}\ (\mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{g}}\ =\ 0;\ \mbox{\hyperlink{classFoam_1_1GaussField}{g}}\ <\ nGauss;\ ++\mbox{\hyperlink{classFoam_1_1GaussField}{g}})}
+\DoxyCodeLine{00077\ \ \ \ \ \{}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{volInt}}\ +=\ (\mbox{\hyperlink{classFoam_1_1GaussField}{cellVol}}\ /\ 8.0)\ *\ (\mbox{\hyperlink{classFoam_1_1GaussField}{gradPhi}}[\mbox{\hyperlink{classFoam_1_1GaussField}{g}}]\ \&\ \mbox{\hyperlink{classFoam_1_1GaussField}{F}}[\mbox{\hyperlink{classFoam_1_1GaussField}{g}}])\ *\ \mbox{\hyperlink{classFoam_1_1GaussField}{w}}[\mbox{\hyperlink{classFoam_1_1GaussField}{g}}];}
+\DoxyCodeLine{00079\ \ \ \ \ \}}
+\DoxyCodeLine{00080\ }
+\DoxyCodeLine{00081\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classFoam_1_1GaussField}{volInt}};}
+\DoxyCodeLine{00082\ \}}
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00084\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*\(\backslash\)}}
+\DoxyCodeLine{00085\ \textcolor{comment}{\ \ \ \ \ Surface\ integral\ for\ vector\ flux:}}
+\DoxyCodeLine{00086\ \textcolor{comment}{\ \ \ \ \ \ \ F\ is\ vector,\ surface\ integral\ returns\ scalar}}
+\DoxyCodeLine{00087\ \textcolor{comment}{\ \ \ \ \ \ \ Integral\ =\ ∫\ phi\ (F\ ·\ n)\ dS\ ≈\ Σ\ phi\ (F(g)\ \&\ n)\ w(g)}}
+\DoxyCodeLine{00088\ \textcolor{comment}{\(\backslash\)*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{00089\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}\ \mbox{\hyperlink{namespaceFoam_ab4801fef406a81dc437da35df1149328}{surfaceIntegral}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{faceGaussField<scalar>}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{phi}},\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{faceGaussField<vector>}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{F}})}
+\DoxyCodeLine{00090\ \{}
+\DoxyCodeLine{00091\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{surfInt}}\ =\ 0.0;}
+\DoxyCodeLine{00092\ }
+\DoxyCodeLine{00093\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ nFaces\ =\ \mbox{\hyperlink{classFoam_1_1GaussField}{F}}.nFaces();}
+\DoxyCodeLine{00094\ }
+\DoxyCodeLine{00095\ \ \ \ \ \textcolor{keywordflow}{for}\ (\mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{faceI}}\ =\ 0;\ \mbox{\hyperlink{classFoam_1_1GaussField}{faceI}}\ <\ nFaces;\ ++\mbox{\hyperlink{classFoam_1_1GaussField}{faceI}})}
+\DoxyCodeLine{00096\ \ \ \ \ \{}
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{n}}\ =\ \mbox{\hyperlink{classFoam_1_1GaussField}{F}}.faces()[\mbox{\hyperlink{classFoam_1_1GaussField}{faceI}}]-\/>normal();}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ nGauss\ =\ \mbox{\hyperlink{classFoam_1_1GaussField}{F}}.nGaussPerFace();}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{List<scalar>}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{w}}\ =\ \mbox{\hyperlink{classFoam_1_1GaussField}{F}}.faces()[\mbox{\hyperlink{classFoam_1_1GaussField}{faceI}}]-\/>weights();}
+\DoxyCodeLine{00100\ }
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Face\ has\ straight\ edges,\ so\ Jacobian\ is\ constant\ (=\ face\ area\ /\ 4)}}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{faceArea}}\ =\ \mbox{\hyperlink{classFoam_1_1GaussField}{F}}.faces()[\mbox{\hyperlink{classFoam_1_1GaussField}{faceI}}]-\/>area();}
+\DoxyCodeLine{00103\ }
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{g}}\ =\ 0;\ \mbox{\hyperlink{classFoam_1_1GaussField}{g}}\ <\ nGauss;\ ++\mbox{\hyperlink{classFoam_1_1GaussField}{g}})}
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ F(g)\ is\ vector\ ⇒\ dot\ with\ n\ to\ get\ scalar\ flux}}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{surfInt}}\ +=\ (\mbox{\hyperlink{classFoam_1_1GaussField}{faceArea}}\ /\ 4.0)\ *\ \mbox{\hyperlink{classFoam_1_1GaussField}{phi}}.minusValueOnFace(\mbox{\hyperlink{classFoam_1_1GaussField}{faceI}},\ \mbox{\hyperlink{classFoam_1_1GaussField}{g}})\ *\ (\mbox{\hyperlink{classFoam_1_1GaussField}{F}}.fluxOnFace(\mbox{\hyperlink{classFoam_1_1GaussField}{faceI}},\ \mbox{\hyperlink{classFoam_1_1GaussField}{g}})\ \&\ \mbox{\hyperlink{classFoam_1_1GaussField}{n}})\ *\ \mbox{\hyperlink{classFoam_1_1GaussField}{w}}[\mbox{\hyperlink{classFoam_1_1GaussField}{g}}];}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00109\ \ \ \ \ \}}
+\DoxyCodeLine{00110\ }
+\DoxyCodeLine{00111\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classFoam_1_1GaussField}{surfInt}};}
+\DoxyCodeLine{00112\ \}}
+\DoxyCodeLine{00113\ }
+\DoxyCodeLine{00114\ }
+\DoxyCodeLine{00115\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*\(\backslash\)}}
+\DoxyCodeLine{00116\ \textcolor{comment}{\ \ \ \ \ Surface\ integral\ for\ tensor\ flux:}}
+\DoxyCodeLine{00117\ \textcolor{comment}{\ \ \ \ \ \ \ F\ is\ tensor,\ but\ F.fluxOnFace\ already\ returns\ T·n\ (a\ vector)}}
+\DoxyCodeLine{00118\ \textcolor{comment}{\ \ \ \ \ \ \ Surface\ integral\ returns\ vector:}}
+\DoxyCodeLine{00119\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ ∫\ (T·n)\ dS\ ≈\ Σ\ (T·n)(g)\ w(g)}}
+\DoxyCodeLine{00120\ \textcolor{comment}{\(\backslash\)*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{00121\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}}\ \mbox{\hyperlink{namespaceFoam_ab4801fef406a81dc437da35df1149328}{surfaceIntegral}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{faceGaussField<scalar>}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{phi}},\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{faceGaussField<tensor>}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{F}})}
+\DoxyCodeLine{00122\ \{}
+\DoxyCodeLine{00123\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{surfInt}}\ =\ \mbox{\hyperlink{classFoam_1_1GaussField}{Zero}};}
+\DoxyCodeLine{00124\ }
+\DoxyCodeLine{00125\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ nFaces\ =\ \mbox{\hyperlink{classFoam_1_1GaussField}{F}}.nFaces();}
+\DoxyCodeLine{00126\ }
+\DoxyCodeLine{00127\ \ \ \ \ \textcolor{keywordflow}{for}\ (\mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{faceI}}\ =\ 0;\ \mbox{\hyperlink{classFoam_1_1GaussField}{faceI}}\ <\ nFaces;\ ++\mbox{\hyperlink{classFoam_1_1GaussField}{faceI}})}
+\DoxyCodeLine{00128\ \ \ \ \ \{}
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ nGauss\ =\ \mbox{\hyperlink{classFoam_1_1GaussField}{F}}.nGaussPerFace();}
+\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{List<scalar>}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{w}}\ =\ \mbox{\hyperlink{classFoam_1_1GaussField}{F}}.faces()[\mbox{\hyperlink{classFoam_1_1GaussField}{faceI}}]-\/>weights();}
+\DoxyCodeLine{00131\ }
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Face\ has\ straight\ edges,\ so\ Jacobian\ is\ constant\ (=\ face\ area\ /\ 4)}}
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{faceArea}}\ =\ \mbox{\hyperlink{classFoam_1_1GaussField}{F}}.faces()[\mbox{\hyperlink{classFoam_1_1GaussField}{faceI}}]-\/>area();}
+\DoxyCodeLine{00134\ }
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{g}}\ =\ 0;\ \mbox{\hyperlink{classFoam_1_1GaussField}{g}}\ <\ nGauss;\ ++\mbox{\hyperlink{classFoam_1_1GaussField}{g}})}
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ fluxOnFace\ already\ returns\ T·n\ (vector)}}
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{surfInt}}\ +=\ (\mbox{\hyperlink{classFoam_1_1GaussField}{faceArea}}\ /\ 4.0)\ *\ \mbox{\hyperlink{classFoam_1_1GaussField}{phi}}.minusValueOnFace(\mbox{\hyperlink{classFoam_1_1GaussField}{faceI}},\ \mbox{\hyperlink{classFoam_1_1GaussField}{g}})\ *\ \mbox{\hyperlink{classFoam_1_1GaussField}{F}}.fluxOnFace(\mbox{\hyperlink{classFoam_1_1GaussField}{faceI}},\ \mbox{\hyperlink{classFoam_1_1GaussField}{g}})\ *\ \mbox{\hyperlink{classFoam_1_1GaussField}{w}}[\mbox{\hyperlink{classFoam_1_1GaussField}{g}}];}
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00140\ \ \ \ \ \}}
+\DoxyCodeLine{00141\ }
+\DoxyCodeLine{00142\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classFoam_1_1GaussField}{surfInt}};}
+\DoxyCodeLine{00143\ \}}
+\DoxyCodeLine{00144\ }
+\DoxyCodeLine{00145\ \}\ \textcolor{comment}{//\ End\ namespace\ Foam}}
+\DoxyCodeLine{00146\ }
+\DoxyCodeLine{00147\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00148\ }
+\DoxyCodeLine{00149\ \textcolor{comment}{//\ *************************************************************************\ //}}
+\DoxyCodeLine{00150\ }
+
+\end{DoxyCode}

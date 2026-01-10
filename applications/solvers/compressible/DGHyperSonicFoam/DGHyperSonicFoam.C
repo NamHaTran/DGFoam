@@ -43,6 +43,7 @@ Description
 #include "dgField.H"
 #include "dgMath.H"
 #include "dgGeneralBoundaryManager.H"
+#include "dgProcessorBoundaryManager.H"
 #include "dgFluxSolverManager.H"
 #include "dgThermoConservative.H"
 #include "dgGeneralPDETerm.H"
@@ -76,6 +77,8 @@ int main(int argc, char *argv[])
     #include "readSolverSettings.H"
 
     // TIME LOOP
+
+        #include "synchProcessors.H"
 
         // It's possible to iterate over every cell in a standard C++ for loop
         for (label cellI = 0; cellI < mesh.C().size(); cellI++)
@@ -120,8 +123,10 @@ int main(int argc, char *argv[])
             // Get residual
             const List<scalar>& res = massConvTerm.R();
 
-            Info<< "Cell " << cellI << " residual: " << res << endl;
+            Pout<< "Cell " << cellI << " residual: " << res << endl;
         }
+
+        //vectorInterfaceBC->update(U);
 
         // Reset necessary objects before next time step
         #include "resetAll.H"

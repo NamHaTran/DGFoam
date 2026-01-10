@@ -5,9 +5,6 @@
     \\  /    A nd           | www.openfoam.com
      \\/     M anipulation  |
 -------------------------------------------------------------------------------
-    Copyright (C) 2011-2016 OpenFOAM Foundation
-    Copyright (C) 2017-2023 OpenCFD Ltd.
--------------------------------------------------------------------------------
 License
     This file is part of OpenFOAM.
 
@@ -29,39 +26,6 @@ Class
 
 Description
     Base class for thermodynamic laws used in DG thermophysical models.
-
-    This class provides the generic interface for:
-      - Converting between temperature and energy forms (e, h).
-      - Computing Cp(T), Cv(T), gamma(T), and speed of sound.
-      - Computing internal energy and enthalpy at Gauss points.
-
-    Thermodynamic models are grouped into the following categories:
-
-    1. Perfect-gas thermo
-       - Cp(T) and Cv(T) depend only on temperature.
-       - No formation enthalpy is included.
-       - h(T) = ∫ Cp(T) dT,  e(T) = ∫ Cv(T) dT.
-       - Compatible with ideal-gas EOS (p = rho*R*T).
-       - Used in compressible flows and high-temperature gases.
-
-    2. Absolute-enthalpy thermo
-       - Enthalpy includes chemical formation energy:
-           h(T) = h_f0 + ∫ Cp(T) dT.
-       - Required for combustion and reacting flows.
-       - Works with ideal-gas or selected real-gas EOS.
-
-    3. Real-gas thermo
-       - Cp, Cv, h, and e depend on both temperature and density.
-       - Must be used together with real-gas EOS
-         (Peng–Robinson, SRK, Redlich–Kwong, etc.).
-       - Required for high-pressure and supercritical fluids.
-
-    4. Kinetic / rarefied-gas thermo (VHS/VSS/BGK/ES-BGK)
-       - Based on kinetic theory and molecular degrees of freedom.
-       - e = (f/2)*R*T,  h = ((f+2)/2)*R*T.
-       - Cp and Cv follow kinetic DOF relations.
-       - Compatible with thermal-perfect-gas EOS.
-       - Used in rarefied gas and hypersonic applications.
 
 SourceFiles
     thermoLaw.C
@@ -85,23 +49,70 @@ namespace Foam
 {
 
 /*---------------------------------------------------------------------------*\
-                           Class thermoLaw Declaration
+                       Class thermoLaw Declaration
 \*---------------------------------------------------------------------------*/
 
+/**
+ * \class Foam::thermoLaw
+ * \brief Base class for thermodynamic laws in DG solvers
+ *
+ * \details
+ * thermoLaw defines the thermodynamic closure relations required by DG
+ * thermophysical models. It provides a unified interface for:
+ *
+ * \li Converting between temperature and energy forms \f$(e, h)\f$
+ * \li Computing heat capacities \f$C_p(T)\f$, \f$C_v(T)\f$
+ * \li Computing heat-capacity ratio \f$\gamma(T)\f$
+ * \li Computing speed of sound \f$a(T)\f$
+ * \li Evaluating internal energy and enthalpy at Gauss points
+ *
+ * All operations are performed locally at Gauss points of each DG cell,
+ * consistent with high-order discontinuous Galerkin formulations.
+ *
+ * \par Thermodynamic model categories
+ *
+ * \par Perfect-gas thermodynamics
+ * \li \f$C_p(T)\f$ and \f$C_v(T)\f$ depend only on temperature
+ * \li No formation enthalpy is included
+ * \li \f$h(T) = \int C_p(T)\,\mathrm{d}T\f$
+ * \li \f$e(T) = \int C_v(T)\,\mathrm{d}T\f$
+ * \li Compatible with ideal-gas EOS: \f$p = \rho R T\f$
+ * \li Used in compressible and high-temperature gas flows
+ *
+ * \par Absolute-enthalpy thermodynamics
+ * \li Enthalpy includes chemical formation energy
+ * \li \f$h(T) = h_f^0 + \int C_p(T)\,\mathrm{d}T\f$
+ * \li Required for combustion and reacting flows
+ * \li Works with ideal-gas or selected real-gas EOS
+ *
+ * \par Real-gas thermodynamics
+ * \li \f$C_p\f$, \f$C_v\f$, \f$e\f$, and \f$h\f$ depend on both temperature
+ *     and density
+ * \li Must be used together with real-gas EOS
+ * \li Required for high-pressure and supercritical fluids
+ *
+ * \par Kinetic / rarefied-gas thermodynamics
+ * \li Based on kinetic theory and molecular degrees of freedom
+ * \li \f$e = \frac{f}{2} R T\f$
+ * \li \f$h = \frac{f+2}{2} R T\f$
+ * \li \f$C_p\f$ and \f$C_v\f$ follow kinetic DOF relations
+ * \li Compatible with thermal-perfect-gas EOS
+ * \li Used in rarefied gas and hypersonic applications
+ */
 class thermoLaw
 {
 protected:
 
-    //- Name of the model (for logging/debugging)
+    /** Model name (used for logging and diagnostics) */
     word name_;
 
-    //- Coefficient dictionary (read-only after construction)
+    /** Coefficient dictionary (immutable after construction) */
     const dictionary dict_;
 
-    //- Reference to DG mesh (non-owning)
+    /** Reference to DG geometric mesh (non-owning) */
     const dgGeomMesh& mesh_;
 
-    //- Reference to eqnOfState
+    /** Reference to equation-of-state model */
     const eqnOfState& eos_;
 
 public:
@@ -109,7 +120,7 @@ public:
     //- Runtime type information
     TypeName("thermoLaw");
 
-    //- Runtime selection table for dictionary-based construction
+    //- Runtime selection table
     declareRunTimeSelectionTable
     (
         autoPtr, thermoLaw, dictionary,
@@ -122,7 +133,14 @@ public:
         (name, dict, mesh, eos)
     );
 
-    //- Construct from model name and coefficient dictionary
+    /**
+     * \brief Construct from model name and coefficient dictionary
+     *
+     * \param name Model name
+     * \param dict Coefficient dictionary
+     * \param mesh DG geometric mesh
+     * \param eos  Equation-of-state model
+     */
     thermoLaw
     (
         const word& name,
@@ -131,10 +149,18 @@ public:
         const eqnOfState& eos
     );
 
-    //- Virtual destructor
+    /** Virtual destructor */
     virtual ~thermoLaw() = default;
 
-    //- Selector
+    /**
+     * \brief Runtime selector
+     *
+     * \param name Model name
+     * \param dict Coefficient dictionary
+     * \param mesh DG geometric mesh
+     * \param eos  Equation-of-state model
+     * \return Auto pointer to selected thermoLaw
+     */
     static autoPtr<thermoLaw> New
     (
         const word& name,
@@ -144,43 +170,59 @@ public:
     );
 
     //====================================================================//
-    //                      General Thermo Interface
-    //
-    //   All functions:
-    //     - receive cellI
-    //     - input fields = const GaussField<scalar>&
-    //     - output field = GaussField<scalar>&
-    //     - return void (write directly into output)
-    //
-    //   This interface is compatible with all models:
-    //     constantCp, perfectGas, JANAF, vibrational, polyatomic, ...
+    //                   General thermodynamic interface
     //====================================================================//
 
-    //- Calculate temperature T from internal energy e(T) or enthalpy h(T)
+    /**
+     * \brief Compute temperature from energy
+     *
+     * Computes temperature $T$ from internal energy $e(T)$ or enthalpy $h(T)$,
+     * depending on the specific thermoLaw model.
+     *
+     * \param cellI  Cell index
+     * \param energy Energy field ($e$ or $h$)
+     * \param T      Temperature field to be written
+     */
     virtual void calcT
     (
         const label cellI,
-        const GaussField<scalar>& energy,       // input: e or h depending on model
-        GaussField<scalar>& T                   // output: temperature
+        const GaussField<scalar>& energy,
+        GaussField<scalar>& T
     ) const = 0;
 
-    //- Calculate Cp(T)
+    /**
+     * \brief Compute heat capacity at constant pressure
+     *
+     * \param cellI Cell index
+     * \param T     Temperature field
+     * \param Cp    $C_p(T)$ field
+     */
     virtual void calcCp
     (
         const label cellI,
-        const GaussField<scalar>& T,            // input: temperature
-        GaussField<scalar>& Cp                  // output: Cp(T)
+        const GaussField<scalar>& T,
+        GaussField<scalar>& Cp
     ) const = 0;
 
-    //- Calculate Cv(T)
+    /**
+     * \brief Compute heat capacity at constant volume
+     *
+     * \param cellI Cell index
+     * \param T     Temperature field
+     * \param Cv    $C_v(T)$ field
+     */
     virtual void calcCv
     (
         const label cellI,
-        const GaussField<scalar>& T,            // input: temperature
-        GaussField<scalar>& Cv                  // output: Cv(T)
+        const GaussField<scalar>& T,
+        GaussField<scalar>& Cv
     ) const = 0;
 
-    //- Calculate gamma(T) = Cp(T)/Cv(T)
+    /**
+     * \brief Compute heat-capacity ratio
+     *
+     * Computes $\gamma = C_p / C_v$.
+     */
     virtual void calcGamma
     (
         const label cellI,
@@ -189,7 +231,11 @@ public:
         GaussField<scalar>& gamma
     ) const = 0;
 
-    //- Calculate internal energy e(T)
+    /**
+     * \brief Compute internal energy
+     *
+     * Computes internal energy $e(T)$.
+     */
     virtual void calcInternalE
     (
         const label cellI,
@@ -197,7 +243,11 @@ public:
         GaussField<scalar>& e
     ) const = 0;
 
-    //- Calculate enthalpy h(T)
+    /**
+     * \brief Compute enthalpy
+     *
+     * Computes enthalpy $h(T)$.
+     */
     virtual void calcH
     (
         const label cellI,
@@ -205,7 +255,12 @@ public:
         GaussField<scalar>& h
     ) const = 0;
 
-    //- Calculate speedOfSound
+    /**
+     * \brief Compute speed of sound
+     *
+     * Computes speed of sound $a = \sqrt{\gamma R T}$ or the
+     * corresponding real-gas / kinetic-theory expression.
+     */
     virtual void calcSpeedOfSound
     (
         const label cellI,
@@ -214,17 +269,20 @@ public:
         GaussField<scalar>& a
     ) const = 0;
 
-    //- ThermoLaw groups
-        // Perfect-gas type: Cp(T), Cv(T) but h=∫Cp dT (no formation energy)
+    //====================================================================//
+    //                   ThermoLaw classification flags
+    //====================================================================//
+
+        /** Perfect-gas thermo (temperature-dependent Cp, no formation energy) */
         virtual bool isPerfectGasThermo() const { return false; }
 
-        // Absolute enthalpy model: h includes formation enthalpy
+        /** Absolute-enthalpy thermo (includes formation enthalpy) */
         virtual bool isAbsoluteEnthalpyThermo() const { return false; }
 
-        // Real-gas / high-temperature thermo
+        /** Real-gas thermo */
         virtual bool isRealGasThermo() const { return false; }
 
-        // Kinetic/rarefied thermo (VHS/VSS)
+        /** Kinetic / rarefied-gas thermo */
         virtual bool isKineticThermo() const { return false; }
 };
 
@@ -233,4 +291,3 @@ public:
 #endif
 
 // ************************************************************************* //
-

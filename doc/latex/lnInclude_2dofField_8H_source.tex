@@ -1,0 +1,142 @@
+\doxysection{dof\+Field.\+H}
+\hypertarget{lnInclude_2dofField_8H_source}{}\label{lnInclude_2dofField_8H_source}\index{/home/nam-\/ha-\/tran/OpenFOAM/DGFoam/src/DGFoam/lnInclude/dofField.H@{/home/nam-\/ha-\/tran/OpenFOAM/DGFoam/src/DGFoam/lnInclude/dofField.H}}
+\mbox{\hyperlink{lnInclude_2dofField_8H}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*\(\backslash\)}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ \ =========\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ \ \(\backslash\)\(\backslash\)\ \ \ \ \ \ /\ \ F\ ield\ \ \ \ \ \ \ \ \ |\ OpenFOAM:\ The\ Open\ Source\ CFD\ Toolbox}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ \ \ \(\backslash\)\(\backslash\)\ \ \ \ /\ \ \ O\ peration\ \ \ \ \ |}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ \ \ \ \(\backslash\)\(\backslash\)\ \ /\ \ \ \ A\ nd\ \ \ \ \ \ \ \ \ \ \ |\ www.openfoam.com}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ \ \ \ \ \(\backslash\)\(\backslash\)/\ \ \ \ \ M\ anipulation\ \ |}}
+\DoxyCodeLine{00007\ \textcolor{comment}{-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ \ \ \ Copyright\ (C)\ 2015-\/2024\ OpenCFD\ Ltd.}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ \ \ \ Copyright\ (C)\ 2024-\/2025\ Ha\ Nam\ Tran}}
+\DoxyCodeLine{00010\ \textcolor{comment}{-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00011\ \textcolor{comment}{License}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ \ \ \ This\ file\ is\ part\ of\ DGFoam.}}
+\DoxyCodeLine{00013\ \textcolor{comment}{}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ \ \ \ DGFoam\ is\ free\ software:\ you\ can\ redistribute\ it\ and/or\ modify\ it}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ \ \ \ under\ the\ terms\ of\ the\ GNU\ General\ Public\ License\ as\ published\ by}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ \ \ \ the\ Free\ Software\ Foundation,\ either\ version\ 3\ of\ the\ License,\ or}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ \ \ \ (at\ your\ option)\ any\ later\ version.}}
+\DoxyCodeLine{00018\ \textcolor{comment}{}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ \ \ \ DGFoam\ is\ distributed\ in\ the\ hope\ that\ it\ will\ be\ useful,\ but\ WITHOUT}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ \ \ \ ANY\ WARRANTY;\ without\ even\ the\ implied\ warranty\ of\ MERCHANTABILITY\ or}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ \ \ \ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE.\ \ See\ the\ GNU\ General\ Public\ License}}
+\DoxyCodeLine{00022\ \textcolor{comment}{\ \ \ \ for\ more\ details.}}
+\DoxyCodeLine{00023\ \textcolor{comment}{}}
+\DoxyCodeLine{00024\ \textcolor{comment}{\ \ \ \ You\ should\ have\ received\ a\ copy\ of\ the\ GNU\ General\ Public\ License}}
+\DoxyCodeLine{00025\ \textcolor{comment}{\ \ \ \ along\ with\ OpenFOAM.\ \ If\ not,\ see\ <http://www.gnu.org/licenses/>.}}
+\DoxyCodeLine{00026\ \textcolor{comment}{}}
+\DoxyCodeLine{00027\ \textcolor{comment}{Class}}
+\DoxyCodeLine{00028\ \textcolor{comment}{\ \ \ \ Foam::dofField<Type>}}
+\DoxyCodeLine{00029\ \textcolor{comment}{}}
+\DoxyCodeLine{00030\ \textcolor{comment}{Description}}
+\DoxyCodeLine{00031\ \textcolor{comment}{\ \ \ \ Degree-\/of-\/freedom\ field\ for\ DG\ discretization.}}
+\DoxyCodeLine{00032\ \textcolor{comment}{}}
+\DoxyCodeLine{00033\ \textcolor{comment}{\ \ \ \ Stores\ all\ cell-\/wise\ degrees\ of\ freedom\ and\ provides\ a\ bridge}}
+\DoxyCodeLine{00034\ \textcolor{comment}{\ \ \ \ between\ DG\ DoF\ storage\ and\ OpenFOAM\ volField\ representation.}}
+\DoxyCodeLine{00035\ \textcolor{comment}{}}
+\DoxyCodeLine{00036\ \textcolor{comment}{SourceFiles}}
+\DoxyCodeLine{00037\ \textcolor{comment}{\ \ \ \ dofField.C}}
+\DoxyCodeLine{00038\ \textcolor{comment}{}}
+\DoxyCodeLine{00039\ \textcolor{comment}{\(\backslash\)*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \textcolor{preprocessor}{\#ifndef\ Foam\_dofField\_H}}
+\DoxyCodeLine{00042\ \textcolor{preprocessor}{\#define\ Foam\_dofField\_H}}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ \textcolor{preprocessor}{\#include\ "{}volFields.H"{}}}
+\DoxyCodeLine{00045\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{lnInclude_2cellDof_8H}{cellDof.H}}"{}}}
+\DoxyCodeLine{00046\ \textcolor{preprocessor}{\#include\ "{}dgGeomMesh.H"{}}}
+\DoxyCodeLine{00047\ \textcolor{preprocessor}{\#include\ "{}IOobject.H"{}}}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespaceFoam}{Foam}}}
+\DoxyCodeLine{00050\ \{}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00052\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*\(\backslash\)}}
+\DoxyCodeLine{00053\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Class\ dofField\ Declaration}}
+\DoxyCodeLine{00054\ \textcolor{comment}{\(\backslash\)*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00075\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Type>}
+\DoxyCodeLine{00076\ \textcolor{keyword}{class\ }dofField}
+\DoxyCodeLine{00077\ \{}
+\DoxyCodeLine{00078\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00079\ }
+\DoxyCodeLine{00080\ \ \ \ \ \textcolor{comment}{//====================================================================//}}
+\DoxyCodeLine{00081\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Data\ members}}
+\DoxyCodeLine{00082\ \ \ \ \ \textcolor{comment}{//====================================================================//}}
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ dgGeomMesh\&\ \mbox{\hyperlink{classFoam_1_1dofField_ad7005c2731d1d760c00527ab96f4eebe}{dgMesh\_}};}
+\DoxyCodeLine{00086\ }
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ List<cellDof<Type>>\ \mbox{\hyperlink{classFoam_1_1dofField_a01beb8110d74104665b40842e1d63325}{cellDofs\_}};}
+\DoxyCodeLine{00089\ }
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ label\ \mbox{\hyperlink{classFoam_1_1dofField_afdedafaf83bd6df3aa3a01818ddc1909}{nCells\_}};}
+\DoxyCodeLine{00092\ }
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ List<autoPtr<GeometricField<Type,\ fvPatchField,\ volMesh>>>\ \mbox{\hyperlink{classFoam_1_1dofField_a2d2bd9787be6f36e973d5fceac087418}{foamFields\_}};}
+\DoxyCodeLine{00099\ }
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ List<label>\ \mbox{\hyperlink{classFoam_1_1dofField_a56e85ac46de29871fd545a1e061f18a5}{dofPerCell\_}};}
+\DoxyCodeLine{00102\ }
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ label\ \mbox{\hyperlink{classFoam_1_1dofField_a6735843d3aa0a320ea0c9e0ee51f2ba3}{maxDoF\_}};}
+\DoxyCodeLine{00105\ }
+\DoxyCodeLine{00106\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00107\ }
+\DoxyCodeLine{00108\ \ \ \ \ \textcolor{comment}{//====================================================================//}}
+\DoxyCodeLine{00109\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Constructors}}
+\DoxyCodeLine{00110\ \ \ \ \ \textcolor{comment}{//====================================================================//}}
+\DoxyCodeLine{00111\ }
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1dofField_a81c74b45a86dd15c9368210f4d34aaf6}{dofField}}}
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ (}
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{word}}\&\ name,}
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{fileName}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{instance}},}
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ \ \ \ \ IOobject::readOption\ \mbox{\hyperlink{classFoam_1_1GaussField}{rOpt}},}
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ \ \ \ \ IOobject::writeOption\ \mbox{\hyperlink{classFoam_1_1GaussField}{wOpt}},}
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dgGeomMesh}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{mesh}}}
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ );}
+\DoxyCodeLine{00126\ }
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1dofField_a8143c982f2bf6de2f3e6ebb528eca10b}{dofField}}}
+\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ (}
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dgGeomMesh}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{mesh}}}
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ );}
+\DoxyCodeLine{00137\ }
+\DoxyCodeLine{00138\ \ \ \ \ \textcolor{comment}{//====================================================================//}}
+\DoxyCodeLine{00139\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Access}}
+\DoxyCodeLine{00140\ \ \ \ \ \textcolor{comment}{//====================================================================//}}
+\DoxyCodeLine{00141\ }
+\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{List<cellDof<Type>}}>\&\ \mbox{\hyperlink{classFoam_1_1dofField_a4e025c47ffecf244e79c6023c82c3653}{cellDofList}}()\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00144\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00145\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classFoam_1_1dofField_a01beb8110d74104665b40842e1d63325}{cellDofs\_}};}
+\DoxyCodeLine{00146\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00147\ }
+\DoxyCodeLine{00149\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \mbox{\hyperlink{classFoam_1_1GaussField}{List<cellDof<Type>}}>\&\ \mbox{\hyperlink{classFoam_1_1dofField_a85b035fbc2d75b96b99f3b69830b4c6c}{cellDofList}}()}
+\DoxyCodeLine{00150\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classFoam_1_1dofField_a01beb8110d74104665b40842e1d63325}{cellDofs\_}};}
+\DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00153\ }
+\DoxyCodeLine{00155\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \mbox{\hyperlink{classFoam_1_1GaussField}{cellDof<Type>}}\&\ \mbox{\hyperlink{classFoam_1_1dofField_a598e199ba474b043675cebc930946d80}{operator[]}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{i}})}
+\DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classFoam_1_1dofField_a01beb8110d74104665b40842e1d63325}{cellDofs\_}}[\mbox{\hyperlink{classFoam_1_1GaussField}{i}}];}
+\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00159\ }
+\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{cellDof<Type>}}\&\ \mbox{\hyperlink{classFoam_1_1dofField_a057acaa2e05ab581b9bb85afb0e42331}{operator[]}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{i}})\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00162\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classFoam_1_1dofField_a01beb8110d74104665b40842e1d63325}{cellDofs\_}}[\mbox{\hyperlink{classFoam_1_1GaussField}{i}}];}
+\DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00165\ }
+\DoxyCodeLine{00166\ \ \ \ \ \textcolor{comment}{//====================================================================//}}
+\DoxyCodeLine{00167\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Synchronization}}
+\DoxyCodeLine{00168\ \ \ \ \ \textcolor{comment}{//====================================================================//}}
+\DoxyCodeLine{00169\ }
+\DoxyCodeLine{00176\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classFoam_1_1dofField_a59b38d83b62dece24d8a5f0c4b1e2641}{updateFoamFields}}();}
+\DoxyCodeLine{00177\ }
+\DoxyCodeLine{00181\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classFoam_1_1dofField_ab3e229f0c38495f1fad1721498f3c9b7}{write}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00182\ \};}
+\DoxyCodeLine{00183\ }
+\DoxyCodeLine{00184\ \}\ \textcolor{comment}{//\ End\ namespace\ Foam}}
+\DoxyCodeLine{00185\ }
+\DoxyCodeLine{00186\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{lnInclude_2dofFieldI_8H}{dofFieldI.H}}"{}}}
+\DoxyCodeLine{00187\ }
+\DoxyCodeLine{00188\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00189\ }
+\DoxyCodeLine{00190\ \textcolor{comment}{//\ *************************************************************************\ //}}
+
+\end{DoxyCode}

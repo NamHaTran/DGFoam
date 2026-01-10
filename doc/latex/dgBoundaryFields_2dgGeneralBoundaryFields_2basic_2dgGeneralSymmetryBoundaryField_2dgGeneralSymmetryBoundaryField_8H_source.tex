@@ -1,0 +1,195 @@
+\doxysection{dg\+General\+Symmetry\+Boundary\+Field.\+H}
+\hypertarget{dgBoundaryFields_2dgGeneralBoundaryFields_2basic_2dgGeneralSymmetryBoundaryField_2dgGeneralSymmetryBoundaryField_8H_source}{}\label{dgBoundaryFields_2dgGeneralBoundaryFields_2basic_2dgGeneralSymmetryBoundaryField_2dgGeneralSymmetryBoundaryField_8H_source}\index{/home/nam-\/ha-\/tran/OpenFOAM/DGFoam/src/DGMethod/dgBoundaryFields/dgGeneralBoundaryFields/basic/dgGeneralSymmetryBoundaryField/dgGeneralSymmetryBoundaryField.H@{/home/nam-\/ha-\/tran/OpenFOAM/DGFoam/src/DGMethod/dgBoundaryFields/dgGeneralBoundaryFields/basic/dgGeneralSymmetryBoundaryField/dgGeneralSymmetryBoundaryField.H}}
+\mbox{\hyperlink{dgBoundaryFields_2dgGeneralBoundaryFields_2basic_2dgGeneralSymmetryBoundaryField_2dgGeneralSymmetryBoundaryField_8H}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*\(\backslash\)}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ \ =========\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ \ \(\backslash\)\(\backslash\)\ \ \ \ \ \ /\ \ F\ ield\ \ \ \ \ \ \ \ \ |\ OpenFOAM:\ The\ Open\ Source\ CFD\ Toolbox}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ \ \ \(\backslash\)\(\backslash\)\ \ \ \ /\ \ \ O\ peration\ \ \ \ \ |}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ \ \ \ \(\backslash\)\(\backslash\)\ \ /\ \ \ \ A\ nd\ \ \ \ \ \ \ \ \ \ \ |\ www.openfoam.com}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ \ \ \ \ \(\backslash\)\(\backslash\)/\ \ \ \ \ M\ anipulation\ \ |}}
+\DoxyCodeLine{00007\ \textcolor{comment}{-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ \ \ \ Copyright\ (C)\ 2015-\/2024\ OpenCFD\ Ltd.}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ \ \ \ Copyright\ (C)\ 2024-\/2025\ Ha\ Nam\ Tran}}
+\DoxyCodeLine{00010\ \textcolor{comment}{-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00011\ \textcolor{comment}{License}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ \ \ \ This\ file\ is\ part\ of\ DGFoam.}}
+\DoxyCodeLine{00013\ \textcolor{comment}{}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ \ \ \ DGFoam\ is\ free\ software:\ you\ can\ redistribute\ it\ and/or\ modify\ it}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ \ \ \ under\ the\ terms\ of\ the\ GNU\ General\ Public\ License\ as\ published\ by}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ \ \ \ the\ Free\ Software\ Foundation,\ either\ version\ 3\ of\ the\ License,\ or}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ \ \ \ (at\ your\ option)\ any\ later\ version.}}
+\DoxyCodeLine{00018\ \textcolor{comment}{}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ \ \ \ DGFoam\ is\ distributed\ in\ the\ hope\ that\ it\ will\ be\ useful,\ but\ WITHOUT}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ \ \ \ ANY\ WARRANTY;\ without\ even\ the\ implied\ warranty\ of\ MERCHANTABILITY\ or}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ \ \ \ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE.\ \ See\ the\ GNU\ General\ Public\ License}}
+\DoxyCodeLine{00022\ \textcolor{comment}{\ \ \ \ for\ more\ details.}}
+\DoxyCodeLine{00023\ \textcolor{comment}{}}
+\DoxyCodeLine{00024\ \textcolor{comment}{\ \ \ \ You\ should\ have\ received\ a\ copy\ of\ the\ GNU\ General\ Public\ License}}
+\DoxyCodeLine{00025\ \textcolor{comment}{\ \ \ \ along\ with\ OpenFOAM.\ \ If\ not,\ see\ <http://www.gnu.org/licenses/>.}}
+\DoxyCodeLine{00026\ \textcolor{comment}{}}
+\DoxyCodeLine{00027\ \textcolor{comment}{\ \ Class\ dgGeneralSymmetryBoundaryField\ Declaration}}
+\DoxyCodeLine{00028\ \textcolor{comment}{}}
+\DoxyCodeLine{00029\ \textcolor{comment}{\ \ Description}}
+\DoxyCodeLine{00030\ \textcolor{comment}{\ \ \ \ -\/\ Implements\ a\ general\ symmetry\ boundary\ condition\ for\ scalar,\ vector,\ and}}
+\DoxyCodeLine{00031\ \textcolor{comment}{\ \ \ \ \ \ tensor\ fields.}}
+\DoxyCodeLine{00032\ \textcolor{comment}{}}
+\DoxyCodeLine{00033\ \textcolor{comment}{\ \ \ \ -\/\ This\ condition\ assumes\ the\ boundary\ is\ a\ symmetry\ plane:}}
+\DoxyCodeLine{00034\ \textcolor{comment}{\ \ \ \ \ \ \ \ *\ No\ flux\ passes\ through\ the\ boundary.}}
+\DoxyCodeLine{00035\ \textcolor{comment}{\ \ \ \ \ \ \ \ *\ Useful\ for\ reducing\ domain\ size\ in\ symmetric\ problems.}}
+\DoxyCodeLine{00036\ \textcolor{comment}{}}
+\DoxyCodeLine{00037\ \textcolor{comment}{\ \ Usage}}
+\DoxyCodeLine{00038\ \textcolor{comment}{\ \ \ \ boundaryField}}
+\DoxyCodeLine{00039\ \textcolor{comment}{\ \ \ \ \{}}
+\DoxyCodeLine{00040\ \textcolor{comment}{\ \ \ \ \ \ \ \ patchName}}
+\DoxyCodeLine{00041\ \textcolor{comment}{\ \ \ \ \ \ \ \ \{}}
+\DoxyCodeLine{00042\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ type\ \ \ \ generalSymmetry;}}
+\DoxyCodeLine{00043\ \textcolor{comment}{\ \ \ \ \ \ \ \ \}}}
+\DoxyCodeLine{00044\ \textcolor{comment}{\ \ \ \ \}}}
+\DoxyCodeLine{00045\ \textcolor{comment}{}}
+\DoxyCodeLine{00046\ \textcolor{comment}{\ \ Note}}
+\DoxyCodeLine{00047\ \textcolor{comment}{\ \ \ \ -\/\ Only\ geometric\ information\ (normal\ vector\ n)\ and\ internal\ values\ are}}
+\DoxyCodeLine{00048\ \textcolor{comment}{\ \ \ \ \ \ used.\ No\ input\ parameters\ required\ from\ dictionary.}}
+\DoxyCodeLine{00049\ \textcolor{comment}{}}
+\DoxyCodeLine{00050\ \textcolor{comment}{SourceFiles}}
+\DoxyCodeLine{00051\ \textcolor{comment}{\ \ \ \ dgGeneralZeroGradientBoundaryField.C}}
+\DoxyCodeLine{00052\ \textcolor{comment}{}}
+\DoxyCodeLine{00053\ \textcolor{comment}{\(\backslash\)*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00055\ \textcolor{preprocessor}{\#ifndef\ dgGeneralSymmetryBoundaryField\_H}}
+\DoxyCodeLine{00056\ \textcolor{preprocessor}{\#define\ dgGeneralSymmetryBoundaryField\_H}}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00058\ \textcolor{preprocessor}{\#include\ "{}dgGeneralBoundaryField.H"{}}}
+\DoxyCodeLine{00059\ \textcolor{preprocessor}{\#include\ "{}symmetryPolyPatch.H"{}}}
+\DoxyCodeLine{00060\ \textcolor{preprocessor}{\#include\ "{}vector.H"{}}}
+\DoxyCodeLine{00061\ \textcolor{preprocessor}{\#include\ "{}tensor.H"{}}}
+\DoxyCodeLine{00062\ \textcolor{preprocessor}{\#include\ "{}VectorSpace.H"{}}}
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00064\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespaceFoam}{Foam}}}
+\DoxyCodeLine{00065\ \{}
+\DoxyCodeLine{00066\ }
+\DoxyCodeLine{00067\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*\(\backslash\)}}
+\DoxyCodeLine{00068\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Class\ dgGeneralSymmetryBoundaryField\ Declaration}}
+\DoxyCodeLine{00069\ \textcolor{comment}{\(\backslash\)*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00071\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Type>}
+\DoxyCodeLine{00072\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classFoam_1_1dgGeneralSymmetryBoundaryField}{dgGeneralSymmetryBoundaryField}}}
+\DoxyCodeLine{00073\ :}
+\DoxyCodeLine{00074\ \ \ \ \ \textcolor{keyword}{public}\ \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField}{dgGeneralBoundaryField}}<Type>}
+\DoxyCodeLine{00075\ \{}
+\DoxyCodeLine{00076\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00077\ }
+\DoxyCodeLine{00078\ \ \ \ \ \textcolor{comment}{//-\/\ Runtime\ type\ information}}
+\DoxyCodeLine{00079\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1dgGeneralSymmetryBoundaryField_a483601b3eea41e4ecb782d518db51696}{TypeName}}(\textcolor{stringliteral}{"{}generalSymmetry"{}});}
+\DoxyCodeLine{00080\ }
+\DoxyCodeLine{00081\ \ \ \ \ \textcolor{comment}{//-\/\ Constructor\ from\ name\ and\ dictionary}}
+\DoxyCodeLine{00082\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1dgGeneralSymmetryBoundaryField}{dgGeneralSymmetryBoundaryField}}}
+\DoxyCodeLine{00083\ \ \ \ \ (}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{fvPatch}}\&\ \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_a005dea866598236ad0bda74b694bb6fb}{patch}},}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dgGeomMesh}}\&\ \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_a67193a1a1f618c6688825653a12edb7c}{dgMesh}},}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}}\&\ \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_acf8a9ee14cd01bde7a78896f1bfde325}{dict}}}
+\DoxyCodeLine{00087\ \ \ \ \ );}
+\DoxyCodeLine{00088\ }
+\DoxyCodeLine{00089\ \ \ \ \ \textcolor{comment}{//-\/\ Destructor}}
+\DoxyCodeLine{00090\ \ \ \ \ \textcolor{keyword}{virtual}\ \mbox{\hyperlink{classFoam_1_1dgGeneralSymmetryBoundaryField_ae133eeb4a0030129c7384f6b177b3dc3}{\string~dgGeneralSymmetryBoundaryField}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00091\ }
+\DoxyCodeLine{00092\ \ \ \ \ \textcolor{comment}{//-\/\ Member\ methods}}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classFoam_1_1dgGeneralSymmetryBoundaryField_a260abd4df6840a9fd65ce71e7b63eba6}{updateGhostStateValue}}}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ (}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ cellID,}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{faceLocalID}},}
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{localGauss}},}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{n}},}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}\&\ minusValue,}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}\&\ plusValue}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ )\textcolor{keyword}{\ const\ override}}
+\DoxyCodeLine{00102\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \ \ \ \ plusValue\ =\ minusValue;}
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00105\ }
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classFoam_1_1dgGeneralSymmetryBoundaryField_a02bcd7885d0f78211b7445edc7e6b3bd}{updateGhostStateValue}}}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ (}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ cellID,}
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{faceLocalID}},}
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{localGauss}},}
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{n}},}
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}}\&\ minusValue,}
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}}\&\ plusValue}
+\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ )\textcolor{keyword}{\ const\ override}}
+\DoxyCodeLine{00115\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \ \ \ \ plusValue\ =\ minusValue\ -\/\ 2\ *\ (\mbox{\hyperlink{classFoam_1_1GaussField}{n}}\ \&\ minusValue)\ *\ \mbox{\hyperlink{classFoam_1_1GaussField}{n}};}
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00118\ }
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00120\ \textcolor{comment}{\ \ \ \ \ \ \ \ void\ dgGeneralSymmetryBoundaryField<tensor>::updateGhostStateValue}}
+\DoxyCodeLine{00121\ \textcolor{comment}{\ \ \ \ \ \ \ \ (}}
+\DoxyCodeLine{00122\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ const\ label\ cellID,}}
+\DoxyCodeLine{00123\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ const\ label\ faceLocalID,}}
+\DoxyCodeLine{00124\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ const\ label\ localGauss,}}
+\DoxyCodeLine{00125\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ const\ vector\&\ n,}}
+\DoxyCodeLine{00126\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ const\ vector\&\ minusValue,}}
+\DoxyCodeLine{00127\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ vector\&\ plusValue}}
+\DoxyCodeLine{00128\ \textcolor{comment}{\ \ \ \ \ \ \ \ )\ const\ override}}
+\DoxyCodeLine{00129\ \textcolor{comment}{\ \ \ \ \ \ \ \ \{}}
+\DoxyCodeLine{00130\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ tensor\ R\ =\ tensor::I\ -\/\ 2.0\ *\ n\ *\ n;\ //\ Reflection\ tensor}}
+\DoxyCodeLine{00131\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ plusValue\ =\ R\ \&\ minusValue\ \&\ R;}}
+\DoxyCodeLine{00132\ \textcolor{comment}{\ \ \ \ \ \ \ \ \}}}
+\DoxyCodeLine{00133\ \textcolor{comment}{}}
+\DoxyCodeLine{00134\ \textcolor{comment}{\ \ \ \ \ \ \ \ void\ dgGeneralSymmetryBoundaryField<vector>::updateGhostStateGrad}}
+\DoxyCodeLine{00135\ \textcolor{comment}{\ \ \ \ \ \ \ \ (}}
+\DoxyCodeLine{00136\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ const\ label\ cellID,}}
+\DoxyCodeLine{00137\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ const\ label\ faceLocalID,}}
+\DoxyCodeLine{00138\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ const\ label\ localGauss,}}
+\DoxyCodeLine{00139\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ const\ vector\&\ n,}}
+\DoxyCodeLine{00140\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ const\ vector\&\ minusGrad,}}
+\DoxyCodeLine{00141\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ vector\&\ plusGrad}}
+\DoxyCodeLine{00142\ \textcolor{comment}{\ \ \ \ \ \ \ \ )\ const\ override}}
+\DoxyCodeLine{00143\ \textcolor{comment}{\ \ \ \ \ \ \ \ \{}}
+\DoxyCodeLine{00144\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ plusGrad\ =\ minusGrad\ -\/\ 2\ *\ (n\ \&\ minusGrad)\ *\ n;}}
+\DoxyCodeLine{00145\ \textcolor{comment}{\ \ \ \ \ \ \ \ \}}}
+\DoxyCodeLine{00146\ \textcolor{comment}{}}
+\DoxyCodeLine{00147\ \textcolor{comment}{\ \ \ \ \ \ \ \ void\ dgGeneralSymmetryBoundaryField<tensor>::updateGhostStateGrad}}
+\DoxyCodeLine{00148\ \textcolor{comment}{\ \ \ \ \ \ \ \ (}}
+\DoxyCodeLine{00149\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ const\ label\ cellID,}}
+\DoxyCodeLine{00150\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ const\ label\ faceLocalID,}}
+\DoxyCodeLine{00151\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ const\ label\ localGauss,}}
+\DoxyCodeLine{00152\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ const\ vector\&\ n,}}
+\DoxyCodeLine{00153\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ const\ vector\&\ minusGrad,}}
+\DoxyCodeLine{00154\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ vector\&\ plusGrad}}
+\DoxyCodeLine{00155\ \textcolor{comment}{\ \ \ \ \ \ \ \ )\ const\ override}}
+\DoxyCodeLine{00156\ \textcolor{comment}{\ \ \ \ \ \ \ \ \{}}
+\DoxyCodeLine{00157\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ tensor\ R\ =\ tensor::I\ -\/\ 2.0\ *\ n\ *\ n;\ //\ Reflection\ tensor}}
+\DoxyCodeLine{00158\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ plusGrad\ =\ R\ \&\ minusGrad\ \&\ R;}}
+\DoxyCodeLine{00159\ \textcolor{comment}{\ \ \ \ \ \ \ \ \}}}
+\DoxyCodeLine{00160\ \textcolor{comment}{\ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00161\ }
+\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ \textcolor{comment}{//-\/\ Check\ patch\ type}}
+\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classFoam_1_1dgGeneralSymmetryBoundaryField_a701fc800e004e6fcda37ee8f9d664c8c}{checkPatchType}}()\textcolor{keyword}{\ const\ override}}
+\DoxyCodeLine{00164\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (this-\/>\mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_aace96ded992b70311437cdb261b78b7e}{patch\_}}.type()\ !=\ \textcolor{stringliteral}{"{}symmetry"{}})}
+\DoxyCodeLine{00166\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{FatalErrorInFunction}}}
+\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{}Boundary\ condition\ "{}}\ <<\ type()\ <<\textcolor{stringliteral}{"{}\ can\ only\ "{}}}
+\DoxyCodeLine{00169\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{}be\ applied\ to\ patch\ type:\ \(\backslash\)n"{}}}
+\DoxyCodeLine{00170\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{}\ \ \ \ "{}}\ <<\ \textcolor{stringliteral}{"{}symmetry\ \(\backslash\)n"{}}}
+\DoxyCodeLine{00171\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{}but\ patch\ "{}}}
+\DoxyCodeLine{00172\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ this-\/>\mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_aace96ded992b70311437cdb261b78b7e}{patch\_}}.name()\ <<\ \textcolor{stringliteral}{"{}\ is\ of\ type\ "{}}\ <<\ this-\/>\mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_aace96ded992b70311437cdb261b78b7e}{patch\_}}.type()\ <<\ \mbox{\hyperlink{classFoam_1_1GaussField}{nl}}}
+\DoxyCodeLine{00173\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \mbox{\hyperlink{classFoam_1_1GaussField}{exit}}(\mbox{\hyperlink{classFoam_1_1GaussField}{FatalError}});}
+\DoxyCodeLine{00174\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00175\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00176\ \};}
+\DoxyCodeLine{00177\ }
+\DoxyCodeLine{00178\ \}\ \textcolor{comment}{//\ End\ namespace\ Foam}}
+\DoxyCodeLine{00179\ }
+\DoxyCodeLine{00180\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*\(\backslash\)}}
+\DoxyCodeLine{00181\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Include\ template\ implementation}}
+\DoxyCodeLine{00182\ \textcolor{comment}{\(\backslash\)*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{00183\ }
+\DoxyCodeLine{00184\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{lnInclude_2dgGeneralSymmetryBoundaryFieldI_8H}{dgGeneralSymmetryBoundaryFieldI.H}}"{}}}
+\DoxyCodeLine{00185\ }
+\DoxyCodeLine{00186\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00187\ }
+\DoxyCodeLine{00188\ \textcolor{comment}{//\ *************************************************************************\ //}}
+\DoxyCodeLine{00189\ }
+
+\end{DoxyCode}

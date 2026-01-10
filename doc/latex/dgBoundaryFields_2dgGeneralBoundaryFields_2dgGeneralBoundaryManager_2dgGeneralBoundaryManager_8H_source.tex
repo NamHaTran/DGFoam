@@ -1,0 +1,149 @@
+\doxysection{dg\+General\+Boundary\+Manager.\+H}
+\hypertarget{dgBoundaryFields_2dgGeneralBoundaryFields_2dgGeneralBoundaryManager_2dgGeneralBoundaryManager_8H_source}{}\label{dgBoundaryFields_2dgGeneralBoundaryFields_2dgGeneralBoundaryManager_2dgGeneralBoundaryManager_8H_source}\index{/home/nam-\/ha-\/tran/OpenFOAM/DGFoam/src/DGMethod/dgBoundaryFields/dgGeneralBoundaryFields/dgGeneralBoundaryManager/dgGeneralBoundaryManager.H@{/home/nam-\/ha-\/tran/OpenFOAM/DGFoam/src/DGMethod/dgBoundaryFields/dgGeneralBoundaryFields/dgGeneralBoundaryManager/dgGeneralBoundaryManager.H}}
+\mbox{\hyperlink{dgBoundaryFields_2dgGeneralBoundaryFields_2dgGeneralBoundaryManager_2dgGeneralBoundaryManager_8H}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*\(\backslash\)}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ \ =========\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ \ \(\backslash\)\(\backslash\)\ \ \ \ \ \ /\ \ F\ ield\ \ \ \ \ \ \ \ \ |\ OpenFOAM:\ The\ Open\ Source\ CFD\ Toolbox}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ \ \ \(\backslash\)\(\backslash\)\ \ \ \ /\ \ \ O\ peration\ \ \ \ \ |}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ \ \ \ \(\backslash\)\(\backslash\)\ \ /\ \ \ \ A\ nd\ \ \ \ \ \ \ \ \ \ \ |\ www.openfoam.com}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ \ \ \ \ \(\backslash\)\(\backslash\)/\ \ \ \ \ M\ anipulation\ \ |}}
+\DoxyCodeLine{00007\ \textcolor{comment}{-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ \ \ \ Copyright\ (C)\ 2015-\/2024\ OpenCFD\ Ltd.}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ \ \ \ Copyright\ (C)\ 2024-\/2025\ Ha\ Nam\ Tran}}
+\DoxyCodeLine{00010\ \textcolor{comment}{-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00011\ \textcolor{comment}{License}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ \ \ \ This\ file\ is\ part\ of\ DGFoam.}}
+\DoxyCodeLine{00013\ \textcolor{comment}{}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ \ \ \ DGFoam\ is\ free\ software:\ you\ can\ redistribute\ it\ and/or\ modify\ it}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ \ \ \ under\ the\ terms\ of\ the\ GNU\ General\ Public\ License\ as\ published\ by}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ \ \ \ the\ Free\ Software\ Foundation,\ either\ version\ 3\ of\ the\ License,\ or}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ \ \ \ (at\ your\ option)\ any\ later\ version.}}
+\DoxyCodeLine{00018\ \textcolor{comment}{}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ \ \ \ DGFoam\ is\ distributed\ in\ the\ hope\ that\ it\ will\ be\ useful,\ but\ WITHOUT}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ \ \ \ ANY\ WARRANTY;\ without\ even\ the\ implied\ warranty\ of\ MERCHANTABILITY\ or}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ \ \ \ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE.\ \ See\ the\ GNU\ General\ Public\ License}}
+\DoxyCodeLine{00022\ \textcolor{comment}{\ \ \ \ for\ more\ details.}}
+\DoxyCodeLine{00023\ \textcolor{comment}{}}
+\DoxyCodeLine{00024\ \textcolor{comment}{\ \ \ \ You\ should\ have\ received\ a\ copy\ of\ the\ GNU\ General\ Public\ License}}
+\DoxyCodeLine{00025\ \textcolor{comment}{\ \ \ \ along\ with\ OpenFOAM.\ \ If\ not,\ see\ <http://www.gnu.org/licenses/>.}}
+\DoxyCodeLine{00026\ \textcolor{comment}{}}
+\DoxyCodeLine{00027\ \textcolor{comment}{Class}}
+\DoxyCodeLine{00028\ \textcolor{comment}{\ \ \ \ Foam::dgGeneralBoundaryManager}}
+\DoxyCodeLine{00029\ \textcolor{comment}{}}
+\DoxyCodeLine{00030\ \textcolor{comment}{Description}}
+\DoxyCodeLine{00031\ \textcolor{comment}{\ \ \ \ Class\ for\ DG\ boundary\ conditions\ management.}}
+\DoxyCodeLine{00032\ \textcolor{comment}{}}
+\DoxyCodeLine{00033\ \textcolor{comment}{\(\backslash\)*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ \textcolor{preprocessor}{\#ifndef\ Foam\_dgGeneralBoundaryManager\_H}}
+\DoxyCodeLine{00036\ \textcolor{preprocessor}{\#define\ Foam\_dgGeneralBoundaryManager\_H}}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \textcolor{preprocessor}{\#include\ "{}dgGeomMesh.H"{}}}
+\DoxyCodeLine{00039\ \textcolor{preprocessor}{\#include\ "{}fvPatch.H"{}}}
+\DoxyCodeLine{00040\ \textcolor{preprocessor}{\#include\ "{}dictionary.H"{}}}
+\DoxyCodeLine{00041\ \textcolor{preprocessor}{\#include\ "{}IOdictionary.H"{}}}
+\DoxyCodeLine{00042\ \textcolor{preprocessor}{\#include\ "{}PtrList.H"{}}}
+\DoxyCodeLine{00043\ \textcolor{preprocessor}{\#include\ "{}dgGeneralBoundaryField.H"{}}}
+\DoxyCodeLine{00044\ \textcolor{preprocessor}{\#include\ "{}dgField.H"{}}}
+\DoxyCodeLine{00045\ \textcolor{preprocessor}{\#include\ "{}dgBoundaryHelper.H"{}}}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespaceFoam}{Foam}}}
+\DoxyCodeLine{00048\ \{}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00050\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*\(\backslash\)}}
+\DoxyCodeLine{00051\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Class\ dgGeneralBoundaryManager\ Declaration}}
+\DoxyCodeLine{00052\ \textcolor{comment}{\(\backslash\)*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Type>}
+\DoxyCodeLine{00055\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryManager}{dgGeneralBoundaryManager}}}
+\DoxyCodeLine{00056\ \{}
+\DoxyCodeLine{00057\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00059\ \ \ \ \ \textcolor{comment}{//-\/\ Reference\ to\ dgGeomMesh\ (used\ for\ fvPatch\ access\ and\ field\ lookup)}}
+\DoxyCodeLine{00060\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dgGeomMesh}}\&\ \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryManager_a1fa3a0e06e93a1d3404e70f566baf335}{mesh\_}};}
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{comment}{//-\/\ List\ of\ boundary\ condition\ objects\ (one\ per\ fvPatch)}}
+\DoxyCodeLine{00063\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{DynamicList<autoPtr<dgGeneralBoundaryField<Type>}}>>\ \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryManager_afd6dccbb0880b0ce0df9c42c21c43769}{bConditions\_}};}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00065\ \ \ \ \ \textcolor{comment}{//-\/\ Internal\ field\ value\ (currently\ only\ supports\ 'uniform\ <value>')}}
+\DoxyCodeLine{00066\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}}\ \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryManager_af41c200ef0992e3bf950359e6380bf9e}{internalValue\_}};}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00068\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00070\ \ \ \ \ \textcolor{comment}{//\ Constructors}}
+\DoxyCodeLine{00071\ }
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \textcolor{comment}{//-\/\ Construct\ from\ fvPatch\ +\ dgGeomMesh\ +\ dictionary\ of\ BC\ file}}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryManager}{dgGeneralBoundaryManager}}}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ (}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{fieldDict}},}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dgGeomMesh}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{mesh}}}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ );}
+\DoxyCodeLine{00078\ }
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \textcolor{comment}{//-\/\ Construct\ from\ IOobject\ +\ dgGeomMesh}}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryManager}{dgGeneralBoundaryManager}}}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ (}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{IOobject}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{io}},}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dgGeomMesh}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{mesh}}}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ );}
+\DoxyCodeLine{00085\ }
+\DoxyCodeLine{00086\ \ \ \ \ \textcolor{comment}{//-\/\ Destructor}}
+\DoxyCodeLine{00087\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryManager_aaf3022831cb21842642dc2d3007bebb3}{\string~dgGeneralBoundaryManager}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00088\ }
+\DoxyCodeLine{00089\ \ \ \ \ \textcolor{comment}{//\ Access\ Functions}}
+\DoxyCodeLine{00090\ }
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \textcolor{comment}{//-\/\ Number\ of\ boundary\ patches}}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryManager_a032e0018efa7e202913f00d55164081f}{size}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryManager_afd6dccbb0880b0ce0df9c42c21c43769}{bConditions\_}}.size();\ \}}
+\DoxyCodeLine{00093\ }
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \textcolor{comment}{//-\/\ Const\ access\ by\ patch\ index}}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{dgGeneralBoundaryField<Type>}}\&\ \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryManager_a4142da54cab5f763a92fea9fc17b3e41}{operator[]}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{i}})\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00096\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryManager_afd6dccbb0880b0ce0df9c42c21c43769}{bConditions\_}}[\mbox{\hyperlink{classFoam_1_1GaussField}{i}}];}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00099\ }
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \textcolor{comment}{//-\/\ Non-\/const\ access}}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \mbox{\hyperlink{classFoam_1_1GaussField}{dgGeneralBoundaryField<Type>}}\&\ \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryManager_a89baaaf3bb8e6b84e178aa3d6a1bc2b6}{operator[]}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{i}})}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryManager_afd6dccbb0880b0ce0df9c42c21c43769}{bConditions\_}}[\mbox{\hyperlink{classFoam_1_1GaussField}{i}}];}
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00105\ }
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \textcolor{comment}{//-\/\ Return\ internal\ field\ value}}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}}\&\ \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryManager_ad1d785651f9f9f20e9a8a6fb084f745a}{internalValue}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryManager_af41c200ef0992e3bf950359e6380bf9e}{internalValue\_}};\ \}}
+\DoxyCodeLine{00108\ }
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \textcolor{comment}{//-\/\ Check\ if\ given\ patchID\ is\ general\ boundary}}
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryManager_af63c22719ba1a4e2f95ea2fb32362170}{isGeneralPatch}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ patchID)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00111\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{fvBoundaryMesh}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{patches}}\ =\ \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryManager_a1fa3a0e06e93a1d3404e70f566baf335}{mesh\_}}.getFvMesh().boundary();}
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{namespaceFoam_1_1dgBoundaryHelper_ad336b0d03003430f2a70769a5a4ccaa3}{dgBoundaryHelper::isGeneralPatch}}(\mbox{\hyperlink{classFoam_1_1GaussField}{patches}}[patchID]))}
+\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00122\ }
+\DoxyCodeLine{00123\ \ \ \ \ \textcolor{comment}{//\ Core\ methods}}
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ \textcolor{comment}{//-\/\ Update\ values\ on\ plus\ side\ according\ to\ boundary\ conditions}}
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryManager_a49ca4d69931cac3a1fc1e9d9827a4551}{updateValue}}}
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ (}
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{GaussField<Type>}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{GField}}}
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ );}
+\DoxyCodeLine{00130\ }
+\DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ \textcolor{comment}{//-\/\ Update\ gradients\ on\ plus\ side\ according\ to\ boundary\ conditions}}
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryManager_a5ee4e829f0774b1b97a5b9b6691c2b6e}{updateGrad}}}
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ (}
+\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{GaussField<Type>}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{GField}}}
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ );}
+\DoxyCodeLine{00136\ \};}
+\DoxyCodeLine{00137\ }
+\DoxyCodeLine{00138\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{lnInclude_2dgGeneralBoundaryManagerI_8H}{dgGeneralBoundaryManagerI.H}}"{}}}
+\DoxyCodeLine{00139\ }
+\DoxyCodeLine{00140\ \}\ \textcolor{comment}{//\ End\ namespace\ Foam}}
+\DoxyCodeLine{00141\ }
+\DoxyCodeLine{00142\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00143\ \textcolor{comment}{//\ *************************************************************************\ //}}
+
+\end{DoxyCode}

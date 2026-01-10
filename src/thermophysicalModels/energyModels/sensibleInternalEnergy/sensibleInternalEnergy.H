@@ -28,8 +28,7 @@ Class
     Foam::sensibleInternalEnergy
 
 Description
-    sensibleInternalEnergy energy model.
-    Energy field is sensible internal energy e = Cv*T
+    Sensible internal-energy model for DG thermodynamics.
 
 SourceFiles
     sensibleInternalEnergy.C
@@ -48,16 +47,46 @@ namespace Foam
 {
 
 /*---------------------------------------------------------------------------*\
-                 Class sensibleInternalEnergy Declaration
+               Class sensibleInternalEnergy Declaration
 \*---------------------------------------------------------------------------*/
 
+/**
+ * \class Foam::sensibleInternalEnergy
+ * \brief Sensible internal-energy formulation \f$e = C_v T\f$
+ *
+ * \details
+ * sensibleInternalEnergy implements an energy model in which the conserved
+ * thermodynamic variable is the sensible internal energy.
+ *
+ * The internal energy is defined as:
+ * \f[
+ *   e(T) = C_v(T)\,T
+ * \f]
+ *
+ * Enthalpy is recovered consistently as:
+ * \f[
+ *   h(T) = e(T) + \frac{p}{\rho}
+ * \f]
+ *
+ * This model:
+ * - Evolves sensible internal energy only
+ * - Excludes chemical formation energy
+ * - Is suitable for compressible DG solvers
+ * - Is compatible with perfect-gas and thermal-perfect-gas thermodynamics
+ *
+ * \par Usage
+ * sensibleInternalEnergy is intended for conservative DG formulations
+ * where the energy equation is written in terms of internal energy.
+ *
+ * \ingroup grpDGThermo
+ */
 class sensibleInternalEnergy
 :
     public energy
 {
 protected:
 
-    //- Optional coefficient storage
+    /** Optional coefficient dictionary */
     dictionary coeffDict_;
 
 public:
@@ -65,7 +94,14 @@ public:
     //- Runtime type information
     TypeName("sensibleInternalEnergy");
 
-    //- Construct from dictionary
+    /**
+     * \brief Construct from dictionary
+     *
+     * \param name   Model name
+     * \param dict   Coefficient dictionary
+     * \param mesh   DG geometric mesh
+     * \param thermo Thermodynamic law
+     */
     sensibleInternalEnergy
     (
         const word& name,
@@ -74,9 +110,20 @@ public:
         const thermoLaw& thermo
     );
 
-    // * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * * //
+    // * * * * * * * * * * * * Member Functions * * * * * * * * * * * * //
 
-    //- Compute enthalpy h(T)
+    /**
+     * \brief Compute enthalpy from temperature
+     *
+     * Computes sensible enthalpy as:
+     * \f[
+     *   h(T) = e(T) + \frac{p}{\rho}
+     * \f]
+     *
+     * \param cellI Cell index
+     * \param T     Temperature field at Gauss points
+     * \param h     Enthalpy field to be written
+     */
     virtual void calcEnthalpy
     (
         const label cellI,
@@ -84,7 +131,18 @@ public:
         GaussField<scalar>& h
     ) const override;
 
-    //- Compute internal energy e(T)
+    /**
+     * \brief Compute internal energy from temperature
+     *
+     * Computes sensible internal energy:
+     * \f[
+     *   e(T) = C_v(T)\,T
+     * \f]
+     *
+     * \param cellI Cell index
+     * \param T     Temperature field at Gauss points
+     * \param e     Internal energy field to be written
+     */
     virtual void calcEnergy
     (
         const label cellI,
@@ -92,7 +150,18 @@ public:
         GaussField<scalar>& e
     ) const override;
 
-    //- Compute T(e)
+    /**
+     * \brief Compute temperature from internal energy
+     *
+     * Inverts the relation:
+     * \f[
+     *   e = C_v(T)\,T
+     * \f]
+     *
+     * \param cellI Cell index
+     * \param e     Internal energy field at Gauss points
+     * \param T     Temperature field to be written
+     */
     virtual void calcTfromEnergy
     (
         const label cellI,
@@ -100,7 +169,11 @@ public:
         GaussField<scalar>& T
     ) const override;
 
-    //- Set energy group
+    /**
+     * \brief Identify internal-energy formulation
+     *
+     * \return True, since this model is internal-energy based
+     */
     virtual bool energyInternal() const override { return true; }
 };
 
@@ -109,4 +182,3 @@ public:
 #endif
 
 // ************************************************************************* //
-

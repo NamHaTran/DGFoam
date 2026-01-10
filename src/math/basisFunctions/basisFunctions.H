@@ -61,6 +61,7 @@ label getNumBasis(const label pOrder, const dgCellType type);
 
 // Evaluate basis functions at a 3D point (eta1, eta2, eta3)
 // and their derivatives ∂φ/∂eta1, ∂φ/∂eta2, ∂φ/∂eta3
+/*
 void computeBasisAndDerivatives
 (
     const scalar eta1,
@@ -73,9 +74,10 @@ void computeBasisAndDerivatives
     List<scalar>& dBasis_deta2,
     List<scalar>& dBasis_deta3
 );
+*/
 
 // Evaluate basis functions and derivatives for hexagonal cells
-void computeHexBasisAndDerivatives
+void computeInteriorHexBasisAndDerivatives
 (
     const scalar eta1,
     const scalar eta2,
@@ -88,7 +90,7 @@ void computeHexBasisAndDerivatives
 );
 
 // Evaluate basis functions and derivatives for prism cells
-void computePrismBasisAndDerivatives
+void computeInteriorPrismBasisAndDerivatives
 (
     const scalar eta1,
     const scalar eta2,
@@ -101,7 +103,7 @@ void computePrismBasisAndDerivatives
 );
 
 // Evaluate basis functions and derivatives for pyramid cells
-void computePyramidBasisAndDerivatives
+void computeInteriorPyramidBasisAndDerivatives
 (
     const scalar eta1,
     const scalar eta2,
@@ -114,12 +116,103 @@ void computePyramidBasisAndDerivatives
 );
 
 // Evaluate basis functions and derivatives for tetrahedral cells
-void computeTetBasisAndDerivatives
+void computeInteriorTetBasisAndDerivatives
 (
     const scalar eta1,
     const scalar eta2,
     const scalar eta3,
     const label pOrder,
+    List<scalar>& basis,
+    List<scalar>& dBasis_deta1,
+    List<scalar>& dBasis_deta2,
+    List<scalar>& dBasis_deta3
+);
+
+// Evaluate basis functions and derivatives for polyhedral cells
+void computeInteriorPolyBasisAndDerivatives
+(
+    const scalar eta1,
+    const scalar eta2,
+    const scalar eta3,
+    const label pOrder,
+    List<scalar>& basis,
+    List<scalar>& dBasis_deta1,
+    List<scalar>& dBasis_deta2,
+    List<scalar>& dBasis_deta3
+);
+
+// Evaluate basis functions for triangular faces
+void computeInteriorTriBasis
+(
+    const scalar eta1,
+    const scalar eta2,
+    const label pOrder,
+    List<scalar>& basis,
+    List<scalar>& dBasis_deta1,
+    List<scalar>& dBasis_deta2
+);
+
+// Evaluate basis functions for quadrilateral faces
+void computeInteriorQuadBasis
+(
+    const scalar eta1,
+    const scalar eta2,
+    const label pOrder,
+    List<scalar>& basis,
+    List<scalar>& dBasis_deta1,
+    List<scalar>& dBasis_deta2
+);
+
+// Evaluate basis functions on hex faces
+void computeFaceBasisAndDerivativesOfHex
+(
+    const scalar eta1,
+    const scalar eta2,
+    const scalar eta3,
+    const label pOrder,
+    const dgFacePosition pos,
+    List<scalar>& basis,
+    List<scalar>& dBasis_deta1,
+    List<scalar>& dBasis_deta2,
+    List<scalar>& dBasis_deta3
+);
+
+// Evaluate basis functions on prism faces
+void computeFaceBasisAndDerivativesOfPrism
+(
+    const scalar eta1,
+    const scalar eta2,
+    const scalar eta3,
+    const label pOrder,
+    const dgFacePositionOnPrism pos,
+    List<scalar>& basis,
+    List<scalar>& dBasis_deta1,
+    List<scalar>& dBasis_deta2,
+    List<scalar>& dBasis_deta3
+);
+
+// Evaluate basis functions on pyramid faces
+void computeFaceBasisAndDerivativesOfPyramid
+(
+    const scalar eta1,
+    const scalar eta2,
+    const scalar eta3,
+    const label pOrder,
+    const dgFacePositionOnPyramid pos,
+    List<scalar>& basis,
+    List<scalar>& dBasis_deta1,
+    List<scalar>& dBasis_deta2,
+    List<scalar>& dBasis_deta3
+);
+
+// Evaluate basis functions on tetrahedral faces
+void computeFaceBasisAndDerivativesOfTet
+(
+    const scalar eta1,
+    const scalar eta2,
+    const scalar eta3,
+    const label pOrder,
+    const dgFacePositionOnTet pos,
     List<scalar>& basis,
     List<scalar>& dBasis_deta1,
     List<scalar>& dBasis_deta2,

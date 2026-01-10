@@ -1,0 +1,92 @@
+\doxysection{dg\+Processor\+Boundary\+Manager\+I.\+H}
+\hypertarget{dgBoundaryFields_2dgProcessorBoundaryFields_2dgProcessorBoundaryManager_2dgProcessorBoundaryManagerI_8H_source}{}\label{dgBoundaryFields_2dgProcessorBoundaryFields_2dgProcessorBoundaryManager_2dgProcessorBoundaryManagerI_8H_source}\index{/home/nam-\/ha-\/tran/OpenFOAM/DGFoam/src/DGMethod/dgBoundaryFields/dgProcessorBoundaryFields/dgProcessorBoundaryManager/dgProcessorBoundaryManagerI.H@{/home/nam-\/ha-\/tran/OpenFOAM/DGFoam/src/DGMethod/dgBoundaryFields/dgProcessorBoundaryFields/dgProcessorBoundaryManager/dgProcessorBoundaryManagerI.H}}
+\mbox{\hyperlink{dgBoundaryFields_2dgProcessorBoundaryFields_2dgProcessorBoundaryManager_2dgProcessorBoundaryManagerI_8H}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*\(\backslash\)}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ \ =========\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ \ \(\backslash\)\(\backslash\)\ \ \ \ \ \ /\ \ F\ ield\ \ \ \ \ \ \ \ \ |\ DGFoam:\ Discontinuous\ Galerkin\ CFD\ Toolbox}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ \ \ \(\backslash\)\(\backslash\)\ \ \ \ /\ \ \ O\ peration\ \ \ \ \ |}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ \ \ \ \(\backslash\)\(\backslash\)\ \ /\ \ \ \ A\ nd\ \ \ \ \ \ \ \ \ \ \ |\ GPU-\/friendly\ CFD\ solver\ framework}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ \ \ \ \ \(\backslash\)\(\backslash\)/\ \ \ \ \ M\ anipulation\ \ |}}
+\DoxyCodeLine{00007\ \textcolor{comment}{-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00008\ \textcolor{comment}{}}
+\DoxyCodeLine{00009\ \textcolor{comment}{License}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ \ \ \ This\ file\ is\ part\ of\ DGFoam.}}
+\DoxyCodeLine{00011\ \textcolor{comment}{}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ \ \ \ DGFoam\ is\ free\ software:\ you\ can\ redistribute\ it\ and/or\ modify\ it}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ \ \ \ under\ the\ terms\ of\ the\ GNU\ General\ Public\ License\ as\ published\ by}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ \ \ \ the\ Free\ Software\ Foundation,\ either\ version\ 3\ of\ the\ License,\ or}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ \ \ \ (at\ your\ option)\ any\ later\ version.}}
+\DoxyCodeLine{00016\ \textcolor{comment}{}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ \ \ \ DGFoam\ is\ distributed\ in\ the\ hope\ that\ it\ will\ be\ useful,\ but\ WITHOUT}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ \ \ \ ANY\ WARRANTY;\ without\ even\ the\ implied\ warranty\ of\ MERCHANTABILITY\ or}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ \ \ \ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE.\ \ See\ the\ GNU\ General\ Public\ License}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ \ \ \ for\ more\ details.}}
+\DoxyCodeLine{00021\ \textcolor{comment}{}}
+\DoxyCodeLine{00022\ \textcolor{comment}{\ \ \ \ You\ should\ have\ received\ a\ copy\ of\ the\ GNU\ General\ Public\ License}}
+\DoxyCodeLine{00023\ \textcolor{comment}{\ \ \ \ along\ with\ DGFoam.\ \ If\ not,\ see\ <http://www.gnu.org/licenses/>.}}
+\DoxyCodeLine{00024\ \textcolor{comment}{}}
+\DoxyCodeLine{00025\ \textcolor{comment}{\(\backslash\)*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \textcolor{preprocessor}{\#ifndef\ Foam\_dgProcessorBoundaryManagerI\_H}}
+\DoxyCodeLine{00028\ \textcolor{preprocessor}{\#define\ Foam\_dgProcessorBoundaryManagerI\_H}}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \textcolor{comment}{//\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ Constructors\ \ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ //}}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Type>}
+\DoxyCodeLine{00033\ \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryManager_a51bd597f184defdb336482e8cae1299b}{Foam::dgProcessorBoundaryManager<Type>::dgProcessorBoundaryManager}}}
+\DoxyCodeLine{00034\ (}
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dgGeomMesh}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{mesh}}}
+\DoxyCodeLine{00036\ )}
+\DoxyCodeLine{00037\ :}
+\DoxyCodeLine{00038\ \ \ \ \ mesh\_(\mbox{\hyperlink{classFoam_1_1GaussField}{mesh}})}
+\DoxyCodeLine{00039\ \{}
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{fvBoundaryMesh}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{patches}}\ =\ \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryManager_a82f9832b085b5f59221b88a0ebf8d55b}{mesh\_}}.getFvMesh().boundary();}
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{nPatches}}\ =\ \mbox{\hyperlink{classFoam_1_1GaussField}{patches}}.size();}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keywordflow}{for}\ (\mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{patchI}}\ =\ 0;\ \mbox{\hyperlink{classFoam_1_1GaussField}{patchI}}\ <\ \mbox{\hyperlink{classFoam_1_1GaussField}{nPatches}};\ ++\mbox{\hyperlink{classFoam_1_1GaussField}{patchI}})}
+\DoxyCodeLine{00044\ \ \ \ \ \{}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{fvPatch}}\&\ patch\ =\ \mbox{\hyperlink{classFoam_1_1GaussField}{patches}}[\mbox{\hyperlink{classFoam_1_1GaussField}{patchI}}];}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{namespaceFoam_1_1dgBoundaryHelper_aacf61fd17830f31a3bf10506dd6b0c4e}{dgBoundaryHelper::isInterfacePatch}}(patch))}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryManager_a517dcd1a6551dad072dbf1e87d68b77c}{bConditions\_}}.append}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \ \ \ \ (}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{new}\ \mbox{\hyperlink{classFoam_1_1GaussField}{dgProcessorBoundaryField<Type>}}(patch,\ \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryManager_a82f9832b085b5f59221b88a0ebf8d55b}{mesh\_}})}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \ \ \ \ );}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00054\ \ \ \ \ \}}
+\DoxyCodeLine{00055\ \}}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00057\ \textcolor{comment}{//\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ Member\ Functions\ \ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ //}}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00059\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Type>}
+\DoxyCodeLine{00060\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryManager_af65e4c96211ef479d837786c38d0305e}{Foam::dgProcessorBoundaryManager<Type>::update}}}
+\DoxyCodeLine{00061\ (}
+\DoxyCodeLine{00062\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{dgField<Type>}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{field}}}
+\DoxyCodeLine{00063\ )}
+\DoxyCodeLine{00064\ \{}
+\DoxyCodeLine{00065\ \ \ \ \ \textcolor{keywordflow}{if}\ (Pstream::parRun())}
+\DoxyCodeLine{00066\ \ \ \ \ \{}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ pack\ and\ send}}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{forAll}}(bConditions\_,\ \mbox{\hyperlink{classFoam_1_1GaussField}{patchI}})}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \ \ \ \ bConditions\_[\mbox{\hyperlink{classFoam_1_1GaussField}{patchI}}].sendAll(\mbox{\hyperlink{classFoam_1_1GaussField}{field}});}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Wait\ for\ all\ sends\ to\ complete}}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ UPstream::waitRequests(-\/1);}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ recv\ and\ unpack}}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{forAll}}(bConditions\_,\ \mbox{\hyperlink{classFoam_1_1GaussField}{patchI}})}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \ \ \ \ bConditions\_[\mbox{\hyperlink{classFoam_1_1GaussField}{patchI}}].recvAll(\mbox{\hyperlink{classFoam_1_1GaussField}{field}});}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00081\ \ \ \ \ \}}
+\DoxyCodeLine{00082\ \}}
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00084\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00085\ \textcolor{comment}{//\ *************************************************************************\ //}}
+\DoxyCodeLine{00086\ }
+
+\end{DoxyCode}

@@ -28,11 +28,7 @@ Class
     Foam::constantCp
 
 Description
-    Thermodynamic model with constant Cp.
-    - Reads Cp from 'thermodynamics' sub-dictionary
-    - Reads molWeight from 'specie' sub-dictionary
-    - Computes R = Ru / molWeight, Cv = Cp - R, gamma = Cp/Cv
-    - Provides cp(T), h(T), e(T) and speed of sound a(T) = sqrt(gamma*R*T)
+    Thermodynamic model with constant specific heat at constant pressure.
 
 SourceFiles
     constantCp.C
@@ -49,25 +45,62 @@ namespace Foam
 {
 
 /*---------------------------------------------------------------------------*\
-                           Class constantCp Declaration
+                        Class constantCp Declaration
 \*---------------------------------------------------------------------------*/
 
+/**
+ * \class Foam::constantCp
+ * \brief Perfect-gas thermodynamic model with constant \f$C_p\f$
+ *
+ * \details
+ * constantCp implements a thermodynamic model in which the specific heat
+ * at constant pressure is assumed to be constant.
+ *
+ * The model reads:
+ * \li \f$C_p\f$ from the \c thermodynamics sub-dictionary
+ * \li Molecular weight from the \c specie sub-dictionary
+ *
+ * The following thermodynamic properties are then derived:
+ * \li Gas constant: \f$R = \frac{R_u}{W}\f$
+ * \li Specific heat at constant volume: \f$C_v = C_p - R\f$
+ * \li Heat-capacity ratio: \f$\gamma = \frac{C_p}{C_v}\f$
+ *
+ * Energy relations:
+ * \li Internal energy: \f$e(T) = C_v T\f$
+ * \li Enthalpy: \f$h(T) = C_p T\f$
+ *
+ * Speed of sound:
+ * \f[
+ *   a = \sqrt{\gamma R T}
+ * \f]
+ *
+ * \par Applicability
+ * \li Ideal-gas equation of state
+ * \li Perfect-gas thermodynamics
+ * \li Compressible DG solvers
+ *
+ * \par Limitations
+ * \li Does not include formation enthalpy
+ * \li Not suitable for real-gas or reacting-flow thermodynamics
+ *
+ * \ingroup grpDGThermo
+ */
 class constantCp
 :
     public thermoLaw
 {
 private:
 
-    //- Constant specific heat at constant pressure [J/(kg.K)]
+    /** Constant specific heat at constant pressure \f$C_p\f$ [J/(kg·K)] */
     scalar Cp_;
 
-    //- Specific gas constant (computed) [J/(kg.K)]
+    /** Specific gas constant \f$R\f$ [J/(kg·K)] */
     scalar R_;
 
-    //- Constant specific heat at constant volume (computed) [J/(kg.K)]
+    /** Constant specific heat at constant volume \f$C_v\f$ [J/(kg·K)] */
     scalar Cv_;
 
-    //- Heat capacity ratio gamma = Cp/Cv [-]
+    /** Heat-capacity ratio \f$\gamma = C_p / C_v\f$ */
     scalar gamma_;
 
 public:
@@ -75,81 +108,137 @@ public:
     //- Runtime type information
     TypeName("constantCp");
 
-    //- Construct from root dictionary (reads subDicts 'thermodynamics' and 'specie')
+    /**
+     * \brief Construct from root dictionary
+     *
+     * Reads:
+     * \li \c Cp from \c thermodynamics sub-dictionary
+     * \li Molecular weight from \c specie sub-dictionary
+     *
+     * \param name     Model name
+     * \param rootDict Root dictionary
+     * \param mesh     DG geometric mesh
+     * \param eos      Equation-of-state model
+     */
     constantCp
     (
-        const word& name, 
-        const dictionary& rootDict, 
+        const word& name,
+        const dictionary& rootDict,
         const dgGeomMesh& mesh,
         const eqnOfState& eos
     );
 
-    //- Destructor
+    /** Virtual destructor */
     virtual ~constantCp() = default;
 
-    // Member Functions
+    //====================================================================//
+    //                   Thermodynamic interface
+    //====================================================================//
 
-        //- Cp(T)
-        virtual void calcCp
-        (
-            const label cellI,
-            const GaussField<scalar>& T,
-            GaussField<scalar>& Cp
-        ) const override;
+    /**
+     * \brief Compute heat capacity at constant pressure
+     *
+     * Returns constant \f$C_p\f$.
+     */
+    virtual void calcCp
+    (
+        const label cellI,
+        const GaussField<scalar>& T,
+        GaussField<scalar>& Cp
+    ) const override;
 
-        //- Cv(T)
-        virtual void calcCv
-        (
-            const label cellI,
-            const GaussField<scalar>& T,
-            GaussField<scalar>& Cv
-        ) const override;
+    /**
+     * \brief Compute heat capacity at constant volume
+     *
+     * Returns constant \f$C_v\f$.
+     */
+    virtual void calcCv
+    (
+        const label cellI,
+        const GaussField<scalar>& T,
+        GaussField<scalar>& Cv
+    ) const override;
 
-        //- gamma(T) = Cp / Cv
-        virtual void calcGamma
-        (
-            const label cellI,
-            const GaussField<scalar>& CpField,
-            const GaussField<scalar>& CvField,
-            GaussField<scalar>& gamma
-        ) const override;
+    /**
+     * \brief Compute heat-capacity ratio
+     *
+     * Computes:
+     * \f[
+     *   \gamma = \frac{C_p}{C_v}
+     * \f]
+     */
+    virtual void calcGamma
+    (
+        const label cellI,
+        const GaussField<scalar>& CpField,
+        const GaussField<scalar>& CvField,
+        GaussField<scalar>& gamma
+    ) const override;
 
-        //- T from energy (e or h depending on energy model)
-        virtual void calcT
-        (
-            const label cellI,
-            const GaussField<scalar>& energy,
-            GaussField<scalar>& T
-        ) const override;
+    /**
+     * \brief Compute temperature from energy
+     *
+     * Inverts:
+     * \li \f$e = C_v T\f$ (internal-energy formulation)
+     * \li \f$h = C_p T\f$ (enthalpy formulation)
+     */
+    virtual void calcT
+    (
+        const label cellI,
+        const GaussField<scalar>& energy,
+        GaussField<scalar>& T
+    ) const override;
 
-        //- e(T)
-        virtual void calcInternalE
-        (
-            const label cellI,
-            const GaussField<scalar>& T,
-            GaussField<scalar>& e
-        ) const override;
+    /**
+     * \brief Compute internal energy
+     *
+     * Computes:
+     * \f[
+     *   e(T) = C_v T
+     * \f]
+     */
+    virtual void calcInternalE
+    (
+        const label cellI,
+        const GaussField<scalar>& T,
+        GaussField<scalar>& e
+    ) const override;
 
-        //- h(T)
-        virtual void calcH
-        (
-            const label cellI,
-            const GaussField<scalar>& T,
-            GaussField<scalar>& h
-        ) const override;
+    /**
+     * \brief Compute enthalpy
+     *
+     * Computes:
+     * \f[
+     *   h(T) = C_p T
+     * \f]
+     */
+    virtual void calcH
+    (
+        const label cellI,
+        const GaussField<scalar>& T,
+        GaussField<scalar>& h
+    ) const override;
 
-        //- Calculate speedOfSound
-        virtual void calcSpeedOfSound
-        (
-            const label cellI,
-            const GaussField<scalar>& T,
-            const GaussField<scalar>& gamma,
-            GaussField<scalar>& a
-        ) const override;
+    /**
+     * \brief Compute speed of sound
+     *
+     * Computes:
+     * \f[
+     *   a = \sqrt{\gamma R T}
+     * \f]
+     */
+    virtual void calcSpeedOfSound
+    (
+        const label cellI,
+        const GaussField<scalar>& T,
+        const GaussField<scalar>& gamma,
+        GaussField<scalar>& a
+    ) const override;
 
-        //- Set group
-        //- This model is in PerfectGasThermo
-        virtual bool isPerfectGasThermo() const override { return true; }
+    /**
+     * \brief Identify perfect-gas thermodynamic model
+     */
+    virtual bool isPerfectGasThermo() const override { return true; }
 };
 
 } // End namespace Foam
