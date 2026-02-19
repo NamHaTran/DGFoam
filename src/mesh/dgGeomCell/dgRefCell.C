@@ -282,9 +282,9 @@ void Foam::dgRefCell::getGaussLobatto1D
 )
 {
     // --------------------------------------------------
-    // Number of GLL points = pOrder + 1
+    // Number of GLL points = pOrder + 2
     // --------------------------------------------------
-    const label nGauss = pOrder + 1;
+    const label nGauss = pOrder + 2;
 
     // --------------------------------------------------
     // Supported range: 2 <= nGauss <= 10
@@ -452,7 +452,7 @@ void Foam::dgRefCell::getGaussRadau1D
     // Number of quadrature points
     // Radau: n = pOrder + 1
     // --------------------------------------------------
-    const label nGauss = pOrder + 1;
+    const label nGauss = pOrder + 2;
 
     // --------------------------------------------------
     // Supported range: 2 <= nGauss <= 10

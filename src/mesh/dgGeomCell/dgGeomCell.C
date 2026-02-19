@@ -141,7 +141,7 @@ Foam::dgGeomCell::dgGeomCell
                 mij +=
                     basis[gp][i]
                   * basis[gp][j]
-                  * JDuffy //J3D_[gp]
+                  * JDuffy // J3D_[gp]
                   * w[gp];
             }
 

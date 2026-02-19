@@ -182,24 +182,23 @@ inline void computeHexBasisAndDerivatives
     List<scalar>& dBasis_dz
 )
 {
-    // Reference coordinates transformation:
-    // vector X = xiToXHex(etaToXiHex(etaPt));
-    scalar x = etaPt.x();
-    scalar y = etaPt.y();
-    scalar z = etaPt.z();
-
+    // Reference coordinates (already in [-1,1]^3)
+    const scalar x = etaPt.x();
+    const scalar y = etaPt.y();
+    const scalar z = etaPt.z();
 
     // --------------------------------------------------
-    // Orthogonal Legendre basis on reference hexahedron
-    // Basis definition:
-    //   psi_{i,j,k} = P_i(x) P_j(y) P_k(z)
-    //   with i + j + k <= pOrder
+    // L2-normalized orthogonal Legendre basis on [-1,1]^3
+    //
+    // psi_{i,j,k} = sqrt((2i+1)(2j+1)(2k+1)/8)
+    //               * P_i(x) P_j(y) P_k(z)
+    //
+    // with i + j + k <= pOrder
     // --------------------------------------------------
 
     using boost::math::jacobi;
     using boost::math::jacobi_prime;
 
-    // Number of basis functions for total-degree HEX
     const label nBasis = getNumBasis(pOrder, dgCellType::HEX);
 
     basis.setSize(nBasis);
@@ -209,36 +208,42 @@ inline void computeHexBasisAndDerivatives
 
     label idx = 0;
 
-    // Loop over total degree
     for (label i = 0; i <= pOrder; ++i)
     {
         const scalar Pi  = jacobi(static_cast<unsigned>(i), 0.0, 0.0, x);
         const scalar dPi = jacobi_prime(static_cast<unsigned>(i), 0.0, 0.0, x);
+
+        const scalar norm_i = 2.0*i + 1.0;
 
         for (label j = 0; j <= pOrder - i; ++j)
         {
             const scalar Pj  = jacobi(static_cast<unsigned>(j), 0.0, 0.0, y);
             const scalar dPj = jacobi_prime(static_cast<unsigned>(j), 0.0, 0.0, y);
 
+            const scalar norm_ij = norm_i * (2.0*j + 1.0);
+
             for (label k = 0; k <= pOrder - i - j; ++k)
             {
                 const scalar Pk  = jacobi(static_cast<unsigned>(k), 0.0, 0.0, z);
                 const scalar dPk = jacobi_prime(static_cast<unsigned>(k), 0.0, 0.0, z);
 
-                // Basis value
-                basis[idx] = Pi * Pj * Pk;
+                // L2 normalization factor on [-1,1]^3
+                const scalar scale =
+                    std::sqrt( norm_ij * (2.0*k + 1.0) / 8.0 );
 
-                // Derivatives w.r.t reference coordinates
-                dBasis_dx[idx] = dPi * Pj  * Pk;
-                dBasis_dy[idx] = Pi  * dPj * Pk;
-                dBasis_dz[idx] = Pi  * Pj  * dPk;
+                // Basis value
+                basis[idx] = scale * Pi * Pj * Pk;
+
+                // Derivatives
+                dBasis_dx[idx] = scale * dPi * Pj  * Pk;
+                dBasis_dy[idx] = scale * Pi  * dPj * Pk;
+                dBasis_dz[idx] = scale * Pi  * Pj  * dPk;
 
                 ++idx;
             }
         }
     }
 }
-
 
 /**
  * \brief Evaluate orthogonal modal basis functions for prism (wedge) cells
@@ -347,33 +352,43 @@ inline void computePrismBasisAndDerivatives
                 const scalar dPk =
                     jacobi_prime(static_cast<unsigned>(k), alpha, 0.0, z);
 
+                // -----------------------------
+                // Normalization coefficient
+                // -----------------------------
+                const scalar norm =
+                    std::sqrt(
+                        (2.0*i + 1.0) *
+                        (2.0*j + 1.0) *
+                        (2.0*k + 2.0*j + 2.0)
+                        / 8.0
+                    );
+
                 // =============================
                 // Basis
                 // =============================
-                basis[idx] = Pi * Pj * S * Pk;
+                basis[idx] = norm * Pi * Pj * S * Pk;
 
                 // =============================
                 // d/dx
                 // =============================
-                dBasis_dx[idx] = dPi * Pj * S * Pk;
+                dBasis_dx[idx] = norm * dPi * Pj * S * Pk;
 
                 // =============================
                 // d/dy
                 // =============================
-                dBasis_dy[idx] = Pi * dPj * S * Pk;
+                dBasis_dy[idx] = norm * Pi * dPj * S * Pk;
 
                 // =============================
                 // d/dz
                 // =============================
                 dBasis_dz[idx] =
-                    Pi * Pj * (S * dPk + Pk * dS_dz);
+                    norm * Pi * Pj * (S * dPk + Pk * dS_dz);
 
                 ++idx;
             }
         }
     }
 }
-
 
 /**
  * \brief Evaluate orthogonal interior basis functions for pyramid cells
