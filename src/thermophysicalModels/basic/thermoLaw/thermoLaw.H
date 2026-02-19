@@ -180,7 +180,7 @@ public:
      * depending on the specific thermoLaw model.
      *
      * \param cellI  Cell index
-     * \param energy Energy field ($e$ or $h$)
+     * \param energy Energy field (\f$e\f$ or \f$h\f$)
      * \param T      Temperature field to be written
      */
     virtual void calcT
@@ -195,7 +195,7 @@ public:
      *
      * \param cellI Cell index
      * \param T     Temperature field
-     * \param Cp    $C_p(T)$ field
+     * \param Cp    \f$C_p(T)\f$ field
      */
     virtual void calcCp
     (
@@ -209,7 +209,7 @@ public:
      *
      * \param cellI Cell index
      * \param T     Temperature field
-     * \param Cv    $C_v(T)$ field
+     * \param Cv    \f$C_v(T)\f$ field
      */
     virtual void calcCv
     (
@@ -221,7 +221,7 @@ public:
     /**
      * \brief Compute heat-capacity ratio
      *
-     * Computes $\gamma = C_p / C_v$.
+     * Computes \f$\gamma = C_p / C_v\f$.
      */
     virtual void calcGamma
     (
@@ -234,7 +234,7 @@ public:
     /**
      * \brief Compute internal energy
      *
-     * Computes internal energy $e(T)$.
+     * Computes internal energy \f$e(T)\f$.
      */
     virtual void calcInternalE
     (
@@ -246,7 +246,7 @@ public:
     /**
      * \brief Compute enthalpy
      *
-     * Computes enthalpy $h(T)$.
+     * Computes enthalpy \f$h(T)\f$.
      */
     virtual void calcH
     (
@@ -258,7 +258,7 @@ public:
     /**
      * \brief Compute speed of sound
      *
-     * Computes speed of sound $a = \sqrt{\gamma R T}$ or the
+     * Computes speed of sound \f$a = \sqrt{\gamma R T}\f$ or the
      * corresponding real-gas / kinetic-theory expression.
      */
     virtual void calcSpeedOfSound

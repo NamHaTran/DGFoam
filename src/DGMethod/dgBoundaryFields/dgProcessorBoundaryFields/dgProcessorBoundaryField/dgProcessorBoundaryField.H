@@ -1,9 +1,12 @@
 /*---------------------------------------------------------------------------*\
   =========                 |
-  \\      /  F ield         | DGFoam: Discontinuous Galerkin CFD Toolbox
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
    \\    /   O peration     |
-    \\  /    A nd           | GPU-friendly CFD solver framework
+    \\  /    A nd           | www.openfoam.com
      \\/     M anipulation  |
+-------------------------------------------------------------------------------
+    Copyright (C) 2015-2024 OpenCFD Ltd.
+    Copyright (C) 2024-2025 Ha Nam Tran
 -------------------------------------------------------------------------------
 
 License
@@ -26,7 +29,7 @@ Class
     Foam::dgProcessorBoundaryField
 
 Description
-
+    Processor boundary handler for DG Gauss fields.
 
 SourceFiles
     dgProcessorBoundaryField.C
@@ -38,36 +41,62 @@ SourceFiles
 
 #include "dgGeomMesh.H"
 #include "processorFvPatch.H"
-
+#include "dgField.H"
+#include "Pstream.H"
 
 namespace Foam
 {
 
 /*---------------------------------------------------------------------------*\
-                    Class dgProcessorBoundaryField Declaration
+                Class dgProcessorBoundaryField Declaration
 \*---------------------------------------------------------------------------*/
 
+/**
+ * \class Foam::dgProcessorBoundaryField
+ * \brief DG processor boundary handler for parallel communication
+ *
+ * \tparam Type Field value type (e.g. scalar, vector, tensor)
+ *
+ * \details
+ * Exchanges DG face Gauss-point plus-side values across processor patches.
+ *
+ * The communication uses explicit send/receive buffers and point-to-point
+ * transfers on processorFvPatch.
+ *
+ * MPI tags are generated from processor ranks to avoid collisions.
+ */
 template<class Type>
 class dgProcessorBoundaryField
 {
 private:
 
-    //- Reference to processor patch (type-safe)
+    /** Reference to processor fvPatch (type-safe) */
     const processorFvPatch& procPatch_;
 
-    //- Reference to DG geometric mesh (for DG-level cell/face connectivity)
+    /** Reference to DG geometric mesh */
     const dgGeomMesh& dgMesh_;
 
-    //- Neighbour processor rank
+    /** Neighbour processor rank */
     const label neighbProc_;
 
-    //- Communication buffers
+    /** Send buffer for Gauss-point values (mutable for const update) */
     mutable List<Type> sendBuf_;
+
+    /** Receive buffer for Gauss-point values (mutable for const update) */
     mutable List<Type> recvBuf_;
 
 public:
 
-    //- Constructor from name and dictionary
+    // Constructors --------------------------------------------------------
+
+    /**
+     * \brief Construct from fvPatch and DG geometric mesh
+     *
+     * The input patch must be of type processor.
+     *
+     * \param patch  Finite-volume patch (processor)
+     * \param dgMesh DG geometric mesh
+     */
     dgProcessorBoundaryField
     (
         const fvPatch& patch,
@@ -77,82 +106,101 @@ public:
     //- Destructor
     virtual ~dgProcessorBoundaryField() = default;
 
-    //- Exchange Gauss data across processor patch
+    // Core communication --------------------------------------------------
+
+    /**
+     * \brief Exchange Gauss-point data across processor boundary
+     *
+     * Performs a send/receive cycle to update plus-side Gauss values on
+     * processor faces.
+     *
+     * \param field DG field whose Gauss data will be exchanged
+     */
     void update
     (
         dgField<Type>& field
     ) const;
 
-    // Member Functions
+    // Low-level communication helpers ------------------------------------
 
-        //- Send all plus values to neighbour processor
-        void sendAll
-        (
-            dgField<Type>& field
-        ) const;
+    /**
+     * \brief Send all plus-side Gauss values to neighbour processor
+     *
+     * \param field DG field providing Gauss data
+     */
+    void sendAll
+    (
+        dgField<Type>& field
+    ) const;
 
-        //- Receive all plus values from neighbour processor
-        void recvAll
-        (
-            dgField<Type>& field
-        ) const;
+    /**
+     * \brief Receive all plus-side Gauss values from neighbour processor
+     *
+     * \param field DG field to be updated with received data
+     */
+    void recvAll
+    (
+        dgField<Type>& field
+    ) const;
 
-        //- Generate tag for MPI communication
-        int genSendTag() const
+    // MPI tag generation --------------------------------------------------
+
+    /**
+     * \brief Generate MPI send tag
+     *
+     * Tag scheme:
+     * - tag = myProc*1e6 + neighbProc
+     *
+     * \return MPI tag for send
+     */
+    int genSendTag() const
+    {
+        const label myProc = Pstream::myProcNo();
+
+        if (myProc >= 200000 || neighbProc_ >= 200000)
         {
-            const label myProc = Pstream::myProcNo();
-
-            if (myProc >= 200000 || neighbProc_ >= 200000)
-            {
-                FatalErrorInFunction
-                    << "Processor rank too large for tag scheme: "
-                    << myProc << " " << neighbProc_
-                    << exit(FatalError);
-            }
-
-            return myProc*1e6 + neighbProc_;
+            FatalErrorInFunction
+                << "Processor rank too large for tag scheme: "
+                << myProc << " " << neighbProc_
+                << exit(FatalError);
         }
 
-        int genRecvTag() const
+        return myProc*1e6 + neighbProc_;
+    }
+
+    /**
+     * \brief Generate MPI receive tag
+     *
+     * Tag scheme:
+     * - tag = neighbProc*1e6 + myProc
+     *
+     * \return MPI tag for receive
+     */
+    int genRecvTag() const
+    {
+        const label myProc = Pstream::myProcNo();
+
+        if (myProc >= 200000 || neighbProc_ >= 200000)
         {
-            const label myProc = Pstream::myProcNo();
-
-            if (myProc >= 200000 || neighbProc_ >= 200000)
-            {
-                FatalErrorInFunction
-                    << "Processor rank too large for tag scheme: "
-                    << myProc << " " << neighbProc_
-                    << exit(FatalError);
-            }
-
-            return neighbProc_*1e6 + myProc;
+            FatalErrorInFunction
+                << "Processor rank too large for tag scheme: "
+                << myProc << " " << neighbProc_
+                << exit(FatalError);
         }
 
-        //- Check patch type
-        /*
-        void checkPatchType() const
-        {
-            if (
-                this->procPatch_.type() != "processor"
-            )
-            {
-                FatalErrorInFunction
-                    << "Boundary condition " << type() <<" can only "
-                    << "be applied to patch type: \n"
-                    << "    " << "processor \n"
-                    << "but patch "
-                    << this->procPatch_.name() << " is of type " << this->procPatch_.type() << nl
-                    << exit(FatalError);
-            }
-        }*/
+        return neighbProc_*1e6 + myProc;
+    }
 
-    // Access Functions
+    // Access functions ----------------------------------------------------
 
-        inline const processorFvPatch& patch() const { return procPatch_; }
+    /** Return processor patch */
+    inline const processorFvPatch& patch() const { return procPatch_; }
 
-        inline const dgGeomMesh& dgMesh() const { return dgMesh_; }
+    /** Return DG geometric mesh */
+    inline const dgGeomMesh& dgMesh() const { return dgMesh_; }
 
-        inline const word& name() const { return procPatch_.name(); }
+    /** Return patch name */
+    inline const word& name() const { return procPatch_.name(); }
 };
 
 } // End namespace Foam

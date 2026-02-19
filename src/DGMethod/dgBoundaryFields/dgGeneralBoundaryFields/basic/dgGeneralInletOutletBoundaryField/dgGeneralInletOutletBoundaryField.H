@@ -25,28 +25,10 @@ License
     along with OpenFOAM.  If not, see <http://www.gnu.org/licenses/>.
 
 Class
-    Foam::dgInletOutletBoundaryField
+    Foam::dgGeneralInletOutletBoundaryField
 
 Description
-    General inletOutlet boundary condition for DG fields.
-
-    - Requires a velocity field named "U" (of type faceGaussField<vector>)
-      to be registered in the fieldsContext.
-    - Checks flow direction using U·n at each Gauss point.
-    - If flow is incoming (U·n < 0), applies a fixedValue condition:
-        \f[
-            \phi^+ = 2 \cdot \phi_{\text{inlet}} - \phi^-
-        \f]
-    - If flow is outgoing (U·n >= 0), applies a zeroGradient condition:
-        \f[
-            \phi^+ = \phi^-
-        \f]
-    - Gradient is always set as:
-        \f[
-            \nabla \phi^+ = \nabla \phi^-
-        \f]
-
-    - The value "inletValue" must be specified in the dictionary.
+    General inlet–outlet boundary condition for DG fields.
 
 SourceFiles
     dgInletOutletBoundaryField.C
@@ -63,9 +45,31 @@ namespace Foam
 {
 
 /*---------------------------------------------------------------------------*\
-                      Class dgGeneralInletOutletBoundaryField Declaration
+              Class dgGeneralInletOutletBoundaryField Declaration
 \*---------------------------------------------------------------------------*/
 
+/**
+ * \class Foam::dgGeneralInletOutletBoundaryField
+ * \brief Inlet–outlet boundary condition for DG fields
+ *
+ * \details
+ * Selects inlet/outlet behaviour per face Gauss point based on the sign of
+ * \f$\mathbf{U}\cdot\mathbf{n}\f$ evaluated at that Gauss point.
+ *
+ * Inlet (\f$\mathbf{U}\cdot\mathbf{n}<0\f$):
+ * \f[
+ *   \phi^{+} = 2\,\phi_{\mathrm{inlet}} - \phi^{-}
+ * \f]
+ *
+ * Outlet (\f$\mathbf{U}\cdot\mathbf{n}\ge 0\f$):
+ * \f[
+ *   \phi^{+} = \phi^{-}
+ * \f]
+ *
+ * Requirements:
+ * - A velocity field named \c "U" of type dgField<vector> must be available.
+ * - The inlet value must be provided via dictionary entry \c inletValue.
+ */
 template<class Type>
 class dgGeneralInletOutletBoundaryField
 :
@@ -73,13 +77,13 @@ class dgGeneralInletOutletBoundaryField
 {
 protected:
 
-    //- Inlet value for Dirichlet BC
+    /** Prescribed inlet value (Dirichlet) */
     Type inletValue_;
 
-    //- Velocity field name
+    /** Name of velocity field used for flow-direction check */
     word UName_ = "U";
 
-    //- Velocity field
+    /** Velocity field reference (read-only, non-owning) */
     const dgField<vector>& U_;
 
 public:
@@ -87,14 +91,37 @@ public:
     //- Runtime type information
     TypeName("generalInletOutlet");
 
-    //- Constructor from name and dictionary
+    /**
+     * \brief Construct from patch, DG mesh, and dictionary
+     *
+     * Reads inletValue and resolves the velocity field used for
+     * the flow-direction check.
+     *
+     * \param patch  Finite-volume patch
+     * \param dgMesh DG geometric mesh
+     * \param dict   Boundary-condition dictionary
+     */
     dgGeneralInletOutletBoundaryField
     (
         const fvPatch& patch,
         const dgGeomMesh& dgMesh,
         const dictionary& dict
     );
-    
+
+    /**
+     * \brief Update ghost-state value using inlet–outlet logic
+     *
+     * Uses the sign of \f$\mathbf{U}\cdot\mathbf{n}\f$ at the Gauss point
+     * to select between inlet (fixed-value reflection) and outlet
+     * (zero-gradient) behaviour.
+     *
+     * \param cellID        Global cell index
+     * \param faceLocalID   Local face index within the cell
+     * \param localGauss    Local Gauss-point index on the face
+     * \param n             Outward face normal
+     * \param minusValue    Interior (minus-side) value
+     * \param plusValue     Ghost (plus-side) value to be set
+     */
     virtual void updateGhostStateValue
     (
         const label cellID,
@@ -105,10 +132,12 @@ public:
         Type& plusValue
     ) const override
     {
-        const vector& Un = U_.gaussFields()[cellID].facePlusValueAt(faceLocalID,localGauss);
-        scalar dotProd = Un & n;
+        const vector& Un =
+            U_.gaussFields()[cellID].facePlusValueAt(faceLocalID, localGauss);
 
-        if (dotProd < 0)  // Inlet: flow into domain
+        const scalar dotProd = Un & n;
+
+        if (dotProd < 0) // Inlet: flow into domain
         {
             plusValue = 2 * inletValue_ - minusValue;
         }
@@ -118,30 +147,36 @@ public:
         }
     }
 
-    //- Check patch type
+    /**
+     * \brief Validate patch compatibility
+     *
+     * Allowed patch type:
+     * - patch
+     */
     void checkPatchType() const override
     {
         if (this->patch_.type() != "patch")
         {
             FatalErrorInFunction
-                << "Boundary condition " << type() <<" can only "
-                << "be applied to patch type: \n"
-                << "    " << "patch \n"
+                << "Boundary condition " << type() << " can only "
+                << "be applied to patch type:\n"
+                << "    patch\n"
                 << "but patch "
-                << this->patch_.name() << " is of type " << this->patch_.type() << nl
+                << this->patch_.name()
+                << " is of type " << this->patch_.type() << nl
                 << exit(FatalError);
         }
     }
-
 };
 
 } // End namespace Foam
 
 /*---------------------------------------------------------------------------*\
-                  Include template implementation
+              Include template implementation
 \*---------------------------------------------------------------------------*/
 
 #include "dgGeneralInletOutletBoundaryFieldI.H"
 
 #endif
+
 // ************************************************************************* //

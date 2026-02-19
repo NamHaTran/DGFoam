@@ -1,0 +1,398 @@
+\doxysection{dg\+Face\+Gauss\+Field\+Tensor\+Math.\+H}
+\hypertarget{backup_2math_2lnInclude_2dgFaceGaussFieldTensorMath_8H_source}{}\label{backup_2math_2lnInclude_2dgFaceGaussFieldTensorMath_8H_source}\index{/home/nam-\/ha-\/tran/OpenFOAM/DGFoam/src/backup/math/lnInclude/dgFaceGaussFieldTensorMath.H@{/home/nam-\/ha-\/tran/OpenFOAM/DGFoam/src/backup/math/lnInclude/dgFaceGaussFieldTensorMath.H}}
+\mbox{\hyperlink{backup_2math_2lnInclude_2dgFaceGaussFieldTensorMath_8H}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*\(\backslash\)}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ \ =========\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ \ \(\backslash\)\(\backslash\)\ \ \ \ \ \ /\ \ F\ ield\ \ \ \ \ \ \ \ \ |\ OpenFOAM:\ The\ Open\ Source\ CFD\ Toolbox}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ \ \ \(\backslash\)\(\backslash\)\ \ \ \ /\ \ \ O\ peration\ \ \ \ \ |}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ \ \ \ \(\backslash\)\(\backslash\)\ \ /\ \ \ \ A\ nd\ \ \ \ \ \ \ \ \ \ \ |\ www.openfoam.com}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ \ \ \ \ \(\backslash\)\(\backslash\)/\ \ \ \ \ M\ anipulation\ \ |}}
+\DoxyCodeLine{00007\ \textcolor{comment}{-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ \ \ \ Copyright\ (C)\ 2011-\/2016\ OpenFOAM\ Foundation}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ \ \ \ Copyright\ (C)\ 2021-\/2025\ OpenCFD\ Ltd.}}
+\DoxyCodeLine{00010\ \textcolor{comment}{-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00011\ \textcolor{comment}{License}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ \ \ \ This\ file\ is\ part\ of\ OpenFOAM.}}
+\DoxyCodeLine{00013\ \textcolor{comment}{}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ \ \ \ OpenFOAM\ is\ free\ software:\ you\ can\ redistribute\ it\ and/or\ modify\ it}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ \ \ \ under\ the\ terms\ of\ the\ GNU\ General\ Public\ License\ as\ published\ by}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ \ \ \ the\ Free\ Software\ Foundation,\ either\ version\ 3\ of\ the\ License,\ or}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ \ \ \ (at\ your\ option)\ any\ later\ version.}}
+\DoxyCodeLine{00018\ \textcolor{comment}{}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ \ \ \ OpenFOAM\ is\ distributed\ in\ the\ hope\ that\ it\ will\ be\ useful,\ but\ WITHOUT}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ \ \ \ ANY\ WARRANTY;\ without\ even\ the\ implied\ warranty\ of\ MERCHANTABILITY\ or}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ \ \ \ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE.\ \ See\ the\ GNU\ General\ Public\ License}}
+\DoxyCodeLine{00022\ \textcolor{comment}{\ \ \ \ for\ more\ details.}}
+\DoxyCodeLine{00023\ \textcolor{comment}{}}
+\DoxyCodeLine{00024\ \textcolor{comment}{\ \ \ \ You\ should\ have\ received\ a\ copy\ of\ the\ GNU\ General\ Public\ License}}
+\DoxyCodeLine{00025\ \textcolor{comment}{\ \ \ \ along\ with\ OpenFOAM.\ \ If\ not,\ see\ <http://www.gnu.org/licenses/>.}}
+\DoxyCodeLine{00026\ \textcolor{comment}{}}
+\DoxyCodeLine{00027\ \textcolor{comment}{Description}}
+\DoxyCodeLine{00028\ \textcolor{comment}{\ \ \ \ Tensor\ math\ operations\ for\ faceGaussField:}}
+\DoxyCodeLine{00029\ \textcolor{comment}{\ \ \ \ -\/\ dev,\ symm,\ skew,\ tr,\ det,\ transpose}}
+\DoxyCodeLine{00030\ \textcolor{comment}{\ \ \ \ -\/\ tensor-\/tensor,\ tensor-\/symmTensor,\ symmTensor-\/symmTensor\ operators}}
+\DoxyCodeLine{00031\ \textcolor{comment}{}}
+\DoxyCodeLine{00032\ \textcolor{comment}{\(\backslash\)*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \textcolor{preprocessor}{\#ifndef\ Foam\_dgFaceGaussFieldTensorMath\_H}}
+\DoxyCodeLine{00035\ \textcolor{preprocessor}{\#define\ Foam\_dgFaceGaussFieldTensorMath\_H}}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ \textcolor{preprocessor}{\#include\ "{}faceGaussField.H"{}}}
+\DoxyCodeLine{00038\ \textcolor{preprocessor}{\#include\ "{}Tensor.H"{}}}
+\DoxyCodeLine{00039\ \textcolor{preprocessor}{\#include\ "{}symmTensor.H"{}}}
+\DoxyCodeLine{00040\ \textcolor{preprocessor}{\#include\ "{}sphericalTensor.H"{}}}
+\DoxyCodeLine{00041\ \textcolor{preprocessor}{\#include\ "{}scalar.H"{}}}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespaceFoam}{Foam}}}
+\DoxyCodeLine{00044\ \{}
+\DoxyCodeLine{00045\ \textcolor{comment}{//\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ Tensor\ utilities\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ //}}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ \textcolor{keyword}{inline}\ faceGaussField<tensor>\ \mbox{\hyperlink{namespaceFoam_a80dc21acfaf7c7f2c3989ea2acf114e6}{dev}}(\textcolor{keyword}{const}\ faceGaussField<tensor>\&\ A)}
+\DoxyCodeLine{00048\ \{}
+\DoxyCodeLine{00049\ \ \ \ \ faceGaussField<tensor>\ result(A.cellID(),\ A.dgMesh());}
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ gp\ =\ 0;\ gp\ <\ A.nGauss();\ ++gp)}
+\DoxyCodeLine{00051\ \ \ \ \ \{}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ result.plusValueAt(gp)\ \ =\ \mbox{\hyperlink{namespaceFoam_a80dc21acfaf7c7f2c3989ea2acf114e6}{dev}}(A.plusValue(gp));}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ result.minusValueAt(gp)\ =\ \mbox{\hyperlink{namespaceFoam_a80dc21acfaf7c7f2c3989ea2acf114e6}{dev}}(A.minusValue(gp));}
+\DoxyCodeLine{00054\ \ \ \ \ \}}
+\DoxyCodeLine{00055\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00056\ \}}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00058\ \textcolor{keyword}{inline}\ faceGaussField<symmTensor>\ \mbox{\hyperlink{namespaceFoam_a879688d649dc635ee593ea30c6c91f8f}{symm}}(\textcolor{keyword}{const}\ faceGaussField<tensor>\&\ A)}
+\DoxyCodeLine{00059\ \{}
+\DoxyCodeLine{00060\ \ \ \ \ faceGaussField<symmTensor>\ result(A.cellID(),\ A.dgMesh());}
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ gp\ =\ 0;\ gp\ <\ A.nGauss();\ ++gp)}
+\DoxyCodeLine{00062\ \ \ \ \ \{}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ result.plusValueAt(gp)\ \ =\ \mbox{\hyperlink{namespaceFoam_a879688d649dc635ee593ea30c6c91f8f}{symm}}(A.plusValue(gp));}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ result.minusValueAt(gp)\ =\ \mbox{\hyperlink{namespaceFoam_a879688d649dc635ee593ea30c6c91f8f}{symm}}(A.minusValue(gp));}
+\DoxyCodeLine{00065\ \ \ \ \ \}}
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00067\ \}}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00069\ \textcolor{keyword}{inline}\ faceGaussField<tensor>\ \mbox{\hyperlink{namespaceFoam_a8400681e77e71244266cacb7e7920a74}{skew}}(\textcolor{keyword}{const}\ faceGaussField<tensor>\&\ A)}
+\DoxyCodeLine{00070\ \{}
+\DoxyCodeLine{00071\ \ \ \ \ faceGaussField<tensor>\ result(A.cellID(),\ A.dgMesh());}
+\DoxyCodeLine{00072\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ gp\ =\ 0;\ gp\ <\ A.nGauss();\ ++gp)}
+\DoxyCodeLine{00073\ \ \ \ \ \{}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ result.plusValueAt(gp)\ \ =\ \mbox{\hyperlink{namespaceFoam_a8400681e77e71244266cacb7e7920a74}{skew}}(A.plusValue(gp));}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ result.minusValueAt(gp)\ =\ \mbox{\hyperlink{namespaceFoam_a8400681e77e71244266cacb7e7920a74}{skew}}(A.minusValue(gp));}
+\DoxyCodeLine{00076\ \ \ \ \ \}}
+\DoxyCodeLine{00077\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00078\ \}}
+\DoxyCodeLine{00079\ }
+\DoxyCodeLine{00080\ \textcolor{keyword}{inline}\ faceGaussField<scalar>\ \mbox{\hyperlink{namespaceFoam_a4e4ffb208a3a51f6e52460a14cc10776}{tr}}(\textcolor{keyword}{const}\ faceGaussField<tensor>\&\ A)}
+\DoxyCodeLine{00081\ \{}
+\DoxyCodeLine{00082\ \ \ \ \ faceGaussField<scalar>\ result(A.cellID(),\ A.dgMesh());}
+\DoxyCodeLine{00083\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ gp\ =\ 0;\ gp\ <\ A.nGauss();\ ++gp)}
+\DoxyCodeLine{00084\ \ \ \ \ \{}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ result.plusValueAt(gp)\ \ =\ \mbox{\hyperlink{namespaceFoam_a4e4ffb208a3a51f6e52460a14cc10776}{tr}}(A.plusValue(gp));}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ result.minusValueAt(gp)\ =\ \mbox{\hyperlink{namespaceFoam_a4e4ffb208a3a51f6e52460a14cc10776}{tr}}(A.minusValue(gp));}
+\DoxyCodeLine{00087\ \ \ \ \ \}}
+\DoxyCodeLine{00088\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00089\ \}}
+\DoxyCodeLine{00090\ }
+\DoxyCodeLine{00091\ \textcolor{keyword}{inline}\ faceGaussField<scalar>\ \mbox{\hyperlink{namespaceFoam_aa35494e071b585795c1dec87417fee8d}{det}}(\textcolor{keyword}{const}\ faceGaussField<tensor>\&\ A)}
+\DoxyCodeLine{00092\ \{}
+\DoxyCodeLine{00093\ \ \ \ \ faceGaussField<scalar>\ result(A.cellID(),\ A.dgMesh());}
+\DoxyCodeLine{00094\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ gp\ =\ 0;\ gp\ <\ A.nGauss();\ ++gp)}
+\DoxyCodeLine{00095\ \ \ \ \ \{}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ result.plusValueAt(gp)\ \ =\ \mbox{\hyperlink{namespaceFoam_aa35494e071b585795c1dec87417fee8d}{det}}(A.plusValue(gp));}
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ result.minusValueAt(gp)\ =\ \mbox{\hyperlink{namespaceFoam_aa35494e071b585795c1dec87417fee8d}{det}}(A.minusValue(gp));}
+\DoxyCodeLine{00098\ \ \ \ \ \}}
+\DoxyCodeLine{00099\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00100\ \}}
+\DoxyCodeLine{00101\ }
+\DoxyCodeLine{00102\ \textcolor{keyword}{inline}\ faceGaussField<tensor>\ \mbox{\hyperlink{namespaceFoam_a5faf7f302ed6c6307e3668365456af74}{T}}(\textcolor{keyword}{const}\ faceGaussField<tensor>\&\ A)}
+\DoxyCodeLine{00103\ \{}
+\DoxyCodeLine{00104\ \ \ \ \ faceGaussField<tensor>\ result(A.cellID(),\ A.dgMesh());}
+\DoxyCodeLine{00105\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ gp\ =\ 0;\ gp\ <\ A.nGauss();\ ++gp)}
+\DoxyCodeLine{00106\ \ \ \ \ \{}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ result.plusValueAt(gp)\ \ =\ \mbox{\hyperlink{namespaceFoam_a5faf7f302ed6c6307e3668365456af74}{T}}(A.plusValue(gp));}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ result.minusValueAt(gp)\ =\ \mbox{\hyperlink{namespaceFoam_a5faf7f302ed6c6307e3668365456af74}{T}}(A.minusValue(gp));}
+\DoxyCodeLine{00109\ \ \ \ \ \}}
+\DoxyCodeLine{00110\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00111\ \}}
+\DoxyCodeLine{00112\ }
+\DoxyCodeLine{00113\ \textcolor{keyword}{inline}\ faceGaussField<tensor>\ \mbox{\hyperlink{namespaceFoam_ab110e04e010c8c9a87630eea553d63d2}{inv}}(\textcolor{keyword}{const}\ faceGaussField<tensor>\&\ A)}
+\DoxyCodeLine{00114\ \{}
+\DoxyCodeLine{00115\ \ \ \ \ faceGaussField<tensor>\ result(A.cellID(),\ A.dgMesh());}
+\DoxyCodeLine{00116\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ gp\ =\ 0;\ gp\ <\ A.nGauss();\ ++gp)}
+\DoxyCodeLine{00117\ \ \ \ \ \{}
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ result.plusValueAt(gp)\ \ =\ \mbox{\hyperlink{namespaceFoam_ab110e04e010c8c9a87630eea553d63d2}{inv}}(A.plusValue(gp));}
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ result.minusValueAt(gp)\ =\ \mbox{\hyperlink{namespaceFoam_ab110e04e010c8c9a87630eea553d63d2}{inv}}(A.minusValue(gp));}
+\DoxyCodeLine{00120\ \ \ \ \ \}}
+\DoxyCodeLine{00121\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00122\ \}}
+\DoxyCodeLine{00123\ }
+\DoxyCodeLine{00124\ \textcolor{comment}{//\ *\ *\ *\ *\ *\ *\ *\ symmTensor\ utilities\ *\ *\ *\ *\ *\ *\ *\ //}}
+\DoxyCodeLine{00125\ }
+\DoxyCodeLine{00126\ \textcolor{keyword}{inline}\ faceGaussField<scalar>\ \mbox{\hyperlink{namespaceFoam_a4e4ffb208a3a51f6e52460a14cc10776}{tr}}(\textcolor{keyword}{const}\ faceGaussField<symmTensor>\&\ A)}
+\DoxyCodeLine{00127\ \{}
+\DoxyCodeLine{00128\ \ \ \ \ faceGaussField<scalar>\ result(A.cellID(),\ A.dgMesh());}
+\DoxyCodeLine{00129\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ gp\ =\ 0;\ gp\ <\ A.nGauss();\ ++gp)}
+\DoxyCodeLine{00130\ \ \ \ \ \{}
+\DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ result.plusValueAt(gp)\ \ =\ \mbox{\hyperlink{namespaceFoam_a4e4ffb208a3a51f6e52460a14cc10776}{tr}}(A.plusValue(gp));}
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ result.minusValueAt(gp)\ =\ \mbox{\hyperlink{namespaceFoam_a4e4ffb208a3a51f6e52460a14cc10776}{tr}}(A.minusValue(gp));}
+\DoxyCodeLine{00133\ \ \ \ \ \}}
+\DoxyCodeLine{00134\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00135\ \}}
+\DoxyCodeLine{00136\ }
+\DoxyCodeLine{00137\ \textcolor{keyword}{inline}\ faceGaussField<symmTensor>\ \mbox{\hyperlink{namespaceFoam_a80dc21acfaf7c7f2c3989ea2acf114e6}{dev}}(\textcolor{keyword}{const}\ faceGaussField<symmTensor>\&\ A)}
+\DoxyCodeLine{00138\ \{}
+\DoxyCodeLine{00139\ \ \ \ \ faceGaussField<symmTensor>\ result(A.cellID(),\ A.dgMesh());}
+\DoxyCodeLine{00140\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ gp\ =\ 0;\ gp\ <\ A.nGauss();\ ++gp)}
+\DoxyCodeLine{00141\ \ \ \ \ \{}
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ result.plusValueAt(gp)\ \ =\ \mbox{\hyperlink{namespaceFoam_a80dc21acfaf7c7f2c3989ea2acf114e6}{dev}}(A.plusValue(gp));}
+\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ result.minusValueAt(gp)\ =\ \mbox{\hyperlink{namespaceFoam_a80dc21acfaf7c7f2c3989ea2acf114e6}{dev}}(A.minusValue(gp));}
+\DoxyCodeLine{00144\ \ \ \ \ \}}
+\DoxyCodeLine{00145\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00146\ \}}
+\DoxyCodeLine{00147\ }
+\DoxyCodeLine{00148\ \textcolor{keyword}{inline}\ faceGaussField<tensor>\ \mbox{\hyperlink{namespaceFoam_ab110e04e010c8c9a87630eea553d63d2}{inv}}(\textcolor{keyword}{const}\ faceGaussField<symmTensor>\&\ A)}
+\DoxyCodeLine{00149\ \{}
+\DoxyCodeLine{00150\ \ \ \ \ faceGaussField<tensor>\ result(A.cellID(),\ A.dgMesh());}
+\DoxyCodeLine{00151\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ gp\ =\ 0;\ gp\ <\ A.nGauss();\ ++gp)}
+\DoxyCodeLine{00152\ \ \ \ \ \{}
+\DoxyCodeLine{00153\ \ \ \ \ \ \ \ \ result.plusValueAt(gp)\ \ =\ \mbox{\hyperlink{namespaceFoam_ab110e04e010c8c9a87630eea553d63d2}{inv}}(A.plusValue(gp));}
+\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ result.minusValueAt(gp)\ =\ \mbox{\hyperlink{namespaceFoam_ab110e04e010c8c9a87630eea553d63d2}{inv}}(A.minusValue(gp));}
+\DoxyCodeLine{00155\ \ \ \ \ \}}
+\DoxyCodeLine{00156\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00157\ \}}
+\DoxyCodeLine{00158\ }
+\DoxyCodeLine{00159\ \textcolor{comment}{//\ *\ *\ *\ *\ *\ *\ *\ tensor\ -\/\ tensor\ *\ *\ *\ *\ *\ *\ *\ //}}
+\DoxyCodeLine{00160\ }
+\DoxyCodeLine{00161\ \textcolor{keyword}{inline}\ faceGaussField<tensor>\ \textcolor{keyword}{operator}+}
+\DoxyCodeLine{00162\ (}
+\DoxyCodeLine{00163\ \ \ \ \ \textcolor{keyword}{const}\ faceGaussField<tensor>\&\ A,}
+\DoxyCodeLine{00164\ \ \ \ \ \textcolor{keyword}{const}\ faceGaussField<tensor>\&\ B}
+\DoxyCodeLine{00165\ )}
+\DoxyCodeLine{00166\ \{}
+\DoxyCodeLine{00167\ \ \ \ \ faceGaussField<tensor>\ result(A.cellID(),\ A.dgMesh());}
+\DoxyCodeLine{00168\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ gp\ =\ 0;\ gp\ <\ A.nGauss();\ ++gp)}
+\DoxyCodeLine{00169\ \ \ \ \ \{}
+\DoxyCodeLine{00170\ \ \ \ \ \ \ \ \ result.plusValueAt(gp)\ \ =\ A.plusValue(gp)\ +\ B.plusValue(gp);}
+\DoxyCodeLine{00171\ \ \ \ \ \ \ \ \ result.minusValueAt(gp)\ =\ A.minusValue(gp)\ +\ B.minusValue(gp);}
+\DoxyCodeLine{00172\ \ \ \ \ \}}
+\DoxyCodeLine{00173\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00174\ \}}
+\DoxyCodeLine{00175\ }
+\DoxyCodeLine{00176\ \textcolor{keyword}{inline}\ faceGaussField<tensor>\ \textcolor{keyword}{operator}-\/}
+\DoxyCodeLine{00177\ (}
+\DoxyCodeLine{00178\ \ \ \ \ \textcolor{keyword}{const}\ faceGaussField<tensor>\&\ A,}
+\DoxyCodeLine{00179\ \ \ \ \ \textcolor{keyword}{const}\ faceGaussField<tensor>\&\ B}
+\DoxyCodeLine{00180\ )}
+\DoxyCodeLine{00181\ \{}
+\DoxyCodeLine{00182\ \ \ \ \ faceGaussField<tensor>\ result(A.cellID(),\ A.dgMesh());}
+\DoxyCodeLine{00183\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ gp\ =\ 0;\ gp\ <\ A.nGauss();\ ++gp)}
+\DoxyCodeLine{00184\ \ \ \ \ \{}
+\DoxyCodeLine{00185\ \ \ \ \ \ \ \ \ result.plusValueAt(gp)\ \ =\ A.plusValue(gp)\ -\/\ B.plusValue(gp);}
+\DoxyCodeLine{00186\ \ \ \ \ \ \ \ \ result.minusValueAt(gp)\ =\ A.minusValue(gp)\ -\/\ B.minusValue(gp);}
+\DoxyCodeLine{00187\ \ \ \ \ \}}
+\DoxyCodeLine{00188\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00189\ \}}
+\DoxyCodeLine{00190\ }
+\DoxyCodeLine{00191\ \textcolor{keyword}{inline}\ faceGaussField<tensor>\ \textcolor{keyword}{operator}\&}
+\DoxyCodeLine{00192\ (}
+\DoxyCodeLine{00193\ \ \ \ \ \textcolor{keyword}{const}\ faceGaussField<tensor>\&\ A,}
+\DoxyCodeLine{00194\ \ \ \ \ \textcolor{keyword}{const}\ faceGaussField<tensor>\&\ B}
+\DoxyCodeLine{00195\ )}
+\DoxyCodeLine{00196\ \{}
+\DoxyCodeLine{00197\ \ \ \ \ faceGaussField<tensor>\ result(A.cellID(),\ A.dgMesh());}
+\DoxyCodeLine{00198\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ gp\ =\ 0;\ gp\ <\ A.nGauss();\ ++gp)}
+\DoxyCodeLine{00199\ \ \ \ \ \{}
+\DoxyCodeLine{00200\ \ \ \ \ \ \ \ \ result.plusValueAt(gp)\ \ =\ A.plusValue(gp)\ \&\ B.plusValue(gp);}
+\DoxyCodeLine{00201\ \ \ \ \ \ \ \ \ result.minusValueAt(gp)\ =\ A.minusValue(gp)\ \&\ B.minusValue(gp);}
+\DoxyCodeLine{00202\ \ \ \ \ \}}
+\DoxyCodeLine{00203\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00204\ \}}
+\DoxyCodeLine{00205\ }
+\DoxyCodeLine{00206\ \textcolor{keyword}{inline}\ faceGaussField<scalar>\ \textcolor{keyword}{operator}\&\&}
+\DoxyCodeLine{00207\ (}
+\DoxyCodeLine{00208\ \ \ \ \ \textcolor{keyword}{const}\ faceGaussField<tensor>\&\ A,}
+\DoxyCodeLine{00209\ \ \ \ \ \textcolor{keyword}{const}\ faceGaussField<tensor>\&\ B}
+\DoxyCodeLine{00210\ )}
+\DoxyCodeLine{00211\ \{}
+\DoxyCodeLine{00212\ \ \ \ \ faceGaussField<scalar>\ result(A.cellID(),\ A.dgMesh());}
+\DoxyCodeLine{00213\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ gp\ =\ 0;\ gp\ <\ A.nGauss();\ ++gp)}
+\DoxyCodeLine{00214\ \ \ \ \ \{}
+\DoxyCodeLine{00215\ \ \ \ \ \ \ \ \ result.plusValueAt(gp)\ \ =\ A.plusValue(gp)\ \&\&\ B.plusValue(gp);}
+\DoxyCodeLine{00216\ \ \ \ \ \ \ \ \ result.minusValueAt(gp)\ =\ A.minusValue(gp)\ \&\&\ B.minusValue(gp);}
+\DoxyCodeLine{00217\ \ \ \ \ \}}
+\DoxyCodeLine{00218\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00219\ \}}
+\DoxyCodeLine{00220\ }
+\DoxyCodeLine{00221\ \textcolor{comment}{//\ *\ *\ *\ *\ *\ *\ *\ tensor\ ±\ symmTensor\ *\ *\ *\ *\ *\ *\ *\ //}}
+\DoxyCodeLine{00222\ }
+\DoxyCodeLine{00223\ \textcolor{keyword}{inline}\ faceGaussField<tensor>\ \textcolor{keyword}{operator}+}
+\DoxyCodeLine{00224\ (}
+\DoxyCodeLine{00225\ \ \ \ \ \textcolor{keyword}{const}\ faceGaussField<tensor>\&\ A,}
+\DoxyCodeLine{00226\ \ \ \ \ \textcolor{keyword}{const}\ faceGaussField<symmTensor>\&\ B}
+\DoxyCodeLine{00227\ )}
+\DoxyCodeLine{00228\ \{}
+\DoxyCodeLine{00229\ \ \ \ \ faceGaussField<tensor>\ result(A.cellID(),\ A.dgMesh());}
+\DoxyCodeLine{00230\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ gp\ =\ 0;\ gp\ <\ A.nGauss();\ ++gp)}
+\DoxyCodeLine{00231\ \ \ \ \ \{}
+\DoxyCodeLine{00232\ \ \ \ \ \ \ \ \ result.plusValueAt(gp)\ \ =\ A.plusValue(gp)\ +\ B.plusValue(gp);}
+\DoxyCodeLine{00233\ \ \ \ \ \ \ \ \ result.minusValueAt(gp)\ =\ A.minusValue(gp)\ +\ B.minusValue(gp);}
+\DoxyCodeLine{00234\ \ \ \ \ \}}
+\DoxyCodeLine{00235\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00236\ \}}
+\DoxyCodeLine{00237\ }
+\DoxyCodeLine{00238\ \textcolor{keyword}{inline}\ faceGaussField<tensor>\ \textcolor{keyword}{operator}-\/}
+\DoxyCodeLine{00239\ (}
+\DoxyCodeLine{00240\ \ \ \ \ \textcolor{keyword}{const}\ faceGaussField<tensor>\&\ A,}
+\DoxyCodeLine{00241\ \ \ \ \ \textcolor{keyword}{const}\ faceGaussField<symmTensor>\&\ B}
+\DoxyCodeLine{00242\ )}
+\DoxyCodeLine{00243\ \{}
+\DoxyCodeLine{00244\ \ \ \ \ faceGaussField<tensor>\ result(A.cellID(),\ A.dgMesh());}
+\DoxyCodeLine{00245\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ gp\ =\ 0;\ gp\ <\ A.nGauss();\ ++gp)}
+\DoxyCodeLine{00246\ \ \ \ \ \{}
+\DoxyCodeLine{00247\ \ \ \ \ \ \ \ \ result.plusValueAt(gp)\ \ =\ A.plusValue(gp)\ -\/\ B.plusValue(gp);}
+\DoxyCodeLine{00248\ \ \ \ \ \ \ \ \ result.minusValueAt(gp)\ =\ A.minusValue(gp)\ -\/\ B.minusValue(gp);}
+\DoxyCodeLine{00249\ \ \ \ \ \}}
+\DoxyCodeLine{00250\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00251\ \}}
+\DoxyCodeLine{00252\ }
+\DoxyCodeLine{00253\ \textcolor{keyword}{inline}\ faceGaussField<tensor>\ \textcolor{keyword}{operator}\&}
+\DoxyCodeLine{00254\ (}
+\DoxyCodeLine{00255\ \ \ \ \ \textcolor{keyword}{const}\ faceGaussField<tensor>\&\ A,}
+\DoxyCodeLine{00256\ \ \ \ \ \textcolor{keyword}{const}\ faceGaussField<symmTensor>\&\ B}
+\DoxyCodeLine{00257\ )}
+\DoxyCodeLine{00258\ \{}
+\DoxyCodeLine{00259\ \ \ \ \ faceGaussField<tensor>\ result(A.cellID(),\ A.dgMesh());}
+\DoxyCodeLine{00260\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ gp\ =\ 0;\ gp\ <\ A.nGauss();\ ++gp)}
+\DoxyCodeLine{00261\ \ \ \ \ \{}
+\DoxyCodeLine{00262\ \ \ \ \ \ \ \ \ result.plusValueAt(gp)\ \ =\ A.plusValue(gp)\ \&\ B.plusValue(gp);}
+\DoxyCodeLine{00263\ \ \ \ \ \ \ \ \ result.minusValueAt(gp)\ =\ A.minusValue(gp)\ \&\ B.minusValue(gp);}
+\DoxyCodeLine{00264\ \ \ \ \ \}}
+\DoxyCodeLine{00265\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00266\ \}}
+\DoxyCodeLine{00267\ }
+\DoxyCodeLine{00268\ \textcolor{keyword}{inline}\ faceGaussField<scalar>\ \textcolor{keyword}{operator}\&\&}
+\DoxyCodeLine{00269\ (}
+\DoxyCodeLine{00270\ \ \ \ \ \textcolor{keyword}{const}\ faceGaussField<tensor>\&\ A,}
+\DoxyCodeLine{00271\ \ \ \ \ \textcolor{keyword}{const}\ faceGaussField<symmTensor>\&\ B}
+\DoxyCodeLine{00272\ )}
+\DoxyCodeLine{00273\ \{}
+\DoxyCodeLine{00274\ \ \ \ \ faceGaussField<scalar>\ result(A.cellID(),\ A.dgMesh());}
+\DoxyCodeLine{00275\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ gp\ =\ 0;\ gp\ <\ A.nGauss();\ ++gp)}
+\DoxyCodeLine{00276\ \ \ \ \ \{}
+\DoxyCodeLine{00277\ \ \ \ \ \ \ \ \ result.plusValueAt(gp)\ \ =\ A.plusValue(gp)\ \&\&\ B.plusValue(gp);}
+\DoxyCodeLine{00278\ \ \ \ \ \ \ \ \ result.minusValueAt(gp)\ =\ A.minusValue(gp)\ \&\&\ B.minusValue(gp);}
+\DoxyCodeLine{00279\ \ \ \ \ \}}
+\DoxyCodeLine{00280\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00281\ \}}
+\DoxyCodeLine{00282\ }
+\DoxyCodeLine{00283\ \textcolor{comment}{//\ *\ *\ *\ *\ *\ *\ *\ symmTensor\ ±\ tensor\ *\ *\ *\ *\ *\ *\ *\ //}}
+\DoxyCodeLine{00284\ }
+\DoxyCodeLine{00285\ \textcolor{keyword}{inline}\ faceGaussField<tensor>\ \textcolor{keyword}{operator}+}
+\DoxyCodeLine{00286\ (}
+\DoxyCodeLine{00287\ \ \ \ \ \textcolor{keyword}{const}\ faceGaussField<symmTensor>\&\ A,}
+\DoxyCodeLine{00288\ \ \ \ \ \textcolor{keyword}{const}\ faceGaussField<tensor>\&\ B}
+\DoxyCodeLine{00289\ )}
+\DoxyCodeLine{00290\ \{}
+\DoxyCodeLine{00291\ \ \ \ \ \textcolor{keywordflow}{return}\ B\ +\ A;}
+\DoxyCodeLine{00292\ \}}
+\DoxyCodeLine{00293\ }
+\DoxyCodeLine{00294\ \textcolor{keyword}{inline}\ faceGaussField<tensor>\ \textcolor{keyword}{operator}-\/}
+\DoxyCodeLine{00295\ (}
+\DoxyCodeLine{00296\ \ \ \ \ \textcolor{keyword}{const}\ faceGaussField<symmTensor>\&\ A,}
+\DoxyCodeLine{00297\ \ \ \ \ \textcolor{keyword}{const}\ faceGaussField<tensor>\&\ B}
+\DoxyCodeLine{00298\ )}
+\DoxyCodeLine{00299\ \{}
+\DoxyCodeLine{00300\ \ \ \ \ faceGaussField<tensor>\ result(A.cellID(),\ A.dgMesh());}
+\DoxyCodeLine{00301\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ gp\ =\ 0;\ gp\ <\ A.nGauss();\ ++gp)}
+\DoxyCodeLine{00302\ \ \ \ \ \{}
+\DoxyCodeLine{00303\ \ \ \ \ \ \ \ \ result.plusValueAt(gp)\ \ =\ A.plusValue(gp)\ -\/\ B.plusValue(gp);}
+\DoxyCodeLine{00304\ \ \ \ \ \ \ \ \ result.minusValueAt(gp)\ =\ A.minusValue(gp)\ -\/\ B.minusValue(gp);}
+\DoxyCodeLine{00305\ \ \ \ \ \}}
+\DoxyCodeLine{00306\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00307\ \}}
+\DoxyCodeLine{00308\ }
+\DoxyCodeLine{00309\ \textcolor{keyword}{inline}\ faceGaussField<tensor>\ \textcolor{keyword}{operator}\&}
+\DoxyCodeLine{00310\ (}
+\DoxyCodeLine{00311\ \ \ \ \ \textcolor{keyword}{const}\ faceGaussField<symmTensor>\&\ A,}
+\DoxyCodeLine{00312\ \ \ \ \ \textcolor{keyword}{const}\ faceGaussField<tensor>\&\ B}
+\DoxyCodeLine{00313\ )}
+\DoxyCodeLine{00314\ \{}
+\DoxyCodeLine{00315\ \ \ \ \ \textcolor{keywordflow}{return}\ B\ \&\ A;}
+\DoxyCodeLine{00316\ \}}
+\DoxyCodeLine{00317\ }
+\DoxyCodeLine{00318\ \textcolor{keyword}{inline}\ faceGaussField<scalar>\ \textcolor{keyword}{operator}\&\&}
+\DoxyCodeLine{00319\ (}
+\DoxyCodeLine{00320\ \ \ \ \ \textcolor{keyword}{const}\ faceGaussField<symmTensor>\&\ A,}
+\DoxyCodeLine{00321\ \ \ \ \ \textcolor{keyword}{const}\ faceGaussField<tensor>\&\ B}
+\DoxyCodeLine{00322\ )}
+\DoxyCodeLine{00323\ \{}
+\DoxyCodeLine{00324\ \ \ \ \ \textcolor{keywordflow}{return}\ B\ \&\&\ A;}
+\DoxyCodeLine{00325\ \}}
+\DoxyCodeLine{00326\ }
+\DoxyCodeLine{00327\ \textcolor{comment}{//\ *\ *\ *\ *\ *\ *\ *\ symmTensor\ ±\ symmTensor\ *\ *\ *\ *\ *\ *\ *\ //}}
+\DoxyCodeLine{00328\ }
+\DoxyCodeLine{00329\ \textcolor{keyword}{inline}\ faceGaussField<symmTensor>\ \textcolor{keyword}{operator}+}
+\DoxyCodeLine{00330\ (}
+\DoxyCodeLine{00331\ \ \ \ \ \textcolor{keyword}{const}\ faceGaussField<symmTensor>\&\ A,}
+\DoxyCodeLine{00332\ \ \ \ \ \textcolor{keyword}{const}\ faceGaussField<symmTensor>\&\ B}
+\DoxyCodeLine{00333\ )}
+\DoxyCodeLine{00334\ \{}
+\DoxyCodeLine{00335\ \ \ \ \ faceGaussField<symmTensor>\ result(A.cellID(),\ A.dgMesh());}
+\DoxyCodeLine{00336\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ gp\ =\ 0;\ gp\ <\ A.nGauss();\ ++gp)}
+\DoxyCodeLine{00337\ \ \ \ \ \{}
+\DoxyCodeLine{00338\ \ \ \ \ \ \ \ \ result.plusValueAt(gp)\ \ =\ A.plusValue(gp)\ +\ B.plusValue(gp);}
+\DoxyCodeLine{00339\ \ \ \ \ \ \ \ \ result.minusValueAt(gp)\ =\ A.minusValue(gp)\ +\ B.minusValue(gp);}
+\DoxyCodeLine{00340\ \ \ \ \ \}}
+\DoxyCodeLine{00341\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00342\ \}}
+\DoxyCodeLine{00343\ }
+\DoxyCodeLine{00344\ \textcolor{keyword}{inline}\ faceGaussField<symmTensor>\ \textcolor{keyword}{operator}-\/}
+\DoxyCodeLine{00345\ (}
+\DoxyCodeLine{00346\ \ \ \ \ \textcolor{keyword}{const}\ faceGaussField<symmTensor>\&\ A,}
+\DoxyCodeLine{00347\ \ \ \ \ \textcolor{keyword}{const}\ faceGaussField<symmTensor>\&\ B}
+\DoxyCodeLine{00348\ )}
+\DoxyCodeLine{00349\ \{}
+\DoxyCodeLine{00350\ \ \ \ \ faceGaussField<symmTensor>\ result(A.cellID(),\ A.dgMesh());}
+\DoxyCodeLine{00351\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ gp\ =\ 0;\ gp\ <\ A.nGauss();\ ++gp)}
+\DoxyCodeLine{00352\ \ \ \ \ \{}
+\DoxyCodeLine{00353\ \ \ \ \ \ \ \ \ result.plusValueAt(gp)\ \ =\ A.plusValue(gp)\ -\/\ B.plusValue(gp);}
+\DoxyCodeLine{00354\ \ \ \ \ \ \ \ \ result.minusValueAt(gp)\ =\ A.minusValue(gp)\ -\/\ B.minusValue(gp);}
+\DoxyCodeLine{00355\ \ \ \ \ \}}
+\DoxyCodeLine{00356\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00357\ \}}
+\DoxyCodeLine{00358\ }
+\DoxyCodeLine{00359\ \textcolor{keyword}{inline}\ faceGaussField<tensor>\ \textcolor{keyword}{operator}\&}
+\DoxyCodeLine{00360\ (}
+\DoxyCodeLine{00361\ \ \ \ \ \textcolor{keyword}{const}\ faceGaussField<symmTensor>\&\ A,}
+\DoxyCodeLine{00362\ \ \ \ \ \textcolor{keyword}{const}\ faceGaussField<symmTensor>\&\ B}
+\DoxyCodeLine{00363\ )}
+\DoxyCodeLine{00364\ \{}
+\DoxyCodeLine{00365\ \ \ \ \ faceGaussField<tensor>\ result(A.cellID(),\ A.dgMesh());}
+\DoxyCodeLine{00366\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ gp\ =\ 0;\ gp\ <\ A.nGauss();\ ++gp)}
+\DoxyCodeLine{00367\ \ \ \ \ \{}
+\DoxyCodeLine{00368\ \ \ \ \ \ \ \ \ result.plusValueAt(gp)\ \ =\ A.plusValue(gp)\ \&\ B.plusValue(gp);}
+\DoxyCodeLine{00369\ \ \ \ \ \ \ \ \ result.minusValueAt(gp)\ =\ A.minusValue(gp)\ \&\ B.minusValue(gp);}
+\DoxyCodeLine{00370\ \ \ \ \ \}}
+\DoxyCodeLine{00371\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00372\ \}}
+\DoxyCodeLine{00373\ }
+\DoxyCodeLine{00374\ \textcolor{keyword}{inline}\ faceGaussField<scalar>\ \textcolor{keyword}{operator}\&\&}
+\DoxyCodeLine{00375\ (}
+\DoxyCodeLine{00376\ \ \ \ \ \textcolor{keyword}{const}\ faceGaussField<symmTensor>\&\ A,}
+\DoxyCodeLine{00377\ \ \ \ \ \textcolor{keyword}{const}\ faceGaussField<symmTensor>\&\ B}
+\DoxyCodeLine{00378\ )}
+\DoxyCodeLine{00379\ \{}
+\DoxyCodeLine{00380\ \ \ \ \ faceGaussField<scalar>\ result(A.cellID(),\ A.dgMesh());}
+\DoxyCodeLine{00381\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ gp\ =\ 0;\ gp\ <\ A.nGauss();\ ++gp)}
+\DoxyCodeLine{00382\ \ \ \ \ \{}
+\DoxyCodeLine{00383\ \ \ \ \ \ \ \ \ result.plusValueAt(gp)\ \ =\ A.plusValue(gp)\ \&\&\ B.plusValue(gp);}
+\DoxyCodeLine{00384\ \ \ \ \ \ \ \ \ result.minusValueAt(gp)\ =\ A.minusValue(gp)\ \&\&\ B.minusValue(gp);}
+\DoxyCodeLine{00385\ \ \ \ \ \}}
+\DoxyCodeLine{00386\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00387\ \}}
+\DoxyCodeLine{00388\ \}\ \textcolor{comment}{//\ End\ namespace\ Foam}}
+\DoxyCodeLine{00389\ }
+\DoxyCodeLine{00390\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00391\ }
+\DoxyCodeLine{00392\ \textcolor{comment}{//\ *************************************************************************\ //}}
+
+\end{DoxyCode}

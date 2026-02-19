@@ -1,9 +1,12 @@
 /*---------------------------------------------------------------------------*\
   =========                 |
-  \\      /  F ield         | DGFoam: Discontinuous Galerkin CFD Toolbox
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
    \\    /   O peration     |
-    \\  /    A nd           | GPU-friendly CFD solver framework
+    \\  /    A nd           | www.openfoam.com
      \\/     M anipulation  |
+-------------------------------------------------------------------------------
+    Copyright (C) 2015-2024 OpenCFD Ltd.
+    Copyright (C) 2024-2025 Ha Nam Tran
 -------------------------------------------------------------------------------
 
 License
@@ -26,7 +29,7 @@ Class
     Foam::dgProcessorBoundaryManager
 
 Description
-    Class for DG processor boundary conditions management.
+    Manager for DG processor boundary communication.
 
 \*---------------------------------------------------------------------------*/
 
@@ -35,8 +38,6 @@ Description
 
 #include "dgGeomMesh.H"
 #include "fvPatch.H"
-#include "dictionary.H"
-#include "IOdictionary.H"
 #include "PtrList.H"
 #include "dgProcessorBoundaryField.H"
 #include "dgField.H"
@@ -47,62 +48,111 @@ namespace Foam
 {
 
 /*---------------------------------------------------------------------------*\
-                    Class dgProcessorBoundaryManager Declaration
+                Class dgProcessorBoundaryManager Declaration
 \*---------------------------------------------------------------------------*/
 
+/**
+ * \class Foam::dgProcessorBoundaryManager
+ * \brief Manager for DG processor boundary fields
+ *
+ * \tparam Type Field value type (e.g. scalar, vector, tensor)
+ *
+ * \details
+ * Detects processor patches in the fvMesh and constructs one
+ * dgProcessorBoundaryField per processor patch.
+ *
+ * The manager coordinates MPI exchanges to synchronise plus-side
+ * Gauss values on processor faces. Physical boundary conditions are
+ * handled separately by general boundary managers.
+ */
 template<class Type>
 class dgProcessorBoundaryManager
 {
 private:
 
-    //- Reference to dgGeomMesh (used for fvPatch access and field lookup)
+    /** Reference to DG geometric mesh */
     const dgGeomMesh& mesh_;
 
-    //- List of boundary condition objects (one per fvPatch)
+    /**
+     * List of processor boundary handlers
+     *
+     * One dgProcessorBoundaryField is created per processor fvPatch.
+     * Ordering follows fvBoundaryMesh patch ordering.
+     */
     PtrList<dgProcessorBoundaryField<Type>> bConditions_;
 
 public:
 
-    // Constructors
+    // Constructors --------------------------------------------------------
 
-        //- Construct from fvPatch + dgGeomMesh
-        dgProcessorBoundaryManager
-        (
-            const dgGeomMesh& mesh
-        );
+    /**
+     * \brief Construct processor boundary manager from DG mesh
+     *
+     * Detects all processor patches from the underlying fvMesh.
+     *
+     * \param mesh DG geometric mesh
+     */
+    dgProcessorBoundaryManager
+    (
+        const dgGeomMesh& mesh
+    );
 
     //- Destructor
     ~dgProcessorBoundaryManager() = default;
 
-    // Access Functions
+    // Access --------------------------------------------------------------
 
-        //- Number of boundary patches
-        inline label size() const { return bConditions_.size(); }
+    /** Return number of processor boundary patches */
+    inline label size() const
+    {
+        return bConditions_.size();
+    }
 
-        //- Const access by patch index
-        inline const dgProcessorBoundaryField<Type>& operator[](const label i) const
-        {
-            return bConditions_[i];
-        }
+    /**
+     * \brief Return const access to processor boundary field by index
+     *
+     * \param i Patch index
+     * \return Const reference to processor boundary handler
+     */
+    inline const dgProcessorBoundaryField<Type>& operator[](const label i) const
+    {
+        return bConditions_[i];
+    }
 
-        //- Non-const access
-        inline dgProcessorBoundaryField<Type>& operator[](const label i)
-        {
-            return bConditions_[i];
-        }
+    /**
+     * \brief Return non-const access to processor boundary field by index
+     *
+     * \param i Patch index
+     * \return Reference to processor boundary handler
+     */
+    inline dgProcessorBoundaryField<Type>& operator[](const label i)
+    {
+        return bConditions_[i];
+    }
 
-    // Core methods
+    // Core functionality -------------------------------------------------
 
-        //- Update field values at the boundary
-        void update
-        (
-            dgField<Type>& field
-        );
+    /**
+     * \brief Update DG field across all processor boundaries
+     *
+     * Triggers communication on all processor patches to synchronise
+     * plus-side Gauss values.
+     *
+     * \param field DG field to be updated
+     */
+    void update
+    (
+        dgField<Type>& field
+    );
 };
 
-#include "dgProcessorBoundaryManagerI.H"
-
 } // End namespace Foam
+
+/*---------------------------------------------------------------------------*\
+                  Include template implementation
+\*---------------------------------------------------------------------------*/
+
+#include "dgProcessorBoundaryManagerI.H"
 
 #endif
 // ************************************************************************* //

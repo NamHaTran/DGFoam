@@ -25,7 +25,10 @@ License
     along with OpenFOAM.  If not, see <http://www.gnu.org/licenses/>.
 
 Description
-    Helper functions for boundary patches classification.
+    Helper utilities for classification of boundary patches in DG.
+
+SourceFiles
+    dgBoundaryHelper.H
 
 \*---------------------------------------------------------------------------*/
 
@@ -37,6 +40,25 @@ Description
 namespace Foam
 {
 
+/*---------------------------------------------------------------------------*\
+                     Namespace dgBoundaryHelper
+\*---------------------------------------------------------------------------*/
+
+/**
+ * \namespace Foam::dgBoundaryHelper
+ * \brief Utility functions for DG boundary patch classification
+ *
+ * \details
+ * This namespace provides a lightweight set of helper functions
+ * to classify OpenFOAM boundary patches into logical categories
+ * used by the DG framework:
+ *  - Interface patches (e.g. processor boundaries)
+ *  - General physical boundary patches (walls, inlets, outlets, symmetry)
+ *  - Constraint or special patches (e.g. overset)
+ *
+ * The classification is based solely on the fvPatch type string
+ * and is intentionally kept simple and extensible.
+ */
 namespace dgBoundaryHelper
 {
 
@@ -44,6 +66,12 @@ namespace dgBoundaryHelper
 //  Interface boundary patches
 //======================================================================//
 
+/**
+ * \brief Check if patch is an interface patch
+ *
+ * Interface patches are used to connect DG cells across
+ * processor boundaries or other internal interfaces.
+ */
 inline bool isInterfacePatch(const fvPatch& patch)
 {
     const word& type = patch.type();
@@ -59,6 +87,12 @@ inline bool isInterfacePatch(const fvPatch& patch)
 //  General (physical) boundary patches
 //======================================================================//
 
+/**
+ * \brief Check if patch is a general physical boundary
+ *
+ * General patches represent physical boundaries such as
+ * walls, inlets, outlets, and symmetry planes.
+ */
 inline bool isGeneralPatch(const fvPatch& patch)
 {
     const word& type = patch.type();
@@ -66,7 +100,7 @@ inline bool isGeneralPatch(const fvPatch& patch)
     return
     (
         type == "wall"
-     || type == "patch"        // generic patch (inlet, outlet, etc.)
+     || type == "patch"          // generic patch (inlet, outlet, etc.)
      || type == "symmetry"
      || type == "symmetryPlane"
     );
@@ -74,9 +108,15 @@ inline bool isGeneralPatch(const fvPatch& patch)
 
 
 //======================================================================//
-//  Constraint / special boundary patches (future extension)
+//  Constraint / special boundary patches
 //======================================================================//
 
+/**
+ * \brief Check if patch is a constraint or special patch
+ *
+ * Constraint patches impose additional topological or
+ * numerical constraints, such as overset connectivity.
+ */
 inline bool isConstraintPatch(const fvPatch& patch)
 {
     const word& type = patch.type();
@@ -92,6 +132,11 @@ inline bool isConstraintPatch(const fvPatch& patch)
 //  Sanity check helpers
 //======================================================================//
 
+/**
+ * \brief Check if patch type is recognised by DG framework
+ *
+ * Returns true if the patch belongs to any known DG category.
+ */
 inline bool isKnownPatchType(const fvPatch& patch)
 {
     return
@@ -107,4 +152,5 @@ inline bool isKnownPatchType(const fvPatch& patch)
 } // End namespace Foam
 
 #endif
+
 // ************************************************************************* //

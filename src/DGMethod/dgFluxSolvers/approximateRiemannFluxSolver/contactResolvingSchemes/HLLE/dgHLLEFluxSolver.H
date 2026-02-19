@@ -5,18 +5,18 @@
     \\  /    A nd           | www.openfoam.com
      \\/     M anipulation  |
 -------------------------------------------------------------------------------
-    Copyright (C) 2011-2016 OpenFOAM Foundation
-    Copyright (C) 2021-2025 OpenCFD Ltd.
+    Copyright (C) 2015-2024 OpenCFD Ltd.
+    Copyright (C) 2024-2025 Ha Nam Tran
 -------------------------------------------------------------------------------
 License
-    This file is part of OpenFOAM.
+    This file is part of DGFoam.
 
-    OpenFOAM is free software: you can redistribute it and/or modify it
+    DGFoam is free software: you can redistribute it and/or modify it
     under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    OpenFOAM is distributed in the hope that it will be useful, but WITHOUT
+    DGFoam is distributed in the hope that it will be useful, but WITHOUT
     ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
     FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
     for more details.
@@ -28,47 +28,11 @@ Class
     Foam::dgHLLEFluxSolver
 
 Description
-    HLLE (Harten–Lax–van Leer–Einfeldt) approximate Riemann solver.
-
-    This flux uses only the bounding wave speeds S_L and S_R to construct a
-    single intermediate state between the left (Minus/P-side) and right
-    (Plus/N-side) states. HLLE does not resolve the contact or shear waves,
-    and therefore produces a more diffusive but very robust and
-    positivity-preserving flux.
-
-    Key properties
-    - Robust for strong shocks and large discontinuities.
-    - Positivity-preserving for density and pressure under standard CFL
-      conditions.
-    - No use of a contact wave → more diffusive than HLLC.
-    - No star-state reconstruction → simpler and cheaper to evaluate.
-    - Suitable for any conserved quantity (rho, rhoE, rhoU, scalar).
-
-    Procedure (local 1D Riemann problem along face normal n):
-    1. Project left and right physical fluxes onto n.
-    2. Compute left/right normal velocities and sound speeds.
-    3. Estimate wave speeds S_L and S_R using either:
-         * Davis (S_L = min(Un^- - a^-, Un^+ - a^+),
-                  S_R = max(Un^- + a^-, Un^+ + a^+)), or
-         * Roe–Einfeldt averaging for reduced numerical diffusion.
-    4. Construct the HLLE flux:
-          f_HLLE = f_L,                             if S_L >= 0
-                 = f_R,                             if S_R <= 0
-                 = ( S_R f_L - S_L f_R
-                     + S_L S_R (U_R - U_L) ) / (S_R - S_L), otherwise
-    5. For scalar equations the Cartesian flux is f_HLLE * n.
-       For vector/momentum equations the Cartesian flux is f_HLLE as a vector
-       obtained from the tensor flux projection; no multiplication by n.
-
-    Notation
-    - Minus  = owner cell (P-side)
-    - Plus   = neighbour cell (N-side)
-    - n      = unit normal pointing P → N
-    - U_L/R  = conserved variables at Gauss point
-    - f_L/R  = physical normal fluxes projected onto n
+    HLLE approximate Riemann solver for DG methods.
 
 SourceFiles
     dgHLLEFluxSolver.C
+
 \*---------------------------------------------------------------------------*/
 
 #ifndef Foam_dgHLLEFluxSolver_H
@@ -85,40 +49,105 @@ namespace Foam
 template<class Type> class faceGaussField;
 
 /*---------------------------------------------------------------------------*\
-                           Class dgHLLEFluxSolver
+                     Class dgHLLEFluxSolver Declaration
 \*---------------------------------------------------------------------------*/
 
-class dgHLLEFluxSolver : public dgFluxSolver
+/**
+ * \class Foam::dgHLLEFluxSolver
+ * \brief HLLE (Harten–Lax–van Leer–Einfeldt) numerical flux
+ *
+ * \details
+ * Implements the HLLE approximate Riemann solver for Discontinuous
+ * Galerkin methods.
+ *
+ * HLLE resolves the local one-dimensional Riemann problem using only
+ * the bounding wave speeds \f$S_L\f$ and \f$S_R\f$, without restoring
+ * the contact or shear waves.
+ *
+ * The numerical flux is defined as:
+ * \f[
+ * \boldsymbol{f}_{\mathrm{HLLE}} =
+ * \begin{cases}
+ * \boldsymbol{f}_L,
+ *   & S_L \ge 0, \\
+ * 
+ * \boldsymbol{f}_R,
+ *   & S_R \le 0, \\
+ * 
+ * \frac{
+ *   S_R \boldsymbol{f}_L
+ * - S_L \boldsymbol{f}_R
+ * + S_L S_R (\boldsymbol{U}_R - \boldsymbol{U}_L)
+ * }{S_R - S_L},
+ *   & \text{otherwise}
+ * \end{cases}
+ * \f]
+ *
+ * where:
+ * - \f$\boldsymbol{U}_L, \boldsymbol{U}_R\f$ are conserved variables
+ * - \f$\boldsymbol{f}_L, \boldsymbol{f}_R\f$ are physical fluxes projected
+ *   onto the face normal
+ *
+ * Wave speeds are estimated using either:
+ * - Davis estimate: \f$U_n \pm a\f$
+ * - Roe–Einfeldt averaged estimate
+ *
+ * Properties:
+ * - Robust for strong shocks
+ * - Positivity-preserving under standard CFL conditions
+ * - More diffusive than HLLC
+ * - No star-state reconstruction
+ *
+ * Cartesian flux handling:
+ * - Scalar transport: returns \f$f_n \boldsymbol{n}\f$
+ * - Vector/momentum transport: returns vector flux directly
+ */
+class dgHLLEFluxSolver
+:
+    public dgFluxSolver
 {
 public:
 
-    //- Wave-speed estimate type
+    /** Wave-speed estimation method */
     enum speedEstimateType
     {
-        seDavis,        //!< Side speeds: Un ± a
-        seRoeEinfeldt   //!< Roe-averaged speeds
+        seDavis,        //!< Davis side-speed estimate
+        seRoeEinfeldt   //!< Roe–Einfeldt averaged estimate
     };
 
 private:
 
-    //- Primitive fields (references)
-        const dgField<scalar>& rho_;     //!< Density
-        const dgField<vector>& U_;       //!< Velocity
-        const dgField<scalar>& p_;       //!< Pressure
-        const dgField<scalar>& a_;       //!< Speed of sound
-        const dgField<scalar>& h_;       //!< Enthalpy
-        const dgField<scalar>& gamma_;   //!< Cp/Cv
+    /** Density field (read-only, non-owning) */
+    const dgField<scalar>& rho_;
 
-    //- Wavespeed selection
+    /** Velocity field (read-only, non-owning) */
+    const dgField<vector>& U_;
+
+    /** Pressure field (read-only, non-owning) */
+    const dgField<scalar>& p_;
+
+    /** Speed of sound field (read-only, non-owning) */
+    const dgField<scalar>& a_;
+
+    /** Enthalpy field (read-only, non-owning) */
+    const dgField<scalar>& h_;
+
+    /** Heat-capacity ratio Cp/Cv (read-only, non-owning) */
+    const dgField<scalar>& gamma_;
+
+    /** Selected wave-speed estimation method */
     speedEstimateType speedEst_;
 
-
-    //- Compute S_L and S_R at Gauss point
+    /**
+     * \brief Compute HLLE wave speeds
+     *
+     * Computes the left and right bounding wave speeds
+     * \f$S_L\f$ and \f$S_R\f$ at a face Gauss point.
+     */
     void calcWaveSpeed
     (
         scalar& SL,
         scalar& SR,
-
         const scalar rhoL,
         const scalar rhoR,
         const vector& ULv,
@@ -134,13 +163,17 @@ private:
         const vector& n
     ) const;
 
-
 public:
 
-    //- Runtime type info
+    //- Runtime type information
     TypeName("HLLE");
 
-    //- Constructor
+    /**
+     * \brief Construct HLLE flux solver
+     *
+     * Reads solver settings and initializes references
+     * to required flow fields.
+     */
     dgHLLEFluxSolver
     (
         const word& name,
@@ -148,10 +181,12 @@ public:
         const dgGeomMesh& mesh
     );
 
-    //- Destructor
+    /** Destructor */
     virtual ~dgHLLEFluxSolver() = default;
 
-    //- Scalar U, vector F
+    /**
+     * \brief Compute numerical flux for scalar conserved variable
+     */
     virtual void computeFlux
     (
         const label cellID,
@@ -159,7 +194,9 @@ public:
         const faceGaussField<scalar>& U
     ) override;
 
-    //- Vector U, tensor F
+    /**
+     * \brief Compute numerical flux for vector conserved variable
+     */
     virtual void computeFlux
     (
         const label cellID,
@@ -167,10 +204,12 @@ public:
         const faceGaussField<vector>& U
     ) override;
 
-    //- HLLE requires no caching → empty
+    /** HLLE has no internal cache */
     virtual void reset() override {}
 
-    //- Read settings
+    /**
+     * \brief Read solver configuration
+     */
     virtual void read(const dictionary& dict) override;
 };
 

@@ -1,9 +1,10 @@
 var searchData=
 [
-  ['termlist_5f_0',['termList_',['../classFoam_1_1dgFluxSolverManager.html#a174f271a43a0555a48ab00673a3fbf79',1,'Foam::dgFluxSolverManager']]],
-  ['termname_5f_1',['termName_',['../classFoam_1_1dgGeneralPDETerm.html#a34a9456ee2e860eed1c42b205bb9d9b5',1,'Foam::dgGeneralPDETerm']]],
-  ['thermo_2',['thermo',['../createDGFields_8H.html#a9925ad70d4a9bc708442f7d79d009002',1,'createDGFields.H']]],
-  ['thermo_5f_3',['thermo_',['../classFoam_1_1energy.html#a44d93eaa08a1a35b408cc2efc519adf4',1,'Foam::energy::thermo_'],['../classFoam_1_1transportLaw.html#a2f70c28af6cfc3b0bc49211c58c204db',1,'Foam::transportLaw::thermo_']]],
-  ['tref_5f_4',['TRef_',['../classFoam_1_1powerVHS.html#ac12d9cc23e796a996d18ec7cefb4fa6d',1,'Foam::powerVHS']]],
-  ['type_5f_5',['type_',['../classFoam_1_1dgGeomCell.html#a4a5e0f4035e367e0a9eb0c35f3aea710',1,'Foam::dgGeomCell::type_'],['../classFoam_1_1dgRefCell.html#a256054f18e4457b123701f7a86f4109b',1,'Foam::dgRefCell::type_'],['../classFoam_1_1dgGeomFace.html#af0b78f0cfd83e3df36abc213a07987da',1,'Foam::dgGeomFace::type_']]]
+  ['s_5f_0',['S_',['../classFoam_1_1Sutherland.html#ae57207de99175b457cd78061d83ae141',1,'Foam::Sutherland']]],
+  ['scalebymach_5f_1',['scaleByMach_',['../classFoam_1_1dgLaxFriedrichsFluxSolver.html#a95ef67c7bb8ae02201275ea226dc37e3',1,'Foam::dgLaxFriedrichsFluxSolver']]],
+  ['sendbuf_5f_2',['sendBuf_',['../classFoam_1_1dgProcessorBoundaryField.html#a8a48c87af06db1a7c43686f234832962',1,'Foam::dgProcessorBoundaryField']]],
+  ['sl_5flist_5f_3',['SL_list_',['../classFoam_1_1dgHLLCFluxSolver.html#a014f374502b37fab5fe114cc7cb7c023',1,'Foam::dgHLLCFluxSolver']]],
+  ['speedest_5f_4',['speedest_',['../classFoam_1_1dgHLLCFluxSolver.html#a68cacbb4eabda82e607756d13d28087d',1,'Foam::dgHLLCFluxSolver::speedEst_'],['../classFoam_1_1dgHLLEFluxSolver.html#a603b8dfb17f4865fcafd1d499a0f743f',1,'Foam::dgHLLEFluxSolver::speedEst_']]],
+  ['sr_5flist_5f_5',['SR_list_',['../classFoam_1_1dgHLLCFluxSolver.html#a13bda7d1a0b98b870ac0ed587b9a2299',1,'Foam::dgHLLCFluxSolver']]],
+  ['sstar_5flist_5f_6',['SStar_list_',['../classFoam_1_1dgHLLCFluxSolver.html#ab636f6eab7a057143c08fa96f9728d25',1,'Foam::dgHLLCFluxSolver']]]
 ];

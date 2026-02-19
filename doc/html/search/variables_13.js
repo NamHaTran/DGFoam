@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['wgauss_5f_0',['wgauss_',['../classFoam_1_1dgRefCell.html#a35d8095022a519bb366f353a94ae5c5c',1,'Foam::dgRefCell::wGauss_'],['../classFoam_1_1dgRefFace.html#a4059416ea885da30e981e3b4943ff61a',1,'Foam::dgRefFace::wGauss_']]]
+  ['value_5f_0',['value_',['../classFoam_1_1dgGeneralFixedValueBoundaryField.html#a832222250424cd72368f5864e8cf23a6',1,'Foam::dgGeneralFixedValueBoundaryField']]],
+  ['values_5f_1',['values_',['../classFoam_1_1cellGaussField.html#a8d6a6690df38a7a91a6ca052b899351c',1,'Foam::cellGaussField']]]
 ];

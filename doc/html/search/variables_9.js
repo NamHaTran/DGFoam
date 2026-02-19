@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['kb_5f_0',['kB_',['../classFoam_1_1powerVHS.html#a5f9e3f14db245463c0d3bc7b48ed3452',1,'Foam::powerVHS']]]
+  ['j3d_5f_0',['J3D_',['../classFoam_1_1dgGeomCell.html#a8e77726ecb45bb125a8b9ff3e05116f4',1,'Foam::dgGeomCell']]]
 ];

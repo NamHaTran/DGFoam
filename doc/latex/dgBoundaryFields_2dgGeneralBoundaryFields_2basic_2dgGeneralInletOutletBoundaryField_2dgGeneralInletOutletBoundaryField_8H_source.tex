@@ -29,125 +29,105 @@
 \DoxyCodeLine{00025\ \textcolor{comment}{\ \ \ \ along\ with\ OpenFOAM.\ \ If\ not,\ see\ <http://www.gnu.org/licenses/>.}}
 \DoxyCodeLine{00026\ \textcolor{comment}{}}
 \DoxyCodeLine{00027\ \textcolor{comment}{Class}}
-\DoxyCodeLine{00028\ \textcolor{comment}{\ \ \ \ Foam::dgInletOutletBoundaryField}}
+\DoxyCodeLine{00028\ \textcolor{comment}{\ \ \ \ Foam::dgGeneralInletOutletBoundaryField}}
 \DoxyCodeLine{00029\ \textcolor{comment}{}}
 \DoxyCodeLine{00030\ \textcolor{comment}{Description}}
-\DoxyCodeLine{00031\ \textcolor{comment}{\ \ \ \ General\ inletOutlet\ boundary\ condition\ for\ DG\ fields.}}
+\DoxyCodeLine{00031\ \textcolor{comment}{\ \ \ \ General\ inlet–outlet\ boundary\ condition\ for\ DG\ fields.}}
 \DoxyCodeLine{00032\ \textcolor{comment}{}}
-\DoxyCodeLine{00033\ \textcolor{comment}{\ \ \ \ -\/\ Requires\ a\ velocity\ field\ named\ "{}U"{}\ (of\ type\ faceGaussField<vector>)}}
-\DoxyCodeLine{00034\ \textcolor{comment}{\ \ \ \ \ \ to\ be\ registered\ in\ the\ fieldsContext.}}
-\DoxyCodeLine{00035\ \textcolor{comment}{\ \ \ \ -\/\ Checks\ flow\ direction\ using\ U·n\ at\ each\ Gauss\ point.}}
-\DoxyCodeLine{00036\ \textcolor{comment}{\ \ \ \ -\/\ If\ flow\ is\ incoming\ (U·n\ <\ 0),\ applies\ a\ fixedValue\ condition:}}
-\DoxyCodeLine{00037\ \textcolor{comment}{\ \ \ \ \ \ \ \ \(\backslash\)f[}}
-\DoxyCodeLine{00038\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)phi\string^+\ =\ 2\ \(\backslash\)cdot\ \(\backslash\)phi\_\{\(\backslash\)text\{inlet\}\}\ -\/\ \(\backslash\)phi\string^-\/}}
-\DoxyCodeLine{00039\ \textcolor{comment}{\ \ \ \ \ \ \ \ \(\backslash\)f]}}
-\DoxyCodeLine{00040\ \textcolor{comment}{\ \ \ \ -\/\ If\ flow\ is\ outgoing\ (U·n\ >=\ 0),\ applies\ a\ zeroGradient\ condition:}}
-\DoxyCodeLine{00041\ \textcolor{comment}{\ \ \ \ \ \ \ \ \(\backslash\)f[}}
-\DoxyCodeLine{00042\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)phi\string^+\ =\ \(\backslash\)phi\string^-\/}}
-\DoxyCodeLine{00043\ \textcolor{comment}{\ \ \ \ \ \ \ \ \(\backslash\)f]}}
-\DoxyCodeLine{00044\ \textcolor{comment}{\ \ \ \ -\/\ Gradient\ is\ always\ set\ as:}}
-\DoxyCodeLine{00045\ \textcolor{comment}{\ \ \ \ \ \ \ \ \(\backslash\)f[}}
-\DoxyCodeLine{00046\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)nabla\ \(\backslash\)phi\string^+\ =\ \(\backslash\)nabla\ \(\backslash\)phi\string^-\/}}
-\DoxyCodeLine{00047\ \textcolor{comment}{\ \ \ \ \ \ \ \ \(\backslash\)f]}}
-\DoxyCodeLine{00048\ \textcolor{comment}{}}
-\DoxyCodeLine{00049\ \textcolor{comment}{\ \ \ \ -\/\ The\ value\ "{}inletValue"{}\ must\ be\ specified\ in\ the\ dictionary.}}
-\DoxyCodeLine{00050\ \textcolor{comment}{}}
-\DoxyCodeLine{00051\ \textcolor{comment}{SourceFiles}}
-\DoxyCodeLine{00052\ \textcolor{comment}{\ \ \ \ dgInletOutletBoundaryField.C}}
-\DoxyCodeLine{00053\ \textcolor{comment}{}}
-\DoxyCodeLine{00054\ \textcolor{comment}{\(\backslash\)*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
-\DoxyCodeLine{00055\ }
-\DoxyCodeLine{00056\ \textcolor{preprocessor}{\#ifndef\ dgGeneralInletOutletBoundaryField\_H}}
-\DoxyCodeLine{00057\ \textcolor{preprocessor}{\#define\ dgGeneralInletOutletBoundaryField\_H}}
-\DoxyCodeLine{00058\ }
-\DoxyCodeLine{00059\ \textcolor{preprocessor}{\#include\ "{}dgGeneralBoundaryField.H"{}}}
-\DoxyCodeLine{00060\ \textcolor{preprocessor}{\#include\ "{}dgField.H"{}}}
-\DoxyCodeLine{00061\ }
-\DoxyCodeLine{00062\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespaceFoam}{Foam}}}
-\DoxyCodeLine{00063\ \{}
-\DoxyCodeLine{00064\ }
-\DoxyCodeLine{00065\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*\(\backslash\)}}
-\DoxyCodeLine{00066\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Class\ dgGeneralInletOutletBoundaryField\ Declaration}}
-\DoxyCodeLine{00067\ \textcolor{comment}{\(\backslash\)*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
-\DoxyCodeLine{00068\ }
-\DoxyCodeLine{00069\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Type>}
-\DoxyCodeLine{00070\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classFoam_1_1dgGeneralInletOutletBoundaryField}{dgGeneralInletOutletBoundaryField}}}
-\DoxyCodeLine{00071\ :}
-\DoxyCodeLine{00072\ \ \ \ \ \textcolor{keyword}{public}\ \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField}{dgGeneralBoundaryField}}<Type>}
-\DoxyCodeLine{00073\ \{}
-\DoxyCodeLine{00074\ \textcolor{keyword}{protected}:}
-\DoxyCodeLine{00075\ }
-\DoxyCodeLine{00076\ \ \ \ \ \textcolor{comment}{//-\/\ Inlet\ value\ for\ Dirichlet\ BC}}
-\DoxyCodeLine{00077\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}}\ \mbox{\hyperlink{classFoam_1_1dgGeneralInletOutletBoundaryField_ab607c257434c76af5ce7f4257c5bf71a}{inletValue\_}};}
-\DoxyCodeLine{00078\ }
-\DoxyCodeLine{00079\ \ \ \ \ \textcolor{comment}{//-\/\ Velocity\ field\ name}}
-\DoxyCodeLine{00080\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{word}}\ \mbox{\hyperlink{classFoam_1_1dgGeneralInletOutletBoundaryField_ab64cb886c62ad7d208d1c19d98936192}{UName\_}}\ =\ \textcolor{stringliteral}{"{}U"{}};}
-\DoxyCodeLine{00081\ }
-\DoxyCodeLine{00082\ \ \ \ \ \textcolor{comment}{//-\/\ Velocity\ field}}
-\DoxyCodeLine{00083\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{dgField<vector>}}\&\ \mbox{\hyperlink{classFoam_1_1dgGeneralInletOutletBoundaryField_a577c6f3deff7a4743d4b33167614ea1b}{U\_}};}
-\DoxyCodeLine{00084\ }
-\DoxyCodeLine{00085\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00086\ }
-\DoxyCodeLine{00087\ \ \ \ \ \textcolor{comment}{//-\/\ Runtime\ type\ information}}
-\DoxyCodeLine{00088\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1dgGeneralInletOutletBoundaryField_a8f57a450bf3c1b1677955985657b7aa4}{TypeName}}(\textcolor{stringliteral}{"{}generalInletOutlet"{}});}
-\DoxyCodeLine{00089\ }
-\DoxyCodeLine{00090\ \ \ \ \ \textcolor{comment}{//-\/\ Constructor\ from\ name\ and\ dictionary}}
-\DoxyCodeLine{00091\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1dgGeneralInletOutletBoundaryField}{dgGeneralInletOutletBoundaryField}}}
-\DoxyCodeLine{00092\ \ \ \ \ (}
-\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{fvPatch}}\&\ \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_a005dea866598236ad0bda74b694bb6fb}{patch}},}
-\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dgGeomMesh}}\&\ \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_a67193a1a1f618c6688825653a12edb7c}{dgMesh}},}
-\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}}\&\ \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_acf8a9ee14cd01bde7a78896f1bfde325}{dict}}}
-\DoxyCodeLine{00096\ \ \ \ \ );}
-\DoxyCodeLine{00097\ \ \ \ \ }
-\DoxyCodeLine{00098\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classFoam_1_1dgGeneralInletOutletBoundaryField_a57b22251c00970adebe35cac0281d1d4}{updateGhostStateValue}}}
-\DoxyCodeLine{00099\ \ \ \ \ (}
-\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ cellID,}
-\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{faceLocalID}},}
-\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{localGauss}},}
-\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{n}},}
-\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}}\&\ minusValue,}
-\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}}\&\ plusValue}
-\DoxyCodeLine{00106\ \ \ \ \ )\textcolor{keyword}{\ const\ override}}
-\DoxyCodeLine{00107\ \textcolor{keyword}{\ \ \ \ }\{}
-\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{Un}}\ =\ \mbox{\hyperlink{classFoam_1_1dgGeneralInletOutletBoundaryField_a577c6f3deff7a4743d4b33167614ea1b}{U\_}}.gaussFields()[cellID].\mbox{\hyperlink{classFoam_1_1GaussField_a396ecdd4262ce1f979ca4e93a91b55ee}{facePlusValueAt}}(\mbox{\hyperlink{classFoam_1_1GaussField}{faceLocalID}},\mbox{\hyperlink{classFoam_1_1GaussField}{localGauss}});}
-\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{dotProd}}\ =\ \mbox{\hyperlink{classFoam_1_1GaussField}{Un}}\ \&\ \mbox{\hyperlink{classFoam_1_1GaussField}{n}};}
+\DoxyCodeLine{00033\ \textcolor{comment}{SourceFiles}}
+\DoxyCodeLine{00034\ \textcolor{comment}{\ \ \ \ dgInletOutletBoundaryField.C}}
+\DoxyCodeLine{00035\ \textcolor{comment}{}}
+\DoxyCodeLine{00036\ \textcolor{comment}{\(\backslash\)*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \textcolor{preprocessor}{\#ifndef\ dgGeneralInletOutletBoundaryField\_H}}
+\DoxyCodeLine{00039\ \textcolor{preprocessor}{\#define\ dgGeneralInletOutletBoundaryField\_H}}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \textcolor{preprocessor}{\#include\ "{}dgGeneralBoundaryField.H"{}}}
+\DoxyCodeLine{00042\ \textcolor{preprocessor}{\#include\ "{}dgField.H"{}}}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespaceFoam}{Foam}}}
+\DoxyCodeLine{00045\ \{}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*\(\backslash\)}}
+\DoxyCodeLine{00048\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ Class\ dgGeneralInletOutletBoundaryField\ Declaration}}
+\DoxyCodeLine{00049\ \textcolor{comment}{\(\backslash\)*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00073\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Type>}
+\DoxyCodeLine{00074\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classFoam_1_1dgGeneralInletOutletBoundaryField}{dgGeneralInletOutletBoundaryField}}}
+\DoxyCodeLine{00075\ :}
+\DoxyCodeLine{00076\ \ \ \ \ \textcolor{keyword}{public}\ \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField}{dgGeneralBoundaryField}}<Type>}
+\DoxyCodeLine{00077\ \{}
+\DoxyCodeLine{00078\ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00079\ }
+\DoxyCodeLine{00081\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}}\ \mbox{\hyperlink{classFoam_1_1dgGeneralInletOutletBoundaryField_ab607c257434c76af5ce7f4257c5bf71a}{inletValue\_}};}
+\DoxyCodeLine{00082\ }
+\DoxyCodeLine{00084\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{word}}\ \mbox{\hyperlink{classFoam_1_1dgGeneralInletOutletBoundaryField_ab64cb886c62ad7d208d1c19d98936192}{UName\_}}\ =\ \textcolor{stringliteral}{"{}U"{}};}
+\DoxyCodeLine{00085\ }
+\DoxyCodeLine{00087\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{dgField<vector>}}\&\ \mbox{\hyperlink{classFoam_1_1dgGeneralInletOutletBoundaryField_a577c6f3deff7a4743d4b33167614ea1b}{U\_}};}
+\DoxyCodeLine{00088\ }
+\DoxyCodeLine{00089\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00090\ }
+\DoxyCodeLine{00091\ \ \ \ \ \textcolor{comment}{//-\/\ Runtime\ type\ information}}
+\DoxyCodeLine{00092\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1dgGeneralInletOutletBoundaryField_a8f57a450bf3c1b1677955985657b7aa4}{TypeName}}(\textcolor{stringliteral}{"{}generalInletOutlet"{}});}
+\DoxyCodeLine{00093\ }
+\DoxyCodeLine{00104\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1dgGeneralInletOutletBoundaryField}{dgGeneralInletOutletBoundaryField}}}
+\DoxyCodeLine{00105\ \ \ \ \ (}
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{fvPatch}}\&\ \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_a005dea866598236ad0bda74b694bb6fb}{patch}},}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dgGeomMesh}}\&\ \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_a67193a1a1f618c6688825653a12edb7c}{dgMesh}},}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}}\&\ \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_acf8a9ee14cd01bde7a78896f1bfde325}{dict}}}
+\DoxyCodeLine{00109\ \ \ \ \ );}
 \DoxyCodeLine{00110\ }
-\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classFoam_1_1GaussField}{dotProd}}\ <\ 0)\ \ \textcolor{comment}{//\ Inlet:\ flow\ into\ domain}}
-\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \ \ \ \ plusValue\ =\ 2\ *\ \mbox{\hyperlink{classFoam_1_1dgGeneralInletOutletBoundaryField_ab607c257434c76af5ce7f4257c5bf71a}{inletValue\_}}\ -\/\ minusValue;}
-\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{comment}{//\ Outlet:\ flow\ out\ of\ domain}}
-\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \ \ \ \ plusValue\ =\ minusValue;}
-\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00119\ \ \ \ \ \}}
-\DoxyCodeLine{00120\ }
-\DoxyCodeLine{00121\ \ \ \ \ \textcolor{comment}{//-\/\ Check\ patch\ type}}
-\DoxyCodeLine{00122\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classFoam_1_1dgGeneralInletOutletBoundaryField_ad1130e0cafb133009373c34b5bf826b3}{checkPatchType}}()\textcolor{keyword}{\ const\ override}}
-\DoxyCodeLine{00123\ \textcolor{keyword}{\ \ \ \ }\{}
-\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (this-\/>\mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_aace96ded992b70311437cdb261b78b7e}{patch\_}}.type()\ !=\ \textcolor{stringliteral}{"{}patch"{}})}
-\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{FatalErrorInFunction}}}
-\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{}Boundary\ condition\ "{}}\ <<\ type()\ <<\textcolor{stringliteral}{"{}\ can\ only\ "{}}}
-\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{}be\ applied\ to\ patch\ type:\ \(\backslash\)n"{}}}
-\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{}\ \ \ \ "{}}\ <<\ \textcolor{stringliteral}{"{}patch\ \(\backslash\)n"{}}}
-\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{}but\ patch\ "{}}}
-\DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ this-\/>\mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_aace96ded992b70311437cdb261b78b7e}{patch\_}}.name()\ <<\ \textcolor{stringliteral}{"{}\ is\ of\ type\ "{}}\ <<\ this-\/>\mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_aace96ded992b70311437cdb261b78b7e}{patch\_}}.type()\ <<\ \mbox{\hyperlink{classFoam_1_1GaussField}{nl}}}
-\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \mbox{\hyperlink{classFoam_1_1GaussField}{exit}}(\mbox{\hyperlink{classFoam_1_1GaussField}{FatalError}});}
-\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00134\ \ \ \ \ \}}
-\DoxyCodeLine{00135\ }
-\DoxyCodeLine{00136\ \};}
+\DoxyCodeLine{00125\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classFoam_1_1dgGeneralInletOutletBoundaryField_a57b22251c00970adebe35cac0281d1d4}{updateGhostStateValue}}}
+\DoxyCodeLine{00126\ \ \ \ \ (}
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ cellID,}
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{faceLocalID}},}
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{localGauss}},}
+\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{n}},}
+\DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}}\&\ minusValue,}
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}}\&\ plusValue}
+\DoxyCodeLine{00133\ \ \ \ \ )\textcolor{keyword}{\ const\ override}}
+\DoxyCodeLine{00134\ \textcolor{keyword}{\ \ \ \ }\{}
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{Un}}\ =}
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1dgGeneralInletOutletBoundaryField_a577c6f3deff7a4743d4b33167614ea1b}{U\_}}.gaussFields()[cellID].\mbox{\hyperlink{classFoam_1_1GaussField_a396ecdd4262ce1f979ca4e93a91b55ee}{facePlusValueAt}}(\mbox{\hyperlink{classFoam_1_1GaussField}{faceLocalID}},\ \mbox{\hyperlink{classFoam_1_1GaussField}{localGauss}});}
 \DoxyCodeLine{00137\ }
-\DoxyCodeLine{00138\ \}\ \textcolor{comment}{//\ End\ namespace\ Foam}}
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{dotProd}}\ =\ \mbox{\hyperlink{classFoam_1_1GaussField}{Un}}\ \&\ \mbox{\hyperlink{classFoam_1_1GaussField}{n}};}
 \DoxyCodeLine{00139\ }
-\DoxyCodeLine{00140\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*\(\backslash\)}}
-\DoxyCodeLine{00141\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Include\ template\ implementation}}
-\DoxyCodeLine{00142\ \textcolor{comment}{\(\backslash\)*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
-\DoxyCodeLine{00143\ }
-\DoxyCodeLine{00144\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{lnInclude_2dgGeneralInletOutletBoundaryFieldI_8H}{dgGeneralInletOutletBoundaryFieldI.H}}"{}}}
-\DoxyCodeLine{00145\ }
-\DoxyCodeLine{00146\ \textcolor{preprocessor}{\#endif}}
-\DoxyCodeLine{00147\ \textcolor{comment}{//\ *************************************************************************\ //}}
+\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classFoam_1_1GaussField}{dotProd}}\ <\ 0)\ \textcolor{comment}{//\ Inlet:\ flow\ into\ domain}}
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ \ \ \ \ plusValue\ =\ 2\ *\ \mbox{\hyperlink{classFoam_1_1dgGeneralInletOutletBoundaryField_ab607c257434c76af5ce7f4257c5bf71a}{inletValue\_}}\ -\/\ minusValue;}
+\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00144\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{comment}{//\ Outlet:\ flow\ out\ of\ domain}}
+\DoxyCodeLine{00145\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00146\ \ \ \ \ \ \ \ \ \ \ \ \ plusValue\ =\ minusValue;}
+\DoxyCodeLine{00147\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00148\ \ \ \ \ \}}
+\DoxyCodeLine{00149\ }
+\DoxyCodeLine{00156\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classFoam_1_1dgGeneralInletOutletBoundaryField_ad1130e0cafb133009373c34b5bf826b3}{checkPatchType}}()\textcolor{keyword}{\ const\ override}}
+\DoxyCodeLine{00157\ \textcolor{keyword}{\ \ \ \ }\{}
+\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (this-\/>\mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_aace96ded992b70311437cdb261b78b7e}{patch\_}}.type()\ !=\ \textcolor{stringliteral}{"{}patch"{}})}
+\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{FatalErrorInFunction}}}
+\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{}Boundary\ condition\ "{}}\ <<\ type()\ <<\ \textcolor{stringliteral}{"{}\ can\ only\ "{}}}
+\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{}be\ applied\ to\ patch\ type:\(\backslash\)n"{}}}
+\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{}\ \ \ \ patch\(\backslash\)n"{}}}
+\DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{}but\ patch\ "{}}}
+\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ this-\/>\mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_aace96ded992b70311437cdb261b78b7e}{patch\_}}.name()}
+\DoxyCodeLine{00166\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{}\ is\ of\ type\ "{}}\ <<\ this-\/>\mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_aace96ded992b70311437cdb261b78b7e}{patch\_}}.type()\ <<\ \mbox{\hyperlink{classFoam_1_1GaussField}{nl}}}
+\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \mbox{\hyperlink{classFoam_1_1GaussField}{exit}}(\mbox{\hyperlink{classFoam_1_1GaussField}{FatalError}});}
+\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00169\ \ \ \ \ \}}
+\DoxyCodeLine{00170\ \};}
+\DoxyCodeLine{00171\ }
+\DoxyCodeLine{00172\ \}\ \textcolor{comment}{//\ End\ namespace\ Foam}}
+\DoxyCodeLine{00173\ }
+\DoxyCodeLine{00174\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*\(\backslash\)}}
+\DoxyCodeLine{00175\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ Include\ template\ implementation}}
+\DoxyCodeLine{00176\ \textcolor{comment}{\(\backslash\)*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{00177\ }
+\DoxyCodeLine{00178\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{lnInclude_2dgGeneralInletOutletBoundaryFieldI_8H}{dgGeneralInletOutletBoundaryFieldI.H}}"{}}}
+\DoxyCodeLine{00179\ }
+\DoxyCodeLine{00180\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00181\ }
+\DoxyCodeLine{00182\ \textcolor{comment}{//\ *************************************************************************\ //}}
 
 \end{DoxyCode}

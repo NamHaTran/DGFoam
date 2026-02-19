@@ -32,78 +32,56 @@
 \DoxyCodeLine{00028\ \textcolor{comment}{\ \ \ \ Foam::dgGeneralZeroGradientBoundaryField}}
 \DoxyCodeLine{00029\ \textcolor{comment}{}}
 \DoxyCodeLine{00030\ \textcolor{comment}{Description}}
-\DoxyCodeLine{00031\ \textcolor{comment}{\ \ \ \ Implements\ a\ zero-\/gradient\ (Neumann-\/type)\ general\ boundary\ condition\ for\ }}
-\DoxyCodeLine{00032\ \textcolor{comment}{\ \ \ \ Discontinuous\ Galerkin\ methods.}}
-\DoxyCodeLine{00033\ \textcolor{comment}{}}
-\DoxyCodeLine{00034\ \textcolor{comment}{\ \ \ \ This\ condition\ assumes\ that\ the\ field\ has\ zero\ normal\ derivative\ across\ the\ }}
-\DoxyCodeLine{00035\ \textcolor{comment}{\ \ \ \ boundary\ face.\ It\ is\ implemented\ by\ mirroring\ the\ internal\ value\ to\ the\ }}
-\DoxyCodeLine{00036\ \textcolor{comment}{\ \ \ \ outside:}}
-\DoxyCodeLine{00037\ \textcolor{comment}{}}
-\DoxyCodeLine{00038\ \textcolor{comment}{\ \ \ \ \ \ \ \ U⁺\ =\ U⁻}}
-\DoxyCodeLine{00039\ \textcolor{comment}{\ \ \ \ \ \ \ \ ∇U⁺\ =\ ∇U⁻}}
-\DoxyCodeLine{00040\ \textcolor{comment}{}}
-\DoxyCodeLine{00041\ \textcolor{comment}{\ \ \ \ where:}}
-\DoxyCodeLine{00042\ \textcolor{comment}{\ \ \ \ \ \ \ \ -\/\ U⁻:\ solution\ inside\ the\ domain}}
-\DoxyCodeLine{00043\ \textcolor{comment}{\ \ \ \ \ \ \ \ -\/\ U⁺:\ ghost\ value\ used\ for\ flux\ computation}}
-\DoxyCodeLine{00044\ \textcolor{comment}{\ \ \ \ \ \ \ \ -\/\ ∇U⁻:\ gradient\ inside\ the\ domain}}
-\DoxyCodeLine{00045\ \textcolor{comment}{\ \ \ \ \ \ \ \ -\/\ ∇U⁺:\ gradient\ used\ for\ flux\ evaluation\ on\ ghost\ side}}
-\DoxyCodeLine{00046\ \textcolor{comment}{}}
-\DoxyCodeLine{00047\ \textcolor{comment}{\ \ \ \ Typical\ use:}}
-\DoxyCodeLine{00048\ \textcolor{comment}{\ \ \ \ \ \ \ \ -\/\ Outlet\ boundaries}}
-\DoxyCodeLine{00049\ \textcolor{comment}{\ \ \ \ \ \ \ \ -\/\ Symmetry\ planes\ (for\ scalar\ fields)}}
-\DoxyCodeLine{00050\ \textcolor{comment}{\ \ \ \ \ \ \ \ -\/\ Free-\/slip\ walls\ (when\ velocity\ gradient\ is\ zero)}}
-\DoxyCodeLine{00051\ \textcolor{comment}{}}
-\DoxyCodeLine{00052\ \textcolor{comment}{SourceFiles}}
-\DoxyCodeLine{00053\ \textcolor{comment}{\ \ \ \ dgGeneralZeroGradientBoundaryField.C}}
-\DoxyCodeLine{00054\ \textcolor{comment}{}}
-\DoxyCodeLine{00055\ \textcolor{comment}{\(\backslash\)*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
-\DoxyCodeLine{00056\ }
-\DoxyCodeLine{00057\ \textcolor{preprocessor}{\#ifndef\ dgGeneralZeroGradientBoundaryField\_H}}
-\DoxyCodeLine{00058\ \textcolor{preprocessor}{\#define\ dgGeneralZeroGradientBoundaryField\_H}}
-\DoxyCodeLine{00059\ }
-\DoxyCodeLine{00060\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{lnInclude_2dgGeneralBoundaryField_8H}{dgGeneralBoundaryField.H}}"{}}}
-\DoxyCodeLine{00061\ }
-\DoxyCodeLine{00062\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespaceFoam}{Foam}}}
-\DoxyCodeLine{00063\ \{}
-\DoxyCodeLine{00064\ }
-\DoxyCodeLine{00065\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*\(\backslash\)}}
-\DoxyCodeLine{00066\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ Class\ dgGeneralZeroGradientBoundaryField\ Declaration}}
-\DoxyCodeLine{00067\ \textcolor{comment}{\(\backslash\)*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
-\DoxyCodeLine{00068\ }
-\DoxyCodeLine{00069\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Type>}
-\DoxyCodeLine{00070\ \textcolor{keyword}{class\ }dgGeneralZeroGradientBoundaryField}
-\DoxyCodeLine{00071\ :}
-\DoxyCodeLine{00072\ \ \ \ \ \textcolor{keyword}{public}\ dgGeneralBoundaryField<Type>}
-\DoxyCodeLine{00073\ \{}
-\DoxyCodeLine{00074\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00075\ }
-\DoxyCodeLine{00076\ \ \ \ \ \textcolor{comment}{//-\/\ Runtime\ type\ information}}
-\DoxyCodeLine{00077\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1dgGeneralZeroGradientBoundaryField_aba6448907b8a7d55fce5eeda4726185a}{TypeName}}(\textcolor{stringliteral}{"{}generalZeroGradient"{}});}
-\DoxyCodeLine{00078\ }
-\DoxyCodeLine{00079\ \ \ \ \ \textcolor{comment}{//-\/\ Constructor\ from\ name\ and\ dictionary}}
-\DoxyCodeLine{00080\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1dgGeneralZeroGradientBoundaryField_a55bb648e4757d95f221a341d7858abea}{dgGeneralZeroGradientBoundaryField}}}
-\DoxyCodeLine{00081\ \ \ \ \ (}
-\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{fvPatch}}\&\ \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_a005dea866598236ad0bda74b694bb6fb}{patch}},}
-\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dgGeomMesh}}\&\ \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_a67193a1a1f618c6688825653a12edb7c}{dgMesh}},}
-\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}}\&\ \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_acf8a9ee14cd01bde7a78896f1bfde325}{dict}}}
-\DoxyCodeLine{00085\ \ \ \ \ );}
-\DoxyCodeLine{00086\ }
-\DoxyCodeLine{00087\ \ \ \ \ \textcolor{comment}{//-\/\ Destructor}}
-\DoxyCodeLine{00088\ \ \ \ \ \textcolor{keyword}{virtual}\ \mbox{\hyperlink{classFoam_1_1dgGeneralZeroGradientBoundaryField_a1892d6e0080f2198adcd48d6f3d1d6cd}{\string~dgGeneralZeroGradientBoundaryField}}()\ =\ \textcolor{keywordflow}{default};}
-\DoxyCodeLine{00089\ }
-\DoxyCodeLine{00090\ \};}
-\DoxyCodeLine{00091\ }
-\DoxyCodeLine{00092\ \}\ \textcolor{comment}{//\ End\ namespace\ Foam}}
+\DoxyCodeLine{00031\ \textcolor{comment}{\ \ \ \ Zero-\/gradient\ boundary\ condition\ for\ DG\ fields.}}
+\DoxyCodeLine{00032\ \textcolor{comment}{}}
+\DoxyCodeLine{00033\ \textcolor{comment}{SourceFiles}}
+\DoxyCodeLine{00034\ \textcolor{comment}{\ \ \ \ dgGeneralZeroGradientBoundaryField.C}}
+\DoxyCodeLine{00035\ \textcolor{comment}{}}
+\DoxyCodeLine{00036\ \textcolor{comment}{\(\backslash\)*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \textcolor{preprocessor}{\#ifndef\ dgGeneralZeroGradientBoundaryField\_H}}
+\DoxyCodeLine{00039\ \textcolor{preprocessor}{\#define\ dgGeneralZeroGradientBoundaryField\_H}}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{lnInclude_2dgGeneralBoundaryField_8H}{dgGeneralBoundaryField.H}}"{}}}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespaceFoam}{Foam}}}
+\DoxyCodeLine{00044\ \{}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*\(\backslash\)}}
+\DoxyCodeLine{00047\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ Class\ dgGeneralZeroGradientBoundaryField\ Declaration}}
+\DoxyCodeLine{00048\ \textcolor{comment}{\(\backslash\)*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00070\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Type>}
+\DoxyCodeLine{00071\ \textcolor{keyword}{class\ }dgGeneralZeroGradientBoundaryField}
+\DoxyCodeLine{00072\ :}
+\DoxyCodeLine{00073\ \ \ \ \ \textcolor{keyword}{public}\ dgGeneralBoundaryField<Type>}
+\DoxyCodeLine{00074\ \{}
+\DoxyCodeLine{00075\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00077\ \ \ \ \ \textcolor{comment}{//-\/\ Runtime\ type\ information}}
+\DoxyCodeLine{00078\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1dgGeneralZeroGradientBoundaryField_aba6448907b8a7d55fce5eeda4726185a}{TypeName}}(\textcolor{stringliteral}{"{}generalZeroGradient"{}});}
+\DoxyCodeLine{00079\ }
+\DoxyCodeLine{00087\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1dgGeneralZeroGradientBoundaryField_a55bb648e4757d95f221a341d7858abea}{dgGeneralZeroGradientBoundaryField}}}
+\DoxyCodeLine{00088\ \ \ \ \ (}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{fvPatch}}\&\ \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_a005dea866598236ad0bda74b694bb6fb}{patch}},}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dgGeomMesh}}\&\ \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_a67193a1a1f618c6688825653a12edb7c}{dgMesh}},}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}}\&\ \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_acf8a9ee14cd01bde7a78896f1bfde325}{dict}}}
+\DoxyCodeLine{00092\ \ \ \ \ );}
 \DoxyCodeLine{00093\ }
-\DoxyCodeLine{00094\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*\(\backslash\)}}
-\DoxyCodeLine{00095\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Include\ template\ implementation}}
-\DoxyCodeLine{00096\ \textcolor{comment}{\(\backslash\)*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{00094\ \ \ \ \ \textcolor{comment}{//-\/\ Destructor}}
+\DoxyCodeLine{00095\ \ \ \ \ \textcolor{keyword}{virtual}\ \mbox{\hyperlink{classFoam_1_1dgGeneralZeroGradientBoundaryField_a1892d6e0080f2198adcd48d6f3d1d6cd}{\string~dgGeneralZeroGradientBoundaryField}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00096\ \};}
 \DoxyCodeLine{00097\ }
-\DoxyCodeLine{00098\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{lnInclude_2dgGeneralZeroGradientBoundaryFieldI_8H}{dgGeneralZeroGradientBoundaryFieldI.H}}"{}}}
+\DoxyCodeLine{00098\ \}\ \textcolor{comment}{//\ End\ namespace\ Foam}}
 \DoxyCodeLine{00099\ }
-\DoxyCodeLine{00100\ \textcolor{preprocessor}{\#endif}}
-\DoxyCodeLine{00101\ }
-\DoxyCodeLine{00102\ \textcolor{comment}{//\ *************************************************************************\ //}}
+\DoxyCodeLine{00100\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*\(\backslash\)}}
+\DoxyCodeLine{00101\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Include\ template\ implementation}}
+\DoxyCodeLine{00102\ \textcolor{comment}{\(\backslash\)*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
 \DoxyCodeLine{00103\ }
+\DoxyCodeLine{00104\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{lnInclude_2dgGeneralZeroGradientBoundaryFieldI_8H}{dgGeneralZeroGradientBoundaryFieldI.H}}"{}}}
+\DoxyCodeLine{00105\ }
+\DoxyCodeLine{00106\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00107\ }
+\DoxyCodeLine{00108\ \textcolor{comment}{//\ *************************************************************************\ //}}
 
 \end{DoxyCode}

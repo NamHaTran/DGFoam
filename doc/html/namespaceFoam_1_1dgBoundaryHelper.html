@@ -86,19 +86,34 @@ $(function() {
   <div class="headertitle"><div class="title">Foam::dgBoundaryHelper Namespace Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Utility functions for DG boundary patch classification.  
+<a href="namespaceFoam_1_1dgBoundaryHelper.html#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:aacf61fd17830f31a3bf10506dd6b0c4e" id="r_aacf61fd17830f31a3bf10506dd6b0c4e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFoam_1_1dgBoundaryHelper.html#aacf61fd17830f31a3bf10506dd6b0c4e">isInterfacePatch</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">fvPatch</a> &amp;patch)</td></tr>
+<tr class="memdesc:aacf61fd17830f31a3bf10506dd6b0c4e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if patch is an interface patch.  <br /></td></tr>
 <tr class="separator:aacf61fd17830f31a3bf10506dd6b0c4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad336b0d03003430f2a70769a5a4ccaa3" id="r_ad336b0d03003430f2a70769a5a4ccaa3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFoam_1_1dgBoundaryHelper.html#ad336b0d03003430f2a70769a5a4ccaa3">isGeneralPatch</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">fvPatch</a> &amp;patch)</td></tr>
+<tr class="memdesc:ad336b0d03003430f2a70769a5a4ccaa3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if patch is a general physical boundary.  <br /></td></tr>
 <tr class="separator:ad336b0d03003430f2a70769a5a4ccaa3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8ddaff7874f784ca13006803262410ea" id="r_a8ddaff7874f784ca13006803262410ea"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFoam_1_1dgBoundaryHelper.html#a8ddaff7874f784ca13006803262410ea">isConstraintPatch</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">fvPatch</a> &amp;patch)</td></tr>
+<tr class="memdesc:a8ddaff7874f784ca13006803262410ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if patch is a constraint or special patch.  <br /></td></tr>
 <tr class="separator:a8ddaff7874f784ca13006803262410ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a982582dbd797b33bf35012ac0763c555" id="r_a982582dbd797b33bf35012ac0763c555"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFoam_1_1dgBoundaryHelper.html#a982582dbd797b33bf35012ac0763c555">isKnownPatchType</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">fvPatch</a> &amp;patch)</td></tr>
+<tr class="memdesc:a982582dbd797b33bf35012ac0763c555"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if patch type is recognised by DG framework.  <br /></td></tr>
 <tr class="separator:a982582dbd797b33bf35012ac0763c555"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Function Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Utility functions for DG boundary patch classification. </p>
+<p>This namespace provides a lightweight set of helper functions to classify OpenFOAM boundary patches into logical categories used by the DG framework:</p><ul>
+<li>Interface patches (e.g. processor boundaries)</li>
+<li>General physical boundary patches (walls, inlets, outlets, symmetry)</li>
+<li>Constraint or special patches (e.g. overset)</li>
+</ul>
+<p>The classification is based solely on the fvPatch type string and is intentionally kept simple and extensible. </p>
+</div><h2 class="groupheader">Function Documentation</h2>
 <a id="aacf61fd17830f31a3bf10506dd6b0c4e" name="aacf61fd17830f31a3bf10506dd6b0c4e"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aacf61fd17830f31a3bf10506dd6b0c4e">&#9670;&#160;</a></span>isInterfacePatch()</h2>
 
@@ -122,6 +137,9 @@ Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Check if patch is an interface patch. </p>
+<p>Interface patches are used to connect DG cells across processor boundaries or other internal interfaces. </p>
 
 </div>
 </div>
@@ -149,6 +167,9 @@ Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Check if patch is a general physical boundary. </p>
+<p>General patches represent physical boundaries such as walls, inlets, outlets, and symmetry planes. </p>
+
 </div>
 </div>
 <a id="a8ddaff7874f784ca13006803262410ea" name="a8ddaff7874f784ca13006803262410ea"></a>
@@ -175,6 +196,9 @@ Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Check if patch is a constraint or special patch. </p>
+<p>Constraint patches impose additional topological or numerical constraints, such as overset connectivity. </p>
+
 </div>
 </div>
 <a id="a982582dbd797b33bf35012ac0763c555" name="a982582dbd797b33bf35012ac0763c555"></a>
@@ -200,6 +224,9 @@ Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Check if patch type is recognised by DG framework. </p>
+<p>Returns true if the patch belongs to any known DG category. </p>
 
 </div>
 </div>

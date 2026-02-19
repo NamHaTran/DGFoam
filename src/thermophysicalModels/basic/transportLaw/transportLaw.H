@@ -5,18 +5,18 @@
     \\  /    A nd           | www.openfoam.com
      \\/     M anipulation  |
 -------------------------------------------------------------------------------
-    Copyright (C) 2011-2016 OpenFOAM Foundation
-    Copyright (C) 2021-2025 OpenCFD Ltd.
+    Copyright (C) 2015-2024 OpenCFD Ltd.
+    Copyright (C) 2024-2025 Ha Nam Tran
 -------------------------------------------------------------------------------
 License
-    This file is part of OpenFOAM.
+    This file is part of DGFoam.
 
-    OpenFOAM is free software: you can redistribute it and/or modify it
+    DGFoam is free software: you can redistribute it and/or modify it
     under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    OpenFOAM is distributed in the hope that it will be useful, but WITHOUT
+    DGFoam is distributed in the hope that it will be useful, but WITHOUT
     ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
     FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
     for more details.
@@ -28,56 +28,7 @@ Class
     Foam::transportLaw
 
 Description
-    Transport laws define the molecular transport properties used in the
-    DG thermophysical system. They provide consistent evaluation of dynamic
-    viscosity μ(T,ρ), thermal conductivity κ(T,ρ), Prandtl number, and
-    related transport quantities at Gauss points.
-
-    Transport models are grouped into the following categories:
-
-    1. Constant-transport models
-    - μ, κ, and Pr are constant.
-    - No dependence on temperature or density.
-    - Useful for verification cases, laminar flows, and GPU-optimized
-    simulations.
-    - Compatible with all thermo and EOS models.
-
-    2. Sutherland-type ideal-gas transport
-    - Viscosity follows Sutherland's law:
-    μ = μ₀ (T/T₀)^(3/2) (T₀ + S) / (T + S).
-    - Thermal conductivity is computed via μ Cp / Pr.
-    - Valid for ideal gases at moderate temperatures.
-    - Compatible with perfect-gas thermo and ideal-gas or
-    thermal-perfect-gas EOS.
-
-    3. Polynomial / power-law transport
-    - Transport properties vary with temperature using empirical
-    correlations, e.g.:
-    μ(T) = a₀ + a₁ T + a₂ T² + ...,
-    μ(T) = a T^b.
-    - Suitable for high-temperature gases, combustion, and fluids
-    where viscosity changes strongly with temperature.
-    - Works with perfect-gas, constant-CpCv, absolute-enthalpy,
-    and selected real-gas thermo models.
-
-    4. Real-gas transport
-    - μ and κ depend on both temperature and density:
-    μ = μ(T, ρ),   κ = κ(T, ρ).
-    - Required for supercritical fluids, hydrocarbons, cryogenic
-    fluids, and high-pressure real gases.
-    - Must be used together with real-gas EOS models
-    (Peng–Robinson, SRK, RK, etc.).
-
-    5. Kinetic / rarefied-gas transport (VHS/VSS/BGK/ES-BGK)
-    - Based on kinetic theory of gases.
-    - Viscosity and thermal conductivity follow power-law relations:
-    μ ∝ T^ω,
-    κ = μ Cp / Pr.
-    - Includes molecular parameters (collision diameter, molecular
-    mass, Boltzmann constant).
-    - Required for rarefied-gas flows, high-altitude aerothermodynamics,
-    and BGK-type models.
-    - Compatible with kinetic thermo and thermal-perfect-gas EOS.
+    Base class for molecular transport property models.
 
 SourceFiles
     transportLaw.C
@@ -101,71 +52,131 @@ namespace Foam
 {
 
 /*---------------------------------------------------------------------------*\
-                           Class transportLaw Declaration
+                       Class transportLaw Declaration
 \*---------------------------------------------------------------------------*/
 
+/**
+ * \class Foam::transportLaw
+ * \brief Base class for DG molecular transport models
+ *
+ * \details
+ * transportLaw defines the interface for evaluating molecular transport
+ * properties at DG Gauss points.
+ *
+ * The class provides Gauss-point-resolved evaluation of:
+ * - Dynamic viscosity \f$\mu\f$
+ * - Thermal conductivity \f$\kappa\f$
+ * - Prandtl number \f$\mathrm{Pr}\f$
+ *
+ * Transport properties may depend on temperature only,
+ * or on both temperature and density, depending on the
+ * selected model.
+ *
+ * Supported transport model categories include:
+ * - Constant transport
+ * - Sutherland-type ideal-gas transport
+ * - Polynomial or power-law transport
+ * - Real-gas transport
+ * - Kinetic / rarefied-gas transport (VHS/VSS/BGK)
+ *
+ * transportLaw instances are created via runtime selection
+ * and are tightly coupled with a thermoLaw model.
+ */
 class transportLaw
 {
 protected:
 
-    //- Name of the model (for logging/debugging)
-    word name_;
+    //====================================================================//
+    //                           Data members
+    //====================================================================//
 
-    //- Coefficient dictionary snapshot (immutable after construction)
-    //  Always set from input dict; never empty by design.
-    const dictionary coeff_;
+        /** Model instance name */
+        word name_;
 
-    //- Reference to DG mesh (non-owning)
-    const dgGeomMesh& mesh_;
+        /** Coefficient dictionary (immutable snapshot) */
+        const dictionary coeff_;
 
-    //- Reference to thermoLaw
-    const thermoLaw& thermo_;
+        /** Reference to DG geometric mesh (non-owning) */
+        const dgGeomMesh& mesh_;
+
+        /** Reference to thermodynamic law (non-owning) */
+        const thermoLaw& thermo_;
 
 public:
 
-    //- Runtime type information
+    //====================================================================//
+    //                     Runtime type information
+    //====================================================================//
+
     TypeName("transportLaw");
 
-    //- Runtime selection table for dictionary-based construction
     declareRunTimeSelectionTable
     (
-        autoPtr, transportLaw, dictionary,
+        autoPtr,
+        transportLaw,
+        dictionary,
         (
-            const word& name, 
-            const dictionary& dict, 
+            const word& name,
+            const dictionary& dict,
             const dgGeomMesh& mesh,
             const thermoLaw& thermo
         ),
         (name, dict, mesh, thermo)
     );
 
-    //- Construct from model name and coefficient dictionary
-    //  * Store name_ and coeff_ (no validation here).
-    transportLaw
-    (
-        const word& name, 
-        const dictionary& dict, 
-        const dgGeomMesh& mesh,
-        const thermoLaw& thermo
-    );
+    //====================================================================//
+    //                           Constructors
+    //====================================================================//
 
-    //- Disallow default construction
-    transportLaw() = delete;
+        /**
+         * \brief Construct from name, dictionary, mesh, and thermo model
+         *
+         * \param name Model instance name
+         * \param dict Transport-law coefficient dictionary
+         * \param mesh DG geometric mesh
+         * \param thermo Thermodynamic law
+         */
+        transportLaw
+        (
+            const word& name,
+            const dictionary& dict,
+            const dgGeomMesh& mesh,
+            const thermoLaw& thermo
+        );
 
-    //- Virtual destructor
-    virtual ~transportLaw() = default;
+        /** Disallow default construction */
+        transportLaw() = delete;
 
-    //- Selector: create a transportLaw from name and dictionary
-    static autoPtr<transportLaw> New
-    (
-        const word& name, 
-        const dictionary& dict, 
-        const dgGeomMesh& mesh,
-        const thermoLaw& thermo
-    );
+        /** Virtual destructor */
+        virtual ~transportLaw() = default;
 
-    // Accessors
-        //- Compute viscosity μ(T) [kg/(m·s)]
+        /**
+         * \brief Construct via runtime selection
+         *
+         * \param name Model instance name
+         * \param dict Transport-law coefficient dictionary
+         * \param mesh DG geometric mesh
+         * \param thermo Thermodynamic law
+         */
+        static autoPtr<transportLaw> New
+        (
+            const word& name,
+            const dictionary& dict,
+            const dgGeomMesh& mesh,
+            const thermoLaw& thermo
+        );
+
+    //====================================================================//
+    //                         Transport evaluation
+    //====================================================================//
+
+        /**
+         * \brief Compute dynamic viscosity
+         *
+         * \param cellI DG cell index
+         * \param T Temperature field at Gauss points
+         * \param mu Dynamic viscosity field at Gauss points
+         */
         virtual void calcMu
         (
             const label cellI,
@@ -173,7 +184,13 @@ public:
             GaussField<scalar>& mu
         ) const = 0;
 
-        //- Compute thermal conductivity κ(T) [W/(m·K)]
+        /**
+         * \brief Compute thermal conductivity
+         *
+         * \param cellI DG cell index
+         * \param T Temperature field at Gauss points
+         * \param kappa Thermal conductivity field at Gauss points
+         */
         virtual void calcKappa
         (
             const label cellI,
@@ -181,7 +198,13 @@ public:
             GaussField<scalar>& kappa
         ) const = 0;
 
-        //- Compute Prandtl number Pr(T)
+        /**
+         * \brief Compute Prandtl number
+         *
+         * \param cellI DG cell index
+         * \param T Temperature field at Gauss points
+         * \param Pr Prandtl number field at Gauss points
+         */
         virtual void calcPr
         (
             const label cellI,
@@ -189,27 +212,35 @@ public:
             GaussField<scalar>& Pr
         ) const = 0;
 
-    // I/O
-        //- Read coefficients (default = do nothing)
+    //====================================================================//
+    //                               I/O
+    //====================================================================//
+
+        /**
+         * \brief Read model coefficients
+         *
+         * Default implementation performs no action.
+         */
         virtual void read();
 
-    // Transport law groups
+    //====================================================================//
+    //                     Transport-law classification
+    //====================================================================//
 
-        //- Constant transport
+        /** Return true if constant-transport model */
         virtual bool isConstantTransportLaw() const { return false; }
 
-        //- Sutherland’s law (ideal-gas viscosity)
+        /** Return true if Sutherland-type transport model */
         virtual bool isSutherlandTransportLaw() const { return false; }
 
-        //- Polynomial/Power-law transport
+        /** Return true if polynomial or power-law transport model */
         virtual bool isPolynomialTransportLaw() const { return false; }
 
-        //- Real-gas transport
+        /** Return true if real-gas transport model */
         virtual bool isRealGasTransportLaw() const { return false; }
 
-        //- Kinetic / Rarefied transport
+        /** Return true if kinetic / rarefied-gas transport model */
         virtual bool isKineticTransportLaw() const { return false; }
-
 };
 
 } // End namespace Foam

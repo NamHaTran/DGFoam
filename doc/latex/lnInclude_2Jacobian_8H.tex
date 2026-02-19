@@ -1,0 +1,54 @@
+\doxysection{/home/nam-\/ha-\/tran/\+Open\+FOAM/\+DGFoam/src/math/ln\+Include/\+Jacobian.H File Reference}
+\hypertarget{lnInclude_2Jacobian_8H}{}\label{lnInclude_2Jacobian_8H}\index{/home/nam-\/ha-\/tran/OpenFOAM/DGFoam/src/math/lnInclude/Jacobian.H@{/home/nam-\/ha-\/tran/OpenFOAM/DGFoam/src/math/lnInclude/Jacobian.H}}
+{\ttfamily \#include "{}basis\+Functions.\+H"{}}\newline
+{\ttfamily \#include "{}error.\+H"{}}\newline
+{\ttfamily \#include $<$cmath$>$}\newline
+{\ttfamily \#include $<$boost/math/special\+\_\+functions/jacobi.\+hpp$>$}\newline
+{\ttfamily \#include $<$boost/math/tools/config.\+hpp$>$}\newline
+{\ttfamily \#include "{}scalar.\+H"{}}\newline
+{\ttfamily \#include "{}vector.\+H"{}}\newline
+{\ttfamily \#include "{}Tensor.\+H"{}}\newline
+{\ttfamily \#include "{}label.\+H"{}}\newline
+{\ttfamily \#include "{}List.\+H"{}}\newline
+{\ttfamily \#include "{}dg\+Cell\+Type.\+H"{}}\newline
+{\ttfamily \#include "{}dg\+Face\+Position.\+H"{}}\newline
+{\ttfamily \#include "{}ref\+Coord\+Transforms.\+H"{}}\newline
+Include dependency graph for Jacobian.\+H\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lnInclude_2Jacobian_8H__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespaceFoam}{Foam}}
+\item 
+namespace \mbox{\hyperlink{namespaceFoam_1_1geometricJacobian}{Foam\+::geometric\+Jacobian}}
+\item 
+namespace \mbox{\hyperlink{namespaceFoam_1_1referenceJacobian}{Foam\+::reference\+Jacobian}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::tensor}} \mbox{\hyperlink{namespaceFoam_1_1geometricJacobian_aaaea28dc5042c3e5886ee75df7b49035}{Foam\+::geometric\+Jacobian\+::\+Hex\+Jacobian}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{gauss\+Pt}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{cell\+Vertices}})
+\begin{DoxyCompactList}\small\item\em Compute the Jacobian tensor for a hexahedral element at a given Gauss point. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::tensor}} \mbox{\hyperlink{namespaceFoam_1_1geometricJacobian_ad79123ae7c8f9933c0b1db4f434e83fe}{Foam\+::geometric\+Jacobian\+::\+Prism\+Jacobian}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{gauss\+Pt}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{cell\+Vertices}})
+\begin{DoxyCompactList}\small\item\em Compute the Jacobian tensor for a prism element at a given Gauss point. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::tensor}} \mbox{\hyperlink{namespaceFoam_1_1geometricJacobian_a2ce71b3859857a6ba42cf882e7a2dd58}{Foam\+::geometric\+Jacobian\+::\+Pyramid\+Jacobian}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{gauss\+Pt}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{cell\+Vertices}})
+\begin{DoxyCompactList}\small\item\em Compute the Jacobian tensor for a pyramid element at a given Gauss point. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::tensor}} \mbox{\hyperlink{namespaceFoam_1_1geometricJacobian_a698f451fa554ccb1995a39956ffe48e8}{Foam\+::geometric\+Jacobian\+::\+Tetra\+Jacobian}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{gauss\+Pt}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{cell\+Vertices}})
+\begin{DoxyCompactList}\small\item\em Compute the Jacobian tensor for a tetrahedral element at a given Gauss point. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::scalar}} \mbox{\hyperlink{namespaceFoam_1_1geometricJacobian_aae5ca0d8eaf6088f5378dc73102a1f04}{Foam\+::geometric\+Jacobian\+::calc\+Jacobian\+Det\+At\+Interior\+Gauss\+Pt}} (\mbox{\hyperlink{dgGeomCell_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5}{dg\+Cell\+Type}} \mbox{\hyperlink{classFoam_1_1GaussField}{cell\+Type}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{gauss\+Pt}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{cell\+Vertices}})
+\begin{DoxyCompactList}\small\item\em Compute the determinant of the Jacobian tensor at a given interior Gauss point. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::scalar}} \mbox{\hyperlink{namespaceFoam_1_1geometricJacobian_a25c24dfc8c51656b041a0ff815ab2c50}{Foam\+::geometric\+Jacobian\+::calc\+Lame\+Param}} (\mbox{\hyperlink{dgGeomCell_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5}{dg\+Cell\+Type}} \mbox{\hyperlink{classFoam_1_1GaussField}{cell\+Type}}, \mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682}{dg\+Face\+Position}} \mbox{\hyperlink{classFoam_1_1GaussField}{face\+Pos}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{gauss\+Pt}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{cell\+Vertices}})
+\begin{DoxyCompactList}\small\item\em Compute the Lame parameter at a given Gauss point on a face. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::tensor}} \mbox{\hyperlink{namespaceFoam_1_1referenceJacobian_a64984e21afebfa72c8f6de170c44536f}{Foam\+::reference\+Jacobian\+::hex\+Ref\+JMontjoie\+To\+DG}} ()
+\begin{DoxyCompactList}\small\item\em Jacobian tensor from Montjoie reference hexahedral element to DG reference hexahedral element. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::tensor}} \mbox{\hyperlink{namespaceFoam_1_1referenceJacobian_a3633fb82ab86e229a32c494e651683a0}{Foam\+::reference\+Jacobian\+::prism\+Ref\+JMontjoie\+To\+DG}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::vector}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{eta\+Pt}})
+\begin{DoxyCompactList}\small\item\em Jacobian tensor from Montjoie reference prismatic element to DG reference hexahedral element. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::tensor}} \mbox{\hyperlink{namespaceFoam_1_1referenceJacobian_a4fb995e832623cbd4e8f8bc23a3830ec}{Foam\+::reference\+Jacobian\+::pyramid\+Ref\+JMontjoie\+To\+DG}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::vector}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{eta\+Pt}})
+\begin{DoxyCompactList}\small\item\em Jacobian tensor from Montjoie reference pyramidic element to DG reference hexahedral element. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::tensor}} \mbox{\hyperlink{namespaceFoam_1_1referenceJacobian_a20cbd3943668679677399471f735f140}{Foam\+::reference\+Jacobian\+::tet\+Ref\+JMontjoie\+To\+DG}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::vector}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{eta\+Pt}})
+\begin{DoxyCompactList}\small\item\em Jacobian tensor from Montjoie reference tetrahedral element to DG reference hexahedral element. \end{DoxyCompactList}\end{DoxyCompactItemize}

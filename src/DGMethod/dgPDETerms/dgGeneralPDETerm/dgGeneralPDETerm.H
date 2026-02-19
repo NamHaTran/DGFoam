@@ -28,19 +28,11 @@ Class
     Foam::dgGeneralPDETerm
 
 Description
-    General DG PDE term for residual assembly. Handles operators of the form:
-
-        Ri = - ∫ grad(phi_i) : F dV
-             + ∫ phi_i (F_flux · n) dS
-
-    where:
-        - UType = scalar  and FType = vector
-        - UType = vector  and FType = tensor
-
-    F may be convective, diffusive, reacting, or any flux supplied by the user.
+    Generic DG PDE term used for residual assembly.
 
 SourceFiles
     dgGeneralPDETerm.C
+
 \*---------------------------------------------------------------------------*/
 
 #ifndef Foam_dgGeneralPDETerm_H
@@ -66,50 +58,96 @@ namespace Foam
                        Class dgGeneralPDETerm Declaration
 \*---------------------------------------------------------------------------*/
 
+/**
+ * \class Foam::dgGeneralPDETerm
+ * \brief Generic DG PDE term for residual assembly
+ *
+ * \tparam UType Type of solution variable (scalar or vector)
+ * \tparam FType Type of flux (vector or tensor)
+ *
+ * \details
+ * This class represents a single PDE operator contribution to the DG
+ * residual of one cell.
+ *
+ * The residual is assembled in the form:
+ * \f[
+ * R_i
+ * =
+ * - \int_{\Omega}
+ *     \nabla \phi_i : \boldsymbol{F}\,\mathrm{d}V
+ * + \int_{\partial\Omega}
+ *     \phi_i (\boldsymbol{F}^{\ast}\cdot\boldsymbol{n})\,\mathrm{d}S
+ * \f]
+ *
+ * Supported type combinations:
+ * - UType = scalar, FType = vector
+ * - UType = vector, FType = tensor
+ *
+ * The numerical surface flux \f$\boldsymbol{F}^{\ast}\f$ is computed
+ * through dgFluxSolverManager based on the PDE term name.
+ *
+ * This class:
+ * - Operates on a single cell
+ * - Owns no global data
+ * - Is used repeatedly during residual assembly
+ */
 template<class UType, class FType>
 class dgGeneralPDETerm
 {
 private:
 
-    //- Name of this PDE term (used to fetch correct flux solver)
+    /** Name of PDE term used to select flux solver */
     word termName_;
 
-    //- Equation type
+    /** Equation type for flux interpretation */
     dgFluxSolver::equationType eqnType_;
 
-    //- Cell index
+    /** Owner cell index */
     label cellID_;
 
-    //- Reference to DG mesh
+    /** Reference to DG geometric mesh */
     dgGeomMesh& dgMesh_;
 
-    //- Basis functions for this cell
+    /** Basis functions associated with this cell */
     dgBasisField basis_;
 
-    //- Solution field
+    /** Solution field evaluated at Gauss points */
     const GaussField<UType>& U_;
 
-    //- Flux field (will be overwritten by flux solvers)
+    /** Flux field evaluated at Gauss points */
     GaussField<FType>& F_;
 
-    //- Flux solver manager
+    /** Flux solver manager */
     dgFluxSolverManager& fluxSolver_;
 
-    //- Number of DoFs in this cell
+    /** Number of degrees of freedom in this cell */
     label nDof_;
 
-    //- Residual per DoF
+    /** Residual values per degree of freedom */
     List<UType> R_;
 
-
-    //- Compile-time type check
+    /**
+     * Compile-time validation of UType/FType combination
+     *
+     * Ensures only supported scalar/vector formulations are instantiated.
+     */
     inline void checkTypes() const;
 
 public:
 
-    // Constructors
+    // Constructors --------------------------------------------------------
 
-    //- Construct from mesh, term name, and fields
+    /**
+     * \brief Construct PDE term for a given cell
+     *
+     * \param termName   Name of PDE term (used for flux solver lookup)
+     * \param eqnType    Equation type (mass, momentum, energy, scalar)
+     * \param cellID     Owner cell index
+     * \param mesh       DG geometric mesh
+     * \param U          Solution field at Gauss points
+     * \param F          Flux field at Gauss points
+     * \param fluxSolver Flux solver manager
+     */
     dgGeneralPDETerm
     (
         const word& termName,
@@ -124,25 +162,35 @@ public:
     //- Destructor
     ~dgGeneralPDETerm() = default;
 
+    // Access --------------------------------------------------------------
 
-    // Member Functions
-
-    //- Return number of DoFs
+    /** Return number of degrees of freedom */
     inline label nDof() const { return nDof_; }
 
-    //- Return residual (const)
+    /** Return residual values (const access) */
     inline const List<UType>& R() const { return R_; }
 
-    //- Return residual (mutable)
+    /** Return residual values (mutable access) */
     inline List<UType>& R() { return R_; }
 
-    //- Compute numerical flux using the dgFluxSolverManager
+    // Core operations -----------------------------------------------------
+
+    /**
+     * \brief Compute numerical surface flux
+     *
+     * Selects the appropriate dgFluxSolver via dgFluxSolverManager
+     * and updates the face Gauss flux field.
+     */
     void updateFlux();
 
-    //- Compute volume + surface contributions to residual
+    /**
+     * \brief Assemble cell residual
+     *
+     * Computes both volume and surface contributions to the
+     * residual vector for this PDE term.
+     */
     void calcResidual();
 };
-
 
 } // End namespace Foam
 

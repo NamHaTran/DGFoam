@@ -28,26 +28,7 @@ Class
     Foam::dgGeneralZeroGradientBoundaryField
 
 Description
-    Implements a zero-gradient (Neumann-type) general boundary condition for 
-    Discontinuous Galerkin methods.
-
-    This condition assumes that the field has zero normal derivative across the 
-    boundary face. It is implemented by mirroring the internal value to the 
-    outside:
-
-        U⁺ = U⁻
-        ∇U⁺ = ∇U⁻
-
-    where:
-        - U⁻: solution inside the domain
-        - U⁺: ghost value used for flux computation
-        - ∇U⁻: gradient inside the domain
-        - ∇U⁺: gradient used for flux evaluation on ghost side
-
-    Typical use:
-        - Outlet boundaries
-        - Symmetry planes (for scalar fields)
-        - Free-slip walls (when velocity gradient is zero)
+    Zero-gradient boundary condition for DG fields.
 
 SourceFiles
     dgGeneralZeroGradientBoundaryField.C
@@ -66,6 +47,26 @@ namespace Foam
            Class dgGeneralZeroGradientBoundaryField Declaration
 \*---------------------------------------------------------------------------*/
 
+/**
+ * \class Foam::dgGeneralZeroGradientBoundaryField
+ * \brief Zero-gradient (Neumann-type) boundary condition for DG fields
+ *
+ * \details
+ * Enforces a zero normal gradient at face Gauss points by copying the
+ * interior (minus-side) state to the ghost (plus-side) state.
+ *
+ * Ghost-state relation:
+ * \f[
+ *   U^{+} = U^{-}
+ * \f]
+ *
+ * The gradient is assumed to be continuous across the boundary:
+ * \f[
+ *   \nabla U^{+} = \nabla U^{-}
+ * \f]
+ *
+ * No dictionary parameters are required; only interior values are used.
+ */
 template<class Type>
 class dgGeneralZeroGradientBoundaryField
 :
@@ -76,7 +77,13 @@ public:
     //- Runtime type information
     TypeName("generalZeroGradient");
 
-    //- Constructor from name and dictionary
+    /**
+     * \brief Construct zero-gradient boundary field
+     *
+     * \param patch  Finite-volume patch
+     * \param dgMesh DG geometric mesh
+     * \param dict   Boundary-condition dictionary (unused)
+     */
     dgGeneralZeroGradientBoundaryField
     (
         const fvPatch& patch,
@@ -86,7 +93,6 @@ public:
 
     //- Destructor
     virtual ~dgGeneralZeroGradientBoundaryField() = default;
-
 };
 
 } // End namespace Foam
@@ -100,4 +106,3 @@ public:
 #endif
 
 // ************************************************************************* //
-

@@ -29,163 +29,45 @@
 \DoxyCodeLine{00025\ \textcolor{comment}{\ \ \ \ along\ with\ OpenFOAM.\ \ If\ not,\ see\ <http://www.gnu.org/licenses/>.}}
 \DoxyCodeLine{00026\ \textcolor{comment}{}}
 \DoxyCodeLine{00027\ \textcolor{comment}{Class}}
-\DoxyCodeLine{00028\ \textcolor{comment}{\ \ \ \ Foam::dgFacePosition}}
-\DoxyCodeLine{00029\ \textcolor{comment}{}}
-\DoxyCodeLine{00030\ \textcolor{comment}{Description}}
-\DoxyCodeLine{00031\ \textcolor{comment}{\ \ \ \ Enumeration\ for\ DG\ face\ positions\ on\ reference\ elements.}}
-\DoxyCodeLine{00032\ \textcolor{comment}{}}
-\DoxyCodeLine{00033\ \textcolor{comment}{\ \ \ \ The\ face\ positions\ are\ defined\ according\ to\ the\ vertex\ ordering}}
-\DoxyCodeLine{00034\ \textcolor{comment}{\ \ \ \ convention\ used\ in:}}
-\DoxyCodeLine{00035\ \textcolor{comment}{}}
-\DoxyCodeLine{00036\ \textcolor{comment}{\ \ \ \ \ \ \ \ Sherwin,\ S.J.,\ Karniadakis,\ G.E.}}
-\DoxyCodeLine{00037\ \textcolor{comment}{\ \ \ \ \ \ \ \ "{}Spectral/hp\ Element\ Methods\ for\ Computational\ Fluid\ Dynamics"{},}}
-\DoxyCodeLine{00038\ \textcolor{comment}{\ \ \ \ \ \ \ \ 2nd\ Edition,\ Oxford\ University\ Press,\ 2005.}}
-\DoxyCodeLine{00039\ \textcolor{comment}{}}
-\DoxyCodeLine{00040\ \textcolor{comment}{\ \ \ \ The\ enumeration\ encodes\ the\ relative\ position\ of\ a\ face\ within\ a}}
-\DoxyCodeLine{00041\ \textcolor{comment}{\ \ \ \ reference\ element\ using\ the\ same\ vertex\ labels\ (A–H)\ as\ in\ the}}
-\DoxyCodeLine{00042\ \textcolor{comment}{\ \ \ \ literature,\ ensuring\ consistent\ evaluation\ of\ DG\ face\ integrals.}}
-\DoxyCodeLine{00043\ \textcolor{comment}{}}
-\DoxyCodeLine{00044\ \textcolor{comment}{SourceFiles}}
-\DoxyCodeLine{00045\ \textcolor{comment}{\ \ \ \ dgFacePosition.H}}
-\DoxyCodeLine{00046\ \textcolor{comment}{}}
-\DoxyCodeLine{00047\ \textcolor{comment}{\(\backslash\)*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
-\DoxyCodeLine{00048\ }
-\DoxyCodeLine{00049\ \textcolor{preprocessor}{\#ifndef\ Foam\_dgFacePosition\_H}}
-\DoxyCodeLine{00050\ \textcolor{preprocessor}{\#define\ Foam\_dgFacePosition\_H}}
-\DoxyCodeLine{00051\ }
-\DoxyCodeLine{00052\ \textcolor{preprocessor}{\#include\ "{}error.H"{}}}
-\DoxyCodeLine{00053\ \textcolor{preprocessor}{\#include\ "{}Ostream.H"{}}}
-\DoxyCodeLine{00054\ }
-\DoxyCodeLine{00055\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespaceFoam}{Foam}}}
+\DoxyCodeLine{00028\ \textcolor{comment}{}}
+\DoxyCodeLine{00029\ \textcolor{comment}{Description}}
+\DoxyCodeLine{00030\ \textcolor{comment}{\ \ \ \ Just\ a\ cell\ type\ enumeration\ for\ use\ in\ DG\ mesh\ handling.}}
+\DoxyCodeLine{00031\ \textcolor{comment}{}}
+\DoxyCodeLine{00032\ \textcolor{comment}{See\ also}}
+\DoxyCodeLine{00033\ \textcolor{comment}{}}
+\DoxyCodeLine{00034\ \textcolor{comment}{SourceFiles}}
+\DoxyCodeLine{00035\ \textcolor{comment}{\ \ \ \ dgCellType.H}}
+\DoxyCodeLine{00036\ \textcolor{comment}{}}
+\DoxyCodeLine{00037\ \textcolor{comment}{\(\backslash\)*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \textcolor{preprocessor}{\#ifndef\ DGCELLTYPE\_H}}
+\DoxyCodeLine{00040\ \textcolor{preprocessor}{\#define\ DGCELLTYPE\_H}}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \textcolor{preprocessor}{\#include\ "{}IOstreams.H"{}}}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ \textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{dgGeomCell_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5}{dgCellType}}}
+\DoxyCodeLine{00045\ \{}
+\DoxyCodeLine{00046\ \ \ \ \ \mbox{\hyperlink{dgGeomCell_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5a268c4b76ec894ec6ad3c119ad7cc2170}{TET}},}
+\DoxyCodeLine{00047\ \ \ \ \ \mbox{\hyperlink{dgGeomCell_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5a58c9566f3c750ce7147b045fdd14202b}{HEX}},}
+\DoxyCodeLine{00048\ \ \ \ \ \mbox{\hyperlink{dgGeomCell_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5a25608df56c02f9fc6854a3de6a51822a}{PRISM}},}
+\DoxyCodeLine{00049\ \ \ \ \ \mbox{\hyperlink{dgGeomCell_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5acd996d3184761601a0e44e587a012d4f}{PYRAMID}},}
+\DoxyCodeLine{00050\ \ \ \ \ \mbox{\hyperlink{dgGeomCell_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5ab50339a10e1de285ac99d4c3990b8693}{NONE}},\ \textcolor{comment}{//\ No\ cell\ type\ (used\ for\ boundary\ faces)}}
+\DoxyCodeLine{00051\ \ \ \ \ \mbox{\hyperlink{dgGeomCell_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5accc0377a8afbf50e7094f5c23a8af223}{INVALID}}}
+\DoxyCodeLine{00052\ \};}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ \textcolor{comment}{//-\/\ Overwrite\ <<\ operator}}
+\DoxyCodeLine{00055\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{classFoam_1_1GaussField}{Foam::Ostream}}\&\ \mbox{\hyperlink{dgGeomCell_2dgCellType_8H_a8cfce96f5a5eebbc1d037855f81dd604}{operator<<}}(\mbox{\hyperlink{classFoam_1_1GaussField}{Foam::Ostream}}\&\ os,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{dgGeomCell_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5}{dgCellType}}\ type)}
 \DoxyCodeLine{00056\ \{}
-\DoxyCodeLine{00057\ }
-\DoxyCodeLine{00067\ \textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682}{dgFacePosition}}}
-\DoxyCodeLine{00068\ \{}
-\DoxyCodeLine{00070\ \ \ \ \ \mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682a3657d9ae4bdf500bb16fb581fdf43c64}{ACEG}}\ =\ 0,}
-\DoxyCodeLine{00071\ }
-\DoxyCodeLine{00073\ \ \ \ \ \mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682a2c1327bd400a4bde2b37ccb26b635800}{BDFH}},}
-\DoxyCodeLine{00074\ }
-\DoxyCodeLine{00076\ \ \ \ \ \mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682a41d9ff5c880ee22566a8480c85ffa831}{ABEF}},}
-\DoxyCodeLine{00077\ }
-\DoxyCodeLine{00079\ \ \ \ \ \mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682abfff11d5fc9f1c1e357e7854d6393723}{CDGH}},}
-\DoxyCodeLine{00080\ }
-\DoxyCodeLine{00082\ \ \ \ \ \mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682acb08ca4a7bb5f9683c19133a84872ca7}{ABCD}},}
-\DoxyCodeLine{00083\ }
-\DoxyCodeLine{00085\ \ \ \ \ \mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682a17dd6919f5930ea8bd58fecbafd7eb7b}{EFGH}},}
-\DoxyCodeLine{00086\ }
-\DoxyCodeLine{00088\ \ \ \ \ \mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682a0e96751c7e5f8a752f54c4b6f0e79389}{NUM\_POSITIONS}},}
-\DoxyCodeLine{00089\ }
-\DoxyCodeLine{00091\ \ \ \ \ \mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682ab50339a10e1de285ac99d4c3990b8693}{NONE}}}
-\DoxyCodeLine{00092\ \};}
-\DoxyCodeLine{00093\ }
-\DoxyCodeLine{00094\ }
-\DoxyCodeLine{00103\ \textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{namespaceFoam_a33894f55b12411460eaf759f2cc29cad}{dgFacePositionOnTet}}}
-\DoxyCodeLine{00104\ \{}
-\DoxyCodeLine{00106\ \ \ \ \ \mbox{\hyperlink{namespaceFoam_a33894f55b12411460eaf759f2cc29cada42451d370b188bc4ed2a312be0bd3c49}{BCE}}\ =\ 0,}
-\DoxyCodeLine{00107\ }
-\DoxyCodeLine{00109\ \ \ \ \ \mbox{\hyperlink{namespaceFoam_a33894f55b12411460eaf759f2cc29cada757f4749aebb1891ef5ac2a9b5439cea}{ACE}},}
-\DoxyCodeLine{00110\ }
-\DoxyCodeLine{00112\ \ \ \ \ \mbox{\hyperlink{namespaceFoam_a33894f55b12411460eaf759f2cc29cada903313b86cfb89682d191d1a6469e398}{ABE}},}
-\DoxyCodeLine{00113\ }
-\DoxyCodeLine{00115\ \ \ \ \ \mbox{\hyperlink{namespaceFoam_a33894f55b12411460eaf759f2cc29cada902fbdd2b1df0c4f70b4a5d23525e932}{ABC}},}
-\DoxyCodeLine{00116\ }
-\DoxyCodeLine{00118\ \ \ \ \ \mbox{\hyperlink{namespaceFoam_a33894f55b12411460eaf759f2cc29cadaa2178255c95c8fd7baf47bbbd34e18bd}{NUM\_FACES}},}
-\DoxyCodeLine{00119\ }
-\DoxyCodeLine{00121\ \ \ \ \ \mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682ab50339a10e1de285ac99d4c3990b8693}{NONE}}}
-\DoxyCodeLine{00122\ \};}
-\DoxyCodeLine{00123\ }
-\DoxyCodeLine{00124\ }
-\DoxyCodeLine{00133\ \textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{namespaceFoam_a5ce8f1f2e5f71c182a4138cf34a3186d}{dgFacePositionOnPyramid}}}
-\DoxyCodeLine{00134\ \{}
-\DoxyCodeLine{00136\ \ \ \ \ \mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682acb08ca4a7bb5f9683c19133a84872ca7}{ABCD}}\ =\ 0,}
-\DoxyCodeLine{00137\ }
-\DoxyCodeLine{00139\ \ \ \ \ \mbox{\hyperlink{namespaceFoam_a33894f55b12411460eaf759f2cc29cada757f4749aebb1891ef5ac2a9b5439cea}{ACE}},}
-\DoxyCodeLine{00140\ }
-\DoxyCodeLine{00142\ \ \ \ \ \mbox{\hyperlink{namespaceFoam_a5ce8f1f2e5f71c182a4138cf34a3186daf8e054e3416de72e874492e25c38b3ec}{CDE}},}
-\DoxyCodeLine{00143\ }
-\DoxyCodeLine{00145\ \ \ \ \ \mbox{\hyperlink{namespaceFoam_a5ce8f1f2e5f71c182a4138cf34a3186da901e2bf2161a620621dffe8eb1431615}{BDE}},}
-\DoxyCodeLine{00146\ }
-\DoxyCodeLine{00148\ \ \ \ \ \mbox{\hyperlink{namespaceFoam_a33894f55b12411460eaf759f2cc29cada903313b86cfb89682d191d1a6469e398}{ABE}},}
-\DoxyCodeLine{00149\ }
-\DoxyCodeLine{00151\ \ \ \ \ \mbox{\hyperlink{namespaceFoam_a33894f55b12411460eaf759f2cc29cadaa2178255c95c8fd7baf47bbbd34e18bd}{NUM\_FACES}},}
-\DoxyCodeLine{00152\ }
-\DoxyCodeLine{00154\ \ \ \ \ \mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682ab50339a10e1de285ac99d4c3990b8693}{NONE}}}
-\DoxyCodeLine{00155\ \};}
-\DoxyCodeLine{00156\ }
-\DoxyCodeLine{00157\ }
-\DoxyCodeLine{00166\ \textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{namespaceFoam_a49389e037db4de91988ad16f0f8f1b54}{dgFacePositionOnPrism}}}
-\DoxyCodeLine{00167\ \{}
-\DoxyCodeLine{00169\ \ \ \ \ \mbox{\hyperlink{namespaceFoam_a33894f55b12411460eaf759f2cc29cada903313b86cfb89682d191d1a6469e398}{ABE}}\ =\ 0,}
-\DoxyCodeLine{00170\ }
-\DoxyCodeLine{00172\ \ \ \ \ \mbox{\hyperlink{namespaceFoam_a49389e037db4de91988ad16f0f8f1b54ab73cc6d3c1d3fbf4c49aea0b307498dd}{CDF}},}
-\DoxyCodeLine{00173\ }
-\DoxyCodeLine{00175\ \ \ \ \ \mbox{\hyperlink{namespaceFoam_a49389e037db4de91988ad16f0f8f1b54ae3ecafdae9412825268c8ba00366d7c2}{BCEF}},}
-\DoxyCodeLine{00176\ }
-\DoxyCodeLine{00178\ \ \ \ \ \mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682acb08ca4a7bb5f9683c19133a84872ca7}{ABCD}},}
-\DoxyCodeLine{00179\ }
-\DoxyCodeLine{00181\ \ \ \ \ \mbox{\hyperlink{namespaceFoam_a49389e037db4de91988ad16f0f8f1b54af8700fa2c4020e129e51436266088d9b}{ADEF}},}
-\DoxyCodeLine{00182\ }
-\DoxyCodeLine{00184\ \ \ \ \ \mbox{\hyperlink{namespaceFoam_a33894f55b12411460eaf759f2cc29cadaa2178255c95c8fd7baf47bbbd34e18bd}{NUM\_FACES}},}
-\DoxyCodeLine{00185\ }
-\DoxyCodeLine{00187\ \ \ \ \ \mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682ab50339a10e1de285ac99d4c3990b8693}{NONE}}}
-\DoxyCodeLine{00188\ \};}
-\DoxyCodeLine{00189\ }
-\DoxyCodeLine{00190\ }
-\DoxyCodeLine{00194\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682}{dgFacePosition}}\ \mbox{\hyperlink{namespaceFoam_ad7f0ffe96add3de5571b54d88dc6e1a4}{mapFacePositionFromTet}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_a33894f55b12411460eaf759f2cc29cad}{dgFacePositionOnTet}}\ f)}
-\DoxyCodeLine{00195\ \{}
-\DoxyCodeLine{00196\ \ \ \ \ \textcolor{keywordflow}{switch}\ (f)}
-\DoxyCodeLine{00197\ \ \ \ \ \{}
-\DoxyCodeLine{00198\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{namespaceFoam_a33894f55b12411460eaf759f2cc29cada757f4749aebb1891ef5ac2a9b5439cea}{dgFacePositionOnTet::ACE}}:\ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682a3657d9ae4bdf500bb16fb581fdf43c64}{dgFacePosition::ACEG}};}
-\DoxyCodeLine{00199\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{namespaceFoam_a33894f55b12411460eaf759f2cc29cada42451d370b188bc4ed2a312be0bd3c49}{dgFacePositionOnTet::BCE}}:\ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682a2c1327bd400a4bde2b37ccb26b635800}{dgFacePosition::BDFH}};}
-\DoxyCodeLine{00200\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{namespaceFoam_a33894f55b12411460eaf759f2cc29cada903313b86cfb89682d191d1a6469e398}{dgFacePositionOnTet::ABE}}:\ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682a41d9ff5c880ee22566a8480c85ffa831}{dgFacePosition::ABEF}};}
-\DoxyCodeLine{00201\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{namespaceFoam_a33894f55b12411460eaf759f2cc29cada902fbdd2b1df0c4f70b4a5d23525e932}{dgFacePositionOnTet::ABC}}:\ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682acb08ca4a7bb5f9683c19133a84872ca7}{dgFacePosition::ABCD}};}
-\DoxyCodeLine{00202\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{namespaceFoam_a33894f55b12411460eaf759f2cc29cadab50339a10e1de285ac99d4c3990b8693}{dgFacePositionOnTet::NONE}}:\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682ab50339a10e1de285ac99d4c3990b8693}{dgFacePosition::NONE}};}
-\DoxyCodeLine{00203\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{default}:}
-\DoxyCodeLine{00204\ \ \ \ \ \ \ \ \ \ \ \ \ FatalErrorInFunction\ <<\ \textcolor{stringliteral}{"{}Invalid\ dgFacePositionOnTet\ enum"{}}}
-\DoxyCodeLine{00205\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ abort(FatalError);}
-\DoxyCodeLine{00206\ \ \ \ \ \}}
-\DoxyCodeLine{00207\ }
-\DoxyCodeLine{00208\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682acb08ca4a7bb5f9683c19133a84872ca7}{dgFacePosition::ABCD}};}
-\DoxyCodeLine{00209\ \}}
-\DoxyCodeLine{00210\ }
-\DoxyCodeLine{00211\ }
-\DoxyCodeLine{00215\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{namespaceFoam_a33894f55b12411460eaf759f2cc29cad}{dgFacePositionOnTet}}\ \mbox{\hyperlink{namespaceFoam_a5a22eec5f0fedfca2abe0f2de2932609}{mapFacePositionToTet}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682}{dgFacePosition}}\ f)}
-\DoxyCodeLine{00216\ \{}
-\DoxyCodeLine{00217\ \ \ \ \ \textcolor{keywordflow}{switch}\ (f)}
-\DoxyCodeLine{00218\ \ \ \ \ \{}
-\DoxyCodeLine{00219\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682a3657d9ae4bdf500bb16fb581fdf43c64}{dgFacePosition::ACEG}}:\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{namespaceFoam_a33894f55b12411460eaf759f2cc29cada757f4749aebb1891ef5ac2a9b5439cea}{dgFacePositionOnTet::ACE}};}
-\DoxyCodeLine{00220\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682a2c1327bd400a4bde2b37ccb26b635800}{dgFacePosition::BDFH}}:\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{namespaceFoam_a33894f55b12411460eaf759f2cc29cada42451d370b188bc4ed2a312be0bd3c49}{dgFacePositionOnTet::BCE}};}
-\DoxyCodeLine{00221\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682a41d9ff5c880ee22566a8480c85ffa831}{dgFacePosition::ABEF}}:\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{namespaceFoam_a33894f55b12411460eaf759f2cc29cada903313b86cfb89682d191d1a6469e398}{dgFacePositionOnTet::ABE}};}
-\DoxyCodeLine{00222\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682acb08ca4a7bb5f9683c19133a84872ca7}{dgFacePosition::ABCD}}:\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{namespaceFoam_a33894f55b12411460eaf759f2cc29cada902fbdd2b1df0c4f70b4a5d23525e932}{dgFacePositionOnTet::ABC}};}
-\DoxyCodeLine{00223\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682ab50339a10e1de285ac99d4c3990b8693}{dgFacePosition::NONE}}:\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{namespaceFoam_a33894f55b12411460eaf759f2cc29cadab50339a10e1de285ac99d4c3990b8693}{dgFacePositionOnTet::NONE}};}
-\DoxyCodeLine{00224\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{default}:}
-\DoxyCodeLine{00225\ \ \ \ \ \ \ \ \ \ \ \ \ FatalErrorInFunction\ <<\ \textcolor{stringliteral}{"{}Invalid\ dgFacePosition\ enum"{}}}
-\DoxyCodeLine{00226\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ abort(FatalError);}
-\DoxyCodeLine{00227\ \ \ \ \ \}}
-\DoxyCodeLine{00228\ }
-\DoxyCodeLine{00229\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{namespaceFoam_a33894f55b12411460eaf759f2cc29cada902fbdd2b1df0c4f70b4a5d23525e932}{dgFacePositionOnTet::ABC}};}
-\DoxyCodeLine{00230\ \}}
-\DoxyCodeLine{00231\ }
-\DoxyCodeLine{00232\ }
-\DoxyCodeLine{00236\ \textcolor{keyword}{inline}\ Ostream\&\ \mbox{\hyperlink{namespaceFoam_af7d5c12d26c2b0bed7f073a787a598fe}{operator<<}}(Ostream\&\ os,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682}{dgFacePosition}}\ type)}
-\DoxyCodeLine{00237\ \{}
-\DoxyCodeLine{00238\ \ \ \ \ \textcolor{keywordflow}{switch}\ (type)}
-\DoxyCodeLine{00239\ \ \ \ \ \{}
-\DoxyCodeLine{00240\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682a3657d9ae4bdf500bb16fb581fdf43c64}{dgFacePosition::ACEG}}:\ \textcolor{keywordflow}{return}\ os\ <<\ \textcolor{stringliteral}{"{}ACEG"{}};}
-\DoxyCodeLine{00241\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682a2c1327bd400a4bde2b37ccb26b635800}{dgFacePosition::BDFH}}:\ \textcolor{keywordflow}{return}\ os\ <<\ \textcolor{stringliteral}{"{}BDFH"{}};}
-\DoxyCodeLine{00242\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682a41d9ff5c880ee22566a8480c85ffa831}{dgFacePosition::ABEF}}:\ \textcolor{keywordflow}{return}\ os\ <<\ \textcolor{stringliteral}{"{}ABEF"{}};}
-\DoxyCodeLine{00243\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682abfff11d5fc9f1c1e357e7854d6393723}{dgFacePosition::CDGH}}:\ \textcolor{keywordflow}{return}\ os\ <<\ \textcolor{stringliteral}{"{}CDGH"{}};}
-\DoxyCodeLine{00244\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682acb08ca4a7bb5f9683c19133a84872ca7}{dgFacePosition::ABCD}}:\ \textcolor{keywordflow}{return}\ os\ <<\ \textcolor{stringliteral}{"{}ABCD"{}};}
-\DoxyCodeLine{00245\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682a17dd6919f5930ea8bd58fecbafd7eb7b}{dgFacePosition::EFGH}}:\ \textcolor{keywordflow}{return}\ os\ <<\ \textcolor{stringliteral}{"{}EFGH"{}};}
-\DoxyCodeLine{00246\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682ab50339a10e1de285ac99d4c3990b8693}{dgFacePosition::NONE}}:\ \textcolor{keywordflow}{return}\ os\ <<\ \textcolor{stringliteral}{"{}NONE"{}};}
-\DoxyCodeLine{00247\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{default}:\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ os\ <<\ \textcolor{stringliteral}{"{}UNKNOWN"{}};}
-\DoxyCodeLine{00248\ \ \ \ \ \}}
-\DoxyCodeLine{00249\ \}}
-\DoxyCodeLine{00250\ }
-\DoxyCodeLine{00251\ \}\ \textcolor{comment}{//\ End\ namespace\ Foam}}
-\DoxyCodeLine{00252\ }
-\DoxyCodeLine{00253\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ Foam\_dgFacePosition\_H}}
-\DoxyCodeLine{00254\ }
-\DoxyCodeLine{00255\ \textcolor{comment}{//\ *************************************************************************\ //}}
+\DoxyCodeLine{00057\ \ \ \ \ \textcolor{keywordflow}{switch}\ (type)}
+\DoxyCodeLine{00058\ \ \ \ \ \{}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{dgGeomCell_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5a268c4b76ec894ec6ad3c119ad7cc2170}{dgCellType::TET}}:\ \ \ \textcolor{keywordflow}{return}\ os\ <<\ \textcolor{stringliteral}{"{}TET"{}};}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{dgGeomCell_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5a58c9566f3c750ce7147b045fdd14202b}{dgCellType::HEX}}:\ \ \ \textcolor{keywordflow}{return}\ os\ <<\ \textcolor{stringliteral}{"{}HEX"{}};}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{dgGeomCell_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5a25608df56c02f9fc6854a3de6a51822a}{dgCellType::PRISM}}:\ \textcolor{keywordflow}{return}\ os\ <<\ \textcolor{stringliteral}{"{}PRISM"{}};}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{dgGeomCell_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5acd996d3184761601a0e44e587a012d4f}{dgCellType::PYRAMID}}:\ \textcolor{keywordflow}{return}\ os\ <<\ \textcolor{stringliteral}{"{}PYRAMID"{}};}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{dgGeomCell_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5ab50339a10e1de285ac99d4c3990b8693}{dgCellType::NONE}}:\ \ \textcolor{keywordflow}{return}\ os\ <<\ \textcolor{stringliteral}{"{}NONE"{}};}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{default}:\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ os\ <<\ \textcolor{stringliteral}{"{}UNKNOWN"{}};}
+\DoxyCodeLine{00065\ \ \ \ \ \}}
+\DoxyCodeLine{00066\ \}}
+\DoxyCodeLine{00067\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ DGCELLTYPE\_H}}
 
 \end{DoxyCode}

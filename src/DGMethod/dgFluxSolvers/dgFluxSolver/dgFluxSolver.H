@@ -28,34 +28,7 @@ Class
     Foam::dgFluxSolver
 
 Description
-    Base class for numerical flux solvers that operate on vector-valued
-    fluxes. The interface accepts Plus/Minus flux vectors (Cartesian)
-    and returns the numerical flux vector.
-
-    Notes
-    - New convention:
-        * Plus  = neighbour cell (N-side)
-        * Minus = owner cell (P-side)
-    - This class only works with Foam::vector (no tensor support).
-    - A fieldsContext pointer may be set for field lookup/registration.
-
-    Flux solvers's category:
-    
-    dgFluxSolvers/
-    ├── exactRiemannFluxSolver/
-    │    ├── Godunov.C
-    ├── approximateRiemannFluxSolver/
-         ├── centralSchemes/
-         │    ├── LaxFriedrichs.C
-         │    └── Rusanov.C
-         ├── contactResolvingSchemes/
-         │    ├── HLLC.C
-         │    ├── Roe.C
-         └── fluxSplittingSchemes/
-              ├── AUSM.C
-              ├── VanLeer.C
-              └── StegerWarming.C
-
+    Base class for DG numerical flux solvers.
 
 SourceFiles
     dgFluxSolver.C
@@ -82,15 +55,39 @@ class fieldsContext;
                            Class dgFluxSolver Declaration
 \*---------------------------------------------------------------------------*/
 
+/**
+ * \enum equationType
+ * \class Foam::dgFluxSolver
+ * \brief Base class for DG numerical flux solvers
+ *
+ * \details
+ * Defines the runtime-selectable interface for numerical-flux solvers that
+ * operate on faceGaussField data. Implementations compute a numerical flux
+ * from minus/plus states at face Gauss points.
+ *
+ * Plus/minus convention:
+ * - minus: owner cell (P-side)
+ * - plus : neighbour cell (N-side)
+ *
+ * The equationType is used by derived solvers to interpret the meaning of
+ * state components and to select wave-speed estimates where required.
+ */
 class dgFluxSolver
 {
 public:
     // Enumeration for identifying the PDE being solved
     enum class equationType
     {
+        /** Mass transport equation */
         massTransport,
+
+        /** Momentum transport equation */
         momentumTransport,
+
+        /** Energy transport equation */
         energyTransport,
+
+        /** Scalar transport equation */
         scalarTransport
     };
 
@@ -98,16 +95,16 @@ protected:
 
     // Attributes
 
-        //- Name of flux solver (instance name for logging/debug)
+        /** Solver instance name (for logging/debug) */
         word name_;
 
-        //- Configuration sub-dictionary for this solver
+        /** Configuration dictionary for this solver */
         dictionary dict_;
 
-        //- Mesh reference
+        /** Reference to DG geometric mesh */
         const dgGeomMesh& mesh_;
 
-        // Internal equation type used for interpreting UL/UR
+        /** Equation type used for interpreting left/right states */
         equationType eqnType_;
 
 public:
@@ -127,18 +124,32 @@ public:
 
     // Constructors
 
-        //- Construct from name and dictionary
+        /**
+         * \brief Construct from name and dictionary
+         *
+         * \param name Solver instance name
+         * \param dict Solver dictionary
+         * \param mesh DG geometric mesh
+         */
         dgFluxSolver(const word& name, const dictionary& dict, const dgGeomMesh& mesh);
 
         //- Disallow default construction
         dgFluxSolver() = delete;
 
-        //- Virtual destructor
+        //- Destructor
         virtual ~dgFluxSolver() = default;
 
     // Factory
 
-        //- Select and construct from dictionary entry "solver"
+        /**
+         * \brief Select and construct from dictionary
+         *
+         * \param name           Solver instance name
+         * \param fluxSolverType Selected flux-solver type name
+         * \param dict           Solver dictionary
+         * \param mesh           DG geometric mesh
+         * \return autoPtr to constructed dgFluxSolver
+         */
         static autoPtr<dgFluxSolver> New
         (
             const word& name,
@@ -149,19 +160,21 @@ public:
 
     // Access
 
-        //- Return solver name
+        /** Return solver name */
         inline const word& name() const { return name_; }
 
-        //- Return solver dictionary
+        /** Return solver dictionary */
         inline const dictionary& dict() const { return dict_; }
 
     // Core API
 
-        //- Compute numerical flux from Plus/Minus physical flux vectors
-        //  Input:
-        //    - cellID  : cellID of cell where flux is calculated
-        //    - F       : faceGaussField of field F
-        //    - U       : faceGaussField of U
+        /**
+         * \brief Compute numerical flux for scalar conserved variable
+         *
+         * \param cellID DG cell index
+         * \param F      Flux field (output)
+         * \param U      Scalar solution at face Gauss points
+         */
         virtual void computeFlux
         (
             const label cellID,
@@ -169,6 +182,13 @@ public:
             const faceGaussField<scalar>& U
         ) = 0;
 
+        /**
+         * \brief Compute numerical flux for vector conserved variable
+         *
+         * \param cellID DG cell index
+         * \param F      Flux field (output)
+         * \param U      Vector solution at face Gauss points
+         */
         virtual void computeFlux
         (
             const label cellID,
@@ -176,15 +196,32 @@ public:
             const faceGaussField<vector>& U
         ) = 0;
 
-        //- Reset if necessary
+        /** Reset solver internal cache/state if required */
         virtual void reset() = 0;
 
     // Utility
-        // - Construct orthonormal basis (n, t1, t2) from normal n
-        //   (t1, t2 are tangential directions)
+
+        /**
+         * \brief Construct an orthonormal basis from a normal vector
+         *
+         * Builds tangential directions (t1, t2) such that (n, t1, t2) is an
+         * orthonormal triad.
+         *
+         * \param n  Unit normal
+         * \param t1 First tangential direction (output)
+         * \param t2 Second tangential direction (output)
+         */
         void makeONB(const vector& n, vector& t1, vector& t2) const;
 
-        // - Decompose vector U to normal and 2 tangential components
+        /**
+         * \brief Decompose a vector into normal and tangential components
+         *
+         * \param U   Input vector
+         * \param n   Unit normal
+         * \param Un  Normal component (output)
+         * \param Ut1 Tangential component along t1 (output)
+         * \param Ut2 Tangential component along t2 (output)
+         */
         void decomposeU
         (
             const vector& U,
@@ -194,15 +231,27 @@ public:
             vector& Ut2
         ) const;
 
-        // - Reading method
+        /**
+         * \brief Read solver settings from dictionary
+         *
+         * \param dict Solver dictionary
+         */
         virtual void read(const dictionary& dict) = 0;
 
-        // Equation type Setter and getter
+        /** Set equation type */
         inline void setEquationType(equationType t) { eqnType_ = t; }
+
+        /** Return equation type */
         inline equationType getEquationType() const { return eqnType_; }
 };
 
-    // Overload operator<< to print equationType
+    /**
+     * \brief Stream output for dgFluxSolver::equationType
+     *
+     * \param os   Output stream
+     * \param type Equation type
+     * \return Output stream
+     */
     inline Ostream& operator<< (Ostream& os, const dgFluxSolver::equationType& type)
     {
         switch (type)

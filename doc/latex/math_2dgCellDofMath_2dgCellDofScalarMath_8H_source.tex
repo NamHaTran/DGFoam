@@ -1,0 +1,463 @@
+\doxysection{dg\+Cell\+Dof\+Scalar\+Math.\+H}
+\hypertarget{math_2dgCellDofMath_2dgCellDofScalarMath_8H_source}{}\label{math_2dgCellDofMath_2dgCellDofScalarMath_8H_source}\index{/home/nam-\/ha-\/tran/OpenFOAM/DGFoam/src/math/dgCellDofMath/dgCellDofScalarMath.H@{/home/nam-\/ha-\/tran/OpenFOAM/DGFoam/src/math/dgCellDofMath/dgCellDofScalarMath.H}}
+\mbox{\hyperlink{math_2dgCellDofMath_2dgCellDofScalarMath_8H}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*\(\backslash\)}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ \ =========\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ \ \(\backslash\)\(\backslash\)\ \ \ \ \ \ /\ \ F\ ield\ \ \ \ \ \ \ \ \ |\ OpenFOAM:\ The\ Open\ Source\ CFD\ Toolbox}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ \ \ \(\backslash\)\(\backslash\)\ \ \ \ /\ \ \ O\ peration\ \ \ \ \ |}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ \ \ \ \(\backslash\)\(\backslash\)\ \ /\ \ \ \ A\ nd\ \ \ \ \ \ \ \ \ \ \ |\ www.openfoam.com}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ \ \ \ \ \(\backslash\)\(\backslash\)/\ \ \ \ \ M\ anipulation\ \ |}}
+\DoxyCodeLine{00007\ \textcolor{comment}{-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ \ \ \ Copyright\ (C)\ 2011-\/2016\ OpenFOAM\ Foundation}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ \ \ \ Copyright\ (C)\ 2017-\/2023\ OpenCFD\ Ltd.}}
+\DoxyCodeLine{00010\ \textcolor{comment}{-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00011\ \textcolor{comment}{License}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ \ \ \ This\ file\ is\ part\ of\ OpenFOAM.}}
+\DoxyCodeLine{00013\ \textcolor{comment}{}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ \ \ \ OpenFOAM\ is\ free\ software:\ you\ can\ redistribute\ it\ and/or\ modify\ it}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ \ \ \ under\ the\ terms\ of\ the\ GNU\ General\ Public\ License\ as\ published\ by}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ \ \ \ the\ Free\ Software\ Foundation,\ either\ version\ 3\ of\ the\ License,\ or}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ \ \ \ (at\ your\ option)\ any\ later\ version.}}
+\DoxyCodeLine{00018\ \textcolor{comment}{}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ \ \ \ OpenFOAM\ is\ distributed\ in\ the\ hope\ that\ it\ will\ be\ useful,\ but\ WITHOUT}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ \ \ \ ANY\ WARRANTY;\ without\ even\ the\ implied\ warranty\ of\ MERCHANTABILITY\ or}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ \ \ \ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE.\ \ See\ the\ GNU\ General\ Public\ License}}
+\DoxyCodeLine{00022\ \textcolor{comment}{\ \ \ \ for\ more\ details.}}
+\DoxyCodeLine{00023\ \textcolor{comment}{}}
+\DoxyCodeLine{00024\ \textcolor{comment}{\ \ \ \ You\ should\ have\ received\ a\ copy\ of\ the\ GNU\ General\ Public\ License}}
+\DoxyCodeLine{00025\ \textcolor{comment}{\ \ \ \ along\ with\ OpenFOAM.\ \ If\ not,\ see\ <http://www.gnu.org/licenses/>.}}
+\DoxyCodeLine{00026\ \textcolor{comment}{}}
+\DoxyCodeLine{00027\ \textcolor{comment}{Class}}
+\DoxyCodeLine{00028\ \textcolor{comment}{\ \ \ \ Foam::dgGaussFieldMath}}
+\DoxyCodeLine{00029\ \textcolor{comment}{}}
+\DoxyCodeLine{00030\ \textcolor{comment}{Description}}
+\DoxyCodeLine{00031\ \textcolor{comment}{\ \ \ \ Mathematical\ operations\ between\ cellDof\ objects}}
+\DoxyCodeLine{00032\ \textcolor{comment}{}}
+\DoxyCodeLine{00033\ \textcolor{comment}{SourceFiles}}
+\DoxyCodeLine{00034\ \textcolor{comment}{\ \ \ \ dgCellDofScalarMath.C}}
+\DoxyCodeLine{00035\ \textcolor{comment}{}}
+\DoxyCodeLine{00036\ \textcolor{comment}{\(\backslash\)*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \textcolor{preprocessor}{\#ifndef\ Foam\_dgCellDofScalarMath\_H}}
+\DoxyCodeLine{00039\ \textcolor{preprocessor}{\#define\ Foam\_dgCellDofScalarMath\_H}}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \textcolor{preprocessor}{\#include\ "{}cellDof.H"{}}}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespaceFoam}{Foam}}}
+\DoxyCodeLine{00044\ \{}
+\DoxyCodeLine{00045\ \textcolor{comment}{//\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ Scalar\ -\/\ Scalar\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ //}}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ \textcolor{keyword}{inline}\ cellDof<scalar>\ \textcolor{keyword}{operator}+}
+\DoxyCodeLine{00048\ (}
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keyword}{const}\ cellDof<scalar>\&\ A,}
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keyword}{const}\ cellDof<scalar>\&\ B}
+\DoxyCodeLine{00051\ )}
+\DoxyCodeLine{00052\ \{}
+\DoxyCodeLine{00053\ \ \ \ \ cellDof<scalar>\ result(A);}
+\DoxyCodeLine{00054\ \ \ \ \ }
+\DoxyCodeLine{00055\ \ \ \ \ \textcolor{keywordflow}{if}\ (A.nDof()\ !=\ B.nDof())}
+\DoxyCodeLine{00056\ \ \ \ \ \{}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ FatalErrorInFunction}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{}Incompatible\ nDof:\ "{}}\ <<\ A.nDof()\ <<\ \textcolor{stringliteral}{"{}\ and\ "{}}\ <<\ B.nDof()}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \ \ \ \ <<\ exit(FatalError);}
+\DoxyCodeLine{00060\ \ \ \ \ \}}
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <\ A.nDof();\ ++i)}
+\DoxyCodeLine{00063\ \ \ \ \ \{}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ result[i]\ =\ A[i]\ +\ B[i];}
+\DoxyCodeLine{00065\ \ \ \ \ \}}
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00067\ \}}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00069\ \textcolor{keyword}{inline}\ cellDof<scalar>\ \textcolor{keyword}{operator}-\/}
+\DoxyCodeLine{00070\ (}
+\DoxyCodeLine{00071\ \ \ \ \ \textcolor{keyword}{const}\ cellDof<scalar>\&\ A,}
+\DoxyCodeLine{00072\ \ \ \ \ \textcolor{keyword}{const}\ cellDof<scalar>\&\ B}
+\DoxyCodeLine{00073\ )}
+\DoxyCodeLine{00074\ \{}
+\DoxyCodeLine{00075\ \ \ \ \ cellDof<scalar>\ result(A);}
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00077\ \ \ \ \ \textcolor{keywordflow}{if}\ (A.nDof()\ !=\ B.nDof())}
+\DoxyCodeLine{00078\ \ \ \ \ \{}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ FatalErrorInFunction}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{}Incompatible\ nDof:\ "{}}\ <<\ A.nDof()\ <<\ \textcolor{stringliteral}{"{}\ and\ "{}}\ <<\ B.nDof()}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \ \ \ \ <<\ exit(FatalError);}
+\DoxyCodeLine{00082\ \ \ \ \ \}}
+\DoxyCodeLine{00083\ \ \ \ \ }
+\DoxyCodeLine{00084\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <\ A.nDof();\ ++i)}
+\DoxyCodeLine{00085\ \ \ \ \ \{}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ result[i]\ =\ A[i]\ -\/\ B[i];}
+\DoxyCodeLine{00087\ \ \ \ \ \}}
+\DoxyCodeLine{00088\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00089\ \}}
+\DoxyCodeLine{00090\ }
+\DoxyCodeLine{00091\ \textcolor{keyword}{inline}\ cellDof<scalar>\ \textcolor{keyword}{operator}*}
+\DoxyCodeLine{00092\ (}
+\DoxyCodeLine{00093\ \ \ \ \ \textcolor{keyword}{const}\ cellDof<scalar>\&\ A,}
+\DoxyCodeLine{00094\ \ \ \ \ \textcolor{keyword}{const}\ cellDof<scalar>\&\ B}
+\DoxyCodeLine{00095\ )}
+\DoxyCodeLine{00096\ \{}
+\DoxyCodeLine{00097\ \ \ \ \ cellDof<scalar>\ result(A);}
+\DoxyCodeLine{00098\ }
+\DoxyCodeLine{00099\ \ \ \ \ \textcolor{keywordflow}{if}\ (A.nDof()\ !=\ B.nDof())}
+\DoxyCodeLine{00100\ \ \ \ \ \{}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ FatalErrorInFunction}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{}Incompatible\ nDof:\ "{}}\ <<\ A.nDof()\ <<\ \textcolor{stringliteral}{"{}\ and\ "{}}\ <<\ B.nDof()}
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \ \ \ \ <<\ exit(FatalError);}
+\DoxyCodeLine{00104\ \ \ \ \ \}}
+\DoxyCodeLine{00105\ \ \ \ \ }
+\DoxyCodeLine{00106\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <\ A.nDof();\ ++i)}
+\DoxyCodeLine{00107\ \ \ \ \ \{}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ result[i]\ =\ A[i]\ *\ B[i];}
+\DoxyCodeLine{00109\ \ \ \ \ \}}
+\DoxyCodeLine{00110\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00111\ \}}
+\DoxyCodeLine{00112\ }
+\DoxyCodeLine{00113\ \textcolor{keyword}{inline}\ cellDof<scalar>\ \textcolor{keyword}{operator}/}
+\DoxyCodeLine{00114\ (}
+\DoxyCodeLine{00115\ \ \ \ \ \textcolor{keyword}{const}\ cellDof<scalar>\&\ A,}
+\DoxyCodeLine{00116\ \ \ \ \ \textcolor{keyword}{const}\ cellDof<scalar>\&\ B}
+\DoxyCodeLine{00117\ )}
+\DoxyCodeLine{00118\ \{}
+\DoxyCodeLine{00119\ \ \ \ \ cellDof<scalar>\ result(A);}
+\DoxyCodeLine{00120\ }
+\DoxyCodeLine{00121\ \ \ \ \ \textcolor{keywordflow}{if}\ (A.nDof()\ !=\ B.nDof())}
+\DoxyCodeLine{00122\ \ \ \ \ \{}
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ FatalErrorInFunction}
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{}Incompatible\ nDof:\ "{}}\ <<\ A.nDof()\ <<\ \textcolor{stringliteral}{"{}\ and\ "{}}\ <<\ B.nDof()}
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ \ \ \ \ <<\ exit(FatalError);}
+\DoxyCodeLine{00126\ \ \ \ \ \}}
+\DoxyCodeLine{00127\ \ \ \ \ }
+\DoxyCodeLine{00128\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <\ A.nDof();\ ++i)}
+\DoxyCodeLine{00129\ \ \ \ \ \{}
+\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ result[i]\ =\ A[i]\ /\ B[i];}
+\DoxyCodeLine{00131\ \ \ \ \ \}}
+\DoxyCodeLine{00132\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00133\ \}}
+\DoxyCodeLine{00134\ }
+\DoxyCodeLine{00135\ \textcolor{comment}{//\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ Scalar\ -\/\ Vector\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ //}}
+\DoxyCodeLine{00136\ }
+\DoxyCodeLine{00137\ \textcolor{keyword}{inline}\ cellDof<vector>\ \textcolor{keyword}{operator}*}
+\DoxyCodeLine{00138\ (}
+\DoxyCodeLine{00139\ \ \ \ \ \textcolor{keyword}{const}\ cellDof<scalar>\&\ A,}
+\DoxyCodeLine{00140\ \ \ \ \ \textcolor{keyword}{const}\ cellDof<vector>\&\ B}
+\DoxyCodeLine{00141\ )}
+\DoxyCodeLine{00142\ \{}
+\DoxyCodeLine{00143\ \ \ \ \ cellDof<vector>\ result(B);}
+\DoxyCodeLine{00144\ }
+\DoxyCodeLine{00145\ \ \ \ \ \textcolor{keywordflow}{if}\ (A.nDof()\ !=\ B.nDof())}
+\DoxyCodeLine{00146\ \ \ \ \ \{}
+\DoxyCodeLine{00147\ \ \ \ \ \ \ \ \ FatalErrorInFunction}
+\DoxyCodeLine{00148\ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{}Incompatible\ nDof:\ "{}}\ <<\ A.nDof()\ <<\ \textcolor{stringliteral}{"{}\ and\ "{}}\ <<\ B.nDof()}
+\DoxyCodeLine{00149\ \ \ \ \ \ \ \ \ \ \ \ \ <<\ exit(FatalError);}
+\DoxyCodeLine{00150\ \ \ \ \ \}}
+\DoxyCodeLine{00151\ \ \ \ \ }
+\DoxyCodeLine{00152\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <\ A.nDof();\ ++i)}
+\DoxyCodeLine{00153\ \ \ \ \ \{}
+\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ result[i]\ =\ A[i]\ *\ B[i];}
+\DoxyCodeLine{00155\ \ \ \ \ \}}
+\DoxyCodeLine{00156\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00157\ \}}
+\DoxyCodeLine{00158\ }
+\DoxyCodeLine{00159\ \textcolor{keyword}{inline}\ cellDof<vector>\ \textcolor{keyword}{operator}*}
+\DoxyCodeLine{00160\ (}
+\DoxyCodeLine{00161\ \ \ \ \ \textcolor{keyword}{const}\ cellDof<vector>\&\ A,}
+\DoxyCodeLine{00162\ \ \ \ \ \textcolor{keyword}{const}\ cellDof<scalar>\&\ B}
+\DoxyCodeLine{00163\ )}
+\DoxyCodeLine{00164\ \{}
+\DoxyCodeLine{00165\ \ \ \ \ cellDof<vector>\ result(A);}
+\DoxyCodeLine{00166\ }
+\DoxyCodeLine{00167\ \ \ \ \ \textcolor{keywordflow}{if}\ (A.nDof()\ !=\ B.nDof())}
+\DoxyCodeLine{00168\ \ \ \ \ \{}
+\DoxyCodeLine{00169\ \ \ \ \ \ \ \ \ FatalErrorInFunction}
+\DoxyCodeLine{00170\ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{}Incompatible\ nDof:\ "{}}\ <<\ A.nDof()\ <<\ \textcolor{stringliteral}{"{}\ and\ "{}}\ <<\ B.nDof()}
+\DoxyCodeLine{00171\ \ \ \ \ \ \ \ \ \ \ \ \ <<\ exit(FatalError);}
+\DoxyCodeLine{00172\ \ \ \ \ \}}
+\DoxyCodeLine{00173\ \ \ \ \ }
+\DoxyCodeLine{00174\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <\ A.nDof();\ ++i)}
+\DoxyCodeLine{00175\ \ \ \ \ \{}
+\DoxyCodeLine{00176\ \ \ \ \ \ \ \ \ result[i]\ =\ A[i]\ *\ B[i];}
+\DoxyCodeLine{00177\ \ \ \ \ \}}
+\DoxyCodeLine{00178\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00179\ \}}
+\DoxyCodeLine{00180\ }
+\DoxyCodeLine{00181\ \textcolor{keyword}{inline}\ cellDof<vector>\ \textcolor{keyword}{operator}/}
+\DoxyCodeLine{00182\ (}
+\DoxyCodeLine{00183\ \ \ \ \ \textcolor{keyword}{const}\ cellDof<vector>\&\ A,}
+\DoxyCodeLine{00184\ \ \ \ \ \textcolor{keyword}{const}\ cellDof<scalar>\&\ B}
+\DoxyCodeLine{00185\ )}
+\DoxyCodeLine{00186\ \{}
+\DoxyCodeLine{00187\ \ \ \ \ cellDof<vector>\ result(A);}
+\DoxyCodeLine{00188\ }
+\DoxyCodeLine{00189\ \ \ \ \ \textcolor{keywordflow}{if}\ (A.nDof()\ !=\ B.nDof())}
+\DoxyCodeLine{00190\ \ \ \ \ \{}
+\DoxyCodeLine{00191\ \ \ \ \ \ \ \ \ FatalErrorInFunction}
+\DoxyCodeLine{00192\ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{}Incompatible\ nDof:\ "{}}\ <<\ A.nDof()\ <<\ \textcolor{stringliteral}{"{}\ and\ "{}}\ <<\ B.nDof()}
+\DoxyCodeLine{00193\ \ \ \ \ \ \ \ \ \ \ \ \ <<\ exit(FatalError);}
+\DoxyCodeLine{00194\ \ \ \ \ \}}
+\DoxyCodeLine{00195\ \ \ \ \ }
+\DoxyCodeLine{00196\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <\ A.nDof();\ ++i)}
+\DoxyCodeLine{00197\ \ \ \ \ \{}
+\DoxyCodeLine{00198\ \ \ \ \ \ \ \ \ result[i]\ =\ A[i]\ /\ B[i];}
+\DoxyCodeLine{00199\ \ \ \ \ \}}
+\DoxyCodeLine{00200\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00201\ \}}
+\DoxyCodeLine{00202\ }
+\DoxyCodeLine{00203\ \textcolor{comment}{//\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ Scalar\ -\/\ tensor\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ //}}
+\DoxyCodeLine{00204\ }
+\DoxyCodeLine{00205\ \textcolor{keyword}{inline}\ cellDof<tensor>\ \textcolor{keyword}{operator}*}
+\DoxyCodeLine{00206\ (}
+\DoxyCodeLine{00207\ \ \ \ \ \textcolor{keyword}{const}\ cellDof<scalar>\&\ A,}
+\DoxyCodeLine{00208\ \ \ \ \ \textcolor{keyword}{const}\ cellDof<tensor>\&\ B}
+\DoxyCodeLine{00209\ )}
+\DoxyCodeLine{00210\ \{}
+\DoxyCodeLine{00211\ \ \ \ \ cellDof<tensor>\ result(B);}
+\DoxyCodeLine{00212\ }
+\DoxyCodeLine{00213\ \ \ \ \ \textcolor{keywordflow}{if}\ (A.nDof()\ !=\ B.nDof())}
+\DoxyCodeLine{00214\ \ \ \ \ \{}
+\DoxyCodeLine{00215\ \ \ \ \ \ \ \ \ FatalErrorInFunction}
+\DoxyCodeLine{00216\ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{}Incompatible\ nDof:\ "{}}\ <<\ A.nDof()\ <<\ \textcolor{stringliteral}{"{}\ and\ "{}}\ <<\ B.nDof()}
+\DoxyCodeLine{00217\ \ \ \ \ \ \ \ \ \ \ \ \ <<\ exit(FatalError);}
+\DoxyCodeLine{00218\ \ \ \ \ \}}
+\DoxyCodeLine{00219\ }
+\DoxyCodeLine{00220\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <\ B.nDof();\ ++i)}
+\DoxyCodeLine{00221\ \ \ \ \ \{}
+\DoxyCodeLine{00222\ \ \ \ \ \ \ \ \ result[i]\ =\ A[i]\ *\ B[i];}
+\DoxyCodeLine{00223\ \ \ \ \ \}}
+\DoxyCodeLine{00224\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00225\ \}}
+\DoxyCodeLine{00226\ }
+\DoxyCodeLine{00227\ \textcolor{keyword}{inline}\ cellDof<tensor>\ \textcolor{keyword}{operator}*}
+\DoxyCodeLine{00228\ (}
+\DoxyCodeLine{00229\ \ \ \ \ \textcolor{keyword}{const}\ cellDof<tensor>\&\ A,}
+\DoxyCodeLine{00230\ \ \ \ \ \textcolor{keyword}{const}\ cellDof<scalar>\&\ B}
+\DoxyCodeLine{00231\ )}
+\DoxyCodeLine{00232\ \{}
+\DoxyCodeLine{00233\ \ \ \ \ \textcolor{keywordflow}{return}\ B\ *\ A;}
+\DoxyCodeLine{00234\ \}}
+\DoxyCodeLine{00235\ }
+\DoxyCodeLine{00236\ \textcolor{keyword}{inline}\ cellDof<tensor>\ \textcolor{keyword}{operator}/}
+\DoxyCodeLine{00237\ (}
+\DoxyCodeLine{00238\ \ \ \ \ \textcolor{keyword}{const}\ cellDof<tensor>\&\ A,}
+\DoxyCodeLine{00239\ \ \ \ \ \textcolor{keyword}{const}\ cellDof<scalar>\&\ B}
+\DoxyCodeLine{00240\ )}
+\DoxyCodeLine{00241\ \{}
+\DoxyCodeLine{00242\ \ \ \ \ cellDof<tensor>\ result(A);}
+\DoxyCodeLine{00243\ }
+\DoxyCodeLine{00244\ \ \ \ \ \textcolor{keywordflow}{if}\ (A.nDof()\ !=\ B.nDof())}
+\DoxyCodeLine{00245\ \ \ \ \ \{}
+\DoxyCodeLine{00246\ \ \ \ \ \ \ \ \ FatalErrorInFunction}
+\DoxyCodeLine{00247\ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{}Incompatible\ nDof:\ "{}}\ <<\ A.nDof()\ <<\ \textcolor{stringliteral}{"{}\ and\ "{}}\ <<\ B.nDof()}
+\DoxyCodeLine{00248\ \ \ \ \ \ \ \ \ \ \ \ \ <<\ exit(FatalError);}
+\DoxyCodeLine{00249\ \ \ \ \ \}}
+\DoxyCodeLine{00250\ \ \ \ \ }
+\DoxyCodeLine{00251\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <\ A.nDof();\ ++i)}
+\DoxyCodeLine{00252\ \ \ \ \ \{}
+\DoxyCodeLine{00253\ \ \ \ \ \ \ \ \ result[i]\ =\ A[i]\ /\ B[i];}
+\DoxyCodeLine{00254\ \ \ \ \ \}}
+\DoxyCodeLine{00255\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00256\ \}}
+\DoxyCodeLine{00257\ }
+\DoxyCodeLine{00258\ \textcolor{comment}{//\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ Scalar\ -\/\ symmTensor\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ //}}
+\DoxyCodeLine{00259\ }
+\DoxyCodeLine{00260\ \textcolor{keyword}{inline}\ cellDof<symmTensor>\ \textcolor{keyword}{operator}*}
+\DoxyCodeLine{00261\ (}
+\DoxyCodeLine{00262\ \ \ \ \ \textcolor{keyword}{const}\ cellDof<scalar>\&\ A,}
+\DoxyCodeLine{00263\ \ \ \ \ \textcolor{keyword}{const}\ cellDof<symmTensor>\&\ B}
+\DoxyCodeLine{00264\ )}
+\DoxyCodeLine{00265\ \{}
+\DoxyCodeLine{00266\ \ \ \ \ cellDof<symmTensor>\ result(B);}
+\DoxyCodeLine{00267\ \ \ \ \ }
+\DoxyCodeLine{00268\ \ \ \ \ \ \textcolor{keywordflow}{if}\ (A.nDof()\ !=\ B.nDof())}
+\DoxyCodeLine{00269\ \ \ \ \ \{}
+\DoxyCodeLine{00270\ \ \ \ \ \ \ \ \ FatalErrorInFunction}
+\DoxyCodeLine{00271\ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{}Incompatible\ nDof:\ "{}}\ <<\ A.nDof()\ <<\ \textcolor{stringliteral}{"{}\ and\ "{}}\ <<\ B.nDof()}
+\DoxyCodeLine{00272\ \ \ \ \ \ \ \ \ \ \ \ \ <<\ exit(FatalError);}
+\DoxyCodeLine{00273\ \ \ \ \ \}}
+\DoxyCodeLine{00274\ }
+\DoxyCodeLine{00275\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <\ A.nDof();\ ++i)}
+\DoxyCodeLine{00276\ \ \ \ \ \{}
+\DoxyCodeLine{00277\ \ \ \ \ \ \ \ \ result[i]\ =\ A[i]\ *\ B[i];}
+\DoxyCodeLine{00278\ \ \ \ \ \}}
+\DoxyCodeLine{00279\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00280\ \}}
+\DoxyCodeLine{00281\ }
+\DoxyCodeLine{00282\ \textcolor{keyword}{inline}\ cellDof<symmTensor>\ \textcolor{keyword}{operator}*}
+\DoxyCodeLine{00283\ (}
+\DoxyCodeLine{00284\ \ \ \ \ \textcolor{keyword}{const}\ cellDof<symmTensor>\&\ A,}
+\DoxyCodeLine{00285\ \ \ \ \ \textcolor{keyword}{const}\ cellDof<scalar>\&\ B}
+\DoxyCodeLine{00286\ )}
+\DoxyCodeLine{00287\ \{}
+\DoxyCodeLine{00288\ \ \ \ \ \textcolor{keywordflow}{return}\ B\ *\ A;}
+\DoxyCodeLine{00289\ \}}
+\DoxyCodeLine{00290\ }
+\DoxyCodeLine{00291\ \textcolor{keyword}{inline}\ cellDof<symmTensor>\ \textcolor{keyword}{operator}/}
+\DoxyCodeLine{00292\ (}
+\DoxyCodeLine{00293\ \ \ \ \ \textcolor{keyword}{const}\ cellDof<symmTensor>\&\ A,}
+\DoxyCodeLine{00294\ \ \ \ \ \textcolor{keyword}{const}\ cellDof<scalar>\&\ B}
+\DoxyCodeLine{00295\ )}
+\DoxyCodeLine{00296\ \{}
+\DoxyCodeLine{00297\ \ \ \ \ cellDof<symmTensor>\ result(A);}
+\DoxyCodeLine{00298\ \ \ \ \ }
+\DoxyCodeLine{00299\ \ \ \ \ \textcolor{keywordflow}{if}\ (A.nDof()\ !=\ B.nDof())}
+\DoxyCodeLine{00300\ \ \ \ \ \{}
+\DoxyCodeLine{00301\ \ \ \ \ \ \ \ \ FatalErrorInFunction}
+\DoxyCodeLine{00302\ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{}Incompatible\ nDof:\ "{}}\ <<\ A.nDof()\ <<\ \textcolor{stringliteral}{"{}\ and\ "{}}\ <<\ B.nDof()}
+\DoxyCodeLine{00303\ \ \ \ \ \ \ \ \ \ \ \ \ <<\ exit(FatalError);}
+\DoxyCodeLine{00304\ \ \ \ \ \}}
+\DoxyCodeLine{00305\ \ \ \ \ }
+\DoxyCodeLine{00306\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <\ A.nDof();\ ++i)}
+\DoxyCodeLine{00307\ \ \ \ \ \{}
+\DoxyCodeLine{00308\ \ \ \ \ \ \ \ \ result[i]\ =\ A[i]\ /\ B[i];}
+\DoxyCodeLine{00309\ \ \ \ \ \}}
+\DoxyCodeLine{00310\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00311\ \}}
+\DoxyCodeLine{00312\ }
+\DoxyCodeLine{00313\ \textcolor{comment}{//\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ Scalar\ -\/\ sphericalTensor\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ //}}
+\DoxyCodeLine{00314\ }
+\DoxyCodeLine{00315\ \textcolor{keyword}{inline}\ cellDof<sphericalTensor>\ \textcolor{keyword}{operator}*}
+\DoxyCodeLine{00316\ (}
+\DoxyCodeLine{00317\ \ \ \ \ \textcolor{keyword}{const}\ cellDof<scalar>\&\ A,}
+\DoxyCodeLine{00318\ \ \ \ \ \textcolor{keyword}{const}\ cellDof<sphericalTensor>\&\ B}
+\DoxyCodeLine{00319\ )}
+\DoxyCodeLine{00320\ \{}
+\DoxyCodeLine{00321\ \ \ \ \ cellDof<sphericalTensor>\ result(B);}
+\DoxyCodeLine{00322\ \ \ \ \ }
+\DoxyCodeLine{00323\ \ \ \ \ \textcolor{keywordflow}{if}\ (A.nDof()\ !=\ B.nDof())}
+\DoxyCodeLine{00324\ \ \ \ \ \{}
+\DoxyCodeLine{00325\ \ \ \ \ \ \ \ \ FatalErrorInFunction}
+\DoxyCodeLine{00326\ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{}Incompatible\ nDof:\ "{}}\ <<\ A.nDof()\ <<\ \textcolor{stringliteral}{"{}\ and\ "{}}\ <<\ B.nDof()}
+\DoxyCodeLine{00327\ \ \ \ \ \ \ \ \ \ \ \ \ <<\ exit(FatalError);}
+\DoxyCodeLine{00328\ \ \ \ \ \}}
+\DoxyCodeLine{00329\ \ \ \ \ }
+\DoxyCodeLine{00330\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <\ A.nDof();\ ++i)}
+\DoxyCodeLine{00331\ \ \ \ \ \{}
+\DoxyCodeLine{00332\ \ \ \ \ \ \ \ \ result[i]\ =\ A[i]\ *\ B[i];}
+\DoxyCodeLine{00333\ \ \ \ \ \}}
+\DoxyCodeLine{00334\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00335\ \}}
+\DoxyCodeLine{00336\ }
+\DoxyCodeLine{00337\ \textcolor{keyword}{inline}\ cellDof<sphericalTensor>\ \textcolor{keyword}{operator}*}
+\DoxyCodeLine{00338\ (}
+\DoxyCodeLine{00339\ \ \ \ \ \textcolor{keyword}{const}\ cellDof<sphericalTensor>\&\ A,}
+\DoxyCodeLine{00340\ \ \ \ \ \textcolor{keyword}{const}\ cellDof<scalar>\&\ B}
+\DoxyCodeLine{00341\ )}
+\DoxyCodeLine{00342\ \{}
+\DoxyCodeLine{00343\ \ \ \ \ \textcolor{keywordflow}{return}\ B\ *\ A;}
+\DoxyCodeLine{00344\ \}}
+\DoxyCodeLine{00345\ }
+\DoxyCodeLine{00346\ \textcolor{keyword}{inline}\ cellDof<sphericalTensor>\ \textcolor{keyword}{operator}/}
+\DoxyCodeLine{00347\ (}
+\DoxyCodeLine{00348\ \ \ \ \ \textcolor{keyword}{const}\ cellDof<sphericalTensor>\&\ A,}
+\DoxyCodeLine{00349\ \ \ \ \ \textcolor{keyword}{const}\ cellDof<scalar>\&\ B}
+\DoxyCodeLine{00350\ )}
+\DoxyCodeLine{00351\ \{}
+\DoxyCodeLine{00352\ \ \ \ \ cellDof<sphericalTensor>\ result(A);}
+\DoxyCodeLine{00353\ }
+\DoxyCodeLine{00354\ \ \ \ \ \textcolor{keywordflow}{if}\ (A.nDof()\ !=\ B.nDof())}
+\DoxyCodeLine{00355\ \ \ \ \ \{}
+\DoxyCodeLine{00356\ \ \ \ \ \ \ \ \ FatalErrorInFunction}
+\DoxyCodeLine{00357\ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{}Incompatible\ nDof:\ "{}}\ <<\ A.nDof()\ <<\ \textcolor{stringliteral}{"{}\ and\ "{}}\ <<\ B.nDof()}
+\DoxyCodeLine{00358\ \ \ \ \ \ \ \ \ \ \ \ \ <<\ exit(FatalError);}
+\DoxyCodeLine{00359\ \ \ \ \ \}}
+\DoxyCodeLine{00360\ }
+\DoxyCodeLine{00361\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <\ A.nDof();\ ++i)}
+\DoxyCodeLine{00362\ \ \ \ \ \{}
+\DoxyCodeLine{00363\ \ \ \ \ \ \ \ \ result[i]\ =\ A[i]\ /\ B[i];}
+\DoxyCodeLine{00364\ \ \ \ \ \}}
+\DoxyCodeLine{00365\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00366\ \}}
+\DoxyCodeLine{00367\ }
+\DoxyCodeLine{00368\ \textcolor{comment}{//\ Comparison\ operators\ between\ cellDof<scalar>}}
+\DoxyCodeLine{00369\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \textcolor{keyword}{operator}<}
+\DoxyCodeLine{00370\ (}
+\DoxyCodeLine{00371\ \ \ \ \ \textcolor{keyword}{const}\ cellDof<scalar>\&\ A,}
+\DoxyCodeLine{00372\ \ \ \ \ \textcolor{keyword}{const}\ cellDof<scalar>\&\ B}
+\DoxyCodeLine{00373\ )}
+\DoxyCodeLine{00374\ \{}
+\DoxyCodeLine{00375\ \ \ \ \ \textcolor{keywordflow}{if}\ (A.nDof()\ !=\ B.nDof())\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00376\ }
+\DoxyCodeLine{00377\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <\ A.nDof();\ ++i)}
+\DoxyCodeLine{00378\ \ \ \ \ \{}
+\DoxyCodeLine{00379\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!(A[i]\ <\ B[i]))\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00380\ \ \ \ \ \}}
+\DoxyCodeLine{00381\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00382\ \}}
+\DoxyCodeLine{00383\ }
+\DoxyCodeLine{00384\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \textcolor{keyword}{operator}<=}
+\DoxyCodeLine{00385\ (}
+\DoxyCodeLine{00386\ \ \ \ \ \textcolor{keyword}{const}\ cellDof<scalar>\&\ A,}
+\DoxyCodeLine{00387\ \ \ \ \ \textcolor{keyword}{const}\ cellDof<scalar>\&\ B}
+\DoxyCodeLine{00388\ )}
+\DoxyCodeLine{00389\ \{}
+\DoxyCodeLine{00390\ \ \ \ \ \textcolor{keywordflow}{if}\ (A.nDof()\ !=\ B.nDof())\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00391\ }
+\DoxyCodeLine{00392\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <\ A.nDof();\ ++i)}
+\DoxyCodeLine{00393\ \ \ \ \ \{}
+\DoxyCodeLine{00394\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!(A[i]\ <=\ B[i]))\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00395\ \ \ \ \ \}}
+\DoxyCodeLine{00396\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00397\ \}}
+\DoxyCodeLine{00398\ }
+\DoxyCodeLine{00399\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \textcolor{keyword}{operator}>}
+\DoxyCodeLine{00400\ (}
+\DoxyCodeLine{00401\ \ \ \ \ \textcolor{keyword}{const}\ cellDof<scalar>\&\ A,}
+\DoxyCodeLine{00402\ \ \ \ \ \textcolor{keyword}{const}\ cellDof<scalar>\&\ B}
+\DoxyCodeLine{00403\ )}
+\DoxyCodeLine{00404\ \{}
+\DoxyCodeLine{00405\ \ \ \ \ \textcolor{keywordflow}{if}\ (A.nDof()\ !=\ B.nDof())\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00406\ }
+\DoxyCodeLine{00407\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <\ A.nDof();\ ++i)}
+\DoxyCodeLine{00408\ \ \ \ \ \{}
+\DoxyCodeLine{00409\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!(A[i]\ >\ B[i]))\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00410\ \ \ \ \ \}}
+\DoxyCodeLine{00411\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00412\ \}}
+\DoxyCodeLine{00413\ }
+\DoxyCodeLine{00414\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \textcolor{keyword}{operator}>=}
+\DoxyCodeLine{00415\ (}
+\DoxyCodeLine{00416\ \ \ \ \ \textcolor{keyword}{const}\ cellDof<scalar>\&\ A,}
+\DoxyCodeLine{00417\ \ \ \ \ \textcolor{keyword}{const}\ cellDof<scalar>\&\ B}
+\DoxyCodeLine{00418\ )}
+\DoxyCodeLine{00419\ \{}
+\DoxyCodeLine{00420\ \ \ \ \ \textcolor{keywordflow}{if}\ (A.nDof()\ !=\ B.nDof())\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00421\ }
+\DoxyCodeLine{00422\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <\ A.nDof();\ ++i)}
+\DoxyCodeLine{00423\ \ \ \ \ \{}
+\DoxyCodeLine{00424\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!(A[i]\ >=\ B[i]))\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00425\ \ \ \ \ \}}
+\DoxyCodeLine{00426\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00427\ \}}
+\DoxyCodeLine{00428\ }
+\DoxyCodeLine{00429\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \textcolor{keyword}{operator}==}
+\DoxyCodeLine{00430\ (}
+\DoxyCodeLine{00431\ \ \ \ \ \textcolor{keyword}{const}\ cellDof<scalar>\&\ A,}
+\DoxyCodeLine{00432\ \ \ \ \ \textcolor{keyword}{const}\ cellDof<scalar>\&\ B}
+\DoxyCodeLine{00433\ )}
+\DoxyCodeLine{00434\ \{}
+\DoxyCodeLine{00435\ \ \ \ \ \textcolor{keywordflow}{if}\ (A.nDof()\ !=\ B.nDof())\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00436\ }
+\DoxyCodeLine{00437\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <\ A.nDof();\ ++i)}
+\DoxyCodeLine{00438\ \ \ \ \ \{}
+\DoxyCodeLine{00439\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!(A[i]\ ==\ B[i]))\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00440\ \ \ \ \ \}}
+\DoxyCodeLine{00441\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00442\ \}}
+\DoxyCodeLine{00443\ }
+\DoxyCodeLine{00444\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \textcolor{keyword}{operator}!=}
+\DoxyCodeLine{00445\ (}
+\DoxyCodeLine{00446\ \ \ \ \ \textcolor{keyword}{const}\ cellDof<scalar>\&\ A,}
+\DoxyCodeLine{00447\ \ \ \ \ \textcolor{keyword}{const}\ cellDof<scalar>\&\ B}
+\DoxyCodeLine{00448\ )}
+\DoxyCodeLine{00449\ \{}
+\DoxyCodeLine{00450\ \ \ \ \ \textcolor{keywordflow}{return}\ !(A\ ==\ B);}
+\DoxyCodeLine{00451\ \}}
+\DoxyCodeLine{00452\ }
+\DoxyCodeLine{00453\ \}\ \textcolor{comment}{//\ End\ namespace\ Foam}}
+\DoxyCodeLine{00454\ }
+\DoxyCodeLine{00455\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00456\ }
+\DoxyCodeLine{00457\ \textcolor{comment}{//\ *************************************************************************\ //}}
+
+\end{DoxyCode}

@@ -1,7 +1,6 @@
 \doxysection{/home/nam-\/ha-\/tran/\+Open\+FOAM/\+DGFoam/src/mesh/ln\+Include/dg\+Cell\+Type.H File Reference}
 \hypertarget{lnInclude_2dgCellType_8H}{}\label{lnInclude_2dgCellType_8H}\index{/home/nam-\/ha-\/tran/OpenFOAM/DGFoam/src/mesh/lnInclude/dgCellType.H@{/home/nam-\/ha-\/tran/OpenFOAM/DGFoam/src/mesh/lnInclude/dgCellType.H}}
-{\ttfamily \#include "{}error.\+H"{}}\newline
-{\ttfamily \#include "{}Ostream.\+H"{}}\newline
+{\ttfamily \#include "{}IOstreams.\+H"{}}\newline
 Include dependency graph for dg\+Cell\+Type.\+H\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
@@ -16,168 +15,96 @@ This graph shows which files directly or indirectly include this file\+:\nopageb
 \includegraphics[width=350pt]{lnInclude_2dgCellType_8H__dep__incl}
 \end{center}
 \end{figure}
-\doxysubsubsection*{Namespaces}
-\begin{DoxyCompactItemize}
-\item 
-namespace \mbox{\hyperlink{namespaceFoam}{Foam}}
-\end{DoxyCompactItemize}
 \doxysubsubsection*{Enumerations}
 \begin{DoxyCompactItemize}
 \item 
-enum class \mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682}{Foam\+::dg\+Face\+Position}} \{ \newline
-\mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682a3657d9ae4bdf500bb16fb581fdf43c64}{Foam\+::\+ACEG}} = 0
-, \mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682a2c1327bd400a4bde2b37ccb26b635800}{Foam\+::\+BDFH}}
-, \mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682a41d9ff5c880ee22566a8480c85ffa831}{Foam\+::\+ABEF}}
-, \mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682abfff11d5fc9f1c1e357e7854d6393723}{Foam\+::\+CDGH}}
+enum class \mbox{\hyperlink{lnInclude_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5}{dg\+Cell\+Type}} \{ \newline
+\mbox{\hyperlink{lnInclude_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5a268c4b76ec894ec6ad3c119ad7cc2170}{TET}}
+, \mbox{\hyperlink{lnInclude_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5a58c9566f3c750ce7147b045fdd14202b}{HEX}}
+, \mbox{\hyperlink{lnInclude_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5a25608df56c02f9fc6854a3de6a51822a}{PRISM}}
+, \mbox{\hyperlink{lnInclude_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5acd996d3184761601a0e44e587a012d4f}{PYRAMID}}
 , \newline
-\mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682acb08ca4a7bb5f9683c19133a84872ca7}{Foam\+::\+ABCD}}
-, \mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682a17dd6919f5930ea8bd58fecbafd7eb7b}{Foam\+::\+EFGH}}
-, \mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682a0e96751c7e5f8a752f54c4b6f0e79389}{Foam\+::\+NUM\+\_\+\+POSITIONS}}
-, \mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682ab50339a10e1de285ac99d4c3990b8693}{Foam\+::\+NONE}}
+\mbox{\hyperlink{lnInclude_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5ab50339a10e1de285ac99d4c3990b8693}{NONE}}
+, \mbox{\hyperlink{lnInclude_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5accc0377a8afbf50e7094f5c23a8af223}{INVALID}}
+, \mbox{\hyperlink{lnInclude_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5a268c4b76ec894ec6ad3c119ad7cc2170}{TET}}
+, \mbox{\hyperlink{lnInclude_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5a58c9566f3c750ce7147b045fdd14202b}{HEX}}
 , \newline
-\mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682a3657d9ae4bdf500bb16fb581fdf43c64}{Foam\+::\+ACEG}} = 0
-, \mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682a2c1327bd400a4bde2b37ccb26b635800}{Foam\+::\+BDFH}}
-, \mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682a41d9ff5c880ee22566a8480c85ffa831}{Foam\+::\+ABEF}}
-, \mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682abfff11d5fc9f1c1e357e7854d6393723}{Foam\+::\+CDGH}}
-, \newline
-\mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682acb08ca4a7bb5f9683c19133a84872ca7}{Foam\+::\+ABCD}}
-, \mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682a17dd6919f5930ea8bd58fecbafd7eb7b}{Foam\+::\+EFGH}}
-, \mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682a0e96751c7e5f8a752f54c4b6f0e79389}{Foam\+::\+NUM\+\_\+\+POSITIONS}}
-, \mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682ab50339a10e1de285ac99d4c3990b8693}{Foam\+::\+NONE}}
-, \newline
-\mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682a3657d9ae4bdf500bb16fb581fdf43c64}{Foam\+::\+ACEG}} = 0
-, \mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682a2c1327bd400a4bde2b37ccb26b635800}{Foam\+::\+BDFH}}
-, \mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682a41d9ff5c880ee22566a8480c85ffa831}{Foam\+::\+ABEF}}
-, \mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682abfff11d5fc9f1c1e357e7854d6393723}{Foam\+::\+CDGH}}
-, \newline
-\mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682acb08ca4a7bb5f9683c19133a84872ca7}{Foam\+::\+ABCD}}
-, \mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682a17dd6919f5930ea8bd58fecbafd7eb7b}{Foam\+::\+EFGH}}
-, \mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682a0e96751c7e5f8a752f54c4b6f0e79389}{Foam\+::\+NUM\+\_\+\+POSITIONS}}
-, \mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682ab50339a10e1de285ac99d4c3990b8693}{Foam\+::\+NONE}}
-, \newline
-\mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682a3657d9ae4bdf500bb16fb581fdf43c64}{Foam\+::\+ACEG}} = 0
-, \mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682a2c1327bd400a4bde2b37ccb26b635800}{Foam\+::\+BDFH}}
-, \mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682a41d9ff5c880ee22566a8480c85ffa831}{Foam\+::\+ABEF}}
-, \mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682abfff11d5fc9f1c1e357e7854d6393723}{Foam\+::\+CDGH}}
-, \newline
-\mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682acb08ca4a7bb5f9683c19133a84872ca7}{Foam\+::\+ABCD}}
-, \mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682a17dd6919f5930ea8bd58fecbafd7eb7b}{Foam\+::\+EFGH}}
-, \mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682a0e96751c7e5f8a752f54c4b6f0e79389}{Foam\+::\+NUM\+\_\+\+POSITIONS}}
-, \mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682ab50339a10e1de285ac99d4c3990b8693}{Foam\+::\+NONE}}
- \}
-\item 
-enum class \mbox{\hyperlink{namespaceFoam_a33894f55b12411460eaf759f2cc29cad}{Foam\+::dg\+Face\+Position\+On\+Tet}} \{ \newline
-\mbox{\hyperlink{namespaceFoam_a33894f55b12411460eaf759f2cc29cada42451d370b188bc4ed2a312be0bd3c49}{Foam\+::\+BCE}} = 0
-, \mbox{\hyperlink{namespaceFoam_a33894f55b12411460eaf759f2cc29cada757f4749aebb1891ef5ac2a9b5439cea}{Foam\+::\+ACE}}
-, \mbox{\hyperlink{namespaceFoam_a33894f55b12411460eaf759f2cc29cada903313b86cfb89682d191d1a6469e398}{Foam\+::\+ABE}}
-, \mbox{\hyperlink{namespaceFoam_a33894f55b12411460eaf759f2cc29cada902fbdd2b1df0c4f70b4a5d23525e932}{Foam\+::\+ABC}}
-, \newline
-\mbox{\hyperlink{namespaceFoam_a33894f55b12411460eaf759f2cc29cadaa2178255c95c8fd7baf47bbbd34e18bd}{Foam\+::\+NUM\+\_\+\+FACES}}
-, \mbox{\hyperlink{namespaceFoam_a33894f55b12411460eaf759f2cc29cadab50339a10e1de285ac99d4c3990b8693}{Foam\+::\+NONE}}
-, \mbox{\hyperlink{namespaceFoam_a33894f55b12411460eaf759f2cc29cada42451d370b188bc4ed2a312be0bd3c49}{Foam\+::\+BCE}} = 0
-, \mbox{\hyperlink{namespaceFoam_a33894f55b12411460eaf759f2cc29cada757f4749aebb1891ef5ac2a9b5439cea}{Foam\+::\+ACE}}
-, \newline
-\mbox{\hyperlink{namespaceFoam_a33894f55b12411460eaf759f2cc29cada903313b86cfb89682d191d1a6469e398}{Foam\+::\+ABE}}
-, \mbox{\hyperlink{namespaceFoam_a33894f55b12411460eaf759f2cc29cada902fbdd2b1df0c4f70b4a5d23525e932}{Foam\+::\+ABC}}
-, \mbox{\hyperlink{namespaceFoam_a33894f55b12411460eaf759f2cc29cadaa2178255c95c8fd7baf47bbbd34e18bd}{Foam\+::\+NUM\+\_\+\+FACES}}
-, \mbox{\hyperlink{namespaceFoam_a33894f55b12411460eaf759f2cc29cadab50339a10e1de285ac99d4c3990b8693}{Foam\+::\+NONE}}
-, \newline
-\mbox{\hyperlink{namespaceFoam_a33894f55b12411460eaf759f2cc29cada42451d370b188bc4ed2a312be0bd3c49}{Foam\+::\+BCE}} = 0
-, \mbox{\hyperlink{namespaceFoam_a33894f55b12411460eaf759f2cc29cada757f4749aebb1891ef5ac2a9b5439cea}{Foam\+::\+ACE}}
-, \mbox{\hyperlink{namespaceFoam_a33894f55b12411460eaf759f2cc29cada903313b86cfb89682d191d1a6469e398}{Foam\+::\+ABE}}
-, \mbox{\hyperlink{namespaceFoam_a33894f55b12411460eaf759f2cc29cada902fbdd2b1df0c4f70b4a5d23525e932}{Foam\+::\+ABC}}
-, \newline
-\mbox{\hyperlink{namespaceFoam_a33894f55b12411460eaf759f2cc29cadaa2178255c95c8fd7baf47bbbd34e18bd}{Foam\+::\+NUM\+\_\+\+FACES}}
-, \mbox{\hyperlink{namespaceFoam_a33894f55b12411460eaf759f2cc29cadab50339a10e1de285ac99d4c3990b8693}{Foam\+::\+NONE}}
-, \mbox{\hyperlink{namespaceFoam_a33894f55b12411460eaf759f2cc29cada42451d370b188bc4ed2a312be0bd3c49}{Foam\+::\+BCE}} = 0
-, \mbox{\hyperlink{namespaceFoam_a33894f55b12411460eaf759f2cc29cada757f4749aebb1891ef5ac2a9b5439cea}{Foam\+::\+ACE}}
-, \newline
-\mbox{\hyperlink{namespaceFoam_a33894f55b12411460eaf759f2cc29cada903313b86cfb89682d191d1a6469e398}{Foam\+::\+ABE}}
-, \mbox{\hyperlink{namespaceFoam_a33894f55b12411460eaf759f2cc29cada902fbdd2b1df0c4f70b4a5d23525e932}{Foam\+::\+ABC}}
-, \mbox{\hyperlink{namespaceFoam_a33894f55b12411460eaf759f2cc29cadaa2178255c95c8fd7baf47bbbd34e18bd}{Foam\+::\+NUM\+\_\+\+FACES}}
-, \mbox{\hyperlink{namespaceFoam_a33894f55b12411460eaf759f2cc29cadab50339a10e1de285ac99d4c3990b8693}{Foam\+::\+NONE}}
- \}
-\item 
-enum class \mbox{\hyperlink{namespaceFoam_a5ce8f1f2e5f71c182a4138cf34a3186d}{Foam\+::dg\+Face\+Position\+On\+Pyramid}} \{ \newline
-\mbox{\hyperlink{namespaceFoam_a5ce8f1f2e5f71c182a4138cf34a3186dacb08ca4a7bb5f9683c19133a84872ca7}{Foam\+::\+ABCD}} = 0
-, \mbox{\hyperlink{namespaceFoam_a5ce8f1f2e5f71c182a4138cf34a3186da757f4749aebb1891ef5ac2a9b5439cea}{Foam\+::\+ACE}}
-, \mbox{\hyperlink{namespaceFoam_a5ce8f1f2e5f71c182a4138cf34a3186daf8e054e3416de72e874492e25c38b3ec}{Foam\+::\+CDE}}
-, \mbox{\hyperlink{namespaceFoam_a5ce8f1f2e5f71c182a4138cf34a3186da901e2bf2161a620621dffe8eb1431615}{Foam\+::\+BDE}}
-, \newline
-\mbox{\hyperlink{namespaceFoam_a5ce8f1f2e5f71c182a4138cf34a3186da903313b86cfb89682d191d1a6469e398}{Foam\+::\+ABE}}
-, \mbox{\hyperlink{namespaceFoam_a5ce8f1f2e5f71c182a4138cf34a3186daa2178255c95c8fd7baf47bbbd34e18bd}{Foam\+::\+NUM\+\_\+\+FACES}}
-, \mbox{\hyperlink{namespaceFoam_a5ce8f1f2e5f71c182a4138cf34a3186dab50339a10e1de285ac99d4c3990b8693}{Foam\+::\+NONE}}
-, \mbox{\hyperlink{namespaceFoam_a5ce8f1f2e5f71c182a4138cf34a3186dacb08ca4a7bb5f9683c19133a84872ca7}{Foam\+::\+ABCD}} = 0
-, \newline
-\mbox{\hyperlink{namespaceFoam_a5ce8f1f2e5f71c182a4138cf34a3186da757f4749aebb1891ef5ac2a9b5439cea}{Foam\+::\+ACE}}
-, \mbox{\hyperlink{namespaceFoam_a5ce8f1f2e5f71c182a4138cf34a3186daf8e054e3416de72e874492e25c38b3ec}{Foam\+::\+CDE}}
-, \mbox{\hyperlink{namespaceFoam_a5ce8f1f2e5f71c182a4138cf34a3186da901e2bf2161a620621dffe8eb1431615}{Foam\+::\+BDE}}
-, \mbox{\hyperlink{namespaceFoam_a5ce8f1f2e5f71c182a4138cf34a3186da903313b86cfb89682d191d1a6469e398}{Foam\+::\+ABE}}
-, \newline
-\mbox{\hyperlink{namespaceFoam_a5ce8f1f2e5f71c182a4138cf34a3186daa2178255c95c8fd7baf47bbbd34e18bd}{Foam\+::\+NUM\+\_\+\+FACES}}
-, \mbox{\hyperlink{namespaceFoam_a5ce8f1f2e5f71c182a4138cf34a3186dab50339a10e1de285ac99d4c3990b8693}{Foam\+::\+NONE}}
-, \mbox{\hyperlink{namespaceFoam_a5ce8f1f2e5f71c182a4138cf34a3186dacb08ca4a7bb5f9683c19133a84872ca7}{Foam\+::\+ABCD}} = 0
-, \mbox{\hyperlink{namespaceFoam_a5ce8f1f2e5f71c182a4138cf34a3186da757f4749aebb1891ef5ac2a9b5439cea}{Foam\+::\+ACE}}
-, \newline
-\mbox{\hyperlink{namespaceFoam_a5ce8f1f2e5f71c182a4138cf34a3186daf8e054e3416de72e874492e25c38b3ec}{Foam\+::\+CDE}}
-, \mbox{\hyperlink{namespaceFoam_a5ce8f1f2e5f71c182a4138cf34a3186da901e2bf2161a620621dffe8eb1431615}{Foam\+::\+BDE}}
-, \mbox{\hyperlink{namespaceFoam_a5ce8f1f2e5f71c182a4138cf34a3186da903313b86cfb89682d191d1a6469e398}{Foam\+::\+ABE}}
-, \mbox{\hyperlink{namespaceFoam_a5ce8f1f2e5f71c182a4138cf34a3186daa2178255c95c8fd7baf47bbbd34e18bd}{Foam\+::\+NUM\+\_\+\+FACES}}
-, \newline
-\mbox{\hyperlink{namespaceFoam_a5ce8f1f2e5f71c182a4138cf34a3186dab50339a10e1de285ac99d4c3990b8693}{Foam\+::\+NONE}}
-, \mbox{\hyperlink{namespaceFoam_a5ce8f1f2e5f71c182a4138cf34a3186dacb08ca4a7bb5f9683c19133a84872ca7}{Foam\+::\+ABCD}} = 0
-, \mbox{\hyperlink{namespaceFoam_a5ce8f1f2e5f71c182a4138cf34a3186da757f4749aebb1891ef5ac2a9b5439cea}{Foam\+::\+ACE}}
-, \mbox{\hyperlink{namespaceFoam_a5ce8f1f2e5f71c182a4138cf34a3186daf8e054e3416de72e874492e25c38b3ec}{Foam\+::\+CDE}}
-, \newline
-\mbox{\hyperlink{namespaceFoam_a5ce8f1f2e5f71c182a4138cf34a3186da901e2bf2161a620621dffe8eb1431615}{Foam\+::\+BDE}}
-, \mbox{\hyperlink{namespaceFoam_a5ce8f1f2e5f71c182a4138cf34a3186da903313b86cfb89682d191d1a6469e398}{Foam\+::\+ABE}}
-, \mbox{\hyperlink{namespaceFoam_a5ce8f1f2e5f71c182a4138cf34a3186daa2178255c95c8fd7baf47bbbd34e18bd}{Foam\+::\+NUM\+\_\+\+FACES}}
-, \mbox{\hyperlink{namespaceFoam_a5ce8f1f2e5f71c182a4138cf34a3186dab50339a10e1de285ac99d4c3990b8693}{Foam\+::\+NONE}}
- \}
-\item 
-enum class \mbox{\hyperlink{namespaceFoam_a49389e037db4de91988ad16f0f8f1b54}{Foam\+::dg\+Face\+Position\+On\+Prism}} \{ \newline
-\mbox{\hyperlink{namespaceFoam_a49389e037db4de91988ad16f0f8f1b54a903313b86cfb89682d191d1a6469e398}{Foam\+::\+ABE}} = 0
-, \mbox{\hyperlink{namespaceFoam_a49389e037db4de91988ad16f0f8f1b54ab73cc6d3c1d3fbf4c49aea0b307498dd}{Foam\+::\+CDF}}
-, \mbox{\hyperlink{namespaceFoam_a49389e037db4de91988ad16f0f8f1b54ae3ecafdae9412825268c8ba00366d7c2}{Foam\+::\+BCEF}}
-, \mbox{\hyperlink{namespaceFoam_a49389e037db4de91988ad16f0f8f1b54acb08ca4a7bb5f9683c19133a84872ca7}{Foam\+::\+ABCD}}
-, \newline
-\mbox{\hyperlink{namespaceFoam_a49389e037db4de91988ad16f0f8f1b54af8700fa2c4020e129e51436266088d9b}{Foam\+::\+ADEF}}
-, \mbox{\hyperlink{namespaceFoam_a49389e037db4de91988ad16f0f8f1b54aa2178255c95c8fd7baf47bbbd34e18bd}{Foam\+::\+NUM\+\_\+\+FACES}}
-, \mbox{\hyperlink{namespaceFoam_a49389e037db4de91988ad16f0f8f1b54ab50339a10e1de285ac99d4c3990b8693}{Foam\+::\+NONE}}
-, \mbox{\hyperlink{namespaceFoam_a49389e037db4de91988ad16f0f8f1b54a903313b86cfb89682d191d1a6469e398}{Foam\+::\+ABE}} = 0
-, \newline
-\mbox{\hyperlink{namespaceFoam_a49389e037db4de91988ad16f0f8f1b54ab73cc6d3c1d3fbf4c49aea0b307498dd}{Foam\+::\+CDF}}
-, \mbox{\hyperlink{namespaceFoam_a49389e037db4de91988ad16f0f8f1b54ae3ecafdae9412825268c8ba00366d7c2}{Foam\+::\+BCEF}}
-, \mbox{\hyperlink{namespaceFoam_a49389e037db4de91988ad16f0f8f1b54acb08ca4a7bb5f9683c19133a84872ca7}{Foam\+::\+ABCD}}
-, \mbox{\hyperlink{namespaceFoam_a49389e037db4de91988ad16f0f8f1b54af8700fa2c4020e129e51436266088d9b}{Foam\+::\+ADEF}}
-, \newline
-\mbox{\hyperlink{namespaceFoam_a49389e037db4de91988ad16f0f8f1b54aa2178255c95c8fd7baf47bbbd34e18bd}{Foam\+::\+NUM\+\_\+\+FACES}}
-, \mbox{\hyperlink{namespaceFoam_a49389e037db4de91988ad16f0f8f1b54ab50339a10e1de285ac99d4c3990b8693}{Foam\+::\+NONE}}
-, \mbox{\hyperlink{namespaceFoam_a49389e037db4de91988ad16f0f8f1b54a903313b86cfb89682d191d1a6469e398}{Foam\+::\+ABE}} = 0
-, \mbox{\hyperlink{namespaceFoam_a49389e037db4de91988ad16f0f8f1b54ab73cc6d3c1d3fbf4c49aea0b307498dd}{Foam\+::\+CDF}}
-, \newline
-\mbox{\hyperlink{namespaceFoam_a49389e037db4de91988ad16f0f8f1b54ae3ecafdae9412825268c8ba00366d7c2}{Foam\+::\+BCEF}}
-, \mbox{\hyperlink{namespaceFoam_a49389e037db4de91988ad16f0f8f1b54acb08ca4a7bb5f9683c19133a84872ca7}{Foam\+::\+ABCD}}
-, \mbox{\hyperlink{namespaceFoam_a49389e037db4de91988ad16f0f8f1b54af8700fa2c4020e129e51436266088d9b}{Foam\+::\+ADEF}}
-, \mbox{\hyperlink{namespaceFoam_a49389e037db4de91988ad16f0f8f1b54aa2178255c95c8fd7baf47bbbd34e18bd}{Foam\+::\+NUM\+\_\+\+FACES}}
-, \newline
-\mbox{\hyperlink{namespaceFoam_a49389e037db4de91988ad16f0f8f1b54ab50339a10e1de285ac99d4c3990b8693}{Foam\+::\+NONE}}
-, \mbox{\hyperlink{namespaceFoam_a49389e037db4de91988ad16f0f8f1b54a903313b86cfb89682d191d1a6469e398}{Foam\+::\+ABE}} = 0
-, \mbox{\hyperlink{namespaceFoam_a49389e037db4de91988ad16f0f8f1b54ab73cc6d3c1d3fbf4c49aea0b307498dd}{Foam\+::\+CDF}}
-, \mbox{\hyperlink{namespaceFoam_a49389e037db4de91988ad16f0f8f1b54ae3ecafdae9412825268c8ba00366d7c2}{Foam\+::\+BCEF}}
-, \newline
-\mbox{\hyperlink{namespaceFoam_a49389e037db4de91988ad16f0f8f1b54acb08ca4a7bb5f9683c19133a84872ca7}{Foam\+::\+ABCD}}
-, \mbox{\hyperlink{namespaceFoam_a49389e037db4de91988ad16f0f8f1b54af8700fa2c4020e129e51436266088d9b}{Foam\+::\+ADEF}}
-, \mbox{\hyperlink{namespaceFoam_a49389e037db4de91988ad16f0f8f1b54aa2178255c95c8fd7baf47bbbd34e18bd}{Foam\+::\+NUM\+\_\+\+FACES}}
-, \mbox{\hyperlink{namespaceFoam_a49389e037db4de91988ad16f0f8f1b54ab50339a10e1de285ac99d4c3990b8693}{Foam\+::\+NONE}}
+\mbox{\hyperlink{lnInclude_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5a25608df56c02f9fc6854a3de6a51822a}{PRISM}}
+, \mbox{\hyperlink{lnInclude_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5acd996d3184761601a0e44e587a012d4f}{PYRAMID}}
+, \mbox{\hyperlink{lnInclude_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5ab50339a10e1de285ac99d4c3990b8693}{NONE}}
+, \mbox{\hyperlink{lnInclude_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5accc0377a8afbf50e7094f5c23a8af223}{INVALID}}
  \}
 \end{DoxyCompactItemize}
 \doxysubsubsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682}{dg\+Face\+Position}} \mbox{\hyperlink{namespaceFoam_ad7f0ffe96add3de5571b54d88dc6e1a4}{Foam\+::map\+Face\+Position\+From\+Tet}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{namespaceFoam_a33894f55b12411460eaf759f2cc29cad}{dg\+Face\+Position\+On\+Tet}} \mbox{\hyperlink{classFoam_1_1GaussField}{f}})
-\begin{DoxyCompactList}\small\item\em Map tetrahedron face position to reference hexahedron face position. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{namespaceFoam_a33894f55b12411460eaf759f2cc29cad}{dg\+Face\+Position\+On\+Tet}} \mbox{\hyperlink{namespaceFoam_a5a22eec5f0fedfca2abe0f2de2932609}{Foam\+::map\+Face\+Position\+To\+Tet}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682}{dg\+Face\+Position}} \mbox{\hyperlink{classFoam_1_1GaussField}{f}})
-\begin{DoxyCompactList}\small\item\em Map reference hexahedron face position to tetrahedron face position. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{classFoam_1_1GaussField}{Ostream}} \& \mbox{\hyperlink{namespaceFoam_a16a617833848e6e14f0d8c2c04634d30}{Foam\+::operator$<$$<$}} (\mbox{\hyperlink{classFoam_1_1GaussField}{Ostream}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{os}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682}{dg\+Face\+Position}} type)
-\begin{DoxyCompactList}\small\item\em Stream output operator for dg\+Face\+Position. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Ostream}} \& \mbox{\hyperlink{lnInclude_2dgCellType_8H_a8cfce96f5a5eebbc1d037855f81dd604}{operator$<$$<$}} (\mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Ostream}} \&os, const \mbox{\hyperlink{dgGeomCell_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5}{dg\+Cell\+Type}} type)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Enumeration Type Documentation}
+\Hypertarget{lnInclude_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5}\label{lnInclude_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5} 
+\index{dgCellType.H@{dgCellType.H}!dgCellType@{dgCellType}}
+\index{dgCellType@{dgCellType}!dgCellType.H@{dgCellType.H}}
+\doxysubsubsection{\texorpdfstring{dgCellType}{dgCellType}}
+{\footnotesize\ttfamily enum class \mbox{\hyperlink{dgGeomCell_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5}{dg\+Cell\+Type}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TET@{TET}!dgCellType.H@{dgCellType.H}}\index{dgCellType.H@{dgCellType.H}!TET@{TET}}}\Hypertarget{lnInclude_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5a268c4b76ec894ec6ad3c119ad7cc2170}\label{lnInclude_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5a268c4b76ec894ec6ad3c119ad7cc2170} 
+TET&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{HEX@{HEX}!dgCellType.H@{dgCellType.H}}\index{dgCellType.H@{dgCellType.H}!HEX@{HEX}}}\Hypertarget{lnInclude_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5a58c9566f3c750ce7147b045fdd14202b}\label{lnInclude_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5a58c9566f3c750ce7147b045fdd14202b} 
+HEX&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{PRISM@{PRISM}!dgCellType.H@{dgCellType.H}}\index{dgCellType.H@{dgCellType.H}!PRISM@{PRISM}}}\Hypertarget{lnInclude_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5a25608df56c02f9fc6854a3de6a51822a}\label{lnInclude_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5a25608df56c02f9fc6854a3de6a51822a} 
+PRISM&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{PYRAMID@{PYRAMID}!dgCellType.H@{dgCellType.H}}\index{dgCellType.H@{dgCellType.H}!PYRAMID@{PYRAMID}}}\Hypertarget{lnInclude_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5acd996d3184761601a0e44e587a012d4f}\label{lnInclude_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5acd996d3184761601a0e44e587a012d4f} 
+PYRAMID&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{NONE@{NONE}!dgCellType.H@{dgCellType.H}}\index{dgCellType.H@{dgCellType.H}!NONE@{NONE}}}\Hypertarget{lnInclude_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5ab50339a10e1de285ac99d4c3990b8693}\label{lnInclude_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5ab50339a10e1de285ac99d4c3990b8693} 
+NONE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{INVALID@{INVALID}!dgCellType.H@{dgCellType.H}}\index{dgCellType.H@{dgCellType.H}!INVALID@{INVALID}}}\Hypertarget{lnInclude_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5accc0377a8afbf50e7094f5c23a8af223}\label{lnInclude_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5accc0377a8afbf50e7094f5c23a8af223} 
+INVALID&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TET@{TET}!dgCellType.H@{dgCellType.H}}\index{dgCellType.H@{dgCellType.H}!TET@{TET}}}\Hypertarget{lnInclude_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5a268c4b76ec894ec6ad3c119ad7cc2170}\label{lnInclude_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5a268c4b76ec894ec6ad3c119ad7cc2170} 
+TET&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{HEX@{HEX}!dgCellType.H@{dgCellType.H}}\index{dgCellType.H@{dgCellType.H}!HEX@{HEX}}}\Hypertarget{lnInclude_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5a58c9566f3c750ce7147b045fdd14202b}\label{lnInclude_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5a58c9566f3c750ce7147b045fdd14202b} 
+HEX&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{PRISM@{PRISM}!dgCellType.H@{dgCellType.H}}\index{dgCellType.H@{dgCellType.H}!PRISM@{PRISM}}}\Hypertarget{lnInclude_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5a25608df56c02f9fc6854a3de6a51822a}\label{lnInclude_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5a25608df56c02f9fc6854a3de6a51822a} 
+PRISM&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{PYRAMID@{PYRAMID}!dgCellType.H@{dgCellType.H}}\index{dgCellType.H@{dgCellType.H}!PYRAMID@{PYRAMID}}}\Hypertarget{lnInclude_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5acd996d3184761601a0e44e587a012d4f}\label{lnInclude_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5acd996d3184761601a0e44e587a012d4f} 
+PYRAMID&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{NONE@{NONE}!dgCellType.H@{dgCellType.H}}\index{dgCellType.H@{dgCellType.H}!NONE@{NONE}}}\Hypertarget{lnInclude_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5ab50339a10e1de285ac99d4c3990b8693}\label{lnInclude_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5ab50339a10e1de285ac99d4c3990b8693} 
+NONE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{INVALID@{INVALID}!dgCellType.H@{dgCellType.H}}\index{dgCellType.H@{dgCellType.H}!INVALID@{INVALID}}}\Hypertarget{lnInclude_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5accc0377a8afbf50e7094f5c23a8af223}\label{lnInclude_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5accc0377a8afbf50e7094f5c23a8af223} 
+INVALID&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{lnInclude_2dgCellType_8H_a8cfce96f5a5eebbc1d037855f81dd604}\label{lnInclude_2dgCellType_8H_a8cfce96f5a5eebbc1d037855f81dd604} 
+\index{dgCellType.H@{dgCellType.H}!operator$<$$<$@{operator$<$$<$}}
+\index{operator$<$$<$@{operator$<$$<$}!dgCellType.H@{dgCellType.H}}
+\doxysubsubsection{\texorpdfstring{operator$<$$<$()}{operator<<()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Ostream}} \& operator$<$$<$ (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Ostream}} \&}]{os,  }\item[{const \mbox{\hyperlink{dgGeomCell_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5}{dg\+Cell\+Type}}}]{type }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+

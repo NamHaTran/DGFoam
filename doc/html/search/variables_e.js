@@ -1,12 +1,11 @@
 var searchData=
 [
-  ['r_5f_0',['r_',['../classFoam_1_1dgGeneralPDETerm.html#aa05ea55aa7663bf57ffc9d0f59754336',1,'Foam::dgGeneralPDETerm::R_'],['../classFoam_1_1idealGas.html#a91e37bde88aa402dc5169bdda401995f',1,'Foam::idealGas::R_'],['../classFoam_1_1constantCp.html#a64f657c919f45d2d577ad3eb4ebc4220',1,'Foam::constantCp::R_']]],
-  ['recvbuf_5f_1',['recvBuf_',['../classFoam_1_1dgProcessorBoundaryField.html#a2f8bd21638770e97d46b895b12404f05',1,'Foam::dgProcessorBoundaryField']]],
-  ['refcell_5f_2',['refCell_',['../classFoam_1_1dgGeomCell.html#aec145464a2774caaf010ece8ab26421f',1,'Foam::dgGeomCell']]],
-  ['refcellhex_5f_3',['refCellHex_',['../classFoam_1_1dgGeomMesh.html#a77be49c4c9a1fda8e2d969c572a2a4dc',1,'Foam::dgGeomMesh']]],
-  ['refcellprism_5f_4',['refCellPrism_',['../classFoam_1_1dgGeomMesh.html#a46c5c4fb42b3862a7fc5c055d90fe630',1,'Foam::dgGeomMesh']]],
-  ['refcellpyramid_5f_5',['refCellPyramid_',['../classFoam_1_1dgGeomMesh.html#a40a8e8fdb80c8035d380dcc02960c900',1,'Foam::dgGeomMesh']]],
-  ['refcelltet_5f_6',['refCellTet_',['../classFoam_1_1dgGeomMesh.html#a167185a80652d52ade42d6ac90691182',1,'Foam::dgGeomMesh']]],
-  ['refface_5f_7',['refface_',['../classFoam_1_1dgGeomCell.html#a55dd7fe713dafe2b3b2825e8addfc053',1,'Foam::dgGeomCell::refFace_'],['../classFoam_1_1dgGeomFace.html#aa638dde4d85714a8708f4c235ccd8074',1,'Foam::dgGeomFace::refFace_'],['../classFoam_1_1dgGeomMesh.html#a8fdf9f2b410bf22a45c8c05976bb5c17',1,'Foam::dgGeomMesh::refFace_']]],
-  ['rho_5f_8',['rho_',['../classFoam_1_1dgHLLCFluxSolver.html#ac7257b5c49d5b833e0944eca756a9349',1,'Foam::dgHLLCFluxSolver::rho_'],['../classFoam_1_1dgHLLEFluxSolver.html#a55d9b10eb73dd03ced7d33041203d0e9',1,'Foam::dgHLLEFluxSolver::rho_']]]
+  ['p_5f_0',['p_',['../classFoam_1_1dgHLLCFluxSolver.html#a403e05ab1d7b1d85f1bf9fca5f2768b9',1,'Foam::dgHLLCFluxSolver::p_'],['../classFoam_1_1dgHLLEFluxSolver.html#a891c597e8e634a0437b9ac7fadc8588a',1,'Foam::dgHLLEFluxSolver::p_'],['../classFoam_1_1dgThermoConservative.html#aec40a4e1869d6e89ef8d627cd52ad44d',1,'Foam::dgThermoConservative::p_']]],
+  ['patch_5f_1',['patch_',['../classFoam_1_1dgGeneralBoundaryField.html#aace96ded992b70311437cdb261b78b7e',1,'Foam::dgGeneralBoundaryField']]],
+  ['patchid_5f_2',['patchID_',['../classFoam_1_1dgGeomFace.html#a9715c226a4685d6ebd59a69610d1ed83',1,'Foam::dgGeomFace']]],
+  ['plusvalues_5f_3',['plusValues_',['../classFoam_1_1faceGaussField.html#ad74d6228d2d845f2bc5c72b0d4a839e4',1,'Foam::faceGaussField']]],
+  ['porder_5f_4',['porder_',['../classFoam_1_1dgRefCell.html#ae666fa119efefcc1123134e75f1a9a5f',1,'Foam::dgRefCell::pOrder_'],['../classFoam_1_1dgRefFace.html#ad01c26031f401bf6953f0468d7e9a3b7',1,'Foam::dgRefFace::pOrder_'],['../classFoam_1_1dgGeomMesh.html#a4c8232046f6592108b1b059b55083391',1,'Foam::dgGeomMesh::pOrder_']]],
+  ['pr0_5f_5',['pr0_',['../classFoam_1_1powerVHS.html#a54d8b830b6ad98f45208eedfba9e6ce3',1,'Foam::powerVHS::Pr0_'],['../classFoam_1_1Sutherland.html#a1f1f9921d4d87147ae95fd6cba0e894c',1,'Foam::Sutherland::Pr0_']]],
+  ['pr_5f_6',['Pr_',['../classFoam_1_1dgThermoConservative.html#a901ad2146b0a32b4ed4e1b0083b36c7f',1,'Foam::dgThermoConservative']]],
+  ['procpatch_5f_7',['procPatch_',['../classFoam_1_1dgProcessorBoundaryField.html#a728842151ae1bd8604d21527ef471fd6',1,'Foam::dgProcessorBoundaryField']]]
 ];

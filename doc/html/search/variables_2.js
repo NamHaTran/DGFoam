@@ -13,7 +13,7 @@ var searchData=
   ['coeffdict_5f_10',['coeffDict_',['../classFoam_1_1sensibleInternalEnergy.html#a5e31783df255d1a3590f4756b3ccbe46',1,'Foam::sensibleInternalEnergy']]],
   ['coeffs_5f_11',['coeffs_',['../classFoam_1_1energy.html#a196e297d7caf016e0eea6385994ab918',1,'Foam::energy']]],
   ['connectivity_5f_12',['connectivity_',['../classFoam_1_1dgGeomFace.html#a1164d63def2527682d7a426ec9c8d89f',1,'Foam::dgGeomFace']]],
-  ['cp_5f_13',['Cp_',['../classFoam_1_1constantCp.html#ad5c15ea785d985cf940e75c8e43d6b92',1,'Foam::constantCp']]],
+  ['cp_5f_13',['cp_',['../classFoam_1_1dgThermoConservative.html#a62de9bdd12feab77e593901bb6ccc23c',1,'Foam::dgThermoConservative::Cp_'],['../classFoam_1_1constantCp.html#ad5c15ea785d985cf940e75c8e43d6b92',1,'Foam::constantCp::Cp_']]],
   ['cr_5flist_5f_14',['CR_list_',['../classFoam_1_1dgHLLCFluxSolver.html#ad1fc58c95763c4a1252fbc7000d6422c',1,'Foam::dgHLLCFluxSolver']]],
-  ['cv_5f_15',['Cv_',['../classFoam_1_1constantCp.html#a5709794b95feb4419d37e8caef53aa7b',1,'Foam::constantCp']]]
+  ['cv_5f_15',['cv_',['../classFoam_1_1dgThermoConservative.html#aa09335eeb1725bbe30eb00d61dd230f3',1,'Foam::dgThermoConservative::Cv_'],['../classFoam_1_1constantCp.html#a5709794b95feb4419d37e8caef53aa7b',1,'Foam::constantCp::Cv_']]]
 ];

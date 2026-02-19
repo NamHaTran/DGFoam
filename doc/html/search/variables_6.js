@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['gamma_5f_0',['gamma_',['../classFoam_1_1dgHLLCFluxSolver.html#af4fa1c2be91e1835b0e7c0fae8ea1844',1,'Foam::dgHLLCFluxSolver::gamma_'],['../classFoam_1_1dgHLLEFluxSolver.html#ac6f56a6b1b426f70a33fa843877548cb',1,'Foam::dgHLLEFluxSolver::gamma_'],['../classFoam_1_1constantCp.html#aa8787e1a51c897a546235e39adf9367b',1,'Foam::constantCp::gamma_']]],
+  ['gamma_5f_0',['gamma_',['../classFoam_1_1dgHLLCFluxSolver.html#af4fa1c2be91e1835b0e7c0fae8ea1844',1,'Foam::dgHLLCFluxSolver::gamma_'],['../classFoam_1_1dgHLLEFluxSolver.html#ac6f56a6b1b426f70a33fa843877548cb',1,'Foam::dgHLLEFluxSolver::gamma_'],['../classFoam_1_1dgThermoConservative.html#af5941f3c02390c2531bd2d483ef4eb78',1,'Foam::dgThermoConservative::gamma_'],['../classFoam_1_1constantCp.html#aa8787e1a51c897a546235e39adf9367b',1,'Foam::constantCp::gamma_']]],
   ['gaussfields_5f_1',['gaussFields_',['../classFoam_1_1dgField.html#ae0ec2ac3d571c7ff2188c199482e234a',1,'Foam::dgField']]],
   ['gaussoffset_5f_2',['gaussOffset_',['../classFoam_1_1faceGaussField.html#ac0ad2da84b1031ed739ce6b886445632',1,'Foam::faceGaussField']]],
   ['gaussp_5f_3',['gaussP_',['../classFoam_1_1dgRefCell.html#a014e15c9938b7cc5d45dbe72fae7d47c',1,'Foam::dgRefCell']]],

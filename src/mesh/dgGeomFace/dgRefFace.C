@@ -164,41 +164,29 @@ Foam::basisData Foam::dgRefFace::computeBasisAndDerivatives
 
     for (label gp = 0; gp < nGauss_; ++gp)
     {
-        scalar eta1(0.0), eta2(0.0), eta3(0.0);
+        vector etaPt;
 
         // Get Gauss point coordinates based on face position
         // and compute basis functions and derivatives
         switch (pos)
         {
             case dgFacePosition::ABCD:
-                eta1 = gaussP_ABCD_[gp].x();
-                eta2 = gaussP_ABCD_[gp].y();
-                eta3 = gaussP_ABCD_[gp].z();
+                etaPt = gaussP_ABCD_[gp];
                 break;
             case dgFacePosition::EFGH:
-                eta1 = gaussP_EFGH_[gp].x();
-                eta2 = gaussP_EFGH_[gp].y();
-                eta3 = gaussP_EFGH_[gp].z();
+                etaPt = gaussP_EFGH_[gp];
                 break;
             case dgFacePosition::ABEF:
-                eta1 = gaussP_ABEF_[gp].x();
-                eta2 = gaussP_ABEF_[gp].y();
-                eta3 = gaussP_ABEF_[gp].z();
+                etaPt = gaussP_ABEF_[gp];
                 break;
             case dgFacePosition::CDGH:
-                eta1 = gaussP_CDGH_[gp].x();
-                eta2 = gaussP_CDGH_[gp].y();
-                eta3 = gaussP_CDGH_[gp].z();
+                etaPt = gaussP_CDGH_[gp];
                 break;
             case dgFacePosition::ACEG:
-                eta1 = gaussP_ACEG_[gp].x();
-                eta2 = gaussP_ACEG_[gp].y();
-                eta3 = gaussP_ACEG_[gp].z();
+                etaPt = gaussP_ACEG_[gp];
                 break;
             case dgFacePosition::BDFH:
-                eta1 = gaussP_BDFH_[gp].x();
-                eta2 = gaussP_BDFH_[gp].y();
-                eta3 = gaussP_BDFH_[gp].z();
+                etaPt = gaussP_BDFH_[gp];
                 break;
             default:
                 FatalErrorInFunction
@@ -209,9 +197,9 @@ Foam::basisData Foam::dgRefFace::computeBasisAndDerivatives
         switch (cellType)
         {
             case dgCellType::HEX:
-                Foam::math::computeFaceBasisAndDerivativesOfHex(
-                    eta1, eta2, eta3, pOrder_,
-                    pos,
+                Foam::computeHexBasisAndDerivatives(
+                    etaPt, pOrder_,
+                    //pos,
                     basisData.basis[gp],
                     basisData.dBasis_dEta1[gp],
                     basisData.dBasis_dEta2[gp],
@@ -220,9 +208,9 @@ Foam::basisData Foam::dgRefFace::computeBasisAndDerivatives
                 break;
 
             case dgCellType::PRISM:
-                Foam::math::computeFaceBasisAndDerivativesOfPrism(
-                    eta1, eta2, eta3, pOrder_,
-                    mapFacePositionToPrism(pos),
+                Foam::computePrismBasisAndDerivatives(
+                    etaPt, pOrder_,
+                    //mapFacePositionToPrism(pos),
                     basisData.basis[gp],
                     basisData.dBasis_dEta1[gp],
                     basisData.dBasis_dEta2[gp],
@@ -231,9 +219,9 @@ Foam::basisData Foam::dgRefFace::computeBasisAndDerivatives
                 break;
 
             case dgCellType::TET:
-                Foam::math::computeFaceBasisAndDerivativesOfTet(
-                    eta1, eta2, eta3, pOrder_,
-                    mapFacePositionToTet(pos),
+                Foam::computeTetBasisAndDerivatives(
+                    etaPt, pOrder_,
+                    //mapFacePositionToTet(pos),
                     basisData.basis[gp],
                     basisData.dBasis_dEta1[gp],
                     basisData.dBasis_dEta2[gp],
@@ -242,9 +230,9 @@ Foam::basisData Foam::dgRefFace::computeBasisAndDerivatives
                 break;
 
             case dgCellType::PYRAMID:
-                Foam::math::computeFaceBasisAndDerivativesOfPyramid(
-                    eta1, eta2, eta3, pOrder_,
-                    mapFacePositionToPyramid(pos),
+                Foam::computePyramidBasisAndDerivatives(
+                    etaPt, pOrder_,
+                    //mapFacePositionToPyramid(pos),
                     basisData.basis[gp],
                     basisData.dBasis_dEta1[gp],
                     basisData.dBasis_dEta2[gp],

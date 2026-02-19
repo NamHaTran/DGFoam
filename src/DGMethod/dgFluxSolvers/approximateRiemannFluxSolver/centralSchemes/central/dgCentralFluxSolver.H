@@ -25,14 +25,11 @@ License
     along with OpenFOAM.  If not, see <http://www.gnu.org/licenses/>.
 
 Description
-    Central flux for DG:
-        h = 0.5 * (F_plus + F_minus)
-
-    No wave-speed estimate, no dissipation.
-    Suitable for diffusive fluxes or LDG auxiliary equations.
+    Central numerical flux for DG methods.
 
 SourceFiles
     dgCentralFluxSolver.C
+
 \*---------------------------------------------------------------------------*/
 
 #ifndef Foam_dgCentralFluxSolver_H
@@ -48,21 +45,64 @@ namespace Foam
 }
 
 /*---------------------------------------------------------------------------*\
-                      Class dgCentralFluxSolver Declaration
+                  Class dgCentralFluxSolver Declaration
 \*---------------------------------------------------------------------------*/
 
 namespace Foam
 {
 
-class dgCentralFluxSolver : public dgFluxSolver
+/**
+ * \class Foam::dgCentralFluxSolver
+ * \brief Central (non-dissipative) numerical flux
+ *
+ * \details
+ * Implements the classical central flux used in DG formulations.
+ *
+ * The numerical flux is defined as the arithmetic average of the
+ * physical flux evaluated on the minus and plus sides:
+ *
+ * \f[
+ *   \boldsymbol{h}
+ *   =
+ *   \frac{1}{2}
+ *   \left(
+ *     \boldsymbol{F}^{-} + \boldsymbol{F}^{+}
+ *   \right)
+ * \f]
+ *
+ * where:
+ * - \f$\boldsymbol{F}^{-}\f$ is the flux from the interior (minus-side) state
+ * - \f$\boldsymbol{F}^{+}\f$ is the flux from the exterior (plus-side) state
+ *
+ * No upwinding or numerical dissipation is applied. This flux is therefore
+ * non-dissipative and non-directional.
+ *
+ * Typical use cases:
+ * - Diffusive fluxes
+ * - LDG auxiliary equations
+ * - Elliptic operators with external stabilisation
+ *
+ * This flux is generally unsuitable for convection-dominated hyperbolic
+ * problems without additional stabilisation.
+ */
+class dgCentralFluxSolver
+:
+    public dgFluxSolver
 {
 public:
 
-    //- Runtime type name
+    /** Runtime type information */
     TypeName("central");
 
+    // Constructors --------------------------------------------------------
 
-    // Constructors
+    /**
+     * \brief Construct central flux solver
+     *
+     * \param name Solver name
+     * \param dict Flux-solver dictionary
+     * \param mesh DG geometric mesh
+     */
     dgCentralFluxSolver
     (
         const word& name,
@@ -73,11 +113,21 @@ public:
         dgFluxSolver(name, dict, mesh)
     {}
 
-
+    //- Destructor
     virtual ~dgCentralFluxSolver() = default;
 
+    // Flux evaluation -----------------------------------------------------
 
-    //- For scalar U and vector F
+    /**
+     * \brief Compute central flux for scalar field
+     *
+     * Computes the arithmetic average of vector-valued fluxes
+     * corresponding to a scalar conserved variable.
+     *
+     * \param cellID DG cell index
+     * \param F      Flux field (output)
+     * \param U      Scalar solution field at face Gauss points
+     */
     virtual void computeFlux
     (
         const label cellID,
@@ -85,8 +135,16 @@ public:
         const faceGaussField<scalar>& U
     ) override;
 
-
-    //- For vector U and tensor F
+    /**
+     * \brief Compute central flux for vector field
+     *
+     * Computes the arithmetic average of tensor-valued fluxes
+     * corresponding to vector-valued conserved variables.
+     *
+     * \param cellID DG cell index
+     * \param F      Flux field (output)
+     * \param U      Vector solution field at face Gauss points
+     */
     virtual void computeFlux
     (
         const label cellID,
@@ -94,17 +152,16 @@ public:
         const faceGaussField<vector>& U
     ) override;
 
+    // Optional hooks ------------------------------------------------------
 
-    //- No state to reset
+    /** No internal state to reset */
     virtual void reset() override {}
 
-    //- No settings to read
+    /** No solver-specific parameters to read */
     virtual void read(const dictionary& dict) override {}
 };
 
 } // End namespace Foam
 
 #endif
-
 // ************************************************************************* //
-

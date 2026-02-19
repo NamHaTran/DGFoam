@@ -31,6 +31,7 @@ License
 #include "cellList.H"
 #include "cellShape.H"
 #include "HashSet.H"
+#include "Jacobian.H"
 
 using namespace Foam;
 
@@ -80,6 +81,73 @@ Foam::dgGeomCell::dgGeomCell
 
     // Get face labels in model order (global face IDs)
     faceLabels_ = shape.meshFaces(mesh_.faces(), mesh_.cells()[cellID_]);
+
+    // Calculate internal Jacobians at Gauss points
+    const List<vector>& gaussPts = refCell_->gaussPoints();
+    const label nGauss = gaussPts.size();
+    J3D_.setSize(nGauss);
+
+    for (label gp = 0; gp < nGauss; ++gp)
+    {
+        J3D_[gp] = mag(Foam::geometricJacobian::calcJacobianDetAtInteriorGaussPt(type_, gaussPts[gp], cellPoints_));
+    }
+
+    // Precompute mass matrix
+    const List<List<scalar>>& basis = refCell_->basis();
+
+    // Gauss weights
+    const List<scalar>& w = refCell_->weights();
+
+    const label nDof = basis[0].size();
+
+    // Resize and initialize mass matrix
+    massMatrix_.resize(nDof);
+
+    // Assemble mass matrix directly at Gauss points
+    for (label i = 0; i < nDof; ++i)
+    {
+        for (label j = 0; j < nDof; ++j)
+        {
+            scalar mij = 0.0;
+
+            for (label gp = 0; gp < nGauss; ++gp)
+            {
+                scalar JDuffy = 0.0;
+
+                switch (type_)
+                {
+                    case dgCellType::HEX:
+                        JDuffy = 1.0; // No Duffy transformation for hex
+                        break;
+
+                    case dgCellType::PRISM:
+                        JDuffy = Foam::referenceJacobian::prismRefToHexRef(gaussPts[gp]);
+                        break;
+
+                    case dgCellType::PYRAMID:
+                        JDuffy = Foam::referenceJacobian::pyramidRefToHexRef(gaussPts[gp]);
+                        break;
+
+                    case dgCellType::TET:
+                        JDuffy = Foam::referenceJacobian::tetRefToHexRef(gaussPts[gp]);
+                        break;
+
+                    default:
+                        FatalErrorInFunction
+                            << "Unsupported cell type for mass matrix calculation: " << type_ << nl
+                            << abort(FatalError);
+                }
+
+                mij +=
+                    basis[gp][i]
+                  * basis[gp][j]
+                  * JDuffy //J3D_[gp]
+                  * w[gp];
+            }
+
+            massMatrix_[i][j] = mij;
+        }
+    }
 }
 
 Foam::dgGeomCell::~dgGeomCell()
@@ -125,15 +193,15 @@ void Foam::dgGeomCell::printDebugInfo() const
         Info << "     Point local ID " << i << ": " << cellPoints_[i] << nl;
     }
 
-    const List<vector>& gaussPts = gaussPoints();
-    const List<scalar>& weights  = this->weights();
+    const List<vector>& gPts = gaussPoints();
+    const List<scalar>& w  = weights();
 
     const List<List<scalar>>& b   = basis();
     const List<List<scalar>>& db1 = dBasis_dEta1();
     const List<List<scalar>>& db2 = dBasis_dEta2();
     const List<List<scalar>>& db3 = dBasis_dEta3();
 
-    const label nGauss = gaussPts.size();
+    const label nGauss = gPts.size();
     const label nBasis = b[0].size();
 
     Info << " - Number of Gauss points: " << nGauss << nl;
@@ -141,8 +209,8 @@ void Foam::dgGeomCell::printDebugInfo() const
     for (label gp = 0; gp < nGauss; ++gp)
     {
         Info << "   Gauss Point [" << gp << "]" << nl;
-        Info << "     eta       : " << gaussPts[gp] << nl;
-        Info << "     weight    : " << weights[gp] << nl;
+        Info << "     eta       : " << gPts[gp] << nl;
+        Info << "     weight    : " << w[gp] << nl;
 
         Info << "     basis     :";
         for (label k = 0; k < nBasis; ++k)
@@ -171,7 +239,13 @@ void Foam::dgGeomCell::printDebugInfo() const
             Info << " " << db3[gp][k];
         }
         Info << nl;
+
+        Info << "     Jacobian det:";
+        Info << " " << J3D_[gp];
+        Info << nl;
     }
+
+    Info << " - Mass matrix:" << massMatrix_ << nl;
 
     Info << "==========================================" << endl;
 }
@@ -233,6 +307,9 @@ void Foam::dgGeomCell::updateFaceInfo
         {
             facePtr->setOwnerPos(pos);
             facePtr->setOwnerCellType(type_);
+            
+            // Calculate Lame parameters at face Gauss points
+            facePtr->computeOwnerLameParameters(cellPoints_);
 
             if (isBoundaryFace)
             {
@@ -251,6 +328,9 @@ void Foam::dgGeomCell::updateFaceInfo
             facePtr->setNeighborPos(pos);
             facePtr->setNeighborCellType(type_);
             neighborCellLabels_[localID] = owner;
+
+            // Calculate Lame parameters at face Gauss points
+            facePtr->computeNeighborLameParameters(cellPoints_);
         }
     }
 }

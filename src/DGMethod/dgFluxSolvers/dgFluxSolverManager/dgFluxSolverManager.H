@@ -28,18 +28,7 @@ Class
     Foam::dgFluxSolverManager
 
 Description
-    Manager for flux solvers, mapping equation terms (e.g. massConvectiveFlux)
-    to concrete dgFluxSolver instances. Provides a default solver when a term
-    has no explicit scheme in the dictionary.
-
-    Dictionary format (sub-dict "fluxSchemes"):
-        default                 pureCentral;
-        massConvectiveFlux      HLLE;
-        momentumConvectiveFlux  LF;
-        HLLECoeff
-        {
-            speedEstimate roeEinfeldt;
-        }
+    Manager for DG flux solvers selected per equation term.
 
 SourceFiles
     dgFluxSolverManager.C
@@ -67,32 +56,101 @@ class Ostream;
                       Class dgFluxSolverManager Declaration
 \*---------------------------------------------------------------------------*/
 
+/**
+ * \class Foam::dgFluxSolverManager
+ * \brief Manager for flux solvers selected per equation term
+ *
+ * \details
+ * This class constructs and manages dgFluxSolver instances based on
+ * the \c fluxSchemes dictionary.
+ *
+ * Each equation term (e.g. massConvTermFlux, momentumConvTermFlux)
+ * can be mapped to a specific numerical flux solver. If a term is
+ * not explicitly defined, a default solver is used.
+ *
+ * The manager supports:
+ * - Term-specific flux solver selection
+ * - A global default solver fallback
+ * - Solver-specific coefficient sub-dictionaries
+ *
+ * \par Example dictionary
+ * \verbatim
+ * fluxSchemes
+ * {
+ *     fluxSolvers
+ *     {
+ *         default                 central;
+ *
+ *         massConvTermFlux        HLLC;
+ *         momentumConvTermFlux    LaxFriedrichs;
+ *
+ *         // Other flux terms such as:
+ *         // - auxiliaryFlux
+ *         // - massDiffusiveFlux
+ *         // - momentumDiffusiveFlux
+ *         // - energyConvectiveFlux
+ *         // - energyDiffusiveFlux
+ *         // fall back to the default solver if not specified.
+ *     }
+ *
+ *     fluxSolversCoeffs
+ *     {
+ *         HLLCCoeffs
+ *         {
+ *             speedEstimate roeEinfeldt;
+ *         }
+ *
+ *         LaxFriedrichsCoeffs
+ *         {
+ *             scaleByMach true;
+ *         }
+ *
+ *         centralCoeffs
+ *         {
+ *             // no parameters
+ *         }
+ *     }
+ * }
+ * \endverbatim
+ *
+ * Solver instances are created lazily using runtime selection tables
+ * and are reused across time steps. The reset() method propagates to
+ * all managed solvers.
+ */
 class dgFluxSolverManager
 {
 private:
 
     // Attributes
 
-        //- Mesh reference
+        /** Reference to DG geometric mesh */
         const dgGeomMesh& mesh_;
 
-        //- List of flux solver instances (one per configured term)
+        /** Flux solver instances (one per configured term) */
         PtrList<dgFluxSolver> fluxSolverList_;
 
-        //- Parallel list of term names corresponding to fluxSolverList_ items
+        /** Term names corresponding to fluxSolverList_ ordering */
         List<word> termList_;
 
-        //- Default flux solver used when a term is not configured (may be null)
+        /** Default flux solver used when a term is not configured (may be null) */
         autoPtr<dgFluxSolver> defaultFluxSolver_;
 
-        //- Cached schemes dictionary (fluxSchemes)
+        /** Cached \c fluxSchemes sub-dictionary */
         dictionary fluxSchemesDict_;
 
 public:
 
     // Constructors
 
-        //- Construct from dgSchemes dictionary and thermo (build solvers)
+        /**
+         * \brief Construct from dgSchemes dictionary and DG mesh
+         *
+         * Parses \c fluxSchemes and constructs term-specific solvers and
+         * an optional default solver.
+         *
+         * \param dgSchemesDict dgSchemes dictionary
+         * \param mesh          DG geometric mesh
+         */
         dgFluxSolverManager
         (
             const dictionary& dgSchemesDict,
@@ -107,16 +165,34 @@ public:
 
     // Member Functions
 
-        //- Number of configured (term-specific) solvers
+        /** Return number of term-specific solvers */
         inline label size() const { return fluxSolverList_.size(); }
 
-        //- Check if a term has an explicitly configured solver (no fallback)
+        /**
+         * \brief Check if a term has an explicitly configured solver
+         *
+         * \param term Equation-term name
+         * \return true if configured in \c fluxSchemes
+         */
         inline bool has(const word& term) const;
 
-        //- Access solver by term name; falls back to default or throws on missing
+        /**
+         * \brief Return solver by term name (const)
+         *
+         * Falls back to the default solver if available; otherwise triggers
+         * an error for missing configuration.
+         *
+         * \param term Equation-term name
+         * \return Const reference to selected solver
+         */
         const dgFluxSolver& solver(const word& term) const;
 
-        //- Reset flux solver
+        /**
+         * \brief Reset all solvers
+         *
+         * Calls reset() on all term-specific solvers and the default solver
+         * (if present).
+         */
         inline void reset()
         {
             forAll(fluxSolverList_, i)
@@ -130,10 +206,22 @@ public:
             }
         }
 
-        //- Non-const access variant
+        /**
+         * \brief Return solver by term name (non-const)
+         *
+         * \param term Equation-term name
+         * \return Reference to selected solver
+         */
         dgFluxSolver& solver(const word& term);
 
-        //- Print configured terms and their scheme names (and default) to stream
+        /**
+         * \brief Print configured terms and their solver types
+         *
+         * Writes the mapping of term names to solver types, including the
+         * default solver if configured.
+         *
+         * \param os Output stream
+         */
         void listTerms(Ostream& os) const;
 };
 

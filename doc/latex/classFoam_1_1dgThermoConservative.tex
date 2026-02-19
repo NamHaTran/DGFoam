@@ -2,7 +2,7 @@
 \hypertarget{classFoam_1_1dgThermoConservative}{}\label{classFoam_1_1dgThermoConservative}\index{Foam::dgThermoConservative@{Foam::dgThermoConservative}}
 
 
-Thermodynamic manager for DG solvers using conservative variables.  
+Conservative thermodynamics wrapper for DG solvers.  
 
 
 
@@ -43,15 +43,17 @@ Collaboration diagram for Foam\+::dg\+Thermo\+Conservative\+:\nopagebreak
 \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgThermoConservative_abb3de860f55b94f6c6843d3c115beae3}{init\+Models}} ()=0
 \begin{DoxyCompactList}\small\item\em Construct EOS, thermo, transport, and energy models. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgThermoConservative_a860da58bdf3e1fa6f0e37ba2111eb7ce}{validate\+Models}} ()=0
-\begin{DoxyCompactList}\small\item\em Validate model compatibility. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Validate selected model combinations. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgThermoConservative_a666ee12075f19573cfccf82d81a43532}{update}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \&cell\+ID)=0
-\begin{DoxyCompactList}\small\item\em Update thermodynamic state for a given cell. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Update thermodynamic fields for a cell. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{bool}} \mbox{\hyperlink{classFoam_1_1dgThermoConservative_a60b313ac9e6c7fc8fc033dd62cdb1ce5}{write\+Data}} (\mbox{\hyperlink{classFoam_1_1GaussField}{Ostream}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{os}}) \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{override}}
+\begin{DoxyCompactList}\small\item\em Write model data. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1eqnOfState}{eqn\+Of\+State}} \& \mbox{\hyperlink{classFoam_1_1dgThermoConservative_aebf35ee153531dc0b07c3f62fc27e277}{eos}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
 \begin{DoxyCompactList}\small\item\em Return equation-\/of-\/state model. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1thermoLaw}{thermo\+Law}} \& \mbox{\hyperlink{classFoam_1_1dgThermoConservative_a8ddc384bee75663cf84567b9dcd3938c}{thermo}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
 \begin{DoxyCompactList}\small\item\em Return thermodynamic law. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1transportLaw}{transport\+Law}} \& \mbox{\hyperlink{classFoam_1_1dgThermoConservative_af8f6cfb6a7294ecfc4857a6e13c9befc}{transport}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
-\begin{DoxyCompactList}\small\item\em Return transport-\/law model. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Return transport law. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} \mbox{\hyperlink{classFoam_1_1dgThermoConservative_a4392eeb083ef5e15a7278651efeff899}{R}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
 \begin{DoxyCompactList}\small\item\em Return gas constant. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgField}{dg\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \& \mbox{\hyperlink{classFoam_1_1dgThermoConservative_a9d6c6eaf68fb65ea7e23fd9d34f3c713}{Cp}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
@@ -63,7 +65,7 @@ Collaboration diagram for Foam\+::dg\+Thermo\+Conservative\+:\nopagebreak
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgField}{dg\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \& \mbox{\hyperlink{classFoam_1_1dgThermoConservative_a5f71cdb606f23b0f156015be4adc03b1}{e}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
 \begin{DoxyCompactList}\small\item\em Return internal energy field. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgField}{dg\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \& \mbox{\hyperlink{classFoam_1_1dgThermoConservative_a22a951ef79495b42b99d290908d76ebc}{mu}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
-\begin{DoxyCompactList}\small\item\em Return dynamic viscosity field. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Return viscosity field. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgField}{dg\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \& \mbox{\hyperlink{classFoam_1_1dgThermoConservative_ac316c0b191d059a894f419301e3833c9}{kappa}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
 \begin{DoxyCompactList}\small\item\em Return thermal conductivity field. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgField}{dg\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \& \mbox{\hyperlink{classFoam_1_1dgThermoConservative_a86f450bc8c4fcb43947b551f7cbbb37e}{Pr}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
@@ -72,8 +74,6 @@ Collaboration diagram for Foam\+::dg\+Thermo\+Conservative\+:\nopagebreak
 \begin{DoxyCompactList}\small\item\em Return speed-\/of-\/sound field. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgField}{dg\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \& \mbox{\hyperlink{classFoam_1_1dgThermoConservative_a75e5aa66b551536373597b11e795a618}{gamma}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
 \begin{DoxyCompactList}\small\item\em Return heat-\/capacity ratio field. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{bool}} \mbox{\hyperlink{classFoam_1_1dgThermoConservative_a60b313ac9e6c7fc8fc033dd62cdb1ce5}{write\+Data}} (\mbox{\hyperlink{classFoam_1_1GaussField}{Ostream}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{os}}) \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{override}}
-\begin{DoxyCompactList}\small\item\em Write object data. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1dgThermoConservative_ac10b60ba5bf7a6a6079e9369f6f9251d}{Type\+Name}} ("{}dg\+Thermo\+Conservative"{})
 \item 
 \mbox{\hyperlink{classFoam_1_1dgThermoConservative_ac80b3408bb4ad432bc6db1bf58955664}{declare\+Run\+Time\+Selection\+Table}} (\mbox{\hyperlink{classFoam_1_1GaussField}{auto\+Ptr}}, \mbox{\hyperlink{classFoam_1_1dgThermoConservative}{dg\+Thermo\+Conservative}}, \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}},(\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{word}} \&name, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}} \&dict, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{mesh}}),(name, dict, \mbox{\hyperlink{classFoam_1_1GaussField}{mesh}}))
@@ -87,15 +87,17 @@ Collaboration diagram for Foam\+::dg\+Thermo\+Conservative\+:\nopagebreak
 \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgThermoConservative_abb3de860f55b94f6c6843d3c115beae3}{init\+Models}} ()=0
 \begin{DoxyCompactList}\small\item\em Construct EOS, thermo, transport, and energy models. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgThermoConservative_a860da58bdf3e1fa6f0e37ba2111eb7ce}{validate\+Models}} ()=0
-\begin{DoxyCompactList}\small\item\em Validate model compatibility. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Validate selected model combinations. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgThermoConservative_a666ee12075f19573cfccf82d81a43532}{update}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \&cell\+ID)=0
-\begin{DoxyCompactList}\small\item\em Update thermodynamic state for a given cell. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Update thermodynamic fields for a cell. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{bool}} \mbox{\hyperlink{classFoam_1_1dgThermoConservative_a533627c9fb3c157c054a1d73d65a80c0}{write\+Data}} (\mbox{\hyperlink{classFoam_1_1GaussField}{Ostream}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{os}}) \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{override}}
+\begin{DoxyCompactList}\small\item\em Write model data. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1eqnOfState}{eqn\+Of\+State}} \& \mbox{\hyperlink{classFoam_1_1dgThermoConservative_aebf35ee153531dc0b07c3f62fc27e277}{eos}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
 \begin{DoxyCompactList}\small\item\em Return equation-\/of-\/state model. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1thermoLaw}{thermo\+Law}} \& \mbox{\hyperlink{classFoam_1_1dgThermoConservative_a8ddc384bee75663cf84567b9dcd3938c}{thermo}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
 \begin{DoxyCompactList}\small\item\em Return thermodynamic law. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1transportLaw}{transport\+Law}} \& \mbox{\hyperlink{classFoam_1_1dgThermoConservative_af8f6cfb6a7294ecfc4857a6e13c9befc}{transport}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
-\begin{DoxyCompactList}\small\item\em Return transport-\/law model. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Return transport law. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} \mbox{\hyperlink{classFoam_1_1dgThermoConservative_a4392eeb083ef5e15a7278651efeff899}{R}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
 \begin{DoxyCompactList}\small\item\em Return gas constant. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgField}{dg\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \& \mbox{\hyperlink{classFoam_1_1dgThermoConservative_a9d6c6eaf68fb65ea7e23fd9d34f3c713}{Cp}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
@@ -107,7 +109,7 @@ Collaboration diagram for Foam\+::dg\+Thermo\+Conservative\+:\nopagebreak
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgField}{dg\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \& \mbox{\hyperlink{classFoam_1_1dgThermoConservative_a5f71cdb606f23b0f156015be4adc03b1}{e}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
 \begin{DoxyCompactList}\small\item\em Return internal energy field. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgField}{dg\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \& \mbox{\hyperlink{classFoam_1_1dgThermoConservative_a22a951ef79495b42b99d290908d76ebc}{mu}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
-\begin{DoxyCompactList}\small\item\em Return dynamic viscosity field. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Return viscosity field. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgField}{dg\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \& \mbox{\hyperlink{classFoam_1_1dgThermoConservative_ac316c0b191d059a894f419301e3833c9}{kappa}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
 \begin{DoxyCompactList}\small\item\em Return thermal conductivity field. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgField}{dg\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \& \mbox{\hyperlink{classFoam_1_1dgThermoConservative_a86f450bc8c4fcb43947b551f7cbbb37e}{Pr}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
@@ -115,33 +117,31 @@ Collaboration diagram for Foam\+::dg\+Thermo\+Conservative\+:\nopagebreak
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgField}{dg\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \& \mbox{\hyperlink{classFoam_1_1dgThermoConservative_ab0b9edb0e875b76b92c73fb47d16f2dd}{a}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
 \begin{DoxyCompactList}\small\item\em Return speed-\/of-\/sound field. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgField}{dg\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \& \mbox{\hyperlink{classFoam_1_1dgThermoConservative_a75e5aa66b551536373597b11e795a618}{gamma}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
-\begin{DoxyCompactList}\small\item\em Return heat-\/capacity ratio field. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{bool}} \mbox{\hyperlink{classFoam_1_1dgThermoConservative_a533627c9fb3c157c054a1d73d65a80c0}{write\+Data}} (\mbox{\hyperlink{classFoam_1_1GaussField}{Ostream}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{os}}) \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{override}}
-\begin{DoxyCompactList}\small\item\em Write object data. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Return heat-\/capacity ratio field. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsubsection*{Static Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{static}} \mbox{\hyperlink{classFoam_1_1GaussField}{auto\+Ptr}}$<$ \mbox{\hyperlink{classFoam_1_1dgThermoConservative}{dg\+Thermo\+Conservative}} $>$ \mbox{\hyperlink{classFoam_1_1dgThermoConservative_ab2794eceedff49db0dc2df2098a4a4ca}{New}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{word}} \&name, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}} \&dict, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{mesh}})
-\begin{DoxyCompactList}\small\item\em Runtime selector. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Construct via runtime selection. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{static}} \mbox{\hyperlink{classFoam_1_1GaussField}{auto\+Ptr}}$<$ \mbox{\hyperlink{classFoam_1_1dgThermoConservative}{dg\+Thermo\+Conservative}} $>$ \mbox{\hyperlink{classFoam_1_1dgThermoConservative_a5a905e80b89703ffb1869c1d19b928b7}{New}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{word}} \&name, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}} \&dict, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{mesh}})
-\begin{DoxyCompactList}\small\item\em Runtime selector. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Construct via runtime selection. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsubsection*{Protected Attributes}
 \begin{DoxyCompactItemize}
 \item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{word}} \mbox{\hyperlink{classFoam_1_1dgThermoConservative_af6f3e367ae3c99da559a31e3a0368953}{name\+\_\+}}
 \begin{DoxyCompactList}\small\item\em Model instance name. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}} \mbox{\hyperlink{classFoam_1_1dgThermoConservative_a099efd43c3f9222313d768b6a56c19ef}{dict\+\_\+}}
-\begin{DoxyCompactList}\small\item\em Root coefficient dictionary (immutable snapshot) \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Root dictionary (immutable snapshot) \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \& \mbox{\hyperlink{classFoam_1_1dgThermoConservative_ab4baf7f1f11284e239531dd4074ca4e3}{mesh\+\_\+}}
 \begin{DoxyCompactList}\small\item\em Reference to DG geometric mesh (non-\/owning) \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{auto\+Ptr}}$<$ \mbox{\hyperlink{classFoam_1_1eqnOfState}{eqn\+Of\+State}} $>$ \mbox{\hyperlink{classFoam_1_1dgThermoConservative_ae106ab958e9b854d93ae9b467027a870}{eqn\+State\+\_\+}}
-\begin{DoxyCompactList}\small\item\em Equation-\/of-\/state model (owned) \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Equation of state model (owning) \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{auto\+Ptr}}$<$ \mbox{\hyperlink{classFoam_1_1thermoLaw}{thermo\+Law}} $>$ \mbox{\hyperlink{classFoam_1_1dgThermoConservative_ac46e2ac1642bb529bd66a804f235df10}{thermo\+\_\+}}
-\begin{DoxyCompactList}\small\item\em Thermodynamic law model (owned) \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Thermodynamic law model (owning) \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{auto\+Ptr}}$<$ \mbox{\hyperlink{classFoam_1_1transportLaw}{transport\+Law}} $>$ \mbox{\hyperlink{classFoam_1_1dgThermoConservative_aff6f3a0c875214a38b9b66320704a453}{transport\+\_\+}}
-\begin{DoxyCompactList}\small\item\em Transport-\/law model (owned) \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Transport law model (owning) \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{auto\+Ptr}}$<$ \mbox{\hyperlink{classFoam_1_1energy}{energy}} $>$ \mbox{\hyperlink{classFoam_1_1dgThermoConservative_ae90942b7d92370c2de76ec04c2cb34f9}{energy\+\_\+}}
-\begin{DoxyCompactList}\small\item\em Energy model (owned) \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Energy formulation model (owning) \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} \mbox{\hyperlink{classFoam_1_1dgThermoConservative_aa4e22b55410890d1677c4592326878a8}{R\+\_\+}}
 \begin{DoxyCompactList}\small\item\em Gas constant. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1dgField}{dg\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \mbox{\hyperlink{classFoam_1_1dgThermoConservative_a62de9bdd12feab77e593901bb6ccc23c}{Cp\+\_\+}}
@@ -149,9 +149,9 @@ Collaboration diagram for Foam\+::dg\+Thermo\+Conservative\+:\nopagebreak
 \mbox{\hyperlink{classFoam_1_1dgField}{dg\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \mbox{\hyperlink{classFoam_1_1dgThermoConservative_aa09335eeb1725bbe30eb00d61dd230f3}{Cv\+\_\+}}
 \begin{DoxyCompactList}\small\item\em Heat capacity at constant volume. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1dgField}{dg\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \mbox{\hyperlink{classFoam_1_1dgThermoConservative_adbce94aacbb6325c209fecc85bd5ab8b}{h\+\_\+}}
-\begin{DoxyCompactList}\small\item\em Enthalpy field. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Specific enthalpy. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1dgField}{dg\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \mbox{\hyperlink{classFoam_1_1dgThermoConservative_aca16ef77fd1d63ac9afaf7aa4e7b0a99}{e\+\_\+}}
-\begin{DoxyCompactList}\small\item\em Internal energy field. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Specific internal energy. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1dgField}{dg\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \mbox{\hyperlink{classFoam_1_1dgThermoConservative_aa3cdf087c8d1dca9ecbadc3df8f802a4}{mu\+\_\+}}
 \begin{DoxyCompactList}\small\item\em Dynamic viscosity. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1dgField}{dg\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \mbox{\hyperlink{classFoam_1_1dgThermoConservative_ac6ec7c58b98813ffd2beb38db9859644}{kappa\+\_\+}}
@@ -163,49 +163,39 @@ Collaboration diagram for Foam\+::dg\+Thermo\+Conservative\+:\nopagebreak
 \mbox{\hyperlink{classFoam_1_1dgField}{dg\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \mbox{\hyperlink{classFoam_1_1dgThermoConservative_af5941f3c02390c2531bd2d483ef4eb78}{gamma\+\_\+}}
 \begin{DoxyCompactList}\small\item\em Heat-\/capacity ratio. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgField}{dg\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \& \mbox{\hyperlink{classFoam_1_1dgThermoConservative_a05f3180e33d496181ebf79f7d2e11d9d}{rho\+\_\+}}
-\begin{DoxyCompactList}\small\item\em Density field. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Conservative density field (read-\/only) \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgField}{dg\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$ \& \mbox{\hyperlink{classFoam_1_1dgThermoConservative_af6d75b279718f8462b6d57f4445af726}{rho\+U\+\_\+}}
-\begin{DoxyCompactList}\small\item\em Momentum field. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Conservative momentum field (read-\/only) \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgField}{dg\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \& \mbox{\hyperlink{classFoam_1_1dgThermoConservative_a1fe78d1c5984c7d3cf02285b4e091dba}{E\+\_\+}}
-\begin{DoxyCompactList}\small\item\em Total energy field. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Conservative total energy field (read-\/only) \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1dgField}{dg\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \& \mbox{\hyperlink{classFoam_1_1dgThermoConservative_aec40a4e1869d6e89ef8d627cd52ad44d}{p\+\_\+}}
-\begin{DoxyCompactList}\small\item\em Pressure field (output) \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Pressure field (output storage) \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1dgField}{dg\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \& \mbox{\hyperlink{classFoam_1_1dgThermoConservative_aab1f364057b391136fd57989723d7fbf}{T\+\_\+}}
-\begin{DoxyCompactList}\small\item\em Temperature field (output) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Temperature field (output storage) \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \doxysubsection{Detailed Description}
-Thermodynamic manager for DG solvers using conservative variables. 
+Conservative thermodynamics wrapper for DG solvers. 
 
-\doxylink{classFoam_1_1dgThermoConservative}{dg\+Thermo\+Conservative} reconstructs all primitive thermodynamic quantities from the conserved variables $(\rho, \rho\mathbf{U}, E)$ at each Gauss point of every DG cell.
+\doxylink{classFoam_1_1dgThermoConservative}{dg\+Thermo\+Conservative} reconstructs primitive thermodynamic quantities at DG Gauss points from conservative variables\+:
 
-The class provides temperature, pressure, internal energy, enthalpy, heat capacities, heat-\/capacity ratio, speed of sound, and transport properties in a fully cell-\/local and Gauss-\/point-\/resolved manner.
+\[
+  (\rho,\; \rho\mathbf{U},\; E)
+\;\longrightarrow\;
+(T,\; p,\; e,\; h,\; C_p,\; C_v,\; \gamma,\; a)
+\]
 
-\begin{DoxyParagraph}{Design intent}
+The model operates in a fully cell-\/local and Gauss-\/point-\/resolved manner and provides thermodynamic and transport properties required by compressible DG formulations.
 
+Supported model structure\+:
 \begin{DoxyItemize}
-\item Designed for compressible DG solvers using conservative formulations.
-\item All thermodynamic reconstruction is performed locally at Gauss points.
-\item Acts as a wrapper coordinating EOS, \doxylink{classFoam_1_1thermoLaw}{thermo\+Law}, \doxylink{classFoam_1_1transportLaw}{transport\+Law}, and energy models.
+\item Equation of state (\doxylink{classFoam_1_1eqnOfState}{eqn\+Of\+State})
+\item Thermodynamic law (\doxylink{classFoam_1_1thermoLaw}{thermo\+Law})
+\item Transport law (\doxylink{classFoam_1_1transportLaw}{transport\+Law})
+\item Energy formulation (energy\+Internal only)
 \end{DoxyItemize}
-\end{DoxyParagraph}
-\begin{DoxyParagraph}{Supported model families}
 
-\begin{DoxyItemize}
-\item Ideal-\/gas and thermal-\/perfect-\/gas EOS
-\item Compatible \doxylink{classFoam_1_1thermoLaw}{thermo\+Law} and \doxylink{classFoam_1_1transportLaw}{transport\+Law} models
-\item Internal-\/energy–based formulations (DG conservative)
-\end{DoxyItemize}
-\end{DoxyParagraph}
-\begin{DoxyParagraph}{Notes}
-
-\begin{DoxyItemize}
-\item Primitive-\/variable formulations are not supported.
-\item Incompressible models are not supported.
-\item DG conservative formulation uses internal energy only. 
-\end{DoxyItemize}
-\end{DoxyParagraph}
-
+The class is intended exclusively for conservative-\/variable DG formulations of compressible flow and does not support primitive or incompressible models. 
 
 \doxysubsection{Constructor \& Destructor Documentation}
 \Hypertarget{classFoam_1_1dgThermoConservative_abcc88a80802eadc541d2a43db4baf924}\label{classFoam_1_1dgThermoConservative_abcc88a80802eadc541d2a43db4baf924} 
@@ -230,9 +220,9 @@ Construct from name, dictionary, and DG mesh.
 
 
 \begin{DoxyParams}{Parameters}
-{\em name} & Model name \\
+{\em name} & Model instance name \\
 \hline
-{\em dict} & Coefficient dictionary \\
+{\em dict} & Thermodynamics dictionary \\
 \hline
 {\em mesh} & DG geometric mesh \\
 \hline
@@ -269,9 +259,9 @@ Construct from name, dictionary, and DG mesh.
 
 
 \begin{DoxyParams}{Parameters}
-{\em name} & Model name \\
+{\em name} & Model instance name \\
 \hline
-{\em dict} & Coefficient dictionary \\
+{\em dict} & Thermodynamics dictionary \\
 \hline
 {\em mesh} & DG geometric mesh \\
 \hline
@@ -309,20 +299,17 @@ Virtual destructor.
 
 
 
-Runtime selector. 
+Construct via runtime selection. 
 
 
 \begin{DoxyParams}{Parameters}
-{\em name} & Model name \\
+{\em name} & Model instance name \\
 \hline
-{\em dict} & Coefficient dictionary \\
+{\em dict} & Thermodynamics dictionary \\
 \hline
 {\em mesh} & DG geometric mesh \\
 \hline
 \end{DoxyParams}
-\begin{DoxyReturn}{Returns}
-Auto pointer to selected \doxylink{classFoam_1_1dgThermoConservative}{dg\+Thermo\+Conservative} model 
-\end{DoxyReturn}
 \Hypertarget{classFoam_1_1dgThermoConservative_abb3de860f55b94f6c6843d3c115beae3}\label{classFoam_1_1dgThermoConservative_abb3de860f55b94f6c6843d3c115beae3} 
 \index{Foam::dgThermoConservative@{Foam::dgThermoConservative}!initModels@{initModels}}
 \index{initModels@{initModels}!Foam::dgThermoConservative@{Foam::dgThermoConservative}}
@@ -333,7 +320,7 @@ Auto pointer to selected \doxylink{classFoam_1_1dgThermoConservative}{dg\+Thermo
 
 Construct EOS, thermo, transport, and energy models. 
 
-Derived classes must create and initialise all sub-\/models here. 
+
 
 Implemented in \mbox{\hyperlink{classFoam_1_1rhoBasedConservative_a890436460a44ecde44b7658e41964e13}{Foam\+::rho\+Based\+Conservative}}, and \mbox{\hyperlink{classFoam_1_1rhoBasedConservative_a8e6cd1ae4e3536b9375be5b801545fd6}{Foam\+::rho\+Based\+Conservative}}.
 
@@ -345,9 +332,9 @@ Implemented in \mbox{\hyperlink{classFoam_1_1rhoBasedConservative_a890436460a44e
 
 
 
-Validate model compatibility. 
+Validate selected model combinations. 
 
-Allows derived classes to check physical consistency between EOS, \doxylink{classFoam_1_1thermoLaw}{thermo\+Law}, \doxylink{classFoam_1_1transportLaw}{transport\+Law}, and energy models. 
+
 
 Implemented in \mbox{\hyperlink{classFoam_1_1rhoBasedConservative_a4796208132d49839213b5fb46ce07b01}{Foam\+::rho\+Based\+Conservative}}, and \mbox{\hyperlink{classFoam_1_1rhoBasedConservative_a4dbd15d3f77d5e36f616596f9f439274}{Foam\+::rho\+Based\+Conservative}}.
 
@@ -359,19 +346,35 @@ Implemented in \mbox{\hyperlink{classFoam_1_1rhoBasedConservative_a4796208132d49
 
 
 
-Update thermodynamic state for a given cell. 
-
-Reconstructs all primitive thermodynamic quantities at Gauss points from the conservative variables.
+Update thermodynamic fields for a cell. 
 
 
 \begin{DoxyParams}{Parameters}
-{\em cell\+ID} & Cell index \\
+{\em cell\+ID} & DG cell index \\
 \hline
 \end{DoxyParams}
 
 
 Implemented in \mbox{\hyperlink{classFoam_1_1rhoBasedConservative_aa571836786cf4474bcccef50159f8ca0}{Foam\+::rho\+Based\+Conservative}}, and \mbox{\hyperlink{classFoam_1_1rhoBasedConservative_aa258a8ffe5e6dcfb288ceb6fdd89149f}{Foam\+::rho\+Based\+Conservative}}.
 
+\Hypertarget{classFoam_1_1dgThermoConservative_a60b313ac9e6c7fc8fc033dd62cdb1ce5}\label{classFoam_1_1dgThermoConservative_a60b313ac9e6c7fc8fc033dd62cdb1ce5} 
+\index{Foam::dgThermoConservative@{Foam::dgThermoConservative}!writeData@{writeData}}
+\index{writeData@{writeData}!Foam::dgThermoConservative@{Foam::dgThermoConservative}}
+\doxysubsubsection{\texorpdfstring{writeData()}{writeData()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{bool}} Foam\+::dg\+Thermo\+Conservative\+::write\+Data (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{Ostream}} \&}]{os }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Write model data. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em os} & Output stream \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if write succeeded 
+\end{DoxyReturn}
 \Hypertarget{classFoam_1_1dgThermoConservative_aebf35ee153531dc0b07c3f62fc27e277}\label{classFoam_1_1dgThermoConservative_aebf35ee153531dc0b07c3f62fc27e277} 
 \index{Foam::dgThermoConservative@{Foam::dgThermoConservative}!eos@{eos}}
 \index{eos@{eos}!Foam::dgThermoConservative@{Foam::dgThermoConservative}}
@@ -400,7 +403,7 @@ Return thermodynamic law.
 
 
 
-Return transport-\/law model. 
+Return transport law. 
 
 \Hypertarget{classFoam_1_1dgThermoConservative_a4392eeb083ef5e15a7278651efeff899}\label{classFoam_1_1dgThermoConservative_a4392eeb083ef5e15a7278651efeff899} 
 \index{Foam::dgThermoConservative@{Foam::dgThermoConservative}!R@{R}}
@@ -460,7 +463,7 @@ Return internal energy field.
 
 
 
-Return dynamic viscosity field. 
+Return viscosity field. 
 
 \Hypertarget{classFoam_1_1dgThermoConservative_ac316c0b191d059a894f419301e3833c9}\label{classFoam_1_1dgThermoConservative_ac316c0b191d059a894f419301e3833c9} 
 \index{Foam::dgThermoConservative@{Foam::dgThermoConservative}!kappa@{kappa}}
@@ -502,17 +505,7 @@ Return speed-\/of-\/sound field.
 
 Return heat-\/capacity ratio field. 
 
-\Hypertarget{classFoam_1_1dgThermoConservative_a60b313ac9e6c7fc8fc033dd62cdb1ce5}\label{classFoam_1_1dgThermoConservative_a60b313ac9e6c7fc8fc033dd62cdb1ce5} 
-\index{Foam::dgThermoConservative@{Foam::dgThermoConservative}!writeData@{writeData}}
-\index{writeData@{writeData}!Foam::dgThermoConservative@{Foam::dgThermoConservative}}
-\doxysubsubsection{\texorpdfstring{writeData()}{writeData()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
-{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{bool}} Foam\+::dg\+Thermo\+Conservative\+::write\+Data (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{Ostream}} \&}]{os }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
-
-
-
-Write object data. 
-
-Overrides reg\+IOobject write behaviour. \Hypertarget{classFoam_1_1dgThermoConservative_ac10b60ba5bf7a6a6079e9369f6f9251d}\label{classFoam_1_1dgThermoConservative_ac10b60ba5bf7a6a6079e9369f6f9251d} 
+\Hypertarget{classFoam_1_1dgThermoConservative_ac10b60ba5bf7a6a6079e9369f6f9251d}\label{classFoam_1_1dgThermoConservative_ac10b60ba5bf7a6a6079e9369f6f9251d} 
 \index{Foam::dgThermoConservative@{Foam::dgThermoConservative}!TypeName@{TypeName}}
 \index{TypeName@{TypeName}!Foam::dgThermoConservative@{Foam::dgThermoConservative}}
 \doxysubsubsection{\texorpdfstring{TypeName()}{TypeName()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
@@ -532,20 +525,17 @@ Overrides reg\+IOobject write behaviour. \Hypertarget{classFoam_1_1dgThermoConse
 
 
 
-Runtime selector. 
+Construct via runtime selection. 
 
 
 \begin{DoxyParams}{Parameters}
-{\em name} & Model name \\
+{\em name} & Model instance name \\
 \hline
-{\em dict} & Coefficient dictionary \\
+{\em dict} & Thermodynamics dictionary \\
 \hline
 {\em mesh} & DG geometric mesh \\
 \hline
 \end{DoxyParams}
-\begin{DoxyReturn}{Returns}
-Auto pointer to selected \doxylink{classFoam_1_1dgThermoConservative}{dg\+Thermo\+Conservative} model 
-\end{DoxyReturn}
 \Hypertarget{classFoam_1_1dgThermoConservative_abb3de860f55b94f6c6843d3c115beae3}\label{classFoam_1_1dgThermoConservative_abb3de860f55b94f6c6843d3c115beae3} 
 \index{Foam::dgThermoConservative@{Foam::dgThermoConservative}!initModels@{initModels}}
 \index{initModels@{initModels}!Foam::dgThermoConservative@{Foam::dgThermoConservative}}
@@ -556,7 +546,7 @@ Auto pointer to selected \doxylink{classFoam_1_1dgThermoConservative}{dg\+Thermo
 
 Construct EOS, thermo, transport, and energy models. 
 
-Derived classes must create and initialise all sub-\/models here. 
+
 
 Implemented in \mbox{\hyperlink{classFoam_1_1rhoBasedConservative_a890436460a44ecde44b7658e41964e13}{Foam\+::rho\+Based\+Conservative}}, and \mbox{\hyperlink{classFoam_1_1rhoBasedConservative_a8e6cd1ae4e3536b9375be5b801545fd6}{Foam\+::rho\+Based\+Conservative}}.
 
@@ -568,9 +558,9 @@ Implemented in \mbox{\hyperlink{classFoam_1_1rhoBasedConservative_a890436460a44e
 
 
 
-Validate model compatibility. 
+Validate selected model combinations. 
 
-Allows derived classes to check physical consistency between EOS, \doxylink{classFoam_1_1thermoLaw}{thermo\+Law}, \doxylink{classFoam_1_1transportLaw}{transport\+Law}, and energy models. 
+
 
 Implemented in \mbox{\hyperlink{classFoam_1_1rhoBasedConservative_a4796208132d49839213b5fb46ce07b01}{Foam\+::rho\+Based\+Conservative}}, and \mbox{\hyperlink{classFoam_1_1rhoBasedConservative_a4dbd15d3f77d5e36f616596f9f439274}{Foam\+::rho\+Based\+Conservative}}.
 
@@ -582,19 +572,35 @@ Implemented in \mbox{\hyperlink{classFoam_1_1rhoBasedConservative_a4796208132d49
 
 
 
-Update thermodynamic state for a given cell. 
-
-Reconstructs all primitive thermodynamic quantities at Gauss points from the conservative variables.
+Update thermodynamic fields for a cell. 
 
 
 \begin{DoxyParams}{Parameters}
-{\em cell\+ID} & Cell index \\
+{\em cell\+ID} & DG cell index \\
 \hline
 \end{DoxyParams}
 
 
 Implemented in \mbox{\hyperlink{classFoam_1_1rhoBasedConservative_aa571836786cf4474bcccef50159f8ca0}{Foam\+::rho\+Based\+Conservative}}, and \mbox{\hyperlink{classFoam_1_1rhoBasedConservative_aa258a8ffe5e6dcfb288ceb6fdd89149f}{Foam\+::rho\+Based\+Conservative}}.
 
+\Hypertarget{classFoam_1_1dgThermoConservative_a533627c9fb3c157c054a1d73d65a80c0}\label{classFoam_1_1dgThermoConservative_a533627c9fb3c157c054a1d73d65a80c0} 
+\index{Foam::dgThermoConservative@{Foam::dgThermoConservative}!writeData@{writeData}}
+\index{writeData@{writeData}!Foam::dgThermoConservative@{Foam::dgThermoConservative}}
+\doxysubsubsection{\texorpdfstring{writeData()}{writeData()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{bool}} Foam\+::dg\+Thermo\+Conservative\+::write\+Data (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{Ostream}} \&}]{os }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Write model data. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em os} & Output stream \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if write succeeded 
+\end{DoxyReturn}
 \Hypertarget{classFoam_1_1dgThermoConservative_aebf35ee153531dc0b07c3f62fc27e277}\label{classFoam_1_1dgThermoConservative_aebf35ee153531dc0b07c3f62fc27e277} 
 \index{Foam::dgThermoConservative@{Foam::dgThermoConservative}!eos@{eos}}
 \index{eos@{eos}!Foam::dgThermoConservative@{Foam::dgThermoConservative}}
@@ -623,7 +629,7 @@ Return thermodynamic law.
 
 
 
-Return transport-\/law model. 
+Return transport law. 
 
 \Hypertarget{classFoam_1_1dgThermoConservative_a4392eeb083ef5e15a7278651efeff899}\label{classFoam_1_1dgThermoConservative_a4392eeb083ef5e15a7278651efeff899} 
 \index{Foam::dgThermoConservative@{Foam::dgThermoConservative}!R@{R}}
@@ -683,7 +689,7 @@ Return internal energy field.
 
 
 
-Return dynamic viscosity field. 
+Return viscosity field. 
 
 \Hypertarget{classFoam_1_1dgThermoConservative_ac316c0b191d059a894f419301e3833c9}\label{classFoam_1_1dgThermoConservative_ac316c0b191d059a894f419301e3833c9} 
 \index{Foam::dgThermoConservative@{Foam::dgThermoConservative}!kappa@{kappa}}
@@ -725,17 +731,7 @@ Return speed-\/of-\/sound field.
 
 Return heat-\/capacity ratio field. 
 
-\Hypertarget{classFoam_1_1dgThermoConservative_a533627c9fb3c157c054a1d73d65a80c0}\label{classFoam_1_1dgThermoConservative_a533627c9fb3c157c054a1d73d65a80c0} 
-\index{Foam::dgThermoConservative@{Foam::dgThermoConservative}!writeData@{writeData}}
-\index{writeData@{writeData}!Foam::dgThermoConservative@{Foam::dgThermoConservative}}
-\doxysubsubsection{\texorpdfstring{writeData()}{writeData()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
-{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{bool}} Foam\+::dg\+Thermo\+Conservative\+::write\+Data (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{Ostream}} \&}]{os }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
 
-
-
-Write object data. 
-
-Overrides reg\+IOobject write behaviour. 
 
 \doxysubsection{Member Data Documentation}
 \Hypertarget{classFoam_1_1dgThermoConservative_af6f3e367ae3c99da559a31e3a0368953}\label{classFoam_1_1dgThermoConservative_af6f3e367ae3c99da559a31e3a0368953} 
@@ -756,7 +752,7 @@ Model instance name.
 
 
 
-Root coefficient dictionary (immutable snapshot) 
+Root dictionary (immutable snapshot) 
 
 \Hypertarget{classFoam_1_1dgThermoConservative_ab4baf7f1f11284e239531dd4074ca4e3}\label{classFoam_1_1dgThermoConservative_ab4baf7f1f11284e239531dd4074ca4e3} 
 \index{Foam::dgThermoConservative@{Foam::dgThermoConservative}!mesh\_@{mesh\_}}
@@ -776,7 +772,7 @@ Reference to DG geometric mesh (non-\/owning)
 
 
 
-Equation-\/of-\/state model (owned) 
+Equation of state model (owning) 
 
 \Hypertarget{classFoam_1_1dgThermoConservative_ac46e2ac1642bb529bd66a804f235df10}\label{classFoam_1_1dgThermoConservative_ac46e2ac1642bb529bd66a804f235df10} 
 \index{Foam::dgThermoConservative@{Foam::dgThermoConservative}!thermo\_@{thermo\_}}
@@ -786,7 +782,7 @@ Equation-\/of-\/state model (owned)
 
 
 
-Thermodynamic law model (owned) 
+Thermodynamic law model (owning) 
 
 \Hypertarget{classFoam_1_1dgThermoConservative_aff6f3a0c875214a38b9b66320704a453}\label{classFoam_1_1dgThermoConservative_aff6f3a0c875214a38b9b66320704a453} 
 \index{Foam::dgThermoConservative@{Foam::dgThermoConservative}!transport\_@{transport\_}}
@@ -796,7 +792,7 @@ Thermodynamic law model (owned)
 
 
 
-Transport-\/law model (owned) 
+Transport law model (owning) 
 
 \Hypertarget{classFoam_1_1dgThermoConservative_ae90942b7d92370c2de76ec04c2cb34f9}\label{classFoam_1_1dgThermoConservative_ae90942b7d92370c2de76ec04c2cb34f9} 
 \index{Foam::dgThermoConservative@{Foam::dgThermoConservative}!energy\_@{energy\_}}
@@ -806,7 +802,7 @@ Transport-\/law model (owned)
 
 
 
-Energy model (owned) 
+Energy formulation model (owning) 
 
 \Hypertarget{classFoam_1_1dgThermoConservative_aa4e22b55410890d1677c4592326878a8}\label{classFoam_1_1dgThermoConservative_aa4e22b55410890d1677c4592326878a8} 
 \index{Foam::dgThermoConservative@{Foam::dgThermoConservative}!R\_@{R\_}}
@@ -846,7 +842,7 @@ Heat capacity at constant volume.
 
 
 
-Enthalpy field. 
+Specific enthalpy. 
 
 \Hypertarget{classFoam_1_1dgThermoConservative_aca16ef77fd1d63ac9afaf7aa4e7b0a99}\label{classFoam_1_1dgThermoConservative_aca16ef77fd1d63ac9afaf7aa4e7b0a99} 
 \index{Foam::dgThermoConservative@{Foam::dgThermoConservative}!e\_@{e\_}}
@@ -856,7 +852,7 @@ Enthalpy field.
 
 
 
-Internal energy field. 
+Specific internal energy. 
 
 \Hypertarget{classFoam_1_1dgThermoConservative_aa3cdf087c8d1dca9ecbadc3df8f802a4}\label{classFoam_1_1dgThermoConservative_aa3cdf087c8d1dca9ecbadc3df8f802a4} 
 \index{Foam::dgThermoConservative@{Foam::dgThermoConservative}!mu\_@{mu\_}}
@@ -916,7 +912,7 @@ Heat-\/capacity ratio.
 
 
 
-Density field. 
+Conservative density field (read-\/only) 
 
 \Hypertarget{classFoam_1_1dgThermoConservative_af6d75b279718f8462b6d57f4445af726}\label{classFoam_1_1dgThermoConservative_af6d75b279718f8462b6d57f4445af726} 
 \index{Foam::dgThermoConservative@{Foam::dgThermoConservative}!rhoU\_@{rhoU\_}}
@@ -926,7 +922,7 @@ Density field.
 
 
 
-Momentum field. 
+Conservative momentum field (read-\/only) 
 
 \Hypertarget{classFoam_1_1dgThermoConservative_a1fe78d1c5984c7d3cf02285b4e091dba}\label{classFoam_1_1dgThermoConservative_a1fe78d1c5984c7d3cf02285b4e091dba} 
 \index{Foam::dgThermoConservative@{Foam::dgThermoConservative}!E\_@{E\_}}
@@ -936,7 +932,7 @@ Momentum field.
 
 
 
-Total energy field. 
+Conservative total energy field (read-\/only) 
 
 \Hypertarget{classFoam_1_1dgThermoConservative_aec40a4e1869d6e89ef8d627cd52ad44d}\label{classFoam_1_1dgThermoConservative_aec40a4e1869d6e89ef8d627cd52ad44d} 
 \index{Foam::dgThermoConservative@{Foam::dgThermoConservative}!p\_@{p\_}}
@@ -946,7 +942,7 @@ Total energy field.
 
 
 
-Pressure field (output) 
+Pressure field (output storage) 
 
 \Hypertarget{classFoam_1_1dgThermoConservative_aab1f364057b391136fd57989723d7fbf}\label{classFoam_1_1dgThermoConservative_aab1f364057b391136fd57989723d7fbf} 
 \index{Foam::dgThermoConservative@{Foam::dgThermoConservative}!T\_@{T\_}}
@@ -956,7 +952,7 @@ Pressure field (output)
 
 
 
-Temperature field (output) 
+Temperature field (output storage) 
 
 
 

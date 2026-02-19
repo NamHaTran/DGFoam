@@ -2,6 +2,11 @@
 \hypertarget{classFoam_1_1dgGeneralBoundaryField}{}\label{classFoam_1_1dgGeneralBoundaryField}\index{Foam::dgGeneralBoundaryField$<$ Type $>$@{Foam::dgGeneralBoundaryField$<$ Type $>$}}
 
 
+Base class for DG ghost-\/state boundary conditions.  
+
+
+
+
 {\ttfamily \#include $<$dg\+General\+Boundary\+Field.\+H$>$}
 
 
@@ -28,84 +33,103 @@ Collaboration diagram for Foam\+::dg\+General\+Boundary\+Field\texorpdfstring{$<
 \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_a76a0522bf71632cdef0a24935f525333}{Type\+Name}} ("{}dg\+General\+Boundary\+Field"{})
 \item 
 \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_a717ef0581733bc4aa5c32561652ba7f8}{declare\+Run\+Time\+Selection\+Table}} (\mbox{\hyperlink{classFoam_1_1GaussField}{auto\+Ptr}}, \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField}{dg\+General\+Boundary\+Field}}, \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}},(\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{fv\+Patch}} \&\mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_a005dea866598236ad0bda74b694bb6fb}{patch}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \&\mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_a67193a1a1f618c6688825653a12edb7c}{dg\+Mesh}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}} \&\mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_acf8a9ee14cd01bde7a78896f1bfde325}{dict}}),(\mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_a005dea866598236ad0bda74b694bb6fb}{patch}}, \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_a67193a1a1f618c6688825653a12edb7c}{dg\+Mesh}}, \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_acf8a9ee14cd01bde7a78896f1bfde325}{dict}}))
-\item 
+\begin{DoxyCompactList}\small\item\em Runtime selection table for DG boundary conditions. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_aac61b93d59d4760dc44789446b2c0323}{dg\+General\+Boundary\+Field}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{fv\+Patch}} \&\mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_a005dea866598236ad0bda74b694bb6fb}{patch}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \&\mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_a67193a1a1f618c6688825653a12edb7c}{dg\+Mesh}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}} \&\mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_acf8a9ee14cd01bde7a78896f1bfde325}{dict}})
-\item 
+\begin{DoxyCompactList}\small\item\em Construct from patch, DG mesh, and dictionary. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_af3bc8927f451e8102e028b6350382f3f}{\texorpdfstring{$\sim$}{\string~}dg\+General\+Boundary\+Field}} ()=\mbox{\hyperlink{classFoam_1_1GaussField}{default}}
 \item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_aa7dbaa0dcb39c4f2e626d2becc772287}{update\+Ghost\+State\+Value}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} cell\+ID, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1GaussField}{face\+Local\+ID}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1GaussField}{local\+Gauss}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{n}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} \&minus\+Value, \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} \&plus\+Value) \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
-\item 
+\begin{DoxyCompactList}\small\item\em Update ghost-\/state value for scalar fields. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_af7c1f3ed62009c1fd4063507b09f758d}{update\+Ghost\+State\+Value}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} cell\+ID, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1GaussField}{face\+Local\+ID}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1GaussField}{local\+Gauss}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{n}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&minus\+Value, \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&plus\+Value) \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
-\item 
+\begin{DoxyCompactList}\small\item\em Update ghost-\/state value for vector fields. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_a420d7928832b7f2704c791bbf4469267}{update\+Ghost\+State\+Value}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} cell\+ID, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1GaussField}{face\+Local\+ID}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1GaussField}{local\+Gauss}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{n}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{tensor}} \&minus\+Value, \mbox{\hyperlink{classFoam_1_1GaussField}{tensor}} \&plus\+Value) \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
-\item 
+\begin{DoxyCompactList}\small\item\em Update ghost-\/state value for tensor fields. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_a7108337bba276840554a8e4caa6f526a}{update\+Ghost\+State\+Grad}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} cell\+ID, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1GaussField}{face\+Local\+ID}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1GaussField}{local\+Gauss}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{n}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{minus\+Grad}}, \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{plus\+Grad}}) \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
-\item 
+\begin{DoxyCompactList}\small\item\em Update ghost-\/state gradient for scalar fields. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_aaaa20bc0cb2202c8d03cce383abdae6e}{update\+Ghost\+State\+Grad}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} cell\+ID, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1GaussField}{face\+Local\+ID}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1GaussField}{local\+Gauss}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{n}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{minus\+Grad}}, \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{plus\+Grad}}) \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
-\item 
+\begin{DoxyCompactList}\small\item\em Update ghost-\/state gradient for vector fields. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_aeea27b41cb7cbba0bdb68335873d0abd}{update\+Ghost\+State\+Grad}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} cell\+ID, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1GaussField}{face\+Local\+ID}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1GaussField}{local\+Gauss}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{n}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{tensor}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{minus\+Grad}}, \mbox{\hyperlink{classFoam_1_1GaussField}{tensor}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{plus\+Grad}}) \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
-\item 
+\begin{DoxyCompactList}\small\item\em Update ghost-\/state gradient for tensor fields. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{fv\+Patch}} \& \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_a005dea866598236ad0bda74b694bb6fb}{patch}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
-\item 
+\begin{DoxyCompactList}\small\item\em Return boundary patch. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \& \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_a67193a1a1f618c6688825653a12edb7c}{dg\+Mesh}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
-\item 
+\begin{DoxyCompactList}\small\item\em Return DG geometric mesh. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}} \& \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_acf8a9ee14cd01bde7a78896f1bfde325}{dict}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
-\item 
+\begin{DoxyCompactList}\small\item\em Return boundary-\/condition dictionary. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{word}} \& \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_a04ad910650b81fe58fe83f8b3f631083}{name}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
-\item 
+\begin{DoxyCompactList}\small\item\em Return patch name. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{word}} \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_a8a004bd50144feb595ff50de3ebdd96c}{BCtype}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
-\item 
+\begin{DoxyCompactList}\small\item\em Return boundary-\/condition type name. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_a1d904132208a273feadb62f678d324ac}{check\+Patch\+Type}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
-\item 
+\begin{DoxyCompactList}\small\item\em Validate patch compatibility. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_a76a0522bf71632cdef0a24935f525333}{Type\+Name}} ("{}dg\+General\+Boundary\+Field"{})
 \item 
 \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_a717ef0581733bc4aa5c32561652ba7f8}{declare\+Run\+Time\+Selection\+Table}} (\mbox{\hyperlink{classFoam_1_1GaussField}{auto\+Ptr}}, \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField}{dg\+General\+Boundary\+Field}}, \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}},(\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{fv\+Patch}} \&\mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_a005dea866598236ad0bda74b694bb6fb}{patch}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \&\mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_a67193a1a1f618c6688825653a12edb7c}{dg\+Mesh}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}} \&\mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_acf8a9ee14cd01bde7a78896f1bfde325}{dict}}),(\mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_a005dea866598236ad0bda74b694bb6fb}{patch}}, \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_a67193a1a1f618c6688825653a12edb7c}{dg\+Mesh}}, \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_acf8a9ee14cd01bde7a78896f1bfde325}{dict}}))
-\item 
+\begin{DoxyCompactList}\small\item\em Runtime selection table for DG boundary conditions. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_aac61b93d59d4760dc44789446b2c0323}{dg\+General\+Boundary\+Field}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{fv\+Patch}} \&\mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_a005dea866598236ad0bda74b694bb6fb}{patch}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \&\mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_a67193a1a1f618c6688825653a12edb7c}{dg\+Mesh}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}} \&\mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_acf8a9ee14cd01bde7a78896f1bfde325}{dict}})
-\item 
+\begin{DoxyCompactList}\small\item\em Construct from patch, DG mesh, and dictionary. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_af3bc8927f451e8102e028b6350382f3f}{\texorpdfstring{$\sim$}{\string~}dg\+General\+Boundary\+Field}} ()=\mbox{\hyperlink{classFoam_1_1GaussField}{default}}
 \item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_aa7dbaa0dcb39c4f2e626d2becc772287}{update\+Ghost\+State\+Value}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} cell\+ID, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1GaussField}{face\+Local\+ID}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1GaussField}{local\+Gauss}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{n}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} \&minus\+Value, \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} \&plus\+Value) \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
-\item 
+\begin{DoxyCompactList}\small\item\em Update ghost-\/state value for scalar fields. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_af7c1f3ed62009c1fd4063507b09f758d}{update\+Ghost\+State\+Value}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} cell\+ID, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1GaussField}{face\+Local\+ID}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1GaussField}{local\+Gauss}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{n}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&minus\+Value, \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&plus\+Value) \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
-\item 
+\begin{DoxyCompactList}\small\item\em Update ghost-\/state value for vector fields. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_a420d7928832b7f2704c791bbf4469267}{update\+Ghost\+State\+Value}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} cell\+ID, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1GaussField}{face\+Local\+ID}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1GaussField}{local\+Gauss}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{n}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{tensor}} \&minus\+Value, \mbox{\hyperlink{classFoam_1_1GaussField}{tensor}} \&plus\+Value) \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
-\item 
+\begin{DoxyCompactList}\small\item\em Update ghost-\/state value for tensor fields. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_a7108337bba276840554a8e4caa6f526a}{update\+Ghost\+State\+Grad}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} cell\+ID, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1GaussField}{face\+Local\+ID}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1GaussField}{local\+Gauss}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{n}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{minus\+Grad}}, \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{plus\+Grad}}) \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
-\item 
+\begin{DoxyCompactList}\small\item\em Update ghost-\/state gradient for scalar fields. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_aaaa20bc0cb2202c8d03cce383abdae6e}{update\+Ghost\+State\+Grad}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} cell\+ID, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1GaussField}{face\+Local\+ID}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1GaussField}{local\+Gauss}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{n}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{minus\+Grad}}, \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{plus\+Grad}}) \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
-\item 
+\begin{DoxyCompactList}\small\item\em Update ghost-\/state gradient for vector fields. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_aeea27b41cb7cbba0bdb68335873d0abd}{update\+Ghost\+State\+Grad}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} cell\+ID, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1GaussField}{face\+Local\+ID}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1GaussField}{local\+Gauss}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{n}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{tensor}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{minus\+Grad}}, \mbox{\hyperlink{classFoam_1_1GaussField}{tensor}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{plus\+Grad}}) \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
-\item 
+\begin{DoxyCompactList}\small\item\em Update ghost-\/state gradient for tensor fields. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{fv\+Patch}} \& \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_a005dea866598236ad0bda74b694bb6fb}{patch}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
-\item 
+\begin{DoxyCompactList}\small\item\em Return boundary patch. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \& \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_a67193a1a1f618c6688825653a12edb7c}{dg\+Mesh}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
-\item 
+\begin{DoxyCompactList}\small\item\em Return DG geometric mesh. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}} \& \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_acf8a9ee14cd01bde7a78896f1bfde325}{dict}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
-\item 
+\begin{DoxyCompactList}\small\item\em Return boundary-\/condition dictionary. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{word}} \& \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_a04ad910650b81fe58fe83f8b3f631083}{name}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
-\item 
+\begin{DoxyCompactList}\small\item\em Return patch name. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{word}} \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_a8a004bd50144feb595ff50de3ebdd96c}{BCtype}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
-\item 
+\begin{DoxyCompactList}\small\item\em Return boundary-\/condition type name. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_a1d904132208a273feadb62f678d324ac}{check\+Patch\+Type}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Validate patch compatibility. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsubsection*{Static Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{static}} \mbox{\hyperlink{classFoam_1_1GaussField}{auto\+Ptr}}$<$ \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField}{dg\+General\+Boundary\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ $>$ \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_a6b2c19d09e9413ef455e28fada50a3d6}{New}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{fv\+Patch}} \&\mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_a005dea866598236ad0bda74b694bb6fb}{patch}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \&\mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_a67193a1a1f618c6688825653a12edb7c}{dg\+Mesh}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}} \&\mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_acf8a9ee14cd01bde7a78896f1bfde325}{dict}})
-\item 
+\begin{DoxyCompactList}\small\item\em Create boundary condition from dictionary. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{static}} \mbox{\hyperlink{classFoam_1_1GaussField}{auto\+Ptr}}$<$ \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField}{dg\+General\+Boundary\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ $>$ \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_a98a69fe33b0a19a0656ab6b281af3278}{New}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{fv\+Patch}} \&\mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_a005dea866598236ad0bda74b694bb6fb}{patch}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \&\mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_a67193a1a1f618c6688825653a12edb7c}{dg\+Mesh}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}} \&\mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_acf8a9ee14cd01bde7a78896f1bfde325}{dict}})
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Create boundary condition from dictionary. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsubsection*{Protected Attributes}
 \begin{DoxyCompactItemize}
 \item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{fv\+Patch}} \& \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_aace96ded992b70311437cdb261b78b7e}{patch\+\_\+}}
-\item 
+\begin{DoxyCompactList}\small\item\em Reference to fv\+Patch describing boundary geometry. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \& \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_a72a10f395de9aa19c4a582cf865e0437}{dg\+Mesh\+\_\+}}
-\item 
+\begin{DoxyCompactList}\small\item\em Reference to DG geometric mesh. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}} \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_a886f8a3eea50ae531aa3c07d31c2bc80}{dict\+\_\+}}
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Boundary-\/condition dictionary (stored by value) \end{DoxyCompactList}\end{DoxyCompactItemize}
 
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}}$>$\newline
+class Foam\+::dg\+General\+Boundary\+Field$<$ Type $>$}
+Base class for DG ghost-\/state boundary conditions. 
+
+Defines a runtime-\/selectable interface for DG boundary conditions that compute the exterior (plus-\/side) state from the interior (minus-\/side) state at boundary face Gauss points\+:
+
+\[
+  \phi^{-} \;\longrightarrow\; \phi^{+}
+\]
+
+Derived classes typically override\+:
+\begin{DoxyItemize}
+\item \doxylink{classFoam_1_1dgGeneralBoundaryField_aa7dbaa0dcb39c4f2e626d2becc772287}{update\+Ghost\+State\+Value()} to define the ghost-\/state value
+\item \doxylink{classFoam_1_1dgGeneralBoundaryField_a7108337bba276840554a8e4caa6f526a}{update\+Ghost\+State\+Grad()} to define the ghost-\/state gradient
+\end{DoxyItemize}
+
+The default implementation corresponds to a copy/zero-\/gradient behaviour. 
 
 \doxysubsection{Constructor \& Destructor Documentation}
 \Hypertarget{classFoam_1_1dgGeneralBoundaryField_aac61b93d59d4760dc44789446b2c0323}\label{classFoam_1_1dgGeneralBoundaryField_aac61b93d59d4760dc44789446b2c0323} 
@@ -115,6 +139,19 @@ Collaboration diagram for Foam\+::dg\+General\+Boundary\+Field\texorpdfstring{$<
 {\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
 \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField}{Foam\+::dg\+General\+Boundary\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::dg\+General\+Boundary\+Field (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{fv\+Patch}} \&}]{patch,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \&}]{dg\+Mesh,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}} \&}]{dict }\end{DoxyParamCaption})}
 
+
+
+Construct from patch, DG mesh, and dictionary. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em patch} & Finite-\/volume patch \\
+\hline
+{\em dg\+Mesh} & DG geometric mesh \\
+\hline
+{\em dict} & Boundary-\/condition dictionary \\
+\hline
+\end{DoxyParams}
 \Hypertarget{classFoam_1_1dgGeneralBoundaryField_af3bc8927f451e8102e028b6350382f3f}\label{classFoam_1_1dgGeneralBoundaryField_af3bc8927f451e8102e028b6350382f3f} 
 \index{Foam::dgGeneralBoundaryField$<$ Type $>$@{Foam::dgGeneralBoundaryField$<$ Type $>$}!````~dgGeneralBoundaryField@{\texorpdfstring{$\sim$}{\string~}dgGeneralBoundaryField}}
 \index{````~dgGeneralBoundaryField@{\texorpdfstring{$\sim$}{\string~}dgGeneralBoundaryField}!Foam::dgGeneralBoundaryField$<$ Type $>$@{Foam::dgGeneralBoundaryField$<$ Type $>$}}
@@ -129,6 +166,19 @@ Collaboration diagram for Foam\+::dg\+General\+Boundary\+Field\texorpdfstring{$<
 {\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
 \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField}{Foam\+::dg\+General\+Boundary\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::dg\+General\+Boundary\+Field (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{fv\+Patch}} \&}]{patch,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \&}]{dg\+Mesh,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}} \&}]{dict }\end{DoxyParamCaption})}
 
+
+
+Construct from patch, DG mesh, and dictionary. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em patch} & Finite-\/volume patch \\
+\hline
+{\em dg\+Mesh} & DG geometric mesh \\
+\hline
+{\em dict} & Boundary-\/condition dictionary \\
+\hline
+\end{DoxyParams}
 \Hypertarget{classFoam_1_1dgGeneralBoundaryField_af3bc8927f451e8102e028b6350382f3f}\label{classFoam_1_1dgGeneralBoundaryField_af3bc8927f451e8102e028b6350382f3f} 
 \index{Foam::dgGeneralBoundaryField$<$ Type $>$@{Foam::dgGeneralBoundaryField$<$ Type $>$}!````~dgGeneralBoundaryField@{\texorpdfstring{$\sim$}{\string~}dgGeneralBoundaryField}}
 \index{````~dgGeneralBoundaryField@{\texorpdfstring{$\sim$}{\string~}dgGeneralBoundaryField}!Foam::dgGeneralBoundaryField$<$ Type $>$@{Foam::dgGeneralBoundaryField$<$ Type $>$}}
@@ -153,13 +203,35 @@ Collaboration diagram for Foam\+::dg\+General\+Boundary\+Field\texorpdfstring{$<
 {\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
 \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField}{Foam\+::dg\+General\+Boundary\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::declare\+Run\+Time\+Selection\+Table (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{auto\+Ptr}}}]{,  }\item[{\mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField}{dg\+General\+Boundary\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$}]{,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}}}]{,  }\item[{(\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{fv\+Patch}} \&\mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_a005dea866598236ad0bda74b694bb6fb}{patch}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \&\mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_a67193a1a1f618c6688825653a12edb7c}{dg\+Mesh}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}} \&\mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_acf8a9ee14cd01bde7a78896f1bfde325}{dict}})}]{,  }\item[{(\mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_a005dea866598236ad0bda74b694bb6fb}{patch}}, \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_a67193a1a1f618c6688825653a12edb7c}{dg\+Mesh}}, \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_acf8a9ee14cd01bde7a78896f1bfde325}{dict}})}]{ }\end{DoxyParamCaption})}
 
-\Hypertarget{classFoam_1_1dgGeneralBoundaryField_a6b2c19d09e9413ef455e28fada50a3d6}\label{classFoam_1_1dgGeneralBoundaryField_a6b2c19d09e9413ef455e28fada50a3d6} 
+
+
+Runtime selection table for DG boundary conditions. 
+
+Enables dictionary-\/based construction of derived boundary-\/condition types. \Hypertarget{classFoam_1_1dgGeneralBoundaryField_a6b2c19d09e9413ef455e28fada50a3d6}\label{classFoam_1_1dgGeneralBoundaryField_a6b2c19d09e9413ef455e28fada50a3d6} 
 \index{Foam::dgGeneralBoundaryField$<$ Type $>$@{Foam::dgGeneralBoundaryField$<$ Type $>$}!New@{New}}
 \index{New@{New}!Foam::dgGeneralBoundaryField$<$ Type $>$@{Foam::dgGeneralBoundaryField$<$ Type $>$}}
 \doxysubsubsection{\texorpdfstring{New()}{New()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
 {\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
 \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::auto\+Ptr}}$<$ \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField}{Foam\+::dg\+General\+Boundary\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ $>$ \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField}{Foam\+::dg\+General\+Boundary\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::\+New (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{fv\+Patch}} \&}]{patch,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \&}]{dg\+Mesh,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}} \&}]{dict }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
 
+
+
+Create boundary condition from dictionary. 
+
+Uses the runtime-\/selection mechanism to construct a derived boundary-\/condition type.
+
+
+\begin{DoxyParams}{Parameters}
+{\em patch} & Finite-\/volume patch \\
+\hline
+{\em dg\+Mesh} & DG geometric mesh \\
+\hline
+{\em dict} & Boundary-\/condition dictionary \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+auto\+Ptr to constructed dg\+General\+Boundary\+Field$<$\+Type$>$ 
+\end{DoxyReturn}
 \Hypertarget{classFoam_1_1dgGeneralBoundaryField_aa7dbaa0dcb39c4f2e626d2becc772287}\label{classFoam_1_1dgGeneralBoundaryField_aa7dbaa0dcb39c4f2e626d2becc772287} 
 \index{Foam::dgGeneralBoundaryField$<$ Type $>$@{Foam::dgGeneralBoundaryField$<$ Type $>$}!updateGhostStateValue@{updateGhostStateValue}}
 \index{updateGhostStateValue@{updateGhostStateValue}!Foam::dgGeneralBoundaryField$<$ Type $>$@{Foam::dgGeneralBoundaryField$<$ Type $>$}}
@@ -167,6 +239,27 @@ Collaboration diagram for Foam\+::dg\+General\+Boundary\+Field\texorpdfstring{$<
 {\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
 \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField}{Foam\+::dg\+General\+Boundary\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::update\+Ghost\+State\+Value (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{cell\+ID,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{face\+Local\+ID,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{local\+Gauss,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&}]{n,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} \&}]{minus\+Value,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} \&}]{plus\+Value }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
 
+
+
+Update ghost-\/state value for scalar fields. 
+
+Default behaviour copies the interior value.
+
+
+\begin{DoxyParams}{Parameters}
+{\em cell\+ID} & Global cell index \\
+\hline
+{\em face\+Local\+ID} & Local face index within the cell \\
+\hline
+{\em local\+Gauss} & Local Gauss-\/point index on the face \\
+\hline
+{\em n} & Outward unit normal \\
+\hline
+{\em minus\+Value} & Interior (minus-\/side) value \\
+\hline
+{\em plus\+Value} & Ghost (plus-\/side) value to be set \\
+\hline
+\end{DoxyParams}
 
 
 Reimplemented in \mbox{\hyperlink{classFoam_1_1dgGeneralSymmetryBoundaryField_a260abd4df6840a9fd65ce71e7b63eba6}{Foam\+::dg\+General\+Symmetry\+Boundary\+Field$<$ Type $>$}}, and \mbox{\hyperlink{classFoam_1_1dgGeneralSymmetryBoundaryField_a260abd4df6840a9fd65ce71e7b63eba6}{Foam\+::dg\+General\+Symmetry\+Boundary\+Field$<$ Type $>$}}.
@@ -180,6 +273,27 @@ Reimplemented in \mbox{\hyperlink{classFoam_1_1dgGeneralSymmetryBoundaryField_a2
 
 
 
+Update ghost-\/state value for vector fields. 
+
+Default behaviour copies the interior value.
+
+
+\begin{DoxyParams}{Parameters}
+{\em cell\+ID} & Global cell index \\
+\hline
+{\em face\+Local\+ID} & Local face index within the cell \\
+\hline
+{\em local\+Gauss} & Local Gauss-\/point index on the face \\
+\hline
+{\em n} & Outward unit normal \\
+\hline
+{\em minus\+Value} & Interior (minus-\/side) value \\
+\hline
+{\em plus\+Value} & Ghost (plus-\/side) value to be set \\
+\hline
+\end{DoxyParams}
+
+
 Reimplemented in \mbox{\hyperlink{classFoam_1_1dgGeneralSymmetryBoundaryField_a02bcd7885d0f78211b7445edc7e6b3bd}{Foam\+::dg\+General\+Symmetry\+Boundary\+Field$<$ Type $>$}}, and \mbox{\hyperlink{classFoam_1_1dgGeneralSymmetryBoundaryField_a02bcd7885d0f78211b7445edc7e6b3bd}{Foam\+::dg\+General\+Symmetry\+Boundary\+Field$<$ Type $>$}}.
 
 \Hypertarget{classFoam_1_1dgGeneralBoundaryField_a420d7928832b7f2704c791bbf4469267}\label{classFoam_1_1dgGeneralBoundaryField_a420d7928832b7f2704c791bbf4469267} 
@@ -189,6 +303,27 @@ Reimplemented in \mbox{\hyperlink{classFoam_1_1dgGeneralSymmetryBoundaryField_a0
 {\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
 \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField}{Foam\+::dg\+General\+Boundary\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::update\+Ghost\+State\+Value (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{cell\+ID,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{face\+Local\+ID,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{local\+Gauss,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&}]{n,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{tensor}} \&}]{minus\+Value,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{tensor}} \&}]{plus\+Value }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
 
+
+
+Update ghost-\/state value for tensor fields. 
+
+Default behaviour copies the interior value.
+
+
+\begin{DoxyParams}{Parameters}
+{\em cell\+ID} & Global cell index \\
+\hline
+{\em face\+Local\+ID} & Local face index within the cell \\
+\hline
+{\em local\+Gauss} & Local Gauss-\/point index on the face \\
+\hline
+{\em n} & Outward unit normal \\
+\hline
+{\em minus\+Value} & Interior (minus-\/side) value \\
+\hline
+{\em plus\+Value} & Ghost (plus-\/side) value to be set \\
+\hline
+\end{DoxyParams}
 \Hypertarget{classFoam_1_1dgGeneralBoundaryField_a7108337bba276840554a8e4caa6f526a}\label{classFoam_1_1dgGeneralBoundaryField_a7108337bba276840554a8e4caa6f526a} 
 \index{Foam::dgGeneralBoundaryField$<$ Type $>$@{Foam::dgGeneralBoundaryField$<$ Type $>$}!updateGhostStateGrad@{updateGhostStateGrad}}
 \index{updateGhostStateGrad@{updateGhostStateGrad}!Foam::dgGeneralBoundaryField$<$ Type $>$@{Foam::dgGeneralBoundaryField$<$ Type $>$}}
@@ -196,6 +331,27 @@ Reimplemented in \mbox{\hyperlink{classFoam_1_1dgGeneralSymmetryBoundaryField_a0
 {\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
 \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField}{Foam\+::dg\+General\+Boundary\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::update\+Ghost\+State\+Grad (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{cell\+ID,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{face\+Local\+ID,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{local\+Gauss,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&}]{n,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} \&}]{minus\+Grad,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} \&}]{plus\+Grad }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
 
+
+
+Update ghost-\/state gradient for scalar fields. 
+
+Default behaviour copies the interior gradient.
+
+
+\begin{DoxyParams}{Parameters}
+{\em cell\+ID} & Global cell index \\
+\hline
+{\em face\+Local\+ID} & Local face index within the cell \\
+\hline
+{\em local\+Gauss} & Local Gauss-\/point index on the face \\
+\hline
+{\em n} & Outward unit normal \\
+\hline
+{\em minus\+Grad} & Interior (minus-\/side) gradient \\
+\hline
+{\em plus\+Grad} & Ghost (plus-\/side) gradient to be set \\
+\hline
+\end{DoxyParams}
 \Hypertarget{classFoam_1_1dgGeneralBoundaryField_aaaa20bc0cb2202c8d03cce383abdae6e}\label{classFoam_1_1dgGeneralBoundaryField_aaaa20bc0cb2202c8d03cce383abdae6e} 
 \index{Foam::dgGeneralBoundaryField$<$ Type $>$@{Foam::dgGeneralBoundaryField$<$ Type $>$}!updateGhostStateGrad@{updateGhostStateGrad}}
 \index{updateGhostStateGrad@{updateGhostStateGrad}!Foam::dgGeneralBoundaryField$<$ Type $>$@{Foam::dgGeneralBoundaryField$<$ Type $>$}}
@@ -203,6 +359,27 @@ Reimplemented in \mbox{\hyperlink{classFoam_1_1dgGeneralSymmetryBoundaryField_a0
 {\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
 \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField}{Foam\+::dg\+General\+Boundary\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::update\+Ghost\+State\+Grad (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{cell\+ID,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{face\+Local\+ID,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{local\+Gauss,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&}]{n,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&}]{minus\+Grad,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&}]{plus\+Grad }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
 
+
+
+Update ghost-\/state gradient for vector fields. 
+
+Default behaviour copies the interior gradient.
+
+
+\begin{DoxyParams}{Parameters}
+{\em cell\+ID} & Global cell index \\
+\hline
+{\em face\+Local\+ID} & Local face index within the cell \\
+\hline
+{\em local\+Gauss} & Local Gauss-\/point index on the face \\
+\hline
+{\em n} & Outward unit normal \\
+\hline
+{\em minus\+Grad} & Interior (minus-\/side) gradient \\
+\hline
+{\em plus\+Grad} & Ghost (plus-\/side) gradient to be set \\
+\hline
+\end{DoxyParams}
 \Hypertarget{classFoam_1_1dgGeneralBoundaryField_aeea27b41cb7cbba0bdb68335873d0abd}\label{classFoam_1_1dgGeneralBoundaryField_aeea27b41cb7cbba0bdb68335873d0abd} 
 \index{Foam::dgGeneralBoundaryField$<$ Type $>$@{Foam::dgGeneralBoundaryField$<$ Type $>$}!updateGhostStateGrad@{updateGhostStateGrad}}
 \index{updateGhostStateGrad@{updateGhostStateGrad}!Foam::dgGeneralBoundaryField$<$ Type $>$@{Foam::dgGeneralBoundaryField$<$ Type $>$}}
@@ -210,12 +387,37 @@ Reimplemented in \mbox{\hyperlink{classFoam_1_1dgGeneralSymmetryBoundaryField_a0
 {\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
 \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField}{Foam\+::dg\+General\+Boundary\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::update\+Ghost\+State\+Grad (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{cell\+ID,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{face\+Local\+ID,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{local\+Gauss,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&}]{n,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{tensor}} \&}]{minus\+Grad,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{tensor}} \&}]{plus\+Grad }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
 
+
+
+Update ghost-\/state gradient for tensor fields. 
+
+Default behaviour copies the interior gradient.
+
+
+\begin{DoxyParams}{Parameters}
+{\em cell\+ID} & Global cell index \\
+\hline
+{\em face\+Local\+ID} & Local face index within the cell \\
+\hline
+{\em local\+Gauss} & Local Gauss-\/point index on the face \\
+\hline
+{\em n} & Outward unit normal \\
+\hline
+{\em minus\+Grad} & Interior (minus-\/side) gradient \\
+\hline
+{\em plus\+Grad} & Ghost (plus-\/side) gradient to be set \\
+\hline
+\end{DoxyParams}
 \Hypertarget{classFoam_1_1dgGeneralBoundaryField_a005dea866598236ad0bda74b694bb6fb}\label{classFoam_1_1dgGeneralBoundaryField_a005dea866598236ad0bda74b694bb6fb} 
 \index{Foam::dgGeneralBoundaryField$<$ Type $>$@{Foam::dgGeneralBoundaryField$<$ Type $>$}!patch@{patch}}
 \index{patch@{patch}!Foam::dgGeneralBoundaryField$<$ Type $>$@{Foam::dgGeneralBoundaryField$<$ Type $>$}}
 \doxysubsubsection{\texorpdfstring{patch()}{patch()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
 {\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{fv\+Patch}} \& \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField}{Foam\+::dg\+General\+Boundary\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::patch (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Return boundary patch. 
 
 \Hypertarget{classFoam_1_1dgGeneralBoundaryField_a67193a1a1f618c6688825653a12edb7c}\label{classFoam_1_1dgGeneralBoundaryField_a67193a1a1f618c6688825653a12edb7c} 
 \index{Foam::dgGeneralBoundaryField$<$ Type $>$@{Foam::dgGeneralBoundaryField$<$ Type $>$}!dgMesh@{dgMesh}}
@@ -224,12 +426,20 @@ Reimplemented in \mbox{\hyperlink{classFoam_1_1dgGeneralSymmetryBoundaryField_a0
 {\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \& \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField}{Foam\+::dg\+General\+Boundary\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::dg\+Mesh (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
 
+
+
+Return DG geometric mesh. 
+
 \Hypertarget{classFoam_1_1dgGeneralBoundaryField_acf8a9ee14cd01bde7a78896f1bfde325}\label{classFoam_1_1dgGeneralBoundaryField_acf8a9ee14cd01bde7a78896f1bfde325} 
 \index{Foam::dgGeneralBoundaryField$<$ Type $>$@{Foam::dgGeneralBoundaryField$<$ Type $>$}!dict@{dict}}
 \index{dict@{dict}!Foam::dgGeneralBoundaryField$<$ Type $>$@{Foam::dgGeneralBoundaryField$<$ Type $>$}}
 \doxysubsubsection{\texorpdfstring{dict()}{dict()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
 {\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}} \& \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField}{Foam\+::dg\+General\+Boundary\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::dict (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Return boundary-\/condition dictionary. 
 
 \Hypertarget{classFoam_1_1dgGeneralBoundaryField_a04ad910650b81fe58fe83f8b3f631083}\label{classFoam_1_1dgGeneralBoundaryField_a04ad910650b81fe58fe83f8b3f631083} 
 \index{Foam::dgGeneralBoundaryField$<$ Type $>$@{Foam::dgGeneralBoundaryField$<$ Type $>$}!name@{name}}
@@ -238,6 +448,10 @@ Reimplemented in \mbox{\hyperlink{classFoam_1_1dgGeneralSymmetryBoundaryField_a0
 {\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{word}} \& \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField}{Foam\+::dg\+General\+Boundary\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::name (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
 
+
+
+Return patch name. 
+
 \Hypertarget{classFoam_1_1dgGeneralBoundaryField_a8a004bd50144feb595ff50de3ebdd96c}\label{classFoam_1_1dgGeneralBoundaryField_a8a004bd50144feb595ff50de3ebdd96c} 
 \index{Foam::dgGeneralBoundaryField$<$ Type $>$@{Foam::dgGeneralBoundaryField$<$ Type $>$}!BCtype@{BCtype}}
 \index{BCtype@{BCtype}!Foam::dgGeneralBoundaryField$<$ Type $>$@{Foam::dgGeneralBoundaryField$<$ Type $>$}}
@@ -245,6 +459,15 @@ Reimplemented in \mbox{\hyperlink{classFoam_1_1dgGeneralSymmetryBoundaryField_a0
 {\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
 \mbox{\hyperlink{classFoam_1_1GaussField}{word}} \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField}{Foam\+::dg\+General\+Boundary\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::\+BCtype (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
 
+
+
+Return boundary-\/condition type name. 
+
+Extracts the value of dictionary entry {\ttfamily type}.
+
+\begin{DoxyReturn}{Returns}
+Boundary-\/condition type name 
+\end{DoxyReturn}
 \Hypertarget{classFoam_1_1dgGeneralBoundaryField_a1d904132208a273feadb62f678d324ac}\label{classFoam_1_1dgGeneralBoundaryField_a1d904132208a273feadb62f678d324ac} 
 \index{Foam::dgGeneralBoundaryField$<$ Type $>$@{Foam::dgGeneralBoundaryField$<$ Type $>$}!checkPatchType@{checkPatchType}}
 \index{checkPatchType@{checkPatchType}!Foam::dgGeneralBoundaryField$<$ Type $>$@{Foam::dgGeneralBoundaryField$<$ Type $>$}}
@@ -253,6 +476,10 @@ Reimplemented in \mbox{\hyperlink{classFoam_1_1dgGeneralSymmetryBoundaryField_a0
 \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField}{Foam\+::dg\+General\+Boundary\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::check\+Patch\+Type (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
 
 
+
+Validate patch compatibility. 
+
+Derived classes should override this method to restrict supported patch types. 
 
 Reimplemented in \mbox{\hyperlink{classFoam_1_1dgGeneralFixedValueBoundaryField_a7bef1c8d95d38ff7872ebb96f84065c0}{Foam\+::dg\+General\+Fixed\+Value\+Boundary\+Field$<$ Type $>$}}, \mbox{\hyperlink{classFoam_1_1dgGeneralInletOutletBoundaryField_ad1130e0cafb133009373c34b5bf826b3}{Foam\+::dg\+General\+Inlet\+Outlet\+Boundary\+Field$<$ Type $>$}}, \mbox{\hyperlink{classFoam_1_1dgGeneralSymmetryBoundaryField_a701fc800e004e6fcda37ee8f9d664c8c}{Foam\+::dg\+General\+Symmetry\+Boundary\+Field$<$ Type $>$}}, \mbox{\hyperlink{classFoam_1_1dgGeneralFixedValueBoundaryField_a7bef1c8d95d38ff7872ebb96f84065c0}{Foam\+::dg\+General\+Fixed\+Value\+Boundary\+Field$<$ Type $>$}}, \mbox{\hyperlink{classFoam_1_1dgGeneralInletOutletBoundaryField_ad1130e0cafb133009373c34b5bf826b3}{Foam\+::dg\+General\+Inlet\+Outlet\+Boundary\+Field$<$ Type $>$}}, and \mbox{\hyperlink{classFoam_1_1dgGeneralSymmetryBoundaryField_a701fc800e004e6fcda37ee8f9d664c8c}{Foam\+::dg\+General\+Symmetry\+Boundary\+Field$<$ Type $>$}}.
 
@@ -270,13 +497,35 @@ Reimplemented in \mbox{\hyperlink{classFoam_1_1dgGeneralFixedValueBoundaryField_
 {\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
 \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField}{Foam\+::dg\+General\+Boundary\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::declare\+Run\+Time\+Selection\+Table (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{auto\+Ptr}}}]{,  }\item[{\mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField}{dg\+General\+Boundary\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$}]{,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}}}]{,  }\item[{(\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{fv\+Patch}} \&\mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_a005dea866598236ad0bda74b694bb6fb}{patch}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \&\mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_a67193a1a1f618c6688825653a12edb7c}{dg\+Mesh}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}} \&\mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_acf8a9ee14cd01bde7a78896f1bfde325}{dict}})}]{,  }\item[{(\mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_a005dea866598236ad0bda74b694bb6fb}{patch}}, \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_a67193a1a1f618c6688825653a12edb7c}{dg\+Mesh}}, \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_acf8a9ee14cd01bde7a78896f1bfde325}{dict}})}]{ }\end{DoxyParamCaption})}
 
-\Hypertarget{classFoam_1_1dgGeneralBoundaryField_a98a69fe33b0a19a0656ab6b281af3278}\label{classFoam_1_1dgGeneralBoundaryField_a98a69fe33b0a19a0656ab6b281af3278} 
+
+
+Runtime selection table for DG boundary conditions. 
+
+Enables dictionary-\/based construction of derived boundary-\/condition types. \Hypertarget{classFoam_1_1dgGeneralBoundaryField_a98a69fe33b0a19a0656ab6b281af3278}\label{classFoam_1_1dgGeneralBoundaryField_a98a69fe33b0a19a0656ab6b281af3278} 
 \index{Foam::dgGeneralBoundaryField$<$ Type $>$@{Foam::dgGeneralBoundaryField$<$ Type $>$}!New@{New}}
 \index{New@{New}!Foam::dgGeneralBoundaryField$<$ Type $>$@{Foam::dgGeneralBoundaryField$<$ Type $>$}}
 \doxysubsubsection{\texorpdfstring{New()}{New()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
 {\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
 \mbox{\hyperlink{classFoam_1_1GaussField}{static}} \mbox{\hyperlink{classFoam_1_1GaussField}{auto\+Ptr}}$<$ \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField}{dg\+General\+Boundary\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ $>$ \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField}{Foam\+::dg\+General\+Boundary\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::\+New (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{fv\+Patch}} \&}]{patch,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \&}]{dg\+Mesh,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}} \&}]{dict }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
 
+
+
+Create boundary condition from dictionary. 
+
+Uses the runtime-\/selection mechanism to construct a derived boundary-\/condition type.
+
+
+\begin{DoxyParams}{Parameters}
+{\em patch} & Finite-\/volume patch \\
+\hline
+{\em dg\+Mesh} & DG geometric mesh \\
+\hline
+{\em dict} & Boundary-\/condition dictionary \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+auto\+Ptr to constructed dg\+General\+Boundary\+Field$<$\+Type$>$ 
+\end{DoxyReturn}
 \Hypertarget{classFoam_1_1dgGeneralBoundaryField_aa7dbaa0dcb39c4f2e626d2becc772287}\label{classFoam_1_1dgGeneralBoundaryField_aa7dbaa0dcb39c4f2e626d2becc772287} 
 \index{Foam::dgGeneralBoundaryField$<$ Type $>$@{Foam::dgGeneralBoundaryField$<$ Type $>$}!updateGhostStateValue@{updateGhostStateValue}}
 \index{updateGhostStateValue@{updateGhostStateValue}!Foam::dgGeneralBoundaryField$<$ Type $>$@{Foam::dgGeneralBoundaryField$<$ Type $>$}}
@@ -284,6 +533,27 @@ Reimplemented in \mbox{\hyperlink{classFoam_1_1dgGeneralFixedValueBoundaryField_
 {\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
 \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField}{Foam\+::dg\+General\+Boundary\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::update\+Ghost\+State\+Value (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{cell\+ID,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{face\+Local\+ID,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{local\+Gauss,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&}]{n,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} \&}]{minus\+Value,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} \&}]{plus\+Value }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
 
+
+
+Update ghost-\/state value for scalar fields. 
+
+Default behaviour copies the interior value.
+
+
+\begin{DoxyParams}{Parameters}
+{\em cell\+ID} & Global cell index \\
+\hline
+{\em face\+Local\+ID} & Local face index within the cell \\
+\hline
+{\em local\+Gauss} & Local Gauss-\/point index on the face \\
+\hline
+{\em n} & Outward unit normal \\
+\hline
+{\em minus\+Value} & Interior (minus-\/side) value \\
+\hline
+{\em plus\+Value} & Ghost (plus-\/side) value to be set \\
+\hline
+\end{DoxyParams}
 
 
 Reimplemented in \mbox{\hyperlink{classFoam_1_1dgGeneralSymmetryBoundaryField_a260abd4df6840a9fd65ce71e7b63eba6}{Foam\+::dg\+General\+Symmetry\+Boundary\+Field$<$ Type $>$}}, and \mbox{\hyperlink{classFoam_1_1dgGeneralSymmetryBoundaryField_a260abd4df6840a9fd65ce71e7b63eba6}{Foam\+::dg\+General\+Symmetry\+Boundary\+Field$<$ Type $>$}}.
@@ -297,6 +567,27 @@ Reimplemented in \mbox{\hyperlink{classFoam_1_1dgGeneralSymmetryBoundaryField_a2
 
 
 
+Update ghost-\/state value for vector fields. 
+
+Default behaviour copies the interior value.
+
+
+\begin{DoxyParams}{Parameters}
+{\em cell\+ID} & Global cell index \\
+\hline
+{\em face\+Local\+ID} & Local face index within the cell \\
+\hline
+{\em local\+Gauss} & Local Gauss-\/point index on the face \\
+\hline
+{\em n} & Outward unit normal \\
+\hline
+{\em minus\+Value} & Interior (minus-\/side) value \\
+\hline
+{\em plus\+Value} & Ghost (plus-\/side) value to be set \\
+\hline
+\end{DoxyParams}
+
+
 Reimplemented in \mbox{\hyperlink{classFoam_1_1dgGeneralSymmetryBoundaryField_a02bcd7885d0f78211b7445edc7e6b3bd}{Foam\+::dg\+General\+Symmetry\+Boundary\+Field$<$ Type $>$}}, and \mbox{\hyperlink{classFoam_1_1dgGeneralSymmetryBoundaryField_a02bcd7885d0f78211b7445edc7e6b3bd}{Foam\+::dg\+General\+Symmetry\+Boundary\+Field$<$ Type $>$}}.
 
 \Hypertarget{classFoam_1_1dgGeneralBoundaryField_a420d7928832b7f2704c791bbf4469267}\label{classFoam_1_1dgGeneralBoundaryField_a420d7928832b7f2704c791bbf4469267} 
@@ -306,6 +597,27 @@ Reimplemented in \mbox{\hyperlink{classFoam_1_1dgGeneralSymmetryBoundaryField_a0
 {\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
 \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField}{Foam\+::dg\+General\+Boundary\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::update\+Ghost\+State\+Value (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{cell\+ID,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{face\+Local\+ID,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{local\+Gauss,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&}]{n,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{tensor}} \&}]{minus\+Value,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{tensor}} \&}]{plus\+Value }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
 
+
+
+Update ghost-\/state value for tensor fields. 
+
+Default behaviour copies the interior value.
+
+
+\begin{DoxyParams}{Parameters}
+{\em cell\+ID} & Global cell index \\
+\hline
+{\em face\+Local\+ID} & Local face index within the cell \\
+\hline
+{\em local\+Gauss} & Local Gauss-\/point index on the face \\
+\hline
+{\em n} & Outward unit normal \\
+\hline
+{\em minus\+Value} & Interior (minus-\/side) value \\
+\hline
+{\em plus\+Value} & Ghost (plus-\/side) value to be set \\
+\hline
+\end{DoxyParams}
 \Hypertarget{classFoam_1_1dgGeneralBoundaryField_a7108337bba276840554a8e4caa6f526a}\label{classFoam_1_1dgGeneralBoundaryField_a7108337bba276840554a8e4caa6f526a} 
 \index{Foam::dgGeneralBoundaryField$<$ Type $>$@{Foam::dgGeneralBoundaryField$<$ Type $>$}!updateGhostStateGrad@{updateGhostStateGrad}}
 \index{updateGhostStateGrad@{updateGhostStateGrad}!Foam::dgGeneralBoundaryField$<$ Type $>$@{Foam::dgGeneralBoundaryField$<$ Type $>$}}
@@ -313,6 +625,27 @@ Reimplemented in \mbox{\hyperlink{classFoam_1_1dgGeneralSymmetryBoundaryField_a0
 {\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
 \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField}{Foam\+::dg\+General\+Boundary\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::update\+Ghost\+State\+Grad (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{cell\+ID,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{face\+Local\+ID,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{local\+Gauss,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&}]{n,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} \&}]{minus\+Grad,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} \&}]{plus\+Grad }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
 
+
+
+Update ghost-\/state gradient for scalar fields. 
+
+Default behaviour copies the interior gradient.
+
+
+\begin{DoxyParams}{Parameters}
+{\em cell\+ID} & Global cell index \\
+\hline
+{\em face\+Local\+ID} & Local face index within the cell \\
+\hline
+{\em local\+Gauss} & Local Gauss-\/point index on the face \\
+\hline
+{\em n} & Outward unit normal \\
+\hline
+{\em minus\+Grad} & Interior (minus-\/side) gradient \\
+\hline
+{\em plus\+Grad} & Ghost (plus-\/side) gradient to be set \\
+\hline
+\end{DoxyParams}
 \Hypertarget{classFoam_1_1dgGeneralBoundaryField_aaaa20bc0cb2202c8d03cce383abdae6e}\label{classFoam_1_1dgGeneralBoundaryField_aaaa20bc0cb2202c8d03cce383abdae6e} 
 \index{Foam::dgGeneralBoundaryField$<$ Type $>$@{Foam::dgGeneralBoundaryField$<$ Type $>$}!updateGhostStateGrad@{updateGhostStateGrad}}
 \index{updateGhostStateGrad@{updateGhostStateGrad}!Foam::dgGeneralBoundaryField$<$ Type $>$@{Foam::dgGeneralBoundaryField$<$ Type $>$}}
@@ -320,6 +653,27 @@ Reimplemented in \mbox{\hyperlink{classFoam_1_1dgGeneralSymmetryBoundaryField_a0
 {\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
 \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField}{Foam\+::dg\+General\+Boundary\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::update\+Ghost\+State\+Grad (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{cell\+ID,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{face\+Local\+ID,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{local\+Gauss,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&}]{n,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&}]{minus\+Grad,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&}]{plus\+Grad }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
 
+
+
+Update ghost-\/state gradient for vector fields. 
+
+Default behaviour copies the interior gradient.
+
+
+\begin{DoxyParams}{Parameters}
+{\em cell\+ID} & Global cell index \\
+\hline
+{\em face\+Local\+ID} & Local face index within the cell \\
+\hline
+{\em local\+Gauss} & Local Gauss-\/point index on the face \\
+\hline
+{\em n} & Outward unit normal \\
+\hline
+{\em minus\+Grad} & Interior (minus-\/side) gradient \\
+\hline
+{\em plus\+Grad} & Ghost (plus-\/side) gradient to be set \\
+\hline
+\end{DoxyParams}
 \Hypertarget{classFoam_1_1dgGeneralBoundaryField_aeea27b41cb7cbba0bdb68335873d0abd}\label{classFoam_1_1dgGeneralBoundaryField_aeea27b41cb7cbba0bdb68335873d0abd} 
 \index{Foam::dgGeneralBoundaryField$<$ Type $>$@{Foam::dgGeneralBoundaryField$<$ Type $>$}!updateGhostStateGrad@{updateGhostStateGrad}}
 \index{updateGhostStateGrad@{updateGhostStateGrad}!Foam::dgGeneralBoundaryField$<$ Type $>$@{Foam::dgGeneralBoundaryField$<$ Type $>$}}
@@ -327,12 +681,37 @@ Reimplemented in \mbox{\hyperlink{classFoam_1_1dgGeneralSymmetryBoundaryField_a0
 {\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
 \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField}{Foam\+::dg\+General\+Boundary\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::update\+Ghost\+State\+Grad (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{cell\+ID,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{face\+Local\+ID,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{local\+Gauss,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&}]{n,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{tensor}} \&}]{minus\+Grad,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{tensor}} \&}]{plus\+Grad }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
 
+
+
+Update ghost-\/state gradient for tensor fields. 
+
+Default behaviour copies the interior gradient.
+
+
+\begin{DoxyParams}{Parameters}
+{\em cell\+ID} & Global cell index \\
+\hline
+{\em face\+Local\+ID} & Local face index within the cell \\
+\hline
+{\em local\+Gauss} & Local Gauss-\/point index on the face \\
+\hline
+{\em n} & Outward unit normal \\
+\hline
+{\em minus\+Grad} & Interior (minus-\/side) gradient \\
+\hline
+{\em plus\+Grad} & Ghost (plus-\/side) gradient to be set \\
+\hline
+\end{DoxyParams}
 \Hypertarget{classFoam_1_1dgGeneralBoundaryField_a005dea866598236ad0bda74b694bb6fb}\label{classFoam_1_1dgGeneralBoundaryField_a005dea866598236ad0bda74b694bb6fb} 
 \index{Foam::dgGeneralBoundaryField$<$ Type $>$@{Foam::dgGeneralBoundaryField$<$ Type $>$}!patch@{patch}}
 \index{patch@{patch}!Foam::dgGeneralBoundaryField$<$ Type $>$@{Foam::dgGeneralBoundaryField$<$ Type $>$}}
 \doxysubsubsection{\texorpdfstring{patch()}{patch()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
 {\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{fv\+Patch}} \& \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField}{Foam\+::dg\+General\+Boundary\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::patch (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Return boundary patch. 
 
 \Hypertarget{classFoam_1_1dgGeneralBoundaryField_a67193a1a1f618c6688825653a12edb7c}\label{classFoam_1_1dgGeneralBoundaryField_a67193a1a1f618c6688825653a12edb7c} 
 \index{Foam::dgGeneralBoundaryField$<$ Type $>$@{Foam::dgGeneralBoundaryField$<$ Type $>$}!dgMesh@{dgMesh}}
@@ -341,12 +720,20 @@ Reimplemented in \mbox{\hyperlink{classFoam_1_1dgGeneralSymmetryBoundaryField_a0
 {\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \& \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField}{Foam\+::dg\+General\+Boundary\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::dg\+Mesh (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
 
+
+
+Return DG geometric mesh. 
+
 \Hypertarget{classFoam_1_1dgGeneralBoundaryField_acf8a9ee14cd01bde7a78896f1bfde325}\label{classFoam_1_1dgGeneralBoundaryField_acf8a9ee14cd01bde7a78896f1bfde325} 
 \index{Foam::dgGeneralBoundaryField$<$ Type $>$@{Foam::dgGeneralBoundaryField$<$ Type $>$}!dict@{dict}}
 \index{dict@{dict}!Foam::dgGeneralBoundaryField$<$ Type $>$@{Foam::dgGeneralBoundaryField$<$ Type $>$}}
 \doxysubsubsection{\texorpdfstring{dict()}{dict()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
 {\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}} \& \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField}{Foam\+::dg\+General\+Boundary\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::dict (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Return boundary-\/condition dictionary. 
 
 \Hypertarget{classFoam_1_1dgGeneralBoundaryField_a04ad910650b81fe58fe83f8b3f631083}\label{classFoam_1_1dgGeneralBoundaryField_a04ad910650b81fe58fe83f8b3f631083} 
 \index{Foam::dgGeneralBoundaryField$<$ Type $>$@{Foam::dgGeneralBoundaryField$<$ Type $>$}!name@{name}}
@@ -355,6 +742,10 @@ Reimplemented in \mbox{\hyperlink{classFoam_1_1dgGeneralSymmetryBoundaryField_a0
 {\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{word}} \& \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField}{Foam\+::dg\+General\+Boundary\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::name (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
 
+
+
+Return patch name. 
+
 \Hypertarget{classFoam_1_1dgGeneralBoundaryField_a8a004bd50144feb595ff50de3ebdd96c}\label{classFoam_1_1dgGeneralBoundaryField_a8a004bd50144feb595ff50de3ebdd96c} 
 \index{Foam::dgGeneralBoundaryField$<$ Type $>$@{Foam::dgGeneralBoundaryField$<$ Type $>$}!BCtype@{BCtype}}
 \index{BCtype@{BCtype}!Foam::dgGeneralBoundaryField$<$ Type $>$@{Foam::dgGeneralBoundaryField$<$ Type $>$}}
@@ -362,6 +753,15 @@ Reimplemented in \mbox{\hyperlink{classFoam_1_1dgGeneralSymmetryBoundaryField_a0
 {\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
 \mbox{\hyperlink{classFoam_1_1GaussField}{word}} \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField}{Foam\+::dg\+General\+Boundary\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::\+BCtype (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
 
+
+
+Return boundary-\/condition type name. 
+
+Extracts the value of dictionary entry {\ttfamily type}.
+
+\begin{DoxyReturn}{Returns}
+Boundary-\/condition type name 
+\end{DoxyReturn}
 \Hypertarget{classFoam_1_1dgGeneralBoundaryField_a1d904132208a273feadb62f678d324ac}\label{classFoam_1_1dgGeneralBoundaryField_a1d904132208a273feadb62f678d324ac} 
 \index{Foam::dgGeneralBoundaryField$<$ Type $>$@{Foam::dgGeneralBoundaryField$<$ Type $>$}!checkPatchType@{checkPatchType}}
 \index{checkPatchType@{checkPatchType}!Foam::dgGeneralBoundaryField$<$ Type $>$@{Foam::dgGeneralBoundaryField$<$ Type $>$}}
@@ -370,6 +770,10 @@ Reimplemented in \mbox{\hyperlink{classFoam_1_1dgGeneralSymmetryBoundaryField_a0
 \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField}{Foam\+::dg\+General\+Boundary\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::check\+Patch\+Type (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
 
 
+
+Validate patch compatibility. 
+
+Derived classes should override this method to restrict supported patch types. 
 
 Reimplemented in \mbox{\hyperlink{classFoam_1_1dgGeneralFixedValueBoundaryField_a7bef1c8d95d38ff7872ebb96f84065c0}{Foam\+::dg\+General\+Fixed\+Value\+Boundary\+Field$<$ Type $>$}}, \mbox{\hyperlink{classFoam_1_1dgGeneralInletOutletBoundaryField_ad1130e0cafb133009373c34b5bf826b3}{Foam\+::dg\+General\+Inlet\+Outlet\+Boundary\+Field$<$ Type $>$}}, \mbox{\hyperlink{classFoam_1_1dgGeneralSymmetryBoundaryField_a701fc800e004e6fcda37ee8f9d664c8c}{Foam\+::dg\+General\+Symmetry\+Boundary\+Field$<$ Type $>$}}, \mbox{\hyperlink{classFoam_1_1dgGeneralFixedValueBoundaryField_a7bef1c8d95d38ff7872ebb96f84065c0}{Foam\+::dg\+General\+Fixed\+Value\+Boundary\+Field$<$ Type $>$}}, \mbox{\hyperlink{classFoam_1_1dgGeneralInletOutletBoundaryField_ad1130e0cafb133009373c34b5bf826b3}{Foam\+::dg\+General\+Inlet\+Outlet\+Boundary\+Field$<$ Type $>$}}, and \mbox{\hyperlink{classFoam_1_1dgGeneralSymmetryBoundaryField_a701fc800e004e6fcda37ee8f9d664c8c}{Foam\+::dg\+General\+Symmetry\+Boundary\+Field$<$ Type $>$}}.
 
@@ -383,6 +787,10 @@ Reimplemented in \mbox{\hyperlink{classFoam_1_1dgGeneralFixedValueBoundaryField_
 {\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{fv\+Patch}} \& \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField}{Foam\+::dg\+General\+Boundary\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::patch\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}
 
+
+
+Reference to fv\+Patch describing boundary geometry. 
+
 \Hypertarget{classFoam_1_1dgGeneralBoundaryField_a72a10f395de9aa19c4a582cf865e0437}\label{classFoam_1_1dgGeneralBoundaryField_a72a10f395de9aa19c4a582cf865e0437} 
 \index{Foam::dgGeneralBoundaryField$<$ Type $>$@{Foam::dgGeneralBoundaryField$<$ Type $>$}!dgMesh\_@{dgMesh\_}}
 \index{dgMesh\_@{dgMesh\_}!Foam::dgGeneralBoundaryField$<$ Type $>$@{Foam::dgGeneralBoundaryField$<$ Type $>$}}
@@ -390,12 +798,20 @@ Reimplemented in \mbox{\hyperlink{classFoam_1_1dgGeneralFixedValueBoundaryField_
 {\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \& \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField}{Foam\+::dg\+General\+Boundary\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::dg\+Mesh\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}
 
+
+
+Reference to DG geometric mesh. 
+
 \Hypertarget{classFoam_1_1dgGeneralBoundaryField_a886f8a3eea50ae531aa3c07d31c2bc80}\label{classFoam_1_1dgGeneralBoundaryField_a886f8a3eea50ae531aa3c07d31c2bc80} 
 \index{Foam::dgGeneralBoundaryField$<$ Type $>$@{Foam::dgGeneralBoundaryField$<$ Type $>$}!dict\_@{dict\_}}
 \index{dict\_@{dict\_}!Foam::dgGeneralBoundaryField$<$ Type $>$@{Foam::dgGeneralBoundaryField$<$ Type $>$}}
 \doxysubsubsection{\texorpdfstring{dict\_}{dict\_}}
 {\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}} \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField}{Foam\+::dg\+General\+Boundary\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::dict\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Boundary-\/condition dictionary (stored by value) 
 
 
 

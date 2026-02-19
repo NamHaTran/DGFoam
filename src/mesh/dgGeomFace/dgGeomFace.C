@@ -122,6 +122,8 @@ Foam::dgGeomFace::dgGeomFace(const dgGeomFace& other)
     connectivity_(other.connectivity_),
     ownerBasisData_(other.ownerBasisData_),
     neighborBasisData_(other.neighborBasisData_),
+    ownerJ2D_(other.ownerJ2D_),
+    neighborJ2D_(other.neighborJ2D_),
     patchID_(other.patchID_),
     isBoundary_(other.isBoundary_),
     isProcessorPatch_(other.isProcessorPatch_)
@@ -204,6 +206,8 @@ Foam::dgGeomFace& Foam::dgGeomFace::operator=(const dgGeomFace& other)
         connectivity_     = other.connectivity_;
         ownerBasisData_   = other.ownerBasisData_;
         neighborBasisData_ = other.neighborBasisData_;
+        ownerJ2D_         = other.ownerJ2D_;
+        neighborJ2D_      = other.neighborJ2D_;
         patchID_          = other.patchID_;
         isBoundary_       = other.isBoundary_;
         isProcessorPatch_ = other.isProcessorPatch_;
@@ -519,5 +523,36 @@ void Foam::dgGeomFace::computeBasisAndDerivatives()
     }
 }
 
+void Foam::dgGeomFace::computeOwnerLameParameters
+(
+    const List<vector>& cellVertices
+)
+{
+    // Calculate Jacobian 2D at Gauss points
+    const List<vector>& ownerGaussPts = refFace_->gaussPoints(ownerPos_);
+    const label nGauss = ownerGaussPts.size();
+    ownerJ2D_.setSize(nGauss);
+
+    for (label gp = 0; gp < nGauss; ++gp)
+    {
+        ownerJ2D_[gp] = Foam::geometricJacobian::calcLameParam(ownerCellType_, ownerPos_, ownerGaussPts[gp], cellVertices);
+    }
+}
+
+void Foam::dgGeomFace::computeNeighborLameParameters
+(
+    const List<vector>& cellVertices
+)
+{
+    // Calculate Jacobian 2D at Gauss points
+    const List<vector>& neighborGaussPts = refFace_->gaussPoints(neighborPos_);
+    const label nGauss = neighborGaussPts.size();
+    neighborJ2D_.setSize(nGauss);
+
+    for (label gp = 0; gp < nGauss; ++gp)
+    {
+        neighborJ2D_[gp] = Foam::geometricJacobian::calcLameParam(neighborCellType_, neighborPos_, neighborGaussPts[gp], cellVertices);
+    }
+}
 
 // ************************************************************************* //

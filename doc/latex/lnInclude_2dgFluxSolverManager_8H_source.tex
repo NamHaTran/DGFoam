@@ -32,119 +32,96 @@
 \DoxyCodeLine{00028\ \textcolor{comment}{\ \ \ \ Foam::dgFluxSolverManager}}
 \DoxyCodeLine{00029\ \textcolor{comment}{}}
 \DoxyCodeLine{00030\ \textcolor{comment}{Description}}
-\DoxyCodeLine{00031\ \textcolor{comment}{\ \ \ \ Manager\ for\ flux\ solvers,\ mapping\ equation\ terms\ (e.g.\ massConvectiveFlux)}}
-\DoxyCodeLine{00032\ \textcolor{comment}{\ \ \ \ to\ concrete\ dgFluxSolver\ instances.\ Provides\ a\ default\ solver\ when\ a\ term}}
-\DoxyCodeLine{00033\ \textcolor{comment}{\ \ \ \ has\ no\ explicit\ scheme\ in\ the\ dictionary.}}
-\DoxyCodeLine{00034\ \textcolor{comment}{}}
-\DoxyCodeLine{00035\ \textcolor{comment}{\ \ \ \ Dictionary\ format\ (sub-\/dict\ "{}fluxSchemes"{}):}}
-\DoxyCodeLine{00036\ \textcolor{comment}{\ \ \ \ \ \ \ \ default\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pureCentral;}}
-\DoxyCodeLine{00037\ \textcolor{comment}{\ \ \ \ \ \ \ \ massConvectiveFlux\ \ \ \ \ \ HLLE;}}
-\DoxyCodeLine{00038\ \textcolor{comment}{\ \ \ \ \ \ \ \ momentumConvectiveFlux\ \ LF;}}
-\DoxyCodeLine{00039\ \textcolor{comment}{\ \ \ \ \ \ \ \ HLLECoeff}}
-\DoxyCodeLine{00040\ \textcolor{comment}{\ \ \ \ \ \ \ \ \{}}
-\DoxyCodeLine{00041\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ speedEstimate\ roeEinfeldt;}}
-\DoxyCodeLine{00042\ \textcolor{comment}{\ \ \ \ \ \ \ \ \}}}
-\DoxyCodeLine{00043\ \textcolor{comment}{}}
-\DoxyCodeLine{00044\ \textcolor{comment}{SourceFiles}}
-\DoxyCodeLine{00045\ \textcolor{comment}{\ \ \ \ dgFluxSolverManager.C}}
-\DoxyCodeLine{00046\ \textcolor{comment}{}}
-\DoxyCodeLine{00047\ \textcolor{comment}{\(\backslash\)*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{00031\ \textcolor{comment}{\ \ \ \ Manager\ for\ DG\ flux\ solvers\ selected\ per\ equation\ term.}}
+\DoxyCodeLine{00032\ \textcolor{comment}{}}
+\DoxyCodeLine{00033\ \textcolor{comment}{SourceFiles}}
+\DoxyCodeLine{00034\ \textcolor{comment}{\ \ \ \ dgFluxSolverManager.C}}
+\DoxyCodeLine{00035\ \textcolor{comment}{}}
+\DoxyCodeLine{00036\ \textcolor{comment}{\(\backslash\)*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \textcolor{preprocessor}{\#ifndef\ Foam\_dgFluxSolverManager\_H}}
+\DoxyCodeLine{00039\ \textcolor{preprocessor}{\#define\ Foam\_dgFluxSolverManager\_H}}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \textcolor{preprocessor}{\#include\ "{}PtrList.H"{}}}
+\DoxyCodeLine{00042\ \textcolor{preprocessor}{\#include\ "{}List.H"{}}}
+\DoxyCodeLine{00043\ \textcolor{preprocessor}{\#include\ "{}word.H"{}}}
+\DoxyCodeLine{00044\ \textcolor{preprocessor}{\#include\ "{}dictionary.H"{}}}
+\DoxyCodeLine{00045\ \textcolor{preprocessor}{\#include\ "{}autoPtr.H"{}}}
+\DoxyCodeLine{00046\ \textcolor{preprocessor}{\#include\ "{}dgGeomMesh.H"{}}}
+\DoxyCodeLine{00047\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{lnInclude_2dgFluxSolver_8H}{dgFluxSolver.H}}"{}}}
 \DoxyCodeLine{00048\ }
-\DoxyCodeLine{00049\ \textcolor{preprocessor}{\#ifndef\ Foam\_dgFluxSolverManager\_H}}
-\DoxyCodeLine{00050\ \textcolor{preprocessor}{\#define\ Foam\_dgFluxSolverManager\_H}}
+\DoxyCodeLine{00049\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespaceFoam}{Foam}}}
+\DoxyCodeLine{00050\ \{}
 \DoxyCodeLine{00051\ }
-\DoxyCodeLine{00052\ \textcolor{preprocessor}{\#include\ "{}PtrList.H"{}}}
-\DoxyCodeLine{00053\ \textcolor{preprocessor}{\#include\ "{}List.H"{}}}
-\DoxyCodeLine{00054\ \textcolor{preprocessor}{\#include\ "{}word.H"{}}}
-\DoxyCodeLine{00055\ \textcolor{preprocessor}{\#include\ "{}dictionary.H"{}}}
-\DoxyCodeLine{00056\ \textcolor{preprocessor}{\#include\ "{}autoPtr.H"{}}}
-\DoxyCodeLine{00057\ \textcolor{preprocessor}{\#include\ "{}dgGeomMesh.H"{}}}
-\DoxyCodeLine{00058\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{lnInclude_2dgFluxSolver_8H}{dgFluxSolver.H}}"{}}}
-\DoxyCodeLine{00059\ }
-\DoxyCodeLine{00060\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespaceFoam}{Foam}}}
-\DoxyCodeLine{00061\ \{}
-\DoxyCodeLine{00062\ }
-\DoxyCodeLine{00063\ \textcolor{comment}{//\ Forward\ declare\ Ostream\ to\ avoid\ heavy\ includes\ here}}
-\DoxyCodeLine{00064\ \textcolor{keyword}{class\ }Ostream;}
-\DoxyCodeLine{00065\ }
-\DoxyCodeLine{00066\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*\(\backslash\)}}
-\DoxyCodeLine{00067\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Class\ dgFluxSolverManager\ Declaration}}
-\DoxyCodeLine{00068\ \textcolor{comment}{\(\backslash\)*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
-\DoxyCodeLine{00069\ }
-\DoxyCodeLine{00070\ \textcolor{keyword}{class\ }dgFluxSolverManager}
-\DoxyCodeLine{00071\ \{}
-\DoxyCodeLine{00072\ \textcolor{keyword}{private}:}
-\DoxyCodeLine{00073\ }
-\DoxyCodeLine{00074\ \ \ \ \ \textcolor{comment}{//\ Attributes}}
-\DoxyCodeLine{00075\ }
-\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \textcolor{comment}{//-\/\ Mesh\ reference}}
-\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ dgGeomMesh\&\ \mbox{\hyperlink{classFoam_1_1dgFluxSolverManager_a4434e42d468b9c4750a6bfe20115d9fa}{mesh\_}};}
-\DoxyCodeLine{00078\ }
-\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \textcolor{comment}{//-\/\ List\ of\ flux\ solver\ instances\ (one\ per\ configured\ term)}}
-\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ PtrList<dgFluxSolver>\ \mbox{\hyperlink{classFoam_1_1dgFluxSolverManager_a486f8eedcefb731007166a83699ba8d5}{fluxSolverList\_}};}
-\DoxyCodeLine{00081\ }
-\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \textcolor{comment}{//-\/\ Parallel\ list\ of\ term\ names\ corresponding\ to\ fluxSolverList\_\ items}}
-\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ List<word>\ \mbox{\hyperlink{classFoam_1_1dgFluxSolverManager_a174f271a43a0555a48ab00673a3fbf79}{termList\_}};}
-\DoxyCodeLine{00084\ }
-\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \textcolor{comment}{//-\/\ Default\ flux\ solver\ used\ when\ a\ term\ is\ not\ configured\ (may\ be\ null)}}
-\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ autoPtr<dgFluxSolver>\ \mbox{\hyperlink{classFoam_1_1dgFluxSolverManager_a56cf95a8d53246d3a8100e3d77befa8d}{defaultFluxSolver\_}};}
-\DoxyCodeLine{00087\ }
-\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \textcolor{comment}{//-\/\ Cached\ schemes\ dictionary\ (fluxSchemes)}}
-\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ dictionary\ \mbox{\hyperlink{classFoam_1_1dgFluxSolverManager_a86460e0cae45ce319de04bfcc0e2930d}{fluxSchemesDict\_}};}
-\DoxyCodeLine{00090\ }
-\DoxyCodeLine{00091\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00092\ }
-\DoxyCodeLine{00093\ \ \ \ \ \textcolor{comment}{//\ Constructors}}
-\DoxyCodeLine{00094\ }
-\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \textcolor{comment}{//-\/\ Construct\ from\ dgSchemes\ dictionary\ and\ thermo\ (build\ solvers)}}
-\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1dgFluxSolverManager_af8a665373d4d586195a0b2132296b213}{dgFluxSolverManager}}}
-\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ (}
-\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{dgSchemesDict}},}
-\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dgGeomMesh}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{mesh}}}
-\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ );}
-\DoxyCodeLine{00101\ }
-\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \textcolor{comment}{//-\/\ Disallow\ default\ construction}}
-\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1dgFluxSolverManager_a38f6a620826ef26272124c334b3ee6bf}{dgFluxSolverManager}}()\ =\ \textcolor{keyword}{delete};}
-\DoxyCodeLine{00104\ }
-\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \textcolor{comment}{//-\/\ Destructor}}
-\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1dgFluxSolverManager_a86a5577df36163e9b00d8a7fc8e5754e}{\string~dgFluxSolverManager}}()\ =\ \textcolor{keywordflow}{default};}
-\DoxyCodeLine{00107\ }
-\DoxyCodeLine{00108\ \ \ \ \ \textcolor{comment}{//\ Member\ Functions}}
-\DoxyCodeLine{00109\ }
-\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \textcolor{comment}{//-\/\ Number\ of\ configured\ (term-\/specific)\ solvers}}
-\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ \mbox{\hyperlink{classFoam_1_1dgFluxSolverManager_aba86877dab072441f4adae31a640e9e7}{size}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classFoam_1_1dgFluxSolverManager_a486f8eedcefb731007166a83699ba8d5}{fluxSolverList\_}}.size();\ \}}
-\DoxyCodeLine{00112\ }
-\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \textcolor{comment}{//-\/\ Check\ if\ a\ term\ has\ an\ explicitly\ configured\ solver\ (no\ fallback)}}
-\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classFoam_1_1dgFluxSolverManager_aea5eac79d5faa62a5253f7ad1169da97}{has}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{word}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{term}})\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00115\ }
-\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \textcolor{comment}{//-\/\ Access\ solver\ by\ term\ name;\ falls\ back\ to\ default\ or\ throws\ on\ missing}}
-\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1dgFluxSolver}{dgFluxSolver}}\&\ \mbox{\hyperlink{classFoam_1_1dgFluxSolverManager_a315cf94beebd434c9ea7d1090e9b79cc}{solver}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{word}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{term}})\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00118\ }
-\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \textcolor{comment}{//-\/\ Reset\ flux\ solver}}
-\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classFoam_1_1dgFluxSolverManager_ae94120a1e88f153760d3fcdf661572bf}{reset}}()}
-\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{forAll}}(\mbox{\hyperlink{classFoam_1_1dgFluxSolverManager_a486f8eedcefb731007166a83699ba8d5}{fluxSolverList\_}},\ \mbox{\hyperlink{classFoam_1_1GaussField}{i}})}
-\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1dgFluxSolverManager_a486f8eedcefb731007166a83699ba8d5}{fluxSolverList\_}}[\mbox{\hyperlink{classFoam_1_1GaussField}{i}}].reset();}
-\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00126\ }
-\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classFoam_1_1dgFluxSolverManager_a56cf95a8d53246d3a8100e3d77befa8d}{defaultFluxSolver\_}}.valid())}
-\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1dgFluxSolverManager_a56cf95a8d53246d3a8100e3d77befa8d}{defaultFluxSolver\_}}.reset();}
-\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00132\ }
-\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ \textcolor{comment}{//-\/\ Non-\/const\ access\ variant}}
-\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1dgFluxSolver}{dgFluxSolver}}\&\ \mbox{\hyperlink{classFoam_1_1dgFluxSolverManager_a71349581d3e985678420c0e5204f13fb}{solver}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{word}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{term}});}
-\DoxyCodeLine{00135\ }
-\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ \textcolor{comment}{//-\/\ Print\ configured\ terms\ and\ their\ scheme\ names\ (and\ default)\ to\ stream}}
-\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classFoam_1_1dgFluxSolverManager_aa95ad04be946097b0f64a08715e8ba1b}{listTerms}}(\mbox{\hyperlink{classFoam_1_1GaussField}{Ostream}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{os}})\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00138\ \};}
-\DoxyCodeLine{00139\ }
-\DoxyCodeLine{00140\ \}\ \textcolor{comment}{//\ End\ namespace\ Foam}}
-\DoxyCodeLine{00141\ }
-\DoxyCodeLine{00142\ \textcolor{preprocessor}{\#endif}}
-\DoxyCodeLine{00143\ }
-\DoxyCodeLine{00144\ \textcolor{comment}{//\ *************************************************************************\ //}}
+\DoxyCodeLine{00052\ \textcolor{comment}{//\ Forward\ declare\ Ostream\ to\ avoid\ heavy\ includes\ here}}
+\DoxyCodeLine{00053\ \textcolor{keyword}{class\ }Ostream;}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00055\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*\(\backslash\)}}
+\DoxyCodeLine{00056\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Class\ dgFluxSolverManager\ Declaration}}
+\DoxyCodeLine{00057\ \textcolor{comment}{\(\backslash\)*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00120\ \textcolor{keyword}{class\ }dgFluxSolverManager}
+\DoxyCodeLine{00121\ \{}
+\DoxyCodeLine{00122\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00123\ }
+\DoxyCodeLine{00124\ \ \ \ \ \textcolor{comment}{//\ Attributes}}
+\DoxyCodeLine{00125\ }
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ dgGeomMesh\&\ \mbox{\hyperlink{classFoam_1_1dgFluxSolverManager_a4434e42d468b9c4750a6bfe20115d9fa}{mesh\_}};}
+\DoxyCodeLine{00128\ }
+\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ PtrList<dgFluxSolver>\ \mbox{\hyperlink{classFoam_1_1dgFluxSolverManager_a486f8eedcefb731007166a83699ba8d5}{fluxSolverList\_}};}
+\DoxyCodeLine{00131\ }
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ List<word>\ \mbox{\hyperlink{classFoam_1_1dgFluxSolverManager_a174f271a43a0555a48ab00673a3fbf79}{termList\_}};}
+\DoxyCodeLine{00134\ }
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ autoPtr<dgFluxSolver>\ \mbox{\hyperlink{classFoam_1_1dgFluxSolverManager_a56cf95a8d53246d3a8100e3d77befa8d}{defaultFluxSolver\_}};}
+\DoxyCodeLine{00137\ }
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ dictionary\ \mbox{\hyperlink{classFoam_1_1dgFluxSolverManager_a86460e0cae45ce319de04bfcc0e2930d}{fluxSchemesDict\_}};}
+\DoxyCodeLine{00140\ }
+\DoxyCodeLine{00141\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00142\ }
+\DoxyCodeLine{00143\ \ \ \ \ \textcolor{comment}{//\ Constructors}}
+\DoxyCodeLine{00144\ }
+\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1dgFluxSolverManager_af8a665373d4d586195a0b2132296b213}{dgFluxSolverManager}}}
+\DoxyCodeLine{00155\ \ \ \ \ \ \ \ \ (}
+\DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{dgSchemesDict}},}
+\DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dgGeomMesh}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{mesh}}}
+\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ );}
+\DoxyCodeLine{00159\ }
+\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ \textcolor{comment}{//-\/\ Disallow\ default\ construction}}
+\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1dgFluxSolverManager_a38f6a620826ef26272124c334b3ee6bf}{dgFluxSolverManager}}()\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00162\ }
+\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ \textcolor{comment}{//-\/\ Destructor}}
+\DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1dgFluxSolverManager_a86a5577df36163e9b00d8a7fc8e5754e}{\string~dgFluxSolverManager}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00165\ }
+\DoxyCodeLine{00166\ \ \ \ \ \textcolor{comment}{//\ Member\ Functions}}
+\DoxyCodeLine{00167\ }
+\DoxyCodeLine{00169\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ \mbox{\hyperlink{classFoam_1_1dgFluxSolverManager_aba86877dab072441f4adae31a640e9e7}{size}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classFoam_1_1dgFluxSolverManager_a486f8eedcefb731007166a83699ba8d5}{fluxSolverList\_}}.size();\ \}}
+\DoxyCodeLine{00170\ }
+\DoxyCodeLine{00177\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classFoam_1_1dgFluxSolverManager_aea5eac79d5faa62a5253f7ad1169da97}{has}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{word}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{term}})\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00178\ }
+\DoxyCodeLine{00188\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1dgFluxSolver}{dgFluxSolver}}\&\ \mbox{\hyperlink{classFoam_1_1dgFluxSolverManager_a315cf94beebd434c9ea7d1090e9b79cc}{solver}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{word}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{term}})\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00189\ }
+\DoxyCodeLine{00196\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classFoam_1_1dgFluxSolverManager_ae94120a1e88f153760d3fcdf661572bf}{reset}}()}
+\DoxyCodeLine{00197\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00198\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{forAll}}(\mbox{\hyperlink{classFoam_1_1dgFluxSolverManager_a486f8eedcefb731007166a83699ba8d5}{fluxSolverList\_}},\ \mbox{\hyperlink{classFoam_1_1GaussField}{i}})}
+\DoxyCodeLine{00199\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00200\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1dgFluxSolverManager_a486f8eedcefb731007166a83699ba8d5}{fluxSolverList\_}}[\mbox{\hyperlink{classFoam_1_1GaussField}{i}}].reset();}
+\DoxyCodeLine{00201\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00202\ }
+\DoxyCodeLine{00203\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classFoam_1_1dgFluxSolverManager_a56cf95a8d53246d3a8100e3d77befa8d}{defaultFluxSolver\_}}.valid())}
+\DoxyCodeLine{00204\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00205\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1dgFluxSolverManager_a56cf95a8d53246d3a8100e3d77befa8d}{defaultFluxSolver\_}}.reset();}
+\DoxyCodeLine{00206\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00207\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00208\ }
+\DoxyCodeLine{00215\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1dgFluxSolver}{dgFluxSolver}}\&\ \mbox{\hyperlink{classFoam_1_1dgFluxSolverManager_a71349581d3e985678420c0e5204f13fb}{solver}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{word}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{term}});}
+\DoxyCodeLine{00216\ }
+\DoxyCodeLine{00225\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classFoam_1_1dgFluxSolverManager_aa95ad04be946097b0f64a08715e8ba1b}{listTerms}}(\mbox{\hyperlink{classFoam_1_1GaussField}{Ostream}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{os}})\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00226\ \};}
+\DoxyCodeLine{00227\ }
+\DoxyCodeLine{00228\ \}\ \textcolor{comment}{//\ End\ namespace\ Foam}}
+\DoxyCodeLine{00229\ }
+\DoxyCodeLine{00230\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00231\ }
+\DoxyCodeLine{00232\ \textcolor{comment}{//\ *************************************************************************\ //}}
 
 \end{DoxyCode}

@@ -89,13 +89,16 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
+<p>DG processor boundary handler for parallel communication.  
+ <a href="classFoam_1_1dgProcessorBoundaryField.html#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="dgBoundaryFields_2dgProcessorBoundaryFields_2dgProcessorBoundaryField_2dgProcessorBoundaryField_8H_source.html">dgProcessorBoundaryField.H</a>&gt;</code></p>
 <div class="dynheader">
 Collaboration diagram for Foam::dgProcessorBoundaryField&lt; Type &gt;:</div>
 <div class="dyncontent">
 <div class="center"><img src="classFoam_1_1dgProcessorBoundaryField__coll__graph.png" border="0" usemap="#aFoam_1_1dgProcessorBoundaryField_3_01Type_01_4_coll__map" alt="Collaboration graph"/></div>
 <map name="aFoam_1_1dgProcessorBoundaryField_3_01Type_01_4_coll__map" id="aFoam_1_1dgProcessorBoundaryField_3_01Type_01_4_coll__map">
-<area shape="rect" title=" " alt="" coords="5,93,212,133"/>
+<area shape="rect" title="DG processor boundary handler for parallel communication." alt="" coords="5,93,212,133"/>
 <area shape="rect" href="classFoam_1_1dgGeomMesh.html" title="DG geometric mesh wrapper around fvMesh." alt="" coords="31,5,187,31"/>
 <area shape="poly" title=" " alt="" coords="111,44,111,93,106,93,106,44"/>
 </map>
@@ -104,60 +107,95 @@ Collaboration diagram for Foam::dgProcessorBoundaryField&lt; Type &gt;:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a7e67388024a3c92eb8e7959700d3e9ab" id="r_a7e67388024a3c92eb8e7959700d3e9ab"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1dgProcessorBoundaryField.html#a7e67388024a3c92eb8e7959700d3e9ab">dgProcessorBoundaryField</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">fvPatch</a> &amp;<a class="el" href="classFoam_1_1dgProcessorBoundaryField.html#ad53d2439521fc37920925e7f32d52a7d">patch</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1dgGeomMesh.html">dgGeomMesh</a> &amp;<a class="el" href="classFoam_1_1dgProcessorBoundaryField.html#ad767b7ae38e0c9557e351951448b81fa">dgMesh</a>)</td></tr>
+<tr class="memdesc:a7e67388024a3c92eb8e7959700d3e9ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct from fvPatch and DG geometric mesh.  <br /></td></tr>
 <tr class="separator:a7e67388024a3c92eb8e7959700d3e9ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a703c2728de95e6deaca9ff422989491b" id="r_a703c2728de95e6deaca9ff422989491b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">virtual</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1dgProcessorBoundaryField.html#a703c2728de95e6deaca9ff422989491b">~dgProcessorBoundaryField</a> ()=<a class="el" href="classFoam_1_1GaussField.html">default</a></td></tr>
 <tr class="separator:a703c2728de95e6deaca9ff422989491b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a28fe949f350b6388a2ad558c83eb2c25" id="r_a28fe949f350b6388a2ad558c83eb2c25"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1dgProcessorBoundaryField.html#a28fe949f350b6388a2ad558c83eb2c25">update</a> (<a class="el" href="classFoam_1_1dgField.html">dgField</a>&lt; <a class="el" href="classFoam_1_1GaussField.html">Type</a> &gt; &amp;<a class="el" href="classFoam_1_1GaussField.html">field</a>) <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
+<tr class="memdesc:a28fe949f350b6388a2ad558c83eb2c25"><td class="mdescLeft">&#160;</td><td class="mdescRight">Exchange Gauss-point data across processor boundary.  <br /></td></tr>
 <tr class="separator:a28fe949f350b6388a2ad558c83eb2c25"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4aa4338e8be3aa9f4c2490d3e3efd17e" id="r_a4aa4338e8be3aa9f4c2490d3e3efd17e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1dgProcessorBoundaryField.html#a4aa4338e8be3aa9f4c2490d3e3efd17e">sendAll</a> (<a class="el" href="classFoam_1_1dgField.html">dgField</a>&lt; <a class="el" href="classFoam_1_1GaussField.html">Type</a> &gt; &amp;<a class="el" href="classFoam_1_1GaussField.html">field</a>) <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
+<tr class="memdesc:a4aa4338e8be3aa9f4c2490d3e3efd17e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send all plus-side Gauss values to neighbour processor.  <br /></td></tr>
 <tr class="separator:a4aa4338e8be3aa9f4c2490d3e3efd17e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af9c231c18d1ecaf4b0c2bb209c767511" id="r_af9c231c18d1ecaf4b0c2bb209c767511"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1dgProcessorBoundaryField.html#af9c231c18d1ecaf4b0c2bb209c767511">recvAll</a> (<a class="el" href="classFoam_1_1dgField.html">dgField</a>&lt; <a class="el" href="classFoam_1_1GaussField.html">Type</a> &gt; &amp;<a class="el" href="classFoam_1_1GaussField.html">field</a>) <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
+<tr class="memdesc:af9c231c18d1ecaf4b0c2bb209c767511"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receive all plus-side Gauss values from neighbour processor.  <br /></td></tr>
 <tr class="separator:af9c231c18d1ecaf4b0c2bb209c767511"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afe8411a305c3b44f259d9f005cdd682e" id="r_afe8411a305c3b44f259d9f005cdd682e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">int</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1dgProcessorBoundaryField.html#afe8411a305c3b44f259d9f005cdd682e">genSendTag</a> () <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
+<tr class="memdesc:afe8411a305c3b44f259d9f005cdd682e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate MPI send tag.  <br /></td></tr>
 <tr class="separator:afe8411a305c3b44f259d9f005cdd682e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af8cce9ea0db0eab33d19730a6b2ef7ec" id="r_af8cce9ea0db0eab33d19730a6b2ef7ec"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">int</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1dgProcessorBoundaryField.html#af8cce9ea0db0eab33d19730a6b2ef7ec">genRecvTag</a> () <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
+<tr class="memdesc:af8cce9ea0db0eab33d19730a6b2ef7ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate MPI receive tag.  <br /></td></tr>
 <tr class="separator:af8cce9ea0db0eab33d19730a6b2ef7ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad53d2439521fc37920925e7f32d52a7d" id="r_ad53d2439521fc37920925e7f32d52a7d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">processorFvPatch</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1dgProcessorBoundaryField.html#ad53d2439521fc37920925e7f32d52a7d">patch</a> () <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
+<tr class="memdesc:ad53d2439521fc37920925e7f32d52a7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return processor patch.  <br /></td></tr>
 <tr class="separator:ad53d2439521fc37920925e7f32d52a7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad767b7ae38e0c9557e351951448b81fa" id="r_ad767b7ae38e0c9557e351951448b81fa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1dgGeomMesh.html">dgGeomMesh</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1dgProcessorBoundaryField.html#ad767b7ae38e0c9557e351951448b81fa">dgMesh</a> () <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
+<tr class="memdesc:ad767b7ae38e0c9557e351951448b81fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return DG geometric mesh.  <br /></td></tr>
 <tr class="separator:ad767b7ae38e0c9557e351951448b81fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af521106b7fd8ac10e1274c740a915b74" id="r_af521106b7fd8ac10e1274c740a915b74"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">word</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1dgProcessorBoundaryField.html#af521106b7fd8ac10e1274c740a915b74">name</a> () <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
+<tr class="memdesc:af521106b7fd8ac10e1274c740a915b74"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return patch name.  <br /></td></tr>
 <tr class="separator:af521106b7fd8ac10e1274c740a915b74"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7e67388024a3c92eb8e7959700d3e9ab" id="r_a7e67388024a3c92eb8e7959700d3e9ab"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1dgProcessorBoundaryField.html#a7e67388024a3c92eb8e7959700d3e9ab">dgProcessorBoundaryField</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">fvPatch</a> &amp;<a class="el" href="classFoam_1_1dgProcessorBoundaryField.html#ad53d2439521fc37920925e7f32d52a7d">patch</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1dgGeomMesh.html">dgGeomMesh</a> &amp;<a class="el" href="classFoam_1_1dgProcessorBoundaryField.html#ad767b7ae38e0c9557e351951448b81fa">dgMesh</a>)</td></tr>
+<tr class="memdesc:a7e67388024a3c92eb8e7959700d3e9ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct from fvPatch and DG geometric mesh.  <br /></td></tr>
 <tr class="separator:a7e67388024a3c92eb8e7959700d3e9ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a703c2728de95e6deaca9ff422989491b" id="r_a703c2728de95e6deaca9ff422989491b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">virtual</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1dgProcessorBoundaryField.html#a703c2728de95e6deaca9ff422989491b">~dgProcessorBoundaryField</a> ()=<a class="el" href="classFoam_1_1GaussField.html">default</a></td></tr>
 <tr class="separator:a703c2728de95e6deaca9ff422989491b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a28fe949f350b6388a2ad558c83eb2c25" id="r_a28fe949f350b6388a2ad558c83eb2c25"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1dgProcessorBoundaryField.html#a28fe949f350b6388a2ad558c83eb2c25">update</a> (<a class="el" href="classFoam_1_1dgField.html">dgField</a>&lt; <a class="el" href="classFoam_1_1GaussField.html">Type</a> &gt; &amp;<a class="el" href="classFoam_1_1GaussField.html">field</a>) <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
+<tr class="memdesc:a28fe949f350b6388a2ad558c83eb2c25"><td class="mdescLeft">&#160;</td><td class="mdescRight">Exchange Gauss-point data across processor boundary.  <br /></td></tr>
 <tr class="separator:a28fe949f350b6388a2ad558c83eb2c25"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4aa4338e8be3aa9f4c2490d3e3efd17e" id="r_a4aa4338e8be3aa9f4c2490d3e3efd17e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1dgProcessorBoundaryField.html#a4aa4338e8be3aa9f4c2490d3e3efd17e">sendAll</a> (<a class="el" href="classFoam_1_1dgField.html">dgField</a>&lt; <a class="el" href="classFoam_1_1GaussField.html">Type</a> &gt; &amp;<a class="el" href="classFoam_1_1GaussField.html">field</a>) <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
+<tr class="memdesc:a4aa4338e8be3aa9f4c2490d3e3efd17e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send all plus-side Gauss values to neighbour processor.  <br /></td></tr>
 <tr class="separator:a4aa4338e8be3aa9f4c2490d3e3efd17e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af9c231c18d1ecaf4b0c2bb209c767511" id="r_af9c231c18d1ecaf4b0c2bb209c767511"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1dgProcessorBoundaryField.html#af9c231c18d1ecaf4b0c2bb209c767511">recvAll</a> (<a class="el" href="classFoam_1_1dgField.html">dgField</a>&lt; <a class="el" href="classFoam_1_1GaussField.html">Type</a> &gt; &amp;<a class="el" href="classFoam_1_1GaussField.html">field</a>) <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
+<tr class="memdesc:af9c231c18d1ecaf4b0c2bb209c767511"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receive all plus-side Gauss values from neighbour processor.  <br /></td></tr>
 <tr class="separator:af9c231c18d1ecaf4b0c2bb209c767511"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afe8411a305c3b44f259d9f005cdd682e" id="r_afe8411a305c3b44f259d9f005cdd682e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">int</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1dgProcessorBoundaryField.html#afe8411a305c3b44f259d9f005cdd682e">genSendTag</a> () <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
+<tr class="memdesc:afe8411a305c3b44f259d9f005cdd682e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate MPI send tag.  <br /></td></tr>
 <tr class="separator:afe8411a305c3b44f259d9f005cdd682e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af8cce9ea0db0eab33d19730a6b2ef7ec" id="r_af8cce9ea0db0eab33d19730a6b2ef7ec"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">int</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1dgProcessorBoundaryField.html#af8cce9ea0db0eab33d19730a6b2ef7ec">genRecvTag</a> () <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
+<tr class="memdesc:af8cce9ea0db0eab33d19730a6b2ef7ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate MPI receive tag.  <br /></td></tr>
 <tr class="separator:af8cce9ea0db0eab33d19730a6b2ef7ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad53d2439521fc37920925e7f32d52a7d" id="r_ad53d2439521fc37920925e7f32d52a7d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">processorFvPatch</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1dgProcessorBoundaryField.html#ad53d2439521fc37920925e7f32d52a7d">patch</a> () <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
+<tr class="memdesc:ad53d2439521fc37920925e7f32d52a7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return processor patch.  <br /></td></tr>
 <tr class="separator:ad53d2439521fc37920925e7f32d52a7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad767b7ae38e0c9557e351951448b81fa" id="r_ad767b7ae38e0c9557e351951448b81fa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1dgGeomMesh.html">dgGeomMesh</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1dgProcessorBoundaryField.html#ad767b7ae38e0c9557e351951448b81fa">dgMesh</a> () <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
+<tr class="memdesc:ad767b7ae38e0c9557e351951448b81fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return DG geometric mesh.  <br /></td></tr>
 <tr class="separator:ad767b7ae38e0c9557e351951448b81fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af521106b7fd8ac10e1274c740a915b74" id="r_af521106b7fd8ac10e1274c740a915b74"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">word</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1dgProcessorBoundaryField.html#af521106b7fd8ac10e1274c740a915b74">name</a> () <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
+<tr class="memdesc:af521106b7fd8ac10e1274c740a915b74"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return patch name.  <br /></td></tr>
 <tr class="separator:af521106b7fd8ac10e1274c740a915b74"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
 <tr class="memitem:a728842151ae1bd8604d21527ef471fd6" id="r_a728842151ae1bd8604d21527ef471fd6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">processorFvPatch</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1dgProcessorBoundaryField.html#a728842151ae1bd8604d21527ef471fd6">procPatch_</a></td></tr>
+<tr class="memdesc:a728842151ae1bd8604d21527ef471fd6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reference to processor fvPatch (type-safe)  <br /></td></tr>
 <tr class="separator:a728842151ae1bd8604d21527ef471fd6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aef2fae50069c54c9c94453abb18000f5" id="r_aef2fae50069c54c9c94453abb18000f5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1dgGeomMesh.html">dgGeomMesh</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1dgProcessorBoundaryField.html#aef2fae50069c54c9c94453abb18000f5">dgMesh_</a></td></tr>
+<tr class="memdesc:aef2fae50069c54c9c94453abb18000f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reference to DG geometric mesh.  <br /></td></tr>
 <tr class="separator:aef2fae50069c54c9c94453abb18000f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a20fae8edfee33edc4e761acc11aff751" id="r_a20fae8edfee33edc4e761acc11aff751"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">label</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1dgProcessorBoundaryField.html#a20fae8edfee33edc4e761acc11aff751">neighbProc_</a></td></tr>
+<tr class="memdesc:a20fae8edfee33edc4e761acc11aff751"><td class="mdescLeft">&#160;</td><td class="mdescRight">Neighbour processor rank.  <br /></td></tr>
 <tr class="separator:a20fae8edfee33edc4e761acc11aff751"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8a48c87af06db1a7c43686f234832962" id="r_a8a48c87af06db1a7c43686f234832962"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">List</a>&lt; <a class="el" href="classFoam_1_1GaussField.html">Type</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1dgProcessorBoundaryField.html#a8a48c87af06db1a7c43686f234832962">sendBuf_</a></td></tr>
+<tr class="memdesc:a8a48c87af06db1a7c43686f234832962"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send buffer for Gauss-point values (mutable for const update)  <br /></td></tr>
 <tr class="separator:a8a48c87af06db1a7c43686f234832962"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2f8bd21638770e97d46b895b12404f05" id="r_a2f8bd21638770e97d46b895b12404f05"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">List</a>&lt; <a class="el" href="classFoam_1_1GaussField.html">Type</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1dgProcessorBoundaryField.html#a2f8bd21638770e97d46b895b12404f05">recvBuf_</a></td></tr>
+<tr class="memdesc:a2f8bd21638770e97d46b895b12404f05"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receive buffer for Gauss-point values (mutable for const update)  <br /></td></tr>
 <tr class="separator:a2f8bd21638770e97d46b895b12404f05"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><div class="compoundTemplParams">template&lt;<a class="el" href="classFoam_1_1GaussField.html">class</a> <a class="el" href="classFoam_1_1GaussField.html">Type</a>&gt;<br />
+class Foam::dgProcessorBoundaryField&lt; Type &gt;</div><p>DG processor boundary handler for parallel communication. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Type</td><td>Field value type (e.g. scalar, vector, tensor)</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Exchanges DG face Gauss-point plus-side values across processor patches.</p>
+<p>The communication uses explicit send/receive buffers and point-to-point transfers on processorFvPatch.</p>
+<p>MPI tags are generated from processor ranks to avoid collisions. </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a7e67388024a3c92eb8e7959700d3e9ab" name="a7e67388024a3c92eb8e7959700d3e9ab"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a7e67388024a3c92eb8e7959700d3e9ab">&#9670;&#160;</a></span>dgProcessorBoundaryField() <span class="overload">[1/2]</span></h2>
 
@@ -185,6 +223,16 @@ template&lt;<a class="el" href="classFoam_1_1GaussField.html">class</a> <a class
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Construct from fvPatch and DG geometric mesh. </p>
+<p>The input patch must be of type processor.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">patch</td><td>Finite-volume patch (processor) </td></tr>
+    <tr><td class="paramname">dgMesh</td><td>DG geometric mesh </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -243,6 +291,16 @@ template&lt;<a class="el" href="classFoam_1_1GaussField.html">class</a> <a class
       </table>
 </div><div class="memdoc">
 
+<p>Construct from fvPatch and DG geometric mesh. </p>
+<p>The input patch must be of type processor.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">patch</td><td>Finite-volume patch (processor) </td></tr>
+    <tr><td class="paramname">dgMesh</td><td>DG geometric mesh </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <a id="a703c2728de95e6deaca9ff422989491b" name="a703c2728de95e6deaca9ff422989491b"></a>
@@ -291,6 +349,15 @@ template&lt;<a class="el" href="classFoam_1_1GaussField.html">class</a> <a class
       </table>
 </div><div class="memdoc">
 
+<p>Exchange Gauss-point data across processor boundary. </p>
+<p>Performs a send/receive cycle to update plus-side Gauss values on processor faces.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">field</td><td>DG field whose Gauss data will be exchanged </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <a id="a4aa4338e8be3aa9f4c2490d3e3efd17e" name="a4aa4338e8be3aa9f4c2490d3e3efd17e"></a>
@@ -311,6 +378,14 @@ template&lt;<a class="el" href="classFoam_1_1GaussField.html">class</a> <a class
       </table>
 </div><div class="memdoc">
 
+<p>Send all plus-side Gauss values to neighbour processor. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">field</td><td>DG field providing Gauss data </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <a id="af9c231c18d1ecaf4b0c2bb209c767511" name="af9c231c18d1ecaf4b0c2bb209c767511"></a>
@@ -330,6 +405,14 @@ template&lt;<a class="el" href="classFoam_1_1GaussField.html">class</a> <a class
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Receive all plus-side Gauss values from neighbour processor. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">field</td><td>DG field to be updated with received data </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -358,6 +441,12 @@ template&lt;<a class="el" href="classFoam_1_1GaussField.html">class</a> <a class
 </table>
 </div><div class="memdoc">
 
+<p>Generate MPI send tag. </p>
+<p>Tag scheme:</p><ul>
+<li>tag = myProc*1e6 + neighbProc</li>
+</ul>
+<dl class="section return"><dt>Returns</dt><dd>MPI tag for send </dd></dl>
+
 </div>
 </div>
 <a id="af8cce9ea0db0eab33d19730a6b2ef7ec" name="af8cce9ea0db0eab33d19730a6b2ef7ec"></a>
@@ -384,6 +473,12 @@ template&lt;<a class="el" href="classFoam_1_1GaussField.html">class</a> <a class
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Generate MPI receive tag. </p>
+<p>Tag scheme:</p><ul>
+<li>tag = neighbProc*1e6 + myProc</li>
+</ul>
+<dl class="section return"><dt>Returns</dt><dd>MPI tag for receive </dd></dl>
 
 </div>
 </div>
@@ -412,6 +507,8 @@ template&lt;<a class="el" href="classFoam_1_1GaussField.html">class</a> <a class
 </table>
 </div><div class="memdoc">
 
+<p>Return processor patch. </p>
+
 </div>
 </div>
 <a id="ad767b7ae38e0c9557e351951448b81fa" name="ad767b7ae38e0c9557e351951448b81fa"></a>
@@ -438,6 +535,8 @@ template&lt;<a class="el" href="classFoam_1_1GaussField.html">class</a> <a class
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Return DG geometric mesh. </p>
 
 </div>
 </div>
@@ -466,6 +565,8 @@ template&lt;<a class="el" href="classFoam_1_1GaussField.html">class</a> <a class
 </table>
 </div><div class="memdoc">
 
+<p>Return patch name. </p>
+
 </div>
 </div>
 <a id="a28fe949f350b6388a2ad558c83eb2c25" name="a28fe949f350b6388a2ad558c83eb2c25"></a>
@@ -485,6 +586,15 @@ template&lt;<a class="el" href="classFoam_1_1GaussField.html">class</a> <a class
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Exchange Gauss-point data across processor boundary. </p>
+<p>Performs a send/receive cycle to update plus-side Gauss values on processor faces.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">field</td><td>DG field whose Gauss data will be exchanged </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -506,6 +616,14 @@ template&lt;<a class="el" href="classFoam_1_1GaussField.html">class</a> <a class
       </table>
 </div><div class="memdoc">
 
+<p>Send all plus-side Gauss values to neighbour processor. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">field</td><td>DG field providing Gauss data </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <a id="af9c231c18d1ecaf4b0c2bb209c767511" name="af9c231c18d1ecaf4b0c2bb209c767511"></a>
@@ -525,6 +643,14 @@ template&lt;<a class="el" href="classFoam_1_1GaussField.html">class</a> <a class
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Receive all plus-side Gauss values from neighbour processor. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">field</td><td>DG field to be updated with received data </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -553,6 +679,12 @@ template&lt;<a class="el" href="classFoam_1_1GaussField.html">class</a> <a class
 </table>
 </div><div class="memdoc">
 
+<p>Generate MPI send tag. </p>
+<p>Tag scheme:</p><ul>
+<li>tag = myProc*1e6 + neighbProc</li>
+</ul>
+<dl class="section return"><dt>Returns</dt><dd>MPI tag for send </dd></dl>
+
 </div>
 </div>
 <a id="af8cce9ea0db0eab33d19730a6b2ef7ec" name="af8cce9ea0db0eab33d19730a6b2ef7ec"></a>
@@ -579,6 +711,12 @@ template&lt;<a class="el" href="classFoam_1_1GaussField.html">class</a> <a class
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Generate MPI receive tag. </p>
+<p>Tag scheme:</p><ul>
+<li>tag = neighbProc*1e6 + myProc</li>
+</ul>
+<dl class="section return"><dt>Returns</dt><dd>MPI tag for receive </dd></dl>
 
 </div>
 </div>
@@ -607,6 +745,8 @@ template&lt;<a class="el" href="classFoam_1_1GaussField.html">class</a> <a class
 </table>
 </div><div class="memdoc">
 
+<p>Return processor patch. </p>
+
 </div>
 </div>
 <a id="ad767b7ae38e0c9557e351951448b81fa" name="ad767b7ae38e0c9557e351951448b81fa"></a>
@@ -633,6 +773,8 @@ template&lt;<a class="el" href="classFoam_1_1GaussField.html">class</a> <a class
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Return DG geometric mesh. </p>
 
 </div>
 </div>
@@ -661,6 +803,8 @@ template&lt;<a class="el" href="classFoam_1_1GaussField.html">class</a> <a class
 </table>
 </div><div class="memdoc">
 
+<p>Return patch name. </p>
+
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
@@ -686,6 +830,8 @@ template&lt;<a class="el" href="classFoam_1_1GaussField.html">class</a> <a class
 </table>
 </div><div class="memdoc">
 
+<p>Reference to processor fvPatch (type-safe) </p>
+
 </div>
 </div>
 <a id="aef2fae50069c54c9c94453abb18000f5" name="aef2fae50069c54c9c94453abb18000f5"></a>
@@ -709,6 +855,8 @@ template&lt;<a class="el" href="classFoam_1_1GaussField.html">class</a> <a class
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Reference to DG geometric mesh. </p>
 
 </div>
 </div>
@@ -734,6 +882,8 @@ template&lt;<a class="el" href="classFoam_1_1GaussField.html">class</a> <a class
 </table>
 </div><div class="memdoc">
 
+<p>Neighbour processor rank. </p>
+
 </div>
 </div>
 <a id="a8a48c87af06db1a7c43686f234832962" name="a8a48c87af06db1a7c43686f234832962"></a>
@@ -758,6 +908,8 @@ template&lt;<a class="el" href="classFoam_1_1GaussField.html">class</a> <a class
 </table>
 </div><div class="memdoc">
 
+<p>Send buffer for Gauss-point values (mutable for const update) </p>
+
 </div>
 </div>
 <a id="a2f8bd21638770e97d46b895b12404f05" name="a2f8bd21638770e97d46b895b12404f05"></a>
@@ -781,6 +933,8 @@ template&lt;<a class="el" href="classFoam_1_1GaussField.html">class</a> <a class
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Receive buffer for Gauss-point values (mutable for const update) </p>
 
 </div>
 </div>

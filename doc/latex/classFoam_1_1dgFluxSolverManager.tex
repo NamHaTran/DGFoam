@@ -2,6 +2,11 @@
 \hypertarget{classFoam_1_1dgFluxSolverManager}{}\label{classFoam_1_1dgFluxSolverManager}\index{Foam::dgFluxSolverManager@{Foam::dgFluxSolverManager}}
 
 
+Manager for flux solvers selected per equation term.  
+
+
+
+
 {\ttfamily \#include $<$dg\+Flux\+Solver\+Manager.\+H$>$}
 
 
@@ -17,55 +22,111 @@ Collaboration diagram for Foam\+::dg\+Flux\+Solver\+Manager\+:\nopagebreak
 \begin{DoxyCompactItemize}
 \item 
 \mbox{\hyperlink{classFoam_1_1dgFluxSolverManager_af8a665373d4d586195a0b2132296b213}{dg\+Flux\+Solver\+Manager}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{dg\+Schemes\+Dict}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{mesh}})
-\item 
+\begin{DoxyCompactList}\small\item\em Construct from dg\+Schemes dictionary and DG mesh. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1dgFluxSolverManager_a38f6a620826ef26272124c334b3ee6bf}{dg\+Flux\+Solver\+Manager}} ()=\mbox{\hyperlink{classFoam_1_1GaussField}{delete}}
 \item 
 \mbox{\hyperlink{classFoam_1_1dgFluxSolverManager_a86a5577df36163e9b00d8a7fc8e5754e}{\texorpdfstring{$\sim$}{\string~}dg\+Flux\+Solver\+Manager}} ()=\mbox{\hyperlink{classFoam_1_1GaussField}{default}}
 \item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1dgFluxSolverManager_aba86877dab072441f4adae31a640e9e7}{size}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
-\item 
+\begin{DoxyCompactList}\small\item\em Return number of term-\/specific solvers. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{bool}} \mbox{\hyperlink{classFoam_1_1dgFluxSolverManager_aea5eac79d5faa62a5253f7ad1169da97}{has}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{word}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{term}}) \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
-\item 
+\begin{DoxyCompactList}\small\item\em Check if a term has an explicitly configured solver. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgFluxSolver}{dg\+Flux\+Solver}} \& \mbox{\hyperlink{classFoam_1_1dgFluxSolverManager_a315cf94beebd434c9ea7d1090e9b79cc}{solver}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{word}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{term}}) \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
-\item 
+\begin{DoxyCompactList}\small\item\em Return solver by term name (const) \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgFluxSolverManager_ae94120a1e88f153760d3fcdf661572bf}{reset}} ()
-\item 
+\begin{DoxyCompactList}\small\item\em Reset all solvers. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1dgFluxSolver}{dg\+Flux\+Solver}} \& \mbox{\hyperlink{classFoam_1_1dgFluxSolverManager_a71349581d3e985678420c0e5204f13fb}{solver}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{word}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{term}})
-\item 
+\begin{DoxyCompactList}\small\item\em Return solver by term name (non-\/const) \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgFluxSolverManager_aa95ad04be946097b0f64a08715e8ba1b}{list\+Terms}} (\mbox{\hyperlink{classFoam_1_1GaussField}{Ostream}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{os}}) \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
-\item 
+\begin{DoxyCompactList}\small\item\em Print configured terms and their solver types. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1dgFluxSolverManager_af8a665373d4d586195a0b2132296b213}{dg\+Flux\+Solver\+Manager}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{dg\+Schemes\+Dict}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{mesh}})
-\item 
+\begin{DoxyCompactList}\small\item\em Construct from dg\+Schemes dictionary and DG mesh. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1dgFluxSolverManager_a38f6a620826ef26272124c334b3ee6bf}{dg\+Flux\+Solver\+Manager}} ()=\mbox{\hyperlink{classFoam_1_1GaussField}{delete}}
 \item 
 \mbox{\hyperlink{classFoam_1_1dgFluxSolverManager_a86a5577df36163e9b00d8a7fc8e5754e}{\texorpdfstring{$\sim$}{\string~}dg\+Flux\+Solver\+Manager}} ()=\mbox{\hyperlink{classFoam_1_1GaussField}{default}}
 \item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1dgFluxSolverManager_aba86877dab072441f4adae31a640e9e7}{size}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
-\item 
+\begin{DoxyCompactList}\small\item\em Return number of term-\/specific solvers. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{bool}} \mbox{\hyperlink{classFoam_1_1dgFluxSolverManager_aea5eac79d5faa62a5253f7ad1169da97}{has}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{word}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{term}}) \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
-\item 
+\begin{DoxyCompactList}\small\item\em Check if a term has an explicitly configured solver. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgFluxSolver}{dg\+Flux\+Solver}} \& \mbox{\hyperlink{classFoam_1_1dgFluxSolverManager_a315cf94beebd434c9ea7d1090e9b79cc}{solver}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{word}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{term}}) \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
-\item 
+\begin{DoxyCompactList}\small\item\em Return solver by term name (const) \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgFluxSolverManager_ae94120a1e88f153760d3fcdf661572bf}{reset}} ()
-\item 
+\begin{DoxyCompactList}\small\item\em Reset all solvers. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1dgFluxSolver}{dg\+Flux\+Solver}} \& \mbox{\hyperlink{classFoam_1_1dgFluxSolverManager_a71349581d3e985678420c0e5204f13fb}{solver}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{word}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{term}})
-\item 
+\begin{DoxyCompactList}\small\item\em Return solver by term name (non-\/const) \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgFluxSolverManager_aa95ad04be946097b0f64a08715e8ba1b}{list\+Terms}} (\mbox{\hyperlink{classFoam_1_1GaussField}{Ostream}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{os}}) \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Print configured terms and their solver types. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsubsection*{Private Attributes}
 \begin{DoxyCompactItemize}
 \item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \& \mbox{\hyperlink{classFoam_1_1dgFluxSolverManager_a4434e42d468b9c4750a6bfe20115d9fa}{mesh\+\_\+}}
-\item 
+\begin{DoxyCompactList}\small\item\em Reference to DG geometric mesh. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{Ptr\+List}}$<$ \mbox{\hyperlink{classFoam_1_1dgFluxSolver}{dg\+Flux\+Solver}} $>$ \mbox{\hyperlink{classFoam_1_1dgFluxSolverManager_a486f8eedcefb731007166a83699ba8d5}{flux\+Solver\+List\+\_\+}}
-\item 
+\begin{DoxyCompactList}\small\item\em Flux solver instances (one per configured term) \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{word}} $>$ \mbox{\hyperlink{classFoam_1_1dgFluxSolverManager_a174f271a43a0555a48ab00673a3fbf79}{term\+List\+\_\+}}
-\item 
+\begin{DoxyCompactList}\small\item\em Term names corresponding to flux\+Solver\+List\+\_\+ ordering. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{auto\+Ptr}}$<$ \mbox{\hyperlink{classFoam_1_1dgFluxSolver}{dg\+Flux\+Solver}} $>$ \mbox{\hyperlink{classFoam_1_1dgFluxSolverManager_a56cf95a8d53246d3a8100e3d77befa8d}{default\+Flux\+Solver\+\_\+}}
-\item 
+\begin{DoxyCompactList}\small\item\em Default flux solver used when a term is not configured (may be null) \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}} \mbox{\hyperlink{classFoam_1_1dgFluxSolverManager_a86460e0cae45ce319de04bfcc0e2930d}{flux\+Schemes\+Dict\+\_\+}}
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Cached {\ttfamily flux\+Schemes} sub-\/dictionary. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
+
+\doxysubsection{Detailed Description}
+Manager for flux solvers selected per equation term. 
+
+This class constructs and manages \doxylink{classFoam_1_1dgFluxSolver}{dg\+Flux\+Solver} instances based on the {\ttfamily flux\+Schemes} dictionary.
+
+Each equation term (e.\+g. mass\+Conv\+Term\+Flux, momentum\+Conv\+Term\+Flux) can be mapped to a specific numerical flux solver. If a term is not explicitly defined, a default solver is used.
+
+The manager supports\+:
+\begin{DoxyItemize}
+\item Term-\/specific flux solver selection
+\item A global default solver fallback
+\item Solver-\/specific coefficient sub-\/dictionaries
+\end{DoxyItemize}
+
+\begin{DoxyParagraph}{Example dictionary}
+\begin{DoxyVerb}* fluxSchemes
+* {
+*     fluxSolvers
+*     {
+*         default                 central;
+*
+*         massConvTermFlux        HLLC;
+*         momentumConvTermFlux    LaxFriedrichs;
+*
+*         // Other flux terms such as:
+*         // - auxiliaryFlux
+*         // - massDiffusiveFlux
+*         // - momentumDiffusiveFlux
+*         // - energyConvectiveFlux
+*         // - energyDiffusiveFlux
+*         // fall back to the default solver if not specified.
+*     }
+*
+*     fluxSolversCoeffs
+*     {
+*         HLLCCoeffs
+*         {
+*             speedEstimate roeEinfeldt;
+*         }
+*
+*         LaxFriedrichsCoeffs
+*         {
+*             scaleByMach true;
+*         }
+*
+*         centralCoeffs
+*         {
+*             // no parameters
+*         }
+*     }
+* }
+* \end{DoxyVerb}
+
+\end{DoxyParagraph}
+Solver instances are created lazily using runtime selection tables and are reused across time steps. The \doxylink{classFoam_1_1dgFluxSolverManager_ae94120a1e88f153760d3fcdf661572bf}{reset()} method propagates to all managed solvers. 
 
 \doxysubsection{Constructor \& Destructor Documentation}
 \Hypertarget{classFoam_1_1dgFluxSolverManager_af8a665373d4d586195a0b2132296b213}\label{classFoam_1_1dgFluxSolverManager_af8a665373d4d586195a0b2132296b213} 
@@ -74,6 +135,19 @@ Collaboration diagram for Foam\+::dg\+Flux\+Solver\+Manager\+:\nopagebreak
 \doxysubsubsection{\texorpdfstring{dgFluxSolverManager()}{dgFluxSolverManager()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
 {\footnotesize\ttfamily Foam\+::dg\+Flux\+Solver\+Manager\+::dg\+Flux\+Solver\+Manager (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}} \&}]{dg\+Schemes\+Dict,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \&}]{mesh }\end{DoxyParamCaption})}
 
+
+
+Construct from dg\+Schemes dictionary and DG mesh. 
+
+Parses {\ttfamily flux\+Schemes} and constructs term-\/specific solvers and an optional default solver.
+
+
+\begin{DoxyParams}{Parameters}
+{\em dg\+Schemes\+Dict} & dg\+Schemes dictionary \\
+\hline
+{\em mesh} & DG geometric mesh \\
+\hline
+\end{DoxyParams}
 \Hypertarget{classFoam_1_1dgFluxSolverManager_a38f6a620826ef26272124c334b3ee6bf}\label{classFoam_1_1dgFluxSolverManager_a38f6a620826ef26272124c334b3ee6bf} 
 \index{Foam::dgFluxSolverManager@{Foam::dgFluxSolverManager}!dgFluxSolverManager@{dgFluxSolverManager}}
 \index{dgFluxSolverManager@{dgFluxSolverManager}!Foam::dgFluxSolverManager@{Foam::dgFluxSolverManager}}
@@ -92,6 +166,19 @@ Collaboration diagram for Foam\+::dg\+Flux\+Solver\+Manager\+:\nopagebreak
 \doxysubsubsection{\texorpdfstring{dgFluxSolverManager()}{dgFluxSolverManager()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
 {\footnotesize\ttfamily Foam\+::dg\+Flux\+Solver\+Manager\+::dg\+Flux\+Solver\+Manager (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}} \&}]{dg\+Schemes\+Dict,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \&}]{mesh }\end{DoxyParamCaption})}
 
+
+
+Construct from dg\+Schemes dictionary and DG mesh. 
+
+Parses {\ttfamily flux\+Schemes} and constructs term-\/specific solvers and an optional default solver.
+
+
+\begin{DoxyParams}{Parameters}
+{\em dg\+Schemes\+Dict} & dg\+Schemes dictionary \\
+\hline
+{\em mesh} & DG geometric mesh \\
+\hline
+\end{DoxyParams}
 \Hypertarget{classFoam_1_1dgFluxSolverManager_a38f6a620826ef26272124c334b3ee6bf}\label{classFoam_1_1dgFluxSolverManager_a38f6a620826ef26272124c334b3ee6bf} 
 \index{Foam::dgFluxSolverManager@{Foam::dgFluxSolverManager}!dgFluxSolverManager@{dgFluxSolverManager}}
 \index{dgFluxSolverManager@{dgFluxSolverManager}!Foam::dgFluxSolverManager@{Foam::dgFluxSolverManager}}
@@ -113,41 +200,102 @@ Collaboration diagram for Foam\+::dg\+Flux\+Solver\+Manager\+:\nopagebreak
 \doxysubsubsection{\texorpdfstring{size()}{size()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
 {\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{label}} Foam\+::dg\+Flux\+Solver\+Manager\+::size (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
 
+
+
+Return number of term-\/specific solvers. 
+
 \Hypertarget{classFoam_1_1dgFluxSolverManager_aea5eac79d5faa62a5253f7ad1169da97}\label{classFoam_1_1dgFluxSolverManager_aea5eac79d5faa62a5253f7ad1169da97} 
 \index{Foam::dgFluxSolverManager@{Foam::dgFluxSolverManager}!has@{has}}
 \index{has@{has}!Foam::dgFluxSolverManager@{Foam::dgFluxSolverManager}}
 \doxysubsubsection{\texorpdfstring{has()}{has()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
 {\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{bool}} Foam\+::dg\+Flux\+Solver\+Manager\+::has (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{word}} \&}]{term }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
 
+
+
+Check if a term has an explicitly configured solver. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em term} & Equation-\/term name \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if configured in {\ttfamily flux\+Schemes} 
+\end{DoxyReturn}
 \Hypertarget{classFoam_1_1dgFluxSolverManager_a315cf94beebd434c9ea7d1090e9b79cc}\label{classFoam_1_1dgFluxSolverManager_a315cf94beebd434c9ea7d1090e9b79cc} 
 \index{Foam::dgFluxSolverManager@{Foam::dgFluxSolverManager}!solver@{solver}}
 \index{solver@{solver}!Foam::dgFluxSolverManager@{Foam::dgFluxSolverManager}}
 \doxysubsubsection{\texorpdfstring{solver()}{solver()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
 {\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgFluxSolver}{dg\+Flux\+Solver}} \& Foam\+::dg\+Flux\+Solver\+Manager\+::solver (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{word}} \&}]{term }\end{DoxyParamCaption}) const}
 
+
+
+Return solver by term name (const) 
+
+Falls back to the default solver if available; otherwise triggers an error for missing configuration.
+
+
+\begin{DoxyParams}{Parameters}
+{\em term} & Equation-\/term name \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Const reference to selected solver 
+\end{DoxyReturn}
 \Hypertarget{classFoam_1_1dgFluxSolverManager_ae94120a1e88f153760d3fcdf661572bf}\label{classFoam_1_1dgFluxSolverManager_ae94120a1e88f153760d3fcdf661572bf} 
 \index{Foam::dgFluxSolverManager@{Foam::dgFluxSolverManager}!reset@{reset}}
 \index{reset@{reset}!Foam::dgFluxSolverManager@{Foam::dgFluxSolverManager}}
 \doxysubsubsection{\texorpdfstring{reset()}{reset()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
 {\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{void}} Foam\+::dg\+Flux\+Solver\+Manager\+::reset (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
 
-\Hypertarget{classFoam_1_1dgFluxSolverManager_a71349581d3e985678420c0e5204f13fb}\label{classFoam_1_1dgFluxSolverManager_a71349581d3e985678420c0e5204f13fb} 
+
+
+Reset all solvers. 
+
+Calls \doxylink{classFoam_1_1dgFluxSolverManager_ae94120a1e88f153760d3fcdf661572bf}{reset()} on all term-\/specific solvers and the default solver (if present). \Hypertarget{classFoam_1_1dgFluxSolverManager_a71349581d3e985678420c0e5204f13fb}\label{classFoam_1_1dgFluxSolverManager_a71349581d3e985678420c0e5204f13fb} 
 \index{Foam::dgFluxSolverManager@{Foam::dgFluxSolverManager}!solver@{solver}}
 \index{solver@{solver}!Foam::dgFluxSolverManager@{Foam::dgFluxSolverManager}}
 \doxysubsubsection{\texorpdfstring{solver()}{solver()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
 {\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1dgFluxSolver}{dg\+Flux\+Solver}} \& Foam\+::dg\+Flux\+Solver\+Manager\+::solver (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{word}} \&}]{term }\end{DoxyParamCaption})}
 
+
+
+Return solver by term name (non-\/const) 
+
+
+\begin{DoxyParams}{Parameters}
+{\em term} & Equation-\/term name \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Reference to selected solver 
+\end{DoxyReturn}
 \Hypertarget{classFoam_1_1dgFluxSolverManager_aa95ad04be946097b0f64a08715e8ba1b}\label{classFoam_1_1dgFluxSolverManager_aa95ad04be946097b0f64a08715e8ba1b} 
 \index{Foam::dgFluxSolverManager@{Foam::dgFluxSolverManager}!listTerms@{listTerms}}
 \index{listTerms@{listTerms}!Foam::dgFluxSolverManager@{Foam::dgFluxSolverManager}}
 \doxysubsubsection{\texorpdfstring{listTerms()}{listTerms()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
 {\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{void}} Foam\+::dg\+Flux\+Solver\+Manager\+::list\+Terms (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{Ostream}} \&}]{os }\end{DoxyParamCaption}) const}
 
+
+
+Print configured terms and their solver types. 
+
+Writes the mapping of term names to solver types, including the default solver if configured.
+
+
+\begin{DoxyParams}{Parameters}
+{\em os} & Output stream \\
+\hline
+\end{DoxyParams}
 \Hypertarget{classFoam_1_1dgFluxSolverManager_aba86877dab072441f4adae31a640e9e7}\label{classFoam_1_1dgFluxSolverManager_aba86877dab072441f4adae31a640e9e7} 
 \index{Foam::dgFluxSolverManager@{Foam::dgFluxSolverManager}!size@{size}}
 \index{size@{size}!Foam::dgFluxSolverManager@{Foam::dgFluxSolverManager}}
 \doxysubsubsection{\texorpdfstring{size()}{size()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
 {\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{label}} Foam\+::dg\+Flux\+Solver\+Manager\+::size (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Return number of term-\/specific solvers. 
 
 \Hypertarget{classFoam_1_1dgFluxSolverManager_aea5eac79d5faa62a5253f7ad1169da97}\label{classFoam_1_1dgFluxSolverManager_aea5eac79d5faa62a5253f7ad1169da97} 
 \index{Foam::dgFluxSolverManager@{Foam::dgFluxSolverManager}!has@{has}}
@@ -155,30 +303,83 @@ Collaboration diagram for Foam\+::dg\+Flux\+Solver\+Manager\+:\nopagebreak
 \doxysubsubsection{\texorpdfstring{has()}{has()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
 {\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{bool}} Foam\+::dg\+Flux\+Solver\+Manager\+::has (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{word}} \&}]{term }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
 
+
+
+Check if a term has an explicitly configured solver. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em term} & Equation-\/term name \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if configured in {\ttfamily flux\+Schemes} 
+\end{DoxyReturn}
 \Hypertarget{classFoam_1_1dgFluxSolverManager_a315cf94beebd434c9ea7d1090e9b79cc}\label{classFoam_1_1dgFluxSolverManager_a315cf94beebd434c9ea7d1090e9b79cc} 
 \index{Foam::dgFluxSolverManager@{Foam::dgFluxSolverManager}!solver@{solver}}
 \index{solver@{solver}!Foam::dgFluxSolverManager@{Foam::dgFluxSolverManager}}
 \doxysubsubsection{\texorpdfstring{solver()}{solver()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
 {\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgFluxSolver}{dg\+Flux\+Solver}} \& Foam\+::dg\+Flux\+Solver\+Manager\+::solver (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{word}} \&}]{term }\end{DoxyParamCaption}) const}
 
+
+
+Return solver by term name (const) 
+
+Falls back to the default solver if available; otherwise triggers an error for missing configuration.
+
+
+\begin{DoxyParams}{Parameters}
+{\em term} & Equation-\/term name \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Const reference to selected solver 
+\end{DoxyReturn}
 \Hypertarget{classFoam_1_1dgFluxSolverManager_ae94120a1e88f153760d3fcdf661572bf}\label{classFoam_1_1dgFluxSolverManager_ae94120a1e88f153760d3fcdf661572bf} 
 \index{Foam::dgFluxSolverManager@{Foam::dgFluxSolverManager}!reset@{reset}}
 \index{reset@{reset}!Foam::dgFluxSolverManager@{Foam::dgFluxSolverManager}}
 \doxysubsubsection{\texorpdfstring{reset()}{reset()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
 {\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{void}} Foam\+::dg\+Flux\+Solver\+Manager\+::reset (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
 
-\Hypertarget{classFoam_1_1dgFluxSolverManager_a71349581d3e985678420c0e5204f13fb}\label{classFoam_1_1dgFluxSolverManager_a71349581d3e985678420c0e5204f13fb} 
+
+
+Reset all solvers. 
+
+Calls \doxylink{classFoam_1_1dgFluxSolverManager_ae94120a1e88f153760d3fcdf661572bf}{reset()} on all term-\/specific solvers and the default solver (if present). \Hypertarget{classFoam_1_1dgFluxSolverManager_a71349581d3e985678420c0e5204f13fb}\label{classFoam_1_1dgFluxSolverManager_a71349581d3e985678420c0e5204f13fb} 
 \index{Foam::dgFluxSolverManager@{Foam::dgFluxSolverManager}!solver@{solver}}
 \index{solver@{solver}!Foam::dgFluxSolverManager@{Foam::dgFluxSolverManager}}
 \doxysubsubsection{\texorpdfstring{solver()}{solver()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
 {\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1dgFluxSolver}{dg\+Flux\+Solver}} \& Foam\+::dg\+Flux\+Solver\+Manager\+::solver (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{word}} \&}]{term }\end{DoxyParamCaption})}
 
+
+
+Return solver by term name (non-\/const) 
+
+
+\begin{DoxyParams}{Parameters}
+{\em term} & Equation-\/term name \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Reference to selected solver 
+\end{DoxyReturn}
 \Hypertarget{classFoam_1_1dgFluxSolverManager_aa95ad04be946097b0f64a08715e8ba1b}\label{classFoam_1_1dgFluxSolverManager_aa95ad04be946097b0f64a08715e8ba1b} 
 \index{Foam::dgFluxSolverManager@{Foam::dgFluxSolverManager}!listTerms@{listTerms}}
 \index{listTerms@{listTerms}!Foam::dgFluxSolverManager@{Foam::dgFluxSolverManager}}
 \doxysubsubsection{\texorpdfstring{listTerms()}{listTerms()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
 {\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{void}} Foam\+::dg\+Flux\+Solver\+Manager\+::list\+Terms (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{Ostream}} \&}]{os }\end{DoxyParamCaption}) const}
 
+
+
+Print configured terms and their solver types. 
+
+Writes the mapping of term names to solver types, including the default solver if configured.
+
+
+\begin{DoxyParams}{Parameters}
+{\em os} & Output stream \\
+\hline
+\end{DoxyParams}
 
 
 \doxysubsection{Member Data Documentation}
@@ -188,11 +389,19 @@ Collaboration diagram for Foam\+::dg\+Flux\+Solver\+Manager\+:\nopagebreak
 \doxysubsubsection{\texorpdfstring{mesh\_}{mesh\_}}
 {\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \& Foam\+::dg\+Flux\+Solver\+Manager\+::mesh\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
 
+
+
+Reference to DG geometric mesh. 
+
 \Hypertarget{classFoam_1_1dgFluxSolverManager_a486f8eedcefb731007166a83699ba8d5}\label{classFoam_1_1dgFluxSolverManager_a486f8eedcefb731007166a83699ba8d5} 
 \index{Foam::dgFluxSolverManager@{Foam::dgFluxSolverManager}!fluxSolverList\_@{fluxSolverList\_}}
 \index{fluxSolverList\_@{fluxSolverList\_}!Foam::dgFluxSolverManager@{Foam::dgFluxSolverManager}}
 \doxysubsubsection{\texorpdfstring{fluxSolverList\_}{fluxSolverList\_}}
 {\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{Ptr\+List}}$<$ \mbox{\hyperlink{classFoam_1_1dgFluxSolver}{dg\+Flux\+Solver}} $>$ Foam\+::dg\+Flux\+Solver\+Manager\+::flux\+Solver\+List\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Flux solver instances (one per configured term) 
 
 \Hypertarget{classFoam_1_1dgFluxSolverManager_a174f271a43a0555a48ab00673a3fbf79}\label{classFoam_1_1dgFluxSolverManager_a174f271a43a0555a48ab00673a3fbf79} 
 \index{Foam::dgFluxSolverManager@{Foam::dgFluxSolverManager}!termList\_@{termList\_}}
@@ -200,17 +409,29 @@ Collaboration diagram for Foam\+::dg\+Flux\+Solver\+Manager\+:\nopagebreak
 \doxysubsubsection{\texorpdfstring{termList\_}{termList\_}}
 {\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{word}} $>$ Foam\+::dg\+Flux\+Solver\+Manager\+::term\+List\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
 
+
+
+Term names corresponding to flux\+Solver\+List\+\_\+ ordering. 
+
 \Hypertarget{classFoam_1_1dgFluxSolverManager_a56cf95a8d53246d3a8100e3d77befa8d}\label{classFoam_1_1dgFluxSolverManager_a56cf95a8d53246d3a8100e3d77befa8d} 
 \index{Foam::dgFluxSolverManager@{Foam::dgFluxSolverManager}!defaultFluxSolver\_@{defaultFluxSolver\_}}
 \index{defaultFluxSolver\_@{defaultFluxSolver\_}!Foam::dgFluxSolverManager@{Foam::dgFluxSolverManager}}
 \doxysubsubsection{\texorpdfstring{defaultFluxSolver\_}{defaultFluxSolver\_}}
 {\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{auto\+Ptr}}$<$ \mbox{\hyperlink{classFoam_1_1dgFluxSolver}{dg\+Flux\+Solver}} $>$ Foam\+::dg\+Flux\+Solver\+Manager\+::default\+Flux\+Solver\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
 
+
+
+Default flux solver used when a term is not configured (may be null) 
+
 \Hypertarget{classFoam_1_1dgFluxSolverManager_a86460e0cae45ce319de04bfcc0e2930d}\label{classFoam_1_1dgFluxSolverManager_a86460e0cae45ce319de04bfcc0e2930d} 
 \index{Foam::dgFluxSolverManager@{Foam::dgFluxSolverManager}!fluxSchemesDict\_@{fluxSchemesDict\_}}
 \index{fluxSchemesDict\_@{fluxSchemesDict\_}!Foam::dgFluxSolverManager@{Foam::dgFluxSolverManager}}
 \doxysubsubsection{\texorpdfstring{fluxSchemesDict\_}{fluxSchemesDict\_}}
 {\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}} Foam\+::dg\+Flux\+Solver\+Manager\+::flux\+Schemes\+Dict\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Cached {\ttfamily flux\+Schemes} sub-\/dictionary. 
 
 
 

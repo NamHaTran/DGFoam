@@ -5,8 +5,8 @@
     \\  /    A nd           | www.openfoam.com
      \\/     M anipulation  |
 -------------------------------------------------------------------------------
-    Copyright (C) 2011-2016 OpenFOAM Foundation
-    Copyright (C) 2021-2025 OpenCFD Ltd.
+    Copyright (C) 2015-2024 OpenCFD Ltd.
+    Copyright (C) 2024-2025 Ha Nam Tran
 -------------------------------------------------------------------------------
 License
     This file is part of OpenFOAM.
@@ -28,60 +28,7 @@ Class
     Foam::dgHLLCFluxSolver
 
 Description
-    HLLC (Harten–Lax–van Leer–Contact) approximate Riemann solver.
-
-    This flux restores the missing contact and shear waves that are removed in
-    the HLLE formulation. HLLC introduces a middle wave S* and two
-    reconstructed intermediate states (U*_L and U*_R), allowing accurate
-    resolution of contact discontinuities and tangential shear layers.
-
-    Compared to HLLE:
-    - HLLC is significantly less diffusive.
-    - Captures contact discontinuities sharply.
-    - Preserves tangential velocity continuity (important for momentum flux).
-    - Requires computing a star region and wave strengths C_L, C_R.
-
-    Procedure (local 1D Riemann problem along face normal n):
-    1. Project left and right physical fluxes onto n.
-    2. Compute left/right normal velocities and sound speeds.
-    3. Estimate wave speeds S_L and S_R using either:
-         * Davis side speeds, or
-         * Roe–Einfeldt averages (U_roe, H_roe, a_roe).
-    4. Compute the contact wave speed S* based on pressure and velocity jumps.
-    5. Compute the scaling coefficients:
-         C_L = rho_L (S_L - Un_L) / (S_L - S*)
-         C_R = rho_R (S_R - Un_R) / (S_R - S*)
-    6. Construct the intermediate star states U*_L and U*_R:
-         - For mass:     U* = C
-         - For momentum: U* = C ( S* n + U_t ), preserving tangential velocity
-         - For energy:   U* = C ( e + corrective term )
-         - For scalars:  U* = C q
-    7. Construct the flux in each region:
-         f = f_L,                               if S_L >= 0
-         f = f*_L,                              if S_L <= 0 <= S*
-         f = f*_R,                              if S* <= 0 <= S_R
-         f = f_R,                               if S_R <= 0
-       where f*_L and f*_R are star-region fluxes.
-    8. Cartesian flux:
-         * scalar equations → f * n
-         * momentum equations → f as a vector (no multiplication by n)
-
-    Notation
-    - Minus  = owner cell (P-side)
-    - Plus   = neighbour cell (N-side)
-    - n      = unit normal pointing P → N
-    - U_L/R  = conserved variables at Gauss point
-    - f_L/R  = physical normal fluxes projected onto n
-
-    Advantages
-    - Accurate contact resolution.
-    - Good shear preservation.
-    - Less diffusive than HLLE while retaining robustness.
-
-    References
-    - Toro (2009), “Riemann Solvers and Numerical Methods for Fluid Dynamics”
-    - Harten, Lax, van Leer (1983)
-    - Einfeldt (1991)
+    HLLC approximate Riemann solver for DG methods.
 
 SourceFiles
     dgHLLCFluxSolver.C
@@ -107,53 +54,104 @@ namespace Foam
                         Class dgHLLCFluxSolver Declaration
 \*---------------------------------------------------------------------------*/
 
-class dgHLLCFluxSolver : public dgFluxSolver
+/**
+ * \class Foam::dgHLLCFluxSolver
+ * \brief HLLC approximate Riemann solver for DG methods
+ *
+ * \details
+ * Implements the HLLC (Harten–Lax–van Leer–Contact) numerical flux.
+ *
+ * HLLC extends HLLE by restoring the contact (and shear) wave through a
+ * middle wave speed \f$S^*\f$ and two star states. This reduces numerical
+ * dissipation and improves resolution of contact discontinuities.
+ *
+ * The local one-dimensional Riemann problem is solved along the face unit
+ * normal \f$\boldsymbol{n}\f$.
+ *
+ * Flux selection by wave-speed ordering:
+ * \f[
+ * \boldsymbol{f} =
+ * \begin{cases}
+ * \boldsymbol{f}_L,        & S_L \ge 0, \\
+ * \boldsymbol{f}_L^*,      & S_L \le 0 \le S^*, \\
+ * \boldsymbol{f}_R^*,      & S^* \le 0 \le S_R, \\
+ * \boldsymbol{f}_R,        & S_R \le 0
+ * \end{cases}
+ * \f]
+ *
+ * Cartesian flux handling:
+ * - Scalar transport: returns \f$f\,\boldsymbol{n}\f$
+ * - Momentum transport: returns vector flux directly
+ */
+class dgHLLCFluxSolver
+:
+    public dgFluxSolver
 {
 public:
 
-    //- Wave-speed estimate types
+    /** Wave-speed estimation methods */
     enum speedEstimateType
     {
-        seDavis,        // S_L = min(Un^- - a^-, Un^+ - a^+), S_R = max(Un^- + a^-, Un^+ + a^+)
-        seRoeEinfeldt   // Roe averages (U_roe, H_roe, a_roe)
+        seDavis,        ///< Davis estimate (Un ± a)
+        seRoeEinfeldt   ///< Roe–Einfeldt averaged estimate
     };
 
 private:
-    // Attributes
 
-        //- Reference to global fields
-            // Density
-            const dgField<scalar>& rho_;
-            // Velocity
-            const dgField<vector>& U_;
-            // Pressure
-            const dgField<scalar>& p_;
-            // Speed of sound
-            const dgField<scalar>& a_;
-            // Enthalpy
-            const dgField<scalar>& h_;
-            // Ratio Cp by Cv
-            const dgField<scalar>& gamma_;
+    /** Pointer to density field (read-only, non-owning) */
+    const dgField<scalar>& rho_;
 
-        //- Wave-speed estimate type
-        speedEstimateType speedEst_;
+    /** Pointer to velocity field (read-only, non-owning) */
+    const dgField<vector>& U_;
 
-        //- List intermediate states
-        List<List<scalar>> SL_list_;
-        List<List<scalar>> SR_list_;
-        List<List<scalar>> SStar_list_;
-        List<List<scalar>> CL_list_;
-        List<List<scalar>> CR_list_;
+    /** Pointer to pressure field (read-only, non-owning) */
+    const dgField<scalar>& p_;
 
-        //- List of computed intermediate states flag
-        List<bool> isStateComputed_;
+    /** Pointer to speed-of-sound field (read-only, non-owning) */
+    const dgField<scalar>& a_;
+
+    /** Pointer to enthalpy field (read-only, non-owning) */
+    const dgField<scalar>& h_;
+
+    /** Pointer to heat-capacity ratio field (read-only, non-owning) */
+    const dgField<scalar>& gamma_;
+
+    /** Selected wave-speed estimation method */
+    speedEstimateType speedEst_;
+
+    /** Cached left wave speeds per face and Gauss point */
+    List<List<scalar>> SL_list_;
+
+    /** Cached right wave speeds per face and Gauss point */
+    List<List<scalar>> SR_list_;
+
+    /** Cached contact wave speeds per face and Gauss point */
+    List<List<scalar>> SStar_list_;
+
+    /** Cached left star-state coefficients */
+    List<List<scalar>> CL_list_;
+
+    /** Cached right star-state coefficients */
+    List<List<scalar>> CR_list_;
+
+    /** Flags indicating whether intermediate states are computed */
+    List<bool> isStateComputed_;
 
 public:
 
-    //- Runtime type name
+    //- Runtime type information
     TypeName("HLLC");
 
-    //- Construct from name, dictionary and mesh
+    /**
+     * \brief Construct from name, dictionary, and DG mesh
+     *
+     * Reads wave-speed estimation settings and allocates storage for
+     * cached intermediate HLLC states.
+     *
+     * \param name Solver name
+     * \param dict Flux-solver dictionary
+     * \param mesh DG geometric mesh
+     */
     dgHLLCFluxSolver
     (
         const word& name,
@@ -164,15 +162,28 @@ public:
     //- Destructor
     virtual ~dgHLLCFluxSolver() = default;
 
-    //- Calculate intermediate states
+    /**
+     * \brief Compute intermediate wave speeds and star-state coefficients
+     *
+     * Computes \f$S_L\f$, \f$S_R\f$, \f$S^\*\f$ and star-state scaling
+     * coefficients \f$C_L\f$, \f$C_R\f$ at a face Gauss point.
+     *
+     * \param cellID        DG cell index
+     * \param localFaceID   Local face index within the cell
+     * \param localGaussID  Local Gauss-point index on the face
+     * \param n             Face unit normal (minus-to-plus)
+     * \param SL            Left wave speed (output)
+     * \param SR            Right wave speed (output)
+     * \param SStar         Contact wave speed (output)
+     * \param CL            Left star-state coefficient (output)
+     * \param CR            Right star-state coefficient (output)
+     */
     void calcIntermediateState
     (
         const label cellID,
         const label localFaceID,
         const label localGaussID,
         const vector& n,
-
-        // Output
         scalar& SL,
         scalar& SR,
         scalar& SStar,
@@ -180,11 +191,13 @@ public:
         scalar& CR
     );
 
-    //- Compute numerical flux from Plus/Minus physical flux vectors
-    //  Input:
-    //    - cellID  : cellID of cell where flux is calculated
-    //    - F       : faceGaussField of field F
-    //    - U       : faceGaussField of U
+    /**
+     * \brief Compute numerical flux for scalar conserved variable
+     *
+     * \param cellID DG cell index
+     * \param F      Flux field (output)
+     * \param U      Scalar solution at face Gauss points
+     */
     virtual void computeFlux
     (
         const label cellID,
@@ -192,6 +205,13 @@ public:
         const faceGaussField<scalar>& U
     ) override;
 
+    /**
+     * \brief Compute numerical flux for vector conserved variable
+     *
+     * \param cellID DG cell index
+     * \param F      Flux field (output)
+     * \param U      Vector solution at face Gauss points
+     */
     virtual void computeFlux
     (
         const label cellID,
@@ -199,15 +219,20 @@ public:
         const faceGaussField<vector>& U
     ) override;
 
-    // Override reset() method
+    /**
+     * \brief Reset cached intermediate HLLC states
+     */
     virtual void reset() override;
 
-    //- Reading method
+    /**
+     * \brief Read solver settings from dictionary
+     *
+     * \param dict Flux-solver dictionary
+     */
     virtual void read(const dictionary& dict) override;
 };
 
 } // End namespace Foam
 
 #endif
-
 // ************************************************************************* //

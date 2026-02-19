@@ -24,31 +24,14 @@ License
     You should have received a copy of the GNU General Public License
     along with OpenFOAM.  If not, see <http://www.gnu.org/licenses/>.
 
-  Class dgGeneralSymmetryBoundaryField Declaration
+Class
+    Foam::dgGeneralSymmetryBoundaryField
 
-  Description
-    - Implements a general symmetry boundary condition for scalar, vector, and
-      tensor fields.
-
-    - This condition assumes the boundary is a symmetry plane:
-        * No flux passes through the boundary.
-        * Useful for reducing domain size in symmetric problems.
-
-  Usage
-    boundaryField
-    {
-        patchName
-        {
-            type    generalSymmetry;
-        }
-    }
-
-  Note
-    - Only geometric information (normal vector n) and internal values are
-      used. No input parameters required from dictionary.
+Description
+    Symmetry boundary condition for DG fields.
 
 SourceFiles
-    dgGeneralZeroGradientBoundaryField.C
+    dgGeneralSymmetryBoundaryField.C
 
 \*---------------------------------------------------------------------------*/
 
@@ -68,6 +51,31 @@ namespace Foam
                 Class dgGeneralSymmetryBoundaryField Declaration
 \*---------------------------------------------------------------------------*/
 
+/**
+ * \class Foam::dgGeneralSymmetryBoundaryField
+ * \brief Symmetry boundary condition for DG fields
+ *
+ * \details
+ * Enforces a symmetry-plane constraint at face Gauss points by
+ * reflecting the interior (minus-side) state with respect to the
+ * boundary unit normal.
+ *
+ * Scalar fields:
+ * \f[
+ *   \phi^{+} = \phi^{-}
+ * \f]
+ *
+ * Vector fields:
+ * \f[
+ *   \boldsymbol{\phi}^{+}
+ *   =
+ *   \boldsymbol{\phi}^{-}
+ *   - 2(\boldsymbol{\phi}^{-}\cdot\mathbf{n})\,\mathbf{n}
+ * \f]
+ *
+ * Only interior values and geometric information are used.
+ * No dictionary parameters are required.
+ */
 template<class Type>
 class dgGeneralSymmetryBoundaryField
 :
@@ -78,7 +86,13 @@ public:
     //- Runtime type information
     TypeName("generalSymmetry");
 
-    //- Constructor from name and dictionary
+    /**
+     * \brief Construct symmetry boundary field
+     *
+     * \param patch  Finite-volume patch
+     * \param dgMesh DG geometric mesh
+     * \param dict   Boundary-condition dictionary (unused)
+     */
     dgGeneralSymmetryBoundaryField
     (
         const fvPatch& patch,
@@ -89,90 +103,76 @@ public:
     //- Destructor
     virtual ~dgGeneralSymmetryBoundaryField() = default;
 
-    //- Member methods
-        inline void updateGhostStateValue
-        (
-            const label cellID,
-            const label faceLocalID,
-            const label localGauss,
-            const vector& n,
-            const scalar& minusValue,
-            scalar& plusValue
-        ) const override
-        {
-            plusValue = minusValue;
-        }
+    /**
+     * \brief Update ghost-state value for scalar fields
+     *
+     * Copies the interior value to the ghost state.
+     *
+     * \param cellID        Global cell index
+     * \param faceLocalID   Local face index within the cell
+     * \param localGauss    Local Gauss-point index on the face
+     * \param n             Outward unit normal
+     * \param minusValue    Interior (minus-side) value
+     * \param plusValue     Ghost (plus-side) value to be set
+     */
+    inline void updateGhostStateValue
+    (
+        const label cellID,
+        const label faceLocalID,
+        const label localGauss,
+        const vector& n,
+        const scalar& minusValue,
+        scalar& plusValue
+    ) const override
+    {
+        plusValue = minusValue;
+    }
 
-        void updateGhostStateValue
-        (
-            const label cellID,
-            const label faceLocalID,
-            const label localGauss,
-            const vector& n,
-            const vector& minusValue,
-            vector& plusValue
-        ) const override
-        {
-            plusValue = minusValue - 2 * (n & minusValue) * n;
-        }
+    /**
+     * \brief Update ghost-state value for vector fields
+     *
+     * Reflects the normal component and preserves tangential components.
+     *
+     * \param cellID        Global cell index
+     * \param faceLocalID   Local face index within the cell
+     * \param localGauss    Local Gauss-point index on the face
+     * \param n             Outward unit normal
+     * \param minusValue    Interior (minus-side) vector value
+     * \param plusValue     Ghost (plus-side) vector value to be set
+     */
+    void updateGhostStateValue
+    (
+        const label cellID,
+        const label faceLocalID,
+        const label localGauss,
+        const vector& n,
+        const vector& minusValue,
+        vector& plusValue
+    ) const override
+    {
+        plusValue = minusValue - 2 * (n & minusValue) * n;
+    }
 
-        /*
-        void dgGeneralSymmetryBoundaryField<tensor>::updateGhostStateValue
-        (
-            const label cellID,
-            const label faceLocalID,
-            const label localGauss,
-            const vector& n,
-            const vector& minusValue,
-            vector& plusValue
-        ) const override
+    /**
+     * \brief Validate patch compatibility
+     *
+     * Allowed patch type:
+     * - symmetry
+     */
+    void checkPatchType() const override
+    {
+        if (this->patch_.type() != "symmetry")
         {
-            tensor R = tensor::I - 2.0 * n * n; // Reflection tensor
-            plusValue = R & minusValue & R;
+            FatalErrorInFunction
+                << "Boundary condition " << type() << " can only "
+                << "be applied to patch type:\n"
+                << "    symmetry\n"
+                << "but patch "
+                << this->patch_.name() << " is of type "
+                << this->patch_.type() << nl
+                << exit(FatalError);
         }
-
-        void dgGeneralSymmetryBoundaryField<vector>::updateGhostStateGrad
-        (
-            const label cellID,
-            const label faceLocalID,
-            const label localGauss,
-            const vector& n,
-            const vector& minusGrad,
-            vector& plusGrad
-        ) const override
-        {
-            plusGrad = minusGrad - 2 * (n & minusGrad) * n;
-        }
-
-        void dgGeneralSymmetryBoundaryField<tensor>::updateGhostStateGrad
-        (
-            const label cellID,
-            const label faceLocalID,
-            const label localGauss,
-            const vector& n,
-            const vector& minusGrad,
-            vector& plusGrad
-        ) const override
-        {
-            tensor R = tensor::I - 2.0 * n * n; // Reflection tensor
-            plusGrad = R & minusGrad & R;
-        }
-        */
-
-        //- Check patch type
-        void checkPatchType() const override
-        {
-            if (this->patch_.type() != "symmetry")
-            {
-                FatalErrorInFunction
-                    << "Boundary condition " << type() <<" can only "
-                    << "be applied to patch type: \n"
-                    << "    " << "symmetry \n"
-                    << "but patch "
-                    << this->patch_.name() << " is of type " << this->patch_.type() << nl
-                    << exit(FatalError);
-            }
-        }
+    }
 };
 
 } // End namespace Foam
@@ -186,4 +186,3 @@ public:
 #endif
 
 // ************************************************************************* //
-

@@ -29,8 +29,9 @@ Class
 
 Description
     Base class for runtime-selectable DG boundary conditions.
-    When creating a new boundary condition, please remember to override
-    checkPatchType() method.
+
+SourceFiles
+    dgGeneralBoundaryField.C
 
 \*---------------------------------------------------------------------------*/
 
@@ -54,18 +55,37 @@ template<class Type> class faceGaussField;
                     Class dgGeneralBoundaryField Declaration
 \*---------------------------------------------------------------------------*/
 
+/**
+ * \class Foam::dgGeneralBoundaryField
+ * \brief Base class for DG ghost-state boundary conditions
+ *
+ * \details
+ * Defines a runtime-selectable interface for DG boundary conditions that
+ * compute the exterior (plus-side) state from the interior (minus-side)
+ * state at boundary face Gauss points:
+ *
+ * \f[
+ *   \phi^{-} \;\longrightarrow\; \phi^{+}
+ * \f]
+ *
+ * Derived classes typically override:
+ * - updateGhostStateValue() to define the ghost-state value
+ * - updateGhostStateGrad()  to define the ghost-state gradient
+ *
+ * The default implementation corresponds to a copy/zero-gradient behaviour.
+ */
 template<class Type>
 class dgGeneralBoundaryField
 {
 protected:
 
-    //- Reference to fvPatch (geometry of patch)
+    /** Reference to fvPatch describing boundary geometry */
     const fvPatch& patch_;
 
-    //- Reference to DG geometric mesh (for DG-level cell/face connectivity)
+    /** Reference to DG geometric mesh */
     const dgGeomMesh& dgMesh_;
 
-    //- Patch dictionary used to read BC parameters
+    /** Boundary-condition dictionary (stored by value) */
     const dictionary dict_;
 
 public:
@@ -73,7 +93,12 @@ public:
     //- Runtime type information
     TypeName("dgGeneralBoundaryField");
 
-    //- Runtime selection table (dictionary constructor)
+    /**
+     * \brief Runtime selection table for DG boundary conditions
+     *
+     * Enables dictionary-based construction of derived boundary-condition
+     * types.
+     */
     declareRunTimeSelectionTable
     (
         autoPtr,
@@ -83,135 +108,234 @@ public:
         (patch, dgMesh, dict)
     );
 
-    // Constructors
+    // Constructors --------------------------------------------------------
 
-        //- Construct from fvPatch, dgGeomMesh, and dictionary
-        dgGeneralBoundaryField
-        (
-            const fvPatch& patch,
-            const dgGeomMesh& dgMesh,
-            const dictionary& dict
-        );
+    /**
+     * \brief Construct from patch, DG mesh, and dictionary
+     *
+     * \param patch  Finite-volume patch
+     * \param dgMesh DG geometric mesh
+     * \param dict   Boundary-condition dictionary
+     */
+    dgGeneralBoundaryField
+    (
+        const fvPatch& patch,
+        const dgGeomMesh& dgMesh,
+        const dictionary& dict
+    );
 
     //- Destructor
     virtual ~dgGeneralBoundaryField() = default;
 
-    // Factory Method
+    // Factory method ------------------------------------------------------
 
-        static autoPtr<dgGeneralBoundaryField<Type>> New
-        (
-            const fvPatch& patch,
-            const dgGeomMesh& dgMesh,
-            const dictionary& dict
-        );
+    /**
+     * \brief Create boundary condition from dictionary
+     *
+     * Uses the runtime-selection mechanism to construct a derived
+     * boundary-condition type.
+     *
+     * \param patch  Finite-volume patch
+     * \param dgMesh DG geometric mesh
+     * \param dict   Boundary-condition dictionary
+     * \return autoPtr to constructed dgGeneralBoundaryField<Type>
+     */
+    static autoPtr<dgGeneralBoundaryField<Type>> New
+    (
+        const fvPatch& patch,
+        const dgGeomMesh& dgMesh,
+        const dictionary& dict
+    );
 
-    // Core Interface
+    // Core DG boundary interface -----------------------------------------
 
-        //- Update '+' side value at a DG cell boundary for Type scalar
-        virtual void updateGhostStateValue
-        (
-            const label cellID,
-            const label faceLocalID,
-            const label localGauss,
-            const vector& n,
-            const scalar& minusValue,
-            scalar& plusValue
-        ) const
-        {
-            plusValue = minusValue;
-        }
+    /**
+     * \brief Update ghost-state value for scalar fields
+     *
+     * Default behaviour copies the interior value.
+     *
+     * \param cellID        Global cell index
+     * \param faceLocalID   Local face index within the cell
+     * \param localGauss    Local Gauss-point index on the face
+     * \param n             Outward unit normal
+     * \param minusValue    Interior (minus-side) value
+     * \param plusValue     Ghost (plus-side) value to be set
+     */
+    virtual void updateGhostStateValue
+    (
+        const label cellID,
+        const label faceLocalID,
+        const label localGauss,
+        const vector& n,
+        const scalar& minusValue,
+        scalar& plusValue
+    ) const
+    {
+        plusValue = minusValue;
+    }
 
-        //- Update '+' side value at a DG cell boundary for Type vector
-        virtual void updateGhostStateValue
-        (
-            const label cellID,
-            const label faceLocalID,
-            const label localGauss,
-            const vector& n,
-            const vector& minusValue,
-            vector& plusValue
-        ) const
-        {
-            plusValue = minusValue;
-        }
+    /**
+     * \brief Update ghost-state value for vector fields
+     *
+     * Default behaviour copies the interior value.
+     *
+     * \param cellID        Global cell index
+     * \param faceLocalID   Local face index within the cell
+     * \param localGauss    Local Gauss-point index on the face
+     * \param n             Outward unit normal
+     * \param minusValue    Interior (minus-side) value
+     * \param plusValue     Ghost (plus-side) value to be set
+     */
+    virtual void updateGhostStateValue
+    (
+        const label cellID,
+        const label faceLocalID,
+        const label localGauss,
+        const vector& n,
+        const vector& minusValue,
+        vector& plusValue
+    ) const
+    {
+        plusValue = minusValue;
+    }
 
-        //- Update '+' side value at a DG cell boundary for Type tensor
-        virtual void updateGhostStateValue
-        (
-            const label cellID,
-            const label faceLocalID,
-            const label localGauss,
-            const vector& n,
-            const tensor& minusValue,
-            tensor& plusValue
-        ) const
-        {
-            plusValue = minusValue;
-        }
+    /**
+     * \brief Update ghost-state value for tensor fields
+     *
+     * Default behaviour copies the interior value.
+     *
+     * \param cellID        Global cell index
+     * \param faceLocalID   Local face index within the cell
+     * \param localGauss    Local Gauss-point index on the face
+     * \param n             Outward unit normal
+     * \param minusValue    Interior (minus-side) value
+     * \param plusValue     Ghost (plus-side) value to be set
+     */
+    virtual void updateGhostStateValue
+    (
+        const label cellID,
+        const label faceLocalID,
+        const label localGauss,
+        const vector& n,
+        const tensor& minusValue,
+        tensor& plusValue
+    ) const
+    {
+        plusValue = minusValue;
+    }
 
-        //- Update '+' side gradient for Type scalar
-        virtual void updateGhostStateGrad
-        (
-            const label cellID,
-            const label faceLocalID,
-            const label localGauss,
-            const vector& n,
-            const scalar& minusGrad,
-            scalar& plusGrad
-        ) const
-        {
-            plusGrad = minusGrad;
-        }
+    /**
+     * \brief Update ghost-state gradient for scalar fields
+     *
+     * Default behaviour copies the interior gradient.
+     *
+     * \param cellID        Global cell index
+     * \param faceLocalID   Local face index within the cell
+     * \param localGauss    Local Gauss-point index on the face
+     * \param n             Outward unit normal
+     * \param minusGrad     Interior (minus-side) gradient
+     * \param plusGrad      Ghost (plus-side) gradient to be set
+     */
+    virtual void updateGhostStateGrad
+    (
+        const label cellID,
+        const label faceLocalID,
+        const label localGauss,
+        const vector& n,
+        const scalar& minusGrad,
+        scalar& plusGrad
+    ) const
+    {
+        plusGrad = minusGrad;
+    }
 
-        //- Update '+' side gradient for Type vector
-        virtual void updateGhostStateGrad
-        (
-            const label cellID,
-            const label faceLocalID,
-            const label localGauss,
-            const vector& n,
-            const vector& minusGrad,
-            vector& plusGrad
-        ) const
-        {
-            plusGrad = minusGrad;
-        }
+    /**
+     * \brief Update ghost-state gradient for vector fields
+     *
+     * Default behaviour copies the interior gradient.
+     *
+     * \param cellID        Global cell index
+     * \param faceLocalID   Local face index within the cell
+     * \param localGauss    Local Gauss-point index on the face
+     * \param n             Outward unit normal
+     * \param minusGrad     Interior (minus-side) gradient
+     * \param plusGrad      Ghost (plus-side) gradient to be set
+     */
+    virtual void updateGhostStateGrad
+    (
+        const label cellID,
+        const label faceLocalID,
+        const label localGauss,
+        const vector& n,
+        const vector& minusGrad,
+        vector& plusGrad
+    ) const
+    {
+        plusGrad = minusGrad;
+    }
 
-        //- Update '+' side gradient for Type tensor
-        virtual void updateGhostStateGrad
-        (
-            const label cellID,
-            const label faceLocalID,
-            const label localGauss,
-            const vector& n,
-            const tensor& minusGrad,
-            tensor& plusGrad
-        ) const
-        {
-            plusGrad = minusGrad;
-        }
+    /**
+     * \brief Update ghost-state gradient for tensor fields
+     *
+     * Default behaviour copies the interior gradient.
+     *
+     * \param cellID        Global cell index
+     * \param faceLocalID   Local face index within the cell
+     * \param localGauss    Local Gauss-point index on the face
+     * \param n             Outward unit normal
+     * \param minusGrad     Interior (minus-side) gradient
+     * \param plusGrad      Ghost (plus-side) gradient to be set
+     */
+    virtual void updateGhostStateGrad
+    (
+        const label cellID,
+        const label faceLocalID,
+        const label localGauss,
+        const vector& n,
+        const tensor& minusGrad,
+        tensor& plusGrad
+    ) const
+    {
+        plusGrad = minusGrad;
+    }
 
-    // Access Functions
+    // Access functions ----------------------------------------------------
 
-        inline const fvPatch& patch() const { return patch_; }
+    /** Return boundary patch */
+    inline const fvPatch& patch() const { return patch_; }
 
-        inline const dgGeomMesh& dgMesh() const { return dgMesh_; }
+    /** Return DG geometric mesh */
+    inline const dgGeomMesh& dgMesh() const { return dgMesh_; }
 
-        inline const dictionary& dict() const { return dict_; }
+    /** Return boundary-condition dictionary */
+    inline const dictionary& dict() const { return dict_; }
 
-        inline const word& name() const { return patch_.name(); }
+    /** Return patch name */
+    inline const word& name() const { return patch_.name(); }
 
-        inline word BCtype() const
-        {
-            word t;
-            dict_.lookup("type") >> t;
-            return t;
-        }
+    /**
+     * \brief Return boundary-condition type name
+     *
+     * Extracts the value of dictionary entry \c type.
+     *
+     * \return Boundary-condition type name
+     */
+    inline word BCtype() const
+    {
+        word t;
+        dict_.lookup("type") >> t;
+        return t;
+    }
 
-    // Check type
-        
-        //- Verify patch type compatibility
-        virtual void checkPatchType() const {}
+    // Patch compatibility -------------------------------------------------
+
+    /**
+     * \brief Validate patch compatibility
+     *
+     * Derived classes should override this method to restrict supported
+     * patch types.
+     */
+    virtual void checkPatchType() const {}
 };
 
 } // End namespace Foam
@@ -223,4 +347,5 @@ public:
 #include "dgGeneralBoundaryFieldI.H"
 
 #endif
+
 // ************************************************************************* //

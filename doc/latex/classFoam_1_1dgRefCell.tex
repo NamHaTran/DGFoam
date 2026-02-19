@@ -12,13 +12,13 @@ Reference-\/cell data for DG discretization.
 \doxysubsubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\hyperlink{classFoam_1_1dgRefCell_a05f8e99e156c185e16d128129c9af61f}{dg\+Ref\+Cell}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} p\+Order, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{dg\+Cell\+Type}} \mbox{\hyperlink{classFoam_1_1dgRefCell_a7d0347eb9b5c1575414fafabdbecb1f1}{type}})
+\mbox{\hyperlink{classFoam_1_1dgRefCell_a05f8e99e156c185e16d128129c9af61f}{dg\+Ref\+Cell}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} p\+Order, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{dgGeomCell_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5}{dg\+Cell\+Type}} \mbox{\hyperlink{classFoam_1_1dgRefCell_a7d0347eb9b5c1575414fafabdbecb1f1}{type}})
 \begin{DoxyCompactList}\small\item\em Construct reference-\/cell data. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1dgRefCell_a078bef9438409eacc63501645d23ac38}{\texorpdfstring{$\sim$}{\string~}dg\+Ref\+Cell}} ()=\mbox{\hyperlink{classFoam_1_1GaussField}{default}}
 \begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1dgRefCell_a1bc774383e3a881e732203d82b679104}{order}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
 \begin{DoxyCompactList}\small\item\em Return polynomial order. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{classFoam_1_1GaussField}{dg\+Cell\+Type}} \mbox{\hyperlink{classFoam_1_1dgRefCell_a7d0347eb9b5c1575414fafabdbecb1f1}{type}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\mbox{\hyperlink{dgGeomCell_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5}{dg\+Cell\+Type}} \mbox{\hyperlink{classFoam_1_1dgRefCell_a7d0347eb9b5c1575414fafabdbecb1f1}{type}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
 \begin{DoxyCompactList}\small\item\em Return reference cell type. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1dgRefCell_aa28533838b2a5ff7f8b7049c80003941}{n\+Gauss}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
 \begin{DoxyCompactList}\small\item\em Return number of Gauss points. \end{DoxyCompactList}\item 
@@ -36,17 +36,25 @@ Reference-\/cell data for DG discretization.
 \begin{DoxyCompactList}\small\item\em Return basis-\/function derivatives w.\+r.\+t. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ $>$ \& \mbox{\hyperlink{classFoam_1_1dgRefCell_a8d4d4e555605442deae330bb5883b226}{d\+Basis\+\_\+d\+Eta3}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
 \begin{DoxyCompactList}\small\item\em Return basis-\/function derivatives w.\+r.\+t. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgRefCell_ae21ce8aa4f51a99abfc5283671fdf9c2}{get\+Gauss\+Jacobi1D}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} p\+Order, \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{eta}}, \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{w}})
+\begin{DoxyCompactList}\small\item\em Get 1D Gauss-\/\+Jacobi points. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgRefCell_ac1aabdb73f1f9074dd2e2c07dc07f0f6}{get\+Gauss\+Legendre1D}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} p\+Order, \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{eta}}, \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{w}})
+\begin{DoxyCompactList}\small\item\em Get 1D Gauss-\/\+Legendre points. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgRefCell_a30131b2704af120d0b6ce47b2c91da52}{get\+Gauss\+Lobatto1D}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} p\+Order, \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{eta}}, \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{w}})
+\begin{DoxyCompactList}\small\item\em Get 1D Gauss-\/\+Lobatto points. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgRefCell_a7a8e84bb96f9a421bcfdd6f07b4d4bdf}{get\+Gauss\+Radau1D}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} p\+Order, \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{eta}}, \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{w}})
+\begin{DoxyCompactList}\small\item\em Get 1D Gauss-\/\+Radau points. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgRefCell_a0994856d44982a386b309b097f66cbc8}{generate\+Cell\+Gauss\+Points\+And\+Weights}} ()
 \begin{DoxyCompactList}\small\item\em Generate Gauss quadrature points and weights. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgRefCell_a858d9d4f89d486b2286612e54f5b48f5}{compute\+Basis\+And\+Derivatives}} ()
 \begin{DoxyCompactList}\small\item\em Compute basis functions and derivatives. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{classFoam_1_1dgRefCell_a250c99bcfa2a3d990e7e8e76eaf31bca}{dg\+Ref\+Cell}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} p\+Order, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{dg\+Cell\+Type}} \mbox{\hyperlink{classFoam_1_1dgRefCell_a7d0347eb9b5c1575414fafabdbecb1f1}{type}})
+\mbox{\hyperlink{classFoam_1_1dgRefCell_a250c99bcfa2a3d990e7e8e76eaf31bca}{dg\+Ref\+Cell}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} p\+Order, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{dgGeomCell_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5}{dg\+Cell\+Type}} \mbox{\hyperlink{classFoam_1_1dgRefCell_a7d0347eb9b5c1575414fafabdbecb1f1}{type}})
 \begin{DoxyCompactList}\small\item\em Construct reference-\/cell data. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1dgRefCell_a078bef9438409eacc63501645d23ac38}{\texorpdfstring{$\sim$}{\string~}dg\+Ref\+Cell}} ()=\mbox{\hyperlink{classFoam_1_1GaussField}{default}}
 \begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1dgRefCell_a1bc774383e3a881e732203d82b679104}{order}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
 \begin{DoxyCompactList}\small\item\em Return polynomial order. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{classFoam_1_1GaussField}{dg\+Cell\+Type}} \mbox{\hyperlink{classFoam_1_1dgRefCell_a7d0347eb9b5c1575414fafabdbecb1f1}{type}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\mbox{\hyperlink{dgGeomCell_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5}{dg\+Cell\+Type}} \mbox{\hyperlink{classFoam_1_1dgRefCell_a7d0347eb9b5c1575414fafabdbecb1f1}{type}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
 \begin{DoxyCompactList}\small\item\em Return reference cell type. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1dgRefCell_aa28533838b2a5ff7f8b7049c80003941}{n\+Gauss}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
 \begin{DoxyCompactList}\small\item\em Return number of Gauss points. \end{DoxyCompactList}\item 
@@ -64,6 +72,14 @@ Reference-\/cell data for DG discretization.
 \begin{DoxyCompactList}\small\item\em Return basis-\/function derivatives w.\+r.\+t. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ $>$ \& \mbox{\hyperlink{classFoam_1_1dgRefCell_a8d4d4e555605442deae330bb5883b226}{d\+Basis\+\_\+d\+Eta3}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
 \begin{DoxyCompactList}\small\item\em Return basis-\/function derivatives w.\+r.\+t. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgRefCell_ae21ce8aa4f51a99abfc5283671fdf9c2}{get\+Gauss\+Jacobi1D}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} p\+Order, \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{eta}}, \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{w}})
+\begin{DoxyCompactList}\small\item\em Get 1D Gauss-\/\+Jacobi points. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgRefCell_ac1aabdb73f1f9074dd2e2c07dc07f0f6}{get\+Gauss\+Legendre1D}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} p\+Order, \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{eta}}, \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{w}})
+\begin{DoxyCompactList}\small\item\em Get 1D Gauss-\/\+Legendre points. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgRefCell_a30131b2704af120d0b6ce47b2c91da52}{get\+Gauss\+Lobatto1D}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} p\+Order, \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{eta}}, \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{w}})
+\begin{DoxyCompactList}\small\item\em Get 1D Gauss-\/\+Lobatto points. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgRefCell_a7a8e84bb96f9a421bcfdd6f07b4d4bdf}{get\+Gauss\+Radau1D}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} p\+Order, \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{eta}}, \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{w}})
+\begin{DoxyCompactList}\small\item\em Get 1D Gauss-\/\+Radau points. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgRefCell_a0994856d44982a386b309b097f66cbc8}{generate\+Cell\+Gauss\+Points\+And\+Weights}} ()
 \begin{DoxyCompactList}\small\item\em Generate Gauss quadrature points and weights. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgRefCell_a9a10d4cc219c581eb3d02d44df8af030}{compute\+Basis\+And\+Derivatives}} ()
@@ -73,7 +89,7 @@ Reference-\/cell data for DG discretization.
 \item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1dgRefCell_ae666fa119efefcc1123134e75f1a9a5f}{p\+Order\+\_\+}}
 \begin{DoxyCompactList}\small\item\em Polynomial order of the DG approximation. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{classFoam_1_1GaussField}{dg\+Cell\+Type}} \mbox{\hyperlink{classFoam_1_1dgRefCell_a256054f18e4457b123701f7a86f4109b}{type\+\_\+}}
+\mbox{\hyperlink{dgGeomCell_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5}{dg\+Cell\+Type}} \mbox{\hyperlink{classFoam_1_1dgRefCell_a256054f18e4457b123701f7a86f4109b}{type\+\_\+}}
 \begin{DoxyCompactList}\small\item\em Reference cell type (HEX, PRISM, TET, etc.) \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1dgRefCell_a353b8fcbaab0f878e669de22f8f41921}{n\+Gauss\+\_\+}}
 \begin{DoxyCompactList}\small\item\em Number of Gauss quadrature points. \end{DoxyCompactList}\item 
@@ -112,7 +128,7 @@ The data is generated once and shared among all physical cells of the same type 
 \index{Foam::dgRefCell@{Foam::dgRefCell}!dgRefCell@{dgRefCell}}
 \index{dgRefCell@{dgRefCell}!Foam::dgRefCell@{Foam::dgRefCell}}
 \doxysubsubsection{\texorpdfstring{dgRefCell()}{dgRefCell()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
-{\footnotesize\ttfamily dg\+Ref\+Cell\+::dg\+Ref\+Cell (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{p\+Order,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{dg\+Cell\+Type}}}]{type }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily dg\+Ref\+Cell\+::dg\+Ref\+Cell (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{p\+Order,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{dgGeomCell_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5}{dg\+Cell\+Type}}}]{type }\end{DoxyParamCaption})}
 
 
 
@@ -132,7 +148,7 @@ Destructor.
 \index{Foam::dgRefCell@{Foam::dgRefCell}!dgRefCell@{dgRefCell}}
 \index{dgRefCell@{dgRefCell}!Foam::dgRefCell@{Foam::dgRefCell}}
 \doxysubsubsection{\texorpdfstring{dgRefCell()}{dgRefCell()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
-{\footnotesize\ttfamily Foam\+::dg\+Ref\+Cell\+::dg\+Ref\+Cell (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{p\+Order,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{dg\+Cell\+Type}}}]{type }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily Foam\+::dg\+Ref\+Cell\+::dg\+Ref\+Cell (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{p\+Order,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{dgGeomCell_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5}{dg\+Cell\+Type}}}]{type }\end{DoxyParamCaption})}
 
 
 
@@ -165,7 +181,7 @@ Return polynomial order.
 \index{Foam::dgRefCell@{Foam::dgRefCell}!type@{type}}
 \index{type@{type}!Foam::dgRefCell@{Foam::dgRefCell}}
 \doxysubsubsection{\texorpdfstring{type()}{type()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
-{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{dg\+Cell\+Type}} Foam\+::dg\+Ref\+Cell\+::type (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{dgGeomCell_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5}{dg\+Cell\+Type}} Foam\+::dg\+Ref\+Cell\+::type (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
 
 
 
@@ -251,7 +267,47 @@ $\eta_2$ \Hypertarget{classFoam_1_1dgRefCell_a8d4d4e555605442deae330bb5883b226}\
 
 Return basis-\/function derivatives w.\+r.\+t. 
 
-$\eta_3$ \Hypertarget{classFoam_1_1dgRefCell_a0994856d44982a386b309b097f66cbc8}\label{classFoam_1_1dgRefCell_a0994856d44982a386b309b097f66cbc8} 
+$\eta_3$ \Hypertarget{classFoam_1_1dgRefCell_ae21ce8aa4f51a99abfc5283671fdf9c2}\label{classFoam_1_1dgRefCell_ae21ce8aa4f51a99abfc5283671fdf9c2} 
+\index{Foam::dgRefCell@{Foam::dgRefCell}!getGaussJacobi1D@{getGaussJacobi1D}}
+\index{getGaussJacobi1D@{getGaussJacobi1D}!Foam::dgRefCell@{Foam::dgRefCell}}
+\doxysubsubsection{\texorpdfstring{getGaussJacobi1D()}{getGaussJacobi1D()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{void}} Foam\+::dg\+Ref\+Cell\+::get\+Gauss\+Jacobi1D (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{p\+Order,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{eta,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{w }\end{DoxyParamCaption})}
+
+
+
+Get 1D Gauss-\/\+Jacobi points. 
+
+\Hypertarget{classFoam_1_1dgRefCell_ac1aabdb73f1f9074dd2e2c07dc07f0f6}\label{classFoam_1_1dgRefCell_ac1aabdb73f1f9074dd2e2c07dc07f0f6} 
+\index{Foam::dgRefCell@{Foam::dgRefCell}!getGaussLegendre1D@{getGaussLegendre1D}}
+\index{getGaussLegendre1D@{getGaussLegendre1D}!Foam::dgRefCell@{Foam::dgRefCell}}
+\doxysubsubsection{\texorpdfstring{getGaussLegendre1D()}{getGaussLegendre1D()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{void}} Foam\+::dg\+Ref\+Cell\+::get\+Gauss\+Legendre1D (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{p\+Order,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{eta,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{w }\end{DoxyParamCaption})}
+
+
+
+Get 1D Gauss-\/\+Legendre points. 
+
+\Hypertarget{classFoam_1_1dgRefCell_a30131b2704af120d0b6ce47b2c91da52}\label{classFoam_1_1dgRefCell_a30131b2704af120d0b6ce47b2c91da52} 
+\index{Foam::dgRefCell@{Foam::dgRefCell}!getGaussLobatto1D@{getGaussLobatto1D}}
+\index{getGaussLobatto1D@{getGaussLobatto1D}!Foam::dgRefCell@{Foam::dgRefCell}}
+\doxysubsubsection{\texorpdfstring{getGaussLobatto1D()}{getGaussLobatto1D()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{void}} Foam\+::dg\+Ref\+Cell\+::get\+Gauss\+Lobatto1D (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{p\+Order,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{eta,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{w }\end{DoxyParamCaption})}
+
+
+
+Get 1D Gauss-\/\+Lobatto points. 
+
+\Hypertarget{classFoam_1_1dgRefCell_a7a8e84bb96f9a421bcfdd6f07b4d4bdf}\label{classFoam_1_1dgRefCell_a7a8e84bb96f9a421bcfdd6f07b4d4bdf} 
+\index{Foam::dgRefCell@{Foam::dgRefCell}!getGaussRadau1D@{getGaussRadau1D}}
+\index{getGaussRadau1D@{getGaussRadau1D}!Foam::dgRefCell@{Foam::dgRefCell}}
+\doxysubsubsection{\texorpdfstring{getGaussRadau1D()}{getGaussRadau1D()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{void}} Foam\+::dg\+Ref\+Cell\+::get\+Gauss\+Radau1D (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{p\+Order,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{eta,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{w }\end{DoxyParamCaption})}
+
+
+
+Get 1D Gauss-\/\+Radau points. 
+
+\Hypertarget{classFoam_1_1dgRefCell_a0994856d44982a386b309b097f66cbc8}\label{classFoam_1_1dgRefCell_a0994856d44982a386b309b097f66cbc8} 
 \index{Foam::dgRefCell@{Foam::dgRefCell}!generateCellGaussPointsAndWeights@{generateCellGaussPointsAndWeights}}
 \index{generateCellGaussPointsAndWeights@{generateCellGaussPointsAndWeights}!Foam::dgRefCell@{Foam::dgRefCell}}
 \doxysubsubsection{\texorpdfstring{generateCellGaussPointsAndWeights()}{generateCellGaussPointsAndWeights()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
@@ -285,7 +341,7 @@ Return polynomial order.
 \index{Foam::dgRefCell@{Foam::dgRefCell}!type@{type}}
 \index{type@{type}!Foam::dgRefCell@{Foam::dgRefCell}}
 \doxysubsubsection{\texorpdfstring{type()}{type()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
-{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{dg\+Cell\+Type}} Foam\+::dg\+Ref\+Cell\+::type (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{dgGeomCell_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5}{dg\+Cell\+Type}} Foam\+::dg\+Ref\+Cell\+::type (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
 
 
 
@@ -371,7 +427,47 @@ $\eta_2$ \Hypertarget{classFoam_1_1dgRefCell_a8d4d4e555605442deae330bb5883b226}\
 
 Return basis-\/function derivatives w.\+r.\+t. 
 
-$\eta_3$ \Hypertarget{classFoam_1_1dgRefCell_a0994856d44982a386b309b097f66cbc8}\label{classFoam_1_1dgRefCell_a0994856d44982a386b309b097f66cbc8} 
+$\eta_3$ \Hypertarget{classFoam_1_1dgRefCell_ae21ce8aa4f51a99abfc5283671fdf9c2}\label{classFoam_1_1dgRefCell_ae21ce8aa4f51a99abfc5283671fdf9c2} 
+\index{Foam::dgRefCell@{Foam::dgRefCell}!getGaussJacobi1D@{getGaussJacobi1D}}
+\index{getGaussJacobi1D@{getGaussJacobi1D}!Foam::dgRefCell@{Foam::dgRefCell}}
+\doxysubsubsection{\texorpdfstring{getGaussJacobi1D()}{getGaussJacobi1D()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{void}} Foam\+::dg\+Ref\+Cell\+::get\+Gauss\+Jacobi1D (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{p\+Order,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{eta,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{w }\end{DoxyParamCaption})}
+
+
+
+Get 1D Gauss-\/\+Jacobi points. 
+
+\Hypertarget{classFoam_1_1dgRefCell_ac1aabdb73f1f9074dd2e2c07dc07f0f6}\label{classFoam_1_1dgRefCell_ac1aabdb73f1f9074dd2e2c07dc07f0f6} 
+\index{Foam::dgRefCell@{Foam::dgRefCell}!getGaussLegendre1D@{getGaussLegendre1D}}
+\index{getGaussLegendre1D@{getGaussLegendre1D}!Foam::dgRefCell@{Foam::dgRefCell}}
+\doxysubsubsection{\texorpdfstring{getGaussLegendre1D()}{getGaussLegendre1D()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{void}} Foam\+::dg\+Ref\+Cell\+::get\+Gauss\+Legendre1D (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{p\+Order,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{eta,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{w }\end{DoxyParamCaption})}
+
+
+
+Get 1D Gauss-\/\+Legendre points. 
+
+\Hypertarget{classFoam_1_1dgRefCell_a30131b2704af120d0b6ce47b2c91da52}\label{classFoam_1_1dgRefCell_a30131b2704af120d0b6ce47b2c91da52} 
+\index{Foam::dgRefCell@{Foam::dgRefCell}!getGaussLobatto1D@{getGaussLobatto1D}}
+\index{getGaussLobatto1D@{getGaussLobatto1D}!Foam::dgRefCell@{Foam::dgRefCell}}
+\doxysubsubsection{\texorpdfstring{getGaussLobatto1D()}{getGaussLobatto1D()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{void}} Foam\+::dg\+Ref\+Cell\+::get\+Gauss\+Lobatto1D (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{p\+Order,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{eta,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{w }\end{DoxyParamCaption})}
+
+
+
+Get 1D Gauss-\/\+Lobatto points. 
+
+\Hypertarget{classFoam_1_1dgRefCell_a7a8e84bb96f9a421bcfdd6f07b4d4bdf}\label{classFoam_1_1dgRefCell_a7a8e84bb96f9a421bcfdd6f07b4d4bdf} 
+\index{Foam::dgRefCell@{Foam::dgRefCell}!getGaussRadau1D@{getGaussRadau1D}}
+\index{getGaussRadau1D@{getGaussRadau1D}!Foam::dgRefCell@{Foam::dgRefCell}}
+\doxysubsubsection{\texorpdfstring{getGaussRadau1D()}{getGaussRadau1D()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{void}} Foam\+::dg\+Ref\+Cell\+::get\+Gauss\+Radau1D (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{p\+Order,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{eta,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{w }\end{DoxyParamCaption})}
+
+
+
+Get 1D Gauss-\/\+Radau points. 
+
+\Hypertarget{classFoam_1_1dgRefCell_a0994856d44982a386b309b097f66cbc8}\label{classFoam_1_1dgRefCell_a0994856d44982a386b309b097f66cbc8} 
 \index{Foam::dgRefCell@{Foam::dgRefCell}!generateCellGaussPointsAndWeights@{generateCellGaussPointsAndWeights}}
 \index{generateCellGaussPointsAndWeights@{generateCellGaussPointsAndWeights}!Foam::dgRefCell@{Foam::dgRefCell}}
 \doxysubsubsection{\texorpdfstring{generateCellGaussPointsAndWeights()}{generateCellGaussPointsAndWeights()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
@@ -408,7 +504,7 @@ Polynomial order of the DG approximation.
 \index{Foam::dgRefCell@{Foam::dgRefCell}!type\_@{type\_}}
 \index{type\_@{type\_}!Foam::dgRefCell@{Foam::dgRefCell}}
 \doxysubsubsection{\texorpdfstring{type\_}{type\_}}
-{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{dg\+Cell\+Type}} Foam\+::dg\+Ref\+Cell\+::type\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{dgGeomCell_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5}{dg\+Cell\+Type}} Foam\+::dg\+Ref\+Cell\+::type\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
 
 
 

@@ -91,23 +91,26 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
+<p>Base class for DG numerical flux solvers.  
+ <a href="classFoam_1_1dgFluxSolver.html#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="dgFluxSolvers_2dgFluxSolver_2dgFluxSolver_8H_source.html">dgFluxSolver.H</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for Foam::dgFluxSolver:</div>
 <div class="dyncontent">
 <div class="center"><img src="classFoam_1_1dgFluxSolver__inherit__graph.png" border="0" usemap="#aFoam_1_1dgFluxSolver_inherit__map" alt="Inheritance graph"/></div>
 <map name="aFoam_1_1dgFluxSolver_inherit__map" id="aFoam_1_1dgFluxSolver_inherit__map">
-<area shape="rect" title=" " alt="" coords="5,80,156,105"/>
-<area shape="rect" href="classFoam_1_1dgCentralFluxSolver.html" title=" " alt="" coords="204,5,403,31"/>
+<area shape="rect" title="Base class for DG numerical flux solvers." alt="" coords="5,80,156,105"/>
+<area shape="rect" href="classFoam_1_1dgCentralFluxSolver.html" title="Central (non&#45;dissipative) numerical flux." alt="" coords="204,5,403,31"/>
 <area shape="poly" title=" " alt="" coords="147,72,203,51,282,28,284,33,205,57,149,77"/>
 <area shape="poly" title=" " alt="" coords="105,70,150,48,203,28,204,33,152,53,107,75"/>
-<area shape="rect" href="classFoam_1_1dgHLLCFluxSolver.html" title=" " alt="" coords="211,55,395,80"/>
+<area shape="rect" href="classFoam_1_1dgHLLCFluxSolver.html" title="HLLC approximate Riemann solver for DG methods." alt="" coords="211,55,395,80"/>
 <area shape="poly" title=" " alt="" coords="170,89,256,77,257,83,170,94"/>
 <area shape="poly" title=" " alt="" coords="141,75,211,66,211,72,142,80"/>
-<area shape="rect" href="classFoam_1_1dgHLLEFluxSolver.html" title=" " alt="" coords="212,104,395,129"/>
+<area shape="rect" href="classFoam_1_1dgHLLEFluxSolver.html" title="HLLE (Harten–Lax–van Leer–Einfeldt) numerical flux." alt="" coords="212,104,395,129"/>
 <area shape="poly" title=" " alt="" coords="143,105,212,113,212,118,142,110"/>
 <area shape="poly" title=" " alt="" coords="170,91,255,101,254,107,170,96"/>
-<area shape="rect" href="classFoam_1_1dgLaxFriedrichsFluxSolver.html" title=" " alt="" coords="205,154,401,194"/>
+<area shape="rect" href="classFoam_1_1dgLaxFriedrichsFluxSolver.html" title="Local Lax–Friedrichs (Rusanov) numerical flux." alt="" coords="205,154,401,194"/>
 <area shape="poly" title=" " alt="" coords="108,110,205,150,208,151,207,156,203,155,106,114"/>
 <area shape="poly" title=" " alt="" coords="156,108,205,126,273,151,271,156,203,131,154,113"/>
 </map>
@@ -117,7 +120,7 @@ Collaboration diagram for Foam::dgFluxSolver:</div>
 <div class="dyncontent">
 <div class="center"><img src="classFoam_1_1dgFluxSolver__coll__graph.png" border="0" usemap="#aFoam_1_1dgFluxSolver_coll__map" alt="Collaboration graph"/></div>
 <map name="aFoam_1_1dgFluxSolver_coll__map" id="aFoam_1_1dgFluxSolver_coll__map">
-<area shape="rect" title=" " alt="" coords="8,93,159,119"/>
+<area shape="rect" title="Base class for DG numerical flux solvers." alt="" coords="8,93,159,119"/>
 <area shape="rect" href="classFoam_1_1dgGeomMesh.html" title="DG geometric mesh wrapper around fvMesh." alt="" coords="5,5,161,31"/>
 <area shape="poly" title=" " alt="" coords="86,45,86,93,81,93,81,45"/>
 </map>
@@ -159,81 +162,117 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a134274fbdac274323f8764d10123f5f3" id="r_a134274fbdac274323f8764d10123f5f3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1dgFluxSolver.html#a134274fbdac274323f8764d10123f5f3">declareRunTimeSelectionTable</a> (<a class="el" href="classFoam_1_1GaussField.html">autoPtr</a>, <a class="el" href="classFoam_1_1dgFluxSolver.html">dgFluxSolver</a>, <a class="el" href="classFoam_1_1GaussField.html">dictionary</a>,(<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">word</a> &amp;<a class="el" href="classFoam_1_1dgFluxSolver.html#a65f5c41742c90fc8ca26bc6220cdeea3">name</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">dictionary</a> &amp;<a class="el" href="classFoam_1_1dgFluxSolver.html#af698821f76c9aa02a7b9f0ac651086a4">dict</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1dgGeomMesh.html">dgGeomMesh</a> &amp;<a class="el" href="classFoam_1_1GaussField.html">mesh</a>),(<a class="el" href="classFoam_1_1dgFluxSolver.html#a65f5c41742c90fc8ca26bc6220cdeea3">name</a>, <a class="el" href="classFoam_1_1dgFluxSolver.html#af698821f76c9aa02a7b9f0ac651086a4">dict</a>, <a class="el" href="classFoam_1_1GaussField.html">mesh</a>))</td></tr>
 <tr class="separator:a134274fbdac274323f8764d10123f5f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8fd8ad0de1f63de00e9103405ba5e2aa" id="r_a8fd8ad0de1f63de00e9103405ba5e2aa"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1dgFluxSolver.html#a8fd8ad0de1f63de00e9103405ba5e2aa">dgFluxSolver</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">word</a> &amp;<a class="el" href="classFoam_1_1dgFluxSolver.html#a65f5c41742c90fc8ca26bc6220cdeea3">name</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">dictionary</a> &amp;<a class="el" href="classFoam_1_1dgFluxSolver.html#af698821f76c9aa02a7b9f0ac651086a4">dict</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1dgGeomMesh.html">dgGeomMesh</a> &amp;<a class="el" href="classFoam_1_1GaussField.html">mesh</a>)</td></tr>
+<tr class="memdesc:a8fd8ad0de1f63de00e9103405ba5e2aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct from name and dictionary.  <br /></td></tr>
 <tr class="separator:a8fd8ad0de1f63de00e9103405ba5e2aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a714ac461d56251ba0656e504d53254a1" id="r_a714ac461d56251ba0656e504d53254a1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1dgFluxSolver.html#a714ac461d56251ba0656e504d53254a1">dgFluxSolver</a> ()=<a class="el" href="classFoam_1_1GaussField.html">delete</a></td></tr>
 <tr class="separator:a714ac461d56251ba0656e504d53254a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a04415b95f57d65f4dda993607cb7d9d6" id="r_a04415b95f57d65f4dda993607cb7d9d6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">virtual</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1dgFluxSolver.html#a04415b95f57d65f4dda993607cb7d9d6">~dgFluxSolver</a> ()=<a class="el" href="classFoam_1_1GaussField.html">default</a></td></tr>
 <tr class="separator:a04415b95f57d65f4dda993607cb7d9d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a65f5c41742c90fc8ca26bc6220cdeea3" id="r_a65f5c41742c90fc8ca26bc6220cdeea3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">word</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1dgFluxSolver.html#a65f5c41742c90fc8ca26bc6220cdeea3">name</a> () <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
+<tr class="memdesc:a65f5c41742c90fc8ca26bc6220cdeea3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return solver name.  <br /></td></tr>
 <tr class="separator:a65f5c41742c90fc8ca26bc6220cdeea3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af698821f76c9aa02a7b9f0ac651086a4" id="r_af698821f76c9aa02a7b9f0ac651086a4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">dictionary</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1dgFluxSolver.html#af698821f76c9aa02a7b9f0ac651086a4">dict</a> () <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
+<tr class="memdesc:af698821f76c9aa02a7b9f0ac651086a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return solver dictionary.  <br /></td></tr>
 <tr class="separator:af698821f76c9aa02a7b9f0ac651086a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a818e96c113a2634cc92278d07576fd45" id="r_a818e96c113a2634cc92278d07576fd45"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="classFoam_1_1GaussField.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1dgFluxSolver.html#a818e96c113a2634cc92278d07576fd45">computeFlux</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">label</a> cellID, <a class="el" href="classFoam_1_1faceGaussField.html">faceGaussField</a>&lt; <a class="el" href="classFoam_1_1GaussField.html">vector</a> &gt; &amp;<a class="el" href="classFoam_1_1GaussField.html">F</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1faceGaussField.html">faceGaussField</a>&lt; <a class="el" href="classFoam_1_1GaussField.html">scalar</a> &gt; &amp;<a class="el" href="createPrimaryFields_8H.html#acaa7fe8168a3a866f1958b3663d384c6">U</a>)=0</td></tr>
+<tr class="memdesc:a818e96c113a2634cc92278d07576fd45"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute numerical flux for scalar conserved variable.  <br /></td></tr>
 <tr class="separator:a818e96c113a2634cc92278d07576fd45"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae1a701c051676d77d2c8ecc5afb2989d" id="r_ae1a701c051676d77d2c8ecc5afb2989d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="classFoam_1_1GaussField.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1dgFluxSolver.html#ae1a701c051676d77d2c8ecc5afb2989d">computeFlux</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">label</a> cellID, <a class="el" href="classFoam_1_1faceGaussField.html">faceGaussField</a>&lt; <a class="el" href="classFoam_1_1GaussField.html">tensor</a> &gt; &amp;<a class="el" href="classFoam_1_1GaussField.html">F</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1faceGaussField.html">faceGaussField</a>&lt; <a class="el" href="classFoam_1_1GaussField.html">vector</a> &gt; &amp;<a class="el" href="createPrimaryFields_8H.html#acaa7fe8168a3a866f1958b3663d384c6">U</a>)=0</td></tr>
+<tr class="memdesc:ae1a701c051676d77d2c8ecc5afb2989d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute numerical flux for vector conserved variable.  <br /></td></tr>
 <tr class="separator:ae1a701c051676d77d2c8ecc5afb2989d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4f531350dfae3874165829e63725a8a7" id="r_a4f531350dfae3874165829e63725a8a7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="classFoam_1_1GaussField.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1dgFluxSolver.html#a4f531350dfae3874165829e63725a8a7">reset</a> ()=0</td></tr>
+<tr class="memdesc:a4f531350dfae3874165829e63725a8a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset solver internal cache/state if required.  <br /></td></tr>
 <tr class="separator:a4f531350dfae3874165829e63725a8a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4fc7f98f8af77cfb24e847735313d7cf" id="r_a4fc7f98f8af77cfb24e847735313d7cf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1dgFluxSolver.html#a4fc7f98f8af77cfb24e847735313d7cf">makeONB</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">vector</a> &amp;<a class="el" href="classFoam_1_1GaussField.html">n</a>, <a class="el" href="classFoam_1_1GaussField.html">vector</a> &amp;<a class="el" href="classFoam_1_1GaussField.html">t1</a>, <a class="el" href="classFoam_1_1GaussField.html">vector</a> &amp;<a class="el" href="classFoam_1_1GaussField.html">t2</a>) <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
+<tr class="memdesc:a4fc7f98f8af77cfb24e847735313d7cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct an orthonormal basis from a normal vector.  <br /></td></tr>
 <tr class="separator:a4fc7f98f8af77cfb24e847735313d7cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aeb30b26b6e79cea0ea1fd639576841c0" id="r_aeb30b26b6e79cea0ea1fd639576841c0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1dgFluxSolver.html#aeb30b26b6e79cea0ea1fd639576841c0">decomposeU</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">vector</a> &amp;<a class="el" href="createPrimaryFields_8H.html#acaa7fe8168a3a866f1958b3663d384c6">U</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">vector</a> &amp;<a class="el" href="classFoam_1_1GaussField.html">n</a>, <a class="el" href="classFoam_1_1GaussField.html">vector</a> &amp;<a class="el" href="classFoam_1_1GaussField.html">Un</a>, <a class="el" href="classFoam_1_1GaussField.html">vector</a> &amp;<a class="el" href="classFoam_1_1GaussField.html">Ut1</a>, <a class="el" href="classFoam_1_1GaussField.html">vector</a> &amp;<a class="el" href="classFoam_1_1GaussField.html">Ut2</a>) <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
+<tr class="memdesc:aeb30b26b6e79cea0ea1fd639576841c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decompose a vector into normal and tangential components.  <br /></td></tr>
 <tr class="separator:aeb30b26b6e79cea0ea1fd639576841c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4ebea0b463d5b9d8747e52ff693276ce" id="r_a4ebea0b463d5b9d8747e52ff693276ce"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="classFoam_1_1GaussField.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1dgFluxSolver.html#a4ebea0b463d5b9d8747e52ff693276ce">read</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">dictionary</a> &amp;<a class="el" href="classFoam_1_1dgFluxSolver.html#af698821f76c9aa02a7b9f0ac651086a4">dict</a>)=0</td></tr>
+<tr class="memdesc:a4ebea0b463d5b9d8747e52ff693276ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read solver settings from dictionary.  <br /></td></tr>
 <tr class="separator:a4ebea0b463d5b9d8747e52ff693276ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa29c80d12bc940c6582afde7d48a45ae" id="r_aa29c80d12bc940c6582afde7d48a45ae"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1dgFluxSolver.html#aa29c80d12bc940c6582afde7d48a45ae">setEquationType</a> (<a class="el" href="classFoam_1_1dgFluxSolver.html#ac861a0350cf2f298fecfc97544af0572">equationType</a> <a class="el" href="classFoam_1_1GaussField.html">t</a>)</td></tr>
+<tr class="memdesc:aa29c80d12bc940c6582afde7d48a45ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set equation type.  <br /></td></tr>
 <tr class="separator:aa29c80d12bc940c6582afde7d48a45ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a09aac3f56d63fa367f9d2b3e3f897a4b" id="r_a09aac3f56d63fa367f9d2b3e3f897a4b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1dgFluxSolver.html#ac861a0350cf2f298fecfc97544af0572">equationType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1dgFluxSolver.html#a09aac3f56d63fa367f9d2b3e3f897a4b">getEquationType</a> () <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
+<tr class="memdesc:a09aac3f56d63fa367f9d2b3e3f897a4b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return equation type.  <br /></td></tr>
 <tr class="separator:a09aac3f56d63fa367f9d2b3e3f897a4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7973a30716b8f174a3da0cb2968cd0a8" id="r_a7973a30716b8f174a3da0cb2968cd0a8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1dgFluxSolver.html#a7973a30716b8f174a3da0cb2968cd0a8">TypeName</a> (&quot;dgFluxSolver&quot;)</td></tr>
 <tr class="separator:a7973a30716b8f174a3da0cb2968cd0a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a134274fbdac274323f8764d10123f5f3" id="r_a134274fbdac274323f8764d10123f5f3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1dgFluxSolver.html#a134274fbdac274323f8764d10123f5f3">declareRunTimeSelectionTable</a> (<a class="el" href="classFoam_1_1GaussField.html">autoPtr</a>, <a class="el" href="classFoam_1_1dgFluxSolver.html">dgFluxSolver</a>, <a class="el" href="classFoam_1_1GaussField.html">dictionary</a>,(<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">word</a> &amp;<a class="el" href="classFoam_1_1dgFluxSolver.html#a65f5c41742c90fc8ca26bc6220cdeea3">name</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">dictionary</a> &amp;<a class="el" href="classFoam_1_1dgFluxSolver.html#af698821f76c9aa02a7b9f0ac651086a4">dict</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1dgGeomMesh.html">dgGeomMesh</a> &amp;<a class="el" href="classFoam_1_1GaussField.html">mesh</a>),(<a class="el" href="classFoam_1_1dgFluxSolver.html#a65f5c41742c90fc8ca26bc6220cdeea3">name</a>, <a class="el" href="classFoam_1_1dgFluxSolver.html#af698821f76c9aa02a7b9f0ac651086a4">dict</a>, <a class="el" href="classFoam_1_1GaussField.html">mesh</a>))</td></tr>
 <tr class="separator:a134274fbdac274323f8764d10123f5f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8fd8ad0de1f63de00e9103405ba5e2aa" id="r_a8fd8ad0de1f63de00e9103405ba5e2aa"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1dgFluxSolver.html#a8fd8ad0de1f63de00e9103405ba5e2aa">dgFluxSolver</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">word</a> &amp;<a class="el" href="classFoam_1_1dgFluxSolver.html#a65f5c41742c90fc8ca26bc6220cdeea3">name</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">dictionary</a> &amp;<a class="el" href="classFoam_1_1dgFluxSolver.html#af698821f76c9aa02a7b9f0ac651086a4">dict</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1dgGeomMesh.html">dgGeomMesh</a> &amp;<a class="el" href="classFoam_1_1GaussField.html">mesh</a>)</td></tr>
+<tr class="memdesc:a8fd8ad0de1f63de00e9103405ba5e2aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct from name and dictionary.  <br /></td></tr>
 <tr class="separator:a8fd8ad0de1f63de00e9103405ba5e2aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a714ac461d56251ba0656e504d53254a1" id="r_a714ac461d56251ba0656e504d53254a1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1dgFluxSolver.html#a714ac461d56251ba0656e504d53254a1">dgFluxSolver</a> ()=<a class="el" href="classFoam_1_1GaussField.html">delete</a></td></tr>
 <tr class="separator:a714ac461d56251ba0656e504d53254a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a04415b95f57d65f4dda993607cb7d9d6" id="r_a04415b95f57d65f4dda993607cb7d9d6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">virtual</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1dgFluxSolver.html#a04415b95f57d65f4dda993607cb7d9d6">~dgFluxSolver</a> ()=<a class="el" href="classFoam_1_1GaussField.html">default</a></td></tr>
 <tr class="separator:a04415b95f57d65f4dda993607cb7d9d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a65f5c41742c90fc8ca26bc6220cdeea3" id="r_a65f5c41742c90fc8ca26bc6220cdeea3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">word</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1dgFluxSolver.html#a65f5c41742c90fc8ca26bc6220cdeea3">name</a> () <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
+<tr class="memdesc:a65f5c41742c90fc8ca26bc6220cdeea3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return solver name.  <br /></td></tr>
 <tr class="separator:a65f5c41742c90fc8ca26bc6220cdeea3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af698821f76c9aa02a7b9f0ac651086a4" id="r_af698821f76c9aa02a7b9f0ac651086a4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">dictionary</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1dgFluxSolver.html#af698821f76c9aa02a7b9f0ac651086a4">dict</a> () <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
+<tr class="memdesc:af698821f76c9aa02a7b9f0ac651086a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return solver dictionary.  <br /></td></tr>
 <tr class="separator:af698821f76c9aa02a7b9f0ac651086a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a818e96c113a2634cc92278d07576fd45" id="r_a818e96c113a2634cc92278d07576fd45"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="classFoam_1_1GaussField.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1dgFluxSolver.html#a818e96c113a2634cc92278d07576fd45">computeFlux</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">label</a> cellID, <a class="el" href="classFoam_1_1faceGaussField.html">faceGaussField</a>&lt; <a class="el" href="classFoam_1_1GaussField.html">vector</a> &gt; &amp;<a class="el" href="classFoam_1_1GaussField.html">F</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1faceGaussField.html">faceGaussField</a>&lt; <a class="el" href="classFoam_1_1GaussField.html">scalar</a> &gt; &amp;<a class="el" href="createPrimaryFields_8H.html#acaa7fe8168a3a866f1958b3663d384c6">U</a>)=0</td></tr>
+<tr class="memdesc:a818e96c113a2634cc92278d07576fd45"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute numerical flux for scalar conserved variable.  <br /></td></tr>
 <tr class="separator:a818e96c113a2634cc92278d07576fd45"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae1a701c051676d77d2c8ecc5afb2989d" id="r_ae1a701c051676d77d2c8ecc5afb2989d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="classFoam_1_1GaussField.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1dgFluxSolver.html#ae1a701c051676d77d2c8ecc5afb2989d">computeFlux</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">label</a> cellID, <a class="el" href="classFoam_1_1faceGaussField.html">faceGaussField</a>&lt; <a class="el" href="classFoam_1_1GaussField.html">tensor</a> &gt; &amp;<a class="el" href="classFoam_1_1GaussField.html">F</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1faceGaussField.html">faceGaussField</a>&lt; <a class="el" href="classFoam_1_1GaussField.html">vector</a> &gt; &amp;<a class="el" href="createPrimaryFields_8H.html#acaa7fe8168a3a866f1958b3663d384c6">U</a>)=0</td></tr>
+<tr class="memdesc:ae1a701c051676d77d2c8ecc5afb2989d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute numerical flux for vector conserved variable.  <br /></td></tr>
 <tr class="separator:ae1a701c051676d77d2c8ecc5afb2989d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4f531350dfae3874165829e63725a8a7" id="r_a4f531350dfae3874165829e63725a8a7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="classFoam_1_1GaussField.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1dgFluxSolver.html#a4f531350dfae3874165829e63725a8a7">reset</a> ()=0</td></tr>
+<tr class="memdesc:a4f531350dfae3874165829e63725a8a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset solver internal cache/state if required.  <br /></td></tr>
 <tr class="separator:a4f531350dfae3874165829e63725a8a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4fc7f98f8af77cfb24e847735313d7cf" id="r_a4fc7f98f8af77cfb24e847735313d7cf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1dgFluxSolver.html#a4fc7f98f8af77cfb24e847735313d7cf">makeONB</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">vector</a> &amp;<a class="el" href="classFoam_1_1GaussField.html">n</a>, <a class="el" href="classFoam_1_1GaussField.html">vector</a> &amp;<a class="el" href="classFoam_1_1GaussField.html">t1</a>, <a class="el" href="classFoam_1_1GaussField.html">vector</a> &amp;<a class="el" href="classFoam_1_1GaussField.html">t2</a>) <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
+<tr class="memdesc:a4fc7f98f8af77cfb24e847735313d7cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct an orthonormal basis from a normal vector.  <br /></td></tr>
 <tr class="separator:a4fc7f98f8af77cfb24e847735313d7cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aeb30b26b6e79cea0ea1fd639576841c0" id="r_aeb30b26b6e79cea0ea1fd639576841c0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1dgFluxSolver.html#aeb30b26b6e79cea0ea1fd639576841c0">decomposeU</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">vector</a> &amp;<a class="el" href="createPrimaryFields_8H.html#acaa7fe8168a3a866f1958b3663d384c6">U</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">vector</a> &amp;<a class="el" href="classFoam_1_1GaussField.html">n</a>, <a class="el" href="classFoam_1_1GaussField.html">vector</a> &amp;<a class="el" href="classFoam_1_1GaussField.html">Un</a>, <a class="el" href="classFoam_1_1GaussField.html">vector</a> &amp;<a class="el" href="classFoam_1_1GaussField.html">Ut1</a>, <a class="el" href="classFoam_1_1GaussField.html">vector</a> &amp;<a class="el" href="classFoam_1_1GaussField.html">Ut2</a>) <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
+<tr class="memdesc:aeb30b26b6e79cea0ea1fd639576841c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decompose a vector into normal and tangential components.  <br /></td></tr>
 <tr class="separator:aeb30b26b6e79cea0ea1fd639576841c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4ebea0b463d5b9d8747e52ff693276ce" id="r_a4ebea0b463d5b9d8747e52ff693276ce"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="classFoam_1_1GaussField.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1dgFluxSolver.html#a4ebea0b463d5b9d8747e52ff693276ce">read</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">dictionary</a> &amp;<a class="el" href="classFoam_1_1dgFluxSolver.html#af698821f76c9aa02a7b9f0ac651086a4">dict</a>)=0</td></tr>
+<tr class="memdesc:a4ebea0b463d5b9d8747e52ff693276ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read solver settings from dictionary.  <br /></td></tr>
 <tr class="separator:a4ebea0b463d5b9d8747e52ff693276ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa29c80d12bc940c6582afde7d48a45ae" id="r_aa29c80d12bc940c6582afde7d48a45ae"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1dgFluxSolver.html#aa29c80d12bc940c6582afde7d48a45ae">setEquationType</a> (<a class="el" href="classFoam_1_1dgFluxSolver.html#ac861a0350cf2f298fecfc97544af0572">equationType</a> <a class="el" href="classFoam_1_1GaussField.html">t</a>)</td></tr>
+<tr class="memdesc:aa29c80d12bc940c6582afde7d48a45ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set equation type.  <br /></td></tr>
 <tr class="separator:aa29c80d12bc940c6582afde7d48a45ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a09aac3f56d63fa367f9d2b3e3f897a4b" id="r_a09aac3f56d63fa367f9d2b3e3f897a4b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1dgFluxSolver.html#ac861a0350cf2f298fecfc97544af0572">equationType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1dgFluxSolver.html#a09aac3f56d63fa367f9d2b3e3f897a4b">getEquationType</a> () <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
+<tr class="memdesc:a09aac3f56d63fa367f9d2b3e3f897a4b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return equation type.  <br /></td></tr>
 <tr class="separator:a09aac3f56d63fa367f9d2b3e3f897a4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a4739349630624924584ae6ea0d7df763" id="r_a4739349630624924584ae6ea0d7df763"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">static</a> <a class="el" href="classFoam_1_1GaussField.html">autoPtr</a>&lt; <a class="el" href="classFoam_1_1dgFluxSolver.html">dgFluxSolver</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1dgFluxSolver.html#a4739349630624924584ae6ea0d7df763">New</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">word</a> &amp;<a class="el" href="classFoam_1_1dgFluxSolver.html#a65f5c41742c90fc8ca26bc6220cdeea3">name</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">word</a> &amp;<a class="el" href="classFoam_1_1GaussField.html">fluxSolverType</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">dictionary</a> &amp;<a class="el" href="classFoam_1_1dgFluxSolver.html#af698821f76c9aa02a7b9f0ac651086a4">dict</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1dgGeomMesh.html">dgGeomMesh</a> &amp;<a class="el" href="classFoam_1_1GaussField.html">mesh</a>)</td></tr>
+<tr class="memdesc:a4739349630624924584ae6ea0d7df763"><td class="mdescLeft">&#160;</td><td class="mdescRight">Select and construct from dictionary.  <br /></td></tr>
 <tr class="separator:a4739349630624924584ae6ea0d7df763"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a617cb61197710786b9c9da79f623ae38" id="r_a617cb61197710786b9c9da79f623ae38"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">static</a> <a class="el" href="classFoam_1_1GaussField.html">autoPtr</a>&lt; <a class="el" href="classFoam_1_1dgFluxSolver.html">dgFluxSolver</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1dgFluxSolver.html#a617cb61197710786b9c9da79f623ae38">New</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">word</a> &amp;<a class="el" href="classFoam_1_1dgFluxSolver.html#a65f5c41742c90fc8ca26bc6220cdeea3">name</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">word</a> &amp;<a class="el" href="classFoam_1_1GaussField.html">fluxSolverType</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">dictionary</a> &amp;<a class="el" href="classFoam_1_1dgFluxSolver.html#af698821f76c9aa02a7b9f0ac651086a4">dict</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1dgGeomMesh.html">dgGeomMesh</a> &amp;<a class="el" href="classFoam_1_1GaussField.html">mesh</a>)</td></tr>
+<tr class="memdesc:a617cb61197710786b9c9da79f623ae38"><td class="mdescLeft">&#160;</td><td class="mdescRight">Select and construct from dictionary.  <br /></td></tr>
 <tr class="separator:a617cb61197710786b9c9da79f623ae38"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
 <tr class="memitem:a940ac2708929c4b459605c642b5bfe9e" id="r_a940ac2708929c4b459605c642b5bfe9e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">word</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1dgFluxSolver.html#a940ac2708929c4b459605c642b5bfe9e">name_</a></td></tr>
+<tr class="memdesc:a940ac2708929c4b459605c642b5bfe9e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Solver instance name (for logging/debug)  <br /></td></tr>
 <tr class="separator:a940ac2708929c4b459605c642b5bfe9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aab4ed6bf78c423de92270601c10f5214" id="r_aab4ed6bf78c423de92270601c10f5214"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">dictionary</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1dgFluxSolver.html#aab4ed6bf78c423de92270601c10f5214">dict_</a></td></tr>
+<tr class="memdesc:aab4ed6bf78c423de92270601c10f5214"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configuration dictionary for this solver.  <br /></td></tr>
 <tr class="separator:aab4ed6bf78c423de92270601c10f5214"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0a5b03f6b3e59f91d5175d644b7118d6" id="r_a0a5b03f6b3e59f91d5175d644b7118d6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1dgGeomMesh.html">dgGeomMesh</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1dgFluxSolver.html#a0a5b03f6b3e59f91d5175d644b7118d6">mesh_</a></td></tr>
+<tr class="memdesc:a0a5b03f6b3e59f91d5175d644b7118d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reference to DG geometric mesh.  <br /></td></tr>
 <tr class="separator:a0a5b03f6b3e59f91d5175d644b7118d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a01702ce212b866ad64127b8e304395ea" id="r_a01702ce212b866ad64127b8e304395ea"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1dgFluxSolver.html#ac861a0350cf2f298fecfc97544af0572">equationType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1dgFluxSolver.html#a01702ce212b866ad64127b8e304395ea">eqnType_</a></td></tr>
+<tr class="memdesc:a01702ce212b866ad64127b8e304395ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Equation type used for interpreting left/right states.  <br /></td></tr>
 <tr class="separator:a01702ce212b866ad64127b8e304395ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Member Enumeration Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Base class for DG numerical flux solvers. </p>
+<p>Defines the runtime-selectable interface for numerical-flux solvers that operate on <a class="el" href="classFoam_1_1faceGaussField.html" title="Gauss-point field on faces of a DG cell.">faceGaussField</a> data. Implementations compute a numerical flux from minus/plus states at face Gauss points.</p>
+<p>Plus/minus convention:</p><ul>
+<li>minus: owner cell (P-side)</li>
+<li>plus : neighbour cell (N-side)</li>
+</ul>
+<p>The equationType is used by derived solvers to interpret the meaning of state components and to select wave-speed estimates where required. </p>
+</div><h2 class="groupheader">Member Enumeration Documentation</h2>
 <a id="ac861a0350cf2f298fecfc97544af0572" name="ac861a0350cf2f298fecfc97544af0572"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ac861a0350cf2f298fecfc97544af0572">&#9670;&#160;</a></span>equationType <span class="overload">[1/2]</span></h2>
 
@@ -254,14 +293,22 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ac861a0350cf2f298fecfc97544af0572a184b6e2175a62be0322600dfd9fdcb39" name="ac861a0350cf2f298fecfc97544af0572a184b6e2175a62be0322600dfd9fdcb39"></a>massTransport&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="ac861a0350cf2f298fecfc97544af0572ab13bb6b4d6512ea3776b199e277b267f" name="ac861a0350cf2f298fecfc97544af0572ab13bb6b4d6512ea3776b199e277b267f"></a>momentumTransport&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="ac861a0350cf2f298fecfc97544af0572a3133169db610b44f06f0406a7450e5f2" name="ac861a0350cf2f298fecfc97544af0572a3133169db610b44f06f0406a7450e5f2"></a>energyTransport&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="ac861a0350cf2f298fecfc97544af0572a8c287215eefcc35dfe9f95e8380e011c" name="ac861a0350cf2f298fecfc97544af0572a8c287215eefcc35dfe9f95e8380e011c"></a>scalarTransport&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="ac861a0350cf2f298fecfc97544af0572a184b6e2175a62be0322600dfd9fdcb39" name="ac861a0350cf2f298fecfc97544af0572a184b6e2175a62be0322600dfd9fdcb39"></a>massTransport&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="ac861a0350cf2f298fecfc97544af0572ab13bb6b4d6512ea3776b199e277b267f" name="ac861a0350cf2f298fecfc97544af0572ab13bb6b4d6512ea3776b199e277b267f"></a>momentumTransport&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="ac861a0350cf2f298fecfc97544af0572a3133169db610b44f06f0406a7450e5f2" name="ac861a0350cf2f298fecfc97544af0572a3133169db610b44f06f0406a7450e5f2"></a>energyTransport&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="ac861a0350cf2f298fecfc97544af0572a8c287215eefcc35dfe9f95e8380e011c" name="ac861a0350cf2f298fecfc97544af0572a8c287215eefcc35dfe9f95e8380e011c"></a>scalarTransport&#160;</td><td class="fielddoc"></td></tr>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ac861a0350cf2f298fecfc97544af0572a184b6e2175a62be0322600dfd9fdcb39" name="ac861a0350cf2f298fecfc97544af0572a184b6e2175a62be0322600dfd9fdcb39"></a>massTransport&#160;</td><td class="fielddoc"><p>Mass transport equation. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ac861a0350cf2f298fecfc97544af0572ab13bb6b4d6512ea3776b199e277b267f" name="ac861a0350cf2f298fecfc97544af0572ab13bb6b4d6512ea3776b199e277b267f"></a>momentumTransport&#160;</td><td class="fielddoc"><p>Momentum transport equation. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ac861a0350cf2f298fecfc97544af0572a3133169db610b44f06f0406a7450e5f2" name="ac861a0350cf2f298fecfc97544af0572a3133169db610b44f06f0406a7450e5f2"></a>energyTransport&#160;</td><td class="fielddoc"><p>Energy transport equation. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ac861a0350cf2f298fecfc97544af0572a8c287215eefcc35dfe9f95e8380e011c" name="ac861a0350cf2f298fecfc97544af0572a8c287215eefcc35dfe9f95e8380e011c"></a>scalarTransport&#160;</td><td class="fielddoc"><p>Scalar transport equation. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ac861a0350cf2f298fecfc97544af0572a184b6e2175a62be0322600dfd9fdcb39" name="ac861a0350cf2f298fecfc97544af0572a184b6e2175a62be0322600dfd9fdcb39"></a>massTransport&#160;</td><td class="fielddoc"><p>Mass transport equation. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ac861a0350cf2f298fecfc97544af0572ab13bb6b4d6512ea3776b199e277b267f" name="ac861a0350cf2f298fecfc97544af0572ab13bb6b4d6512ea3776b199e277b267f"></a>momentumTransport&#160;</td><td class="fielddoc"><p>Momentum transport equation. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ac861a0350cf2f298fecfc97544af0572a3133169db610b44f06f0406a7450e5f2" name="ac861a0350cf2f298fecfc97544af0572a3133169db610b44f06f0406a7450e5f2"></a>energyTransport&#160;</td><td class="fielddoc"><p>Energy transport equation. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ac861a0350cf2f298fecfc97544af0572a8c287215eefcc35dfe9f95e8380e011c" name="ac861a0350cf2f298fecfc97544af0572a8c287215eefcc35dfe9f95e8380e011c"></a>scalarTransport&#160;</td><td class="fielddoc"><p>Scalar transport equation. </p>
+</td></tr>
 </table>
 
 </div>
@@ -286,14 +333,22 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ac861a0350cf2f298fecfc97544af0572a184b6e2175a62be0322600dfd9fdcb39" name="ac861a0350cf2f298fecfc97544af0572a184b6e2175a62be0322600dfd9fdcb39"></a>massTransport&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="ac861a0350cf2f298fecfc97544af0572ab13bb6b4d6512ea3776b199e277b267f" name="ac861a0350cf2f298fecfc97544af0572ab13bb6b4d6512ea3776b199e277b267f"></a>momentumTransport&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="ac861a0350cf2f298fecfc97544af0572a3133169db610b44f06f0406a7450e5f2" name="ac861a0350cf2f298fecfc97544af0572a3133169db610b44f06f0406a7450e5f2"></a>energyTransport&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="ac861a0350cf2f298fecfc97544af0572a8c287215eefcc35dfe9f95e8380e011c" name="ac861a0350cf2f298fecfc97544af0572a8c287215eefcc35dfe9f95e8380e011c"></a>scalarTransport&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="ac861a0350cf2f298fecfc97544af0572a184b6e2175a62be0322600dfd9fdcb39" name="ac861a0350cf2f298fecfc97544af0572a184b6e2175a62be0322600dfd9fdcb39"></a>massTransport&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="ac861a0350cf2f298fecfc97544af0572ab13bb6b4d6512ea3776b199e277b267f" name="ac861a0350cf2f298fecfc97544af0572ab13bb6b4d6512ea3776b199e277b267f"></a>momentumTransport&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="ac861a0350cf2f298fecfc97544af0572a3133169db610b44f06f0406a7450e5f2" name="ac861a0350cf2f298fecfc97544af0572a3133169db610b44f06f0406a7450e5f2"></a>energyTransport&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="ac861a0350cf2f298fecfc97544af0572a8c287215eefcc35dfe9f95e8380e011c" name="ac861a0350cf2f298fecfc97544af0572a8c287215eefcc35dfe9f95e8380e011c"></a>scalarTransport&#160;</td><td class="fielddoc"></td></tr>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ac861a0350cf2f298fecfc97544af0572a184b6e2175a62be0322600dfd9fdcb39" name="ac861a0350cf2f298fecfc97544af0572a184b6e2175a62be0322600dfd9fdcb39"></a>massTransport&#160;</td><td class="fielddoc"><p>Mass transport equation. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ac861a0350cf2f298fecfc97544af0572ab13bb6b4d6512ea3776b199e277b267f" name="ac861a0350cf2f298fecfc97544af0572ab13bb6b4d6512ea3776b199e277b267f"></a>momentumTransport&#160;</td><td class="fielddoc"><p>Momentum transport equation. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ac861a0350cf2f298fecfc97544af0572a3133169db610b44f06f0406a7450e5f2" name="ac861a0350cf2f298fecfc97544af0572a3133169db610b44f06f0406a7450e5f2"></a>energyTransport&#160;</td><td class="fielddoc"><p>Energy transport equation. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ac861a0350cf2f298fecfc97544af0572a8c287215eefcc35dfe9f95e8380e011c" name="ac861a0350cf2f298fecfc97544af0572a8c287215eefcc35dfe9f95e8380e011c"></a>scalarTransport&#160;</td><td class="fielddoc"><p>Scalar transport equation. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ac861a0350cf2f298fecfc97544af0572a184b6e2175a62be0322600dfd9fdcb39" name="ac861a0350cf2f298fecfc97544af0572a184b6e2175a62be0322600dfd9fdcb39"></a>massTransport&#160;</td><td class="fielddoc"><p>Mass transport equation. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ac861a0350cf2f298fecfc97544af0572ab13bb6b4d6512ea3776b199e277b267f" name="ac861a0350cf2f298fecfc97544af0572ab13bb6b4d6512ea3776b199e277b267f"></a>momentumTransport&#160;</td><td class="fielddoc"><p>Momentum transport equation. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ac861a0350cf2f298fecfc97544af0572a3133169db610b44f06f0406a7450e5f2" name="ac861a0350cf2f298fecfc97544af0572a3133169db610b44f06f0406a7450e5f2"></a>energyTransport&#160;</td><td class="fielddoc"><p>Energy transport equation. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ac861a0350cf2f298fecfc97544af0572a8c287215eefcc35dfe9f95e8380e011c" name="ac861a0350cf2f298fecfc97544af0572a8c287215eefcc35dfe9f95e8380e011c"></a>scalarTransport&#160;</td><td class="fielddoc"><p>Scalar transport equation. </p>
+</td></tr>
 </table>
 
 </div>
@@ -330,6 +385,16 @@ Protected Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Construct from name and dictionary. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name</td><td>Solver instance name </td></tr>
+    <tr><td class="paramname">dict</td><td>Solver dictionary </td></tr>
+    <tr><td class="paramname">mesh</td><td>DG geometric mesh </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -414,6 +479,16 @@ Protected Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Construct from name and dictionary. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name</td><td>Solver instance name </td></tr>
+    <tr><td class="paramname">dict</td><td>Solver dictionary </td></tr>
+    <tr><td class="paramname">mesh</td><td>DG geometric mesh </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -578,6 +653,18 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Select and construct from dictionary. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name</td><td>Solver instance name </td></tr>
+    <tr><td class="paramname">fluxSolverType</td><td>Selected flux-solver type name </td></tr>
+    <tr><td class="paramname">dict</td><td>Solver dictionary </td></tr>
+    <tr><td class="paramname">mesh</td><td>DG geometric mesh </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>autoPtr to constructed <a class="el" href="classFoam_1_1dgFluxSolver.html" title="Base class for DG numerical flux solvers.">dgFluxSolver</a> </dd></dl>
+
 </div>
 </div>
 <a id="a65f5c41742c90fc8ca26bc6220cdeea3" name="a65f5c41742c90fc8ca26bc6220cdeea3"></a>
@@ -603,6 +690,8 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Return solver name. </p>
+
 </div>
 </div>
 <a id="af698821f76c9aa02a7b9f0ac651086a4" name="af698821f76c9aa02a7b9f0ac651086a4"></a>
@@ -627,6 +716,8 @@ Protected Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Return solver dictionary. </p>
 
 </div>
 </div>
@@ -669,6 +760,16 @@ Protected Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Compute numerical flux for scalar conserved variable. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cellID</td><td>DG cell index </td></tr>
+    <tr><td class="paramname">F</td><td>Flux field (output) </td></tr>
+    <tr><td class="paramname">U</td><td>Scalar solution at face Gauss points </td></tr>
+  </table>
+  </dd>
+</dl>
 
 <p>Implemented in <a class="el" href="classFoam_1_1dgCentralFluxSolver.html#a1814acda5529e50f332da873284371e8">Foam::dgCentralFluxSolver</a>, <a class="el" href="classFoam_1_1dgLaxFriedrichsFluxSolver.html#ad592701971b1819572ea66910fbd76f1">Foam::dgLaxFriedrichsFluxSolver</a>, <a class="el" href="classFoam_1_1dgHLLCFluxSolver.html#a8f1280d3b30a07801232658956bea663">Foam::dgHLLCFluxSolver</a>, <a class="el" href="classFoam_1_1dgHLLEFluxSolver.html#a225c3352bc3375e32401b2361e47e3c4">Foam::dgHLLEFluxSolver</a>, <a class="el" href="classFoam_1_1dgCentralFluxSolver.html#a08ed977f865c18a1d584efc8f66e3ca4">Foam::dgCentralFluxSolver</a>, <a class="el" href="classFoam_1_1dgHLLCFluxSolver.html#ab87d6824b803bd5a773fe2cf126d87a3">Foam::dgHLLCFluxSolver</a>, <a class="el" href="classFoam_1_1dgHLLEFluxSolver.html#accfb18f675c1cd797ee9c55d6fc5bc1e">Foam::dgHLLEFluxSolver</a>, and <a class="el" href="classFoam_1_1dgLaxFriedrichsFluxSolver.html#a4e07c80e5634b104d8a27ca2a967ccee">Foam::dgLaxFriedrichsFluxSolver</a>.</p>
 
@@ -714,6 +815,16 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Compute numerical flux for vector conserved variable. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cellID</td><td>DG cell index </td></tr>
+    <tr><td class="paramname">F</td><td>Flux field (output) </td></tr>
+    <tr><td class="paramname">U</td><td>Vector solution at face Gauss points </td></tr>
+  </table>
+  </dd>
+</dl>
+
 <p>Implemented in <a class="el" href="classFoam_1_1dgCentralFluxSolver.html#ae8cce7a08a252eddd6d9bebcaffd44af">Foam::dgCentralFluxSolver</a>, <a class="el" href="classFoam_1_1dgLaxFriedrichsFluxSolver.html#a381e592d67bf15847dfdedfe5aa4058a">Foam::dgLaxFriedrichsFluxSolver</a>, <a class="el" href="classFoam_1_1dgHLLCFluxSolver.html#a0efd6b862865cdda1722f8941c02a8f6">Foam::dgHLLCFluxSolver</a>, <a class="el" href="classFoam_1_1dgHLLEFluxSolver.html#a5c49bfbdb8219a32f2d88682fdc35d3e">Foam::dgHLLEFluxSolver</a>, <a class="el" href="classFoam_1_1dgCentralFluxSolver.html#a8bfed0b8f1cecc37037160b73ea88757">Foam::dgCentralFluxSolver</a>, <a class="el" href="classFoam_1_1dgHLLCFluxSolver.html#af8a51ccb014214aeba0148781b48e061">Foam::dgHLLCFluxSolver</a>, <a class="el" href="classFoam_1_1dgHLLEFluxSolver.html#a5099752b8faa27181c6ec9c15f1b8d31">Foam::dgHLLEFluxSolver</a>, and <a class="el" href="classFoam_1_1dgLaxFriedrichsFluxSolver.html#a7077c530163d30a97c3590bfb69fa715">Foam::dgLaxFriedrichsFluxSolver</a>.</p>
 
 </div>
@@ -740,6 +851,8 @@ Protected Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Reset solver internal cache/state if required. </p>
 
 <p>Implemented in <a class="el" href="classFoam_1_1dgCentralFluxSolver.html#a603193dd5f962bfd19d8f668669332c4">Foam::dgCentralFluxSolver</a>, <a class="el" href="classFoam_1_1dgLaxFriedrichsFluxSolver.html#ab056ecd7e1aff9d41bd8a1a300201f5d">Foam::dgLaxFriedrichsFluxSolver</a>, <a class="el" href="classFoam_1_1dgHLLCFluxSolver.html#a7bd8f4ff5b882ec5173838e8445675c8">Foam::dgHLLCFluxSolver</a>, <a class="el" href="classFoam_1_1dgHLLEFluxSolver.html#a9747ba5f629d03206cbb406f0372896c">Foam::dgHLLEFluxSolver</a>, <a class="el" href="classFoam_1_1dgCentralFluxSolver.html#a603193dd5f962bfd19d8f668669332c4">Foam::dgCentralFluxSolver</a>, <a class="el" href="classFoam_1_1dgHLLCFluxSolver.html#a4281be95989d25d5d991109dd96531e2">Foam::dgHLLCFluxSolver</a>, <a class="el" href="classFoam_1_1dgHLLEFluxSolver.html#a9747ba5f629d03206cbb406f0372896c">Foam::dgHLLEFluxSolver</a>, and <a class="el" href="classFoam_1_1dgLaxFriedrichsFluxSolver.html#ab056ecd7e1aff9d41bd8a1a300201f5d">Foam::dgLaxFriedrichsFluxSolver</a>.</p>
 
@@ -776,6 +889,17 @@ Protected Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Construct an orthonormal basis from a normal vector. </p>
+<p>Builds tangential directions (t1, t2) such that (n, t1, t2) is an orthonormal triad.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">n</td><td>Unit normal </td></tr>
+    <tr><td class="paramname">t1</td><td>First tangential direction (output) </td></tr>
+    <tr><td class="paramname">t2</td><td>Second tangential direction (output) </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -823,6 +947,18 @@ Protected Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Decompose a vector into normal and tangential components. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">U</td><td>Input vector </td></tr>
+    <tr><td class="paramname">n</td><td>Unit normal </td></tr>
+    <tr><td class="paramname">Un</td><td>Normal component (output) </td></tr>
+    <tr><td class="paramname">Ut1</td><td>Tangential component along t1 (output) </td></tr>
+    <tr><td class="paramname">Ut2</td><td>Tangential component along t2 (output) </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <a id="a4ebea0b463d5b9d8747e52ff693276ce" name="a4ebea0b463d5b9d8747e52ff693276ce"></a>
@@ -848,6 +984,14 @@ Protected Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Read solver settings from dictionary. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">dict</td><td>Solver dictionary </td></tr>
+  </table>
+  </dd>
+</dl>
 
 <p>Implemented in <a class="el" href="classFoam_1_1dgCentralFluxSolver.html#ad45311c9a7d55af2bf1f395b657835b1">Foam::dgCentralFluxSolver</a>, <a class="el" href="classFoam_1_1dgLaxFriedrichsFluxSolver.html#a3c8f9df3c76af026f371a8308a4d7544">Foam::dgLaxFriedrichsFluxSolver</a>, <a class="el" href="classFoam_1_1dgHLLCFluxSolver.html#ad27ff701dfcc54a9319c6e4bde37ef15">Foam::dgHLLCFluxSolver</a>, <a class="el" href="classFoam_1_1dgHLLEFluxSolver.html#a083f1cc62ef494e94cf7676b184d20d5">Foam::dgHLLEFluxSolver</a>, <a class="el" href="classFoam_1_1dgCentralFluxSolver.html#ad45311c9a7d55af2bf1f395b657835b1">Foam::dgCentralFluxSolver</a>, <a class="el" href="classFoam_1_1dgHLLCFluxSolver.html#aa0787bdd0bdead946728c68dea99eac7">Foam::dgHLLCFluxSolver</a>, <a class="el" href="classFoam_1_1dgHLLEFluxSolver.html#ad9a23b45f66ff957ea5c37f6aec23796">Foam::dgHLLEFluxSolver</a>, and <a class="el" href="classFoam_1_1dgLaxFriedrichsFluxSolver.html#abea0a8c6798477d5d4d32ff745430be6">Foam::dgLaxFriedrichsFluxSolver</a>.</p>
 
@@ -877,6 +1021,8 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Set equation type. </p>
+
 </div>
 </div>
 <a id="a09aac3f56d63fa367f9d2b3e3f897a4b" name="a09aac3f56d63fa367f9d2b3e3f897a4b"></a>
@@ -901,6 +1047,8 @@ Protected Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Return equation type. </p>
 
 </div>
 </div>
@@ -1014,6 +1162,18 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Select and construct from dictionary. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name</td><td>Solver instance name </td></tr>
+    <tr><td class="paramname">fluxSolverType</td><td>Selected flux-solver type name </td></tr>
+    <tr><td class="paramname">dict</td><td>Solver dictionary </td></tr>
+    <tr><td class="paramname">mesh</td><td>DG geometric mesh </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>autoPtr to constructed <a class="el" href="classFoam_1_1dgFluxSolver.html" title="Base class for DG numerical flux solvers.">dgFluxSolver</a> </dd></dl>
+
 </div>
 </div>
 <a id="a65f5c41742c90fc8ca26bc6220cdeea3" name="a65f5c41742c90fc8ca26bc6220cdeea3"></a>
@@ -1039,6 +1199,8 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Return solver name. </p>
+
 </div>
 </div>
 <a id="af698821f76c9aa02a7b9f0ac651086a4" name="af698821f76c9aa02a7b9f0ac651086a4"></a>
@@ -1063,6 +1225,8 @@ Protected Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Return solver dictionary. </p>
 
 </div>
 </div>
@@ -1105,6 +1269,16 @@ Protected Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Compute numerical flux for scalar conserved variable. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cellID</td><td>DG cell index </td></tr>
+    <tr><td class="paramname">F</td><td>Flux field (output) </td></tr>
+    <tr><td class="paramname">U</td><td>Scalar solution at face Gauss points </td></tr>
+  </table>
+  </dd>
+</dl>
 
 <p>Implemented in <a class="el" href="classFoam_1_1dgCentralFluxSolver.html#a1814acda5529e50f332da873284371e8">Foam::dgCentralFluxSolver</a>, <a class="el" href="classFoam_1_1dgLaxFriedrichsFluxSolver.html#ad592701971b1819572ea66910fbd76f1">Foam::dgLaxFriedrichsFluxSolver</a>, <a class="el" href="classFoam_1_1dgHLLCFluxSolver.html#a8f1280d3b30a07801232658956bea663">Foam::dgHLLCFluxSolver</a>, <a class="el" href="classFoam_1_1dgHLLEFluxSolver.html#a225c3352bc3375e32401b2361e47e3c4">Foam::dgHLLEFluxSolver</a>, <a class="el" href="classFoam_1_1dgCentralFluxSolver.html#a08ed977f865c18a1d584efc8f66e3ca4">Foam::dgCentralFluxSolver</a>, <a class="el" href="classFoam_1_1dgHLLCFluxSolver.html#ab87d6824b803bd5a773fe2cf126d87a3">Foam::dgHLLCFluxSolver</a>, <a class="el" href="classFoam_1_1dgHLLEFluxSolver.html#accfb18f675c1cd797ee9c55d6fc5bc1e">Foam::dgHLLEFluxSolver</a>, and <a class="el" href="classFoam_1_1dgLaxFriedrichsFluxSolver.html#a4e07c80e5634b104d8a27ca2a967ccee">Foam::dgLaxFriedrichsFluxSolver</a>.</p>
 
@@ -1150,6 +1324,16 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Compute numerical flux for vector conserved variable. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cellID</td><td>DG cell index </td></tr>
+    <tr><td class="paramname">F</td><td>Flux field (output) </td></tr>
+    <tr><td class="paramname">U</td><td>Vector solution at face Gauss points </td></tr>
+  </table>
+  </dd>
+</dl>
+
 <p>Implemented in <a class="el" href="classFoam_1_1dgCentralFluxSolver.html#ae8cce7a08a252eddd6d9bebcaffd44af">Foam::dgCentralFluxSolver</a>, <a class="el" href="classFoam_1_1dgLaxFriedrichsFluxSolver.html#a381e592d67bf15847dfdedfe5aa4058a">Foam::dgLaxFriedrichsFluxSolver</a>, <a class="el" href="classFoam_1_1dgHLLCFluxSolver.html#a0efd6b862865cdda1722f8941c02a8f6">Foam::dgHLLCFluxSolver</a>, <a class="el" href="classFoam_1_1dgHLLEFluxSolver.html#a5c49bfbdb8219a32f2d88682fdc35d3e">Foam::dgHLLEFluxSolver</a>, <a class="el" href="classFoam_1_1dgCentralFluxSolver.html#a8bfed0b8f1cecc37037160b73ea88757">Foam::dgCentralFluxSolver</a>, <a class="el" href="classFoam_1_1dgHLLCFluxSolver.html#af8a51ccb014214aeba0148781b48e061">Foam::dgHLLCFluxSolver</a>, <a class="el" href="classFoam_1_1dgHLLEFluxSolver.html#a5099752b8faa27181c6ec9c15f1b8d31">Foam::dgHLLEFluxSolver</a>, and <a class="el" href="classFoam_1_1dgLaxFriedrichsFluxSolver.html#a7077c530163d30a97c3590bfb69fa715">Foam::dgLaxFriedrichsFluxSolver</a>.</p>
 
 </div>
@@ -1176,6 +1360,8 @@ Protected Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Reset solver internal cache/state if required. </p>
 
 <p>Implemented in <a class="el" href="classFoam_1_1dgCentralFluxSolver.html#a603193dd5f962bfd19d8f668669332c4">Foam::dgCentralFluxSolver</a>, <a class="el" href="classFoam_1_1dgLaxFriedrichsFluxSolver.html#ab056ecd7e1aff9d41bd8a1a300201f5d">Foam::dgLaxFriedrichsFluxSolver</a>, <a class="el" href="classFoam_1_1dgHLLCFluxSolver.html#a7bd8f4ff5b882ec5173838e8445675c8">Foam::dgHLLCFluxSolver</a>, <a class="el" href="classFoam_1_1dgHLLEFluxSolver.html#a9747ba5f629d03206cbb406f0372896c">Foam::dgHLLEFluxSolver</a>, <a class="el" href="classFoam_1_1dgCentralFluxSolver.html#a603193dd5f962bfd19d8f668669332c4">Foam::dgCentralFluxSolver</a>, <a class="el" href="classFoam_1_1dgHLLCFluxSolver.html#a4281be95989d25d5d991109dd96531e2">Foam::dgHLLCFluxSolver</a>, <a class="el" href="classFoam_1_1dgHLLEFluxSolver.html#a9747ba5f629d03206cbb406f0372896c">Foam::dgHLLEFluxSolver</a>, and <a class="el" href="classFoam_1_1dgLaxFriedrichsFluxSolver.html#ab056ecd7e1aff9d41bd8a1a300201f5d">Foam::dgLaxFriedrichsFluxSolver</a>.</p>
 
@@ -1212,6 +1398,17 @@ Protected Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Construct an orthonormal basis from a normal vector. </p>
+<p>Builds tangential directions (t1, t2) such that (n, t1, t2) is an orthonormal triad.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">n</td><td>Unit normal </td></tr>
+    <tr><td class="paramname">t1</td><td>First tangential direction (output) </td></tr>
+    <tr><td class="paramname">t2</td><td>Second tangential direction (output) </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -1259,6 +1456,18 @@ Protected Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Decompose a vector into normal and tangential components. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">U</td><td>Input vector </td></tr>
+    <tr><td class="paramname">n</td><td>Unit normal </td></tr>
+    <tr><td class="paramname">Un</td><td>Normal component (output) </td></tr>
+    <tr><td class="paramname">Ut1</td><td>Tangential component along t1 (output) </td></tr>
+    <tr><td class="paramname">Ut2</td><td>Tangential component along t2 (output) </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <a id="a4ebea0b463d5b9d8747e52ff693276ce" name="a4ebea0b463d5b9d8747e52ff693276ce"></a>
@@ -1284,6 +1493,14 @@ Protected Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Read solver settings from dictionary. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">dict</td><td>Solver dictionary </td></tr>
+  </table>
+  </dd>
+</dl>
 
 <p>Implemented in <a class="el" href="classFoam_1_1dgCentralFluxSolver.html#ad45311c9a7d55af2bf1f395b657835b1">Foam::dgCentralFluxSolver</a>, <a class="el" href="classFoam_1_1dgLaxFriedrichsFluxSolver.html#a3c8f9df3c76af026f371a8308a4d7544">Foam::dgLaxFriedrichsFluxSolver</a>, <a class="el" href="classFoam_1_1dgHLLCFluxSolver.html#ad27ff701dfcc54a9319c6e4bde37ef15">Foam::dgHLLCFluxSolver</a>, <a class="el" href="classFoam_1_1dgHLLEFluxSolver.html#a083f1cc62ef494e94cf7676b184d20d5">Foam::dgHLLEFluxSolver</a>, <a class="el" href="classFoam_1_1dgCentralFluxSolver.html#ad45311c9a7d55af2bf1f395b657835b1">Foam::dgCentralFluxSolver</a>, <a class="el" href="classFoam_1_1dgHLLCFluxSolver.html#aa0787bdd0bdead946728c68dea99eac7">Foam::dgHLLCFluxSolver</a>, <a class="el" href="classFoam_1_1dgHLLEFluxSolver.html#ad9a23b45f66ff957ea5c37f6aec23796">Foam::dgHLLEFluxSolver</a>, and <a class="el" href="classFoam_1_1dgLaxFriedrichsFluxSolver.html#abea0a8c6798477d5d4d32ff745430be6">Foam::dgLaxFriedrichsFluxSolver</a>.</p>
 
@@ -1313,6 +1530,8 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Set equation type. </p>
+
 </div>
 </div>
 <a id="a09aac3f56d63fa367f9d2b3e3f897a4b" name="a09aac3f56d63fa367f9d2b3e3f897a4b"></a>
@@ -1338,6 +1557,8 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Return equation type. </p>
+
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
@@ -1361,6 +1582,8 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Solver instance name (for logging/debug) </p>
+
 </div>
 </div>
 <a id="aab4ed6bf78c423de92270601c10f5214" name="aab4ed6bf78c423de92270601c10f5214"></a>
@@ -1382,6 +1605,8 @@ Protected Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Configuration dictionary for this solver. </p>
 
 </div>
 </div>
@@ -1405,6 +1630,8 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Reference to DG geometric mesh. </p>
+
 </div>
 </div>
 <a id="a01702ce212b866ad64127b8e304395ea" name="a01702ce212b866ad64127b8e304395ea"></a>
@@ -1426,6 +1653,8 @@ Protected Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Equation type used for interpreting left/right states. </p>
 
 </div>
 </div>

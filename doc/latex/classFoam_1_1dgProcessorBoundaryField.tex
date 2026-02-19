@@ -2,6 +2,11 @@
 \hypertarget{classFoam_1_1dgProcessorBoundaryField}{}\label{classFoam_1_1dgProcessorBoundaryField}\index{Foam::dgProcessorBoundaryField$<$ Type $>$@{Foam::dgProcessorBoundaryField$<$ Type $>$}}
 
 
+DG processor boundary handler for parallel communication.  
+
+
+
+
 {\ttfamily \#include $<$dg\+Processor\+Boundary\+Field.\+H$>$}
 
 
@@ -17,59 +22,75 @@ Collaboration diagram for Foam\+::dg\+Processor\+Boundary\+Field\texorpdfstring{
 \begin{DoxyCompactItemize}
 \item 
 \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField_a7e67388024a3c92eb8e7959700d3e9ab}{dg\+Processor\+Boundary\+Field}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{fv\+Patch}} \&\mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField_ad53d2439521fc37920925e7f32d52a7d}{patch}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \&\mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField_ad767b7ae38e0c9557e351951448b81fa}{dg\+Mesh}})
-\item 
+\begin{DoxyCompactList}\small\item\em Construct from fv\+Patch and DG geometric mesh. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField_a703c2728de95e6deaca9ff422989491b}{\texorpdfstring{$\sim$}{\string~}dg\+Processor\+Boundary\+Field}} ()=\mbox{\hyperlink{classFoam_1_1GaussField}{default}}
 \item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField_a28fe949f350b6388a2ad558c83eb2c25}{update}} (\mbox{\hyperlink{classFoam_1_1dgField}{dg\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{field}}) \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
-\item 
+\begin{DoxyCompactList}\small\item\em Exchange Gauss-\/point data across processor boundary. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField_a4aa4338e8be3aa9f4c2490d3e3efd17e}{send\+All}} (\mbox{\hyperlink{classFoam_1_1dgField}{dg\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{field}}) \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
-\item 
+\begin{DoxyCompactList}\small\item\em Send all plus-\/side Gauss values to neighbour processor. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField_af9c231c18d1ecaf4b0c2bb209c767511}{recv\+All}} (\mbox{\hyperlink{classFoam_1_1dgField}{dg\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{field}}) \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
-\item 
+\begin{DoxyCompactList}\small\item\em Receive all plus-\/side Gauss values from neighbour processor. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{int}} \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField_afe8411a305c3b44f259d9f005cdd682e}{gen\+Send\+Tag}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
-\item 
+\begin{DoxyCompactList}\small\item\em Generate MPI send tag. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{int}} \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField_af8cce9ea0db0eab33d19730a6b2ef7ec}{gen\+Recv\+Tag}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
-\item 
+\begin{DoxyCompactList}\small\item\em Generate MPI receive tag. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{processor\+Fv\+Patch}} \& \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField_ad53d2439521fc37920925e7f32d52a7d}{patch}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
-\item 
+\begin{DoxyCompactList}\small\item\em Return processor patch. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \& \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField_ad767b7ae38e0c9557e351951448b81fa}{dg\+Mesh}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
-\item 
+\begin{DoxyCompactList}\small\item\em Return DG geometric mesh. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{word}} \& \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField_af521106b7fd8ac10e1274c740a915b74}{name}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
-\item 
+\begin{DoxyCompactList}\small\item\em Return patch name. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField_a7e67388024a3c92eb8e7959700d3e9ab}{dg\+Processor\+Boundary\+Field}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{fv\+Patch}} \&\mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField_ad53d2439521fc37920925e7f32d52a7d}{patch}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \&\mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField_ad767b7ae38e0c9557e351951448b81fa}{dg\+Mesh}})
-\item 
+\begin{DoxyCompactList}\small\item\em Construct from fv\+Patch and DG geometric mesh. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField_a703c2728de95e6deaca9ff422989491b}{\texorpdfstring{$\sim$}{\string~}dg\+Processor\+Boundary\+Field}} ()=\mbox{\hyperlink{classFoam_1_1GaussField}{default}}
 \item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField_a28fe949f350b6388a2ad558c83eb2c25}{update}} (\mbox{\hyperlink{classFoam_1_1dgField}{dg\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{field}}) \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
-\item 
+\begin{DoxyCompactList}\small\item\em Exchange Gauss-\/point data across processor boundary. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField_a4aa4338e8be3aa9f4c2490d3e3efd17e}{send\+All}} (\mbox{\hyperlink{classFoam_1_1dgField}{dg\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{field}}) \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
-\item 
+\begin{DoxyCompactList}\small\item\em Send all plus-\/side Gauss values to neighbour processor. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField_af9c231c18d1ecaf4b0c2bb209c767511}{recv\+All}} (\mbox{\hyperlink{classFoam_1_1dgField}{dg\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{field}}) \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
-\item 
+\begin{DoxyCompactList}\small\item\em Receive all plus-\/side Gauss values from neighbour processor. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{int}} \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField_afe8411a305c3b44f259d9f005cdd682e}{gen\+Send\+Tag}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
-\item 
+\begin{DoxyCompactList}\small\item\em Generate MPI send tag. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{int}} \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField_af8cce9ea0db0eab33d19730a6b2ef7ec}{gen\+Recv\+Tag}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
-\item 
+\begin{DoxyCompactList}\small\item\em Generate MPI receive tag. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{processor\+Fv\+Patch}} \& \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField_ad53d2439521fc37920925e7f32d52a7d}{patch}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
-\item 
+\begin{DoxyCompactList}\small\item\em Return processor patch. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \& \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField_ad767b7ae38e0c9557e351951448b81fa}{dg\+Mesh}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
-\item 
+\begin{DoxyCompactList}\small\item\em Return DG geometric mesh. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{word}} \& \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField_af521106b7fd8ac10e1274c740a915b74}{name}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Return patch name. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsubsection*{Private Attributes}
 \begin{DoxyCompactItemize}
 \item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{processor\+Fv\+Patch}} \& \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField_a728842151ae1bd8604d21527ef471fd6}{proc\+Patch\+\_\+}}
-\item 
+\begin{DoxyCompactList}\small\item\em Reference to processor fv\+Patch (type-\/safe) \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \& \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField_aef2fae50069c54c9c94453abb18000f5}{dg\+Mesh\+\_\+}}
-\item 
+\begin{DoxyCompactList}\small\item\em Reference to DG geometric mesh. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField_a20fae8edfee33edc4e761acc11aff751}{neighb\+Proc\+\_\+}}
-\item 
+\begin{DoxyCompactList}\small\item\em Neighbour processor rank. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField_a8a48c87af06db1a7c43686f234832962}{send\+Buf\+\_\+}}
-\item 
+\begin{DoxyCompactList}\small\item\em Send buffer for Gauss-\/point values (mutable for const update) \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField_a2f8bd21638770e97d46b895b12404f05}{recv\+Buf\+\_\+}}
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Receive buffer for Gauss-\/point values (mutable for const update) \end{DoxyCompactList}\end{DoxyCompactItemize}
 
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}}$>$\newline
+class Foam\+::dg\+Processor\+Boundary\+Field$<$ Type $>$}
+DG processor boundary handler for parallel communication. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em Type} & Field value type (e.\+g. scalar, vector, tensor)\\
+\hline
+\end{DoxyTemplParams}
+Exchanges DG face Gauss-\/point plus-\/side values across processor patches.
+
+The communication uses explicit send/receive buffers and point-\/to-\/point transfers on processor\+Fv\+Patch.
+
+MPI tags are generated from processor ranks to avoid collisions. 
 
 \doxysubsection{Constructor \& Destructor Documentation}
 \Hypertarget{classFoam_1_1dgProcessorBoundaryField_a7e67388024a3c92eb8e7959700d3e9ab}\label{classFoam_1_1dgProcessorBoundaryField_a7e67388024a3c92eb8e7959700d3e9ab} 
@@ -79,6 +100,19 @@ Collaboration diagram for Foam\+::dg\+Processor\+Boundary\+Field\texorpdfstring{
 {\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
 \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField}{Foam\+::dg\+Processor\+Boundary\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::dg\+Processor\+Boundary\+Field (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{fv\+Patch}} \&}]{patch,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \&}]{dg\+Mesh }\end{DoxyParamCaption})}
 
+
+
+Construct from fv\+Patch and DG geometric mesh. 
+
+The input patch must be of type processor.
+
+
+\begin{DoxyParams}{Parameters}
+{\em patch} & Finite-\/volume patch (processor) \\
+\hline
+{\em dg\+Mesh} & DG geometric mesh \\
+\hline
+\end{DoxyParams}
 \Hypertarget{classFoam_1_1dgProcessorBoundaryField_a703c2728de95e6deaca9ff422989491b}\label{classFoam_1_1dgProcessorBoundaryField_a703c2728de95e6deaca9ff422989491b} 
 \index{Foam::dgProcessorBoundaryField$<$ Type $>$@{Foam::dgProcessorBoundaryField$<$ Type $>$}!````~dgProcessorBoundaryField@{\texorpdfstring{$\sim$}{\string~}dgProcessorBoundaryField}}
 \index{````~dgProcessorBoundaryField@{\texorpdfstring{$\sim$}{\string~}dgProcessorBoundaryField}!Foam::dgProcessorBoundaryField$<$ Type $>$@{Foam::dgProcessorBoundaryField$<$ Type $>$}}
@@ -93,6 +127,19 @@ Collaboration diagram for Foam\+::dg\+Processor\+Boundary\+Field\texorpdfstring{
 {\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
 \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField}{Foam\+::dg\+Processor\+Boundary\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::dg\+Processor\+Boundary\+Field (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{fv\+Patch}} \&}]{patch,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \&}]{dg\+Mesh }\end{DoxyParamCaption})}
 
+
+
+Construct from fv\+Patch and DG geometric mesh. 
+
+The input patch must be of type processor.
+
+
+\begin{DoxyParams}{Parameters}
+{\em patch} & Finite-\/volume patch (processor) \\
+\hline
+{\em dg\+Mesh} & DG geometric mesh \\
+\hline
+\end{DoxyParams}
 \Hypertarget{classFoam_1_1dgProcessorBoundaryField_a703c2728de95e6deaca9ff422989491b}\label{classFoam_1_1dgProcessorBoundaryField_a703c2728de95e6deaca9ff422989491b} 
 \index{Foam::dgProcessorBoundaryField$<$ Type $>$@{Foam::dgProcessorBoundaryField$<$ Type $>$}!````~dgProcessorBoundaryField@{\texorpdfstring{$\sim$}{\string~}dgProcessorBoundaryField}}
 \index{````~dgProcessorBoundaryField@{\texorpdfstring{$\sim$}{\string~}dgProcessorBoundaryField}!Foam::dgProcessorBoundaryField$<$ Type $>$@{Foam::dgProcessorBoundaryField$<$ Type $>$}}
@@ -110,6 +157,17 @@ Collaboration diagram for Foam\+::dg\+Processor\+Boundary\+Field\texorpdfstring{
 {\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
 \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField}{Foam\+::dg\+Processor\+Boundary\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::update (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1dgField}{dg\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \&}]{field }\end{DoxyParamCaption}) const}
 
+
+
+Exchange Gauss-\/point data across processor boundary. 
+
+Performs a send/receive cycle to update plus-\/side Gauss values on processor faces.
+
+
+\begin{DoxyParams}{Parameters}
+{\em field} & DG field whose Gauss data will be exchanged \\
+\hline
+\end{DoxyParams}
 \Hypertarget{classFoam_1_1dgProcessorBoundaryField_a4aa4338e8be3aa9f4c2490d3e3efd17e}\label{classFoam_1_1dgProcessorBoundaryField_a4aa4338e8be3aa9f4c2490d3e3efd17e} 
 \index{Foam::dgProcessorBoundaryField$<$ Type $>$@{Foam::dgProcessorBoundaryField$<$ Type $>$}!sendAll@{sendAll}}
 \index{sendAll@{sendAll}!Foam::dgProcessorBoundaryField$<$ Type $>$@{Foam::dgProcessorBoundaryField$<$ Type $>$}}
@@ -117,6 +175,15 @@ Collaboration diagram for Foam\+::dg\+Processor\+Boundary\+Field\texorpdfstring{
 {\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
 \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField}{Foam\+::dg\+Processor\+Boundary\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::send\+All (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1dgField}{dg\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \&}]{field }\end{DoxyParamCaption}) const}
 
+
+
+Send all plus-\/side Gauss values to neighbour processor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em field} & DG field providing Gauss data \\
+\hline
+\end{DoxyParams}
 \Hypertarget{classFoam_1_1dgProcessorBoundaryField_af9c231c18d1ecaf4b0c2bb209c767511}\label{classFoam_1_1dgProcessorBoundaryField_af9c231c18d1ecaf4b0c2bb209c767511} 
 \index{Foam::dgProcessorBoundaryField$<$ Type $>$@{Foam::dgProcessorBoundaryField$<$ Type $>$}!recvAll@{recvAll}}
 \index{recvAll@{recvAll}!Foam::dgProcessorBoundaryField$<$ Type $>$@{Foam::dgProcessorBoundaryField$<$ Type $>$}}
@@ -124,6 +191,15 @@ Collaboration diagram for Foam\+::dg\+Processor\+Boundary\+Field\texorpdfstring{
 {\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
 \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField}{Foam\+::dg\+Processor\+Boundary\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::recv\+All (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1dgField}{dg\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \&}]{field }\end{DoxyParamCaption}) const}
 
+
+
+Receive all plus-\/side Gauss values from neighbour processor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em field} & DG field to be updated with received data \\
+\hline
+\end{DoxyParams}
 \Hypertarget{classFoam_1_1dgProcessorBoundaryField_afe8411a305c3b44f259d9f005cdd682e}\label{classFoam_1_1dgProcessorBoundaryField_afe8411a305c3b44f259d9f005cdd682e} 
 \index{Foam::dgProcessorBoundaryField$<$ Type $>$@{Foam::dgProcessorBoundaryField$<$ Type $>$}!genSendTag@{genSendTag}}
 \index{genSendTag@{genSendTag}!Foam::dgProcessorBoundaryField$<$ Type $>$@{Foam::dgProcessorBoundaryField$<$ Type $>$}}
@@ -131,6 +207,18 @@ Collaboration diagram for Foam\+::dg\+Processor\+Boundary\+Field\texorpdfstring{
 {\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
 \mbox{\hyperlink{classFoam_1_1GaussField}{int}} \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField}{Foam\+::dg\+Processor\+Boundary\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::gen\+Send\+Tag (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
 
+
+
+Generate MPI send tag. 
+
+Tag scheme\+:
+\begin{DoxyItemize}
+\item tag = my\+Proc\texorpdfstring{$\ast$}{*}1e6 + neighb\+Proc
+\end{DoxyItemize}
+
+\begin{DoxyReturn}{Returns}
+MPI tag for send 
+\end{DoxyReturn}
 \Hypertarget{classFoam_1_1dgProcessorBoundaryField_af8cce9ea0db0eab33d19730a6b2ef7ec}\label{classFoam_1_1dgProcessorBoundaryField_af8cce9ea0db0eab33d19730a6b2ef7ec} 
 \index{Foam::dgProcessorBoundaryField$<$ Type $>$@{Foam::dgProcessorBoundaryField$<$ Type $>$}!genRecvTag@{genRecvTag}}
 \index{genRecvTag@{genRecvTag}!Foam::dgProcessorBoundaryField$<$ Type $>$@{Foam::dgProcessorBoundaryField$<$ Type $>$}}
@@ -138,12 +226,28 @@ Collaboration diagram for Foam\+::dg\+Processor\+Boundary\+Field\texorpdfstring{
 {\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
 \mbox{\hyperlink{classFoam_1_1GaussField}{int}} \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField}{Foam\+::dg\+Processor\+Boundary\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::gen\+Recv\+Tag (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
 
+
+
+Generate MPI receive tag. 
+
+Tag scheme\+:
+\begin{DoxyItemize}
+\item tag = neighb\+Proc\texorpdfstring{$\ast$}{*}1e6 + my\+Proc
+\end{DoxyItemize}
+
+\begin{DoxyReturn}{Returns}
+MPI tag for receive 
+\end{DoxyReturn}
 \Hypertarget{classFoam_1_1dgProcessorBoundaryField_ad53d2439521fc37920925e7f32d52a7d}\label{classFoam_1_1dgProcessorBoundaryField_ad53d2439521fc37920925e7f32d52a7d} 
 \index{Foam::dgProcessorBoundaryField$<$ Type $>$@{Foam::dgProcessorBoundaryField$<$ Type $>$}!patch@{patch}}
 \index{patch@{patch}!Foam::dgProcessorBoundaryField$<$ Type $>$@{Foam::dgProcessorBoundaryField$<$ Type $>$}}
 \doxysubsubsection{\texorpdfstring{patch()}{patch()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
 {\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{processor\+Fv\+Patch}} \& \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField}{Foam\+::dg\+Processor\+Boundary\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::patch (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Return processor patch. 
 
 \Hypertarget{classFoam_1_1dgProcessorBoundaryField_ad767b7ae38e0c9557e351951448b81fa}\label{classFoam_1_1dgProcessorBoundaryField_ad767b7ae38e0c9557e351951448b81fa} 
 \index{Foam::dgProcessorBoundaryField$<$ Type $>$@{Foam::dgProcessorBoundaryField$<$ Type $>$}!dgMesh@{dgMesh}}
@@ -152,12 +256,20 @@ Collaboration diagram for Foam\+::dg\+Processor\+Boundary\+Field\texorpdfstring{
 {\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \& \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField}{Foam\+::dg\+Processor\+Boundary\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::dg\+Mesh (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
 
+
+
+Return DG geometric mesh. 
+
 \Hypertarget{classFoam_1_1dgProcessorBoundaryField_af521106b7fd8ac10e1274c740a915b74}\label{classFoam_1_1dgProcessorBoundaryField_af521106b7fd8ac10e1274c740a915b74} 
 \index{Foam::dgProcessorBoundaryField$<$ Type $>$@{Foam::dgProcessorBoundaryField$<$ Type $>$}!name@{name}}
 \index{name@{name}!Foam::dgProcessorBoundaryField$<$ Type $>$@{Foam::dgProcessorBoundaryField$<$ Type $>$}}
 \doxysubsubsection{\texorpdfstring{name()}{name()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
 {\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{word}} \& \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField}{Foam\+::dg\+Processor\+Boundary\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::name (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Return patch name. 
 
 \Hypertarget{classFoam_1_1dgProcessorBoundaryField_a28fe949f350b6388a2ad558c83eb2c25}\label{classFoam_1_1dgProcessorBoundaryField_a28fe949f350b6388a2ad558c83eb2c25} 
 \index{Foam::dgProcessorBoundaryField$<$ Type $>$@{Foam::dgProcessorBoundaryField$<$ Type $>$}!update@{update}}
@@ -166,6 +278,17 @@ Collaboration diagram for Foam\+::dg\+Processor\+Boundary\+Field\texorpdfstring{
 {\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
 \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField}{Foam\+::dg\+Processor\+Boundary\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::update (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1dgField}{dg\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \&}]{field }\end{DoxyParamCaption}) const}
 
+
+
+Exchange Gauss-\/point data across processor boundary. 
+
+Performs a send/receive cycle to update plus-\/side Gauss values on processor faces.
+
+
+\begin{DoxyParams}{Parameters}
+{\em field} & DG field whose Gauss data will be exchanged \\
+\hline
+\end{DoxyParams}
 \Hypertarget{classFoam_1_1dgProcessorBoundaryField_a4aa4338e8be3aa9f4c2490d3e3efd17e}\label{classFoam_1_1dgProcessorBoundaryField_a4aa4338e8be3aa9f4c2490d3e3efd17e} 
 \index{Foam::dgProcessorBoundaryField$<$ Type $>$@{Foam::dgProcessorBoundaryField$<$ Type $>$}!sendAll@{sendAll}}
 \index{sendAll@{sendAll}!Foam::dgProcessorBoundaryField$<$ Type $>$@{Foam::dgProcessorBoundaryField$<$ Type $>$}}
@@ -173,6 +296,15 @@ Collaboration diagram for Foam\+::dg\+Processor\+Boundary\+Field\texorpdfstring{
 {\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
 \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField}{Foam\+::dg\+Processor\+Boundary\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::send\+All (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1dgField}{dg\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \&}]{field }\end{DoxyParamCaption}) const}
 
+
+
+Send all plus-\/side Gauss values to neighbour processor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em field} & DG field providing Gauss data \\
+\hline
+\end{DoxyParams}
 \Hypertarget{classFoam_1_1dgProcessorBoundaryField_af9c231c18d1ecaf4b0c2bb209c767511}\label{classFoam_1_1dgProcessorBoundaryField_af9c231c18d1ecaf4b0c2bb209c767511} 
 \index{Foam::dgProcessorBoundaryField$<$ Type $>$@{Foam::dgProcessorBoundaryField$<$ Type $>$}!recvAll@{recvAll}}
 \index{recvAll@{recvAll}!Foam::dgProcessorBoundaryField$<$ Type $>$@{Foam::dgProcessorBoundaryField$<$ Type $>$}}
@@ -180,6 +312,15 @@ Collaboration diagram for Foam\+::dg\+Processor\+Boundary\+Field\texorpdfstring{
 {\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
 \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField}{Foam\+::dg\+Processor\+Boundary\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::recv\+All (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1dgField}{dg\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \&}]{field }\end{DoxyParamCaption}) const}
 
+
+
+Receive all plus-\/side Gauss values from neighbour processor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em field} & DG field to be updated with received data \\
+\hline
+\end{DoxyParams}
 \Hypertarget{classFoam_1_1dgProcessorBoundaryField_afe8411a305c3b44f259d9f005cdd682e}\label{classFoam_1_1dgProcessorBoundaryField_afe8411a305c3b44f259d9f005cdd682e} 
 \index{Foam::dgProcessorBoundaryField$<$ Type $>$@{Foam::dgProcessorBoundaryField$<$ Type $>$}!genSendTag@{genSendTag}}
 \index{genSendTag@{genSendTag}!Foam::dgProcessorBoundaryField$<$ Type $>$@{Foam::dgProcessorBoundaryField$<$ Type $>$}}
@@ -187,6 +328,18 @@ Collaboration diagram for Foam\+::dg\+Processor\+Boundary\+Field\texorpdfstring{
 {\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
 \mbox{\hyperlink{classFoam_1_1GaussField}{int}} \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField}{Foam\+::dg\+Processor\+Boundary\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::gen\+Send\+Tag (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
 
+
+
+Generate MPI send tag. 
+
+Tag scheme\+:
+\begin{DoxyItemize}
+\item tag = my\+Proc\texorpdfstring{$\ast$}{*}1e6 + neighb\+Proc
+\end{DoxyItemize}
+
+\begin{DoxyReturn}{Returns}
+MPI tag for send 
+\end{DoxyReturn}
 \Hypertarget{classFoam_1_1dgProcessorBoundaryField_af8cce9ea0db0eab33d19730a6b2ef7ec}\label{classFoam_1_1dgProcessorBoundaryField_af8cce9ea0db0eab33d19730a6b2ef7ec} 
 \index{Foam::dgProcessorBoundaryField$<$ Type $>$@{Foam::dgProcessorBoundaryField$<$ Type $>$}!genRecvTag@{genRecvTag}}
 \index{genRecvTag@{genRecvTag}!Foam::dgProcessorBoundaryField$<$ Type $>$@{Foam::dgProcessorBoundaryField$<$ Type $>$}}
@@ -194,12 +347,28 @@ Collaboration diagram for Foam\+::dg\+Processor\+Boundary\+Field\texorpdfstring{
 {\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
 \mbox{\hyperlink{classFoam_1_1GaussField}{int}} \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField}{Foam\+::dg\+Processor\+Boundary\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::gen\+Recv\+Tag (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
 
+
+
+Generate MPI receive tag. 
+
+Tag scheme\+:
+\begin{DoxyItemize}
+\item tag = neighb\+Proc\texorpdfstring{$\ast$}{*}1e6 + my\+Proc
+\end{DoxyItemize}
+
+\begin{DoxyReturn}{Returns}
+MPI tag for receive 
+\end{DoxyReturn}
 \Hypertarget{classFoam_1_1dgProcessorBoundaryField_ad53d2439521fc37920925e7f32d52a7d}\label{classFoam_1_1dgProcessorBoundaryField_ad53d2439521fc37920925e7f32d52a7d} 
 \index{Foam::dgProcessorBoundaryField$<$ Type $>$@{Foam::dgProcessorBoundaryField$<$ Type $>$}!patch@{patch}}
 \index{patch@{patch}!Foam::dgProcessorBoundaryField$<$ Type $>$@{Foam::dgProcessorBoundaryField$<$ Type $>$}}
 \doxysubsubsection{\texorpdfstring{patch()}{patch()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
 {\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{processor\+Fv\+Patch}} \& \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField}{Foam\+::dg\+Processor\+Boundary\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::patch (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Return processor patch. 
 
 \Hypertarget{classFoam_1_1dgProcessorBoundaryField_ad767b7ae38e0c9557e351951448b81fa}\label{classFoam_1_1dgProcessorBoundaryField_ad767b7ae38e0c9557e351951448b81fa} 
 \index{Foam::dgProcessorBoundaryField$<$ Type $>$@{Foam::dgProcessorBoundaryField$<$ Type $>$}!dgMesh@{dgMesh}}
@@ -208,12 +377,20 @@ Collaboration diagram for Foam\+::dg\+Processor\+Boundary\+Field\texorpdfstring{
 {\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \& \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField}{Foam\+::dg\+Processor\+Boundary\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::dg\+Mesh (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
 
+
+
+Return DG geometric mesh. 
+
 \Hypertarget{classFoam_1_1dgProcessorBoundaryField_af521106b7fd8ac10e1274c740a915b74}\label{classFoam_1_1dgProcessorBoundaryField_af521106b7fd8ac10e1274c740a915b74} 
 \index{Foam::dgProcessorBoundaryField$<$ Type $>$@{Foam::dgProcessorBoundaryField$<$ Type $>$}!name@{name}}
 \index{name@{name}!Foam::dgProcessorBoundaryField$<$ Type $>$@{Foam::dgProcessorBoundaryField$<$ Type $>$}}
 \doxysubsubsection{\texorpdfstring{name()}{name()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
 {\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{word}} \& \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField}{Foam\+::dg\+Processor\+Boundary\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::name (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Return patch name. 
 
 
 
@@ -225,12 +402,20 @@ Collaboration diagram for Foam\+::dg\+Processor\+Boundary\+Field\texorpdfstring{
 {\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{processor\+Fv\+Patch}} \& \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField}{Foam\+::dg\+Processor\+Boundary\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::proc\+Patch\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
 
+
+
+Reference to processor fv\+Patch (type-\/safe) 
+
 \Hypertarget{classFoam_1_1dgProcessorBoundaryField_aef2fae50069c54c9c94453abb18000f5}\label{classFoam_1_1dgProcessorBoundaryField_aef2fae50069c54c9c94453abb18000f5} 
 \index{Foam::dgProcessorBoundaryField$<$ Type $>$@{Foam::dgProcessorBoundaryField$<$ Type $>$}!dgMesh\_@{dgMesh\_}}
 \index{dgMesh\_@{dgMesh\_}!Foam::dgProcessorBoundaryField$<$ Type $>$@{Foam::dgProcessorBoundaryField$<$ Type $>$}}
 \doxysubsubsection{\texorpdfstring{dgMesh\_}{dgMesh\_}}
 {\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \& \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField}{Foam\+::dg\+Processor\+Boundary\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::dg\+Mesh\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Reference to DG geometric mesh. 
 
 \Hypertarget{classFoam_1_1dgProcessorBoundaryField_a20fae8edfee33edc4e761acc11aff751}\label{classFoam_1_1dgProcessorBoundaryField_a20fae8edfee33edc4e761acc11aff751} 
 \index{Foam::dgProcessorBoundaryField$<$ Type $>$@{Foam::dgProcessorBoundaryField$<$ Type $>$}!neighbProc\_@{neighbProc\_}}
@@ -239,6 +424,10 @@ Collaboration diagram for Foam\+::dg\+Processor\+Boundary\+Field\texorpdfstring{
 {\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField}{Foam\+::dg\+Processor\+Boundary\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::neighb\+Proc\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
 
+
+
+Neighbour processor rank. 
+
 \Hypertarget{classFoam_1_1dgProcessorBoundaryField_a8a48c87af06db1a7c43686f234832962}\label{classFoam_1_1dgProcessorBoundaryField_a8a48c87af06db1a7c43686f234832962} 
 \index{Foam::dgProcessorBoundaryField$<$ Type $>$@{Foam::dgProcessorBoundaryField$<$ Type $>$}!sendBuf\_@{sendBuf\_}}
 \index{sendBuf\_@{sendBuf\_}!Foam::dgProcessorBoundaryField$<$ Type $>$@{Foam::dgProcessorBoundaryField$<$ Type $>$}}
@@ -246,12 +435,20 @@ Collaboration diagram for Foam\+::dg\+Processor\+Boundary\+Field\texorpdfstring{
 {\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
 \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField}{Foam\+::dg\+Processor\+Boundary\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::send\+Buf\+\_\+\hspace{0.3cm}{\ttfamily [mutable]}, {\ttfamily [private]}}
 
+
+
+Send buffer for Gauss-\/point values (mutable for const update) 
+
 \Hypertarget{classFoam_1_1dgProcessorBoundaryField_a2f8bd21638770e97d46b895b12404f05}\label{classFoam_1_1dgProcessorBoundaryField_a2f8bd21638770e97d46b895b12404f05} 
 \index{Foam::dgProcessorBoundaryField$<$ Type $>$@{Foam::dgProcessorBoundaryField$<$ Type $>$}!recvBuf\_@{recvBuf\_}}
 \index{recvBuf\_@{recvBuf\_}!Foam::dgProcessorBoundaryField$<$ Type $>$@{Foam::dgProcessorBoundaryField$<$ Type $>$}}
 \doxysubsubsection{\texorpdfstring{recvBuf\_}{recvBuf\_}}
 {\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
 \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField}{Foam\+::dg\+Processor\+Boundary\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::recv\+Buf\+\_\+\hspace{0.3cm}{\ttfamily [mutable]}, {\ttfamily [private]}}
+
+
+
+Receive buffer for Gauss-\/point values (mutable for const update) 
 
 
 

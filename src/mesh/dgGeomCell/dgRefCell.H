@@ -176,6 +176,42 @@ public:
             return dBasis_dEta3_;
         }
 
+        /** Get 1D Gauss-Jacobi points */
+        /*
+        void getGaussJacobi1D
+        (
+            const label pOrder,
+            List<scalar>& eta,
+            List<scalar>& w
+        );
+        */
+
+        /** Get 1D Gauss-Legendre points */
+        void getGaussLegendre1D
+        (
+            const label pOrder,
+            List<scalar>& eta,
+            List<scalar>& w
+        );
+
+        /** Get 1D Gauss-Lobatto points */
+        void getGaussLobatto1D
+        (
+            const label pOrder,
+            List<scalar>& eta,
+            List<scalar>& w
+        );
+
+        /** Get 1D Gauss-Radau points */
+        void getGaussRadau1D
+        (
+            const label pOrder,
+            const bool includeLeft,   // true  -> include eta = -1  (Left Radau)
+                                      // false -> include eta = +1  (Right Radau)
+            List<scalar>& eta,
+            List<scalar>& w
+        );
+
     //====================================================================//
     //                       Internal generation
     //====================================================================//

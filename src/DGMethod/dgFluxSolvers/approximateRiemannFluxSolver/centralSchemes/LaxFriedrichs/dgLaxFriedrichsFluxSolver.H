@@ -25,29 +25,13 @@ License
     along with OpenFOAM.  If not, see <http://www.gnu.org/licenses/>.
 
 Class
-    Foam::dgHLLCFluxSolver
+    Foam::dgLaxFriedrichsFluxSolver
 
 Description
-    Local Lax–Friedrichs / Rusanov numerical flux.
-
-    Numerical flux:
-        h(U+, U-, n) =
-            0.5*(F(U+) + F(U-))·n
-          - 0.5*C*(U+ - U-)
-
-    with dissipation coefficient:
-        C = max( |U_n^-| + a^- , |U_n^+| + a^+ )
-
-    Optional:
-        If 'scaleByMach = true' in dictionary:
-            C = |U_n| + a/M     where  M = |U_n|/a
-
-    Notes:
-    - For scalar transport: Cartesian flux = fn * n
-    - For momentum transport: output flux is a vector, not multiplied by n
+    Local Lax–Friedrichs (Rusanov) numerical flux for DG methods.
 
 SourceFiles
-    dgHLLCFluxSolver.C
+    dgLaxFriedrichsFluxSolver.C
 \*---------------------------------------------------------------------------*/
 
 #ifndef Foam_dgLaxFriedrichsFluxSolver_H
@@ -63,28 +47,77 @@ namespace Foam
     template<class Type> class faceGaussField;
 }
 
+namespace Foam
+{
+
 /*---------------------------------------------------------------------------*\
                 Class dgLaxFriedrichsFluxSolver Declaration
 \*---------------------------------------------------------------------------*/
 
-namespace Foam
-{
-
-class dgLaxFriedrichsFluxSolver : public dgFluxSolver
+/**
+ * \class Foam::dgLaxFriedrichsFluxSolver
+ * \brief Local Lax–Friedrichs (Rusanov) numerical flux
+ *
+ * \details
+ * Implements the local Lax–Friedrichs (Rusanov) flux for DG formulations.
+ *
+ * The numerical flux is defined as:
+ * \f[
+ *   \boldsymbol{h}
+ *   =
+ *   \frac{1}{2}
+ *   \left(
+ *     \boldsymbol{F}(\boldsymbol{U}^{-})
+ *   + \boldsymbol{F}(\boldsymbol{U}^{+})
+ *   \right)\cdot\boldsymbol{n}
+ *   -
+ *   \frac{1}{2} C
+ *   \left(
+ *     \boldsymbol{U}^{+} - \boldsymbol{U}^{-}
+ *   \right)
+ * \f]
+ *
+ * where:
+ * - \f$\boldsymbol{U}^{-}\f$ is the interior (minus-side) state
+ * - \f$\boldsymbol{U}^{+}\f$ is the exterior (plus-side) state
+ * - \f$\boldsymbol{F}\f$ is the physical flux
+ * - \f$\boldsymbol{n}\f$ is the outward unit normal
+ *
+ * The dissipation coefficient \f$C\f$ is evaluated locally from flow
+ * velocity and acoustic speed. Optional Mach-based scaling can be enabled
+ * via dictionary settings.
+ *
+ * This flux is robust but introduces stronger numerical dissipation than
+ * approximate Riemann solvers such as HLLC or Roe.
+ */
+class dgLaxFriedrichsFluxSolver
+:
+    public dgFluxSolver
 {
 private:
 
-    //- Velocity field
+    /** Pointer to velocity field (read-only, non-owning) */
     const dgField<vector>& U_;
 
-    //- Speed of sound field
+    /** Pointer to speed-of-sound field (read-only, non-owning) */
     const dgField<scalar>& a_;
 
-    //- Enable Mach-based dissipation model
+    /** Enable Mach-number-based dissipation scaling */
     bool scaleByMach_;
 
-
-    //- Compute dissipation coefficient C
+    /**
+     * \brief Compute local dissipation coefficient
+     *
+     * Computes the Lax–Friedrichs dissipation coefficient using left/right
+     * states and face normal direction.
+     *
+     * \param ULv Velocity on minus side
+     * \param URv Velocity on plus side
+     * \param aL  Speed of sound on minus side
+     * \param aR  Speed of sound on plus side
+     * \param n   Face outward unit normal
+     * \return Dissipation coefficient
+     */
     scalar calcDissipationCoeff
     (
         const vector& ULv,
@@ -96,10 +129,19 @@ private:
 
 public:
 
-    //- Runtime type name
+    //- Runtime type information
     TypeName("LaxFriedrichs");
 
-    //- Construct from name, dictionary and mesh
+    /**
+     * \brief Construct from name, dictionary, and DG mesh
+     *
+     * Initializes field references and reads solver options
+     * (e.g. Mach-based scaling).
+     *
+     * \param name Solver name
+     * \param dict Flux-solver dictionary
+     * \param mesh DG geometric mesh
+     */
     dgLaxFriedrichsFluxSolver
     (
         const word& name,
@@ -107,10 +149,18 @@ public:
         const dgGeomMesh& mesh
     );
 
+    //- Destructor
     virtual ~dgLaxFriedrichsFluxSolver() = default;
 
-
-    //- Scalar U, vector F
+    /**
+     * \brief Compute numerical flux for scalar conserved variable
+     *
+     * Produces a vector-valued numerical flux.
+     *
+     * \param cellID DG cell index
+     * \param F      Flux field (output)
+     * \param U      Scalar solution at face Gauss points
+     */
     virtual void computeFlux
     (
         const label cellID,
@@ -118,7 +168,15 @@ public:
         const faceGaussField<scalar>& U
     ) override;
 
-    //- Vector U, tensor F
+    /**
+     * \brief Compute numerical flux for vector conserved variable
+     *
+     * Produces a tensor-valued numerical flux.
+     *
+     * \param cellID DG cell index
+     * \param F      Flux field (output)
+     * \param U      Vector solution at face Gauss points
+     */
     virtual void computeFlux
     (
         const label cellID,
@@ -126,15 +184,20 @@ public:
         const faceGaussField<vector>& U
     ) override;
 
-    //- No caching required
+    /** Reset internal state (no-op) */
     virtual void reset() override {}
 
-    //- Read dictionary
+    /**
+     * \brief Read solver settings from dictionary
+     *
+     * Updates dissipation-scaling options.
+     *
+     * \param dict Flux-solver dictionary
+     */
     virtual void read(const dictionary& dict) override;
 };
 
 } // End namespace Foam
 
 #endif
-
 // ************************************************************************* //

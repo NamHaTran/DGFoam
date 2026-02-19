@@ -2,6 +2,11 @@
 \hypertarget{classFoam_1_1dgLaxFriedrichsFluxSolver}{}\label{classFoam_1_1dgLaxFriedrichsFluxSolver}\index{Foam::dgLaxFriedrichsFluxSolver@{Foam::dgLaxFriedrichsFluxSolver}}
 
 
+Local Lax–\+Friedrichs (Rusanov) numerical flux.  
+
+
+
+
 {\ttfamily \#include $<$dg\+Lax\+Friedrichs\+Flux\+Solver.\+H$>$}
 
 
@@ -28,31 +33,31 @@ Collaboration diagram for Foam\+::dg\+Lax\+Friedrichs\+Flux\+Solver\+:\nopagebre
 \mbox{\hyperlink{classFoam_1_1dgLaxFriedrichsFluxSolver_a3ace4155d010023938c937c9ced4ec70}{Type\+Name}} ("{}Lax\+Friedrichs"{})
 \item 
 \mbox{\hyperlink{classFoam_1_1dgLaxFriedrichsFluxSolver_aa3a86806982922dfac7ac24c66e6876c}{dg\+Lax\+Friedrichs\+Flux\+Solver}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{word}} \&\mbox{\hyperlink{classFoam_1_1dgFluxSolver_a65f5c41742c90fc8ca26bc6220cdeea3}{name}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}} \&\mbox{\hyperlink{classFoam_1_1dgFluxSolver_af698821f76c9aa02a7b9f0ac651086a4}{dict}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{mesh}})
-\item 
+\begin{DoxyCompactList}\small\item\em Construct from name, dictionary, and DG mesh. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1dgLaxFriedrichsFluxSolver_ab335afd6f86988898c8d43a0afb8c4be}{\texorpdfstring{$\sim$}{\string~}dg\+Lax\+Friedrichs\+Flux\+Solver}} ()=\mbox{\hyperlink{classFoam_1_1GaussField}{default}}
 \item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgLaxFriedrichsFluxSolver_ad592701971b1819572ea66910fbd76f1}{compute\+Flux}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} cell\+ID, \mbox{\hyperlink{classFoam_1_1faceGaussField}{face\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{F}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1faceGaussField}{face\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{createPrimaryFields_8H_acaa7fe8168a3a866f1958b3663d384c6}{U}}) \mbox{\hyperlink{classFoam_1_1GaussField}{override}}
-\item 
+\begin{DoxyCompactList}\small\item\em Compute numerical flux for scalar conserved variable. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgLaxFriedrichsFluxSolver_a381e592d67bf15847dfdedfe5aa4058a}{compute\+Flux}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} cell\+ID, \mbox{\hyperlink{classFoam_1_1faceGaussField}{face\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{tensor}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{F}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1faceGaussField}{face\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$ \&\mbox{\hyperlink{createPrimaryFields_8H_acaa7fe8168a3a866f1958b3663d384c6}{U}}) \mbox{\hyperlink{classFoam_1_1GaussField}{override}}
-\item 
+\begin{DoxyCompactList}\small\item\em Compute numerical flux for vector conserved variable. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgLaxFriedrichsFluxSolver_ab056ecd7e1aff9d41bd8a1a300201f5d}{reset}} () \mbox{\hyperlink{classFoam_1_1GaussField}{override}}
-\item 
+\begin{DoxyCompactList}\small\item\em Reset internal state (no-\/op) \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgLaxFriedrichsFluxSolver_a3c8f9df3c76af026f371a8308a4d7544}{read}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}} \&\mbox{\hyperlink{classFoam_1_1dgFluxSolver_af698821f76c9aa02a7b9f0ac651086a4}{dict}}) \mbox{\hyperlink{classFoam_1_1GaussField}{override}}
-\item 
+\begin{DoxyCompactList}\small\item\em Read solver settings from dictionary. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1dgLaxFriedrichsFluxSolver_a3ace4155d010023938c937c9ced4ec70}{Type\+Name}} ("{}Lax\+Friedrichs"{})
 \item 
 \mbox{\hyperlink{classFoam_1_1dgLaxFriedrichsFluxSolver_aa3a86806982922dfac7ac24c66e6876c}{dg\+Lax\+Friedrichs\+Flux\+Solver}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{word}} \&\mbox{\hyperlink{classFoam_1_1dgFluxSolver_a65f5c41742c90fc8ca26bc6220cdeea3}{name}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}} \&\mbox{\hyperlink{classFoam_1_1dgFluxSolver_af698821f76c9aa02a7b9f0ac651086a4}{dict}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{mesh}})
-\item 
+\begin{DoxyCompactList}\small\item\em Construct from name, dictionary, and DG mesh. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1dgLaxFriedrichsFluxSolver_ab335afd6f86988898c8d43a0afb8c4be}{\texorpdfstring{$\sim$}{\string~}dg\+Lax\+Friedrichs\+Flux\+Solver}} ()=\mbox{\hyperlink{classFoam_1_1GaussField}{default}}
 \item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgLaxFriedrichsFluxSolver_a4e07c80e5634b104d8a27ca2a967ccee}{compute\+Flux}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} cell\+ID, \mbox{\hyperlink{classFoam_1_1faceGaussField}{face\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{F}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1faceGaussField}{face\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{createPrimaryFields_8H_acaa7fe8168a3a866f1958b3663d384c6}{U}}) \mbox{\hyperlink{classFoam_1_1GaussField}{override}}
-\item 
+\begin{DoxyCompactList}\small\item\em Compute numerical flux for scalar conserved variable. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgLaxFriedrichsFluxSolver_a7077c530163d30a97c3590bfb69fa715}{compute\+Flux}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} cell\+ID, \mbox{\hyperlink{classFoam_1_1faceGaussField}{face\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{tensor}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{F}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1faceGaussField}{face\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$ \&\mbox{\hyperlink{createPrimaryFields_8H_acaa7fe8168a3a866f1958b3663d384c6}{U}}) \mbox{\hyperlink{classFoam_1_1GaussField}{override}}
-\item 
+\begin{DoxyCompactList}\small\item\em Compute numerical flux for vector conserved variable. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgLaxFriedrichsFluxSolver_ab056ecd7e1aff9d41bd8a1a300201f5d}{reset}} () \mbox{\hyperlink{classFoam_1_1GaussField}{override}}
-\item 
+\begin{DoxyCompactList}\small\item\em Reset internal state (no-\/op) \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgLaxFriedrichsFluxSolver_abea0a8c6798477d5d4d32ff745430be6}{read}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}} \&\mbox{\hyperlink{classFoam_1_1dgFluxSolver_af698821f76c9aa02a7b9f0ac651086a4}{dict}}) \mbox{\hyperlink{classFoam_1_1GaussField}{override}}
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Read solver settings from dictionary. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classFoam_1_1dgFluxSolver}{Foam\+::dg\+Flux\+Solver}}}
 \begin{DoxyCompactItemize}
 \item 
@@ -61,61 +66,61 @@ Collaboration diagram for Foam\+::dg\+Lax\+Friedrichs\+Flux\+Solver\+:\nopagebre
 \mbox{\hyperlink{classFoam_1_1dgFluxSolver_a134274fbdac274323f8764d10123f5f3}{declare\+Run\+Time\+Selection\+Table}} (\mbox{\hyperlink{classFoam_1_1GaussField}{auto\+Ptr}}, \mbox{\hyperlink{classFoam_1_1dgFluxSolver}{dg\+Flux\+Solver}}, \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}},(\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{word}} \&\mbox{\hyperlink{classFoam_1_1dgFluxSolver_a65f5c41742c90fc8ca26bc6220cdeea3}{name}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}} \&\mbox{\hyperlink{classFoam_1_1dgFluxSolver_af698821f76c9aa02a7b9f0ac651086a4}{dict}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{mesh}}),(\mbox{\hyperlink{classFoam_1_1dgFluxSolver_a65f5c41742c90fc8ca26bc6220cdeea3}{name}}, \mbox{\hyperlink{classFoam_1_1dgFluxSolver_af698821f76c9aa02a7b9f0ac651086a4}{dict}}, \mbox{\hyperlink{classFoam_1_1GaussField}{mesh}}))
 \item 
 \mbox{\hyperlink{classFoam_1_1dgFluxSolver_a8fd8ad0de1f63de00e9103405ba5e2aa}{dg\+Flux\+Solver}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{word}} \&\mbox{\hyperlink{classFoam_1_1dgFluxSolver_a65f5c41742c90fc8ca26bc6220cdeea3}{name}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}} \&\mbox{\hyperlink{classFoam_1_1dgFluxSolver_af698821f76c9aa02a7b9f0ac651086a4}{dict}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{mesh}})
-\item 
+\begin{DoxyCompactList}\small\item\em Construct from name and dictionary. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1dgFluxSolver_a714ac461d56251ba0656e504d53254a1}{dg\+Flux\+Solver}} ()=\mbox{\hyperlink{classFoam_1_1GaussField}{delete}}
 \item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1dgFluxSolver_a04415b95f57d65f4dda993607cb7d9d6}{\texorpdfstring{$\sim$}{\string~}dg\+Flux\+Solver}} ()=\mbox{\hyperlink{classFoam_1_1GaussField}{default}}
 \item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{word}} \& \mbox{\hyperlink{classFoam_1_1dgFluxSolver_a65f5c41742c90fc8ca26bc6220cdeea3}{name}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
-\item 
+\begin{DoxyCompactList}\small\item\em Return solver name. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}} \& \mbox{\hyperlink{classFoam_1_1dgFluxSolver_af698821f76c9aa02a7b9f0ac651086a4}{dict}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
-\item 
+\begin{DoxyCompactList}\small\item\em Return solver dictionary. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgFluxSolver_a4fc7f98f8af77cfb24e847735313d7cf}{make\+ONB}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{n}}, \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{t1}}, \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{t2}}) \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
-\item 
+\begin{DoxyCompactList}\small\item\em Construct an orthonormal basis from a normal vector. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgFluxSolver_aeb30b26b6e79cea0ea1fd639576841c0}{decomposeU}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&\mbox{\hyperlink{createPrimaryFields_8H_acaa7fe8168a3a866f1958b3663d384c6}{U}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{n}}, \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{Un}}, \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{Ut1}}, \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{Ut2}}) \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
-\item 
+\begin{DoxyCompactList}\small\item\em Decompose a vector into normal and tangential components. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgFluxSolver_aa29c80d12bc940c6582afde7d48a45ae}{set\+Equation\+Type}} (\mbox{\hyperlink{classFoam_1_1dgFluxSolver_ac861a0350cf2f298fecfc97544af0572}{equation\+Type}} \mbox{\hyperlink{classFoam_1_1GaussField}{t}})
-\item 
+\begin{DoxyCompactList}\small\item\em Set equation type. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1dgFluxSolver_ac861a0350cf2f298fecfc97544af0572}{equation\+Type}} \mbox{\hyperlink{classFoam_1_1dgFluxSolver_a09aac3f56d63fa367f9d2b3e3f897a4b}{get\+Equation\+Type}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
-\item 
+\begin{DoxyCompactList}\small\item\em Return equation type. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1dgFluxSolver_a7973a30716b8f174a3da0cb2968cd0a8}{Type\+Name}} ("{}dg\+Flux\+Solver"{})
 \item 
 \mbox{\hyperlink{classFoam_1_1dgFluxSolver_a134274fbdac274323f8764d10123f5f3}{declare\+Run\+Time\+Selection\+Table}} (\mbox{\hyperlink{classFoam_1_1GaussField}{auto\+Ptr}}, \mbox{\hyperlink{classFoam_1_1dgFluxSolver}{dg\+Flux\+Solver}}, \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}},(\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{word}} \&\mbox{\hyperlink{classFoam_1_1dgFluxSolver_a65f5c41742c90fc8ca26bc6220cdeea3}{name}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}} \&\mbox{\hyperlink{classFoam_1_1dgFluxSolver_af698821f76c9aa02a7b9f0ac651086a4}{dict}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{mesh}}),(\mbox{\hyperlink{classFoam_1_1dgFluxSolver_a65f5c41742c90fc8ca26bc6220cdeea3}{name}}, \mbox{\hyperlink{classFoam_1_1dgFluxSolver_af698821f76c9aa02a7b9f0ac651086a4}{dict}}, \mbox{\hyperlink{classFoam_1_1GaussField}{mesh}}))
 \item 
 \mbox{\hyperlink{classFoam_1_1dgFluxSolver_a8fd8ad0de1f63de00e9103405ba5e2aa}{dg\+Flux\+Solver}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{word}} \&\mbox{\hyperlink{classFoam_1_1dgFluxSolver_a65f5c41742c90fc8ca26bc6220cdeea3}{name}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}} \&\mbox{\hyperlink{classFoam_1_1dgFluxSolver_af698821f76c9aa02a7b9f0ac651086a4}{dict}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{mesh}})
-\item 
+\begin{DoxyCompactList}\small\item\em Construct from name and dictionary. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1dgFluxSolver_a714ac461d56251ba0656e504d53254a1}{dg\+Flux\+Solver}} ()=\mbox{\hyperlink{classFoam_1_1GaussField}{delete}}
 \item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1dgFluxSolver_a04415b95f57d65f4dda993607cb7d9d6}{\texorpdfstring{$\sim$}{\string~}dg\+Flux\+Solver}} ()=\mbox{\hyperlink{classFoam_1_1GaussField}{default}}
 \item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{word}} \& \mbox{\hyperlink{classFoam_1_1dgFluxSolver_a65f5c41742c90fc8ca26bc6220cdeea3}{name}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
-\item 
+\begin{DoxyCompactList}\small\item\em Return solver name. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}} \& \mbox{\hyperlink{classFoam_1_1dgFluxSolver_af698821f76c9aa02a7b9f0ac651086a4}{dict}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
-\item 
+\begin{DoxyCompactList}\small\item\em Return solver dictionary. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgFluxSolver_a4fc7f98f8af77cfb24e847735313d7cf}{make\+ONB}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{n}}, \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{t1}}, \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{t2}}) \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
-\item 
+\begin{DoxyCompactList}\small\item\em Construct an orthonormal basis from a normal vector. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgFluxSolver_aeb30b26b6e79cea0ea1fd639576841c0}{decomposeU}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&\mbox{\hyperlink{createPrimaryFields_8H_acaa7fe8168a3a866f1958b3663d384c6}{U}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{n}}, \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{Un}}, \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{Ut1}}, \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{Ut2}}) \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
-\item 
+\begin{DoxyCompactList}\small\item\em Decompose a vector into normal and tangential components. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgFluxSolver_aa29c80d12bc940c6582afde7d48a45ae}{set\+Equation\+Type}} (\mbox{\hyperlink{classFoam_1_1dgFluxSolver_ac861a0350cf2f298fecfc97544af0572}{equation\+Type}} \mbox{\hyperlink{classFoam_1_1GaussField}{t}})
-\item 
+\begin{DoxyCompactList}\small\item\em Set equation type. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1dgFluxSolver_ac861a0350cf2f298fecfc97544af0572}{equation\+Type}} \mbox{\hyperlink{classFoam_1_1dgFluxSolver_a09aac3f56d63fa367f9d2b3e3f897a4b}{get\+Equation\+Type}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Return equation type. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsubsection*{Private Member Functions}
 \begin{DoxyCompactItemize}
 \item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} \mbox{\hyperlink{classFoam_1_1dgLaxFriedrichsFluxSolver_a8165bb486e760033f856a7bc6cf0085f}{calc\+Dissipation\+Coeff}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{ULv}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{URv}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} \mbox{\hyperlink{classFoam_1_1GaussField}{aL}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} \mbox{\hyperlink{classFoam_1_1GaussField}{aR}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{n}}) \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
-\item 
+\begin{DoxyCompactList}\small\item\em Compute local dissipation coefficient. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} \mbox{\hyperlink{classFoam_1_1dgLaxFriedrichsFluxSolver_a8165bb486e760033f856a7bc6cf0085f}{calc\+Dissipation\+Coeff}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{ULv}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{URv}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} \mbox{\hyperlink{classFoam_1_1GaussField}{aL}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} \mbox{\hyperlink{classFoam_1_1GaussField}{aR}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{n}}) \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Compute local dissipation coefficient. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsubsection*{Private Attributes}
 \begin{DoxyCompactItemize}
 \item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgField}{dg\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$ \& \mbox{\hyperlink{classFoam_1_1dgLaxFriedrichsFluxSolver_aa47fbf51fc143c0ef8c307e4abefc165}{U\+\_\+}}
-\item 
+\begin{DoxyCompactList}\small\item\em Pointer to velocity field (read-\/only, non-\/owning) \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgField}{dg\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \& \mbox{\hyperlink{classFoam_1_1dgLaxFriedrichsFluxSolver_ace9a6cf90cf52d1ea215598bfbb7588f}{a\+\_\+}}
-\item 
+\begin{DoxyCompactList}\small\item\em Pointer to speed-\/of-\/sound field (read-\/only, non-\/owning) \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{bool}} \mbox{\hyperlink{classFoam_1_1dgLaxFriedrichsFluxSolver_a95ef67c7bb8ae02201275ea226dc37e3}{scale\+By\+Mach\+\_\+}}
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Enable Mach-\/number-\/based dissipation scaling. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsubsection*{Additional Inherited Members}
 \doxysubsection*{Public Types inherited from \mbox{\hyperlink{classFoam_1_1dgFluxSolver}{Foam\+::dg\+Flux\+Solver}}}
 \begin{DoxyCompactItemize}
@@ -148,21 +153,53 @@ enum class \mbox{\hyperlink{classFoam_1_1dgFluxSolver_ac861a0350cf2f298fecfc9754
 \begin{DoxyCompactItemize}
 \item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{static}} \mbox{\hyperlink{classFoam_1_1GaussField}{auto\+Ptr}}$<$ \mbox{\hyperlink{classFoam_1_1dgFluxSolver}{dg\+Flux\+Solver}} $>$ \mbox{\hyperlink{classFoam_1_1dgFluxSolver_a4739349630624924584ae6ea0d7df763}{New}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{word}} \&\mbox{\hyperlink{classFoam_1_1dgFluxSolver_a65f5c41742c90fc8ca26bc6220cdeea3}{name}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{word}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{flux\+Solver\+Type}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}} \&\mbox{\hyperlink{classFoam_1_1dgFluxSolver_af698821f76c9aa02a7b9f0ac651086a4}{dict}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{mesh}})
-\item 
+\begin{DoxyCompactList}\small\item\em Select and construct from dictionary. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{static}} \mbox{\hyperlink{classFoam_1_1GaussField}{auto\+Ptr}}$<$ \mbox{\hyperlink{classFoam_1_1dgFluxSolver}{dg\+Flux\+Solver}} $>$ \mbox{\hyperlink{classFoam_1_1dgFluxSolver_a617cb61197710786b9c9da79f623ae38}{New}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{word}} \&\mbox{\hyperlink{classFoam_1_1dgFluxSolver_a65f5c41742c90fc8ca26bc6220cdeea3}{name}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{word}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{flux\+Solver\+Type}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}} \&\mbox{\hyperlink{classFoam_1_1dgFluxSolver_af698821f76c9aa02a7b9f0ac651086a4}{dict}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{mesh}})
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Select and construct from dictionary. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{classFoam_1_1dgFluxSolver}{Foam\+::dg\+Flux\+Solver}}}
 \begin{DoxyCompactItemize}
 \item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{word}} \mbox{\hyperlink{classFoam_1_1dgFluxSolver_a940ac2708929c4b459605c642b5bfe9e}{name\+\_\+}}
-\item 
+\begin{DoxyCompactList}\small\item\em Solver instance name (for logging/debug) \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}} \mbox{\hyperlink{classFoam_1_1dgFluxSolver_aab4ed6bf78c423de92270601c10f5214}{dict\+\_\+}}
-\item 
+\begin{DoxyCompactList}\small\item\em Configuration dictionary for this solver. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \& \mbox{\hyperlink{classFoam_1_1dgFluxSolver_a0a5b03f6b3e59f91d5175d644b7118d6}{mesh\+\_\+}}
-\item 
+\begin{DoxyCompactList}\small\item\em Reference to DG geometric mesh. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1dgFluxSolver_ac861a0350cf2f298fecfc97544af0572}{equation\+Type}} \mbox{\hyperlink{classFoam_1_1dgFluxSolver_a01702ce212b866ad64127b8e304395ea}{eqn\+Type\+\_\+}}
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Equation type used for interpreting left/right states. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
+
+\doxysubsection{Detailed Description}
+Local Lax–\+Friedrichs (Rusanov) numerical flux. 
+
+Implements the local Lax–\+Friedrichs (Rusanov) flux for DG formulations.
+
+The numerical flux is defined as\+:  \[
+  \boldsymbol{h}
+  =
+  \frac{1}{2}
+  \left(
+    \boldsymbol{F}(\boldsymbol{U}^{-})
+  + \boldsymbol{F}(\boldsymbol{U}^{+})
+  \right)\cdot\boldsymbol{n}
+  -
+  \frac{1}{2} C
+  \left(
+    \boldsymbol{U}^{+} - \boldsymbol{U}^{-}
+  \right)
+\]
+
+where\+:
+\begin{DoxyItemize}
+\item $\boldsymbol{U}^{-}$ is the interior (minus-\/side) state
+\item $\boldsymbol{U}^{+}$ is the exterior (plus-\/side) state
+\item $\boldsymbol{F}$ is the physical flux
+\item $\boldsymbol{n}$ is the outward unit normal
+\end{DoxyItemize}
+
+The dissipation coefficient $C$ is evaluated locally from flow velocity and acoustic speed. Optional Mach-\/based scaling can be enabled via dictionary settings.
+
+This flux is robust but introduces stronger numerical dissipation than approximate Riemann solvers such as HLLC or Roe. 
 
 \doxysubsection{Constructor \& Destructor Documentation}
 \Hypertarget{classFoam_1_1dgLaxFriedrichsFluxSolver_aa3a86806982922dfac7ac24c66e6876c}\label{classFoam_1_1dgLaxFriedrichsFluxSolver_aa3a86806982922dfac7ac24c66e6876c} 
@@ -171,6 +208,21 @@ enum class \mbox{\hyperlink{classFoam_1_1dgFluxSolver_ac861a0350cf2f298fecfc9754
 \doxysubsubsection{\texorpdfstring{dgLaxFriedrichsFluxSolver()}{dgLaxFriedrichsFluxSolver()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
 {\footnotesize\ttfamily Foam\+::dg\+Lax\+Friedrichs\+Flux\+Solver\+::dg\+Lax\+Friedrichs\+Flux\+Solver (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{word}} \&}]{name,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}} \&}]{dict,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \&}]{mesh }\end{DoxyParamCaption})}
 
+
+
+Construct from name, dictionary, and DG mesh. 
+
+Initializes field references and reads solver options (e.\+g. Mach-\/based scaling).
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & Solver name \\
+\hline
+{\em dict} & Flux-\/solver dictionary \\
+\hline
+{\em mesh} & DG geometric mesh \\
+\hline
+\end{DoxyParams}
 \Hypertarget{classFoam_1_1dgLaxFriedrichsFluxSolver_ab335afd6f86988898c8d43a0afb8c4be}\label{classFoam_1_1dgLaxFriedrichsFluxSolver_ab335afd6f86988898c8d43a0afb8c4be} 
 \index{Foam::dgLaxFriedrichsFluxSolver@{Foam::dgLaxFriedrichsFluxSolver}!````~dgLaxFriedrichsFluxSolver@{\texorpdfstring{$\sim$}{\string~}dgLaxFriedrichsFluxSolver}}
 \index{````~dgLaxFriedrichsFluxSolver@{\texorpdfstring{$\sim$}{\string~}dgLaxFriedrichsFluxSolver}!Foam::dgLaxFriedrichsFluxSolver@{Foam::dgLaxFriedrichsFluxSolver}}
@@ -183,6 +235,21 @@ enum class \mbox{\hyperlink{classFoam_1_1dgFluxSolver_ac861a0350cf2f298fecfc9754
 \doxysubsubsection{\texorpdfstring{dgLaxFriedrichsFluxSolver()}{dgLaxFriedrichsFluxSolver()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
 {\footnotesize\ttfamily Foam\+::dg\+Lax\+Friedrichs\+Flux\+Solver\+::dg\+Lax\+Friedrichs\+Flux\+Solver (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{word}} \&}]{name,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}} \&}]{dict,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \&}]{mesh }\end{DoxyParamCaption})}
 
+
+
+Construct from name, dictionary, and DG mesh. 
+
+Initializes field references and reads solver options (e.\+g. Mach-\/based scaling).
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & Solver name \\
+\hline
+{\em dict} & Flux-\/solver dictionary \\
+\hline
+{\em mesh} & DG geometric mesh \\
+\hline
+\end{DoxyParams}
 \Hypertarget{classFoam_1_1dgLaxFriedrichsFluxSolver_ab335afd6f86988898c8d43a0afb8c4be}\label{classFoam_1_1dgLaxFriedrichsFluxSolver_ab335afd6f86988898c8d43a0afb8c4be} 
 \index{Foam::dgLaxFriedrichsFluxSolver@{Foam::dgLaxFriedrichsFluxSolver}!````~dgLaxFriedrichsFluxSolver@{\texorpdfstring{$\sim$}{\string~}dgLaxFriedrichsFluxSolver}}
 \index{````~dgLaxFriedrichsFluxSolver@{\texorpdfstring{$\sim$}{\string~}dgLaxFriedrichsFluxSolver}!Foam::dgLaxFriedrichsFluxSolver@{Foam::dgLaxFriedrichsFluxSolver}}
@@ -198,6 +265,28 @@ enum class \mbox{\hyperlink{classFoam_1_1dgFluxSolver_ac861a0350cf2f298fecfc9754
 \doxysubsubsection{\texorpdfstring{calcDissipationCoeff()}{calcDissipationCoeff()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
 {\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} Foam\+::dg\+Lax\+Friedrichs\+Flux\+Solver\+::calc\+Dissipation\+Coeff (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&}]{ULv,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&}]{URv,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}}]{aL,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}}]{aR,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&}]{n }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [private]}}
 
+
+
+Compute local dissipation coefficient. 
+
+Computes the Lax–\+Friedrichs dissipation coefficient using left/right states and face normal direction.
+
+
+\begin{DoxyParams}{Parameters}
+{\em ULv} & Velocity on minus side \\
+\hline
+{\em URv} & Velocity on plus side \\
+\hline
+{\em aL} & Speed of sound on minus side \\
+\hline
+{\em aR} & Speed of sound on plus side \\
+\hline
+{\em n} & Face outward unit normal \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Dissipation coefficient 
+\end{DoxyReturn}
 \Hypertarget{classFoam_1_1dgLaxFriedrichsFluxSolver_a3ace4155d010023938c937c9ced4ec70}\label{classFoam_1_1dgLaxFriedrichsFluxSolver_a3ace4155d010023938c937c9ced4ec70} 
 \index{Foam::dgLaxFriedrichsFluxSolver@{Foam::dgLaxFriedrichsFluxSolver}!TypeName@{TypeName}}
 \index{TypeName@{TypeName}!Foam::dgLaxFriedrichsFluxSolver@{Foam::dgLaxFriedrichsFluxSolver}}
@@ -212,6 +301,21 @@ enum class \mbox{\hyperlink{classFoam_1_1dgFluxSolver_ac861a0350cf2f298fecfc9754
 
 
 
+Compute numerical flux for scalar conserved variable. 
+
+Produces a vector-\/valued numerical flux.
+
+
+\begin{DoxyParams}{Parameters}
+{\em cell\+ID} & DG cell index \\
+\hline
+{\em F} & Flux field (output) \\
+\hline
+{\em U} & Scalar solution at face Gauss points \\
+\hline
+\end{DoxyParams}
+
+
 Implements \mbox{\hyperlink{classFoam_1_1dgFluxSolver_a818e96c113a2634cc92278d07576fd45}{Foam\+::dg\+Flux\+Solver}}.
 
 \Hypertarget{classFoam_1_1dgLaxFriedrichsFluxSolver_a381e592d67bf15847dfdedfe5aa4058a}\label{classFoam_1_1dgLaxFriedrichsFluxSolver_a381e592d67bf15847dfdedfe5aa4058a} 
@@ -222,6 +326,21 @@ Implements \mbox{\hyperlink{classFoam_1_1dgFluxSolver_a818e96c113a2634cc92278d07
 
 
 
+Compute numerical flux for vector conserved variable. 
+
+Produces a tensor-\/valued numerical flux.
+
+
+\begin{DoxyParams}{Parameters}
+{\em cell\+ID} & DG cell index \\
+\hline
+{\em F} & Flux field (output) \\
+\hline
+{\em U} & Vector solution at face Gauss points \\
+\hline
+\end{DoxyParams}
+
+
 Implements \mbox{\hyperlink{classFoam_1_1dgFluxSolver_ae1a701c051676d77d2c8ecc5afb2989d}{Foam\+::dg\+Flux\+Solver}}.
 
 \Hypertarget{classFoam_1_1dgLaxFriedrichsFluxSolver_ab056ecd7e1aff9d41bd8a1a300201f5d}\label{classFoam_1_1dgLaxFriedrichsFluxSolver_ab056ecd7e1aff9d41bd8a1a300201f5d} 
@@ -229,6 +348,10 @@ Implements \mbox{\hyperlink{classFoam_1_1dgFluxSolver_ae1a701c051676d77d2c8ecc5a
 \index{reset@{reset}!Foam::dgLaxFriedrichsFluxSolver@{Foam::dgLaxFriedrichsFluxSolver}}
 \doxysubsubsection{\texorpdfstring{reset()}{reset()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
 {\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{void}} Foam\+::dg\+Lax\+Friedrichs\+Flux\+Solver\+::reset (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reset internal state (no-\/op) 
 
 
 
@@ -242,6 +365,17 @@ Implements \mbox{\hyperlink{classFoam_1_1dgFluxSolver_a4f531350dfae3874165829e63
 
 
 
+Read solver settings from dictionary. 
+
+Updates dissipation-\/scaling options.
+
+
+\begin{DoxyParams}{Parameters}
+{\em dict} & Flux-\/solver dictionary \\
+\hline
+\end{DoxyParams}
+
+
 Implements \mbox{\hyperlink{classFoam_1_1dgFluxSolver_a4ebea0b463d5b9d8747e52ff693276ce}{Foam\+::dg\+Flux\+Solver}}.
 
 \Hypertarget{classFoam_1_1dgLaxFriedrichsFluxSolver_a8165bb486e760033f856a7bc6cf0085f}\label{classFoam_1_1dgLaxFriedrichsFluxSolver_a8165bb486e760033f856a7bc6cf0085f} 
@@ -250,6 +384,28 @@ Implements \mbox{\hyperlink{classFoam_1_1dgFluxSolver_a4ebea0b463d5b9d8747e52ff6
 \doxysubsubsection{\texorpdfstring{calcDissipationCoeff()}{calcDissipationCoeff()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
 {\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} Foam\+::dg\+Lax\+Friedrichs\+Flux\+Solver\+::calc\+Dissipation\+Coeff (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&}]{ULv,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&}]{URv,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}}]{aL,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}}]{aR,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&}]{n }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [private]}}
 
+
+
+Compute local dissipation coefficient. 
+
+Computes the Lax–\+Friedrichs dissipation coefficient using left/right states and face normal direction.
+
+
+\begin{DoxyParams}{Parameters}
+{\em ULv} & Velocity on minus side \\
+\hline
+{\em URv} & Velocity on plus side \\
+\hline
+{\em aL} & Speed of sound on minus side \\
+\hline
+{\em aR} & Speed of sound on plus side \\
+\hline
+{\em n} & Face outward unit normal \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Dissipation coefficient 
+\end{DoxyReturn}
 \Hypertarget{classFoam_1_1dgLaxFriedrichsFluxSolver_a3ace4155d010023938c937c9ced4ec70}\label{classFoam_1_1dgLaxFriedrichsFluxSolver_a3ace4155d010023938c937c9ced4ec70} 
 \index{Foam::dgLaxFriedrichsFluxSolver@{Foam::dgLaxFriedrichsFluxSolver}!TypeName@{TypeName}}
 \index{TypeName@{TypeName}!Foam::dgLaxFriedrichsFluxSolver@{Foam::dgLaxFriedrichsFluxSolver}}
@@ -264,6 +420,21 @@ Implements \mbox{\hyperlink{classFoam_1_1dgFluxSolver_a4ebea0b463d5b9d8747e52ff6
 
 
 
+Compute numerical flux for scalar conserved variable. 
+
+Produces a vector-\/valued numerical flux.
+
+
+\begin{DoxyParams}{Parameters}
+{\em cell\+ID} & DG cell index \\
+\hline
+{\em F} & Flux field (output) \\
+\hline
+{\em U} & Scalar solution at face Gauss points \\
+\hline
+\end{DoxyParams}
+
+
 Implements \mbox{\hyperlink{classFoam_1_1dgFluxSolver_a818e96c113a2634cc92278d07576fd45}{Foam\+::dg\+Flux\+Solver}}.
 
 \Hypertarget{classFoam_1_1dgLaxFriedrichsFluxSolver_a7077c530163d30a97c3590bfb69fa715}\label{classFoam_1_1dgLaxFriedrichsFluxSolver_a7077c530163d30a97c3590bfb69fa715} 
@@ -274,6 +445,21 @@ Implements \mbox{\hyperlink{classFoam_1_1dgFluxSolver_a818e96c113a2634cc92278d07
 
 
 
+Compute numerical flux for vector conserved variable. 
+
+Produces a tensor-\/valued numerical flux.
+
+
+\begin{DoxyParams}{Parameters}
+{\em cell\+ID} & DG cell index \\
+\hline
+{\em F} & Flux field (output) \\
+\hline
+{\em U} & Vector solution at face Gauss points \\
+\hline
+\end{DoxyParams}
+
+
 Implements \mbox{\hyperlink{classFoam_1_1dgFluxSolver_ae1a701c051676d77d2c8ecc5afb2989d}{Foam\+::dg\+Flux\+Solver}}.
 
 \Hypertarget{classFoam_1_1dgLaxFriedrichsFluxSolver_ab056ecd7e1aff9d41bd8a1a300201f5d}\label{classFoam_1_1dgLaxFriedrichsFluxSolver_ab056ecd7e1aff9d41bd8a1a300201f5d} 
@@ -281,6 +467,10 @@ Implements \mbox{\hyperlink{classFoam_1_1dgFluxSolver_ae1a701c051676d77d2c8ecc5a
 \index{reset@{reset}!Foam::dgLaxFriedrichsFluxSolver@{Foam::dgLaxFriedrichsFluxSolver}}
 \doxysubsubsection{\texorpdfstring{reset()}{reset()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
 {\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{virtual}} \mbox{\hyperlink{classFoam_1_1GaussField}{void}} Foam\+::dg\+Lax\+Friedrichs\+Flux\+Solver\+::reset (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reset internal state (no-\/op) 
 
 
 
@@ -294,6 +484,17 @@ Implements \mbox{\hyperlink{classFoam_1_1dgFluxSolver_a4f531350dfae3874165829e63
 
 
 
+Read solver settings from dictionary. 
+
+Updates dissipation-\/scaling options.
+
+
+\begin{DoxyParams}{Parameters}
+{\em dict} & Flux-\/solver dictionary \\
+\hline
+\end{DoxyParams}
+
+
 Implements \mbox{\hyperlink{classFoam_1_1dgFluxSolver_a4ebea0b463d5b9d8747e52ff693276ce}{Foam\+::dg\+Flux\+Solver}}.
 
 
@@ -305,17 +506,29 @@ Implements \mbox{\hyperlink{classFoam_1_1dgFluxSolver_a4ebea0b463d5b9d8747e52ff6
 \doxysubsubsection{\texorpdfstring{U\_}{U\_}}
 {\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgField}{dg\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$ \& Foam\+::dg\+Lax\+Friedrichs\+Flux\+Solver\+::\+U\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
 
+
+
+Pointer to velocity field (read-\/only, non-\/owning) 
+
 \Hypertarget{classFoam_1_1dgLaxFriedrichsFluxSolver_ace9a6cf90cf52d1ea215598bfbb7588f}\label{classFoam_1_1dgLaxFriedrichsFluxSolver_ace9a6cf90cf52d1ea215598bfbb7588f} 
 \index{Foam::dgLaxFriedrichsFluxSolver@{Foam::dgLaxFriedrichsFluxSolver}!a\_@{a\_}}
 \index{a\_@{a\_}!Foam::dgLaxFriedrichsFluxSolver@{Foam::dgLaxFriedrichsFluxSolver}}
 \doxysubsubsection{\texorpdfstring{a\_}{a\_}}
 {\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgField}{dg\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \& Foam\+::dg\+Lax\+Friedrichs\+Flux\+Solver\+::a\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
 
+
+
+Pointer to speed-\/of-\/sound field (read-\/only, non-\/owning) 
+
 \Hypertarget{classFoam_1_1dgLaxFriedrichsFluxSolver_a95ef67c7bb8ae02201275ea226dc37e3}\label{classFoam_1_1dgLaxFriedrichsFluxSolver_a95ef67c7bb8ae02201275ea226dc37e3} 
 \index{Foam::dgLaxFriedrichsFluxSolver@{Foam::dgLaxFriedrichsFluxSolver}!scaleByMach\_@{scaleByMach\_}}
 \index{scaleByMach\_@{scaleByMach\_}!Foam::dgLaxFriedrichsFluxSolver@{Foam::dgLaxFriedrichsFluxSolver}}
 \doxysubsubsection{\texorpdfstring{scaleByMach\_}{scaleByMach\_}}
 {\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{bool}} Foam\+::dg\+Lax\+Friedrichs\+Flux\+Solver\+::scale\+By\+Mach\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Enable Mach-\/number-\/based dissipation scaling. 
 
 
 

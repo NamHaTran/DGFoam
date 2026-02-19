@@ -28,7 +28,7 @@ Class
     Foam::dgGeneralBoundaryManager
 
 Description
-    Class for DG boundary conditions management.
+    Manager for DG general boundary conditions.
 
 \*---------------------------------------------------------------------------*/
 
@@ -51,88 +51,142 @@ namespace Foam
                     Class dgGeneralBoundaryManager Declaration
 \*---------------------------------------------------------------------------*/
 
+/**
+ * \class Foam::dgGeneralBoundaryManager
+ * \brief Manager for DG general boundary conditions
+ *
+ * \tparam Type Field value type (e.g. scalar, vector, tensor)
+ *
+ * \details
+ * Constructs and stores one dgGeneralBoundaryField per fvPatch and applies
+ * them to update ghost (plus-side) values and gradients at face Gauss points.
+ *
+ * The manager:
+ * - Filters patches via dgBoundaryHelper::isGeneralPatch()
+ * - Builds boundary-condition objects via runtime selection
+ * - Dispatches updateGhostStateValue()/updateGhostStateGrad() per Gauss point
+ */
 template<class Type>
 class dgGeneralBoundaryManager
 {
 private:
 
-    //- Reference to dgGeomMesh (used for fvPatch access and field lookup)
+    /** Reference to DG geometric mesh */
     const dgGeomMesh& mesh_;
 
-    //- List of boundary condition objects (one per fvPatch)
+    /**
+     * List of boundary-condition objects (one per fvPatch)
+     *
+     * The ordering follows fvBoundaryMesh patch ordering.
+     */
     DynamicList<autoPtr<dgGeneralBoundaryField<Type>>> bConditions_;
 
-    //- Internal field value (currently only supports 'uniform <value>')
+    /** Internal field value used for initialization (uniform) */
     Type internalValue_;
 
 public:
 
-    // Constructors
+    // Constructors --------------------------------------------------------
 
-        //- Construct from fvPatch + dgGeomMesh + dictionary of BC file
-        dgGeneralBoundaryManager
-        (
-            const dictionary& fieldDict,
-            const dgGeomMesh& mesh
-        );
+    /**
+     * \brief Construct from field dictionary and DG mesh
+     *
+     * \param fieldDict Field dictionary containing boundary definitions
+     * \param mesh      DG geometric mesh
+     */
+    dgGeneralBoundaryManager
+    (
+        const dictionary& fieldDict,
+        const dgGeomMesh& mesh
+    );
 
-        //- Construct from IOobject + dgGeomMesh
-        dgGeneralBoundaryManager
-        (
-            const IOobject& io,
-            const dgGeomMesh& mesh
-        );
+    /**
+     * \brief Construct from IOobject and DG mesh
+     *
+     * Typically used when reading boundary conditions from disk.
+     *
+     * \param io   IOobject associated with the field
+     * \param mesh DG geometric mesh
+     */
+    dgGeneralBoundaryManager
+    (
+        const IOobject& io,
+        const dgGeomMesh& mesh
+    );
 
     //- Destructor
     ~dgGeneralBoundaryManager() = default;
 
-    // Access Functions
+    // Access functions ----------------------------------------------------
 
-        //- Number of boundary patches
-        inline label size() const { return bConditions_.size(); }
+    /** Return number of boundary patches */
+    inline label size() const { return bConditions_.size(); }
 
-        //- Const access by patch index
-        inline const dgGeneralBoundaryField<Type>& operator[](const label i) const
-        {
-            return bConditions_[i];
-        }
+    /**
+     * \brief Return const access to boundary condition by patch index
+     *
+     * \param i Patch index
+     * \return Const reference to boundary-condition object
+     */
+    inline const dgGeneralBoundaryField<Type>& operator[](const label i) const
+    {
+        return bConditions_[i];
+    }
 
-        //- Non-const access
-        inline dgGeneralBoundaryField<Type>& operator[](const label i)
-        {
-            return bConditions_[i];
-        }
+    /**
+     * \brief Return non-const access to boundary condition by patch index
+     *
+     * \param i Patch index
+     * \return Reference to boundary-condition object
+     */
+    inline dgGeneralBoundaryField<Type>& operator[](const label i)
+    {
+        return bConditions_[i];
+    }
 
-        //- Return internal field value
-        inline const Type& internalValue() const { return internalValue_; }
+    /** Return internal field value */
+    inline const Type& internalValue() const { return internalValue_; }
 
-        //- Check if given patchID is general boundary
-        inline bool isGeneralPatch(const label patchID) const
-        {
-            const fvBoundaryMesh& patches = mesh_.getFvMesh().boundary();
-            if (dgBoundaryHelper::isGeneralPatch(patches[patchID]))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
+    /**
+     * \brief Return true if patch is a general (physical) boundary
+     *
+     * Interface and constraint patches are excluded.
+     *
+     * \param patchID Patch index
+     * \return true if patch is a general boundary
+     */
+    inline bool isGeneralPatch(const label patchID) const
+    {
+        const fvBoundaryMesh& patches = mesh_.getFvMesh().boundary();
+        return dgBoundaryHelper::isGeneralPatch(patches[patchID]);
+    }
 
-    // Core methods
-        
-        //- Update values on plus side according to boundary conditions
-        void updateValue
-        (
-            GaussField<Type>& GField
-        );
+    // Core methods --------------------------------------------------------
 
-        //- Update gradients on plus side according to boundary conditions
-        void updateGrad
-        (
-            GaussField<Type>& GField
-        );
+    /**
+     * \brief Update ghost-state values on boundary faces
+     *
+     * Applies boundary conditions to set plus-side values at face Gauss points.
+     *
+     * \param GField GaussField to be updated
+     */
+    void updateValue
+    (
+        GaussField<Type>& GField
+    );
+
+    /**
+     * \brief Update ghost-state gradients on boundary faces
+     *
+     * Applies boundary conditions to set plus-side gradients at face Gauss
+     * points.
+     *
+     * \param GField GaussField to be updated
+     */
+    void updateGrad
+    (
+        GaussField<Type>& GField
+    );
 };
 
 #include "dgGeneralBoundaryManagerI.H"

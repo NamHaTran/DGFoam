@@ -24,7 +24,8 @@ var searchData=
   ['dgprocessorboundarymanager_21',['dgProcessorBoundaryManager',['../classFoam_1_1dgProcessorBoundaryManager.html',1,'Foam']]],
   ['dgrefcell_22',['dgRefCell',['../classFoam_1_1dgRefCell.html',1,'Foam']]],
   ['dgrefface_23',['dgRefFace',['../classFoam_1_1dgRefFace.html',1,'Foam']]],
-  ['doffield_24',['dofField',['../classFoam_1_1dofField.html',1,'Foam']]],
-  ['doffield_3c_20ftype_20_3e_25',['dofField&lt; FType &gt;',['../classFoam_1_1dofField.html',1,'Foam']]],
-  ['doffield_3c_20utype_20_3e_26',['dofField&lt; UType &gt;',['../classFoam_1_1dofField.html',1,'Foam']]]
+  ['dgthermoconservative_24',['dgThermoConservative',['../classFoam_1_1dgThermoConservative.html',1,'Foam']]],
+  ['doffield_25',['dofField',['../classFoam_1_1dofField.html',1,'Foam']]],
+  ['doffield_3c_20ftype_20_3e_26',['dofField&lt; FType &gt;',['../classFoam_1_1dofField.html',1,'Foam']]],
+  ['doffield_3c_20utype_20_3e_27',['dofField&lt; UType &gt;',['../classFoam_1_1dofField.html',1,'Foam']]]
 ];

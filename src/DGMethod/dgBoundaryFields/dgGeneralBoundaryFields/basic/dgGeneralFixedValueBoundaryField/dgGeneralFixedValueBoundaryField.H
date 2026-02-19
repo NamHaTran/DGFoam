@@ -28,18 +28,7 @@ Class
     Foam::dgGeneralFixedValueBoundaryField
 
 Description
-    Fixed value (Dirichlet) boundary condition for DG methods.
-
-    Applies a strong Dirichlet constraint at the boundary by mirroring
-    the internal value around the prescribed boundary value:
-
-        U⁺ = 2·U_bc − U⁻
-
-    The gradient is not modified (copied as-is), assuming the Dirichlet
-    value controls the field, not the gradient.
-
-    Supports any Type (scalar, vector, tensor, etc.) that provides basic
-    arithmetic operations.
+    Fixed-value (Dirichlet) boundary condition for DG methods.
 
 SourceFiles
     dgGeneralFixedValueBoundaryField.C
@@ -56,15 +45,37 @@ namespace Foam
 {
 
 /*---------------------------------------------------------------------------*\
-                    Class dgGeneralFixedValueBoundaryField Declaration
+              Class dgGeneralFixedValueBoundaryField Declaration
 \*---------------------------------------------------------------------------*/
 
+/**
+ * \class Foam::dgGeneralFixedValueBoundaryField
+ * \brief Strong Dirichlet boundary condition for DG fields
+ *
+ * \details
+ * Enforces a prescribed boundary value using a ghost-state reflection.
+ *
+ * The Dirichlet condition is imposed strongly by mirroring the
+ * interior (minus-side) state about the prescribed value:
+ *
+ * \f[
+ *   U^{+} = 2\,U_{\mathrm{bc}} - U^{-}
+ * \f]
+ *
+ * where:
+ * - \f$U^{-}\f$ is the interior (minus-side) value
+ * - \f$U^{+}\f$ is the ghost (plus-side) value
+ * - \f$U_{\mathrm{bc}}\f$ is the prescribed boundary value
+ *
+ * No explicit gradient modification is applied; the boundary value
+ * fully constrains the solution at the interface.
+ */
 template<class Type>
 class dgGeneralFixedValueBoundaryField
 :
     public dgGeneralBoundaryField<Type>
 {
-    //- Prescribed boundary value
+    /** Prescribed boundary value */
     Type value_;
 
 public:
@@ -72,7 +83,16 @@ public:
     //- Runtime type information
     TypeName("generalFixedValue");
 
-    //- Constructor from name and dictionary
+    /**
+     * \brief Construct from patch, DG mesh, and dictionary
+     *
+     * Reads the prescribed boundary value from the dictionary and
+     * validates the patch type.
+     *
+     * \param patch  Finite-volume patch
+     * \param dgMesh DG geometric mesh
+     * \param dict   Boundary-condition dictionary
+     */
     dgGeneralFixedValueBoundaryField
     (
         const fvPatch& patch,
@@ -83,7 +103,19 @@ public:
     //- Destructor
     virtual ~dgGeneralFixedValueBoundaryField() = default;
 
-    //- Update value at plus side using fixed value BC
+    /**
+     * \brief Update ghost-state value for fixed-value condition
+     *
+     * Applies the strong Dirichlet relation:
+     * \f$ U^{+} = 2\,U_{\mathrm{bc}} - U^{-} \f$
+     *
+     * \param cellID        Global cell index
+     * \param faceLocalID   Local face index within the cell
+     * \param localGauss    Local Gauss-point index on the face
+     * \param n             Outward face normal
+     * \param minusValue    Interior (minus-side) value
+     * \param plusValue     Ghost (plus-side) value to be set
+     */
     virtual void updateGhostStateValue
     (
         const label cellID,
@@ -97,21 +129,29 @@ public:
         plusValue = 2 * value_ - minusValue;
     }
 
-    //- Check patch type
+    /**
+     * \brief Validate patch compatibility
+     *
+     * Allowed patch types:
+     * - patch
+     * - wall
+     */
     void checkPatchType() const override
     {
-        if (
-            this->patch_.type() != "patch" &&
-            this->patch_.type() != "wall"
+        if
+        (
+            this->patch_.type() != "patch"
+         && this->patch_.type() != "wall"
         )
         {
             FatalErrorInFunction
-                << "Boundary condition " << type() <<" can only "
-                << "be applied to patch type: \n"
-                << "    " << "patch \n"
-                << "    " << "wall \n"
+                << "Boundary condition " << type() << " can only "
+                << "be applied to patch types:\n"
+                << "    patch\n"
+                << "    wall\n"
                 << "but patch "
-                << this->patch_.name() << " is of type " << this->patch_.type() << nl
+                << this->patch_.name()
+                << " is of type " << this->patch_.type() << nl
                 << exit(FatalError);
         }
     }
@@ -120,10 +160,11 @@ public:
 } // End namespace Foam
 
 /*---------------------------------------------------------------------------*\
-                  Include template implementation
+              Include template implementation
 \*---------------------------------------------------------------------------*/
 
 #include "dgGeneralFixedValueBoundaryFieldI.H"
 
 #endif
+
 // ************************************************************************* //
