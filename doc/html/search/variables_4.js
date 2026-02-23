@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['e_5f_0',['e_',['../classFoam_1_1dgThermoConservative.html#aca16ef77fd1d63ac9afaf7aa4e7b0a99',1,'Foam::dgThermoConservative::e_'],['../classFoam_1_1dgThermoConservative.html#a1fe78d1c5984c7d3cf02285b4e091dba',1,'Foam::dgThermoConservative::E_']]],
+  ['e_5f_0',['e_',['../classFoam_1_1dgThermoConservative.html#a1fe78d1c5984c7d3cf02285b4e091dba',1,'Foam::dgThermoConservative::E_'],['../classFoam_1_1dgThermoConservative.html#aca16ef77fd1d63ac9afaf7aa4e7b0a99',1,'Foam::dgThermoConservative::e_']]],
   ['energy_5f_1',['energy_',['../classFoam_1_1dgThermoConservative.html#ae90942b7d92370c2de76ec04c2cb34f9',1,'Foam::dgThermoConservative']]],
   ['eos_5f_2',['eos_',['../classFoam_1_1thermoLaw.html#a0108111aeddcf6d7eb6118bc1e62c07e',1,'Foam::thermoLaw']]],
   ['eqnstate_5f_3',['eqnState_',['../classFoam_1_1dgThermoConservative.html#ae106ab958e9b854d93ae9b467027a870',1,'Foam::dgThermoConservative']]],

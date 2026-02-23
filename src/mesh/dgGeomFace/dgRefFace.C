@@ -35,6 +35,7 @@ License
 #include "error.H"
 #include "vector.H"
 #include <cmath>
+#include "GaussQuadrature.H"
 
 // * * * * * * * * * * * * * * * Static Data Members * * * * * * * * * * * * //
 
@@ -56,38 +57,8 @@ void Foam::dgRefFace::generateFaceGaussPointsAndWeights()
 {
     List<scalar> eta1D, w1D;
 
-    switch (pOrder_)
-    {
-        case 0:
-            eta1D = { 0.0 };
-            w1D   = { 2.0 };
-            break;
-
-        case 1:
-            eta1D = { -0.5773502692, 0.5773502692 };
-            w1D   = { 1.0, 1.0 };
-            break;
-
-        case 2:
-            eta1D = { -0.7745966692, 0.0, 0.7745966692 };
-            w1D   = { 0.5555555556, 0.8888888889, 0.5555555556 };
-            break;
-
-        case 3:
-            eta1D = { -0.8611363116, -0.3399810436, 0.3399810436, 0.8611363116 };
-            w1D   = { 0.3478548451, 0.6521451549, 0.6521451549, 0.3478548451 };
-            break;
-
-        case 4:
-            eta1D = { -0.9061798459, -0.5384693101, 0.0, 0.5384693101, 0.9061798459 };
-            w1D   = { 0.2369268851, 0.4786286705, 0.5688888889, 0.4786286705, 0.2369268851 };
-            break;
-
-        default:
-            FatalErrorInFunction
-                << "Gauss rule for pOrder = " << pOrder_ << " not implemented\n"
-                << abort(FatalError);
-    }
+    // Use 1D Gauss-Legendre quadrature for face integration
+    Foam::getGaussLegendre1D(pOrder_, eta1D, w1D);
 
     label n1D = eta1D.size();
     nGauss_ = n1D * n1D;

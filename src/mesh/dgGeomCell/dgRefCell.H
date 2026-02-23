@@ -47,6 +47,7 @@ SourceFiles
 #include "List.H"
 #include "vector.H"
 #include "dgCellType.H"  // Enum defining HEX, PRISM, TET, etc.
+#include "SquareMatrix.H"
 
 namespace Foam
 {
@@ -112,6 +113,12 @@ private:
 
         /** Basis-function derivatives w.r.t. \f$\eta_3\f$ */
         List<List<scalar>> dBasis_dEta3_;
+
+        /** Mass matrix for the cell */
+        Foam::SquareMatrix<scalar> massMatrix_;
+
+        /** Diagonal of mass matrix */
+        List<scalar> massMatrixDiag_;
 
 public:
 
@@ -186,31 +193,20 @@ public:
         );
         */
 
-        /** Get 1D Gauss-Legendre points */
-        void getGaussLegendre1D
-        (
-            const label pOrder,
-            List<scalar>& eta,
-            List<scalar>& w
-        );
+        /** Construct reference-cell mass matrix */
+        void constructMassMatrix();
 
-        /** Get 1D Gauss-Lobatto points */
-        void getGaussLobatto1D
-        (
-            const label pOrder,
-            List<scalar>& eta,
-            List<scalar>& w
-        );
+        /** Return reference-cell mass matrix */
+        inline const Foam::SquareMatrix<scalar>& massMatrix() const
+        {
+            return massMatrix_;
+        }
 
-        /** Get 1D Gauss-Radau points */
-        void getGaussRadau1D
-        (
-            const label pOrder,
-            const bool includeLeft,   // true  -> include eta = -1  (Left Radau)
-                                      // false -> include eta = +1  (Right Radau)
-            List<scalar>& eta,
-            List<scalar>& w
-        );
+        /** Return diagonal of reference-cell mass matrix */
+        inline const List<scalar>& massMatrixDiag() const
+        {
+            return massMatrixDiag_;
+        }
 
     //====================================================================//
     //                       Internal generation

@@ -65,20 +65,104 @@ namespace Foam
 
 /**
  * \class Foam::dgGeomCell
- * \brief Geometric container for a DG cell
+ * \brief Geometric container for a DG cell (affine formulation)
  *
  * \details
- * The dgGeomCell class represents the geometry of a single mesh cell
- * tailored for Discontinuous Galerkin discretization.
+ * The dgGeomCell class stores and manages the geometric information
+ * of a single mesh cell for Discontinuous Galerkin discretization.
  *
  * It provides:
- * - Access to mesh-based quantities (volume, centroid)
- * - Cell topology (faces, neighbors, vertices)
- * - Access to reference-cell data (Gauss points, weights, basis functions)
+ *  - Access to mesh-based geometric quantities (volume, centroid),
+ *  - Cell topology (faces, vertices, neighbors),
+ *  - Access to reference-element data (Gauss points, weights,
+ *    orthonormal modal basis, reference mass matrix),
+ *  - Mapping information between physical and reference coordinates.
  *
- * Geometry-specific face objects (dgGeomFace) are initialized using a
- * shared reference face (dgRefFace). Reference-cell data is shared via
- * dgRefCell to avoid duplication and ensure consistency.
+ * -------------------------------------------------------------------------
+ * Affine-cell formulation
+ * -------------------------------------------------------------------------
+ *
+ * The current implementation assumes that the cell mapping is affine.
+ * Let
+ *
+ * \f[
+ *     \boldsymbol{\Xi} = (\xi_1,\xi_2,\xi_3)
+ * \f]
+ *
+ * denote the reference coordinates and
+ *
+ * \f[
+ *     \mathbf{X} = (x,y,z)
+ * \f]
+ *
+ * the physical coordinates. The geometric transformation is
+ *
+ * \f[
+ *     \mathbf{X} = \mathbf{X}(\boldsymbol{\Xi}),
+ * \f]
+ *
+ * with Jacobian matrix
+ *
+ * \f[
+ *     \mathbf{J}
+ *     =
+ *     \frac{\partial (x,y,z)}
+ *          {\partial (\xi_1,\xi_2,\xi_3)}.
+ * \f]
+ *
+ * Under the affine assumption:
+ *
+ * \f[
+ *     \mathbf{J} = \text{constant}, 
+ *     \qquad
+ *     |\mathbf{J}| = \text{constant}
+ * \f]
+ *
+ * throughout the entire cell.
+ *
+ * Consequently:
+ *  - The determinant \f$|\mathbf{J}|\f$ is identical at all Gauss points.
+ *  - The geometric Jacobian needs to be evaluated only once per cell.
+ *
+ * This assumption is valid for straight-sided affine elements such as:
+ *  - linear tetrahedra,
+ *  - parallelepiped hexahedra,
+ *  - straight prisms and pyramids.
+ *
+ * -------------------------------------------------------------------------
+ * Mass matrix structure
+ * -------------------------------------------------------------------------
+ *
+ * The modal basis defined on the reference element is L²-orthonormal.
+ * Therefore, the reference mass matrix satisfies
+ *
+ * \f[
+ *     \mathbf{M}_{\text{ref}} = \mathbf{I},
+ * \f]
+ *
+ * or more generally, it is diagonal.
+ *
+ * Under the affine mapping assumption, the physical mass matrix is
+ *
+ * \f[
+ *     \mathbf{M}_{\text{phys}}
+ *     =
+ *     |\mathbf{J}|\,
+ *     \mathbf{M}_{\text{ref}}.
+ * \f]
+ *
+ * Since \f$|\mathbf{J}|\f$ is constant, the physical-cell mass matrix
+ * remains diagonal.
+ *
+ * This property enables:
+ *  - Efficient modal DG implementation,
+ *  - Matrix-free operator evaluation,
+ *
+ * -------------------------------------------------------------------------
+ *
+ * Geometry-specific face objects (dgGeomFace) are constructed using
+ * a shared reference face (dgRefFace). Reference-cell data is shared
+ * via dgRefCell to avoid duplication and ensure consistency.
  *
  * \ingroup grpDGMesh
  */
@@ -119,9 +203,6 @@ private:
 
     /** List of internal Gauss Jacobian */
     List<scalar> J3D_;
-
-    /** Mass matrix for the cell */
-    Foam::SquareMatrix<scalar> massMatrix_;
 
 public:
 
@@ -201,9 +282,15 @@ public:
         );
 
         /** Return the mass matrix for the cell */
-        inline const Foam::SquareMatrix<scalar>& massMatrix() const
+        inline Foam::SquareMatrix<scalar> massMatrix() const
         {
-            return massMatrix_;
+            return refCell_->massMatrix()*J3D_[0]; // Scale by Jacobian at first Gauss point (constant for affine cells)
+        }
+
+        /** Return the diagonal of the mass matrix for the cell */
+        inline List<scalar> massMatrixDiag() const
+        {
+            return refCell_->massMatrixDiag()*J3D_[0];
         }
 
     //====================================================================//

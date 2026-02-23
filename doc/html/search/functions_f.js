@@ -17,8 +17,8 @@ var searchData=
   ['pr_14',['pr',['../classFoam_1_1dgThermoConservative.html#a86f450bc8c4fcb43947b551f7cbbb37e',1,'Foam::dgThermoConservative::Pr() const'],['../classFoam_1_1dgThermoConservative.html#a86f450bc8c4fcb43947b551f7cbbb37e',1,'Foam::dgThermoConservative::Pr() const']]],
   ['printdebuginfo_15',['printdebuginfo',['../classFoam_1_1dgGeomFace.html#a6916f773f4ba82d5e5aee6110772ea42',1,'Foam::dgGeomFace::printDebugInfo()'],['../classFoam_1_1dgGeomCell.html#a7cf2b854cfa2c04af1181abec7230bc7',1,'Foam::dgGeomCell::printDebugInfo()'],['../classFoam_1_1dgGeomFace.html#a6916f773f4ba82d5e5aee6110772ea42',1,'Foam::dgGeomFace::printDebugInfo()'],['../classFoam_1_1dgGeomCell.html#a7cf2b854cfa2c04af1181abec7230bc7',1,'Foam::dgGeomCell::printDebugInfo()']]],
   ['prismjacobian_16',['PrismJacobian',['../namespaceFoam_1_1geometricJacobian.html#ad79123ae7c8f9933c0b1db4f434e83fe',1,'Foam::geometricJacobian']]],
-  ['prismrefjmontjoietodg_17',['prismRefJMontjoieToDG',['../namespaceFoam_1_1referenceJacobian.html#a3633fb82ab86e229a32c494e651683a0',1,'Foam::referenceJacobian']]],
+  ['prismreftohexref_17',['prismRefToHexRef',['../namespaceFoam_1_1referenceJacobian.html#ab2095d71f6f37306131e1e305fb4fd06',1,'Foam::referenceJacobian']]],
   ['processflatandsortedpoints_18',['processflatandsortedpoints',['../classFoam_1_1dgGeomFace.html#a8725821726d73118866669b0d6ef6fac',1,'Foam::dgGeomFace::processFlatAndSortedPoints()'],['../classFoam_1_1dgGeomFace.html#a8725821726d73118866669b0d6ef6fac',1,'Foam::dgGeomFace::processFlatAndSortedPoints()']]],
   ['pyramidjacobian_19',['PyramidJacobian',['../namespaceFoam_1_1geometricJacobian.html#a2ce71b3859857a6ba42cf882e7a2dd58',1,'Foam::geometricJacobian']]],
-  ['pyramidrefjmontjoietodg_20',['pyramidRefJMontjoieToDG',['../namespaceFoam_1_1referenceJacobian.html#a4fb995e832623cbd4e8f8bc23a3830ec',1,'Foam::referenceJacobian']]]
+  ['pyramidreftohexref_20',['pyramidRefToHexRef',['../namespaceFoam_1_1referenceJacobian.html#a5310019cb178ee71956b74dc728ad13b',1,'Foam::referenceJacobian']]]
 ];

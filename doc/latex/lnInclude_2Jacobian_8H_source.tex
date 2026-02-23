@@ -61,619 +61,545 @@
 \DoxyCodeLine{00057\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespaceFoam}{Foam}}}
 \DoxyCodeLine{00058\ \{}
 \DoxyCodeLine{00059\ }
-\DoxyCodeLine{00060\ \textcolor{keyword}{namespace\ }geometricJacobian}
+\DoxyCodeLine{00060\ \textcolor{keyword}{namespace\ }referenceJacobian}
 \DoxyCodeLine{00061\ \{}
-\DoxyCodeLine{00062\ }
-\DoxyCodeLine{00069\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{classFoam_1_1GaussField}{Foam::tensor}}\ \mbox{\hyperlink{namespaceFoam_1_1geometricJacobian_aaaea28dc5042c3e5886ee75df7b49035}{HexJacobian}}}
-\DoxyCodeLine{00070\ (}
-\DoxyCodeLine{00071\ \ \ \ \ \textcolor{keyword}{const}\ vector\&\ gaussPt,\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Gauss\ point\ in\ reference\ space\ (eta)}}
-\DoxyCodeLine{00072\ \ \ \ \ \textcolor{keyword}{const}\ List<vector>\&\ cellVertices\ \ \ \textcolor{comment}{//\ Physical\ coordinates\ of\ hex\ vertices}}
-\DoxyCodeLine{00073\ )}
-\DoxyCodeLine{00074\ \{}
-\DoxyCodeLine{00075\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00076\ \ \ \ \ \textcolor{comment}{//\ Extract\ reference\ coordinates\ (eta-\/space)}}
-\DoxyCodeLine{00077\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00078\ \ \ \ \ \textcolor{keyword}{const}\ scalar\ eta1\ =\ gaussPt.\mbox{\hyperlink{classFoam_1_1GaussField_a49c91fd2de86e400eb7bf30ed43b04fd}{x}}();}
-\DoxyCodeLine{00079\ \ \ \ \ \textcolor{keyword}{const}\ scalar\ eta2\ =\ gaussPt.\mbox{\hyperlink{classFoam_1_1GaussField_af48b2954902727aadb60e75a5baf4cf3}{y}}();}
-\DoxyCodeLine{00080\ \ \ \ \ \textcolor{keyword}{const}\ scalar\ eta3\ =\ gaussPt.\mbox{\hyperlink{classFoam_1_1GaussField_ac893a0f59b8435e95c03d2a35c6a2cc3}{z}}();}
+\DoxyCodeLine{00067\ \ \ \ \ \textcolor{keyword}{inline}\ \mbox{\hyperlink{classFoam_1_1GaussField}{Foam::scalar}}\ \mbox{\hyperlink{namespaceFoam_1_1referenceJacobian_ab2095d71f6f37306131e1e305fb4fd06}{prismRefToHexRef}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{Foam::vector}}\&\ etaPt)}
+\DoxyCodeLine{00068\ \ \ \ \ \{}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (1-\/etaPt.\mbox{\hyperlink{classFoam_1_1GaussField_ac893a0f59b8435e95c03d2a35c6a2cc3}{z}}())/2;}
+\DoxyCodeLine{00070\ \ \ \ \ \}}
+\DoxyCodeLine{00071\ }
+\DoxyCodeLine{00077\ \ \ \ \ \textcolor{keyword}{inline}\ \mbox{\hyperlink{classFoam_1_1GaussField}{Foam::scalar}}\ \mbox{\hyperlink{namespaceFoam_1_1referenceJacobian_a5310019cb178ee71956b74dc728ad13b}{pyramidRefToHexRef}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{Foam::vector}}\&\ etaPt)}
+\DoxyCodeLine{00078\ \ \ \ \ \{}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{namespaceFoam_a15ce1c3546151277ea9d518e17384f34}{pow}}(1-\/etaPt.\mbox{\hyperlink{classFoam_1_1GaussField_ac893a0f59b8435e95c03d2a35c6a2cc3}{z}}(),2)/4;}
+\DoxyCodeLine{00080\ \ \ \ \ \}}
 \DoxyCodeLine{00081\ }
-\DoxyCodeLine{00082\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00083\ \ \ \ \ \textcolor{comment}{//\ Gradients\ of\ shape\ functions\ w.r.t\ eta\ (dPhi/dEta)}}
-\DoxyCodeLine{00084\ \ \ \ \ \textcolor{comment}{//\ Ordering:\ A\ B\ C\ D\ E\ F\ G\ H}}
-\DoxyCodeLine{00085\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00086\ \ \ \ \ List<vector>\ gradPhi\_Eta(cellVertices.size(),\ Zero);}
-\DoxyCodeLine{00087\ }
-\DoxyCodeLine{00088\ \ \ \ \ \textcolor{comment}{//\ Vertex\ A}}
-\DoxyCodeLine{00089\ \ \ \ \ gradPhi\_Eta[0].x()\ =\ -\/(1\ -\/\ eta2)*(1\ -\/\ eta3)/8;}
-\DoxyCodeLine{00090\ \ \ \ \ gradPhi\_Eta[0].y()\ =\ -\/(1\ -\/\ eta1)*(1\ -\/\ eta3)/8;}
-\DoxyCodeLine{00091\ \ \ \ \ gradPhi\_Eta[0].z()\ =\ -\/(1\ -\/\ eta1)*(1\ -\/\ eta2)/8;}
+\DoxyCodeLine{00087\ \ \ \ \ \textcolor{keyword}{inline}\ \mbox{\hyperlink{classFoam_1_1GaussField}{Foam::scalar}}\ \mbox{\hyperlink{namespaceFoam_1_1referenceJacobian_ab91bfe99c7d460fb6f65df8679db9b9c}{tetRefToHexRef}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{Foam::vector}}\&\ etaPt)}
+\DoxyCodeLine{00088\ \ \ \ \ \{}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (1-\/etaPt.\mbox{\hyperlink{classFoam_1_1GaussField_af48b2954902727aadb60e75a5baf4cf3}{y}}())*\mbox{\hyperlink{namespaceFoam_a15ce1c3546151277ea9d518e17384f34}{pow}}(1-\/etaPt.\mbox{\hyperlink{classFoam_1_1GaussField_ac893a0f59b8435e95c03d2a35c6a2cc3}{z}}(),2)/8;}
+\DoxyCodeLine{00090\ \ \ \ \ \}}
+\DoxyCodeLine{00091\ \}\ \textcolor{comment}{//\ namespace\ referenceJacobian}}
 \DoxyCodeLine{00092\ }
-\DoxyCodeLine{00093\ \ \ \ \ \textcolor{comment}{//\ Vertex\ B}}
-\DoxyCodeLine{00094\ \ \ \ \ gradPhi\_Eta[1].x()\ =\ \ (1\ -\/\ eta2)*(1\ -\/\ eta3)/8;}
-\DoxyCodeLine{00095\ \ \ \ \ gradPhi\_Eta[1].y()\ =\ -\/(1\ +\ eta1)*(1\ -\/\ eta3)/8;}
-\DoxyCodeLine{00096\ \ \ \ \ gradPhi\_Eta[1].z()\ =\ -\/(1\ +\ eta1)*(1\ -\/\ eta2)/8;}
-\DoxyCodeLine{00097\ }
-\DoxyCodeLine{00098\ \ \ \ \ \textcolor{comment}{//\ Vertex\ C}}
-\DoxyCodeLine{00099\ \ \ \ \ gradPhi\_Eta[2].x()\ =\ -\/(1\ +\ eta2)*(1\ -\/\ eta3)/8;}
-\DoxyCodeLine{00100\ \ \ \ \ gradPhi\_Eta[2].y()\ =\ \ (1\ -\/\ eta1)*(1\ -\/\ eta3)/8;}
-\DoxyCodeLine{00101\ \ \ \ \ gradPhi\_Eta[2].z()\ =\ -\/(1\ -\/\ eta1)*(1\ +\ eta2)/8;}
-\DoxyCodeLine{00102\ }
-\DoxyCodeLine{00103\ \ \ \ \ \textcolor{comment}{//\ Vertex\ D}}
-\DoxyCodeLine{00104\ \ \ \ \ gradPhi\_Eta[3].x()\ =\ \ (1\ +\ eta2)*(1\ -\/\ eta3)/8;}
-\DoxyCodeLine{00105\ \ \ \ \ gradPhi\_Eta[3].y()\ =\ \ (1\ +\ eta1)*(1\ -\/\ eta3)/8;}
-\DoxyCodeLine{00106\ \ \ \ \ gradPhi\_Eta[3].z()\ =\ -\/(1\ +\ eta1)*(1\ +\ eta2)/8;}
-\DoxyCodeLine{00107\ }
-\DoxyCodeLine{00108\ \ \ \ \ \textcolor{comment}{//\ Vertex\ E}}
-\DoxyCodeLine{00109\ \ \ \ \ gradPhi\_Eta[4].x()\ =\ -\/(1\ -\/\ eta2)*(1\ +\ eta3)/8;}
-\DoxyCodeLine{00110\ \ \ \ \ gradPhi\_Eta[4].y()\ =\ -\/(1\ -\/\ eta1)*(1\ +\ eta3)/8;}
-\DoxyCodeLine{00111\ \ \ \ \ gradPhi\_Eta[4].z()\ =\ \ (1\ -\/\ eta1)*(1\ -\/\ eta2)/8;}
-\DoxyCodeLine{00112\ }
-\DoxyCodeLine{00113\ \ \ \ \ \textcolor{comment}{//\ Vertex\ F}}
-\DoxyCodeLine{00114\ \ \ \ \ gradPhi\_Eta[5].x()\ =\ \ (1\ -\/\ eta2)*(1\ +\ eta3)/8;}
-\DoxyCodeLine{00115\ \ \ \ \ gradPhi\_Eta[5].y()\ =\ -\/(1\ +\ eta1)*(1\ +\ eta3)/8;}
-\DoxyCodeLine{00116\ \ \ \ \ gradPhi\_Eta[5].z()\ =\ \ (1\ +\ eta1)*(1\ -\/\ eta2)/8;}
-\DoxyCodeLine{00117\ }
-\DoxyCodeLine{00118\ \ \ \ \ \textcolor{comment}{//\ Vertex\ G}}
-\DoxyCodeLine{00119\ \ \ \ \ gradPhi\_Eta[6].x()\ =\ -\/(1\ +\ eta2)*(1\ +\ eta3)/8;}
-\DoxyCodeLine{00120\ \ \ \ \ gradPhi\_Eta[6].y()\ =\ \ (1\ -\/\ eta1)*(1\ +\ eta3)/8;}
-\DoxyCodeLine{00121\ \ \ \ \ gradPhi\_Eta[6].z()\ =\ \ (1\ -\/\ eta1)*(1\ +\ eta2)/8;}
-\DoxyCodeLine{00122\ }
-\DoxyCodeLine{00123\ \ \ \ \ \textcolor{comment}{//\ Vertex\ H}}
-\DoxyCodeLine{00124\ \ \ \ \ gradPhi\_Eta[7].x()\ =\ \ (1\ +\ eta2)*(1\ +\ eta3)/8;}
-\DoxyCodeLine{00125\ \ \ \ \ gradPhi\_Eta[7].y()\ =\ \ (1\ +\ eta1)*(1\ +\ eta3)/8;}
-\DoxyCodeLine{00126\ \ \ \ \ gradPhi\_Eta[7].z()\ =\ \ (1\ +\ eta1)*(1\ +\ eta2)/8;}
-\DoxyCodeLine{00127\ }
-\DoxyCodeLine{00128\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00129\ \ \ \ \ \textcolor{comment}{//\ Compute\ physical\ gradients:\ d(x,y,z)/d(eta1,eta2,eta3)}}
-\DoxyCodeLine{00130\ \ \ \ \ \textcolor{comment}{//\ Each\ vector\ stores\ partial\ derivatives\ w.r.t\ eta}}
-\DoxyCodeLine{00131\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00132\ \ \ \ \ vector\ gradX1\_Eta(Zero);\ \textcolor{comment}{//\ d(x)/d(eta)}}
-\DoxyCodeLine{00133\ \ \ \ \ vector\ gradX2\_Eta(Zero);\ \textcolor{comment}{//\ d(y)/d(eta)}}
-\DoxyCodeLine{00134\ \ \ \ \ vector\ gradX3\_Eta(Zero);\ \textcolor{comment}{//\ d(z)/d(eta)}}
+\DoxyCodeLine{00093\ \textcolor{keyword}{namespace\ }geometricJacobian}
+\DoxyCodeLine{00094\ \{}
+\DoxyCodeLine{00095\ }
+\DoxyCodeLine{00102\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{classFoam_1_1GaussField}{Foam::tensor}}\ \mbox{\hyperlink{namespaceFoam_1_1geometricJacobian_aaaea28dc5042c3e5886ee75df7b49035}{HexJacobian}}}
+\DoxyCodeLine{00103\ (}
+\DoxyCodeLine{00104\ \ \ \ \ \textcolor{keyword}{const}\ vector\&\ gaussPt,\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Gauss\ point\ in\ reference\ space\ (eta)}}
+\DoxyCodeLine{00105\ \ \ \ \ \textcolor{keyword}{const}\ List<vector>\&\ cellVertices\ \ \ \textcolor{comment}{//\ Physical\ coordinates\ of\ hex\ vertices}}
+\DoxyCodeLine{00106\ )}
+\DoxyCodeLine{00107\ \{}
+\DoxyCodeLine{00108\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00109\ \ \ \ \ \textcolor{comment}{//\ Extract\ reference\ coordinates\ (eta-\/space)}}
+\DoxyCodeLine{00110\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00111\ \ \ \ \ \textcolor{keyword}{const}\ scalar\ eta1\ =\ gaussPt.\mbox{\hyperlink{classFoam_1_1GaussField_a49c91fd2de86e400eb7bf30ed43b04fd}{x}}();}
+\DoxyCodeLine{00112\ \ \ \ \ \textcolor{keyword}{const}\ scalar\ eta2\ =\ gaussPt.\mbox{\hyperlink{classFoam_1_1GaussField_af48b2954902727aadb60e75a5baf4cf3}{y}}();}
+\DoxyCodeLine{00113\ \ \ \ \ \textcolor{keyword}{const}\ scalar\ eta3\ =\ gaussPt.\mbox{\hyperlink{classFoam_1_1GaussField_ac893a0f59b8435e95c03d2a35c6a2cc3}{z}}();}
+\DoxyCodeLine{00114\ }
+\DoxyCodeLine{00115\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00116\ \ \ \ \ \textcolor{comment}{//\ Gradients\ of\ shape\ functions\ w.r.t\ eta\ (dPhi/dEta)}}
+\DoxyCodeLine{00117\ \ \ \ \ \textcolor{comment}{//\ Ordering:\ A\ B\ C\ D\ E\ F\ G\ H}}
+\DoxyCodeLine{00118\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00119\ \ \ \ \ List<vector>\ gradPhi\_Eta(cellVertices.size(),\ Zero);}
+\DoxyCodeLine{00120\ }
+\DoxyCodeLine{00121\ \ \ \ \ \textcolor{comment}{//\ Vertex\ A}}
+\DoxyCodeLine{00122\ \ \ \ \ gradPhi\_Eta[0].x()\ =\ -\/(1\ -\/\ eta2)*(1\ -\/\ eta3)/8;}
+\DoxyCodeLine{00123\ \ \ \ \ gradPhi\_Eta[0].y()\ =\ -\/(1\ -\/\ eta1)*(1\ -\/\ eta3)/8;}
+\DoxyCodeLine{00124\ \ \ \ \ gradPhi\_Eta[0].z()\ =\ -\/(1\ -\/\ eta1)*(1\ -\/\ eta2)/8;}
+\DoxyCodeLine{00125\ }
+\DoxyCodeLine{00126\ \ \ \ \ \textcolor{comment}{//\ Vertex\ B}}
+\DoxyCodeLine{00127\ \ \ \ \ gradPhi\_Eta[1].x()\ =\ \ (1\ -\/\ eta2)*(1\ -\/\ eta3)/8;}
+\DoxyCodeLine{00128\ \ \ \ \ gradPhi\_Eta[1].y()\ =\ -\/(1\ +\ eta1)*(1\ -\/\ eta3)/8;}
+\DoxyCodeLine{00129\ \ \ \ \ gradPhi\_Eta[1].z()\ =\ -\/(1\ +\ eta1)*(1\ -\/\ eta2)/8;}
+\DoxyCodeLine{00130\ }
+\DoxyCodeLine{00131\ \ \ \ \ \textcolor{comment}{//\ Vertex\ C}}
+\DoxyCodeLine{00132\ \ \ \ \ gradPhi\_Eta[2].x()\ =\ \ (1\ +\ eta2)*(1\ -\/\ eta3)/8;}
+\DoxyCodeLine{00133\ \ \ \ \ gradPhi\_Eta[2].y()\ =\ \ (1\ +\ eta1)*(1\ -\/\ eta3)/8;}
+\DoxyCodeLine{00134\ \ \ \ \ gradPhi\_Eta[2].z()\ =\ -\/(1\ +\ eta1)*(1\ +\ eta2)/8;}
 \DoxyCodeLine{00135\ }
-\DoxyCodeLine{00136\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <\ cellVertices.size();\ ++i)}
-\DoxyCodeLine{00137\ \ \ \ \ \{}
-\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ gradX1\_Eta.x()\ +=\ gradPhi\_Eta[i].x()*cellVertices[i].x();}
-\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ gradX1\_Eta.y()\ +=\ gradPhi\_Eta[i].y()*cellVertices[i].x();}
-\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ gradX1\_Eta.z()\ +=\ gradPhi\_Eta[i].z()*cellVertices[i].x();}
-\DoxyCodeLine{00141\ }
-\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ gradX2\_Eta.x()\ +=\ gradPhi\_Eta[i].x()*cellVertices[i].y();}
-\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ gradX2\_Eta.y()\ +=\ gradPhi\_Eta[i].y()*cellVertices[i].y();}
-\DoxyCodeLine{00144\ \ \ \ \ \ \ \ \ gradX2\_Eta.z()\ +=\ gradPhi\_Eta[i].z()*cellVertices[i].y();}
+\DoxyCodeLine{00136\ \ \ \ \ \textcolor{comment}{//\ Vertex\ D}}
+\DoxyCodeLine{00137\ \ \ \ \ gradPhi\_Eta[3].x()\ =\ -\/(1\ +\ eta2)*(1\ -\/\ eta3)/8;}
+\DoxyCodeLine{00138\ \ \ \ \ gradPhi\_Eta[3].y()\ =\ \ (1\ -\/\ eta1)*(1\ -\/\ eta3)/8;}
+\DoxyCodeLine{00139\ \ \ \ \ gradPhi\_Eta[3].z()\ =\ -\/(1\ -\/\ eta1)*(1\ +\ eta2)/8;}
+\DoxyCodeLine{00140\ }
+\DoxyCodeLine{00141\ \ \ \ \ \textcolor{comment}{//\ Vertex\ E}}
+\DoxyCodeLine{00142\ \ \ \ \ gradPhi\_Eta[4].x()\ =\ -\/(1\ -\/\ eta2)*(1\ +\ eta3)/8;}
+\DoxyCodeLine{00143\ \ \ \ \ gradPhi\_Eta[4].y()\ =\ -\/(1\ -\/\ eta1)*(1\ +\ eta3)/8;}
+\DoxyCodeLine{00144\ \ \ \ \ gradPhi\_Eta[4].z()\ =\ \ (1\ -\/\ eta1)*(1\ -\/\ eta2)/8;}
 \DoxyCodeLine{00145\ }
-\DoxyCodeLine{00146\ \ \ \ \ \ \ \ \ gradX3\_Eta.x()\ +=\ gradPhi\_Eta[i].x()*cellVertices[i].z();}
-\DoxyCodeLine{00147\ \ \ \ \ \ \ \ \ gradX3\_Eta.y()\ +=\ gradPhi\_Eta[i].y()*cellVertices[i].z();}
-\DoxyCodeLine{00148\ \ \ \ \ \ \ \ \ gradX3\_Eta.z()\ +=\ gradPhi\_Eta[i].z()*cellVertices[i].z();}
-\DoxyCodeLine{00149\ \ \ \ \ \}}
+\DoxyCodeLine{00146\ \ \ \ \ \textcolor{comment}{//\ Vertex\ F}}
+\DoxyCodeLine{00147\ \ \ \ \ gradPhi\_Eta[5].x()\ =\ \ (1\ -\/\ eta2)*(1\ +\ eta3)/8;}
+\DoxyCodeLine{00148\ \ \ \ \ gradPhi\_Eta[5].y()\ =\ -\/(1\ +\ eta1)*(1\ +\ eta3)/8;}
+\DoxyCodeLine{00149\ \ \ \ \ gradPhi\_Eta[5].z()\ =\ \ (1\ +\ eta1)*(1\ -\/\ eta2)/8;}
 \DoxyCodeLine{00150\ }
-\DoxyCodeLine{00151\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00152\ \ \ \ \ \textcolor{comment}{//\ Jacobian\ tensor\ (columns\ =\ gradients\ of\ x,\ y,\ z\ w.r.t\ eta)}}
-\DoxyCodeLine{00153\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00154\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{Foam::tensor}}\ Jacobian}
-\DoxyCodeLine{00155\ \ \ \ \ (}
-\DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ gradX1\_Eta,}
-\DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ gradX2\_Eta,}
-\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ gradX3\_Eta}
-\DoxyCodeLine{00159\ \ \ \ \ );}
+\DoxyCodeLine{00151\ \ \ \ \ \textcolor{comment}{//\ Vertex\ G}}
+\DoxyCodeLine{00152\ \ \ \ \ gradPhi\_Eta[6].x()\ =\ \ (1\ +\ eta2)*(1\ +\ eta3)/8;}
+\DoxyCodeLine{00153\ \ \ \ \ gradPhi\_Eta[6].y()\ =\ \ (1\ +\ eta1)*(1\ +\ eta3)/8;}
+\DoxyCodeLine{00154\ \ \ \ \ gradPhi\_Eta[6].z()\ =\ \ (1\ +\ eta1)*(1\ +\ eta2)/8;}
+\DoxyCodeLine{00155\ }
+\DoxyCodeLine{00156\ \ \ \ \ \textcolor{comment}{//\ Vertex\ H}}
+\DoxyCodeLine{00157\ \ \ \ \ gradPhi\_Eta[7].x()\ =\ -\/(1\ +\ eta2)*(1\ +\ eta3)/8;}
+\DoxyCodeLine{00158\ \ \ \ \ gradPhi\_Eta[7].y()\ =\ \ (1\ -\/\ eta1)*(1\ +\ eta3)/8;}
+\DoxyCodeLine{00159\ \ \ \ \ gradPhi\_Eta[7].z()\ =\ \ (1\ -\/\ eta1)*(1\ +\ eta2)/8;}
 \DoxyCodeLine{00160\ }
-\DoxyCodeLine{00161\ \ \ \ \ \textcolor{keywordflow}{return}\ Jacobian;}
-\DoxyCodeLine{00162\ \}}
-\DoxyCodeLine{00163\ }
-\DoxyCodeLine{00170\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{classFoam_1_1GaussField}{Foam::tensor}}\ \mbox{\hyperlink{namespaceFoam_1_1geometricJacobian_ad79123ae7c8f9933c0b1db4f434e83fe}{PrismJacobian}}}
-\DoxyCodeLine{00171\ (}
-\DoxyCodeLine{00172\ \ \ \ \ \textcolor{keyword}{const}\ vector\&\ gaussPt,\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Gauss\ point\ in\ reference\ space\ (eta)}}
-\DoxyCodeLine{00173\ \ \ \ \ \textcolor{keyword}{const}\ List<vector>\&\ cellVertices\ \ \ \textcolor{comment}{//\ Physical\ coordinates\ of\ prism\ vertices}}
-\DoxyCodeLine{00174\ )}
-\DoxyCodeLine{00175\ \{}
-\DoxyCodeLine{00176\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00177\ \ \ \ \ \textcolor{comment}{//\ Extract\ reference\ coordinates\ (eta-\/space)}}
-\DoxyCodeLine{00178\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00179\ \ \ \ \ \textcolor{keyword}{const}\ scalar\ eta1\ =\ gaussPt.\mbox{\hyperlink{classFoam_1_1GaussField_a49c91fd2de86e400eb7bf30ed43b04fd}{x}}();}
-\DoxyCodeLine{00180\ \ \ \ \ \textcolor{keyword}{const}\ scalar\ eta2\ =\ gaussPt.\mbox{\hyperlink{classFoam_1_1GaussField_af48b2954902727aadb60e75a5baf4cf3}{y}}();}
-\DoxyCodeLine{00181\ \ \ \ \ \textcolor{keyword}{const}\ scalar\ eta3\ =\ gaussPt.\mbox{\hyperlink{classFoam_1_1GaussField_ac893a0f59b8435e95c03d2a35c6a2cc3}{z}}();}
-\DoxyCodeLine{00182\ }
-\DoxyCodeLine{00183\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00184\ \ \ \ \ \textcolor{comment}{//\ Gradients\ of\ shape\ functions\ w.r.t\ eta\ (dPhi/dEta)}}
-\DoxyCodeLine{00185\ \ \ \ \ \textcolor{comment}{//}}
-\DoxyCodeLine{00186\ \ \ \ \ \textcolor{comment}{//\ Vertex\ correspondence:}}
-\DoxyCodeLine{00187\ \ \ \ \ \textcolor{comment}{//}}
-\DoxyCodeLine{00188\ \ \ \ \ \textcolor{comment}{//\ \ \ cellVertices\ id\ -\/>\ prism\ vertex\ -\/>\ gradPhi\_Eta\ id}}
-\DoxyCodeLine{00189\ \ \ \ \ \textcolor{comment}{//\ \ \ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00190\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ 0\ \ \ \ \ \ \ \ -\/>\ \ \ \ \ \ \ E\ \ \ \ \ \ \ \ -\/>\ \ \ \ \ \ \ 0}}
-\DoxyCodeLine{00191\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ 1\ \ \ \ \ \ \ \ -\/>\ \ \ \ \ \ \ A\ \ \ \ \ \ \ \ -\/>\ \ \ \ \ \ \ 1}}
-\DoxyCodeLine{00192\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ 2\ \ \ \ \ \ \ \ -\/>\ \ \ \ \ \ \ B\ \ \ \ \ \ \ \ -\/>\ \ \ \ \ \ \ 2}}
-\DoxyCodeLine{00193\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ 3\ \ \ \ \ \ \ \ -\/>\ \ \ \ \ \ \ F\ \ \ \ \ \ \ \ -\/>\ \ \ \ \ \ \ 3}}
-\DoxyCodeLine{00194\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ 4\ \ \ \ \ \ \ \ -\/>\ \ \ \ \ \ \ D\ \ \ \ \ \ \ \ -\/>\ \ \ \ \ \ \ 4}}
-\DoxyCodeLine{00195\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ 5\ \ \ \ \ \ \ \ -\/>\ \ \ \ \ \ \ C\ \ \ \ \ \ \ \ -\/>\ \ \ \ \ \ \ 5}}
-\DoxyCodeLine{00196\ \ \ \ \ \textcolor{comment}{//}}
-\DoxyCodeLine{00197\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00198\ \ \ \ \ List<vector>\ gradPhi\_Eta(cellVertices.size(),\ Zero);}
-\DoxyCodeLine{00199\ }
-\DoxyCodeLine{00200\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00201\ \ \ \ \ \textcolor{comment}{//\ Vertex\ A\ (cellVertices[1])}}
-\DoxyCodeLine{00202\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00203\ \ \ \ \ gradPhi\_Eta[1].x()\ =\ -\/(1\ -\/\ eta2)*(1\ -\/\ eta3)/8;}
-\DoxyCodeLine{00204\ \ \ \ \ gradPhi\_Eta[1].y()\ =\ -\/(1\ -\/\ eta1)*(1\ -\/\ eta3)/8;}
-\DoxyCodeLine{00205\ \ \ \ \ gradPhi\_Eta[1].z()\ =\ -\/(1\ -\/\ eta1)*(1\ -\/\ eta2)/8;}
-\DoxyCodeLine{00206\ }
-\DoxyCodeLine{00207\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00208\ \ \ \ \ \textcolor{comment}{//\ Vertex\ B\ (cellVertices[2])}}
+\DoxyCodeLine{00161\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00162\ \ \ \ \ \textcolor{comment}{//\ Compute\ physical\ gradients:\ d(x,y,z)/d(eta1,eta2,eta3)}}
+\DoxyCodeLine{00163\ \ \ \ \ \textcolor{comment}{//\ Each\ vector\ stores\ partial\ derivatives\ w.r.t\ eta}}
+\DoxyCodeLine{00164\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00165\ \ \ \ \ vector\ gradX1\_Eta(Zero);\ \textcolor{comment}{//\ d(x)/d(eta)}}
+\DoxyCodeLine{00166\ \ \ \ \ vector\ gradX2\_Eta(Zero);\ \textcolor{comment}{//\ d(y)/d(eta)}}
+\DoxyCodeLine{00167\ \ \ \ \ vector\ gradX3\_Eta(Zero);\ \textcolor{comment}{//\ d(z)/d(eta)}}
+\DoxyCodeLine{00168\ }
+\DoxyCodeLine{00169\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <\ cellVertices.size();\ ++i)}
+\DoxyCodeLine{00170\ \ \ \ \ \{}
+\DoxyCodeLine{00171\ \ \ \ \ \ \ \ \ gradX1\_Eta.x()\ +=\ gradPhi\_Eta[i].x()*cellVertices[i].x();}
+\DoxyCodeLine{00172\ \ \ \ \ \ \ \ \ gradX1\_Eta.y()\ +=\ gradPhi\_Eta[i].y()*cellVertices[i].x();}
+\DoxyCodeLine{00173\ \ \ \ \ \ \ \ \ gradX1\_Eta.z()\ +=\ gradPhi\_Eta[i].z()*cellVertices[i].x();}
+\DoxyCodeLine{00174\ }
+\DoxyCodeLine{00175\ \ \ \ \ \ \ \ \ gradX2\_Eta.x()\ +=\ gradPhi\_Eta[i].x()*cellVertices[i].y();}
+\DoxyCodeLine{00176\ \ \ \ \ \ \ \ \ gradX2\_Eta.y()\ +=\ gradPhi\_Eta[i].y()*cellVertices[i].y();}
+\DoxyCodeLine{00177\ \ \ \ \ \ \ \ \ gradX2\_Eta.z()\ +=\ gradPhi\_Eta[i].z()*cellVertices[i].y();}
+\DoxyCodeLine{00178\ }
+\DoxyCodeLine{00179\ \ \ \ \ \ \ \ \ gradX3\_Eta.x()\ +=\ gradPhi\_Eta[i].x()*cellVertices[i].z();}
+\DoxyCodeLine{00180\ \ \ \ \ \ \ \ \ gradX3\_Eta.y()\ +=\ gradPhi\_Eta[i].y()*cellVertices[i].z();}
+\DoxyCodeLine{00181\ \ \ \ \ \ \ \ \ gradX3\_Eta.z()\ +=\ gradPhi\_Eta[i].z()*cellVertices[i].z();}
+\DoxyCodeLine{00182\ \ \ \ \ \}}
+\DoxyCodeLine{00183\ }
+\DoxyCodeLine{00184\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00185\ \ \ \ \ \textcolor{comment}{//\ Jacobian\ tensor\ (columns\ =\ gradients\ of\ x,\ y,\ z\ w.r.t\ eta)}}
+\DoxyCodeLine{00186\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00187\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{Foam::tensor}}\ Jacobian}
+\DoxyCodeLine{00188\ \ \ \ \ (}
+\DoxyCodeLine{00189\ \ \ \ \ \ \ \ \ gradX1\_Eta,}
+\DoxyCodeLine{00190\ \ \ \ \ \ \ \ \ gradX2\_Eta,}
+\DoxyCodeLine{00191\ \ \ \ \ \ \ \ \ gradX3\_Eta}
+\DoxyCodeLine{00192\ \ \ \ \ );}
+\DoxyCodeLine{00193\ }
+\DoxyCodeLine{00194\ \ \ \ \ \textcolor{keywordflow}{return}\ Jacobian;}
+\DoxyCodeLine{00195\ \}}
+\DoxyCodeLine{00196\ }
+\DoxyCodeLine{00203\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{classFoam_1_1GaussField}{Foam::tensor}}\ \mbox{\hyperlink{namespaceFoam_1_1geometricJacobian_ad79123ae7c8f9933c0b1db4f434e83fe}{PrismJacobian}}}
+\DoxyCodeLine{00204\ (}
+\DoxyCodeLine{00205\ \ \ \ \ \textcolor{keyword}{const}\ vector\&\ gaussPt,\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Gauss\ point\ in\ reference\ space\ (eta)}}
+\DoxyCodeLine{00206\ \ \ \ \ \textcolor{keyword}{const}\ List<vector>\&\ cellVertices\ \ \ \textcolor{comment}{//\ Physical\ coordinates\ of\ prism\ vertices}}
+\DoxyCodeLine{00207\ )}
+\DoxyCodeLine{00208\ \{}
 \DoxyCodeLine{00209\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00210\ \ \ \ \ gradPhi\_Eta[2].x()\ =\ \ (1\ -\/\ eta2)*(1\ -\/\ eta3)/8;}
-\DoxyCodeLine{00211\ \ \ \ \ gradPhi\_Eta[2].y()\ =\ -\/(1\ +\ eta1)*(1\ -\/\ eta3)/8;}
-\DoxyCodeLine{00212\ \ \ \ \ gradPhi\_Eta[2].z()\ =\ -\/(1\ +\ eta1)*(1\ -\/\ eta2)/8;}
-\DoxyCodeLine{00213\ }
-\DoxyCodeLine{00214\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00215\ \ \ \ \ \textcolor{comment}{//\ Vertex\ C\ (cellVertices[5])}}
+\DoxyCodeLine{00210\ \ \ \ \ \textcolor{comment}{//\ Extract\ reference\ coordinates\ (eta-\/space)}}
+\DoxyCodeLine{00211\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00212\ \ \ \ \ \textcolor{keyword}{const}\ scalar\ eta1\ =\ gaussPt.\mbox{\hyperlink{classFoam_1_1GaussField_a49c91fd2de86e400eb7bf30ed43b04fd}{x}}();}
+\DoxyCodeLine{00213\ \ \ \ \ \textcolor{keyword}{const}\ scalar\ eta2\ =\ gaussPt.\mbox{\hyperlink{classFoam_1_1GaussField_af48b2954902727aadb60e75a5baf4cf3}{y}}();}
+\DoxyCodeLine{00214\ \ \ \ \ \textcolor{keyword}{const}\ scalar\ eta3\ =\ gaussPt.\mbox{\hyperlink{classFoam_1_1GaussField_ac893a0f59b8435e95c03d2a35c6a2cc3}{z}}();}
+\DoxyCodeLine{00215\ }
 \DoxyCodeLine{00216\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00217\ \ \ \ \ gradPhi\_Eta[5].x()\ =\ -\/(1\ +\ eta2)*(1\ -\/\ eta3)/8;}
-\DoxyCodeLine{00218\ \ \ \ \ gradPhi\_Eta[5].y()\ =\ \ (1\ -\/\ eta1)*(1\ -\/\ eta3)/8;}
-\DoxyCodeLine{00219\ \ \ \ \ gradPhi\_Eta[5].z()\ =\ -\/(1\ -\/\ eta1)*(1\ +\ eta2)/8;}
-\DoxyCodeLine{00220\ }
-\DoxyCodeLine{00221\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00222\ \ \ \ \ \textcolor{comment}{//\ Vertex\ D\ (cellVertices[4])}}
-\DoxyCodeLine{00223\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00224\ \ \ \ \ gradPhi\_Eta[4].x()\ =\ \ (1\ +\ eta2)*(1\ -\/\ eta3)/8;}
-\DoxyCodeLine{00225\ \ \ \ \ gradPhi\_Eta[4].y()\ =\ \ (1\ +\ eta1)*(1\ -\/\ eta3)/8;}
-\DoxyCodeLine{00226\ \ \ \ \ gradPhi\_Eta[4].z()\ =\ -\/(1\ +\ eta1)*(1\ +\ eta2)/8;}
-\DoxyCodeLine{00227\ }
-\DoxyCodeLine{00228\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00229\ \ \ \ \ \textcolor{comment}{//\ Vertex\ E\ (cellVertices[0])}}
+\DoxyCodeLine{00217\ \ \ \ \ \textcolor{comment}{//\ Gradients\ of\ shape\ functions\ w.r.t\ eta\ (dPhi/dEta)}}
+\DoxyCodeLine{00218\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00219\ \ \ \ \ \textcolor{comment}{//\ Vertex\ correspondence:}}
+\DoxyCodeLine{00220\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00221\ \ \ \ \ \textcolor{comment}{//\ \ \ cellVertices\ id\ -\/>\ prism\ vertex\ -\/>\ gradPhi\_Eta\ id}}
+\DoxyCodeLine{00222\ \ \ \ \ \textcolor{comment}{//\ \ \ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00223\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ 0\ \ \ \ \ \ \ \ -\/>\ \ \ \ \ \ \ E\ \ \ \ \ \ \ \ -\/>\ \ \ \ \ \ \ 0}}
+\DoxyCodeLine{00224\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ 1\ \ \ \ \ \ \ \ -\/>\ \ \ \ \ \ \ A\ \ \ \ \ \ \ \ -\/>\ \ \ \ \ \ \ 1}}
+\DoxyCodeLine{00225\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ 2\ \ \ \ \ \ \ \ -\/>\ \ \ \ \ \ \ B\ \ \ \ \ \ \ \ -\/>\ \ \ \ \ \ \ 2}}
+\DoxyCodeLine{00226\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ 3\ \ \ \ \ \ \ \ -\/>\ \ \ \ \ \ \ F\ \ \ \ \ \ \ \ -\/>\ \ \ \ \ \ \ 3}}
+\DoxyCodeLine{00227\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ 4\ \ \ \ \ \ \ \ -\/>\ \ \ \ \ \ \ D\ \ \ \ \ \ \ \ -\/>\ \ \ \ \ \ \ 4}}
+\DoxyCodeLine{00228\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ 5\ \ \ \ \ \ \ \ -\/>\ \ \ \ \ \ \ C\ \ \ \ \ \ \ \ -\/>\ \ \ \ \ \ \ 5}}
+\DoxyCodeLine{00229\ \ \ \ \ \textcolor{comment}{//}}
 \DoxyCodeLine{00230\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00231\ \ \ \ \ gradPhi\_Eta[0].x()\ =\ \ 0;}
-\DoxyCodeLine{00232\ \ \ \ \ gradPhi\_Eta[0].y()\ =\ -\/(1\ +\ eta3)/4;}
-\DoxyCodeLine{00233\ \ \ \ \ gradPhi\_Eta[0].z()\ =\ \ (1\ -\/\ eta2)/4;}
-\DoxyCodeLine{00234\ }
+\DoxyCodeLine{00231\ \ \ \ \ List<vector>\ gradPhi\_Eta(cellVertices.size(),\ Zero);}
+\DoxyCodeLine{00232\ }
+\DoxyCodeLine{00233\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00234\ \ \ \ \ \textcolor{comment}{//\ Vertex\ A\ (cellVertices[1])}}
 \DoxyCodeLine{00235\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00236\ \ \ \ \ \textcolor{comment}{//\ Vertex\ F\ (cellVertices[3])}}
-\DoxyCodeLine{00237\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00238\ \ \ \ \ gradPhi\_Eta[3].x()\ =\ \ 0;}
-\DoxyCodeLine{00239\ \ \ \ \ gradPhi\_Eta[3].y()\ =\ \ (1\ +\ eta3)/4;}
-\DoxyCodeLine{00240\ \ \ \ \ gradPhi\_Eta[3].z()\ =\ \ (1\ +\ eta2)/4;}
-\DoxyCodeLine{00241\ }
+\DoxyCodeLine{00236\ \ \ \ \ gradPhi\_Eta[1].x()\ =\ -\/(1\ -\/\ eta2)*(1\ -\/\ eta3)/8;}
+\DoxyCodeLine{00237\ \ \ \ \ gradPhi\_Eta[1].y()\ =\ -\/(1\ -\/\ eta1)*(1\ -\/\ eta3)/8;}
+\DoxyCodeLine{00238\ \ \ \ \ gradPhi\_Eta[1].z()\ =\ -\/(1\ -\/\ eta1)*(1\ -\/\ eta2)/8;}
+\DoxyCodeLine{00239\ }
+\DoxyCodeLine{00240\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00241\ \ \ \ \ \textcolor{comment}{//\ Vertex\ B\ (cellVertices[2])}}
 \DoxyCodeLine{00242\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00243\ \ \ \ \ \textcolor{comment}{//\ Compute\ physical\ gradients:\ d(x,y,z)/d(eta1,eta2,eta3)}}
-\DoxyCodeLine{00244\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00245\ \ \ \ \ vector\ gradX1\_Eta(Zero);\ \textcolor{comment}{//\ d(x)/d(eta)}}
-\DoxyCodeLine{00246\ \ \ \ \ vector\ gradX2\_Eta(Zero);\ \textcolor{comment}{//\ d(y)/d(eta)}}
-\DoxyCodeLine{00247\ \ \ \ \ vector\ gradX3\_Eta(Zero);\ \textcolor{comment}{//\ d(z)/d(eta)}}
-\DoxyCodeLine{00248\ }
-\DoxyCodeLine{00249\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <\ cellVertices.size();\ ++i)}
-\DoxyCodeLine{00250\ \ \ \ \ \{}
-\DoxyCodeLine{00251\ \ \ \ \ \ \ \ \ gradX1\_Eta.x()\ +=\ gradPhi\_Eta[i].x()*cellVertices[i].x();}
-\DoxyCodeLine{00252\ \ \ \ \ \ \ \ \ gradX1\_Eta.y()\ +=\ gradPhi\_Eta[i].y()*cellVertices[i].x();}
-\DoxyCodeLine{00253\ \ \ \ \ \ \ \ \ gradX1\_Eta.z()\ +=\ gradPhi\_Eta[i].z()*cellVertices[i].x();}
-\DoxyCodeLine{00254\ }
-\DoxyCodeLine{00255\ \ \ \ \ \ \ \ \ gradX2\_Eta.x()\ +=\ gradPhi\_Eta[i].x()*cellVertices[i].y();}
-\DoxyCodeLine{00256\ \ \ \ \ \ \ \ \ gradX2\_Eta.y()\ +=\ gradPhi\_Eta[i].y()*cellVertices[i].y();}
-\DoxyCodeLine{00257\ \ \ \ \ \ \ \ \ gradX2\_Eta.z()\ +=\ gradPhi\_Eta[i].z()*cellVertices[i].y();}
-\DoxyCodeLine{00258\ }
-\DoxyCodeLine{00259\ \ \ \ \ \ \ \ \ gradX3\_Eta.x()\ +=\ gradPhi\_Eta[i].x()*cellVertices[i].z();}
-\DoxyCodeLine{00260\ \ \ \ \ \ \ \ \ gradX3\_Eta.y()\ +=\ gradPhi\_Eta[i].y()*cellVertices[i].z();}
-\DoxyCodeLine{00261\ \ \ \ \ \ \ \ \ gradX3\_Eta.z()\ +=\ gradPhi\_Eta[i].z()*cellVertices[i].z();}
-\DoxyCodeLine{00262\ \ \ \ \ \}}
-\DoxyCodeLine{00263\ }
-\DoxyCodeLine{00264\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00265\ \ \ \ \ \textcolor{comment}{//\ Jacobian\ tensor\ (columns\ =\ gradients\ of\ x,\ y,\ z\ w.r.t\ eta)}}
-\DoxyCodeLine{00266\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00267\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{Foam::tensor}}\ Jacobian}
-\DoxyCodeLine{00268\ \ \ \ \ (}
-\DoxyCodeLine{00269\ \ \ \ \ \ \ \ \ gradX1\_Eta,}
-\DoxyCodeLine{00270\ \ \ \ \ \ \ \ \ gradX2\_Eta,}
-\DoxyCodeLine{00271\ \ \ \ \ \ \ \ \ gradX3\_Eta}
-\DoxyCodeLine{00272\ \ \ \ \ );}
-\DoxyCodeLine{00273\ }
-\DoxyCodeLine{00274\ \ \ \ \ \textcolor{keywordflow}{return}\ Jacobian;}
-\DoxyCodeLine{00275\ \}}
-\DoxyCodeLine{00276\ }
-\DoxyCodeLine{00283\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{classFoam_1_1GaussField}{Foam::tensor}}\ \mbox{\hyperlink{namespaceFoam_1_1geometricJacobian_a2ce71b3859857a6ba42cf882e7a2dd58}{PyramidJacobian}}}
-\DoxyCodeLine{00284\ (}
-\DoxyCodeLine{00285\ \ \ \ \ \textcolor{keyword}{const}\ vector\&\ gaussPt,\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Gauss\ point\ in\ reference\ space\ (eta)}}
-\DoxyCodeLine{00286\ \ \ \ \ \textcolor{keyword}{const}\ List<vector>\&\ cellVertices\ \ \ \textcolor{comment}{//\ Physical\ coordinates\ of\ pyramid\ vertices}}
-\DoxyCodeLine{00287\ )}
-\DoxyCodeLine{00288\ \{}
-\DoxyCodeLine{00289\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00290\ \ \ \ \ \textcolor{comment}{//\ Extract\ reference\ coordinates\ (eta-\/space)}}
-\DoxyCodeLine{00291\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00292\ \ \ \ \ \textcolor{keyword}{const}\ scalar\ eta1\ =\ gaussPt.\mbox{\hyperlink{classFoam_1_1GaussField_a49c91fd2de86e400eb7bf30ed43b04fd}{x}}();}
-\DoxyCodeLine{00293\ \ \ \ \ \textcolor{keyword}{const}\ scalar\ eta2\ =\ gaussPt.\mbox{\hyperlink{classFoam_1_1GaussField_af48b2954902727aadb60e75a5baf4cf3}{y}}();}
-\DoxyCodeLine{00294\ \ \ \ \ \textcolor{keyword}{const}\ scalar\ eta3\ =\ gaussPt.\mbox{\hyperlink{classFoam_1_1GaussField_ac893a0f59b8435e95c03d2a35c6a2cc3}{z}}();}
-\DoxyCodeLine{00295\ }
-\DoxyCodeLine{00296\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00297\ \ \ \ \ \textcolor{comment}{//\ Gradients\ of\ shape\ functions\ w.r.t\ eta\ (dPhi/dEta)}}
-\DoxyCodeLine{00298\ \ \ \ \ \textcolor{comment}{//}}
-\DoxyCodeLine{00299\ \ \ \ \ \textcolor{comment}{//\ Vertex\ correspondence:}}
-\DoxyCodeLine{00300\ \ \ \ \ \textcolor{comment}{//}}
-\DoxyCodeLine{00301\ \ \ \ \ \textcolor{comment}{//\ \ \ cellVertices\ id\ -\/>\ pyramid\ vertex\ -\/>\ gradPhi\_Eta\ id}}
-\DoxyCodeLine{00302\ \ \ \ \ \textcolor{comment}{//\ \ \ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00303\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ 0\ \ \ \ \ \ \ \ -\/>\ \ \ \ \ \ \ \ A\ \ \ \ \ \ \ \ \ -\/>\ \ \ \ \ \ \ \ 0}}
-\DoxyCodeLine{00304\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ 1\ \ \ \ \ \ \ \ -\/>\ \ \ \ \ \ \ \ B\ \ \ \ \ \ \ \ \ -\/>\ \ \ \ \ \ \ \ 1}}
-\DoxyCodeLine{00305\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ 2\ \ \ \ \ \ \ \ -\/>\ \ \ \ \ \ \ \ C\ \ \ \ \ \ \ \ \ -\/>\ \ \ \ \ \ \ \ 2}}
-\DoxyCodeLine{00306\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ 3\ \ \ \ \ \ \ \ -\/>\ \ \ \ \ \ \ \ D\ \ \ \ \ \ \ \ \ -\/>\ \ \ \ \ \ \ \ 3}}
-\DoxyCodeLine{00307\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ 4\ \ \ \ \ \ \ \ -\/>\ \ \ \ \ \ \ \ E\ \ \ \ \ \ \ \ \ -\/>\ \ \ \ \ \ \ \ 4}}
-\DoxyCodeLine{00308\ \ \ \ \ \textcolor{comment}{//}}
-\DoxyCodeLine{00309\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00310\ \ \ \ \ List<vector>\ gradPhi\_Eta(cellVertices.size(),\ Zero);}
-\DoxyCodeLine{00311\ }
-\DoxyCodeLine{00312\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00313\ \ \ \ \ \textcolor{comment}{//\ Vertex\ A\ (cellVertices[0])}}
-\DoxyCodeLine{00314\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00315\ \ \ \ \ gradPhi\_Eta[0].x()\ =\ -\/(1\ -\/\ eta2)*(1\ -\/\ eta3)/8;}
-\DoxyCodeLine{00316\ \ \ \ \ gradPhi\_Eta[0].y()\ =\ -\/(1\ -\/\ eta1)*(1\ -\/\ eta3)/8;}
-\DoxyCodeLine{00317\ \ \ \ \ gradPhi\_Eta[0].z()\ =\ -\/(1\ -\/\ eta1)*(1\ -\/\ eta2)/8;}
-\DoxyCodeLine{00318\ }
-\DoxyCodeLine{00319\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00320\ \ \ \ \ \textcolor{comment}{//\ Vertex\ B\ (cellVertices[1])}}
-\DoxyCodeLine{00321\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00322\ \ \ \ \ gradPhi\_Eta[1].x()\ =\ \ (1\ -\/\ eta2)*(1\ -\/\ eta3)/8;}
-\DoxyCodeLine{00323\ \ \ \ \ gradPhi\_Eta[1].y()\ =\ -\/(1\ +\ eta1)*(1\ -\/\ eta3)/8;}
-\DoxyCodeLine{00324\ \ \ \ \ gradPhi\_Eta[1].z()\ =\ -\/(1\ +\ eta1)*(1\ -\/\ eta2)/8;}
-\DoxyCodeLine{00325\ }
-\DoxyCodeLine{00326\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00327\ \ \ \ \ \textcolor{comment}{//\ Vertex\ C\ (cellVertices[2])}}
-\DoxyCodeLine{00328\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00329\ \ \ \ \ gradPhi\_Eta[2].x()\ =\ -\/(1\ +\ eta2)*(1\ -\/\ eta3)/8;}
-\DoxyCodeLine{00330\ \ \ \ \ gradPhi\_Eta[2].y()\ =\ \ (1\ -\/\ eta1)*(1\ -\/\ eta3)/8;}
-\DoxyCodeLine{00331\ \ \ \ \ gradPhi\_Eta[2].z()\ =\ -\/(1\ -\/\ eta1)*(1\ +\ eta2)/8;}
-\DoxyCodeLine{00332\ }
-\DoxyCodeLine{00333\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00334\ \ \ \ \ \textcolor{comment}{//\ Vertex\ D\ (cellVertices[3])}}
-\DoxyCodeLine{00335\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00336\ \ \ \ \ gradPhi\_Eta[3].x()\ =\ \ (1\ +\ eta2)*(1\ -\/\ eta3)/8;}
-\DoxyCodeLine{00337\ \ \ \ \ gradPhi\_Eta[3].y()\ =\ \ (1\ +\ eta1)*(1\ -\/\ eta3)/8;}
-\DoxyCodeLine{00338\ \ \ \ \ gradPhi\_Eta[3].z()\ =\ -\/(1\ +\ eta1)*(1\ +\ eta2)/8;}
-\DoxyCodeLine{00339\ }
-\DoxyCodeLine{00340\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00341\ \ \ \ \ \textcolor{comment}{//\ Vertex\ E\ (cellVertices[4])}}
+\DoxyCodeLine{00243\ \ \ \ \ gradPhi\_Eta[2].x()\ =\ \ (1\ -\/\ eta2)*(1\ -\/\ eta3)/8;}
+\DoxyCodeLine{00244\ \ \ \ \ gradPhi\_Eta[2].y()\ =\ -\/(1\ +\ eta1)*(1\ -\/\ eta3)/8;}
+\DoxyCodeLine{00245\ \ \ \ \ gradPhi\_Eta[2].z()\ =\ -\/(1\ +\ eta1)*(1\ -\/\ eta2)/8;}
+\DoxyCodeLine{00246\ }
+\DoxyCodeLine{00247\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00248\ \ \ \ \ \textcolor{comment}{//\ Vertex\ C\ (cellVertices[5])}}
+\DoxyCodeLine{00249\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00250\ \ \ \ \ gradPhi\_Eta[5].x()\ =\ \ (1\ +\ eta2)*(1\ -\/\ eta3)/8;}
+\DoxyCodeLine{00251\ \ \ \ \ gradPhi\_Eta[5].y()\ =\ \ (1\ +\ eta1)*(1\ -\/\ eta3)/8;}
+\DoxyCodeLine{00252\ \ \ \ \ gradPhi\_Eta[5].z()\ =\ -\/(1\ +\ eta1)*(1\ +\ eta2)/8;}
+\DoxyCodeLine{00253\ }
+\DoxyCodeLine{00254\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00255\ \ \ \ \ \textcolor{comment}{//\ Vertex\ D\ (cellVertices[4])}}
+\DoxyCodeLine{00256\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00257\ \ \ \ \ gradPhi\_Eta[4].x()\ =\ -\/(1\ +\ eta2)*(1\ -\/\ eta3)/8;}
+\DoxyCodeLine{00258\ \ \ \ \ gradPhi\_Eta[4].y()\ =\ \ (1\ -\/\ eta1)*(1\ -\/\ eta3)/8;}
+\DoxyCodeLine{00259\ \ \ \ \ gradPhi\_Eta[4].z()\ =\ -\/(1\ -\/\ eta1)*(1\ +\ eta2)/8;}
+\DoxyCodeLine{00260\ }
+\DoxyCodeLine{00261\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00262\ \ \ \ \ \textcolor{comment}{//\ Vertex\ E\ (cellVertices[0])}}
+\DoxyCodeLine{00263\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00264\ \ \ \ \ gradPhi\_Eta[0].x()\ =\ \ 0;}
+\DoxyCodeLine{00265\ \ \ \ \ gradPhi\_Eta[0].y()\ =\ -\/(1\ +\ eta3)/4;}
+\DoxyCodeLine{00266\ \ \ \ \ gradPhi\_Eta[0].z()\ =\ \ (1\ -\/\ eta2)/4;}
+\DoxyCodeLine{00267\ }
+\DoxyCodeLine{00268\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00269\ \ \ \ \ \textcolor{comment}{//\ Vertex\ F\ (cellVertices[3])}}
+\DoxyCodeLine{00270\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00271\ \ \ \ \ gradPhi\_Eta[3].x()\ =\ \ 0;}
+\DoxyCodeLine{00272\ \ \ \ \ gradPhi\_Eta[3].y()\ =\ \ (1\ +\ eta3)/4;}
+\DoxyCodeLine{00273\ \ \ \ \ gradPhi\_Eta[3].z()\ =\ \ (1\ +\ eta2)/4;}
+\DoxyCodeLine{00274\ }
+\DoxyCodeLine{00275\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00276\ \ \ \ \ \textcolor{comment}{//\ Compute\ physical\ gradients:\ d(x,y,z)/d(eta1,eta2,eta3)}}
+\DoxyCodeLine{00277\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00278\ \ \ \ \ vector\ gradX1\_Eta(Zero);\ \textcolor{comment}{//\ d(x)/d(eta)}}
+\DoxyCodeLine{00279\ \ \ \ \ vector\ gradX2\_Eta(Zero);\ \textcolor{comment}{//\ d(y)/d(eta)}}
+\DoxyCodeLine{00280\ \ \ \ \ vector\ gradX3\_Eta(Zero);\ \textcolor{comment}{//\ d(z)/d(eta)}}
+\DoxyCodeLine{00281\ }
+\DoxyCodeLine{00282\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <\ cellVertices.size();\ ++i)}
+\DoxyCodeLine{00283\ \ \ \ \ \{}
+\DoxyCodeLine{00284\ \ \ \ \ \ \ \ \ gradX1\_Eta.x()\ +=\ gradPhi\_Eta[i].x()*cellVertices[i].x();}
+\DoxyCodeLine{00285\ \ \ \ \ \ \ \ \ gradX1\_Eta.y()\ +=\ gradPhi\_Eta[i].y()*cellVertices[i].x();}
+\DoxyCodeLine{00286\ \ \ \ \ \ \ \ \ gradX1\_Eta.z()\ +=\ gradPhi\_Eta[i].z()*cellVertices[i].x();}
+\DoxyCodeLine{00287\ }
+\DoxyCodeLine{00288\ \ \ \ \ \ \ \ \ gradX2\_Eta.x()\ +=\ gradPhi\_Eta[i].x()*cellVertices[i].y();}
+\DoxyCodeLine{00289\ \ \ \ \ \ \ \ \ gradX2\_Eta.y()\ +=\ gradPhi\_Eta[i].y()*cellVertices[i].y();}
+\DoxyCodeLine{00290\ \ \ \ \ \ \ \ \ gradX2\_Eta.z()\ +=\ gradPhi\_Eta[i].z()*cellVertices[i].y();}
+\DoxyCodeLine{00291\ }
+\DoxyCodeLine{00292\ \ \ \ \ \ \ \ \ gradX3\_Eta.x()\ +=\ gradPhi\_Eta[i].x()*cellVertices[i].z();}
+\DoxyCodeLine{00293\ \ \ \ \ \ \ \ \ gradX3\_Eta.y()\ +=\ gradPhi\_Eta[i].y()*cellVertices[i].z();}
+\DoxyCodeLine{00294\ \ \ \ \ \ \ \ \ gradX3\_Eta.z()\ +=\ gradPhi\_Eta[i].z()*cellVertices[i].z();}
+\DoxyCodeLine{00295\ \ \ \ \ \}}
+\DoxyCodeLine{00296\ }
+\DoxyCodeLine{00297\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00298\ \ \ \ \ \textcolor{comment}{//\ Jacobian\ tensor\ (columns\ =\ gradients\ of\ x,\ y,\ z\ w.r.t\ eta)}}
+\DoxyCodeLine{00299\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00300\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{Foam::tensor}}\ Jacobian}
+\DoxyCodeLine{00301\ \ \ \ \ (}
+\DoxyCodeLine{00302\ \ \ \ \ \ \ \ \ gradX1\_Eta,}
+\DoxyCodeLine{00303\ \ \ \ \ \ \ \ \ gradX2\_Eta,}
+\DoxyCodeLine{00304\ \ \ \ \ \ \ \ \ gradX3\_Eta}
+\DoxyCodeLine{00305\ \ \ \ \ );}
+\DoxyCodeLine{00306\ }
+\DoxyCodeLine{00307\ \ \ \ \ \textcolor{keywordflow}{return}\ Jacobian;}
+\DoxyCodeLine{00308\ \}}
+\DoxyCodeLine{00309\ }
+\DoxyCodeLine{00316\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{classFoam_1_1GaussField}{Foam::tensor}}\ \mbox{\hyperlink{namespaceFoam_1_1geometricJacobian_a2ce71b3859857a6ba42cf882e7a2dd58}{PyramidJacobian}}}
+\DoxyCodeLine{00317\ (}
+\DoxyCodeLine{00318\ \ \ \ \ \textcolor{keyword}{const}\ vector\&\ gaussPt,\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Gauss\ point\ in\ reference\ space\ (eta)}}
+\DoxyCodeLine{00319\ \ \ \ \ \textcolor{keyword}{const}\ List<vector>\&\ cellVertices\ \ \ \textcolor{comment}{//\ Physical\ coordinates\ of\ pyramid\ vertices}}
+\DoxyCodeLine{00320\ )}
+\DoxyCodeLine{00321\ \{}
+\DoxyCodeLine{00322\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00323\ \ \ \ \ \textcolor{comment}{//\ Extract\ reference\ coordinates\ (eta-\/space)}}
+\DoxyCodeLine{00324\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00325\ \ \ \ \ \textcolor{keyword}{const}\ scalar\ eta1\ =\ gaussPt.\mbox{\hyperlink{classFoam_1_1GaussField_a49c91fd2de86e400eb7bf30ed43b04fd}{x}}();}
+\DoxyCodeLine{00326\ \ \ \ \ \textcolor{keyword}{const}\ scalar\ eta2\ =\ gaussPt.\mbox{\hyperlink{classFoam_1_1GaussField_af48b2954902727aadb60e75a5baf4cf3}{y}}();}
+\DoxyCodeLine{00327\ \ \ \ \ \textcolor{keyword}{const}\ scalar\ eta3\ =\ gaussPt.\mbox{\hyperlink{classFoam_1_1GaussField_ac893a0f59b8435e95c03d2a35c6a2cc3}{z}}();}
+\DoxyCodeLine{00328\ }
+\DoxyCodeLine{00329\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00330\ \ \ \ \ \textcolor{comment}{//\ Gradients\ of\ shape\ functions\ w.r.t\ eta\ (dPhi/dEta)}}
+\DoxyCodeLine{00331\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00332\ \ \ \ \ \textcolor{comment}{//\ Vertex\ correspondence:}}
+\DoxyCodeLine{00333\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00334\ \ \ \ \ \textcolor{comment}{//\ \ \ cellVertices\ id\ -\/>\ pyramid\ vertex\ -\/>\ gradPhi\_Eta\ id}}
+\DoxyCodeLine{00335\ \ \ \ \ \textcolor{comment}{//\ \ \ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00336\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ 0\ \ \ \ \ \ \ \ -\/>\ \ \ \ \ \ \ \ A\ \ \ \ \ \ \ \ \ -\/>\ \ \ \ \ \ \ \ 0}}
+\DoxyCodeLine{00337\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ 1\ \ \ \ \ \ \ \ -\/>\ \ \ \ \ \ \ \ B\ \ \ \ \ \ \ \ \ -\/>\ \ \ \ \ \ \ \ 1}}
+\DoxyCodeLine{00338\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ 2\ \ \ \ \ \ \ \ -\/>\ \ \ \ \ \ \ \ C\ \ \ \ \ \ \ \ \ -\/>\ \ \ \ \ \ \ \ 2}}
+\DoxyCodeLine{00339\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ 3\ \ \ \ \ \ \ \ -\/>\ \ \ \ \ \ \ \ D\ \ \ \ \ \ \ \ \ -\/>\ \ \ \ \ \ \ \ 3}}
+\DoxyCodeLine{00340\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ 4\ \ \ \ \ \ \ \ -\/>\ \ \ \ \ \ \ \ E\ \ \ \ \ \ \ \ \ -\/>\ \ \ \ \ \ \ \ 4}}
+\DoxyCodeLine{00341\ \ \ \ \ \textcolor{comment}{//}}
 \DoxyCodeLine{00342\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00343\ \ \ \ \ gradPhi\_Eta[4].x()\ =\ 0;}
-\DoxyCodeLine{00344\ \ \ \ \ gradPhi\_Eta[4].y()\ =\ 0;}
-\DoxyCodeLine{00345\ \ \ \ \ gradPhi\_Eta[4].z()\ =\ 0.5;}
-\DoxyCodeLine{00346\ }
+\DoxyCodeLine{00343\ \ \ \ \ List<vector>\ gradPhi\_Eta(cellVertices.size(),\ Zero);}
+\DoxyCodeLine{00344\ }
+\DoxyCodeLine{00345\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00346\ \ \ \ \ \textcolor{comment}{//\ Vertex\ A\ (cellVertices[0])}}
 \DoxyCodeLine{00347\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00348\ \ \ \ \ \textcolor{comment}{//\ Compute\ physical\ gradients:\ d(x,y,z)/d(eta1,eta2,eta3)}}
-\DoxyCodeLine{00349\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00350\ \ \ \ \ vector\ gradX1\_Eta(Zero);\ \textcolor{comment}{//\ d(x)/d(eta)}}
-\DoxyCodeLine{00351\ \ \ \ \ vector\ gradX2\_Eta(Zero);\ \textcolor{comment}{//\ d(y)/d(eta)}}
-\DoxyCodeLine{00352\ \ \ \ \ vector\ gradX3\_Eta(Zero);\ \textcolor{comment}{//\ d(z)/d(eta)}}
-\DoxyCodeLine{00353\ }
-\DoxyCodeLine{00354\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <\ cellVertices.size();\ ++i)}
-\DoxyCodeLine{00355\ \ \ \ \ \{}
-\DoxyCodeLine{00356\ \ \ \ \ \ \ \ \ gradX1\_Eta.x()\ +=\ gradPhi\_Eta[i].x()*cellVertices[i].x();}
-\DoxyCodeLine{00357\ \ \ \ \ \ \ \ \ gradX1\_Eta.y()\ +=\ gradPhi\_Eta[i].y()*cellVertices[i].x();}
-\DoxyCodeLine{00358\ \ \ \ \ \ \ \ \ gradX1\_Eta.z()\ +=\ gradPhi\_Eta[i].z()*cellVertices[i].x();}
-\DoxyCodeLine{00359\ }
-\DoxyCodeLine{00360\ \ \ \ \ \ \ \ \ gradX2\_Eta.x()\ +=\ gradPhi\_Eta[i].x()*cellVertices[i].y();}
-\DoxyCodeLine{00361\ \ \ \ \ \ \ \ \ gradX2\_Eta.y()\ +=\ gradPhi\_Eta[i].y()*cellVertices[i].y();}
-\DoxyCodeLine{00362\ \ \ \ \ \ \ \ \ gradX2\_Eta.z()\ +=\ gradPhi\_Eta[i].z()*cellVertices[i].y();}
-\DoxyCodeLine{00363\ }
-\DoxyCodeLine{00364\ \ \ \ \ \ \ \ \ gradX3\_Eta.x()\ +=\ gradPhi\_Eta[i].x()*cellVertices[i].z();}
-\DoxyCodeLine{00365\ \ \ \ \ \ \ \ \ gradX3\_Eta.y()\ +=\ gradPhi\_Eta[i].y()*cellVertices[i].z();}
-\DoxyCodeLine{00366\ \ \ \ \ \ \ \ \ gradX3\_Eta.z()\ +=\ gradPhi\_Eta[i].z()*cellVertices[i].z();}
-\DoxyCodeLine{00367\ \ \ \ \ \}}
-\DoxyCodeLine{00368\ }
-\DoxyCodeLine{00369\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00370\ \ \ \ \ \textcolor{comment}{//\ Jacobian\ tensor\ (columns\ =\ gradients\ of\ x,\ y,\ z\ w.r.t\ eta)}}
-\DoxyCodeLine{00371\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00372\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{Foam::tensor}}\ Jacobian}
-\DoxyCodeLine{00373\ \ \ \ \ (}
-\DoxyCodeLine{00374\ \ \ \ \ \ \ \ \ gradX1\_Eta,}
-\DoxyCodeLine{00375\ \ \ \ \ \ \ \ \ gradX2\_Eta,}
-\DoxyCodeLine{00376\ \ \ \ \ \ \ \ \ gradX3\_Eta}
-\DoxyCodeLine{00377\ \ \ \ \ );}
-\DoxyCodeLine{00378\ }
-\DoxyCodeLine{00379\ \ \ \ \ \textcolor{keywordflow}{return}\ Jacobian;}
-\DoxyCodeLine{00380\ \}}
-\DoxyCodeLine{00381\ }
-\DoxyCodeLine{00388\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{classFoam_1_1GaussField}{Foam::tensor}}\ \mbox{\hyperlink{namespaceFoam_1_1geometricJacobian_a698f451fa554ccb1995a39956ffe48e8}{TetraJacobian}}}
-\DoxyCodeLine{00389\ (}
-\DoxyCodeLine{00390\ \ \ \ \ \textcolor{keyword}{const}\ vector\&\ gaussPt,\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Gauss\ point\ in\ reference\ space\ (eta)}}
-\DoxyCodeLine{00391\ \ \ \ \ \textcolor{keyword}{const}\ List<vector>\&\ cellVertices\ \ \ \textcolor{comment}{//\ Physical\ coordinates\ of\ tetrahedron\ vertices}}
-\DoxyCodeLine{00392\ )}
-\DoxyCodeLine{00393\ \{}
-\DoxyCodeLine{00394\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00395\ \ \ \ \ \textcolor{comment}{//\ Extract\ reference\ coordinates\ (eta-\/space)}}
-\DoxyCodeLine{00396\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00397\ \ \ \ \ \textcolor{keyword}{const}\ scalar\ eta1\ =\ gaussPt.\mbox{\hyperlink{classFoam_1_1GaussField_a49c91fd2de86e400eb7bf30ed43b04fd}{x}}();}
-\DoxyCodeLine{00398\ \ \ \ \ \textcolor{keyword}{const}\ scalar\ eta2\ =\ gaussPt.\mbox{\hyperlink{classFoam_1_1GaussField_af48b2954902727aadb60e75a5baf4cf3}{y}}();}
-\DoxyCodeLine{00399\ \ \ \ \ \textcolor{keyword}{const}\ scalar\ eta3\ =\ gaussPt.\mbox{\hyperlink{classFoam_1_1GaussField_ac893a0f59b8435e95c03d2a35c6a2cc3}{z}}();}
-\DoxyCodeLine{00400\ }
-\DoxyCodeLine{00401\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00402\ \ \ \ \ \textcolor{comment}{//\ Gradients\ of\ shape\ functions\ w.r.t\ eta\ (dPhi/dEta)}}
-\DoxyCodeLine{00403\ \ \ \ \ \textcolor{comment}{//}}
-\DoxyCodeLine{00404\ \ \ \ \ \textcolor{comment}{//\ Vertex\ correspondence:}}
-\DoxyCodeLine{00405\ \ \ \ \ \textcolor{comment}{//}}
-\DoxyCodeLine{00406\ \ \ \ \ \textcolor{comment}{//\ \ \ cellVertices\ id\ -\/>\ tetrahedron\ vertex\ -\/>\ gradPhi\_Eta\ id}}
-\DoxyCodeLine{00407\ \ \ \ \ \textcolor{comment}{//\ \ \ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00408\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ 0\ \ \ \ \ \ \ \ -\/>\ \ \ \ \ \ \ \ A\ \ \ \ \ \ \ \ \ -\/>\ \ \ \ \ \ \ \ 0}}
-\DoxyCodeLine{00409\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ 1\ \ \ \ \ \ \ \ -\/>\ \ \ \ \ \ \ \ B\ \ \ \ \ \ \ \ \ -\/>\ \ \ \ \ \ \ \ 1}}
-\DoxyCodeLine{00410\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ 2\ \ \ \ \ \ \ \ -\/>\ \ \ \ \ \ \ \ C\ \ \ \ \ \ \ \ \ -\/>\ \ \ \ \ \ \ \ 2}}
-\DoxyCodeLine{00411\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ 3\ \ \ \ \ \ \ \ -\/>\ \ \ \ \ \ \ \ D\ \ \ \ \ \ \ \ \ -\/>\ \ \ \ \ \ \ \ 3}}
-\DoxyCodeLine{00412\ \ \ \ \ \textcolor{comment}{//}}
-\DoxyCodeLine{00413\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00414\ \ \ \ \ List<vector>\ gradPhi\_Eta(cellVertices.size(),\ Zero);}
-\DoxyCodeLine{00415\ }
-\DoxyCodeLine{00416\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00417\ \ \ \ \ \textcolor{comment}{//\ Vertex\ A\ (cellVertices[0])}}
-\DoxyCodeLine{00418\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00419\ \ \ \ \ gradPhi\_Eta[0].x()\ =\ -\/(1\ -\/\ eta2)*(1\ -\/\ eta3)/8;}
-\DoxyCodeLine{00420\ \ \ \ \ gradPhi\_Eta[0].y()\ =\ -\/(1\ -\/\ eta1)*(1\ -\/\ eta3)/8;}
-\DoxyCodeLine{00421\ \ \ \ \ gradPhi\_Eta[0].z()\ =\ -\/(1\ -\/\ eta1)*(1\ -\/\ eta2)/8;}
-\DoxyCodeLine{00422\ }
-\DoxyCodeLine{00423\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00424\ \ \ \ \ \textcolor{comment}{//\ Vertex\ B\ (cellVertices[1])}}
-\DoxyCodeLine{00425\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00426\ \ \ \ \ gradPhi\_Eta[1].x()\ =\ \ (1\ -\/\ eta2)*(1\ -\/\ eta3)/8;}
-\DoxyCodeLine{00427\ \ \ \ \ gradPhi\_Eta[1].y()\ =\ -\/(1\ +\ eta1)*(1\ -\/\ eta3)/8;}
-\DoxyCodeLine{00428\ \ \ \ \ gradPhi\_Eta[1].z()\ =\ -\/(1\ +\ eta1)*(1\ -\/\ eta2)/8;}
-\DoxyCodeLine{00429\ }
-\DoxyCodeLine{00430\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00431\ \ \ \ \ \textcolor{comment}{//\ Vertex\ C\ (cellVertices[2])}}
-\DoxyCodeLine{00432\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00433\ \ \ \ \ gradPhi\_Eta[2].x()\ =\ -\/(1\ +\ eta2)*(1\ -\/\ eta3)/8;}
-\DoxyCodeLine{00434\ \ \ \ \ gradPhi\_Eta[2].y()\ =\ \ (1\ -\/\ eta1)*(1\ -\/\ eta3)/8;}
-\DoxyCodeLine{00435\ \ \ \ \ gradPhi\_Eta[2].z()\ =\ -\/(1\ -\/\ eta1)*(1\ +\ eta2)/8;}
-\DoxyCodeLine{00436\ }
-\DoxyCodeLine{00437\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00438\ \ \ \ \ \textcolor{comment}{//\ Vertex\ D\ (cellVertices[3])}}
-\DoxyCodeLine{00439\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00440\ \ \ \ \ gradPhi\_Eta[3].x()\ =\ 0;}
-\DoxyCodeLine{00441\ \ \ \ \ gradPhi\_Eta[3].y()\ =\ 0;}
-\DoxyCodeLine{00442\ \ \ \ \ gradPhi\_Eta[3].z()\ =\ 0.5;}
-\DoxyCodeLine{00443\ }
-\DoxyCodeLine{00444\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00445\ \ \ \ \ \textcolor{comment}{//\ Compute\ physical\ gradients:\ d(x,y,z)/d(eta1,eta2,eta3)}}
+\DoxyCodeLine{00348\ \ \ \ \ gradPhi\_Eta[0].x()\ =\ -\/(1\ -\/\ eta2)*(1\ -\/\ eta3)/8;}
+\DoxyCodeLine{00349\ \ \ \ \ gradPhi\_Eta[0].y()\ =\ -\/(1\ -\/\ eta1)*(1\ -\/\ eta3)/8;}
+\DoxyCodeLine{00350\ \ \ \ \ gradPhi\_Eta[0].z()\ =\ -\/(1\ -\/\ eta1)*(1\ -\/\ eta2)/8;}
+\DoxyCodeLine{00351\ }
+\DoxyCodeLine{00352\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00353\ \ \ \ \ \textcolor{comment}{//\ Vertex\ B\ (cellVertices[1])}}
+\DoxyCodeLine{00354\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00355\ \ \ \ \ gradPhi\_Eta[1].x()\ =\ \ (1\ -\/\ eta2)*(1\ -\/\ eta3)/8;}
+\DoxyCodeLine{00356\ \ \ \ \ gradPhi\_Eta[1].y()\ =\ -\/(1\ +\ eta1)*(1\ -\/\ eta3)/8;}
+\DoxyCodeLine{00357\ \ \ \ \ gradPhi\_Eta[1].z()\ =\ -\/(1\ +\ eta1)*(1\ -\/\ eta2)/8;}
+\DoxyCodeLine{00358\ }
+\DoxyCodeLine{00359\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00360\ \ \ \ \ \textcolor{comment}{//\ Vertex\ C\ (cellVertices[2])}}
+\DoxyCodeLine{00361\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00362\ \ \ \ \ gradPhi\_Eta[2].x()\ =\ \ (1\ +\ eta2)*(1\ -\/\ eta3)/8;}
+\DoxyCodeLine{00363\ \ \ \ \ gradPhi\_Eta[2].y()\ =\ \ (1\ +\ eta1)*(1\ -\/\ eta3)/8;}
+\DoxyCodeLine{00364\ \ \ \ \ gradPhi\_Eta[2].z()\ =\ -\/(1\ +\ eta1)*(1\ +\ eta2)/8;}
+\DoxyCodeLine{00365\ }
+\DoxyCodeLine{00366\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00367\ \ \ \ \ \textcolor{comment}{//\ Vertex\ D\ (cellVertices[3])}}
+\DoxyCodeLine{00368\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00369\ \ \ \ \ gradPhi\_Eta[3].x()\ =\ -\/(1\ +\ eta2)*(1\ -\/\ eta3)/8;}
+\DoxyCodeLine{00370\ \ \ \ \ gradPhi\_Eta[3].y()\ =\ \ (1\ -\/\ eta1)*(1\ -\/\ eta3)/8;}
+\DoxyCodeLine{00371\ \ \ \ \ gradPhi\_Eta[3].z()\ =\ -\/(1\ -\/\ eta1)*(1\ +\ eta2)/8;}
+\DoxyCodeLine{00372\ }
+\DoxyCodeLine{00373\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00374\ \ \ \ \ \textcolor{comment}{//\ Vertex\ E\ (cellVertices[4])}}
+\DoxyCodeLine{00375\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00376\ \ \ \ \ gradPhi\_Eta[4].x()\ =\ 0;}
+\DoxyCodeLine{00377\ \ \ \ \ gradPhi\_Eta[4].y()\ =\ 0;}
+\DoxyCodeLine{00378\ \ \ \ \ gradPhi\_Eta[4].z()\ =\ 0.5;}
+\DoxyCodeLine{00379\ }
+\DoxyCodeLine{00380\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00381\ \ \ \ \ \textcolor{comment}{//\ Compute\ physical\ gradients:\ d(x,y,z)/d(eta1,eta2,eta3)}}
+\DoxyCodeLine{00382\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00383\ \ \ \ \ vector\ gradX1\_Eta(Zero);\ \textcolor{comment}{//\ d(x)/d(eta)}}
+\DoxyCodeLine{00384\ \ \ \ \ vector\ gradX2\_Eta(Zero);\ \textcolor{comment}{//\ d(y)/d(eta)}}
+\DoxyCodeLine{00385\ \ \ \ \ vector\ gradX3\_Eta(Zero);\ \textcolor{comment}{//\ d(z)/d(eta)}}
+\DoxyCodeLine{00386\ }
+\DoxyCodeLine{00387\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <\ cellVertices.size();\ ++i)}
+\DoxyCodeLine{00388\ \ \ \ \ \{}
+\DoxyCodeLine{00389\ \ \ \ \ \ \ \ \ gradX1\_Eta.x()\ +=\ gradPhi\_Eta[i].x()*cellVertices[i].x();}
+\DoxyCodeLine{00390\ \ \ \ \ \ \ \ \ gradX1\_Eta.y()\ +=\ gradPhi\_Eta[i].y()*cellVertices[i].x();}
+\DoxyCodeLine{00391\ \ \ \ \ \ \ \ \ gradX1\_Eta.z()\ +=\ gradPhi\_Eta[i].z()*cellVertices[i].x();}
+\DoxyCodeLine{00392\ }
+\DoxyCodeLine{00393\ \ \ \ \ \ \ \ \ gradX2\_Eta.x()\ +=\ gradPhi\_Eta[i].x()*cellVertices[i].y();}
+\DoxyCodeLine{00394\ \ \ \ \ \ \ \ \ gradX2\_Eta.y()\ +=\ gradPhi\_Eta[i].y()*cellVertices[i].y();}
+\DoxyCodeLine{00395\ \ \ \ \ \ \ \ \ gradX2\_Eta.z()\ +=\ gradPhi\_Eta[i].z()*cellVertices[i].y();}
+\DoxyCodeLine{00396\ }
+\DoxyCodeLine{00397\ \ \ \ \ \ \ \ \ gradX3\_Eta.x()\ +=\ gradPhi\_Eta[i].x()*cellVertices[i].z();}
+\DoxyCodeLine{00398\ \ \ \ \ \ \ \ \ gradX3\_Eta.y()\ +=\ gradPhi\_Eta[i].y()*cellVertices[i].z();}
+\DoxyCodeLine{00399\ \ \ \ \ \ \ \ \ gradX3\_Eta.z()\ +=\ gradPhi\_Eta[i].z()*cellVertices[i].z();}
+\DoxyCodeLine{00400\ \ \ \ \ \}}
+\DoxyCodeLine{00401\ }
+\DoxyCodeLine{00402\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00403\ \ \ \ \ \textcolor{comment}{//\ Jacobian\ tensor\ (columns\ =\ gradients\ of\ x,\ y,\ z\ w.r.t\ eta)}}
+\DoxyCodeLine{00404\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00405\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{Foam::tensor}}\ Jacobian}
+\DoxyCodeLine{00406\ \ \ \ \ (}
+\DoxyCodeLine{00407\ \ \ \ \ \ \ \ \ gradX1\_Eta,}
+\DoxyCodeLine{00408\ \ \ \ \ \ \ \ \ gradX2\_Eta,}
+\DoxyCodeLine{00409\ \ \ \ \ \ \ \ \ gradX3\_Eta}
+\DoxyCodeLine{00410\ \ \ \ \ );}
+\DoxyCodeLine{00411\ }
+\DoxyCodeLine{00412\ \ \ \ \ \textcolor{keywordflow}{return}\ Jacobian;}
+\DoxyCodeLine{00413\ \}}
+\DoxyCodeLine{00414\ }
+\DoxyCodeLine{00421\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{classFoam_1_1GaussField}{Foam::tensor}}\ \mbox{\hyperlink{namespaceFoam_1_1geometricJacobian_a698f451fa554ccb1995a39956ffe48e8}{TetraJacobian}}}
+\DoxyCodeLine{00422\ (}
+\DoxyCodeLine{00423\ \ \ \ \ \textcolor{keyword}{const}\ vector\&\ gaussPt,\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Gauss\ point\ in\ reference\ space\ (eta)}}
+\DoxyCodeLine{00424\ \ \ \ \ \textcolor{keyword}{const}\ List<vector>\&\ cellVertices\ \ \ \textcolor{comment}{//\ Physical\ coordinates\ of\ tetrahedron\ vertices}}
+\DoxyCodeLine{00425\ )}
+\DoxyCodeLine{00426\ \{}
+\DoxyCodeLine{00427\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00428\ \ \ \ \ \textcolor{comment}{//\ Extract\ reference\ coordinates\ (eta-\/space)}}
+\DoxyCodeLine{00429\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00430\ \ \ \ \ \textcolor{keyword}{const}\ scalar\ eta1\ =\ gaussPt.\mbox{\hyperlink{classFoam_1_1GaussField_a49c91fd2de86e400eb7bf30ed43b04fd}{x}}();}
+\DoxyCodeLine{00431\ \ \ \ \ \textcolor{keyword}{const}\ scalar\ eta2\ =\ gaussPt.\mbox{\hyperlink{classFoam_1_1GaussField_af48b2954902727aadb60e75a5baf4cf3}{y}}();}
+\DoxyCodeLine{00432\ \ \ \ \ \textcolor{keyword}{const}\ scalar\ eta3\ =\ gaussPt.\mbox{\hyperlink{classFoam_1_1GaussField_ac893a0f59b8435e95c03d2a35c6a2cc3}{z}}();}
+\DoxyCodeLine{00433\ }
+\DoxyCodeLine{00434\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00435\ \ \ \ \ \textcolor{comment}{//\ Gradients\ of\ shape\ functions\ w.r.t\ eta\ (dPhi/dEta)}}
+\DoxyCodeLine{00436\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00437\ \ \ \ \ \textcolor{comment}{//\ Vertex\ correspondence:}}
+\DoxyCodeLine{00438\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00439\ \ \ \ \ \textcolor{comment}{//\ \ \ cellVertices\ id\ -\/>\ tetrahedron\ vertex\ -\/>\ gradPhi\_Eta\ id}}
+\DoxyCodeLine{00440\ \ \ \ \ \textcolor{comment}{//\ \ \ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00441\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ 0\ \ \ \ \ \ \ \ -\/>\ \ \ \ \ \ \ \ A\ \ \ \ \ \ \ \ \ -\/>\ \ \ \ \ \ \ \ 0}}
+\DoxyCodeLine{00442\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ 1\ \ \ \ \ \ \ \ -\/>\ \ \ \ \ \ \ \ B\ \ \ \ \ \ \ \ \ -\/>\ \ \ \ \ \ \ \ 1}}
+\DoxyCodeLine{00443\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ 2\ \ \ \ \ \ \ \ -\/>\ \ \ \ \ \ \ \ C\ \ \ \ \ \ \ \ \ -\/>\ \ \ \ \ \ \ \ 2}}
+\DoxyCodeLine{00444\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ 3\ \ \ \ \ \ \ \ -\/>\ \ \ \ \ \ \ \ D\ \ \ \ \ \ \ \ \ -\/>\ \ \ \ \ \ \ \ 3}}
+\DoxyCodeLine{00445\ \ \ \ \ \textcolor{comment}{//}}
 \DoxyCodeLine{00446\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00447\ \ \ \ \ vector\ gradX1\_Eta(Zero);\ \textcolor{comment}{//\ d(x)/d(eta)}}
-\DoxyCodeLine{00448\ \ \ \ \ vector\ gradX2\_Eta(Zero);\ \textcolor{comment}{//\ d(y)/d(eta)}}
-\DoxyCodeLine{00449\ \ \ \ \ vector\ gradX3\_Eta(Zero);\ \textcolor{comment}{//\ d(z)/d(eta)}}
-\DoxyCodeLine{00450\ }
-\DoxyCodeLine{00451\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <\ cellVertices.size();\ ++i)}
-\DoxyCodeLine{00452\ \ \ \ \ \{}
-\DoxyCodeLine{00453\ \ \ \ \ \ \ \ \ gradX1\_Eta.x()\ +=\ gradPhi\_Eta[i].x()*cellVertices[i].x();}
-\DoxyCodeLine{00454\ \ \ \ \ \ \ \ \ gradX1\_Eta.y()\ +=\ gradPhi\_Eta[i].y()*cellVertices[i].x();}
-\DoxyCodeLine{00455\ \ \ \ \ \ \ \ \ gradX1\_Eta.z()\ +=\ gradPhi\_Eta[i].z()*cellVertices[i].x();}
-\DoxyCodeLine{00456\ }
-\DoxyCodeLine{00457\ \ \ \ \ \ \ \ \ gradX2\_Eta.x()\ +=\ gradPhi\_Eta[i].x()*cellVertices[i].y();}
-\DoxyCodeLine{00458\ \ \ \ \ \ \ \ \ gradX2\_Eta.y()\ +=\ gradPhi\_Eta[i].y()*cellVertices[i].y();}
-\DoxyCodeLine{00459\ \ \ \ \ \ \ \ \ gradX2\_Eta.z()\ +=\ gradPhi\_Eta[i].z()*cellVertices[i].y();}
-\DoxyCodeLine{00460\ }
-\DoxyCodeLine{00461\ \ \ \ \ \ \ \ \ gradX3\_Eta.x()\ +=\ gradPhi\_Eta[i].x()*cellVertices[i].z();}
-\DoxyCodeLine{00462\ \ \ \ \ \ \ \ \ gradX3\_Eta.y()\ +=\ gradPhi\_Eta[i].y()*cellVertices[i].z();}
-\DoxyCodeLine{00463\ \ \ \ \ \ \ \ \ gradX3\_Eta.z()\ +=\ gradPhi\_Eta[i].z()*cellVertices[i].z();}
-\DoxyCodeLine{00464\ \ \ \ \ \}}
-\DoxyCodeLine{00465\ }
-\DoxyCodeLine{00466\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00467\ \ \ \ \ \textcolor{comment}{//\ Jacobian\ tensor\ (columns\ =\ gradients\ of\ x,\ y,\ z\ w.r.t\ eta)}}
-\DoxyCodeLine{00468\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00469\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{Foam::tensor}}\ Jacobian}
-\DoxyCodeLine{00470\ \ \ \ \ (}
-\DoxyCodeLine{00471\ \ \ \ \ \ \ \ \ gradX1\_Eta,}
-\DoxyCodeLine{00472\ \ \ \ \ \ \ \ \ gradX2\_Eta,}
-\DoxyCodeLine{00473\ \ \ \ \ \ \ \ \ gradX3\_Eta}
-\DoxyCodeLine{00474\ \ \ \ \ );}
-\DoxyCodeLine{00475\ }
-\DoxyCodeLine{00476\ \ \ \ \ \textcolor{keywordflow}{return}\ Jacobian;}
-\DoxyCodeLine{00477\ \}}
-\DoxyCodeLine{00478\ }
-\DoxyCodeLine{00486\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{classFoam_1_1GaussField}{Foam::scalar}}\ \mbox{\hyperlink{namespaceFoam_1_1geometricJacobian_aae5ca0d8eaf6088f5378dc73102a1f04}{calcJacobianDetAtInteriorGaussPt}}}
-\DoxyCodeLine{00487\ (}
-\DoxyCodeLine{00488\ \ \ \ \ \mbox{\hyperlink{dgGeomCell_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5}{dgCellType}}\ cellType,}
-\DoxyCodeLine{00489\ \ \ \ \ \textcolor{keyword}{const}\ vector\&\ gaussPt,\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Gauss\ point\ in\ reference\ space\ (eta)}}
-\DoxyCodeLine{00490\ \ \ \ \ \textcolor{keyword}{const}\ List<vector>\&\ cellVertices\ \ \ \textcolor{comment}{//\ Physical\ coordinates\ of\ tetrahedron\ vertices}}
-\DoxyCodeLine{00491\ )}
-\DoxyCodeLine{00492\ \{}
-\DoxyCodeLine{00493\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{Foam::tensor}}\ J;}
-\DoxyCodeLine{00494\ }
-\DoxyCodeLine{00495\ \ \ \ \ \textcolor{keywordflow}{switch}\ (cellType)}
-\DoxyCodeLine{00496\ \ \ \ \ \{}
-\DoxyCodeLine{00497\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{dgGeomCell_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5a58c9566f3c750ce7147b045fdd14202b}{dgCellType::HEX}}:}
-\DoxyCodeLine{00498\ \ \ \ \ \ \ \ \ \ \ \ \ J\ =\ \mbox{\hyperlink{namespaceFoam_1_1geometricJacobian_aaaea28dc5042c3e5886ee75df7b49035}{HexJacobian}}(gaussPt,\ cellVertices);}
-\DoxyCodeLine{00499\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
-\DoxyCodeLine{00500\ }
-\DoxyCodeLine{00501\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{dgGeomCell_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5a25608df56c02f9fc6854a3de6a51822a}{dgCellType::PRISM}}:}
-\DoxyCodeLine{00502\ \ \ \ \ \ \ \ \ \ \ \ \ J\ =\ \mbox{\hyperlink{namespaceFoam_1_1geometricJacobian_ad79123ae7c8f9933c0b1db4f434e83fe}{PrismJacobian}}(gaussPt,\ cellVertices);}
-\DoxyCodeLine{00503\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
-\DoxyCodeLine{00504\ }
-\DoxyCodeLine{00505\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{dgGeomCell_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5acd996d3184761601a0e44e587a012d4f}{dgCellType::PYRAMID}}:}
-\DoxyCodeLine{00506\ \ \ \ \ \ \ \ \ \ \ \ \ J\ =\ \mbox{\hyperlink{namespaceFoam_1_1geometricJacobian_a2ce71b3859857a6ba42cf882e7a2dd58}{PyramidJacobian}}(gaussPt,\ cellVertices);}
-\DoxyCodeLine{00507\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00447\ \ \ \ \ List<vector>\ gradPhi\_Eta(cellVertices.size(),\ Zero);}
+\DoxyCodeLine{00448\ }
+\DoxyCodeLine{00449\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00450\ \ \ \ \ \textcolor{comment}{//\ Vertex\ A\ (cellVertices[0])}}
+\DoxyCodeLine{00451\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00452\ \ \ \ \ gradPhi\_Eta[0].x()\ =\ -\/(1\ -\/\ eta2)*(1\ -\/\ eta3)/8;}
+\DoxyCodeLine{00453\ \ \ \ \ gradPhi\_Eta[0].y()\ =\ -\/(1\ -\/\ eta1)*(1\ -\/\ eta3)/8;}
+\DoxyCodeLine{00454\ \ \ \ \ gradPhi\_Eta[0].z()\ =\ -\/(1\ -\/\ eta1)*(1\ -\/\ eta2)/8;}
+\DoxyCodeLine{00455\ }
+\DoxyCodeLine{00456\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00457\ \ \ \ \ \textcolor{comment}{//\ Vertex\ B\ (cellVertices[1])}}
+\DoxyCodeLine{00458\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00459\ \ \ \ \ gradPhi\_Eta[1].x()\ =\ \ (1\ -\/\ eta2)*(1\ -\/\ eta3)/8;}
+\DoxyCodeLine{00460\ \ \ \ \ gradPhi\_Eta[1].y()\ =\ -\/(1\ +\ eta1)*(1\ -\/\ eta3)/8;}
+\DoxyCodeLine{00461\ \ \ \ \ gradPhi\_Eta[1].z()\ =\ -\/(1\ +\ eta1)*(1\ -\/\ eta2)/8;}
+\DoxyCodeLine{00462\ }
+\DoxyCodeLine{00463\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00464\ \ \ \ \ \textcolor{comment}{//\ Vertex\ C\ (cellVertices[2])}}
+\DoxyCodeLine{00465\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00466\ \ \ \ \ gradPhi\_Eta[2].x()\ =\ -\/(1\ +\ eta2)*(1\ -\/\ eta3)/8;}
+\DoxyCodeLine{00467\ \ \ \ \ gradPhi\_Eta[2].y()\ =\ \ (1\ -\/\ eta1)*(1\ -\/\ eta3)/8;}
+\DoxyCodeLine{00468\ \ \ \ \ gradPhi\_Eta[2].z()\ =\ -\/(1\ -\/\ eta1)*(1\ +\ eta2)/8;}
+\DoxyCodeLine{00469\ }
+\DoxyCodeLine{00470\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00471\ \ \ \ \ \textcolor{comment}{//\ Vertex\ D\ (cellVertices[3])}}
+\DoxyCodeLine{00472\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00473\ \ \ \ \ gradPhi\_Eta[3].x()\ =\ 0;}
+\DoxyCodeLine{00474\ \ \ \ \ gradPhi\_Eta[3].y()\ =\ 0;}
+\DoxyCodeLine{00475\ \ \ \ \ gradPhi\_Eta[3].z()\ =\ 0.5;}
+\DoxyCodeLine{00476\ }
+\DoxyCodeLine{00477\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00478\ \ \ \ \ \textcolor{comment}{//\ Compute\ physical\ gradients:\ d(x,y,z)/d(eta1,eta2,eta3)}}
+\DoxyCodeLine{00479\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00480\ \ \ \ \ vector\ gradX1\_Eta(Zero);\ \textcolor{comment}{//\ d(x)/d(eta)}}
+\DoxyCodeLine{00481\ \ \ \ \ vector\ gradX2\_Eta(Zero);\ \textcolor{comment}{//\ d(y)/d(eta)}}
+\DoxyCodeLine{00482\ \ \ \ \ vector\ gradX3\_Eta(Zero);\ \textcolor{comment}{//\ d(z)/d(eta)}}
+\DoxyCodeLine{00483\ }
+\DoxyCodeLine{00484\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <\ cellVertices.size();\ ++i)}
+\DoxyCodeLine{00485\ \ \ \ \ \{}
+\DoxyCodeLine{00486\ \ \ \ \ \ \ \ \ gradX1\_Eta.x()\ +=\ gradPhi\_Eta[i].x()*cellVertices[i].x();}
+\DoxyCodeLine{00487\ \ \ \ \ \ \ \ \ gradX1\_Eta.y()\ +=\ gradPhi\_Eta[i].y()*cellVertices[i].x();}
+\DoxyCodeLine{00488\ \ \ \ \ \ \ \ \ gradX1\_Eta.z()\ +=\ gradPhi\_Eta[i].z()*cellVertices[i].x();}
+\DoxyCodeLine{00489\ }
+\DoxyCodeLine{00490\ \ \ \ \ \ \ \ \ gradX2\_Eta.x()\ +=\ gradPhi\_Eta[i].x()*cellVertices[i].y();}
+\DoxyCodeLine{00491\ \ \ \ \ \ \ \ \ gradX2\_Eta.y()\ +=\ gradPhi\_Eta[i].y()*cellVertices[i].y();}
+\DoxyCodeLine{00492\ \ \ \ \ \ \ \ \ gradX2\_Eta.z()\ +=\ gradPhi\_Eta[i].z()*cellVertices[i].y();}
+\DoxyCodeLine{00493\ }
+\DoxyCodeLine{00494\ \ \ \ \ \ \ \ \ gradX3\_Eta.x()\ +=\ gradPhi\_Eta[i].x()*cellVertices[i].z();}
+\DoxyCodeLine{00495\ \ \ \ \ \ \ \ \ gradX3\_Eta.y()\ +=\ gradPhi\_Eta[i].y()*cellVertices[i].z();}
+\DoxyCodeLine{00496\ \ \ \ \ \ \ \ \ gradX3\_Eta.z()\ +=\ gradPhi\_Eta[i].z()*cellVertices[i].z();}
+\DoxyCodeLine{00497\ \ \ \ \ \}}
+\DoxyCodeLine{00498\ }
+\DoxyCodeLine{00499\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00500\ \ \ \ \ \textcolor{comment}{//\ Jacobian\ tensor\ (columns\ =\ gradients\ of\ x,\ y,\ z\ w.r.t\ eta)}}
+\DoxyCodeLine{00501\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00502\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{Foam::tensor}}\ Jacobian}
+\DoxyCodeLine{00503\ \ \ \ \ (}
+\DoxyCodeLine{00504\ \ \ \ \ \ \ \ \ gradX1\_Eta,}
+\DoxyCodeLine{00505\ \ \ \ \ \ \ \ \ gradX2\_Eta,}
+\DoxyCodeLine{00506\ \ \ \ \ \ \ \ \ gradX3\_Eta}
+\DoxyCodeLine{00507\ \ \ \ \ );}
 \DoxyCodeLine{00508\ }
-\DoxyCodeLine{00509\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{dgGeomCell_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5a268c4b76ec894ec6ad3c119ad7cc2170}{dgCellType::TET}}:}
-\DoxyCodeLine{00510\ \ \ \ \ \ \ \ \ \ \ \ \ J\ =\ \mbox{\hyperlink{namespaceFoam_1_1geometricJacobian_a698f451fa554ccb1995a39956ffe48e8}{TetraJacobian}}(gaussPt,\ cellVertices);}
-\DoxyCodeLine{00511\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
-\DoxyCodeLine{00512\ }
-\DoxyCodeLine{00513\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{default}:}
-\DoxyCodeLine{00514\ \ \ \ \ \ \ \ \ \ \ \ \ FatalErrorInFunction}
-\DoxyCodeLine{00515\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{}Unsupported\ cell\ type\ for\ 3D\ Jacobian\ calculation:\ "{}}}
-\DoxyCodeLine{00516\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(cellType)\ <<\ abort(FatalError);}
-\DoxyCodeLine{00517\ \ \ \ \ \}}
-\DoxyCodeLine{00518\ }
-\DoxyCodeLine{00519\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{namespaceFoam_aa35494e071b585795c1dec87417fee8d}{det}}(J);}
-\DoxyCodeLine{00520\ \}}
-\DoxyCodeLine{00521\ }
-\DoxyCodeLine{00530\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{classFoam_1_1GaussField}{Foam::scalar}}\ \mbox{\hyperlink{namespaceFoam_1_1geometricJacobian_a25c24dfc8c51656b041a0ff815ab2c50}{calcLameParam}}}
-\DoxyCodeLine{00531\ (}
-\DoxyCodeLine{00532\ \ \ \ \ \mbox{\hyperlink{dgGeomCell_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5}{dgCellType}}\ cellType,}
-\DoxyCodeLine{00533\ \ \ \ \ \mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682}{dgFacePosition}}\ facePos,}
-\DoxyCodeLine{00534\ \ \ \ \ \textcolor{keyword}{const}\ vector\&\ gaussPt,\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Gauss\ point\ in\ reference\ space\ (eta)}}
-\DoxyCodeLine{00535\ \ \ \ \ \textcolor{keyword}{const}\ List<vector>\&\ cellVertices\ \ \ \textcolor{comment}{//\ Physical\ coordinates\ of\ vertices}}
-\DoxyCodeLine{00536\ )}
-\DoxyCodeLine{00537\ \{}
-\DoxyCodeLine{00538\ \ \ \ \ \textcolor{comment}{//\ Caclulate\ Jacobian\ tensor}}
-\DoxyCodeLine{00539\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{Foam::tensor}}\ J;}
+\DoxyCodeLine{00509\ \ \ \ \ \textcolor{keywordflow}{return}\ Jacobian;}
+\DoxyCodeLine{00510\ \}}
+\DoxyCodeLine{00511\ }
+\DoxyCodeLine{00519\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{classFoam_1_1GaussField}{Foam::scalar}}\ \mbox{\hyperlink{namespaceFoam_1_1geometricJacobian_aae5ca0d8eaf6088f5378dc73102a1f04}{calcJacobianDetAtInteriorGaussPt}}}
+\DoxyCodeLine{00520\ (}
+\DoxyCodeLine{00521\ \ \ \ \ \mbox{\hyperlink{dgGeomCell_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5}{dgCellType}}\ cellType,}
+\DoxyCodeLine{00522\ \ \ \ \ \textcolor{keyword}{const}\ vector\&\ gaussPt,\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Gauss\ point\ in\ reference\ space\ (eta)}}
+\DoxyCodeLine{00523\ \ \ \ \ \textcolor{keyword}{const}\ List<vector>\&\ cellVertices\ \ \ \textcolor{comment}{//\ Physical\ coordinates\ of\ tetrahedron\ vertices}}
+\DoxyCodeLine{00524\ )}
+\DoxyCodeLine{00525\ \{}
+\DoxyCodeLine{00526\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{Foam::tensor}}\ J;}
+\DoxyCodeLine{00527\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{Foam::scalar}}\ JDuffy;\ \textcolor{comment}{//\ Jacobian\ determinant\ from\ Duffy\ transformation}}
+\DoxyCodeLine{00528\ }
+\DoxyCodeLine{00529\ \ \ \ \ \textcolor{keywordflow}{switch}\ (cellType)}
+\DoxyCodeLine{00530\ \ \ \ \ \{}
+\DoxyCodeLine{00531\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{dgGeomCell_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5a58c9566f3c750ce7147b045fdd14202b}{dgCellType::HEX}}:}
+\DoxyCodeLine{00532\ \ \ \ \ \ \ \ \ \ \ \ \ J\ =\ \mbox{\hyperlink{namespaceFoam_1_1geometricJacobian_aaaea28dc5042c3e5886ee75df7b49035}{HexJacobian}}(gaussPt,\ cellVertices);}
+\DoxyCodeLine{00533\ \ \ \ \ \ \ \ \ \ \ \ \ JDuffy\ =\ 1.0;\ \textcolor{comment}{//\ No\ Duffy\ transformation\ for\ hex}}
+\DoxyCodeLine{00534\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00535\ }
+\DoxyCodeLine{00536\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{dgGeomCell_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5a25608df56c02f9fc6854a3de6a51822a}{dgCellType::PRISM}}:}
+\DoxyCodeLine{00537\ \ \ \ \ \ \ \ \ \ \ \ \ J\ =\ \mbox{\hyperlink{namespaceFoam_1_1geometricJacobian_ad79123ae7c8f9933c0b1db4f434e83fe}{PrismJacobian}}(gaussPt,\ cellVertices);}
+\DoxyCodeLine{00538\ \ \ \ \ \ \ \ \ \ \ \ \ JDuffy\ =\ \mbox{\hyperlink{namespaceFoam_1_1referenceJacobian_ab2095d71f6f37306131e1e305fb4fd06}{Foam::referenceJacobian::prismRefToHexRef}}(gaussPt);}
+\DoxyCodeLine{00539\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
 \DoxyCodeLine{00540\ }
-\DoxyCodeLine{00541\ \ \ \ \ \textcolor{keywordflow}{switch}\ (cellType)}
-\DoxyCodeLine{00542\ \ \ \ \ \{}
-\DoxyCodeLine{00543\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{dgGeomCell_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5a58c9566f3c750ce7147b045fdd14202b}{dgCellType::HEX}}:}
-\DoxyCodeLine{00544\ \ \ \ \ \ \ \ \ \ \ \ \ J\ =\ \mbox{\hyperlink{namespaceFoam_1_1geometricJacobian_aaaea28dc5042c3e5886ee75df7b49035}{HexJacobian}}(gaussPt,\ cellVertices);}
-\DoxyCodeLine{00545\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
-\DoxyCodeLine{00546\ }
-\DoxyCodeLine{00547\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{dgGeomCell_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5a25608df56c02f9fc6854a3de6a51822a}{dgCellType::PRISM}}:}
-\DoxyCodeLine{00548\ \ \ \ \ \ \ \ \ \ \ \ \ J\ =\ \mbox{\hyperlink{namespaceFoam_1_1geometricJacobian_ad79123ae7c8f9933c0b1db4f434e83fe}{PrismJacobian}}(gaussPt,\ cellVertices);}
+\DoxyCodeLine{00541\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{dgGeomCell_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5acd996d3184761601a0e44e587a012d4f}{dgCellType::PYRAMID}}:}
+\DoxyCodeLine{00542\ \ \ \ \ \ \ \ \ \ \ \ \ J\ =\ \mbox{\hyperlink{namespaceFoam_1_1geometricJacobian_a2ce71b3859857a6ba42cf882e7a2dd58}{PyramidJacobian}}(gaussPt,\ cellVertices);}
+\DoxyCodeLine{00543\ \ \ \ \ \ \ \ \ \ \ \ \ JDuffy\ =\ \mbox{\hyperlink{namespaceFoam_1_1referenceJacobian_a5310019cb178ee71956b74dc728ad13b}{Foam::referenceJacobian::pyramidRefToHexRef}}(gaussPt);}
+\DoxyCodeLine{00544\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00545\ }
+\DoxyCodeLine{00546\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{dgGeomCell_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5a268c4b76ec894ec6ad3c119ad7cc2170}{dgCellType::TET}}:}
+\DoxyCodeLine{00547\ \ \ \ \ \ \ \ \ \ \ \ \ J\ =\ \mbox{\hyperlink{namespaceFoam_1_1geometricJacobian_a698f451fa554ccb1995a39956ffe48e8}{TetraJacobian}}(gaussPt,\ cellVertices);}
+\DoxyCodeLine{00548\ \ \ \ \ \ \ \ \ \ \ \ \ JDuffy\ =\ \mbox{\hyperlink{namespaceFoam_1_1referenceJacobian_ab91bfe99c7d460fb6f65df8679db9b9c}{Foam::referenceJacobian::tetRefToHexRef}}(gaussPt);}
 \DoxyCodeLine{00549\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
 \DoxyCodeLine{00550\ }
-\DoxyCodeLine{00551\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{dgGeomCell_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5acd996d3184761601a0e44e587a012d4f}{dgCellType::PYRAMID}}:}
-\DoxyCodeLine{00552\ \ \ \ \ \ \ \ \ \ \ \ \ J\ =\ \mbox{\hyperlink{namespaceFoam_1_1geometricJacobian_a2ce71b3859857a6ba42cf882e7a2dd58}{PyramidJacobian}}(gaussPt,\ cellVertices);}
-\DoxyCodeLine{00553\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
-\DoxyCodeLine{00554\ }
-\DoxyCodeLine{00555\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{dgGeomCell_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5a268c4b76ec894ec6ad3c119ad7cc2170}{dgCellType::TET}}:}
-\DoxyCodeLine{00556\ \ \ \ \ \ \ \ \ \ \ \ \ J\ =\ \mbox{\hyperlink{namespaceFoam_1_1geometricJacobian_a698f451fa554ccb1995a39956ffe48e8}{TetraJacobian}}(gaussPt,\ cellVertices);}
-\DoxyCodeLine{00557\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
-\DoxyCodeLine{00558\ }
-\DoxyCodeLine{00559\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{default}:}
-\DoxyCodeLine{00560\ \ \ \ \ \ \ \ \ \ \ \ \ FatalErrorInFunction}
-\DoxyCodeLine{00561\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{}Unsupported\ cell\ type\ for\ 3D\ Jacobian\ calculation:\ "{}}}
-\DoxyCodeLine{00562\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(cellType)\ <<\ abort(FatalError);}
-\DoxyCodeLine{00563\ \ \ \ \ \}}
-\DoxyCodeLine{00564\ }
-\DoxyCodeLine{00565\ \ \ \ \ \textcolor{comment}{//\ Compute\ Lame\ parameter\ based\ on\ face\ position}}
-\DoxyCodeLine{00566\ \ \ \ \ scalar\ lameParam\ =\ 0.0;}
-\DoxyCodeLine{00567\ \ \ \ \ \textcolor{keywordflow}{switch}\ (facePos)}
-\DoxyCodeLine{00568\ \ \ \ \ \{}
-\DoxyCodeLine{00569\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682acb08ca4a7bb5f9683c19133a84872ca7}{dgFacePosition::ABCD}}:}
-\DoxyCodeLine{00570\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682a17dd6919f5930ea8bd58fecbafd7eb7b}{dgFacePosition::EFGH}}:}
-\DoxyCodeLine{00571\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00572\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ eta3\ direction,\ eta3\ =\ +/-\/1}}
-\DoxyCodeLine{00573\ \ \ \ \ \ \ \ \ \ \ \ \ vector\ gradX\_eta1\ (J.xx(),\ J.yx(),\ J.zx());}
-\DoxyCodeLine{00574\ \ \ \ \ \ \ \ \ \ \ \ \ vector\ gradX\_eta2\ (J.xy(),\ J.yy(),\ J.zy());}
-\DoxyCodeLine{00575\ \ \ \ \ \ \ \ \ \ \ \ \ lameParam\ =\ \mbox{\hyperlink{namespaceFoam_a5915c981c21128d92bdcfba4bc64c4d3}{mag}}(gradX\_eta1\ \string^\ gradX\_eta2);}
-\DoxyCodeLine{00576\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
-\DoxyCodeLine{00577\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00578\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682a41d9ff5c880ee22566a8480c85ffa831}{dgFacePosition::ABEF}}:}
-\DoxyCodeLine{00579\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682abfff11d5fc9f1c1e357e7854d6393723}{dgFacePosition::CDGH}}:}
-\DoxyCodeLine{00580\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00581\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ eta2\ direction,\ eta2\ =\ +/-\/1}}
-\DoxyCodeLine{00582\ \ \ \ \ \ \ \ \ \ \ \ \ vector\ gradX\_eta1\ (J.xx(),\ J.yx(),\ J.zx());}
-\DoxyCodeLine{00583\ \ \ \ \ \ \ \ \ \ \ \ \ vector\ gradX\_eta3\ (J.xz(),\ J.yz(),\ J.zz());}
-\DoxyCodeLine{00584\ \ \ \ \ \ \ \ \ \ \ \ \ lameParam\ =\ \mbox{\hyperlink{namespaceFoam_a5915c981c21128d92bdcfba4bc64c4d3}{mag}}(gradX\_eta3\ \string^\ gradX\_eta1);}
-\DoxyCodeLine{00585\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
-\DoxyCodeLine{00586\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00587\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682a3657d9ae4bdf500bb16fb581fdf43c64}{dgFacePosition::ACEG}}:}
-\DoxyCodeLine{00588\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682a2c1327bd400a4bde2b37ccb26b635800}{dgFacePosition::BDFH}}:}
-\DoxyCodeLine{00589\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00590\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ eta1\ direction,\ eta1\ =\ +/-\/1}}
-\DoxyCodeLine{00591\ \ \ \ \ \ \ \ \ \ \ \ \ vector\ gradX\_eta2\ (J.xy(),\ J.yy(),\ J.zy());}
-\DoxyCodeLine{00592\ \ \ \ \ \ \ \ \ \ \ \ \ vector\ gradX\_eta3\ (J.xz(),\ J.yz(),\ J.zz());}
-\DoxyCodeLine{00593\ \ \ \ \ \ \ \ \ \ \ \ \ lameParam\ =\ \mbox{\hyperlink{namespaceFoam_a5915c981c21128d92bdcfba4bc64c4d3}{mag}}(gradX\_eta2\ \string^\ gradX\_eta3);}
-\DoxyCodeLine{00594\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};\ }
-\DoxyCodeLine{00595\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00596\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682ab50339a10e1de285ac99d4c3990b8693}{dgFacePosition::NONE}}:}
-\DoxyCodeLine{00597\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00551\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{00552\ \ \ \ \ \ \ \ \ \ \ \ \ FatalErrorInFunction}
+\DoxyCodeLine{00553\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{}Unsupported\ cell\ type\ for\ 3D\ Jacobian\ calculation:\ "{}}}
+\DoxyCodeLine{00554\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(cellType)\ <<\ abort(FatalError);}
+\DoxyCodeLine{00555\ \ \ \ \ \}}
+\DoxyCodeLine{00556\ }
+\DoxyCodeLine{00557\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{namespaceFoam_a5915c981c21128d92bdcfba4bc64c4d3}{mag}}(\mbox{\hyperlink{namespaceFoam_aa35494e071b585795c1dec87417fee8d}{det}}(J)/JDuffy);}
+\DoxyCodeLine{00558\ \}}
+\DoxyCodeLine{00559\ }
+\DoxyCodeLine{00568\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{classFoam_1_1GaussField}{Foam::scalar}}\ \mbox{\hyperlink{namespaceFoam_1_1geometricJacobian_a25c24dfc8c51656b041a0ff815ab2c50}{calcLameParam}}}
+\DoxyCodeLine{00569\ (}
+\DoxyCodeLine{00570\ \ \ \ \ \mbox{\hyperlink{dgGeomCell_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5}{dgCellType}}\ cellType,}
+\DoxyCodeLine{00571\ \ \ \ \ \mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682}{dgFacePosition}}\ facePos,}
+\DoxyCodeLine{00572\ \ \ \ \ \textcolor{keyword}{const}\ vector\&\ gaussPt,\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Gauss\ point\ in\ reference\ space\ (eta)}}
+\DoxyCodeLine{00573\ \ \ \ \ \textcolor{keyword}{const}\ List<vector>\&\ cellVertices\ \ \ \textcolor{comment}{//\ Physical\ coordinates\ of\ vertices}}
+\DoxyCodeLine{00574\ )}
+\DoxyCodeLine{00575\ \{}
+\DoxyCodeLine{00576\ \ \ \ \ \textcolor{comment}{//\ Caclulate\ Jacobian\ tensor}}
+\DoxyCodeLine{00577\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{Foam::tensor}}\ J;}
+\DoxyCodeLine{00578\ }
+\DoxyCodeLine{00579\ \ \ \ \ \textcolor{keywordflow}{switch}\ (cellType)}
+\DoxyCodeLine{00580\ \ \ \ \ \{}
+\DoxyCodeLine{00581\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{dgGeomCell_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5a58c9566f3c750ce7147b045fdd14202b}{dgCellType::HEX}}:}
+\DoxyCodeLine{00582\ \ \ \ \ \ \ \ \ \ \ \ \ J\ =\ \mbox{\hyperlink{namespaceFoam_1_1geometricJacobian_aaaea28dc5042c3e5886ee75df7b49035}{HexJacobian}}(gaussPt,\ cellVertices);}
+\DoxyCodeLine{00583\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00584\ }
+\DoxyCodeLine{00585\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{dgGeomCell_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5a25608df56c02f9fc6854a3de6a51822a}{dgCellType::PRISM}}:}
+\DoxyCodeLine{00586\ \ \ \ \ \ \ \ \ \ \ \ \ J\ =\ \mbox{\hyperlink{namespaceFoam_1_1geometricJacobian_ad79123ae7c8f9933c0b1db4f434e83fe}{PrismJacobian}}(gaussPt,\ cellVertices);}
+\DoxyCodeLine{00587\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00588\ }
+\DoxyCodeLine{00589\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{dgGeomCell_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5acd996d3184761601a0e44e587a012d4f}{dgCellType::PYRAMID}}:}
+\DoxyCodeLine{00590\ \ \ \ \ \ \ \ \ \ \ \ \ J\ =\ \mbox{\hyperlink{namespaceFoam_1_1geometricJacobian_a2ce71b3859857a6ba42cf882e7a2dd58}{PyramidJacobian}}(gaussPt,\ cellVertices);}
+\DoxyCodeLine{00591\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00592\ }
+\DoxyCodeLine{00593\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{dgGeomCell_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5a268c4b76ec894ec6ad3c119ad7cc2170}{dgCellType::TET}}:}
+\DoxyCodeLine{00594\ \ \ \ \ \ \ \ \ \ \ \ \ J\ =\ \mbox{\hyperlink{namespaceFoam_1_1geometricJacobian_a698f451fa554ccb1995a39956ffe48e8}{TetraJacobian}}(gaussPt,\ cellVertices);}
+\DoxyCodeLine{00595\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00596\ }
+\DoxyCodeLine{00597\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{default}:}
 \DoxyCodeLine{00598\ \ \ \ \ \ \ \ \ \ \ \ \ FatalErrorInFunction}
-\DoxyCodeLine{00599\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{}Cannot\ compute\ Lame\ parameter\ for\ face\ with\ NONE\ position."{}}}
-\DoxyCodeLine{00600\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ abort(FatalError);}
-\DoxyCodeLine{00601\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
-\DoxyCodeLine{00602\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00603\ \ \ \ \ \}}
-\DoxyCodeLine{00604\ }
-\DoxyCodeLine{00605\ \ \ \ \ \textcolor{keywordflow}{return}\ lameParam;}
-\DoxyCodeLine{00606\ \}}
-\DoxyCodeLine{00607\ }
-\DoxyCodeLine{00608\ \}\ \textcolor{comment}{//\ namespace\ geometricJacobian}}
-\DoxyCodeLine{00609\ }
-\DoxyCodeLine{00610\ \textcolor{keyword}{namespace\ }referenceJacobian}
-\DoxyCodeLine{00611\ \{}
-\DoxyCodeLine{00617\ \ \ \ \ \textcolor{keyword}{inline}\ \mbox{\hyperlink{classFoam_1_1GaussField}{Foam::tensor}}\ \mbox{\hyperlink{namespaceFoam_1_1referenceJacobian_a64984e21afebfa72c8f6de170c44536f}{hexRefJMontjoieToDG}}()}
-\DoxyCodeLine{00618\ \ \ \ \ \{}
-\DoxyCodeLine{00619\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{Foam::tensor}}\ J(Zero);}
-\DoxyCodeLine{00620\ \ \ \ \ \ \ \ \ J.xx()\ =\ 0.5;}
-\DoxyCodeLine{00621\ \ \ \ \ \ \ \ \ J.yy()\ =\ 0.5;}
-\DoxyCodeLine{00622\ \ \ \ \ \ \ \ \ J.zz()\ =\ 0.5;}
-\DoxyCodeLine{00623\ }
-\DoxyCodeLine{00624\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (J);}
-\DoxyCodeLine{00625\ \ \ \ \ \}}
-\DoxyCodeLine{00626\ }
-\DoxyCodeLine{00634\ \ \ \ \ \textcolor{keyword}{inline}\ \mbox{\hyperlink{classFoam_1_1GaussField}{Foam::tensor}}\ \mbox{\hyperlink{namespaceFoam_1_1referenceJacobian_a3633fb82ab86e229a32c494e651683a0}{prismRefJMontjoieToDG}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{Foam::vector}}\&\ etaPt)}
-\DoxyCodeLine{00635\ \ \ \ \ \{}
-\DoxyCodeLine{00636\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{Foam::vector}}\ xiPt\ =\ \mbox{\hyperlink{namespaceFoam_acbb6358b21e529519de946550e88783a}{etaToXiPrism}}(etaPt);}
-\DoxyCodeLine{00637\ }
-\DoxyCodeLine{00638\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{Foam::scalar}}\ xi1\ =\ xiPt.\mbox{\hyperlink{classFoam_1_1GaussField_a49c91fd2de86e400eb7bf30ed43b04fd}{x}}();}
-\DoxyCodeLine{00639\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{Foam::scalar}}\ xi3\ =\ xiPt.\mbox{\hyperlink{classFoam_1_1GaussField_ac893a0f59b8435e95c03d2a35c6a2cc3}{z}}();}
-\DoxyCodeLine{00640\ }
-\DoxyCodeLine{00641\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{Foam::scalar}}\ eta1\ =\ etaPt.\mbox{\hyperlink{classFoam_1_1GaussField_a49c91fd2de86e400eb7bf30ed43b04fd}{x}}();}
-\DoxyCodeLine{00642\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{Foam::scalar}}\ eta3\ =\ etaPt.\mbox{\hyperlink{classFoam_1_1GaussField_ac893a0f59b8435e95c03d2a35c6a2cc3}{z}}();}
-\DoxyCodeLine{00643\ }
-\DoxyCodeLine{00644\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{Foam::tensor}}\ JxXi(Zero);}
-\DoxyCodeLine{00645\ \ \ \ \ \ \ \ \ JxXi.xx()\ =\ (1\ -\/\ xi3)/4;}
-\DoxyCodeLine{00646\ \ \ \ \ \ \ \ \ JxXi.xz()\ =\ -\/\ (xi1\ +\ 1)/4;}
-\DoxyCodeLine{00647\ \ \ \ \ \ \ \ \ JxXi.yz()\ =\ 0.5;}
-\DoxyCodeLine{00648\ \ \ \ \ \ \ \ \ JxXi.zy()\ =\ 0.5;}
+\DoxyCodeLine{00599\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{}Unsupported\ cell\ type\ for\ 3D\ Jacobian\ calculation:\ "{}}}
+\DoxyCodeLine{00600\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(cellType)\ <<\ abort(FatalError);}
+\DoxyCodeLine{00601\ \ \ \ \ \}}
+\DoxyCodeLine{00602\ }
+\DoxyCodeLine{00603\ \ \ \ \ \textcolor{comment}{//\ Compute\ Lame\ parameter\ based\ on\ face\ position}}
+\DoxyCodeLine{00604\ \ \ \ \ scalar\ lameParam\ =\ 0.0;}
+\DoxyCodeLine{00605\ \ \ \ \ \textcolor{keywordflow}{switch}\ (facePos)}
+\DoxyCodeLine{00606\ \ \ \ \ \{}
+\DoxyCodeLine{00607\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682acb08ca4a7bb5f9683c19133a84872ca7}{dgFacePosition::ABCD}}:}
+\DoxyCodeLine{00608\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682a17dd6919f5930ea8bd58fecbafd7eb7b}{dgFacePosition::EFGH}}:}
+\DoxyCodeLine{00609\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00610\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ eta3\ direction,\ eta3\ =\ +/-\/1}}
+\DoxyCodeLine{00611\ \ \ \ \ \ \ \ \ \ \ \ \ vector\ gradX\_eta1\ (J.xx(),\ J.yx(),\ J.zx());}
+\DoxyCodeLine{00612\ \ \ \ \ \ \ \ \ \ \ \ \ vector\ gradX\_eta2\ (J.xy(),\ J.yy(),\ J.zy());}
+\DoxyCodeLine{00613\ \ \ \ \ \ \ \ \ \ \ \ \ lameParam\ =\ \mbox{\hyperlink{namespaceFoam_a5915c981c21128d92bdcfba4bc64c4d3}{mag}}(gradX\_eta1\ \string^\ gradX\_eta2);}
+\DoxyCodeLine{00614\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00615\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00616\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682a41d9ff5c880ee22566a8480c85ffa831}{dgFacePosition::ABEF}}:}
+\DoxyCodeLine{00617\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682abfff11d5fc9f1c1e357e7854d6393723}{dgFacePosition::CDGH}}:}
+\DoxyCodeLine{00618\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00619\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ eta2\ direction,\ eta2\ =\ +/-\/1}}
+\DoxyCodeLine{00620\ \ \ \ \ \ \ \ \ \ \ \ \ vector\ gradX\_eta1\ (J.xx(),\ J.yx(),\ J.zx());}
+\DoxyCodeLine{00621\ \ \ \ \ \ \ \ \ \ \ \ \ vector\ gradX\_eta3\ (J.xz(),\ J.yz(),\ J.zz());}
+\DoxyCodeLine{00622\ \ \ \ \ \ \ \ \ \ \ \ \ lameParam\ =\ \mbox{\hyperlink{namespaceFoam_a5915c981c21128d92bdcfba4bc64c4d3}{mag}}(gradX\_eta3\ \string^\ gradX\_eta1);}
+\DoxyCodeLine{00623\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00624\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00625\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682a3657d9ae4bdf500bb16fb581fdf43c64}{dgFacePosition::ACEG}}:}
+\DoxyCodeLine{00626\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682a2c1327bd400a4bde2b37ccb26b635800}{dgFacePosition::BDFH}}:}
+\DoxyCodeLine{00627\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00628\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ eta1\ direction,\ eta1\ =\ +/-\/1}}
+\DoxyCodeLine{00629\ \ \ \ \ \ \ \ \ \ \ \ \ vector\ gradX\_eta2\ (J.xy(),\ J.yy(),\ J.zy());}
+\DoxyCodeLine{00630\ \ \ \ \ \ \ \ \ \ \ \ \ vector\ gradX\_eta3\ (J.xz(),\ J.yz(),\ J.zz());}
+\DoxyCodeLine{00631\ \ \ \ \ \ \ \ \ \ \ \ \ lameParam\ =\ \mbox{\hyperlink{namespaceFoam_a5915c981c21128d92bdcfba4bc64c4d3}{mag}}(gradX\_eta2\ \string^\ gradX\_eta3);}
+\DoxyCodeLine{00632\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};\ }
+\DoxyCodeLine{00633\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00634\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682ab50339a10e1de285ac99d4c3990b8693}{dgFacePosition::NONE}}:}
+\DoxyCodeLine{00635\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00636\ \ \ \ \ \ \ \ \ \ \ \ \ FatalErrorInFunction}
+\DoxyCodeLine{00637\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{}Cannot\ compute\ Lame\ parameter\ for\ face\ with\ NONE\ position."{}}}
+\DoxyCodeLine{00638\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ abort(FatalError);}
+\DoxyCodeLine{00639\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00640\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00641\ \ \ \ \ \}}
+\DoxyCodeLine{00642\ }
+\DoxyCodeLine{00643\ \ \ \ \ \textcolor{keywordflow}{return}\ lameParam;}
+\DoxyCodeLine{00644\ \}}
+\DoxyCodeLine{00645\ }
+\DoxyCodeLine{00646\ \}\ \textcolor{comment}{//\ namespace\ geometricJacobian}}
+\DoxyCodeLine{00647\ }
+\DoxyCodeLine{00648\ \}\ \textcolor{comment}{//\ namespace\ Foam}}
 \DoxyCodeLine{00649\ }
-\DoxyCodeLine{00650\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{Foam::tensor}}\ JxiEta(Zero);}
-\DoxyCodeLine{00651\ \ \ \ \ \ \ \ \ JxiEta.xx()\ =\ (1\ -\/\ eta3)/2;}
-\DoxyCodeLine{00652\ \ \ \ \ \ \ \ \ JxiEta.xz()\ =\ -\/0.5*(1\ +\ eta1);}
-\DoxyCodeLine{00653\ \ \ \ \ \ \ \ \ JxiEta.yy()\ =\ 1.0;}
-\DoxyCodeLine{00654\ \ \ \ \ \ \ \ \ JxiEta.zz()\ =\ 1.0;}
-\DoxyCodeLine{00655\ }
-\DoxyCodeLine{00656\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (JxiEta.T()\ \&\ JxXi.T());}
-\DoxyCodeLine{00657\ \ \ \ \ \};}
-\DoxyCodeLine{00658\ }
-\DoxyCodeLine{00666\ \ \ \ \ \textcolor{keyword}{inline}\ \mbox{\hyperlink{classFoam_1_1GaussField}{Foam::tensor}}\ \mbox{\hyperlink{namespaceFoam_1_1referenceJacobian_a4fb995e832623cbd4e8f8bc23a3830ec}{pyramidRefJMontjoieToDG}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{Foam::vector}}\&\ etaPt)}
-\DoxyCodeLine{00667\ \ \ \ \ \{}
-\DoxyCodeLine{00668\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{Foam::vector}}\ xiPt\ =\ \mbox{\hyperlink{namespaceFoam_abba184c244f6cce0d82449f1b69b921a}{etaToXiPyramid}}(etaPt);}
-\DoxyCodeLine{00669\ }
-\DoxyCodeLine{00670\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{Foam::scalar}}\ xi1\ =\ xiPt.\mbox{\hyperlink{classFoam_1_1GaussField_a49c91fd2de86e400eb7bf30ed43b04fd}{x}}();}
-\DoxyCodeLine{00671\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{Foam::scalar}}\ xi2\ =\ xiPt.\mbox{\hyperlink{classFoam_1_1GaussField_af48b2954902727aadb60e75a5baf4cf3}{y}}();}
-\DoxyCodeLine{00672\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{Foam::scalar}}\ xi3\ =\ xiPt.\mbox{\hyperlink{classFoam_1_1GaussField_ac893a0f59b8435e95c03d2a35c6a2cc3}{z}}();}
-\DoxyCodeLine{00673\ }
-\DoxyCodeLine{00674\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{Foam::scalar}}\ eta1\ =\ etaPt.\mbox{\hyperlink{classFoam_1_1GaussField_a49c91fd2de86e400eb7bf30ed43b04fd}{x}}();}
-\DoxyCodeLine{00675\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{Foam::scalar}}\ eta2\ =\ etaPt.\mbox{\hyperlink{classFoam_1_1GaussField_af48b2954902727aadb60e75a5baf4cf3}{y}}();}
-\DoxyCodeLine{00676\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{Foam::scalar}}\ eta3\ =\ etaPt.\mbox{\hyperlink{classFoam_1_1GaussField_ac893a0f59b8435e95c03d2a35c6a2cc3}{z}}();}
-\DoxyCodeLine{00677\ }
-\DoxyCodeLine{00678\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{Foam::tensor}}\ JxXi(Zero);}
-\DoxyCodeLine{00679\ \ \ \ \ \ \ \ \ JxXi.xx()\ =\ (1\ -\/\ xi3)/2;}
-\DoxyCodeLine{00680\ \ \ \ \ \ \ \ \ JxXi.xy()\ =\ 0;}
-\DoxyCodeLine{00681\ \ \ \ \ \ \ \ \ JxXi.xz()\ =\ -\/\ xi1/2;}
-\DoxyCodeLine{00682\ \ \ \ \ \ \ \ \ JxXi.yx()\ =\ 0;}
-\DoxyCodeLine{00683\ \ \ \ \ \ \ \ \ JxXi.yy()\ =\ (1\ -\/\ xi3)/2;}
-\DoxyCodeLine{00684\ \ \ \ \ \ \ \ \ JxXi.yz()\ =\ -\/\ xi2/2;}
-\DoxyCodeLine{00685\ \ \ \ \ \ \ \ \ JxXi.zz()\ =\ 0.5;}
-\DoxyCodeLine{00686\ }
-\DoxyCodeLine{00687\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{Foam::tensor}}\ JxiEta(Zero);}
-\DoxyCodeLine{00688\ \ \ \ \ \ \ \ \ JxiEta.xx()\ =\ (1\ -\/\ eta3)/2;}
-\DoxyCodeLine{00689\ \ \ \ \ \ \ \ \ JxiEta.xz()\ =\ -\/0.5*(1\ +\ eta1);}
-\DoxyCodeLine{00690\ \ \ \ \ \ \ \ \ JxiEta.yy()\ =\ (1\ -\/\ eta3)/2;}
-\DoxyCodeLine{00691\ \ \ \ \ \ \ \ \ JxiEta.yz()\ =\ -\/0.5*(1\ +\ eta2);}
-\DoxyCodeLine{00692\ \ \ \ \ \ \ \ \ JxiEta.zz()\ =\ 1.0;}
-\DoxyCodeLine{00693\ }
-\DoxyCodeLine{00694\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (JxiEta.T()\ \&\ JxXi.T());}
-\DoxyCodeLine{00695\ \ \ \ \ \};}
-\DoxyCodeLine{00696\ }
-\DoxyCodeLine{00704\ \ \ \ \ \textcolor{keyword}{inline}\ \mbox{\hyperlink{classFoam_1_1GaussField}{Foam::tensor}}\ \mbox{\hyperlink{namespaceFoam_1_1referenceJacobian_a20cbd3943668679677399471f735f140}{tetRefJMontjoieToDG}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{Foam::vector}}\&\ etaPt)}
-\DoxyCodeLine{00705\ \ \ \ \ \{}
-\DoxyCodeLine{00706\ \ \ \ \ \ \ \ \ \textcolor{comment}{//Foam::vector\ xiPt\ =\ etaToXiTet(etaPt);}}
-\DoxyCodeLine{00707\ }
-\DoxyCodeLine{00708\ \ \ \ \ \ \ \ \ \textcolor{comment}{//Foam::scalar\ xi1\ =\ xiPt.x();}}
-\DoxyCodeLine{00709\ \ \ \ \ \ \ \ \ \textcolor{comment}{//Foam::scalar\ xi2\ =\ xiPt.y();}}
-\DoxyCodeLine{00710\ \ \ \ \ \ \ \ \ \textcolor{comment}{//Foam::scalar\ xi3\ =\ xiPt.z();}}
-\DoxyCodeLine{00711\ }
-\DoxyCodeLine{00712\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{Foam::scalar}}\ eta1\ =\ etaPt.\mbox{\hyperlink{classFoam_1_1GaussField_a49c91fd2de86e400eb7bf30ed43b04fd}{x}}();}
-\DoxyCodeLine{00713\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{Foam::scalar}}\ eta2\ =\ etaPt.\mbox{\hyperlink{classFoam_1_1GaussField_af48b2954902727aadb60e75a5baf4cf3}{y}}();}
-\DoxyCodeLine{00714\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{Foam::scalar}}\ eta3\ =\ etaPt.\mbox{\hyperlink{classFoam_1_1GaussField_ac893a0f59b8435e95c03d2a35c6a2cc3}{z}}();}
-\DoxyCodeLine{00715\ }
-\DoxyCodeLine{00716\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{Foam::tensor}}\ JxXi(Zero);}
-\DoxyCodeLine{00717\ \ \ \ \ \ \ \ \ JxXi.xx()\ =\ 0.5;}
-\DoxyCodeLine{00718\ \ \ \ \ \ \ \ \ JxXi.yy()\ =\ 0.5;}
-\DoxyCodeLine{00719\ \ \ \ \ \ \ \ \ JxXi.zz()\ =\ 0.5;}
-\DoxyCodeLine{00720\ }
-\DoxyCodeLine{00721\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{Foam::tensor}}\ JxiEta(Zero);}
-\DoxyCodeLine{00722\ \ \ \ \ \ \ \ \ JxiEta.xx()\ =\ (1\ -\/\ eta3)*(1\ -\/\ eta2)/4;}
-\DoxyCodeLine{00723\ \ \ \ \ \ \ \ \ JxiEta.xy()\ =\ -\/(1\ +\ eta1)*(1\ -\/\ eta3)/4;}
-\DoxyCodeLine{00724\ \ \ \ \ \ \ \ \ JxiEta.xz()\ =\ -\/(1\ +\ eta1)*(1\ -\/\ eta2)/4;}
-\DoxyCodeLine{00725\ \ \ \ \ \ \ \ \ JxiEta.yy()\ =\ (1\ -\/\ eta3)/2;}
-\DoxyCodeLine{00726\ \ \ \ \ \ \ \ \ JxiEta.yz()\ =\ -\/0.5*(1\ +\ eta2);}
-\DoxyCodeLine{00727\ \ \ \ \ \ \ \ \ JxiEta.zz()\ =\ 1.0;}
-\DoxyCodeLine{00728\ }
-\DoxyCodeLine{00729\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (JxiEta.T()\ \&\ JxXi.T());}
-\DoxyCodeLine{00730\ \ \ \ \ \};}
-\DoxyCodeLine{00731\ \}\ \textcolor{comment}{//\ namespace\ referenceJacobian}}
-\DoxyCodeLine{00732\ }
-\DoxyCodeLine{00733\ \}\ \textcolor{comment}{//\ namespace\ Foam}}
-\DoxyCodeLine{00734\ }
-\DoxyCodeLine{00735\ \textcolor{preprocessor}{\#endif}}
-\DoxyCodeLine{00736\ }
-\DoxyCodeLine{00737\ \textcolor{comment}{//\ *************************************************************************\ //}}
-\DoxyCodeLine{00738\ }
+\DoxyCodeLine{00650\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00651\ }
+\DoxyCodeLine{00652\ \textcolor{comment}{//\ *************************************************************************\ //}}
+\DoxyCodeLine{00653\ }
 
 \end{DoxyCode}

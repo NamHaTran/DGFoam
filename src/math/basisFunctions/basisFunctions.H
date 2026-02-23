@@ -100,8 +100,8 @@ inline label getNumBasis(const label pOrder, const dgCellType type)
         case dgCellType::PYRAMID:
         {
             for (label i = 0; i <= pOrder; ++i)
-                for (label j = 0; j <= pOrder; ++j)
-                    for (label k = 0; k <= pOrder - j; ++k)
+                for (label j = 0; j <= pOrder - i; ++j)
+                    for (label k = 0; k <= pOrder - i - j; ++k)
                         ++count;
 
             return count;
@@ -136,38 +136,45 @@ inline label getNumBasis(const label pOrder, const dgCellType type)
 
 
 /**
- * \brief Evaluate orthogonal interior basis functions for hexahedral cells
+ * \brief Evaluate orthonormal modal basis functions for hexahedral cells
  *
- * This routine evaluates an orthogonal modal basis defined on the
- * reference hexahedron. The basis functions are constructed as
- * tensor products of Legendre polynomials.
+ * This routine evaluates an L2-orthonormal modal basis defined on the
+ * reference hexahedron using tensor products of Legendre polynomials.
  *
- * The modal basis functions are defined as:
+ * The orthonormal basis functions are defined as:
  *
  * \f[
  *   \psi_{i,j,k}(x,y,z)
- *   = P_i(x)\, P_j(y)\, P_k(z),
+ *   =
+ *   \sqrt{\frac{(2i+1)(2j+1)(2k+1)}{8}}
+ *   \;
+ *   P_i(x)\, P_j(y)\, P_k(z),
  *   \qquad i + j + k \le p
  * \f]
  *
- * where \f$P_n\f$ denotes the Legendre polynomial of degree \f$n\f$.
- *
- * The reference domain of the basis is the unit hexahedron:
+ * where:
+ *  - \f$P_n\f$ is the Legendre polynomial of degree \f$n\f$,
+ *  - \f$(x,y,z) \in [-1,1]^3\f$ is the reference hexahedral domain,
+ *  - the normalization factor ensures L²-orthonormality:
  *
  * \f[
- *   (x,y,z) \in [-1,1]^3
+ *   \int_{[-1,1]^3}
+ *   \psi_{i,j,k}\,\psi_{m,n,l}
+ *   \; dx\,dy\,dz
+ *   =
+ *   \delta_{im}\,\delta_{jn}\,\delta_{kl}.
  * \f]
  *
- * The basis is orthogonal with respect to the \f$L^2\f$ inner product
- * over the reference domain.
+ * Therefore, the mass matrix on the reference element is exactly the
+ * identity matrix when exact integration is used.
  *
  * The routine evaluates:
- *  - the values of all modal basis functions at a given point,
- *  - and their first derivatives with respect to each coordinate.
+ *  - the values of all orthonormal modal basis functions at a given point,
+ *  - and their first derivatives with respect to each reference coordinate.
  *
- * \param etaPt        Reference coordinates in the basis domain
- * \param pOrder       Polynomial order of the approximation
- * \param basis        Values of the basis functions at the evaluation point
+ * \param etaPt        Reference coordinates (x,y,z) in [-1,1]^3
+ * \param pOrder       Maximum total polynomial degree
+ * \param basis        Values of the orthonormal basis functions
  * \param dBasis_dx    Derivatives with respect to x
  * \param dBasis_dy    Derivatives with respect to y
  * \param dBasis_dz    Derivatives with respect to z
@@ -246,55 +253,97 @@ inline void computeHexBasisAndDerivatives
 }
 
 /**
- * \brief Evaluate orthogonal modal basis functions for prism (wedge) cells
+ * \brief Evaluate L2-orthonormal modal basis functions for prism (wedge) cells
  *
- * This routine evaluates a set of hierarchical orthogonal polynomial
- * basis functions defined on the reference prism (wedge) element.
- * The basis is constructed such that it is orthogonal with respect
- * to the L² inner product on the reference prism when combined with
- * the appropriate Duffy-type quadrature.
+ * This routine evaluates an L²-orthonormal hierarchical modal basis
+ * defined on the reference prism element. The construction follows
+ * a Duffy-type tensor-product formulation combining:
  *
- * The orthogonal basis functions are defined as:
+ *   - Legendre polynomials in the η1-direction,
+ *   - collapsed Jacobi polynomials in the (η2,η3) triangular structure.
+ *
+ * The orthonormal basis functions are defined as:
  *
  * \f[
- *   \phi_{i,j,k}(x,y,z)
+ *   \psi_{i,j,k}(\eta_1,\eta_2,\eta_3)
  *   =
- *   P_i^{0,0}(x)\;
- *   P_j^{0,0}(y)\;
- *   \left(\frac{1 - z}{2}\right)^j
- *   P_k^{2j+1,0}(z),
+ *   \sqrt{
+ *     \frac{
+ *       (2i+1)(2j+1)(2k+2j+2)
+ *     }{8}
+ *   }
+ *   \;
+ *   P_i^{0,0}(\eta_1)\;
+ *   P_j^{0,0}(\eta_2)\;
+ *   \left(\frac{1-\eta_3}{2}\right)^j
+ *   P_k^{2j+1,0}(\eta_3),
  * \f]
  *
  * with index constraints
  *
  * \f[
- *   i \le p, \qquad
- *   j \le p, \qquad
- *   j + k \le p.
+ *   0 \le i \le p, \qquad
+ *   0 \le j \le p, \qquad
+ *   0 \le k \le p-j.
  * \f]
  *
- * Here, \f$P_n^{\alpha,\beta}\f$ denotes the Jacobi polynomial of degree
- * \f$n\f$ with parameters \f$(\alpha,\beta)\f$.
+ * where:
+ *  - \f$P_n^{\alpha,\beta}\f$ is the Jacobi polynomial of degree n,
+ *  - \f$(\eta_1,\eta_2,\eta_3) \in [-1,1]^3\f$ is the collapsed prism domain,
+ *  - the factor \f$\left(\frac{1-\eta_3}{2}\right)^j\f$ enforces the triangular
+ *    structure in the (η2,η3) directions,
+ *  - the normalization factor guarantees L²-orthonormality.
  *
- * The reference domain is the tensor-product prism:
+ * The basis satisfies:
  *
  * \f[
- *   (x,y,z) \in [-1,1] \times [-1,1] \times [-1,1],
+ *   \int_{\text{ref prism}}
+ *   \psi_{i,j,k}\,\psi_{m,n,l}
+ *   \; d\eta
+ *   =
+ *   \delta_{im}\,\delta_{jn}\,\delta_{kl}.
  * \f]
  *
- * where the triangular structure in the (y,z) directions is enforced
- * through the factor \f$\left(\frac{1 - z}{2}\right)^j\f$ and the
- * constraint \f$j + k \le p\f$.
+ * Therefore, with exact integration, the reference-element mass matrix
+ * is the identity matrix.
  *
- * The resulting basis forms a hierarchical polynomial space suitable
- * for discontinuous Galerkin discretizations on prism elements.
+ * -------------------------------------------------------------------------
+ * Note
+ * -------------------------------------------------------------------------
  *
- * \param etaPt        Reference coordinates (x,y,z) in [-1,1]^3
- * \param pOrder       Polynomial order of the approximation
- * \param basis        Values of the basis functions at etaPt
- * \param dBasis_dx    Derivatives with respect to x
- * \param dBasis_dy    Derivatives with respect to y
- * \param dBasis_dz    Derivatives with respect to z
+ * Another commonly used orthogonal wedge basis is written in the form:
+ *
+ * \f[
+ *   P_i^{0,0}(\eta_1)\;
+ *   P_j^{0,0}(\eta_2)\;
+ *   \left(\frac{1-\eta_3}{2}\right)^j
+ *   P_k^{2j+1,0}(\eta_3),
+ *   \qquad i \le p,\; j+k \le p,
+ * \f]
+ *
+ * without explicit normalization.
+ *
+ * This alternative formulation appears in the Montjoie finite element
+ * framework and related spectral/hp literature.
+ *
+ * Reference:
+ *   https://www.math.u-bordeaux.fr/~durufle/montjoie/wedge.php
+ *
+ * A detailed comparison between the present L²-orthonormal scaling and
+ * the Montjoie implementation will be investigated in future work.
+ *
+ * -------------------------------------------------------------------------
+ *
+ * The routine evaluates:
+ *  - the values of all orthonormal modal basis functions at a point,
+ *  - and their first derivatives with respect to each reference coordinate.
+ *
+ * \param etaPt        Reference coordinates (η1,η2,η3)
+ * \param pOrder       Maximum polynomial order
+ * \param basis        Values of the orthonormal basis functions
+ * \param dBasis_dx    Derivatives with respect to η1
+ * \param dBasis_dy    Derivatives with respect to η2
+ * \param dBasis_dz    Derivatives with respect to η3
  */
 inline void computePrismBasisAndDerivatives
 (
@@ -391,59 +440,102 @@ inline void computePrismBasisAndDerivatives
 }
 
 /**
- * \brief Evaluate orthogonal interior basis functions for pyramid cells
+ * \brief Evaluate L2-orthonormal modal basis functions for pyramid cells
  *
- * This routine evaluates an orthogonal modal basis defined on the
- * reference pyramid. The polynomial space is identical to that of the
- * classical high-order pyramid element, but the basis functions are
- * constructed to be orthogonal with respect to the L^2 inner product.
+ * This routine evaluates an L²-orthonormal hierarchical modal basis
+ * defined on the reference pyramid element. The construction follows
+ * the standard collapsed-coordinate formulation using Jacobi polynomials
+ * to ensure regular behaviour at the apex.
  *
- * The orthogonal modal basis functions are defined as:
+ * The orthonormal basis functions are defined as:
  *
  * \f[
  *   \psi_{i,j,k}(\eta_1,\eta_2,\eta_3)
  *   =
+ *   \sqrt{
+ *     \frac{
+ *       (2i+1)(2j+1)(2k+2(i+j)+3)
+ *     }{8}
+ *   }
+ *   \;
+ *   P_i^{0,0}(\eta_1)\,
+ *   P_j^{0,0}(\eta_2)\,
+ *   \left(\frac{1-\eta_3}{2}\right)^{i+j}\,
+ *   P_k^{2(i+j)+2,\,0}(\eta_3),
+ * \f]
+ *
+ * with index ranges
+ *
+ * \f[
+ *   0 \le i \le p, \qquad
+ *   0 \le j \le p-i, \qquad
+ *   0 \le k \le p-i-j.
+ * \f]
+ *
+ * where:
+ *  - \f$P_n^{\alpha,\beta}\f$ denotes the Jacobi polynomial,
+ *  - \f$(\eta_1,\eta_2,\eta_3) \in [-1,1]^3\f$ is the collapsed cube domain,
+ *  - the factor \f$\left(\frac{1-\eta_3}{2}\right)^{i+j}\f$
+ *    enforces the pyramid collapse and guarantees regularity at the apex,
+ *  - the normalization factor guarantees L²-orthonormality.
+ *
+ * The basis satisfies:
+ *
+ * \f[
+ *   \int_{\text{ref pyramid}}
+ *   \psi_{i,j,k}\,\psi_{m,n,l}
+ *   \; d\eta
+ *   =
+ *   \delta_{im}\,\delta_{jn}\,\delta_{kl}.
+ * \f]
+ *
+ * Therefore, with exact integration, the reference-element mass matrix
+ * is the identity matrix.
+ *
+ * -------------------------------------------------------------------------
+ * Note
+ * -------------------------------------------------------------------------
+ *
+ * Another commonly used orthogonal pyramid basis is written as:
+ *
+ * \f[
  *   P_i^{0,0}(\eta_1)\,
  *   P_j^{0,0}(\eta_2)\,
  *   \left(\frac{1-\eta_3}{2}\right)^{\max(i,j)}\,
  *   P_k^{2\max(i,j)+2,\,0}(\eta_3),
  * \f]
  *
- * with index ranges:
+ * with index constraints
  *
  * \f[
- *   0 \le i \le p,\quad
- *   0 \le j \le p,\quad
- *   0 \le k \le p - j,
+ *   i \le p,\quad j \le p,\quad k \le p-j.
  * \f]
  *
- * where \f$P_n^{\alpha,\beta}\f$ denotes the Jacobi polynomial of degree
- * \f$n\f$ with parameters \f$(\alpha,\beta)\f$.
+ * This formulation appears in the Montjoie finite element framework
+ * and related spectral/hp literature.
  *
- * The reference domain is the cube:
+ * Reference:
+ *   https://www.math.u-bordeaux.fr/~durufle/montjoie/pyramid.php
  *
- * \f[
- *   (\eta_1,\eta_2,\eta_3) \in [-1,1]^3,
- * \f]
+ * A detailed comparison between the present L²-orthonormal scaling
+ * and the Montjoie implementation will be investigated in future work.
  *
- * together with the pyramid collapse structure implied by the
- * factor \f$((1-\eta_3)/2)^{\max(i,j)}\f$, which ensures regular
- * behavior at the apex.
+ * -------------------------------------------------------------------------
  *
  * The routine evaluates:
- *  - the values of all modal basis functions at a given point,
+ *  - the values of all orthonormal modal basis functions at a point,
  *  - and their first derivatives with respect to each reference coordinate.
  *
- * \param etaPt        Reference coordinates (\f$\eta_1,\eta_2,\eta_3\f$)
- * \param pOrder       Polynomial order of the approximation
- * \param basis        Values of the basis functions at the evaluation point
- * \param dBasis_deta1 Derivatives with respect to \f$\eta_1\f$
- * \param dBasis_deta2 Derivatives with respect to \f$\eta_2\f$
- * \param dBasis_deta3 Derivatives with respect to \f$\eta_3\f$
+ * \param etaPt         Reference coordinates (η1,η2,η3)
+ * \param pOrder        Maximum polynomial order
+ * \param basis         Values of the orthonormal basis functions
+ * \param dBasis_deta1  Derivatives with respect to η1
+ * \param dBasis_deta2  Derivatives with respect to η2
+ * \param dBasis_deta3  Derivatives with respect to η3
  */
 inline void computePyramidBasisAndDerivatives
 (
-    const vector etaPt,     // (eta1, eta2, eta3) in [-1,1]^3
+    const vector etaPt,
     const label  pOrder,
     List<scalar>& basis,
     List<scalar>& dBasis_deta1,
@@ -466,41 +558,36 @@ inline void computePyramidBasisAndDerivatives
     dBasis_deta3.setSize(nBasis);
 
     label idx = 0;
-
-    const scalar oneMinusEta3 = 1.0 - eta3;
-    const scalar halfFactor   = 0.5;
+    const scalar half = 0.5;
 
     for (label i = 0; i <= pOrder; ++i)
     {
         const scalar Pi  = jacobi(static_cast<unsigned>(i), 0.0, 0.0, eta1);
         const scalar dPi = jacobi_prime(static_cast<unsigned>(i), 0.0, 0.0, eta1);
 
-        for (label j = 0; j <= pOrder; ++j)
+        for (label j = 0; j <= pOrder - i; ++j)
         {
             const scalar Pj  = jacobi(static_cast<unsigned>(j), 0.0, 0.0, eta2);
             const scalar dPj = jacobi_prime(static_cast<unsigned>(j), 0.0, 0.0, eta2);
 
-            const label m = max(i, j);
+            const label ij = i + j;
 
-            // ((1 - eta3)/2)^m
-            const scalar baseTerm =
-                (m == 0)
-                ? 1.0
-                : std::pow(oneMinusEta3 * halfFactor, m);
+            const scalar oneMinusEta3 = 1.0 - eta3;
 
-            const scalar dBaseTerm_deta3 =
-                (m == 0)
-                ? 0.0
-                : -m * halfFactor *
-                  std::pow(oneMinusEta3 * halfFactor, m - 1);
+            // ((1 - eta3)/2)^(i+j)
+            const scalar powTerm =
+                (ij == 0) ? 1.0 :
+                std::pow(oneMinusEta3 * half, ij);
 
-            // --------------------------------------------------
-            // Corrected constraint:
-            // k ≤ pOrder - j
-            // --------------------------------------------------
-            for (label k = 0; k <= pOrder - j; ++k)
+            const scalar dPowTerm_deta3 =
+                (ij == 0) ? 0.0 :
+                -ij * half *
+                std::pow(oneMinusEta3 * half, ij - 1);
+
+            for (label k = 0; k <= pOrder - i - j; ++k)
             {
-                const scalar alpha = 2.0 * m + 2.0;
+                const scalar alpha =
+                    2.0 * i + 2.0 * j + 2.0;
 
                 const scalar Pk =
                     jacobi(static_cast<unsigned>(k), alpha, 0.0, eta3);
@@ -508,29 +595,47 @@ inline void computePyramidBasisAndDerivatives
                 const scalar dPk =
                     jacobi_prime(static_cast<unsigned>(k), alpha, 0.0, eta3);
 
-                // --------------------------------------------------
-                // Basis value
-                // --------------------------------------------------
-                basis[idx] = Pi * Pj * baseTerm * Pk;
+                // ----------------------------------
+                // Normalization factor
+                // ----------------------------------
+                const scalar norm =
+                    std::sqrt(
+                        (2.0*i + 1.0) *
+                        (2.0*j + 1.0) *
+                        (2.0*k + 2.0*ij + 3.0)
+                        / 8.0
+                    );
 
-                // --------------------------------------------------
-                // ∂/∂eta1
-                // --------------------------------------------------
+                // ----------------------------------
+                // Basis
+                // ----------------------------------
+                basis[idx] =
+                    norm *
+                    Pi * Pj * powTerm * Pk;
+
+                // ----------------------------------
+                // d/deta1
+                // ----------------------------------
                 dBasis_deta1[idx] =
-                    dPi * Pj * baseTerm * Pk;
+                    norm *
+                    dPi * Pj * powTerm * Pk;
 
-                // --------------------------------------------------
-                // ∂/∂eta2
-                // --------------------------------------------------
+                // ----------------------------------
+                // d/deta2
+                // ----------------------------------
                 dBasis_deta2[idx] =
-                    Pi * dPj * baseTerm * Pk;
+                    norm *
+                    Pi * dPj * powTerm * Pk;
 
-                // --------------------------------------------------
-                // ∂/∂eta3
-                // --------------------------------------------------
+                // ----------------------------------
+                // d/deta3
+                // ----------------------------------
                 dBasis_deta3[idx] =
-                      Pi * Pj * dBaseTerm_deta3 * Pk
-                    + Pi * Pj * baseTerm * dPk;
+                    norm *
+                    (
+                        Pi * Pj * dPowTerm_deta3 * Pk
+                      + Pi * Pj * powTerm * dPk
+                    );
 
                 ++idx;
             }
@@ -539,55 +644,72 @@ inline void computePyramidBasisAndDerivatives
 }
 
 /**
- * \brief Evaluate orthogonal interior basis functions for tetrahedral cells
+ * \brief Evaluate L2-orthonormal modal basis functions for tetrahedral cells
  *
- * This routine evaluates an orthogonal modal basis defined on the
- * reference tetrahedron. The polynomial space corresponds to the
- * classical tetrahedral finite element space of total degree less
- * than or equal to p, but the basis is constructed to be orthogonal
- * with respect to the L^2 inner product.
+ * This routine evaluates an L²-orthonormal hierarchical modal basis
+ * defined on the reference tetrahedron. The polynomial space coincides
+ * with the classical tetrahedral finite element space of total degree
+ * less than or equal to p, but the basis is constructed to be
+ * orthonormal with respect to the L² inner product.
  *
- * The orthogonal modal basis functions are defined as:
+ * The orthonormal basis functions are defined as:
  *
  * \f[
  *   \psi_{i,j,k}(\eta_1,\eta_2,\eta_3)
  *   =
+ *   \sqrt{
+ *     \frac{
+ *       (2i+1)
+ *       (2j+2i+2)
+ *       (2k+2i+2j+3)
+ *     }{8}
+ *   }
+ *   \;
  *   P_i^{0,0}(\eta_1)
  *   \left(\frac{1-\eta_2}{2}\right)^i
  *   P_j^{2i+1,0}(\eta_2)
- *   \left(\frac{1-\eta_3}{2}\right)^j
+ *   \left(\frac{1-\eta_3}{2}\right)^{i+j}
  *   P_k^{2i+2j+2,0}(\eta_3),
  *   \qquad i + j + k \le p,
  * \f]
  *
- * where \f$P_n^{\alpha,\beta}\f$ denotes the Jacobi polynomial of degree
- * \f$n\f$ with parameters \f$(\alpha,\beta)\f$.
+ * where:
+ *  - \f$P_n^{\alpha,\beta}\f$ denotes the Jacobi polynomial,
+ *  - \f$(\eta_1,\eta_2,\eta_3) \in [-1,1]^3\f$ is the collapsed cube domain,
+ *  - the factors
+ *      \f$\left(\frac{1-\eta_2}{2}\right)^i\f$
+ *    and
+ *      \f$\left(\frac{1-\eta_3}{2}\right)^{i+j}\f$
+ *    induce the tetrahedral collapse structure,
+ *  - the normalization factor guarantees L²-orthonormality.
  *
- * The reference domain is the cube:
+ * The basis satisfies:
  *
  * \f[
- *   (\eta_1,\eta_2,\eta_3) \in [-1,1]^3,
+ *   \int_{\text{ref tetra}}
+ *   \psi_{i,j,k}\,\psi_{m,n,l}
+ *   \; d\eta
+ *   =
+ *   \delta_{im}\,\delta_{jn}\,\delta_{kl}.
  * \f]
  *
- * together with the tetrahedral collapse structure induced by the
- * hierarchical factors \f$((1-\eta_2)/2)^i\f$ and
- * \f$((1-\eta_3)/2)^j\f$, which ensure polynomial completeness and
- * regular behavior toward the tetrahedral apex.
+ * Therefore, with exact integration, the reference-element mass matrix
+ * is the identity matrix.
  *
  * The routine evaluates:
- *  - the values of all modal basis functions at a given point,
+ *  - the values of all orthonormal modal basis functions at a point,
  *  - and their first derivatives with respect to each reference coordinate.
  *
- * \param etaPt          Reference coordinates (\f$\eta_1,\eta_2,\eta_3\f$)
- * \param pOrder         Polynomial order of the approximation
- * \param basis          Values of the basis functions at the evaluation point
- * \param dBasis_deta1   Derivatives with respect to \f$\eta_1\f$
- * \param dBasis_deta2   Derivatives with respect to \f$\eta_2\f$
- * \param dBasis_deta3   Derivatives with respect to \f$\eta_3\f$
+ * \param etaPt          Reference coordinates (η1,η2,η3)
+ * \param pOrder         Maximum polynomial order
+ * \param basis          Values of the orthonormal basis functions
+ * \param dBasis_deta1   Derivatives with respect to η1
+ * \param dBasis_deta2   Derivatives with respect to η2
+ * \param dBasis_deta3   Derivatives with respect to η3
  */
 inline void computeTetBasisAndDerivatives
 (
-    const vector etaPt,   // (eta1, eta2, eta3) in [-1,1]^3
+    const vector etaPt,
     const label  pOrder,
     List<scalar>& basis,
     List<scalar>& dBasis_deta1,
@@ -610,7 +732,6 @@ inline void computeTetBasisAndDerivatives
     dBasis_deta3.setSize(nBasis);
 
     label idx = 0;
-
     const scalar half = 0.5;
 
     for (label i = 0; i <= pOrder; ++i)
@@ -620,7 +741,6 @@ inline void computeTetBasisAndDerivatives
 
         const scalar oneMinusEta2 = 1.0 - eta2;
 
-        // ((1 - eta2)/2)^i
         const scalar powEta2 =
             (i == 0) ? 1.0 :
             std::pow(oneMinusEta2 * half, i);
@@ -642,15 +762,17 @@ inline void computeTetBasisAndDerivatives
 
             const scalar oneMinusEta3 = 1.0 - eta3;
 
-            // ((1 - eta3)/2)^j
+            // ( (1 - eta3)/2 )^(i+j)
+            const label ij = i + j;
+
             const scalar powEta3 =
-                (j == 0) ? 1.0 :
-                std::pow(oneMinusEta3 * half, j);
+                (ij == 0) ? 1.0 :
+                std::pow(oneMinusEta3 * half, ij);
 
             const scalar dPowEta3_deta3 =
-                (j == 0) ? 0.0 :
-                -j * half *
-                std::pow(oneMinusEta3 * half, j - 1);
+                (ij == 0) ? 0.0 :
+                -ij * half *
+                std::pow(oneMinusEta3 * half, ij - 1);
 
             for (label k = 0; k <= pOrder - i - j; ++k)
             {
@@ -663,39 +785,58 @@ inline void computeTetBasisAndDerivatives
                 const scalar dPk =
                     jacobi_prime(static_cast<unsigned>(k), alpha_k, 0.0, eta3);
 
-                // --------------------------------------------------
-                // Basis value
-                // --------------------------------------------------
+                // -------------------------
+                // Normalization factor
+                // -------------------------
+                const scalar norm =
+                    std::sqrt(
+                        (2.0*i + 1.0) *
+                        (2.0*j + 2.0*i + 2.0) *
+                        (2.0*k + 2.0*i + 2.0*j + 3.0)
+                        / 8.0
+                    );
+
+                // -------------------------
+                // Basis
+                // -------------------------
                 basis[idx] =
+                    norm *
                     Pi * powEta2 *
                     Pj * powEta3 *
                     Pk;
 
-                // --------------------------------------------------
-                // ∂/∂eta1
-                // --------------------------------------------------
+                // -------------------------
+                // d/deta1
+                // -------------------------
                 dBasis_deta1[idx] =
+                    norm *
                     dPi * powEta2 *
                     Pj * powEta3 *
                     Pk;
 
-                // --------------------------------------------------
-                // ∂/∂eta2
-                // --------------------------------------------------
+                // -------------------------
+                // d/deta2
+                // -------------------------
                 dBasis_deta2[idx] =
-                      Pi * dPowEta2_deta2 *
+                    norm *
+                    (
+                        Pi * dPowEta2_deta2 *
                         Pj * powEta3 * Pk
-                    + Pi * powEta2 *
-                        dPj * powEta3 * Pk;
+                      + Pi * powEta2 *
+                        dPj * powEta3 * Pk
+                    );
 
-                // --------------------------------------------------
-                // ∂/∂eta3
-                // --------------------------------------------------
+                // -------------------------
+                // d/deta3
+                // -------------------------
                 dBasis_deta3[idx] =
-                      Pi * powEta2 *
+                    norm *
+                    (
+                        Pi * powEta2 *
                         Pj * dPowEta3_deta3 * Pk
-                    + Pi * powEta2 *
-                        Pj * powEta3 * dPk;
+                      + Pi * powEta2 *
+                        Pj * powEta3 * dPk
+                    );
 
                 ++idx;
             }

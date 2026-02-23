@@ -147,7 +147,7 @@ Classes</h2></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Zero-gradient (Neumann-type) boundary condition for DG fields.  <a href="classFoam_1_1dgGeneralZeroGradientBoundaryField.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1dgGeomCell.html">dgGeomCell</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Geometric container for a DG cell.  <a href="classFoam_1_1dgGeomCell.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Geometric container for a DG cell (affine formulation)  <a href="classFoam_1_1dgGeomCell.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1dgGeomFace.html">dgGeomFace</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Geometric face data for DG discretization.  <a href="classFoam_1_1dgGeomFace.html#details">More...</a><br /></td></tr>
@@ -413,18 +413,18 @@ Functions</h2></td></tr>
 <tr class="memitem:a3f95ccd325596ba613b34ba6c0bf6c1f" id="r_a3f95ccd325596ba613b34ba6c0bf6c1f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">label</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFoam.html#a3f95ccd325596ba613b34ba6c0bf6c1f">getNumBasis</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">label</a> pOrder, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="dgGeomCell_2dgCellType_8H.html#afaeb14dfc0cfab52916039ab825f34d5">dgCellType</a> type)</td></tr>
 <tr class="memdesc:a3f95ccd325596ba613b34ba6c0bf6c1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return number of basis functions.  <br /></td></tr>
 <tr class="separator:a3f95ccd325596ba613b34ba6c0bf6c1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab471416866fe7f72fb3585d9eec671c2" id="r_ab471416866fe7f72fb3585d9eec671c2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFoam.html#ab471416866fe7f72fb3585d9eec671c2">computeHexBasisAndDerivatives</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">scalar</a> x, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">scalar</a> y, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">scalar</a> z, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">label</a> pOrder, <a class="el" href="classFoam_1_1GaussField.html">List</a>&lt; <a class="el" href="classFoam_1_1GaussField.html">scalar</a> &gt; &amp;basis, <a class="el" href="classFoam_1_1GaussField.html">List</a>&lt; <a class="el" href="classFoam_1_1GaussField.html">scalar</a> &gt; &amp;<a class="el" href="classFoam_1_1GaussField.html">dBasis_dx</a>, <a class="el" href="classFoam_1_1GaussField.html">List</a>&lt; <a class="el" href="classFoam_1_1GaussField.html">scalar</a> &gt; &amp;<a class="el" href="classFoam_1_1GaussField.html">dBasis_dy</a>, <a class="el" href="classFoam_1_1GaussField.html">List</a>&lt; <a class="el" href="classFoam_1_1GaussField.html">scalar</a> &gt; &amp;<a class="el" href="classFoam_1_1GaussField.html">dBasis_dz</a>)</td></tr>
-<tr class="memdesc:ab471416866fe7f72fb3585d9eec671c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evaluate orthogonal interior basis functions for hexahedral cells.  <br /></td></tr>
-<tr class="separator:ab471416866fe7f72fb3585d9eec671c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae93828b60c145d1eecf8e98706ef23f1" id="r_ae93828b60c145d1eecf8e98706ef23f1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFoam.html#ae93828b60c145d1eecf8e98706ef23f1">computePrismBasisAndDerivatives</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">scalar</a> x, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">scalar</a> y, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">scalar</a> z, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">label</a> pOrder, <a class="el" href="classFoam_1_1GaussField.html">List</a>&lt; <a class="el" href="classFoam_1_1GaussField.html">scalar</a> &gt; &amp;basis, <a class="el" href="classFoam_1_1GaussField.html">List</a>&lt; <a class="el" href="classFoam_1_1GaussField.html">scalar</a> &gt; &amp;<a class="el" href="classFoam_1_1GaussField.html">dBasis_dx</a>, <a class="el" href="classFoam_1_1GaussField.html">List</a>&lt; <a class="el" href="classFoam_1_1GaussField.html">scalar</a> &gt; &amp;<a class="el" href="classFoam_1_1GaussField.html">dBasis_dy</a>, <a class="el" href="classFoam_1_1GaussField.html">List</a>&lt; <a class="el" href="classFoam_1_1GaussField.html">scalar</a> &gt; &amp;<a class="el" href="classFoam_1_1GaussField.html">dBasis_dz</a>)</td></tr>
-<tr class="memdesc:ae93828b60c145d1eecf8e98706ef23f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evaluate orthogonal interior basis functions for prism (wedge) cells.  <br /></td></tr>
-<tr class="separator:ae93828b60c145d1eecf8e98706ef23f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4f760deea79360afea19cc00a9c83e4e" id="r_a4f760deea79360afea19cc00a9c83e4e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFoam.html#a4f760deea79360afea19cc00a9c83e4e">computePyramidBasisAndDerivatives</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">scalar</a> x, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">scalar</a> y, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">scalar</a> z, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">label</a> pOrder, <a class="el" href="classFoam_1_1GaussField.html">List</a>&lt; <a class="el" href="classFoam_1_1GaussField.html">scalar</a> &gt; &amp;basis, <a class="el" href="classFoam_1_1GaussField.html">List</a>&lt; <a class="el" href="classFoam_1_1GaussField.html">scalar</a> &gt; &amp;<a class="el" href="classFoam_1_1GaussField.html">dBasis_dx</a>, <a class="el" href="classFoam_1_1GaussField.html">List</a>&lt; <a class="el" href="classFoam_1_1GaussField.html">scalar</a> &gt; &amp;<a class="el" href="classFoam_1_1GaussField.html">dBasis_dy</a>, <a class="el" href="classFoam_1_1GaussField.html">List</a>&lt; <a class="el" href="classFoam_1_1GaussField.html">scalar</a> &gt; &amp;<a class="el" href="classFoam_1_1GaussField.html">dBasis_dz</a>)</td></tr>
-<tr class="memdesc:a4f760deea79360afea19cc00a9c83e4e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evaluate orthogonal interior basis functions for pyramid cells.  <br /></td></tr>
-<tr class="separator:a4f760deea79360afea19cc00a9c83e4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a23972bd07000d4dc81ffd25cbf51968b" id="r_a23972bd07000d4dc81ffd25cbf51968b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFoam.html#a23972bd07000d4dc81ffd25cbf51968b">computeTetBasisAndDerivatives</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">scalar</a> x, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">scalar</a> y, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">scalar</a> z, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">label</a> pOrder, <a class="el" href="classFoam_1_1GaussField.html">List</a>&lt; <a class="el" href="classFoam_1_1GaussField.html">scalar</a> &gt; &amp;basis, <a class="el" href="classFoam_1_1GaussField.html">List</a>&lt; <a class="el" href="classFoam_1_1GaussField.html">scalar</a> &gt; &amp;<a class="el" href="classFoam_1_1GaussField.html">dBasis_dx</a>, <a class="el" href="classFoam_1_1GaussField.html">List</a>&lt; <a class="el" href="classFoam_1_1GaussField.html">scalar</a> &gt; &amp;<a class="el" href="classFoam_1_1GaussField.html">dBasis_dy</a>, <a class="el" href="classFoam_1_1GaussField.html">List</a>&lt; <a class="el" href="classFoam_1_1GaussField.html">scalar</a> &gt; &amp;<a class="el" href="classFoam_1_1GaussField.html">dBasis_dz</a>)</td></tr>
-<tr class="memdesc:a23972bd07000d4dc81ffd25cbf51968b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evaluate orthogonal interior basis functions for tetrahedral cells.  <br /></td></tr>
-<tr class="separator:a23972bd07000d4dc81ffd25cbf51968b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3d4cf3a56a860f24e72885a6c8620308" id="r_a3d4cf3a56a860f24e72885a6c8620308"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFoam.html#a3d4cf3a56a860f24e72885a6c8620308">computeHexBasisAndDerivatives</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">vector</a> <a class="el" href="classFoam_1_1GaussField.html">etaPt</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">label</a> pOrder, <a class="el" href="classFoam_1_1GaussField.html">List</a>&lt; <a class="el" href="classFoam_1_1GaussField.html">scalar</a> &gt; &amp;basis, <a class="el" href="classFoam_1_1GaussField.html">List</a>&lt; <a class="el" href="classFoam_1_1GaussField.html">scalar</a> &gt; &amp;<a class="el" href="classFoam_1_1GaussField.html">dBasis_dx</a>, <a class="el" href="classFoam_1_1GaussField.html">List</a>&lt; <a class="el" href="classFoam_1_1GaussField.html">scalar</a> &gt; &amp;<a class="el" href="classFoam_1_1GaussField.html">dBasis_dy</a>, <a class="el" href="classFoam_1_1GaussField.html">List</a>&lt; <a class="el" href="classFoam_1_1GaussField.html">scalar</a> &gt; &amp;<a class="el" href="classFoam_1_1GaussField.html">dBasis_dz</a>)</td></tr>
+<tr class="memdesc:a3d4cf3a56a860f24e72885a6c8620308"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evaluate orthonormal modal basis functions for hexahedral cells.  <br /></td></tr>
+<tr class="separator:a3d4cf3a56a860f24e72885a6c8620308"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a572c92c5c085d5804bdb33e46a35e840" id="r_a572c92c5c085d5804bdb33e46a35e840"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFoam.html#a572c92c5c085d5804bdb33e46a35e840">computePrismBasisAndDerivatives</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">vector</a> <a class="el" href="classFoam_1_1GaussField.html">etaPt</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">label</a> pOrder, <a class="el" href="classFoam_1_1GaussField.html">List</a>&lt; <a class="el" href="classFoam_1_1GaussField.html">scalar</a> &gt; &amp;basis, <a class="el" href="classFoam_1_1GaussField.html">List</a>&lt; <a class="el" href="classFoam_1_1GaussField.html">scalar</a> &gt; &amp;<a class="el" href="classFoam_1_1GaussField.html">dBasis_dx</a>, <a class="el" href="classFoam_1_1GaussField.html">List</a>&lt; <a class="el" href="classFoam_1_1GaussField.html">scalar</a> &gt; &amp;<a class="el" href="classFoam_1_1GaussField.html">dBasis_dy</a>, <a class="el" href="classFoam_1_1GaussField.html">List</a>&lt; <a class="el" href="classFoam_1_1GaussField.html">scalar</a> &gt; &amp;<a class="el" href="classFoam_1_1GaussField.html">dBasis_dz</a>)</td></tr>
+<tr class="memdesc:a572c92c5c085d5804bdb33e46a35e840"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evaluate L2-orthonormal modal basis functions for prism (wedge) cells.  <br /></td></tr>
+<tr class="separator:a572c92c5c085d5804bdb33e46a35e840"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae7f81f7453e04193254de9449cec0bdd" id="r_ae7f81f7453e04193254de9449cec0bdd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFoam.html#ae7f81f7453e04193254de9449cec0bdd">computePyramidBasisAndDerivatives</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">vector</a> <a class="el" href="classFoam_1_1GaussField.html">etaPt</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">label</a> pOrder, <a class="el" href="classFoam_1_1GaussField.html">List</a>&lt; <a class="el" href="classFoam_1_1GaussField.html">scalar</a> &gt; &amp;basis, <a class="el" href="classFoam_1_1GaussField.html">List</a>&lt; <a class="el" href="classFoam_1_1GaussField.html">scalar</a> &gt; &amp;<a class="el" href="classFoam_1_1GaussField.html">dBasis_deta1</a>, <a class="el" href="classFoam_1_1GaussField.html">List</a>&lt; <a class="el" href="classFoam_1_1GaussField.html">scalar</a> &gt; &amp;<a class="el" href="classFoam_1_1GaussField.html">dBasis_deta2</a>, <a class="el" href="classFoam_1_1GaussField.html">List</a>&lt; <a class="el" href="classFoam_1_1GaussField.html">scalar</a> &gt; &amp;<a class="el" href="classFoam_1_1GaussField.html">dBasis_deta3</a>)</td></tr>
+<tr class="memdesc:ae7f81f7453e04193254de9449cec0bdd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evaluate L2-orthonormal modal basis functions for pyramid cells.  <br /></td></tr>
+<tr class="separator:ae7f81f7453e04193254de9449cec0bdd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7065da252f9f281fe97569fbef1842b5" id="r_a7065da252f9f281fe97569fbef1842b5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFoam.html#a7065da252f9f281fe97569fbef1842b5">computeTetBasisAndDerivatives</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">vector</a> <a class="el" href="classFoam_1_1GaussField.html">etaPt</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">label</a> pOrder, <a class="el" href="classFoam_1_1GaussField.html">List</a>&lt; <a class="el" href="classFoam_1_1GaussField.html">scalar</a> &gt; &amp;basis, <a class="el" href="classFoam_1_1GaussField.html">List</a>&lt; <a class="el" href="classFoam_1_1GaussField.html">scalar</a> &gt; &amp;<a class="el" href="classFoam_1_1GaussField.html">dBasis_deta1</a>, <a class="el" href="classFoam_1_1GaussField.html">List</a>&lt; <a class="el" href="classFoam_1_1GaussField.html">scalar</a> &gt; &amp;<a class="el" href="classFoam_1_1GaussField.html">dBasis_deta2</a>, <a class="el" href="classFoam_1_1GaussField.html">List</a>&lt; <a class="el" href="classFoam_1_1GaussField.html">scalar</a> &gt; &amp;<a class="el" href="classFoam_1_1GaussField.html">dBasis_deta3</a>)</td></tr>
+<tr class="memdesc:a7065da252f9f281fe97569fbef1842b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evaluate L2-orthonormal modal basis functions for tetrahedral cells.  <br /></td></tr>
+<tr class="separator:a7065da252f9f281fe97569fbef1842b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1b943de77fdb1c2d70e3d6f447a2bd9d" id="r_a1b943de77fdb1c2d70e3d6f447a2bd9d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1cellDof.html">cellDof</a>&lt; <a class="el" href="classFoam_1_1GaussField.html">scalar</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFoam.html#a1b943de77fdb1c2d70e3d6f447a2bd9d">operator*</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">scalar</a> &amp;a, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1cellDof.html">cellDof</a>&lt; <a class="el" href="classFoam_1_1GaussField.html">scalar</a> &gt; &amp;<a class="el" href="classFoam_1_1GaussField.html">A</a>)</td></tr>
 <tr class="separator:a1b943de77fdb1c2d70e3d6f447a2bd9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a36a7858ebec6d6d0de20684233ace9e7" id="r_a36a7858ebec6d6d0de20684233ace9e7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1cellDof.html">cellDof</a>&lt; <a class="el" href="classFoam_1_1GaussField.html">scalar</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFoam.html#a36a7858ebec6d6d0de20684233ace9e7">operator*</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1cellDof.html">cellDof</a>&lt; <a class="el" href="classFoam_1_1GaussField.html">scalar</a> &gt; &amp;<a class="el" href="classFoam_1_1GaussField.html">A</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">scalar</a> &amp;a)</td></tr>
@@ -2202,8 +2202,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ab471416866fe7f72fb3585d9eec671c2" name="ab471416866fe7f72fb3585d9eec671c2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab471416866fe7f72fb3585d9eec671c2">&#9670;&#160;</a></span>computeHexBasisAndDerivatives()</h2>
+<a id="a3d4cf3a56a860f24e72885a6c8620308" name="a3d4cf3a56a860f24e72885a6c8620308"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3d4cf3a56a860f24e72885a6c8620308">&#9670;&#160;</a></span>computeHexBasisAndDerivatives()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2214,20 +2214,8 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname"><a class="el" href="classFoam_1_1GaussField.html">void</a> Foam::computeHexBasisAndDerivatives </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">scalar</a>&#160;</td>
-          <td class="paramname"><em>x</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">scalar</a>&#160;</td>
-          <td class="paramname"><em>y</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">scalar</a>&#160;</td>
-          <td class="paramname"><em>z</em>, </td>
+          <td class="paramtype"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">vector</a>&#160;</td>
+          <td class="paramname"><em>etaPt</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -2272,46 +2260,54 @@ Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Evaluate orthogonal interior basis functions for hexahedral cells. </p>
-<p>This routine evaluates the orthogonal modal basis functions defined on a reference hexahedron, following the construction used in the Montjoie finite element framework:</p>
-<p><a href="https://www.math.u-bordeaux.fr/~durufle/montjoie/hexahedra.php">https://www.math.u-bordeaux.fr/~durufle/montjoie/hexahedra.php</a></p>
-<p>The orthogonal basis functions are defined as total-degree tensor products of Legendre polynomials:</p>
+<p>Evaluate orthonormal modal basis functions for hexahedral cells. </p>
+<p>This routine evaluates an L2-orthonormal modal basis defined on the reference hexahedron using tensor products of Legendre polynomials.</p>
+<p>The orthonormal basis functions are defined as:</p>
 <p class="formulaDsp">
 \[
   \psi_{i,j,k}(x,y,z)
-  = P_i^{0,0}(x)\, P_j^{0,0}(y)\, P_k^{0,0}(z),
+  =
+  \sqrt{\frac{(2i+1)(2j+1)(2k+1)}{8}}
+  \;
+  P_i(x)\, P_j(y)\, P_k(z),
   \qquad i + j + k \le p
 \]
 </p>
-<p>where \(P_n^{0,0}\) denotes the Legendre polynomial of degree \(n\).</p>
-<p>The reference domain of the basis is the unit hexahedron:</p>
+<p>where:</p><ul>
+<li>\(P_n\) is the Legendre polynomial of degree \(n\),</li>
+<li>\((x,y,z) \in [-1,1]^3\) is the reference hexahedral domain,</li>
+<li>the normalization factor ensures L²-orthonormality:</li>
+</ul>
 <p class="formulaDsp">
 \[
-  (x,y,z) \in [0,1]^3
+  \int_{[-1,1]^3}
+  \psi_{i,j,k}\,\psi_{m,n,l}
+  \; dx\,dy\,dz
+  =
+  \delta_{im}\,\delta_{jn}\,\delta_{kl}.
 \]
 </p>
-<p>The basis functions are orthogonal with respect to the \(L^2\) inner product over this domain.</p>
-<p>This function assumes that the input coordinates ( \(x,y,z\)) are already expressed in the reference basis domain \([0,1]^3\).</p>
-<p>When used inside DGFoam, Gauss points are often generated in the solver reference hexahedron \([-1,1]^3\). In that case, the caller is responsible for mapping those coordinates to \([0,1]^3\) before calling this routine.</p>
-<p>No geometric mapping, scaling, or coordinate transformation is performed internally. This routine strictly evaluates the basis functions and their derivatives at the provided reference coordinates.</p>
+<p>Therefore, the mass matrix on the reference element is exactly the identity matrix when exact integration is used.</p>
+<p>The routine evaluates:</p><ul>
+<li>the values of all orthonormal modal basis functions at a given point,</li>
+<li>and their first derivatives with respect to each reference coordinate.</li>
+</ul>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">x</td><td>Reference coordinate in the basis domain ( \(x \in [0,1]\)) </td></tr>
-    <tr><td class="paramname">y</td><td>Reference coordinate in the basis domain ( \(y \in [0,1]\)) </td></tr>
-    <tr><td class="paramname">z</td><td>Reference coordinate in the basis domain ( \(z \in [0,1]\)) </td></tr>
-    <tr><td class="paramname">pOrder</td><td>Polynomial order of the approximation </td></tr>
-    <tr><td class="paramname">basis</td><td>Values of the basis functions at the evaluation point </td></tr>
-    <tr><td class="paramname">dBasis_dx</td><td>Derivatives with respect to \(x\) </td></tr>
-    <tr><td class="paramname">dBasis_dy</td><td>Derivatives with respect to \(y\) </td></tr>
-    <tr><td class="paramname">dBasis_dz</td><td>Derivatives with respect to \(z\) </td></tr>
+    <tr><td class="paramname">etaPt</td><td>Reference coordinates (x,y,z) in [-1,1]^3 </td></tr>
+    <tr><td class="paramname">pOrder</td><td>Maximum total polynomial degree </td></tr>
+    <tr><td class="paramname">basis</td><td>Values of the orthonormal basis functions </td></tr>
+    <tr><td class="paramname">dBasis_dx</td><td>Derivatives with respect to x </td></tr>
+    <tr><td class="paramname">dBasis_dy</td><td>Derivatives with respect to y </td></tr>
+    <tr><td class="paramname">dBasis_dz</td><td>Derivatives with respect to z </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a id="ae93828b60c145d1eecf8e98706ef23f1" name="ae93828b60c145d1eecf8e98706ef23f1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae93828b60c145d1eecf8e98706ef23f1">&#9670;&#160;</a></span>computePrismBasisAndDerivatives()</h2>
+<a id="a572c92c5c085d5804bdb33e46a35e840" name="a572c92c5c085d5804bdb33e46a35e840"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a572c92c5c085d5804bdb33e46a35e840">&#9670;&#160;</a></span>computePrismBasisAndDerivatives()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2322,20 +2318,8 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname"><a class="el" href="classFoam_1_1GaussField.html">void</a> Foam::computePrismBasisAndDerivatives </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">scalar</a>&#160;</td>
-          <td class="paramname"><em>x</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">scalar</a>&#160;</td>
-          <td class="paramname"><em>y</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">scalar</a>&#160;</td>
-          <td class="paramname"><em>z</em>, </td>
+          <td class="paramtype"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">vector</a>&#160;</td>
+          <td class="paramname"><em>etaPt</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -2380,51 +2364,172 @@ Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Evaluate orthogonal interior basis functions for prism (wedge) cells. </p>
-<p>This routine evaluates the orthogonal modal basis functions defined on a reference wedge (prism), following the construction used in the Montjoie finite element framework:</p>
-<p><a href="https://www.math.u-bordeaux.fr/~durufle/montjoie/wedge.php">https://www.math.u-bordeaux.fr/~durufle/montjoie/wedge.php</a></p>
-<p>The finite element space is identical to that of the classical wedge element, but the basis functions are chosen to be orthogonal with respect to the \(L^2\) inner product.</p>
-<p>The orthogonal basis functions are defined as:</p>
+<p>Evaluate L2-orthonormal modal basis functions for prism (wedge) cells. </p>
+<p>This routine evaluates an L²-orthonormal hierarchical modal basis defined on the reference prism element. The construction follows a Duffy-type tensor-product formulation combining:</p>
+<ul>
+<li>Legendre polynomials in the η1-direction,</li>
+<li>collapsed Jacobi polynomials in the (η2,η3) triangular structure.</li>
+</ul>
+<p>The orthonormal basis functions are defined as:</p>
 <p class="formulaDsp">
 \[
-  \psi_{i,j,k}(x,y,z)
+  \psi_{i,j,k}(\eta_1,\eta_2,\eta_3)
   =
-  P_i^{0,0}\!\left(\frac{2x}{1-y} - 1\right)
-  (1 - y)^i
-  P_j^{2i+1,0}(2y - 1)
-  P_k^{0,0}(2z - 1),
-  \qquad i + j + k \le p
+  \sqrt{
+    \frac{
+      (2i+1)(2j+1)(2k+2j+2)
+    }{8}
+  }
+  \;
+  P_i^{0,0}(\eta_1)\;
+  P_j^{0,0}(\eta_2)\;
+  \left(\frac{1-\eta_3}{2}\right)^j
+  P_k^{2j+1,0}(\eta_3),
 \]
 </p>
-<p>where \(P_n^{\alpha,\beta}\) denotes the Jacobi polynomial of degree \(n\) with parameters \((\alpha,\beta)\).</p>
-<p>The reference domain of the basis is the unit wedge:</p>
+<p>with index constraints</p>
 <p class="formulaDsp">
 \[
-  (x,y,z) \in [0,1] \times [0,1] \times [0,1],
-  \quad x \le 1 - y
+  0 \le i \le p, \qquad
+  0 \le j \le p, \qquad
+  0 \le k \le p-j.
 \]
 </p>
-<p>This function assumes that the input coordinates ( \(x,y,z\)) are already expressed in this reference wedge coordinate system.</p>
-<p>When used inside DGFoam, Gauss points may be generated in a different solver reference domain. In that case, the caller is responsible for mapping those coordinates to the reference wedge domain before calling this routine.</p>
-<p>No geometric mapping or coordinate transformation is performed inside this routine. It strictly evaluates the basis functions and their derivatives at the provided reference coordinates.</p>
+<p>where:</p><ul>
+<li>\(P_n^{\alpha,\beta}\) is the Jacobi polynomial of degree n,</li>
+<li>\((\eta_1,\eta_2,\eta_3) \in [-1,1]^3\) is the collapsed prism domain,</li>
+<li>the factor \(\left(\frac{1-\eta_3}{2}\right)^j\) enforces the triangular structure in the (η2,η3) directions,</li>
+<li>the normalization factor guarantees L²-orthonormality.</li>
+</ul>
+<p>The basis satisfies:</p>
+<p class="formulaDsp">
+\[
+  \int_{\text{ref prism}}
+  \psi_{i,j,k}\,\psi_{m,n,l}
+  \; d\eta
+  =
+  \delta_{im}\,\delta_{jn}\,\delta_{kl}.
+\]
+</p>
+<p>Therefore, with exact integration, the reference-element mass matrix is the identity matrix.</p>
+<hr  />
+ <h2><a class="anchor" id="autotoc_md1"></a>
+Note</h2>
+<p>Another commonly used orthogonal wedge basis is written in the form:</p>
+<p class="formulaDsp">
+\[
+  P_i^{0,0}(\eta_1)\;
+  P_j^{0,0}(\eta_2)\;
+  \left(\frac{1-\eta_3}{2}\right)^j
+  P_k^{2j+1,0}(\eta_3),
+  \qquad i \le p,\; j+k \le p,
+\]
+</p>
+<p>without explicit normalization.</p>
+<p>This alternative formulation appears in the Montjoie finite element framework and related spectral/hp literature.</p>
+<p>Reference: <a href="https://www.math.u-bordeaux.fr/~durufle/montjoie/wedge.php">https://www.math.u-bordeaux.fr/~durufle/montjoie/wedge.php</a></p>
+<p>A detailed comparison between the present L²-orthonormal scaling and the Montjoie implementation will be investigated in future work.</p>
+<hr  />
+<p>The routine evaluates:</p><ul>
+<li>the values of all orthonormal modal basis functions at a point,</li>
+<li>and their first derivatives with respect to each reference coordinate.</li>
+</ul>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">x</td><td>Reference coordinate in the wedge basis domain </td></tr>
-    <tr><td class="paramname">y</td><td>Reference coordinate in the wedge basis domain </td></tr>
-    <tr><td class="paramname">z</td><td>Reference coordinate in the wedge basis domain </td></tr>
-    <tr><td class="paramname">pOrder</td><td>Polynomial order of the approximation </td></tr>
-    <tr><td class="paramname">basis</td><td>Values of the basis functions at the evaluation point </td></tr>
-    <tr><td class="paramname">dBasis_dx</td><td>Derivatives with respect to \(x\) </td></tr>
-    <tr><td class="paramname">dBasis_dy</td><td>Derivatives with respect to \(y\) </td></tr>
-    <tr><td class="paramname">dBasis_dz</td><td>Derivatives with respect to \(z\) </td></tr>
+    <tr><td class="paramname">etaPt</td><td>Reference coordinates (η1,η2,η3) </td></tr>
+    <tr><td class="paramname">pOrder</td><td>Maximum polynomial order </td></tr>
+    <tr><td class="paramname">basis</td><td>Values of the orthonormal basis functions </td></tr>
+    <tr><td class="paramname">dBasis_dx</td><td>Derivatives with respect to η1 </td></tr>
+    <tr><td class="paramname">dBasis_dy</td><td>Derivatives with respect to η2 </td></tr>
+    <tr><td class="paramname">dBasis_dz</td><td>Derivatives with respect to η3</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>This routine evaluates an L²-orthonormal hierarchical modal basis defined on the reference prism element. The construction follows a Duffy-type tensor-product formulation combining:</p>
+<ul>
+<li>Legendre polynomials in the η1-direction,</li>
+<li>collapsed Jacobi polynomials in the (η2,η3) triangular structure.</li>
+</ul>
+<p>The orthonormal basis functions are defined as:</p>
+<p class="formulaDsp">
+\[
+  \psi_{i,j,k}(\eta_1,\eta_2,\eta_3)
+  =
+  \sqrt{
+    \frac{
+      (2i+1)(2j+1)(2k+2j+2)
+    }{8}
+  }
+  \;
+  P_i^{0,0}(\eta_1)\;
+  P_j^{0,0}(\eta_2)\;
+  \left(\frac{1-\eta_3}{2}\right)^j
+  P_k^{2j+1,0}(\eta_3),
+\]
+</p>
+<p>with index constraints</p>
+<p class="formulaDsp">
+\[
+  0 \le i \le p, \qquad
+  0 \le j \le p, \qquad
+  0 \le k \le p-j.
+\]
+</p>
+<p>where:</p><ul>
+<li>\(P_n^{\alpha,\beta}\) is the Jacobi polynomial of degree n,</li>
+<li>\((\eta_1,\eta_2,\eta_3) \in [-1,1]^3\) is the collapsed prism domain,</li>
+<li>the factor \(\left(\frac{1-\eta_3}{2}\right)^j\) enforces the triangular structure in the (η2,η3) directions,</li>
+<li>the normalization factor guarantees L²-orthonormality.</li>
+</ul>
+<p>The basis satisfies:</p>
+<p class="formulaDsp">
+\[
+  \int_{\text{ref prism}}
+  \psi_{i,j,k}\,\psi_{m,n,l}
+  \; d\eta
+  =
+  \delta_{im}\,\delta_{jn}\,\delta_{kl}.
+\]
+</p>
+<p>Therefore, with exact integration, the reference-element mass matrix is the identity matrix.</p>
+<hr  />
+ <h2><a class="anchor" id="autotoc_md7"></a>
+Note</h2>
+<p>Another commonly used orthogonal wedge basis is written in the form:</p>
+<p class="formulaDsp">
+\[
+  P_i^{0,0}(\eta_1)\;
+  P_j^{0,0}(\eta_2)\;
+  \left(\frac{1-\eta_3}{2}\right)^j
+  P_k^{2j+1,0}(\eta_3),
+  \qquad i \le p,\; j+k \le p,
+\]
+</p>
+<p>without explicit normalization.</p>
+<p>This alternative formulation appears in the Montjoie finite element framework and related spectral/hp literature.</p>
+<p>Reference: <a href="https://www.math.u-bordeaux.fr/~durufle/montjoie/wedge.php">https://www.math.u-bordeaux.fr/~durufle/montjoie/wedge.php</a></p>
+<p>A detailed comparison between the present L²-orthonormal scaling and the Montjoie implementation will be investigated in future work.</p>
+<hr  />
+<p>The routine evaluates:</p><ul>
+<li>the values of all orthonormal modal basis functions at a point,</li>
+<li>and their first derivatives with respect to each reference coordinate.</li>
+</ul>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">etaPt</td><td>Reference coordinates (η1,η2,η3) </td></tr>
+    <tr><td class="paramname">pOrder</td><td>Maximum polynomial order </td></tr>
+    <tr><td class="paramname">basis</td><td>Values of the orthonormal basis functions </td></tr>
+    <tr><td class="paramname">dBasis_dx</td><td>Derivatives with respect to η1 </td></tr>
+    <tr><td class="paramname">dBasis_dy</td><td>Derivatives with respect to η2 </td></tr>
+    <tr><td class="paramname">dBasis_dz</td><td>Derivatives with respect to η3 </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a id="a4f760deea79360afea19cc00a9c83e4e" name="a4f760deea79360afea19cc00a9c83e4e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4f760deea79360afea19cc00a9c83e4e">&#9670;&#160;</a></span>computePyramidBasisAndDerivatives()</h2>
+<a id="ae7f81f7453e04193254de9449cec0bdd" name="ae7f81f7453e04193254de9449cec0bdd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae7f81f7453e04193254de9449cec0bdd">&#9670;&#160;</a></span>computePyramidBasisAndDerivatives()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2435,20 +2540,8 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname"><a class="el" href="classFoam_1_1GaussField.html">void</a> Foam::computePyramidBasisAndDerivatives </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">scalar</a>&#160;</td>
-          <td class="paramname"><em>x</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">scalar</a>&#160;</td>
-          <td class="paramname"><em>y</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">scalar</a>&#160;</td>
-          <td class="paramname"><em>z</em>, </td>
+          <td class="paramtype"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">vector</a>&#160;</td>
+          <td class="paramname"><em>etaPt</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -2466,19 +2559,19 @@ Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="classFoam_1_1GaussField.html">List</a>&lt; <a class="el" href="classFoam_1_1GaussField.html">scalar</a> &gt; &amp;&#160;</td>
-          <td class="paramname"><em>dBasis_dx</em>, </td>
+          <td class="paramname"><em>dBasis_deta1</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="classFoam_1_1GaussField.html">List</a>&lt; <a class="el" href="classFoam_1_1GaussField.html">scalar</a> &gt; &amp;&#160;</td>
-          <td class="paramname"><em>dBasis_dy</em>, </td>
+          <td class="paramname"><em>dBasis_deta2</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="classFoam_1_1GaussField.html">List</a>&lt; <a class="el" href="classFoam_1_1GaussField.html">scalar</a> &gt; &amp;&#160;</td>
-          <td class="paramname"><em>dBasis_dz</em>&#160;</td>
+          <td class="paramname"><em>dBasis_deta3</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -2493,57 +2586,172 @@ Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Evaluate orthogonal interior basis functions for pyramid cells. </p>
-<p>This routine evaluates the orthogonal modal basis functions defined on a reference pyramid, following the construction used in the Montjoie finite element framework:</p>
-<p><a href="https://www.math.u-bordeaux.fr/~durufle/montjoie/pyramid.php">https://www.math.u-bordeaux.fr/~durufle/montjoie/pyramid.php</a></p>
-<p>The finite element space is identical to that of the classical pyramid element, but the basis functions are chosen to be orthogonal with respect to the \(L^2\) inner product.</p>
-<p>The orthogonal basis functions are defined as:</p>
+<p>Evaluate L2-orthonormal modal basis functions for pyramid cells. </p>
+<p>This routine evaluates an L²-orthonormal hierarchical modal basis defined on the reference pyramid element. The construction follows the standard collapsed-coordinate formulation using Jacobi polynomials to ensure regular behaviour at the apex.</p>
+<p>The orthonormal basis functions are defined as:</p>
 <p class="formulaDsp">
 \[
-  \psi_{i,j,k}(x,y,z)
+  \psi_{i,j,k}(\eta_1,\eta_2,\eta_3)
   =
-  P_i^{0,0}\!\left(\frac{x}{1-z}\right)
-  P_j^{0,0}\!\left(\frac{y}{1-z}\right)
-  (1-z)^{\max(i,j)}
-  P_k^{2\max(i,j)+2,0}(2z-1),
+  \sqrt{
+    \frac{
+      (2i+1)(2j+1)(2k+2(i+j)+3)
+    }{8}
+  }
+  \;
+  P_i^{0,0}(\eta_1)\,
+  P_j^{0,0}(\eta_2)\,
+  \left(\frac{1-\eta_3}{2}\right)^{i+j}\,
+  P_k^{2(i+j)+2,\,0}(\eta_3),
 \]
 </p>
-<p>with index ranges:</p>
+<p>with index ranges</p>
 <p class="formulaDsp">
 \[
-  0 \le i,j \le p-k,
-  \qquad 0 \le k \le p
+  0 \le i \le p, \qquad
+  0 \le j \le p-i, \qquad
+  0 \le k \le p-i-j.
 \]
 </p>
-<p>where \(P_n^{\alpha,\beta}\) denotes the Jacobi polynomial of degree \(n\) with parameters \((\alpha,\beta)\).</p>
-<p>The reference domain of the basis is the unit pyramid:</p>
+<p>where:</p><ul>
+<li>\(P_n^{\alpha,\beta}\) denotes the Jacobi polynomial,</li>
+<li>\((\eta_1,\eta_2,\eta_3) \in [-1,1]^3\) is the collapsed cube domain,</li>
+<li>the factor \(\left(\frac{1-\eta_3}{2}\right)^{i+j}\) enforces the pyramid collapse and guarantees regularity at the apex,</li>
+<li>the normalization factor guarantees L²-orthonormality.</li>
+</ul>
+<p>The basis satisfies:</p>
 <p class="formulaDsp">
 \[
-  (x,y,z) \in [0,1] \times [0,1] \times [0,1],
-  \quad x \le 1 - z,\; y \le 1 - z
+  \int_{\text{ref pyramid}}
+  \psi_{i,j,k}\,\psi_{m,n,l}
+  \; d\eta
+  =
+  \delta_{im}\,\delta_{jn}\,\delta_{kl}.
 \]
 </p>
-<p>This function assumes that the input coordinates ( \(x,y,z\)) are already expressed in this reference pyramid coordinate system.</p>
-<p>When used inside DGFoam, Gauss points may be generated in a different solver reference domain. In that case, the caller is responsible for mapping those coordinates to the reference pyramid domain before calling this routine.</p>
-<p>No geometric mapping or coordinate transformation is performed inside this routine. It strictly evaluates the basis functions and their derivatives at the provided reference coordinates.</p>
+<p>Therefore, with exact integration, the reference-element mass matrix is the identity matrix.</p>
+<hr  />
+ <h2><a class="anchor" id="autotoc_md4"></a>
+Note</h2>
+<p>Another commonly used orthogonal pyramid basis is written as:</p>
+<p class="formulaDsp">
+\[
+  P_i^{0,0}(\eta_1)\,
+  P_j^{0,0}(\eta_2)\,
+  \left(\frac{1-\eta_3}{2}\right)^{\max(i,j)}\,
+  P_k^{2\max(i,j)+2,\,0}(\eta_3),
+\]
+</p>
+<p>with index constraints</p>
+<p class="formulaDsp">
+\[
+  i \le p,\quad j \le p,\quad k \le p-j.
+\]
+</p>
+<p>This formulation appears in the Montjoie finite element framework and related spectral/hp literature.</p>
+<p>Reference: <a href="https://www.math.u-bordeaux.fr/~durufle/montjoie/pyramid.php">https://www.math.u-bordeaux.fr/~durufle/montjoie/pyramid.php</a></p>
+<p>A detailed comparison between the present L²-orthonormal scaling and the Montjoie implementation will be investigated in future work.</p>
+<hr  />
+<p>The routine evaluates:</p><ul>
+<li>the values of all orthonormal modal basis functions at a point,</li>
+<li>and their first derivatives with respect to each reference coordinate.</li>
+</ul>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">x</td><td>Reference coordinate in the pyramid basis domain </td></tr>
-    <tr><td class="paramname">y</td><td>Reference coordinate in the pyramid basis domain </td></tr>
-    <tr><td class="paramname">z</td><td>Reference coordinate in the pyramid basis domain </td></tr>
-    <tr><td class="paramname">pOrder</td><td>Polynomial order of the approximation </td></tr>
-    <tr><td class="paramname">basis</td><td>Values of the basis functions at the evaluation point </td></tr>
-    <tr><td class="paramname">dBasis_dx</td><td>Derivatives with respect to \(x\) </td></tr>
-    <tr><td class="paramname">dBasis_dy</td><td>Derivatives with respect to \(y\) </td></tr>
-    <tr><td class="paramname">dBasis_dz</td><td>Derivatives with respect to \(z\) </td></tr>
+    <tr><td class="paramname">etaPt</td><td>Reference coordinates (η1,η2,η3) </td></tr>
+    <tr><td class="paramname">pOrder</td><td>Maximum polynomial order </td></tr>
+    <tr><td class="paramname">basis</td><td>Values of the orthonormal basis functions </td></tr>
+    <tr><td class="paramname">dBasis_deta1</td><td>Derivatives with respect to η1 </td></tr>
+    <tr><td class="paramname">dBasis_deta2</td><td>Derivatives with respect to η2 </td></tr>
+    <tr><td class="paramname">dBasis_deta3</td><td>Derivatives with respect to η3</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>This routine evaluates an L²-orthonormal hierarchical modal basis defined on the reference pyramid element. The construction follows the standard collapsed-coordinate formulation using Jacobi polynomials to ensure regular behaviour at the apex.</p>
+<p>The orthonormal basis functions are defined as:</p>
+<p class="formulaDsp">
+\[
+  \psi_{i,j,k}(\eta_1,\eta_2,\eta_3)
+  =
+  \sqrt{
+    \frac{
+      (2i+1)(2j+1)(2k+2(i+j)+3)
+    }{8}
+  }
+  \;
+  P_i^{0,0}(\eta_1)\,
+  P_j^{0,0}(\eta_2)\,
+  \left(\frac{1-\eta_3}{2}\right)^{i+j}\,
+  P_k^{2(i+j)+2,\,0}(\eta_3),
+\]
+</p>
+<p>with index ranges</p>
+<p class="formulaDsp">
+\[
+  0 \le i \le p, \qquad
+  0 \le j \le p-i, \qquad
+  0 \le k \le p-i-j.
+\]
+</p>
+<p>where:</p><ul>
+<li>\(P_n^{\alpha,\beta}\) denotes the Jacobi polynomial,</li>
+<li>\((\eta_1,\eta_2,\eta_3) \in [-1,1]^3\) is the collapsed cube domain,</li>
+<li>the factor \(\left(\frac{1-\eta_3}{2}\right)^{i+j}\) enforces the pyramid collapse and guarantees regularity at the apex,</li>
+<li>the normalization factor guarantees L²-orthonormality.</li>
+</ul>
+<p>The basis satisfies:</p>
+<p class="formulaDsp">
+\[
+  \int_{\text{ref pyramid}}
+  \psi_{i,j,k}\,\psi_{m,n,l}
+  \; d\eta
+  =
+  \delta_{im}\,\delta_{jn}\,\delta_{kl}.
+\]
+</p>
+<p>Therefore, with exact integration, the reference-element mass matrix is the identity matrix.</p>
+<hr  />
+ <h2><a class="anchor" id="autotoc_md10"></a>
+Note</h2>
+<p>Another commonly used orthogonal pyramid basis is written as:</p>
+<p class="formulaDsp">
+\[
+  P_i^{0,0}(\eta_1)\,
+  P_j^{0,0}(\eta_2)\,
+  \left(\frac{1-\eta_3}{2}\right)^{\max(i,j)}\,
+  P_k^{2\max(i,j)+2,\,0}(\eta_3),
+\]
+</p>
+<p>with index constraints</p>
+<p class="formulaDsp">
+\[
+  i \le p,\quad j \le p,\quad k \le p-j.
+\]
+</p>
+<p>This formulation appears in the Montjoie finite element framework and related spectral/hp literature.</p>
+<p>Reference: <a href="https://www.math.u-bordeaux.fr/~durufle/montjoie/pyramid.php">https://www.math.u-bordeaux.fr/~durufle/montjoie/pyramid.php</a></p>
+<p>A detailed comparison between the present L²-orthonormal scaling and the Montjoie implementation will be investigated in future work.</p>
+<hr  />
+<p>The routine evaluates:</p><ul>
+<li>the values of all orthonormal modal basis functions at a point,</li>
+<li>and their first derivatives with respect to each reference coordinate.</li>
+</ul>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">etaPt</td><td>Reference coordinates (η1,η2,η3) </td></tr>
+    <tr><td class="paramname">pOrder</td><td>Maximum polynomial order </td></tr>
+    <tr><td class="paramname">basis</td><td>Values of the orthonormal basis functions </td></tr>
+    <tr><td class="paramname">dBasis_deta1</td><td>Derivatives with respect to η1 </td></tr>
+    <tr><td class="paramname">dBasis_deta2</td><td>Derivatives with respect to η2 </td></tr>
+    <tr><td class="paramname">dBasis_deta3</td><td>Derivatives with respect to η3 </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a id="a23972bd07000d4dc81ffd25cbf51968b" name="a23972bd07000d4dc81ffd25cbf51968b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a23972bd07000d4dc81ffd25cbf51968b">&#9670;&#160;</a></span>computeTetBasisAndDerivatives()</h2>
+<a id="a7065da252f9f281fe97569fbef1842b5" name="a7065da252f9f281fe97569fbef1842b5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7065da252f9f281fe97569fbef1842b5">&#9670;&#160;</a></span>computeTetBasisAndDerivatives()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2554,20 +2762,8 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname"><a class="el" href="classFoam_1_1GaussField.html">void</a> Foam::computeTetBasisAndDerivatives </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">scalar</a>&#160;</td>
-          <td class="paramname"><em>x</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">scalar</a>&#160;</td>
-          <td class="paramname"><em>y</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">scalar</a>&#160;</td>
-          <td class="paramname"><em>z</em>, </td>
+          <td class="paramtype"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">vector</a>&#160;</td>
+          <td class="paramname"><em>etaPt</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -2585,19 +2781,19 @@ Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="classFoam_1_1GaussField.html">List</a>&lt; <a class="el" href="classFoam_1_1GaussField.html">scalar</a> &gt; &amp;&#160;</td>
-          <td class="paramname"><em>dBasis_dx</em>, </td>
+          <td class="paramname"><em>dBasis_deta1</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="classFoam_1_1GaussField.html">List</a>&lt; <a class="el" href="classFoam_1_1GaussField.html">scalar</a> &gt; &amp;&#160;</td>
-          <td class="paramname"><em>dBasis_dy</em>, </td>
+          <td class="paramname"><em>dBasis_deta2</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="classFoam_1_1GaussField.html">List</a>&lt; <a class="el" href="classFoam_1_1GaussField.html">scalar</a> &gt; &amp;&#160;</td>
-          <td class="paramname"><em>dBasis_dz</em>&#160;</td>
+          <td class="paramname"><em>dBasis_deta3</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -2612,44 +2808,58 @@ Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Evaluate orthogonal interior basis functions for tetrahedral cells. </p>
-<p>This routine evaluates the orthogonal modal basis functions defined on a reference tetrahedron, following the construction used in the Montjoie finite element framework:</p>
-<p><a href="https://www.math.u-bordeaux.fr/~durufle/montjoie/tetrahedron.php">https://www.math.u-bordeaux.fr/~durufle/montjoie/tetrahedron.php</a></p>
-<p>The finite element space is identical to that of the classical tetrahedral element (polynomials of total degree less than or equal to \(p\)), but the basis functions are chosen to be orthogonal with respect to the \(L^2\) inner product.</p>
-<p>The orthogonal basis functions are defined as:</p>
+<p>Evaluate L2-orthonormal modal basis functions for tetrahedral cells. </p>
+<p>This routine evaluates an L²-orthonormal hierarchical modal basis defined on the reference tetrahedron. The polynomial space coincides with the classical tetrahedral finite element space of total degree less than or equal to p, but the basis is constructed to be orthonormal with respect to the L² inner product.</p>
+<p>The orthonormal basis functions are defined as:</p>
 <p class="formulaDsp">
 \[
-  \psi_{i,j,k}(x,y,z)
+  \psi_{i,j,k}(\eta_1,\eta_2,\eta_3)
   =
-  P_i^{0,0}\!\left(\frac{2x}{1-y-z} - 1\right)
-  (1-y-z)^i
-  P_j^{2i+1,0}\!\left(\frac{2y}{1-z} - 1\right)
-  (1-z)^j
-  P_k^{2(i+j)+2,0}(2z-1),
-  \qquad i + j + k \le p
+  \sqrt{
+    \frac{
+      (2i+1)
+      (2j+2i+2)
+      (2k+2i+2j+3)
+    }{8}
+  }
+  \;
+  P_i^{0,0}(\eta_1)
+  \left(\frac{1-\eta_2}{2}\right)^i
+  P_j^{2i+1,0}(\eta_2)
+  \left(\frac{1-\eta_3}{2}\right)^{i+j}
+  P_k^{2i+2j+2,0}(\eta_3),
+  \qquad i + j + k \le p,
 \]
 </p>
-<p>where \(P_n^{\alpha,\beta}\) denotes the Jacobi polynomial of degree \(n\) with parameters \((\alpha,\beta)\).</p>
-<p>The reference domain of the basis is the unit tetrahedron:</p>
+<p>where:</p><ul>
+<li>\(P_n^{\alpha,\beta}\) denotes the Jacobi polynomial,</li>
+<li>\((\eta_1,\eta_2,\eta_3) \in [-1,1]^3\) is the collapsed cube domain,</li>
+<li>the factors \(\left(\frac{1-\eta_2}{2}\right)^i\) and \(\left(\frac{1-\eta_3}{2}\right)^{i+j}\) induce the tetrahedral collapse structure,</li>
+<li>the normalization factor guarantees L²-orthonormality.</li>
+</ul>
+<p>The basis satisfies:</p>
 <p class="formulaDsp">
 \[
-  (x,y,z) \in [0,1] \times [0,1] \times [0,1],
-  \quad x + y + z \le 1
+  \int_{\text{ref tetra}}
+  \psi_{i,j,k}\,\psi_{m,n,l}
+  \; d\eta
+  =
+  \delta_{im}\,\delta_{jn}\,\delta_{kl}.
 \]
 </p>
-<p>This function assumes that the input coordinates ( \(x,y,z\)) are already expressed in this reference tetrahedral coordinate system.</p>
-<p>When used inside DGFoam, Gauss points may be generated in a different solver reference domain. In that case, the caller is responsible for mapping those coordinates to the reference tetrahedron before calling this routine.</p>
-<p>No geometric mapping or coordinate transformation is performed inside this routine. It strictly evaluates the basis functions and their derivatives at the provided reference coordinates.</p>
+<p>Therefore, with exact integration, the reference-element mass matrix is the identity matrix.</p>
+<p>The routine evaluates:</p><ul>
+<li>the values of all orthonormal modal basis functions at a point,</li>
+<li>and their first derivatives with respect to each reference coordinate.</li>
+</ul>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">x</td><td>Reference coordinate in the tetrahedral basis domain </td></tr>
-    <tr><td class="paramname">y</td><td>Reference coordinate in the tetrahedral basis domain </td></tr>
-    <tr><td class="paramname">z</td><td>Reference coordinate in the tetrahedral basis domain </td></tr>
-    <tr><td class="paramname">pOrder</td><td>Polynomial order of the approximation </td></tr>
-    <tr><td class="paramname">basis</td><td>Values of the basis functions at the evaluation point </td></tr>
-    <tr><td class="paramname">dBasis_dx</td><td>Derivatives with respect to \(x\) </td></tr>
-    <tr><td class="paramname">dBasis_dy</td><td>Derivatives with respect to \(y\) </td></tr>
-    <tr><td class="paramname">dBasis_dz</td><td>Derivatives with respect to \(z\) </td></tr>
+    <tr><td class="paramname">etaPt</td><td>Reference coordinates (η1,η2,η3) </td></tr>
+    <tr><td class="paramname">pOrder</td><td>Maximum polynomial order </td></tr>
+    <tr><td class="paramname">basis</td><td>Values of the orthonormal basis functions </td></tr>
+    <tr><td class="paramname">dBasis_deta1</td><td>Derivatives with respect to η1 </td></tr>
+    <tr><td class="paramname">dBasis_deta2</td><td>Derivatives with respect to η2 </td></tr>
+    <tr><td class="paramname">dBasis_deta3</td><td>Derivatives with respect to η3 </td></tr>
   </table>
   </dd>
 </dl>

@@ -51,499 +51,505 @@
 \DoxyCodeLine{00047\ \textcolor{preprocessor}{\#include\ "{}label.H"{}}}
 \DoxyCodeLine{00048\ \textcolor{preprocessor}{\#include\ "{}List.H"{}}}
 \DoxyCodeLine{00049\ \textcolor{preprocessor}{\#include\ "{}error.H"{}}}
-\DoxyCodeLine{00050\ }
-\DoxyCodeLine{00051\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespaceFoam}{Foam}}}
-\DoxyCodeLine{00052\ \{}
-\DoxyCodeLine{00053\ }
-\DoxyCodeLine{00061\ \textcolor{keyword}{inline}\ label\ \mbox{\hyperlink{namespaceFoam_a3f95ccd325596ba613b34ba6c0bf6c1f}{getNumBasis}}(\textcolor{keyword}{const}\ label\ pOrder,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{dgGeomCell_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5}{dgCellType}}\ type)}
-\DoxyCodeLine{00062\ \{}
-\DoxyCodeLine{00063\ \ \ \ \ label\ count\ =\ 0;}
-\DoxyCodeLine{00064\ }
-\DoxyCodeLine{00065\ \ \ \ \ \textcolor{keywordflow}{switch}\ (type)}
-\DoxyCodeLine{00066\ \ \ \ \ \{}
-\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Hexahedron}}
-\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Constraint:\ i\ +\ j\ +\ k\ <=\ r}}
-\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{dgGeomCell_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5a58c9566f3c750ce7147b045fdd14202b}{dgCellType::HEX}}:}
-\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <=\ pOrder;\ ++i)}
-\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ j\ =\ 0;\ j\ <=\ pOrder\ -\/\ i;\ ++j)}
-\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ k\ =\ 0;\ k\ <=\ pOrder\ -\/\ i\ -\/\ j;\ ++k)}
-\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ++count;}
-\DoxyCodeLine{00077\ }
-\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ count;}
-\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00080\ }
-\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Prism\ (wedge)}}
-\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Constraint:\ i\ +\ j\ <=\ r,\ \ k\ <=\ r}}
-\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{dgGeomCell_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5a25608df56c02f9fc6854a3de6a51822a}{dgCellType::PRISM}}:}
-\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <=\ pOrder;\ ++i)}
-\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ j\ =\ 0;\ j\ <=\ pOrder\ -\/\ i;\ ++j)}
-\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ k\ =\ 0;\ k\ <=\ pOrder;\ ++k)}
-\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ++count;}
-\DoxyCodeLine{00091\ }
-\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ count;}
-\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00094\ }
-\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Pyramid}}
-\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Constraint:\ 0\ <=\ i,j\ <=\ r\ -\/\ k,\ \ k\ <=\ r}}
-\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{dgGeomCell_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5acd996d3184761601a0e44e587a012d4f}{dgCellType::PYRAMID}}:}
-\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ k\ =\ 0;\ k\ <=\ pOrder;\ ++k)}
-\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <=\ pOrder\ -\/\ k;\ ++i)}
-\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ j\ =\ 0;\ j\ <=\ pOrder\ -\/\ k;\ ++j)}
-\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ++count;}
-\DoxyCodeLine{00105\ }
-\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ count;}
-\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00108\ }
-\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Tetrahedron}}
-\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Constraint:\ i\ +\ j\ +\ k\ <=\ r}}
-\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{dgGeomCell_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5a268c4b76ec894ec6ad3c119ad7cc2170}{dgCellType::TET}}:}
-\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <=\ pOrder;\ ++i)}
-\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ j\ =\ 0;\ j\ <=\ pOrder\ -\/\ i;\ ++j)}
-\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ k\ =\ 0;\ k\ <=\ pOrder\ -\/\ i\ -\/\ j;\ ++k)}
-\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ++count;}
-\DoxyCodeLine{00119\ }
-\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ count;}
-\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00122\ }
-\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{dgGeomCell_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5accc0377a8afbf50e7094f5c23a8af223}{dgCellType::INVALID}}:}
-\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{default}:}
-\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ \ \ \ \ FatalErrorInFunction}
-\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{}Unsupported\ or\ invalid\ cell\ type\ for\ basis\ function:\ "{}}}
-\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ type\ <<\ nl}
-\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ exit(FatalError);}
-\DoxyCodeLine{00130\ }
-\DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ -\/1;\ \textcolor{comment}{//\ suppress\ compiler\ warning}}
-\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00133\ \ \ \ \ \}}
-\DoxyCodeLine{00134\ \}}
-\DoxyCodeLine{00135\ }
+\DoxyCodeLine{00050\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{refCoordinateTransforms_2refCoordTransforms_8H}{refCoordTransforms.H}}"{}}}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00052\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespaceFoam}{Foam}}}
+\DoxyCodeLine{00053\ \{}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00062\ \textcolor{keyword}{inline}\ label\ \mbox{\hyperlink{namespaceFoam_a3f95ccd325596ba613b34ba6c0bf6c1f}{getNumBasis}}(\textcolor{keyword}{const}\ label\ pOrder,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{dgGeomCell_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5}{dgCellType}}\ type)}
+\DoxyCodeLine{00063\ \{}
+\DoxyCodeLine{00064\ \ \ \ \ label\ count\ =\ 0;}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keywordflow}{switch}\ (type)}
+\DoxyCodeLine{00067\ \ \ \ \ \{}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Hexahedron}}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Constraint:\ i\ +\ j\ +\ k\ <=\ r}}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{dgGeomCell_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5a58c9566f3c750ce7147b045fdd14202b}{dgCellType::HEX}}:}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <=\ pOrder;\ ++i)}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ j\ =\ 0;\ j\ <=\ pOrder\ -\/\ i;\ ++j)}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ k\ =\ 0;\ k\ <=\ pOrder\ -\/\ i\ -\/\ j;\ ++k)}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ++count;}
+\DoxyCodeLine{00078\ }
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ count;}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00081\ }
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Prism\ (wedge)}}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Constraint:\ i\ <=\ r,\ \ j\ +\ k\ <=\ r}}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{dgGeomCell_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5a25608df56c02f9fc6854a3de6a51822a}{dgCellType::PRISM}}:}
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <=\ pOrder;\ ++i)}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ j\ =\ 0;\ j\ <=\ pOrder;\ ++j)}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ k\ =\ 0;\ k\ <=\ pOrder\ -\/\ j;\ ++k)}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ++count;}
+\DoxyCodeLine{00092\ }
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ count;}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00095\ }
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Pyramid}}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Constraint:\ 0\ <=\ i,j\ <=\ r\ -\/\ k,\ \ k\ <=\ r}}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{dgGeomCell_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5acd996d3184761601a0e44e587a012d4f}{dgCellType::PYRAMID}}:}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <=\ pOrder;\ ++i)}
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ j\ =\ 0;\ j\ <=\ pOrder\ -\/\ i;\ ++j)}
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ k\ =\ 0;\ k\ <=\ pOrder\ -\/\ i\ -\/\ j;\ ++k)}
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ++count;}
+\DoxyCodeLine{00106\ }
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ count;}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00109\ }
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Tetrahedron}}
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Constraint:\ i\ +\ j\ +\ k\ <=\ r}}
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{dgGeomCell_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5a268c4b76ec894ec6ad3c119ad7cc2170}{dgCellType::TET}}:}
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <=\ pOrder;\ ++i)}
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ j\ =\ 0;\ j\ <=\ pOrder\ -\/\ i;\ ++j)}
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ k\ =\ 0;\ k\ <=\ pOrder\ -\/\ i\ -\/\ j;\ ++k)}
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ++count;}
+\DoxyCodeLine{00120\ }
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ count;}
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00123\ }
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{dgGeomCell_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5accc0377a8afbf50e7094f5c23a8af223}{dgCellType::INVALID}}:}
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ \ \ \ \ FatalErrorInFunction}
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{}Unsupported\ or\ invalid\ cell\ type\ for\ basis\ function:\ "{}}}
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ type\ <<\ nl}
+\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ exit(FatalError);}
+\DoxyCodeLine{00131\ }
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ -\/1;\ \textcolor{comment}{//\ suppress\ compiler\ warning}}
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00134\ \ \ \ \ \}}
+\DoxyCodeLine{00135\ \}}
 \DoxyCodeLine{00136\ }
-\DoxyCodeLine{00187\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespaceFoam_ab471416866fe7f72fb3585d9eec671c2}{computeHexBasisAndDerivatives}}}
-\DoxyCodeLine{00188\ (}
-\DoxyCodeLine{00189\ \ \ \ \ \textcolor{keyword}{const}\ scalar\ x,}
-\DoxyCodeLine{00190\ \ \ \ \ \textcolor{keyword}{const}\ scalar\ y,}
-\DoxyCodeLine{00191\ \ \ \ \ \textcolor{keyword}{const}\ scalar\ z,}
-\DoxyCodeLine{00192\ \ \ \ \ \textcolor{keyword}{const}\ label\ \ pOrder,}
-\DoxyCodeLine{00193\ \ \ \ \ List<scalar>\&\ basis,}
-\DoxyCodeLine{00194\ \ \ \ \ List<scalar>\&\ dBasis\_dx,}
-\DoxyCodeLine{00195\ \ \ \ \ List<scalar>\&\ dBasis\_dy,}
-\DoxyCodeLine{00196\ \ \ \ \ List<scalar>\&\ dBasis\_dz}
-\DoxyCodeLine{00197\ )}
-\DoxyCodeLine{00198\ \{}
-\DoxyCodeLine{00199\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00200\ \ \ \ \ \textcolor{comment}{//\ Orthogonal\ Legendre\ basis\ on\ reference\ hexahedron}}
-\DoxyCodeLine{00201\ \ \ \ \ \textcolor{comment}{//\ Basis\ definition:}}
-\DoxyCodeLine{00202\ \ \ \ \ \textcolor{comment}{//\ \ \ psi\_\{i,j,k\}\ =\ P\_i(x)\ P\_j(y)\ P\_k(z)}}
-\DoxyCodeLine{00203\ \ \ \ \ \textcolor{comment}{//\ \ \ with\ i\ +\ j\ +\ k\ <=\ pOrder}}
+\DoxyCodeLine{00137\ }
+\DoxyCodeLine{00182\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespaceFoam_a3d4cf3a56a860f24e72885a6c8620308}{computeHexBasisAndDerivatives}}}
+\DoxyCodeLine{00183\ (}
+\DoxyCodeLine{00184\ \ \ \ \ \textcolor{keyword}{const}\ vector\ etaPt,}
+\DoxyCodeLine{00185\ \ \ \ \ \textcolor{keyword}{const}\ label\ \ pOrder,}
+\DoxyCodeLine{00186\ \ \ \ \ List<scalar>\&\ basis,}
+\DoxyCodeLine{00187\ \ \ \ \ List<scalar>\&\ dBasis\_dx,}
+\DoxyCodeLine{00188\ \ \ \ \ List<scalar>\&\ dBasis\_dy,}
+\DoxyCodeLine{00189\ \ \ \ \ List<scalar>\&\ dBasis\_dz}
+\DoxyCodeLine{00190\ )}
+\DoxyCodeLine{00191\ \{}
+\DoxyCodeLine{00192\ \ \ \ \ \textcolor{comment}{//\ Reference\ coordinates\ (already\ in\ [-\/1,1]\string^3)}}
+\DoxyCodeLine{00193\ \ \ \ \ \textcolor{keyword}{const}\ scalar\ x\ =\ etaPt.\mbox{\hyperlink{classFoam_1_1GaussField_a49c91fd2de86e400eb7bf30ed43b04fd}{x}}();}
+\DoxyCodeLine{00194\ \ \ \ \ \textcolor{keyword}{const}\ scalar\ y\ =\ etaPt.\mbox{\hyperlink{classFoam_1_1GaussField_af48b2954902727aadb60e75a5baf4cf3}{y}}();}
+\DoxyCodeLine{00195\ \ \ \ \ \textcolor{keyword}{const}\ scalar\ z\ =\ etaPt.\mbox{\hyperlink{classFoam_1_1GaussField_ac893a0f59b8435e95c03d2a35c6a2cc3}{z}}();}
+\DoxyCodeLine{00196\ }
+\DoxyCodeLine{00197\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00198\ \ \ \ \ \textcolor{comment}{//\ L2-\/normalized\ orthogonal\ Legendre\ basis\ on\ [-\/1,1]\string^3}}
+\DoxyCodeLine{00199\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00200\ \ \ \ \ \textcolor{comment}{//\ psi\_\{i,j,k\}\ =\ sqrt((2i+1)(2j+1)(2k+1)/8)}}
+\DoxyCodeLine{00201\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ P\_i(x)\ P\_j(y)\ P\_k(z)}}
+\DoxyCodeLine{00202\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00203\ \ \ \ \ \textcolor{comment}{//\ with\ i\ +\ j\ +\ k\ <=\ pOrder}}
 \DoxyCodeLine{00204\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
 \DoxyCodeLine{00205\ }
 \DoxyCodeLine{00206\ \ \ \ \ \textcolor{keyword}{using\ }boost::math::jacobi;}
 \DoxyCodeLine{00207\ \ \ \ \ \textcolor{keyword}{using\ }boost::math::jacobi\_prime;}
 \DoxyCodeLine{00208\ }
-\DoxyCodeLine{00209\ \ \ \ \ \textcolor{comment}{//\ Number\ of\ basis\ functions\ for\ total-\/degree\ HEX}}
-\DoxyCodeLine{00210\ \ \ \ \ \textcolor{keyword}{const}\ label\ nBasis\ =\ \mbox{\hyperlink{namespaceFoam_a3f95ccd325596ba613b34ba6c0bf6c1f}{getNumBasis}}(pOrder,\ \mbox{\hyperlink{dgGeomCell_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5a58c9566f3c750ce7147b045fdd14202b}{dgCellType::HEX}});}
-\DoxyCodeLine{00211\ }
-\DoxyCodeLine{00212\ \ \ \ \ basis.setSize(nBasis);}
-\DoxyCodeLine{00213\ \ \ \ \ dBasis\_dx.setSize(nBasis);}
-\DoxyCodeLine{00214\ \ \ \ \ dBasis\_dy.setSize(nBasis);}
-\DoxyCodeLine{00215\ \ \ \ \ dBasis\_dz.setSize(nBasis);}
-\DoxyCodeLine{00216\ }
-\DoxyCodeLine{00217\ \ \ \ \ label\ idx\ =\ 0;}
-\DoxyCodeLine{00218\ }
-\DoxyCodeLine{00219\ \ \ \ \ \textcolor{comment}{//\ Loop\ over\ total\ degree}}
-\DoxyCodeLine{00220\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <=\ pOrder;\ ++i)}
-\DoxyCodeLine{00221\ \ \ \ \ \{}
-\DoxyCodeLine{00222\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ scalar\ Pi\ \ =\ jacobi(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{unsigned}\textcolor{keyword}{>}(i),\ 0.0,\ 0.0,\ x);}
-\DoxyCodeLine{00223\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ scalar\ dPi\ =\ jacobi\_prime(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{unsigned}\textcolor{keyword}{>}(i),\ 0.0,\ 0.0,\ x);}
+\DoxyCodeLine{00209\ \ \ \ \ \textcolor{keyword}{const}\ label\ nBasis\ =\ \mbox{\hyperlink{namespaceFoam_a3f95ccd325596ba613b34ba6c0bf6c1f}{getNumBasis}}(pOrder,\ \mbox{\hyperlink{dgGeomCell_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5a58c9566f3c750ce7147b045fdd14202b}{dgCellType::HEX}});}
+\DoxyCodeLine{00210\ }
+\DoxyCodeLine{00211\ \ \ \ \ basis.setSize(nBasis);}
+\DoxyCodeLine{00212\ \ \ \ \ dBasis\_dx.setSize(nBasis);}
+\DoxyCodeLine{00213\ \ \ \ \ dBasis\_dy.setSize(nBasis);}
+\DoxyCodeLine{00214\ \ \ \ \ dBasis\_dz.setSize(nBasis);}
+\DoxyCodeLine{00215\ }
+\DoxyCodeLine{00216\ \ \ \ \ label\ idx\ =\ 0;}
+\DoxyCodeLine{00217\ }
+\DoxyCodeLine{00218\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <=\ pOrder;\ ++i)}
+\DoxyCodeLine{00219\ \ \ \ \ \{}
+\DoxyCodeLine{00220\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ scalar\ Pi\ \ =\ jacobi(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{unsigned}\textcolor{keyword}{>}(i),\ 0.0,\ 0.0,\ x);}
+\DoxyCodeLine{00221\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ scalar\ dPi\ =\ jacobi\_prime(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{unsigned}\textcolor{keyword}{>}(i),\ 0.0,\ 0.0,\ x);}
+\DoxyCodeLine{00222\ }
+\DoxyCodeLine{00223\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ scalar\ norm\_i\ =\ 2.0*i\ +\ 1.0;}
 \DoxyCodeLine{00224\ }
 \DoxyCodeLine{00225\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ j\ =\ 0;\ j\ <=\ pOrder\ -\/\ i;\ ++j)}
 \DoxyCodeLine{00226\ \ \ \ \ \ \ \ \ \{}
 \DoxyCodeLine{00227\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ scalar\ Pj\ \ =\ jacobi(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{unsigned}\textcolor{keyword}{>}(j),\ 0.0,\ 0.0,\ y);}
 \DoxyCodeLine{00228\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ scalar\ dPj\ =\ jacobi\_prime(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{unsigned}\textcolor{keyword}{>}(j),\ 0.0,\ 0.0,\ y);}
 \DoxyCodeLine{00229\ }
-\DoxyCodeLine{00230\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ k\ =\ 0;\ k\ <=\ pOrder\ -\/\ i\ -\/\ j;\ ++k)}
-\DoxyCodeLine{00231\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00232\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ scalar\ Pk\ \ =\ jacobi(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{unsigned}\textcolor{keyword}{>}(k),\ 0.0,\ 0.0,\ z);}
-\DoxyCodeLine{00233\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ scalar\ dPk\ =\ jacobi\_prime(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{unsigned}\textcolor{keyword}{>}(k),\ 0.0,\ 0.0,\ z);}
-\DoxyCodeLine{00234\ }
-\DoxyCodeLine{00235\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Basis\ value}}
-\DoxyCodeLine{00236\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ basis[idx]\ =\ Pi\ *\ Pj\ *\ Pk;}
-\DoxyCodeLine{00237\ }
-\DoxyCodeLine{00238\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Derivatives\ w.r.t\ reference\ coordinates}}
-\DoxyCodeLine{00239\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dBasis\_dx[idx]\ =\ dPi\ *\ Pj\ \ *\ Pk;}
-\DoxyCodeLine{00240\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dBasis\_dy[idx]\ =\ Pi\ \ *\ dPj\ *\ Pk;}
-\DoxyCodeLine{00241\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dBasis\_dz[idx]\ =\ Pi\ \ *\ Pj\ \ *\ dPk;}
-\DoxyCodeLine{00242\ }
-\DoxyCodeLine{00243\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ++idx;}
-\DoxyCodeLine{00244\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00245\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00246\ \ \ \ \ \}}
-\DoxyCodeLine{00247\ \}}
+\DoxyCodeLine{00230\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ scalar\ norm\_ij\ =\ norm\_i\ *\ (2.0*j\ +\ 1.0);}
+\DoxyCodeLine{00231\ }
+\DoxyCodeLine{00232\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ k\ =\ 0;\ k\ <=\ pOrder\ -\/\ i\ -\/\ j;\ ++k)}
+\DoxyCodeLine{00233\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00234\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ scalar\ Pk\ \ =\ jacobi(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{unsigned}\textcolor{keyword}{>}(k),\ 0.0,\ 0.0,\ z);}
+\DoxyCodeLine{00235\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ scalar\ dPk\ =\ jacobi\_prime(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{unsigned}\textcolor{keyword}{>}(k),\ 0.0,\ 0.0,\ z);}
+\DoxyCodeLine{00236\ }
+\DoxyCodeLine{00237\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ L2\ normalization\ factor\ on\ [-\/1,1]\string^3}}
+\DoxyCodeLine{00238\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ scalar\ scale\ =}
+\DoxyCodeLine{00239\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::sqrt(\ norm\_ij\ *\ (2.0*k\ +\ 1.0)\ /\ 8.0\ );}
+\DoxyCodeLine{00240\ }
+\DoxyCodeLine{00241\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Basis\ value}}
+\DoxyCodeLine{00242\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ basis[idx]\ =\ scale\ *\ Pi\ *\ Pj\ *\ Pk;}
+\DoxyCodeLine{00243\ }
+\DoxyCodeLine{00244\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Derivatives}}
+\DoxyCodeLine{00245\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dBasis\_dx[idx]\ =\ scale\ *\ dPi\ *\ Pj\ \ *\ Pk;}
+\DoxyCodeLine{00246\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dBasis\_dy[idx]\ =\ scale\ *\ Pi\ \ *\ dPj\ *\ Pk;}
+\DoxyCodeLine{00247\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dBasis\_dz[idx]\ =\ scale\ *\ Pi\ \ *\ Pj\ \ *\ dPk;}
 \DoxyCodeLine{00248\ }
-\DoxyCodeLine{00249\ }
-\DoxyCodeLine{00306\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespaceFoam_ae93828b60c145d1eecf8e98706ef23f1}{computePrismBasisAndDerivatives}}}
-\DoxyCodeLine{00307\ (}
-\DoxyCodeLine{00308\ \ \ \ \ \textcolor{keyword}{const}\ scalar\ x,}
-\DoxyCodeLine{00309\ \ \ \ \ \textcolor{keyword}{const}\ scalar\ y,}
-\DoxyCodeLine{00310\ \ \ \ \ \textcolor{keyword}{const}\ scalar\ z,}
-\DoxyCodeLine{00311\ \ \ \ \ \textcolor{keyword}{const}\ label\ \ pOrder,}
-\DoxyCodeLine{00312\ \ \ \ \ List<scalar>\&\ basis,}
-\DoxyCodeLine{00313\ \ \ \ \ List<scalar>\&\ dBasis\_dx,}
-\DoxyCodeLine{00314\ \ \ \ \ List<scalar>\&\ dBasis\_dy,}
-\DoxyCodeLine{00315\ \ \ \ \ List<scalar>\&\ dBasis\_dz}
-\DoxyCodeLine{00316\ )}
-\DoxyCodeLine{00317\ \{}
-\DoxyCodeLine{00318\ \ \ \ \ \textcolor{keyword}{using\ }boost::math::jacobi;}
-\DoxyCodeLine{00319\ \ \ \ \ \textcolor{keyword}{using\ }boost::math::jacobi\_prime;}
-\DoxyCodeLine{00320\ }
-\DoxyCodeLine{00321\ \ \ \ \ \textcolor{keyword}{const}\ label\ nBasis\ =\ \mbox{\hyperlink{namespaceFoam_a3f95ccd325596ba613b34ba6c0bf6c1f}{getNumBasis}}(pOrder,\ \mbox{\hyperlink{dgGeomCell_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5a25608df56c02f9fc6854a3de6a51822a}{dgCellType::PRISM}});}
-\DoxyCodeLine{00322\ }
-\DoxyCodeLine{00323\ \ \ \ \ basis.setSize(nBasis);}
-\DoxyCodeLine{00324\ \ \ \ \ dBasis\_dx.setSize(nBasis);}
-\DoxyCodeLine{00325\ \ \ \ \ dBasis\_dy.setSize(nBasis);}
-\DoxyCodeLine{00326\ \ \ \ \ dBasis\_dz.setSize(nBasis);}
-\DoxyCodeLine{00327\ }
-\DoxyCodeLine{00328\ \ \ \ \ label\ idx\ =\ 0;}
-\DoxyCodeLine{00329\ }
-\DoxyCodeLine{00330\ \ \ \ \ \textcolor{comment}{//\ Precompute\ common\ terms}}
-\DoxyCodeLine{00331\ \ \ \ \ \textcolor{keyword}{const}\ scalar\ oneMinusY\ =\ 1.0\ -\/\ y;}
-\DoxyCodeLine{00332\ \ \ \ \ \textcolor{keyword}{const}\ scalar\ invOneMinusY\ =\ 1.0\ /\ oneMinusY;}
-\DoxyCodeLine{00333\ }
-\DoxyCodeLine{00334\ \ \ \ \ \textcolor{comment}{//\ Mapped\ coordinates}}
-\DoxyCodeLine{00335\ \ \ \ \ \textcolor{keyword}{const}\ scalar\ xi\ =\ 2.0\ *\ x\ *\ invOneMinusY\ -\/\ 1.0;}
-\DoxyCodeLine{00336\ \ \ \ \ \textcolor{keyword}{const}\ scalar\ eta\ =\ 2.0\ *\ y\ -\/\ 1.0;}
-\DoxyCodeLine{00337\ \ \ \ \ \textcolor{keyword}{const}\ scalar\ zeta\ =\ 2.0\ *\ z\ -\/\ 1.0;}
-\DoxyCodeLine{00338\ }
-\DoxyCodeLine{00339\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <=\ pOrder;\ ++i)}
-\DoxyCodeLine{00340\ \ \ \ \ \{}
-\DoxyCodeLine{00341\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ P\_i\string^\{0,0\}(\ (2x)/(1-\/y)\ -\/\ 1\ )}}
-\DoxyCodeLine{00342\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ scalar\ Pi\ \ =\ jacobi(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{unsigned}\textcolor{keyword}{>}(i),\ 0.0,\ 0.0,\ xi);}
-\DoxyCodeLine{00343\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ scalar\ dPi\ =\ jacobi\_prime(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{unsigned}\textcolor{keyword}{>}(i),\ 0.0,\ 0.0,\ xi);}
-\DoxyCodeLine{00344\ }
-\DoxyCodeLine{00345\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ (1\ -\/\ y)\string^i\ and\ derivative}}
-\DoxyCodeLine{00346\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ scalar\ oneMinusYPowI\ =}
-\DoxyCodeLine{00347\ \ \ \ \ \ \ \ \ \ \ \ \ (i\ ==\ 0\ ?\ 1.0\ :\ std::pow(oneMinusY,\ i));}
-\DoxyCodeLine{00348\ }
-\DoxyCodeLine{00349\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ scalar\ dOneMinusYPowI\_dy\ =}
-\DoxyCodeLine{00350\ \ \ \ \ \ \ \ \ \ \ \ \ (i\ ==\ 0\ ?\ 0.0\ :\ -\/i\ *\ std::pow(oneMinusY,\ i\ -\/\ 1));}
-\DoxyCodeLine{00351\ }
-\DoxyCodeLine{00352\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ j\ =\ 0;\ j\ <=\ pOrder\ -\/\ i;\ ++j)}
-\DoxyCodeLine{00353\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00354\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ P\_j\string^\{2i+1,0\}(2y\ -\/\ 1)}}
-\DoxyCodeLine{00355\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ scalar\ alpha\ =\ 2.0\ *\ i\ +\ 1.0;}
-\DoxyCodeLine{00356\ }
-\DoxyCodeLine{00357\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ scalar\ Pj\ \ =}
-\DoxyCodeLine{00358\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ jacobi(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{unsigned}\textcolor{keyword}{>}(j),\ alpha,\ 0.0,\ eta);}
-\DoxyCodeLine{00359\ }
-\DoxyCodeLine{00360\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ scalar\ dPj\ =}
-\DoxyCodeLine{00361\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ jacobi\_prime(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{unsigned}\textcolor{keyword}{>}(j),\ alpha,\ 0.0,\ eta);}
-\DoxyCodeLine{00362\ }
-\DoxyCodeLine{00363\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ k\ =\ 0;\ k\ <=\ pOrder\ -\/\ i\ -\/\ j;\ ++k)}
-\DoxyCodeLine{00364\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00365\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ P\_k\string^\{0,0\}(2z\ -\/\ 1)}}
-\DoxyCodeLine{00366\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ scalar\ Pk\ =}
-\DoxyCodeLine{00367\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ jacobi(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{unsigned}\textcolor{keyword}{>}(k),\ 0.0,\ 0.0,\ zeta);}
-\DoxyCodeLine{00368\ }
-\DoxyCodeLine{00369\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ scalar\ dPk\ =}
-\DoxyCodeLine{00370\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ jacobi\_prime(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{unsigned}\textcolor{keyword}{>}(k),\ 0.0,\ 0.0,\ zeta);}
+\DoxyCodeLine{00249\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ++idx;}
+\DoxyCodeLine{00250\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00251\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00252\ \ \ \ \ \}}
+\DoxyCodeLine{00253\ \}}
+\DoxyCodeLine{00254\ }
+\DoxyCodeLine{00348\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespaceFoam_a572c92c5c085d5804bdb33e46a35e840}{computePrismBasisAndDerivatives}}}
+\DoxyCodeLine{00349\ (}
+\DoxyCodeLine{00350\ \ \ \ \ \textcolor{keyword}{const}\ vector\ etaPt,}
+\DoxyCodeLine{00351\ \ \ \ \ \textcolor{keyword}{const}\ label\ \ pOrder,}
+\DoxyCodeLine{00352\ \ \ \ \ List<scalar>\&\ basis,}
+\DoxyCodeLine{00353\ \ \ \ \ List<scalar>\&\ dBasis\_dx,}
+\DoxyCodeLine{00354\ \ \ \ \ List<scalar>\&\ dBasis\_dy,}
+\DoxyCodeLine{00355\ \ \ \ \ List<scalar>\&\ dBasis\_dz}
+\DoxyCodeLine{00356\ )}
+\DoxyCodeLine{00357\ \{}
+\DoxyCodeLine{00358\ \ \ \ \ \textcolor{keyword}{const}\ scalar\ x\ =\ etaPt.\mbox{\hyperlink{classFoam_1_1GaussField_a49c91fd2de86e400eb7bf30ed43b04fd}{x}}();}
+\DoxyCodeLine{00359\ \ \ \ \ \textcolor{keyword}{const}\ scalar\ y\ =\ etaPt.\mbox{\hyperlink{classFoam_1_1GaussField_af48b2954902727aadb60e75a5baf4cf3}{y}}();}
+\DoxyCodeLine{00360\ \ \ \ \ \textcolor{keyword}{const}\ scalar\ z\ =\ etaPt.\mbox{\hyperlink{classFoam_1_1GaussField_ac893a0f59b8435e95c03d2a35c6a2cc3}{z}}();}
+\DoxyCodeLine{00361\ }
+\DoxyCodeLine{00362\ \ \ \ \ \textcolor{keyword}{using\ }boost::math::jacobi;}
+\DoxyCodeLine{00363\ \ \ \ \ \textcolor{keyword}{using\ }boost::math::jacobi\_prime;}
+\DoxyCodeLine{00364\ }
+\DoxyCodeLine{00365\ \ \ \ \ \textcolor{keyword}{const}\ label\ nBasis\ =\ \mbox{\hyperlink{namespaceFoam_a3f95ccd325596ba613b34ba6c0bf6c1f}{getNumBasis}}(pOrder,\ \mbox{\hyperlink{dgGeomCell_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5a25608df56c02f9fc6854a3de6a51822a}{dgCellType::PRISM}});}
+\DoxyCodeLine{00366\ }
+\DoxyCodeLine{00367\ \ \ \ \ basis.setSize(nBasis);}
+\DoxyCodeLine{00368\ \ \ \ \ dBasis\_dx.setSize(nBasis);}
+\DoxyCodeLine{00369\ \ \ \ \ dBasis\_dy.setSize(nBasis);}
+\DoxyCodeLine{00370\ \ \ \ \ dBasis\_dz.setSize(nBasis);}
 \DoxyCodeLine{00371\ }
-\DoxyCodeLine{00372\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00373\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Basis\ value}}
-\DoxyCodeLine{00374\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00375\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ basis[idx]\ =}
-\DoxyCodeLine{00376\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Pi\ *\ oneMinusYPowI\ *\ Pj\ *\ Pk;}
-\DoxyCodeLine{00377\ }
-\DoxyCodeLine{00378\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00379\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ ∂/∂x}}
-\DoxyCodeLine{00380\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ xi\ =\ 2x\ /\ (1-\/y)\ -\/\ 1}}
-\DoxyCodeLine{00381\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00382\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dBasis\_dx[idx]\ =}
-\DoxyCodeLine{00383\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dPi\ *\ (2.0\ *\ invOneMinusY)}
-\DoxyCodeLine{00384\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ oneMinusYPowI\ *\ Pj\ *\ Pk;}
-\DoxyCodeLine{00385\ }
-\DoxyCodeLine{00386\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00387\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ ∂/∂y}}
-\DoxyCodeLine{00388\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00389\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ scalar\ dxi\_dy\ =}
-\DoxyCodeLine{00390\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 2.0\ *\ x\ *\ invOneMinusY\ *\ invOneMinusY;}
-\DoxyCodeLine{00391\ }
-\DoxyCodeLine{00392\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dBasis\_dy[idx]\ =}
-\DoxyCodeLine{00393\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ derivative\ of\ Pi(xi)}}
-\DoxyCodeLine{00394\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dPi\ *\ dxi\_dy\ *\ oneMinusYPowI\ *\ Pj\ *\ Pk}
-\DoxyCodeLine{00395\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ +\ \textcolor{comment}{//\ derivative\ of\ (1-\/y)\string^i}}
-\DoxyCodeLine{00396\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Pi\ *\ dOneMinusYPowI\_dy\ *\ Pj\ *\ Pk}
-\DoxyCodeLine{00397\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ +\ \textcolor{comment}{//\ derivative\ of\ Pj(eta)}}
-\DoxyCodeLine{00398\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Pi\ *\ oneMinusYPowI\ *\ dPj\ *\ 2.0\ *\ Pk;}
-\DoxyCodeLine{00399\ }
-\DoxyCodeLine{00400\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00401\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ ∂/∂z}}
-\DoxyCodeLine{00402\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ zeta\ =\ 2z\ -\/\ 1}}
-\DoxyCodeLine{00403\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00404\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dBasis\_dz[idx]\ =}
-\DoxyCodeLine{00405\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Pi\ *\ oneMinusYPowI\ *\ Pj\ *\ dPk\ *\ 2.0;}
-\DoxyCodeLine{00406\ }
-\DoxyCodeLine{00407\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ++idx;}
-\DoxyCodeLine{00408\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00409\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00410\ \ \ \ \ \}}
-\DoxyCodeLine{00411\ \}}
-\DoxyCodeLine{00412\ }
-\DoxyCodeLine{00413\ }
-\DoxyCodeLine{00476\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespaceFoam_a4f760deea79360afea19cc00a9c83e4e}{computePyramidBasisAndDerivatives}}}
-\DoxyCodeLine{00477\ (}
-\DoxyCodeLine{00478\ \ \ \ \ \textcolor{keyword}{const}\ scalar\ x,}
-\DoxyCodeLine{00479\ \ \ \ \ \textcolor{keyword}{const}\ scalar\ y,}
-\DoxyCodeLine{00480\ \ \ \ \ \textcolor{keyword}{const}\ scalar\ z,}
-\DoxyCodeLine{00481\ \ \ \ \ \textcolor{keyword}{const}\ label\ \ pOrder,}
-\DoxyCodeLine{00482\ \ \ \ \ List<scalar>\&\ basis,}
-\DoxyCodeLine{00483\ \ \ \ \ List<scalar>\&\ dBasis\_dx,}
-\DoxyCodeLine{00484\ \ \ \ \ List<scalar>\&\ dBasis\_dy,}
-\DoxyCodeLine{00485\ \ \ \ \ List<scalar>\&\ dBasis\_dz}
-\DoxyCodeLine{00486\ )}
-\DoxyCodeLine{00487\ \{}
-\DoxyCodeLine{00488\ \ \ \ \ \textcolor{keyword}{using\ }boost::math::jacobi;}
-\DoxyCodeLine{00489\ \ \ \ \ \textcolor{keyword}{using\ }boost::math::jacobi\_prime;}
-\DoxyCodeLine{00490\ }
-\DoxyCodeLine{00491\ \ \ \ \ \textcolor{keyword}{const}\ label\ nBasis\ =\ \mbox{\hyperlink{namespaceFoam_a3f95ccd325596ba613b34ba6c0bf6c1f}{getNumBasis}}(pOrder,\ \mbox{\hyperlink{dgGeomCell_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5acd996d3184761601a0e44e587a012d4f}{dgCellType::PYRAMID}});}
-\DoxyCodeLine{00492\ }
-\DoxyCodeLine{00493\ \ \ \ \ basis.setSize(nBasis);}
-\DoxyCodeLine{00494\ \ \ \ \ dBasis\_dx.setSize(nBasis);}
-\DoxyCodeLine{00495\ \ \ \ \ dBasis\_dy.setSize(nBasis);}
-\DoxyCodeLine{00496\ \ \ \ \ dBasis\_dz.setSize(nBasis);}
-\DoxyCodeLine{00497\ }
-\DoxyCodeLine{00498\ \ \ \ \ label\ idx\ =\ 0;}
-\DoxyCodeLine{00499\ }
-\DoxyCodeLine{00500\ \ \ \ \ \textcolor{keyword}{const}\ scalar\ oneMinusZ\ =\ 1.0\ -\/\ z;}
-\DoxyCodeLine{00501\ \ \ \ \ \textcolor{keyword}{const}\ scalar\ invOneMinusZ\ =\ 1.0\ /\ oneMinusZ;}
-\DoxyCodeLine{00502\ }
-\DoxyCodeLine{00503\ \ \ \ \ \textcolor{comment}{//\ Mapped\ coordinates}}
-\DoxyCodeLine{00504\ \ \ \ \ \textcolor{keyword}{const}\ scalar\ xi\ \ =\ x\ *\ invOneMinusZ;}
-\DoxyCodeLine{00505\ \ \ \ \ \textcolor{keyword}{const}\ scalar\ eta\ =\ y\ *\ invOneMinusZ;}
-\DoxyCodeLine{00506\ \ \ \ \ \textcolor{keyword}{const}\ scalar\ zeta\ =\ 2.0\ *\ z\ -\/\ 1.0;}
-\DoxyCodeLine{00507\ }
-\DoxyCodeLine{00508\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <=\ pOrder;\ ++i)}
-\DoxyCodeLine{00509\ \ \ \ \ \{}
-\DoxyCodeLine{00510\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ scalar\ Pi\ \ =\ jacobi(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{unsigned}\textcolor{keyword}{>}(i),\ 0.0,\ 0.0,\ xi);}
-\DoxyCodeLine{00511\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ scalar\ dPi\ =\ jacobi\_prime(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{unsigned}\textcolor{keyword}{>}(i),\ 0.0,\ 0.0,\ xi);}
-\DoxyCodeLine{00512\ }
-\DoxyCodeLine{00513\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ j\ =\ 0;\ j\ <=\ pOrder;\ ++j)}
-\DoxyCodeLine{00514\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00515\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ scalar\ Pj\ \ =\ jacobi(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{unsigned}\textcolor{keyword}{>}(j),\ 0.0,\ 0.0,\ eta);}
-\DoxyCodeLine{00516\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ scalar\ dPj\ =\ jacobi\_prime(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{unsigned}\textcolor{keyword}{>}(j),\ 0.0,\ 0.0,\ eta);}
-\DoxyCodeLine{00517\ }
-\DoxyCodeLine{00518\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ label\ m\ =\ max(i,\ j);}
-\DoxyCodeLine{00519\ }
-\DoxyCodeLine{00520\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ (1\ -\/\ z)\string^\{max(i,j)\}}}
-\DoxyCodeLine{00521\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ scalar\ powTerm\ =}
-\DoxyCodeLine{00522\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (m\ ==\ 0\ ?\ 1.0\ :\ std::pow(oneMinusZ,\ m));}
-\DoxyCodeLine{00523\ }
-\DoxyCodeLine{00524\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ scalar\ dPowTerm\_dz\ =}
-\DoxyCodeLine{00525\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (m\ ==\ 0\ ?\ 0.0\ :\ -\/m\ *\ std::pow(oneMinusZ,\ m\ -\/\ 1));}
-\DoxyCodeLine{00526\ }
-\DoxyCodeLine{00527\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ k\ =\ 0;\ k\ <=\ pOrder\ -\/\ m;\ ++k)}
-\DoxyCodeLine{00528\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00529\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ scalar\ alpha\ =\ 2.0\ *\ m\ +\ 2.0;}
-\DoxyCodeLine{00530\ }
-\DoxyCodeLine{00531\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ scalar\ Pk\ =}
-\DoxyCodeLine{00532\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ jacobi(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{unsigned}\textcolor{keyword}{>}(k),\ alpha,\ 0.0,\ zeta);}
-\DoxyCodeLine{00533\ }
-\DoxyCodeLine{00534\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ scalar\ dPk\ =}
-\DoxyCodeLine{00535\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ jacobi\_prime(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{unsigned}\textcolor{keyword}{>}(k),\ alpha,\ 0.0,\ zeta);}
-\DoxyCodeLine{00536\ }
-\DoxyCodeLine{00537\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00538\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Basis\ value}}
-\DoxyCodeLine{00539\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00540\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ basis[idx]\ =\ Pi\ *\ Pj\ *\ powTerm\ *\ Pk;}
-\DoxyCodeLine{00541\ }
-\DoxyCodeLine{00542\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00543\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ ∂/∂x}}
-\DoxyCodeLine{00544\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ xi\ =\ x\ /\ (1\ -\/\ z)}}
-\DoxyCodeLine{00545\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00546\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dBasis\_dx[idx]\ =}
-\DoxyCodeLine{00547\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dPi\ *\ invOneMinusZ\ *\ Pj\ *\ powTerm\ *\ Pk;}
+\DoxyCodeLine{00372\ \ \ \ \ label\ idx\ =\ 0;}
+\DoxyCodeLine{00373\ }
+\DoxyCodeLine{00374\ \ \ \ \ \textcolor{keyword}{const}\ scalar\ half\ =\ 0.5;}
+\DoxyCodeLine{00375\ \ \ \ \ \textcolor{keyword}{const}\ scalar\ oneMinusZ\ =\ 1.0\ -\/\ z;}
+\DoxyCodeLine{00376\ }
+\DoxyCodeLine{00377\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <=\ pOrder;\ ++i)}
+\DoxyCodeLine{00378\ \ \ \ \ \{}
+\DoxyCodeLine{00379\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ scalar\ Pi\ \ =\ jacobi(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{unsigned}\textcolor{keyword}{>}(i),\ 0.0,\ 0.0,\ x);}
+\DoxyCodeLine{00380\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ scalar\ dPi\ =\ jacobi\_prime(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{unsigned}\textcolor{keyword}{>}(i),\ 0.0,\ 0.0,\ x);}
+\DoxyCodeLine{00381\ }
+\DoxyCodeLine{00382\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ j\ =\ 0;\ j\ <=\ pOrder;\ ++j)}
+\DoxyCodeLine{00383\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00384\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ scalar\ Pj\ \ =\ jacobi(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{unsigned}\textcolor{keyword}{>}(j),\ 0.0,\ 0.0,\ y);}
+\DoxyCodeLine{00385\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ scalar\ dPj\ =\ jacobi\_prime(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{unsigned}\textcolor{keyword}{>}(j),\ 0.0,\ 0.0,\ y);}
+\DoxyCodeLine{00386\ }
+\DoxyCodeLine{00387\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ scalar\ S\ =}
+\DoxyCodeLine{00388\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (j\ ==\ 0\ ?\ 1.0\ :\ std::pow(half*oneMinusZ,\ j));}
+\DoxyCodeLine{00389\ }
+\DoxyCodeLine{00390\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ scalar\ dS\_dz\ =}
+\DoxyCodeLine{00391\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (j\ ==\ 0\ ?\ 0.0\ :}
+\DoxyCodeLine{00392\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ -\/j\ *\ std::pow(half*oneMinusZ,\ j-\/1)\ *\ half);}
+\DoxyCodeLine{00393\ }
+\DoxyCodeLine{00394\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ k\ =\ 0;\ k\ <=\ pOrder\ -\/\ j;\ ++k)}
+\DoxyCodeLine{00395\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00396\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ scalar\ alpha\ =\ 2.0*j\ +\ 1.0;}
+\DoxyCodeLine{00397\ }
+\DoxyCodeLine{00398\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ scalar\ Pk\ \ =}
+\DoxyCodeLine{00399\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ jacobi(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{unsigned}\textcolor{keyword}{>}(k),\ alpha,\ 0.0,\ z);}
+\DoxyCodeLine{00400\ }
+\DoxyCodeLine{00401\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ scalar\ dPk\ =}
+\DoxyCodeLine{00402\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ jacobi\_prime(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{unsigned}\textcolor{keyword}{>}(k),\ alpha,\ 0.0,\ z);}
+\DoxyCodeLine{00403\ }
+\DoxyCodeLine{00404\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00405\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Normalization\ coefficient}}
+\DoxyCodeLine{00406\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00407\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ scalar\ norm\ =}
+\DoxyCodeLine{00408\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::sqrt(}
+\DoxyCodeLine{00409\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (2.0*i\ +\ 1.0)\ *}
+\DoxyCodeLine{00410\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (2.0*j\ +\ 1.0)\ *}
+\DoxyCodeLine{00411\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (2.0*k\ +\ 2.0*j\ +\ 2.0)}
+\DoxyCodeLine{00412\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ /\ 8.0}
+\DoxyCodeLine{00413\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ );}
+\DoxyCodeLine{00414\ }
+\DoxyCodeLine{00415\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ =============================}}
+\DoxyCodeLine{00416\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Basis}}
+\DoxyCodeLine{00417\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ =============================}}
+\DoxyCodeLine{00418\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ basis[idx]\ =\ norm\ *\ Pi\ *\ Pj\ *\ S\ *\ Pk;}
+\DoxyCodeLine{00419\ }
+\DoxyCodeLine{00420\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ =============================}}
+\DoxyCodeLine{00421\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ d/dx}}
+\DoxyCodeLine{00422\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ =============================}}
+\DoxyCodeLine{00423\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dBasis\_dx[idx]\ =\ norm\ *\ dPi\ *\ Pj\ *\ S\ *\ Pk;}
+\DoxyCodeLine{00424\ }
+\DoxyCodeLine{00425\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ =============================}}
+\DoxyCodeLine{00426\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ d/dy}}
+\DoxyCodeLine{00427\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ =============================}}
+\DoxyCodeLine{00428\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dBasis\_dy[idx]\ =\ norm\ *\ Pi\ *\ dPj\ *\ S\ *\ Pk;}
+\DoxyCodeLine{00429\ }
+\DoxyCodeLine{00430\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ =============================}}
+\DoxyCodeLine{00431\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ d/dz}}
+\DoxyCodeLine{00432\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ =============================}}
+\DoxyCodeLine{00433\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dBasis\_dz[idx]\ =}
+\DoxyCodeLine{00434\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ norm\ *\ Pi\ *\ Pj\ *\ (S\ *\ dPk\ +\ Pk\ *\ dS\_dz);}
+\DoxyCodeLine{00435\ }
+\DoxyCodeLine{00436\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ++idx;}
+\DoxyCodeLine{00437\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00438\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00439\ \ \ \ \ \}}
+\DoxyCodeLine{00440\ \}}
+\DoxyCodeLine{00441\ }
+\DoxyCodeLine{00536\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespaceFoam_ae7f81f7453e04193254de9449cec0bdd}{computePyramidBasisAndDerivatives}}}
+\DoxyCodeLine{00537\ (}
+\DoxyCodeLine{00538\ \ \ \ \ \textcolor{keyword}{const}\ vector\ etaPt,}
+\DoxyCodeLine{00539\ \ \ \ \ \textcolor{keyword}{const}\ label\ \ pOrder,}
+\DoxyCodeLine{00540\ \ \ \ \ List<scalar>\&\ basis,}
+\DoxyCodeLine{00541\ \ \ \ \ List<scalar>\&\ dBasis\_deta1,}
+\DoxyCodeLine{00542\ \ \ \ \ List<scalar>\&\ dBasis\_deta2,}
+\DoxyCodeLine{00543\ \ \ \ \ List<scalar>\&\ dBasis\_deta3}
+\DoxyCodeLine{00544\ )}
+\DoxyCodeLine{00545\ \{}
+\DoxyCodeLine{00546\ \ \ \ \ \textcolor{keyword}{using\ }boost::math::jacobi;}
+\DoxyCodeLine{00547\ \ \ \ \ \textcolor{keyword}{using\ }boost::math::jacobi\_prime;}
 \DoxyCodeLine{00548\ }
-\DoxyCodeLine{00549\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00550\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ ∂/∂y}}
-\DoxyCodeLine{00551\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ eta\ =\ y\ /\ (1\ -\/\ z)}}
-\DoxyCodeLine{00552\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00553\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dBasis\_dy[idx]\ =}
-\DoxyCodeLine{00554\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Pi\ *\ dPj\ *\ invOneMinusZ\ *\ powTerm\ *\ Pk;}
-\DoxyCodeLine{00555\ }
-\DoxyCodeLine{00556\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00557\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ ∂/∂z}}
-\DoxyCodeLine{00558\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00559\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ scalar\ dxi\_dz\ \ =\ \ x\ *\ invOneMinusZ\ *\ invOneMinusZ;}
-\DoxyCodeLine{00560\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ scalar\ deta\_dz\ =\ \ y\ *\ invOneMinusZ\ *\ invOneMinusZ;}
-\DoxyCodeLine{00561\ }
-\DoxyCodeLine{00562\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dBasis\_dz[idx]\ =}
-\DoxyCodeLine{00563\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ derivative\ through\ xi}}
-\DoxyCodeLine{00564\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dPi\ *\ dxi\_dz\ *\ Pj\ *\ powTerm\ *\ Pk}
-\DoxyCodeLine{00565\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ +\ \textcolor{comment}{//\ derivative\ through\ eta}}
-\DoxyCodeLine{00566\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Pi\ *\ dPj\ *\ deta\_dz\ *\ powTerm\ *\ Pk}
-\DoxyCodeLine{00567\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ +\ \textcolor{comment}{//\ derivative\ of\ (1\ -\/\ z)\string^m}}
-\DoxyCodeLine{00568\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Pi\ *\ Pj\ *\ dPowTerm\_dz\ *\ Pk}
-\DoxyCodeLine{00569\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ +\ \textcolor{comment}{//\ derivative\ of\ Pk(2z\ -\/\ 1)}}
-\DoxyCodeLine{00570\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Pi\ *\ Pj\ *\ powTerm\ *\ dPk\ *\ 2.0;}
-\DoxyCodeLine{00571\ }
-\DoxyCodeLine{00572\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ++idx;}
-\DoxyCodeLine{00573\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00574\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00575\ \ \ \ \ \}}
-\DoxyCodeLine{00576\ \}}
-\DoxyCodeLine{00577\ }
-\DoxyCodeLine{00636\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespaceFoam_a23972bd07000d4dc81ffd25cbf51968b}{computeTetBasisAndDerivatives}}}
-\DoxyCodeLine{00637\ (}
-\DoxyCodeLine{00638\ \ \ \ \ \textcolor{keyword}{const}\ scalar\ x,}
-\DoxyCodeLine{00639\ \ \ \ \ \textcolor{keyword}{const}\ scalar\ y,}
-\DoxyCodeLine{00640\ \ \ \ \ \textcolor{keyword}{const}\ scalar\ z,}
-\DoxyCodeLine{00641\ \ \ \ \ \textcolor{keyword}{const}\ label\ \ pOrder,}
-\DoxyCodeLine{00642\ \ \ \ \ List<scalar>\&\ basis,}
-\DoxyCodeLine{00643\ \ \ \ \ List<scalar>\&\ dBasis\_dx,}
-\DoxyCodeLine{00644\ \ \ \ \ List<scalar>\&\ dBasis\_dy,}
-\DoxyCodeLine{00645\ \ \ \ \ List<scalar>\&\ dBasis\_dz}
-\DoxyCodeLine{00646\ )}
-\DoxyCodeLine{00647\ \{}
-\DoxyCodeLine{00648\ \ \ \ \ \textcolor{keyword}{using\ }boost::math::jacobi;}
-\DoxyCodeLine{00649\ \ \ \ \ \textcolor{keyword}{using\ }boost::math::jacobi\_prime;}
-\DoxyCodeLine{00650\ }
-\DoxyCodeLine{00651\ \ \ \ \ \textcolor{keyword}{const}\ label\ nBasis\ =\ \mbox{\hyperlink{namespaceFoam_a3f95ccd325596ba613b34ba6c0bf6c1f}{getNumBasis}}(pOrder,\ \mbox{\hyperlink{dgGeomCell_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5a268c4b76ec894ec6ad3c119ad7cc2170}{dgCellType::TET}});}
-\DoxyCodeLine{00652\ }
-\DoxyCodeLine{00653\ \ \ \ \ basis.setSize(nBasis);}
-\DoxyCodeLine{00654\ \ \ \ \ dBasis\_dx.setSize(nBasis);}
-\DoxyCodeLine{00655\ \ \ \ \ dBasis\_dy.setSize(nBasis);}
-\DoxyCodeLine{00656\ \ \ \ \ dBasis\_dz.setSize(nBasis);}
-\DoxyCodeLine{00657\ }
-\DoxyCodeLine{00658\ \ \ \ \ label\ idx\ =\ 0;}
-\DoxyCodeLine{00659\ }
-\DoxyCodeLine{00660\ \ \ \ \ \textcolor{keyword}{const}\ scalar\ oneMinusZ\ \ \ \ \ =\ 1.0\ -\/\ z;}
-\DoxyCodeLine{00661\ \ \ \ \ \textcolor{keyword}{const}\ scalar\ oneMinusYZ\ \ \ \ =\ 1.0\ -\/\ y\ -\/\ z;}
-\DoxyCodeLine{00662\ \ \ \ \ \textcolor{keyword}{const}\ scalar\ invOneMinusZ\ \ =\ 1.0\ /\ oneMinusZ;}
-\DoxyCodeLine{00663\ \ \ \ \ \textcolor{keyword}{const}\ scalar\ invOneMinusYZ\ =\ 1.0\ /\ oneMinusYZ;}
-\DoxyCodeLine{00664\ }
-\DoxyCodeLine{00665\ \ \ \ \ \textcolor{comment}{//\ Mapped\ coordinates}}
-\DoxyCodeLine{00666\ \ \ \ \ \textcolor{keyword}{const}\ scalar\ xi\ \ \ =\ 2.0\ *\ x\ *\ invOneMinusYZ\ -\/\ 1.0;}
-\DoxyCodeLine{00667\ \ \ \ \ \textcolor{keyword}{const}\ scalar\ eta\ \ =\ 2.0\ *\ y\ *\ invOneMinusZ\ \ -\/\ 1.0;}
-\DoxyCodeLine{00668\ \ \ \ \ \textcolor{keyword}{const}\ scalar\ zeta\ =\ 2.0\ *\ z\ -\/\ 1.0;}
-\DoxyCodeLine{00669\ }
-\DoxyCodeLine{00670\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <=\ pOrder;\ ++i)}
-\DoxyCodeLine{00671\ \ \ \ \ \{}
-\DoxyCodeLine{00672\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ scalar\ Pi\ \ =\ jacobi(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{unsigned}\textcolor{keyword}{>}(i),\ 0.0,\ 0.0,\ xi);}
-\DoxyCodeLine{00673\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ scalar\ dPi\ =\ jacobi\_prime(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{unsigned}\textcolor{keyword}{>}(i),\ 0.0,\ 0.0,\ xi);}
-\DoxyCodeLine{00674\ }
-\DoxyCodeLine{00675\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ scalar\ oneMinusYZPowI\ =}
-\DoxyCodeLine{00676\ \ \ \ \ \ \ \ \ \ \ \ \ (i\ ==\ 0\ ?\ 1.0\ :\ std::pow(oneMinusYZ,\ i));}
-\DoxyCodeLine{00677\ }
-\DoxyCodeLine{00678\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ scalar\ dOneMinusYZPowI\_dy\ =}
-\DoxyCodeLine{00679\ \ \ \ \ \ \ \ \ \ \ \ \ (i\ ==\ 0\ ?\ 0.0\ :\ -\/i\ *\ std::pow(oneMinusYZ,\ i\ -\/\ 1));}
-\DoxyCodeLine{00680\ }
-\DoxyCodeLine{00681\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ scalar\ dOneMinusYZPowI\_dz\ =}
-\DoxyCodeLine{00682\ \ \ \ \ \ \ \ \ \ \ \ \ dOneMinusYZPowI\_dy;\ \ \textcolor{comment}{//\ same\ derivative\ w.r.t\ y\ and\ z}}
-\DoxyCodeLine{00683\ }
-\DoxyCodeLine{00684\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ j\ =\ 0;\ j\ <=\ pOrder\ -\/\ i;\ ++j)}
-\DoxyCodeLine{00685\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00686\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ scalar\ alpha\_j\ =\ 2.0\ *\ i\ +\ 1.0;}
-\DoxyCodeLine{00687\ }
-\DoxyCodeLine{00688\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ scalar\ Pj\ \ =}
-\DoxyCodeLine{00689\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ jacobi(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{unsigned}\textcolor{keyword}{>}(j),\ alpha\_j,\ 0.0,\ eta);}
-\DoxyCodeLine{00690\ }
-\DoxyCodeLine{00691\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ scalar\ dPj\ =}
-\DoxyCodeLine{00692\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ jacobi\_prime(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{unsigned}\textcolor{keyword}{>}(j),\ alpha\_j,\ 0.0,\ eta);}
-\DoxyCodeLine{00693\ }
-\DoxyCodeLine{00694\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ scalar\ oneMinusZPowJ\ =}
-\DoxyCodeLine{00695\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (j\ ==\ 0\ ?\ 1.0\ :\ std::pow(oneMinusZ,\ j));}
-\DoxyCodeLine{00696\ }
-\DoxyCodeLine{00697\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ scalar\ dOneMinusZPowJ\_dz\ =}
-\DoxyCodeLine{00698\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (j\ ==\ 0\ ?\ 0.0\ :\ -\/j\ *\ std::pow(oneMinusZ,\ j\ -\/\ 1));}
-\DoxyCodeLine{00699\ }
-\DoxyCodeLine{00700\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ k\ =\ 0;\ k\ <=\ pOrder\ -\/\ i\ -\/\ j;\ ++k)}
-\DoxyCodeLine{00701\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00702\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ scalar\ alpha\_k\ =\ 2.0\ *\ (i\ +\ j)\ +\ 2.0;}
-\DoxyCodeLine{00703\ }
-\DoxyCodeLine{00704\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ scalar\ Pk\ =}
-\DoxyCodeLine{00705\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ jacobi(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{unsigned}\textcolor{keyword}{>}(k),\ alpha\_k,\ 0.0,\ zeta);}
-\DoxyCodeLine{00706\ }
-\DoxyCodeLine{00707\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ scalar\ dPk\ =}
-\DoxyCodeLine{00708\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ jacobi\_prime(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{unsigned}\textcolor{keyword}{>}(k),\ alpha\_k,\ 0.0,\ zeta);}
-\DoxyCodeLine{00709\ }
-\DoxyCodeLine{00710\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00711\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Basis\ value}}
-\DoxyCodeLine{00712\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00713\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ basis[idx]\ =}
-\DoxyCodeLine{00714\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Pi\ *\ oneMinusYZPowI\ *}
-\DoxyCodeLine{00715\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Pj\ *\ oneMinusZPowJ\ *}
-\DoxyCodeLine{00716\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Pk;}
-\DoxyCodeLine{00717\ }
-\DoxyCodeLine{00718\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00719\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ ∂/∂x}}
-\DoxyCodeLine{00720\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ xi\ =\ 2x\ /\ (1\ -\/\ y\ -\/\ z)\ -\/\ 1}}
-\DoxyCodeLine{00721\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00722\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dBasis\_dx[idx]\ =}
-\DoxyCodeLine{00723\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dPi\ *\ (2.0\ *\ invOneMinusYZ)\ *}
-\DoxyCodeLine{00724\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ oneMinusYZPowI\ *\ Pj\ *\ oneMinusZPowJ\ *\ Pk;}
-\DoxyCodeLine{00725\ }
-\DoxyCodeLine{00726\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00727\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ ∂/∂y}}
-\DoxyCodeLine{00728\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00729\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ scalar\ dxi\_dy\ =}
-\DoxyCodeLine{00730\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 2.0\ *\ x\ *\ invOneMinusYZ\ *\ invOneMinusYZ;}
-\DoxyCodeLine{00731\ }
-\DoxyCodeLine{00732\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dBasis\_dy[idx]\ =}
-\DoxyCodeLine{00733\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ through\ xi}}
-\DoxyCodeLine{00734\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dPi\ *\ dxi\_dy\ *\ oneMinusYZPowI\ *\ Pj\ *\ oneMinusZPowJ\ *\ Pk}
-\DoxyCodeLine{00735\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ +\ \textcolor{comment}{//\ derivative\ of\ (1\ -\/\ y\ -\/\ z)\string^i}}
-\DoxyCodeLine{00736\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Pi\ *\ dOneMinusYZPowI\_dy\ *\ Pj\ *\ oneMinusZPowJ\ *\ Pk}
-\DoxyCodeLine{00737\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ +\ \textcolor{comment}{//\ through\ eta}}
-\DoxyCodeLine{00738\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Pi\ *\ oneMinusYZPowI\ *}
-\DoxyCodeLine{00739\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dPj\ *\ (2.0\ *\ invOneMinusZ)\ *}
-\DoxyCodeLine{00740\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ oneMinusZPowJ\ *\ Pk;}
+\DoxyCodeLine{00549\ \ \ \ \ \textcolor{keyword}{const}\ scalar\ eta1\ =\ etaPt.\mbox{\hyperlink{classFoam_1_1GaussField_a49c91fd2de86e400eb7bf30ed43b04fd}{x}}();}
+\DoxyCodeLine{00550\ \ \ \ \ \textcolor{keyword}{const}\ scalar\ eta2\ =\ etaPt.\mbox{\hyperlink{classFoam_1_1GaussField_af48b2954902727aadb60e75a5baf4cf3}{y}}();}
+\DoxyCodeLine{00551\ \ \ \ \ \textcolor{keyword}{const}\ scalar\ eta3\ =\ etaPt.\mbox{\hyperlink{classFoam_1_1GaussField_ac893a0f59b8435e95c03d2a35c6a2cc3}{z}}();}
+\DoxyCodeLine{00552\ }
+\DoxyCodeLine{00553\ \ \ \ \ \textcolor{keyword}{const}\ label\ nBasis\ =\ \mbox{\hyperlink{namespaceFoam_a3f95ccd325596ba613b34ba6c0bf6c1f}{getNumBasis}}(pOrder,\ \mbox{\hyperlink{dgGeomCell_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5acd996d3184761601a0e44e587a012d4f}{dgCellType::PYRAMID}});}
+\DoxyCodeLine{00554\ }
+\DoxyCodeLine{00555\ \ \ \ \ basis.setSize(nBasis);}
+\DoxyCodeLine{00556\ \ \ \ \ dBasis\_deta1.setSize(nBasis);}
+\DoxyCodeLine{00557\ \ \ \ \ dBasis\_deta2.setSize(nBasis);}
+\DoxyCodeLine{00558\ \ \ \ \ dBasis\_deta3.setSize(nBasis);}
+\DoxyCodeLine{00559\ }
+\DoxyCodeLine{00560\ \ \ \ \ label\ idx\ =\ 0;}
+\DoxyCodeLine{00561\ \ \ \ \ \textcolor{keyword}{const}\ scalar\ half\ =\ 0.5;}
+\DoxyCodeLine{00562\ }
+\DoxyCodeLine{00563\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <=\ pOrder;\ ++i)}
+\DoxyCodeLine{00564\ \ \ \ \ \{}
+\DoxyCodeLine{00565\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ scalar\ Pi\ \ =\ jacobi(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{unsigned}\textcolor{keyword}{>}(i),\ 0.0,\ 0.0,\ eta1);}
+\DoxyCodeLine{00566\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ scalar\ dPi\ =\ jacobi\_prime(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{unsigned}\textcolor{keyword}{>}(i),\ 0.0,\ 0.0,\ eta1);}
+\DoxyCodeLine{00567\ }
+\DoxyCodeLine{00568\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ j\ =\ 0;\ j\ <=\ pOrder\ -\/\ i;\ ++j)}
+\DoxyCodeLine{00569\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00570\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ scalar\ Pj\ \ =\ jacobi(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{unsigned}\textcolor{keyword}{>}(j),\ 0.0,\ 0.0,\ eta2);}
+\DoxyCodeLine{00571\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ scalar\ dPj\ =\ jacobi\_prime(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{unsigned}\textcolor{keyword}{>}(j),\ 0.0,\ 0.0,\ eta2);}
+\DoxyCodeLine{00572\ }
+\DoxyCodeLine{00573\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ label\ ij\ =\ i\ +\ j;}
+\DoxyCodeLine{00574\ }
+\DoxyCodeLine{00575\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ scalar\ oneMinusEta3\ =\ 1.0\ -\/\ eta3;}
+\DoxyCodeLine{00576\ }
+\DoxyCodeLine{00577\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ ((1\ -\/\ eta3)/2)\string^(i+j)}}
+\DoxyCodeLine{00578\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ scalar\ powTerm\ =}
+\DoxyCodeLine{00579\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (ij\ ==\ 0)\ ?\ 1.0\ :}
+\DoxyCodeLine{00580\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::\mbox{\hyperlink{namespaceFoam_a15ce1c3546151277ea9d518e17384f34}{pow}}(oneMinusEta3\ *\ half,\ ij);}
+\DoxyCodeLine{00581\ }
+\DoxyCodeLine{00582\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ scalar\ dPowTerm\_deta3\ =}
+\DoxyCodeLine{00583\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (ij\ ==\ 0)\ ?\ 0.0\ :}
+\DoxyCodeLine{00584\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ -\/ij\ *\ half\ *}
+\DoxyCodeLine{00585\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::\mbox{\hyperlink{namespaceFoam_a15ce1c3546151277ea9d518e17384f34}{pow}}(oneMinusEta3\ *\ half,\ ij\ -\/\ 1);}
+\DoxyCodeLine{00586\ }
+\DoxyCodeLine{00587\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ k\ =\ 0;\ k\ <=\ pOrder\ -\/\ i\ -\/\ j;\ ++k)}
+\DoxyCodeLine{00588\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00589\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ scalar\ alpha\ =}
+\DoxyCodeLine{00590\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 2.0\ *\ i\ +\ 2.0\ *\ j\ +\ 2.0;}
+\DoxyCodeLine{00591\ }
+\DoxyCodeLine{00592\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ scalar\ Pk\ =}
+\DoxyCodeLine{00593\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ jacobi(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{unsigned}\textcolor{keyword}{>}(k),\ alpha,\ 0.0,\ eta3);}
+\DoxyCodeLine{00594\ }
+\DoxyCodeLine{00595\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ scalar\ dPk\ =}
+\DoxyCodeLine{00596\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ jacobi\_prime(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{unsigned}\textcolor{keyword}{>}(k),\ alpha,\ 0.0,\ eta3);}
+\DoxyCodeLine{00597\ }
+\DoxyCodeLine{00598\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00599\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Normalization\ factor}}
+\DoxyCodeLine{00600\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00601\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ scalar\ norm\ =}
+\DoxyCodeLine{00602\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::sqrt(}
+\DoxyCodeLine{00603\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (2.0*i\ +\ 1.0)\ *}
+\DoxyCodeLine{00604\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (2.0*j\ +\ 1.0)\ *}
+\DoxyCodeLine{00605\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (2.0*k\ +\ 2.0*ij\ +\ 3.0)}
+\DoxyCodeLine{00606\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ /\ 8.0}
+\DoxyCodeLine{00607\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ );}
+\DoxyCodeLine{00608\ }
+\DoxyCodeLine{00609\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00610\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Basis}}
+\DoxyCodeLine{00611\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00612\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ basis[idx]\ =}
+\DoxyCodeLine{00613\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ norm\ *}
+\DoxyCodeLine{00614\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Pi\ *\ Pj\ *\ powTerm\ *\ Pk;}
+\DoxyCodeLine{00615\ }
+\DoxyCodeLine{00616\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00617\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ d/deta1}}
+\DoxyCodeLine{00618\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00619\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dBasis\_deta1[idx]\ =}
+\DoxyCodeLine{00620\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ norm\ *}
+\DoxyCodeLine{00621\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dPi\ *\ Pj\ *\ powTerm\ *\ Pk;}
+\DoxyCodeLine{00622\ }
+\DoxyCodeLine{00623\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00624\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ d/deta2}}
+\DoxyCodeLine{00625\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00626\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dBasis\_deta2[idx]\ =}
+\DoxyCodeLine{00627\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ norm\ *}
+\DoxyCodeLine{00628\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Pi\ *\ dPj\ *\ powTerm\ *\ Pk;}
+\DoxyCodeLine{00629\ }
+\DoxyCodeLine{00630\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00631\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ d/deta3}}
+\DoxyCodeLine{00632\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00633\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dBasis\_deta3[idx]\ =}
+\DoxyCodeLine{00634\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ norm\ *}
+\DoxyCodeLine{00635\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (}
+\DoxyCodeLine{00636\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Pi\ *\ Pj\ *\ dPowTerm\_deta3\ *\ Pk}
+\DoxyCodeLine{00637\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ +\ Pi\ *\ Pj\ *\ powTerm\ *\ dPk}
+\DoxyCodeLine{00638\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ );}
+\DoxyCodeLine{00639\ }
+\DoxyCodeLine{00640\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ++idx;}
+\DoxyCodeLine{00641\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00642\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00643\ \ \ \ \ \}}
+\DoxyCodeLine{00644\ \}}
+\DoxyCodeLine{00645\ }
+\DoxyCodeLine{00710\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespaceFoam_a7065da252f9f281fe97569fbef1842b5}{computeTetBasisAndDerivatives}}}
+\DoxyCodeLine{00711\ (}
+\DoxyCodeLine{00712\ \ \ \ \ \textcolor{keyword}{const}\ vector\ etaPt,}
+\DoxyCodeLine{00713\ \ \ \ \ \textcolor{keyword}{const}\ label\ \ pOrder,}
+\DoxyCodeLine{00714\ \ \ \ \ List<scalar>\&\ basis,}
+\DoxyCodeLine{00715\ \ \ \ \ List<scalar>\&\ dBasis\_deta1,}
+\DoxyCodeLine{00716\ \ \ \ \ List<scalar>\&\ dBasis\_deta2,}
+\DoxyCodeLine{00717\ \ \ \ \ List<scalar>\&\ dBasis\_deta3}
+\DoxyCodeLine{00718\ )}
+\DoxyCodeLine{00719\ \{}
+\DoxyCodeLine{00720\ \ \ \ \ \textcolor{keyword}{using\ }boost::math::jacobi;}
+\DoxyCodeLine{00721\ \ \ \ \ \textcolor{keyword}{using\ }boost::math::jacobi\_prime;}
+\DoxyCodeLine{00722\ }
+\DoxyCodeLine{00723\ \ \ \ \ \textcolor{keyword}{const}\ scalar\ eta1\ =\ etaPt.\mbox{\hyperlink{classFoam_1_1GaussField_a49c91fd2de86e400eb7bf30ed43b04fd}{x}}();}
+\DoxyCodeLine{00724\ \ \ \ \ \textcolor{keyword}{const}\ scalar\ eta2\ =\ etaPt.\mbox{\hyperlink{classFoam_1_1GaussField_af48b2954902727aadb60e75a5baf4cf3}{y}}();}
+\DoxyCodeLine{00725\ \ \ \ \ \textcolor{keyword}{const}\ scalar\ eta3\ =\ etaPt.\mbox{\hyperlink{classFoam_1_1GaussField_ac893a0f59b8435e95c03d2a35c6a2cc3}{z}}();}
+\DoxyCodeLine{00726\ }
+\DoxyCodeLine{00727\ \ \ \ \ \textcolor{keyword}{const}\ label\ nBasis\ =\ \mbox{\hyperlink{namespaceFoam_a3f95ccd325596ba613b34ba6c0bf6c1f}{getNumBasis}}(pOrder,\ \mbox{\hyperlink{dgGeomCell_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5a268c4b76ec894ec6ad3c119ad7cc2170}{dgCellType::TET}});}
+\DoxyCodeLine{00728\ }
+\DoxyCodeLine{00729\ \ \ \ \ basis.setSize(nBasis);}
+\DoxyCodeLine{00730\ \ \ \ \ dBasis\_deta1.setSize(nBasis);}
+\DoxyCodeLine{00731\ \ \ \ \ dBasis\_deta2.setSize(nBasis);}
+\DoxyCodeLine{00732\ \ \ \ \ dBasis\_deta3.setSize(nBasis);}
+\DoxyCodeLine{00733\ }
+\DoxyCodeLine{00734\ \ \ \ \ label\ idx\ =\ 0;}
+\DoxyCodeLine{00735\ \ \ \ \ \textcolor{keyword}{const}\ scalar\ half\ =\ 0.5;}
+\DoxyCodeLine{00736\ }
+\DoxyCodeLine{00737\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <=\ pOrder;\ ++i)}
+\DoxyCodeLine{00738\ \ \ \ \ \{}
+\DoxyCodeLine{00739\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ scalar\ Pi\ \ =\ jacobi(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{unsigned}\textcolor{keyword}{>}(i),\ 0.0,\ 0.0,\ eta1);}
+\DoxyCodeLine{00740\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ scalar\ dPi\ =\ jacobi\_prime(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{unsigned}\textcolor{keyword}{>}(i),\ 0.0,\ 0.0,\ eta1);}
 \DoxyCodeLine{00741\ }
-\DoxyCodeLine{00742\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00743\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ ∂/∂z}}
-\DoxyCodeLine{00744\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00745\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ scalar\ dxi\_dz\ =}
-\DoxyCodeLine{00746\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 2.0\ *\ x\ *\ invOneMinusYZ\ *\ invOneMinusYZ;}
+\DoxyCodeLine{00742\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ scalar\ oneMinusEta2\ =\ 1.0\ -\/\ eta2;}
+\DoxyCodeLine{00743\ }
+\DoxyCodeLine{00744\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ scalar\ powEta2\ =}
+\DoxyCodeLine{00745\ \ \ \ \ \ \ \ \ \ \ \ \ (i\ ==\ 0)\ ?\ 1.0\ :}
+\DoxyCodeLine{00746\ \ \ \ \ \ \ \ \ \ \ \ \ std::\mbox{\hyperlink{namespaceFoam_a15ce1c3546151277ea9d518e17384f34}{pow}}(oneMinusEta2\ *\ half,\ i);}
 \DoxyCodeLine{00747\ }
-\DoxyCodeLine{00748\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ scalar\ deta\_dz\ =}
-\DoxyCodeLine{00749\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 2.0\ *\ y\ *\ invOneMinusZ\ *\ invOneMinusZ;}
-\DoxyCodeLine{00750\ }
-\DoxyCodeLine{00751\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dBasis\_dz[idx]\ =}
-\DoxyCodeLine{00752\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ through\ xi}}
-\DoxyCodeLine{00753\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dPi\ *\ dxi\_dz\ *\ oneMinusYZPowI\ *\ Pj\ *\ oneMinusZPowJ\ *\ Pk}
-\DoxyCodeLine{00754\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ +\ \textcolor{comment}{//\ derivative\ of\ (1\ -\/\ y\ -\/\ z)\string^i}}
-\DoxyCodeLine{00755\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Pi\ *\ dOneMinusYZPowI\_dz\ *\ Pj\ *\ oneMinusZPowJ\ *\ Pk}
-\DoxyCodeLine{00756\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ +\ \textcolor{comment}{//\ through\ eta}}
-\DoxyCodeLine{00757\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Pi\ *\ oneMinusYZPowI\ *}
-\DoxyCodeLine{00758\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dPj\ *\ deta\_dz\ *}
-\DoxyCodeLine{00759\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ oneMinusZPowJ\ *\ Pk}
-\DoxyCodeLine{00760\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ +\ \textcolor{comment}{//\ derivative\ of\ (1\ -\/\ z)\string^j}}
-\DoxyCodeLine{00761\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Pi\ *\ oneMinusYZPowI\ *\ Pj\ *\ dOneMinusZPowJ\_dz\ *\ Pk}
-\DoxyCodeLine{00762\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ +\ \textcolor{comment}{//\ through\ zeta}}
-\DoxyCodeLine{00763\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Pi\ *\ oneMinusYZPowI\ *\ Pj\ *\ oneMinusZPowJ\ *}
-\DoxyCodeLine{00764\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dPk\ *\ 2.0;}
-\DoxyCodeLine{00765\ }
-\DoxyCodeLine{00766\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ++idx;}
-\DoxyCodeLine{00767\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00768\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00769\ \ \ \ \ \}}
-\DoxyCodeLine{00770\ \}}
+\DoxyCodeLine{00748\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ scalar\ dPowEta2\_deta2\ =}
+\DoxyCodeLine{00749\ \ \ \ \ \ \ \ \ \ \ \ \ (i\ ==\ 0)\ ?\ 0.0\ :}
+\DoxyCodeLine{00750\ \ \ \ \ \ \ \ \ \ \ \ \ -\/i\ *\ half\ *}
+\DoxyCodeLine{00751\ \ \ \ \ \ \ \ \ \ \ \ \ std::\mbox{\hyperlink{namespaceFoam_a15ce1c3546151277ea9d518e17384f34}{pow}}(oneMinusEta2\ *\ half,\ i\ -\/\ 1);}
+\DoxyCodeLine{00752\ }
+\DoxyCodeLine{00753\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ j\ =\ 0;\ j\ <=\ pOrder\ -\/\ i;\ ++j)}
+\DoxyCodeLine{00754\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00755\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ scalar\ alpha\_j\ =\ 2.0\ *\ i\ +\ 1.0;}
+\DoxyCodeLine{00756\ }
+\DoxyCodeLine{00757\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ scalar\ Pj\ =}
+\DoxyCodeLine{00758\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ jacobi(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{unsigned}\textcolor{keyword}{>}(j),\ alpha\_j,\ 0.0,\ eta2);}
+\DoxyCodeLine{00759\ }
+\DoxyCodeLine{00760\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ scalar\ dPj\ =}
+\DoxyCodeLine{00761\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ jacobi\_prime(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{unsigned}\textcolor{keyword}{>}(j),\ alpha\_j,\ 0.0,\ eta2);}
+\DoxyCodeLine{00762\ }
+\DoxyCodeLine{00763\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ scalar\ oneMinusEta3\ =\ 1.0\ -\/\ eta3;}
+\DoxyCodeLine{00764\ }
+\DoxyCodeLine{00765\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ (\ (1\ -\/\ eta3)/2\ )\string^(i+j)}}
+\DoxyCodeLine{00766\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ label\ ij\ =\ i\ +\ j;}
+\DoxyCodeLine{00767\ }
+\DoxyCodeLine{00768\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ scalar\ powEta3\ =}
+\DoxyCodeLine{00769\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (ij\ ==\ 0)\ ?\ 1.0\ :}
+\DoxyCodeLine{00770\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::\mbox{\hyperlink{namespaceFoam_a15ce1c3546151277ea9d518e17384f34}{pow}}(oneMinusEta3\ *\ half,\ ij);}
 \DoxyCodeLine{00771\ }
-\DoxyCodeLine{00772\ \}\ \textcolor{comment}{//\ namespace\ Foam}}
-\DoxyCodeLine{00773\ }
-\DoxyCodeLine{00774\ \textcolor{preprocessor}{\#endif}}
-\DoxyCodeLine{00775\ }
-\DoxyCodeLine{00776\ \textcolor{comment}{//\ *************************************************************************\ //}}
+\DoxyCodeLine{00772\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ scalar\ dPowEta3\_deta3\ =}
+\DoxyCodeLine{00773\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (ij\ ==\ 0)\ ?\ 0.0\ :}
+\DoxyCodeLine{00774\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ -\/ij\ *\ half\ *}
+\DoxyCodeLine{00775\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::\mbox{\hyperlink{namespaceFoam_a15ce1c3546151277ea9d518e17384f34}{pow}}(oneMinusEta3\ *\ half,\ ij\ -\/\ 1);}
+\DoxyCodeLine{00776\ }
+\DoxyCodeLine{00777\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ k\ =\ 0;\ k\ <=\ pOrder\ -\/\ i\ -\/\ j;\ ++k)}
+\DoxyCodeLine{00778\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00779\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ scalar\ alpha\_k\ =}
+\DoxyCodeLine{00780\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 2.0\ *\ i\ +\ 2.0\ *\ j\ +\ 2.0;}
+\DoxyCodeLine{00781\ }
+\DoxyCodeLine{00782\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ scalar\ Pk\ =}
+\DoxyCodeLine{00783\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ jacobi(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{unsigned}\textcolor{keyword}{>}(k),\ alpha\_k,\ 0.0,\ eta3);}
+\DoxyCodeLine{00784\ }
+\DoxyCodeLine{00785\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ scalar\ dPk\ =}
+\DoxyCodeLine{00786\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ jacobi\_prime(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{unsigned}\textcolor{keyword}{>}(k),\ alpha\_k,\ 0.0,\ eta3);}
+\DoxyCodeLine{00787\ }
+\DoxyCodeLine{00788\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00789\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Normalization\ factor}}
+\DoxyCodeLine{00790\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00791\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ scalar\ norm\ =}
+\DoxyCodeLine{00792\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::sqrt(}
+\DoxyCodeLine{00793\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (2.0*i\ +\ 1.0)\ *}
+\DoxyCodeLine{00794\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (2.0*j\ +\ 2.0*i\ +\ 2.0)\ *}
+\DoxyCodeLine{00795\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (2.0*k\ +\ 2.0*i\ +\ 2.0*j\ +\ 3.0)}
+\DoxyCodeLine{00796\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ /\ 8.0}
+\DoxyCodeLine{00797\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ );}
+\DoxyCodeLine{00798\ }
+\DoxyCodeLine{00799\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00800\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Basis}}
+\DoxyCodeLine{00801\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00802\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ basis[idx]\ =}
+\DoxyCodeLine{00803\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ norm\ *}
+\DoxyCodeLine{00804\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Pi\ *\ powEta2\ *}
+\DoxyCodeLine{00805\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Pj\ *\ powEta3\ *}
+\DoxyCodeLine{00806\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Pk;}
+\DoxyCodeLine{00807\ }
+\DoxyCodeLine{00808\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00809\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ d/deta1}}
+\DoxyCodeLine{00810\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00811\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dBasis\_deta1[idx]\ =}
+\DoxyCodeLine{00812\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ norm\ *}
+\DoxyCodeLine{00813\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dPi\ *\ powEta2\ *}
+\DoxyCodeLine{00814\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Pj\ *\ powEta3\ *}
+\DoxyCodeLine{00815\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Pk;}
+\DoxyCodeLine{00816\ }
+\DoxyCodeLine{00817\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00818\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ d/deta2}}
+\DoxyCodeLine{00819\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00820\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dBasis\_deta2[idx]\ =}
+\DoxyCodeLine{00821\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ norm\ *}
+\DoxyCodeLine{00822\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (}
+\DoxyCodeLine{00823\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Pi\ *\ dPowEta2\_deta2\ *}
+\DoxyCodeLine{00824\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Pj\ *\ powEta3\ *\ Pk}
+\DoxyCodeLine{00825\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ +\ Pi\ *\ powEta2\ *}
+\DoxyCodeLine{00826\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dPj\ *\ powEta3\ *\ Pk}
+\DoxyCodeLine{00827\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ );}
+\DoxyCodeLine{00828\ }
+\DoxyCodeLine{00829\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00830\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ d/deta3}}
+\DoxyCodeLine{00831\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00832\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dBasis\_deta3[idx]\ =}
+\DoxyCodeLine{00833\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ norm\ *}
+\DoxyCodeLine{00834\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (}
+\DoxyCodeLine{00835\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Pi\ *\ powEta2\ *}
+\DoxyCodeLine{00836\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Pj\ *\ dPowEta3\_deta3\ *\ Pk}
+\DoxyCodeLine{00837\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ +\ Pi\ *\ powEta2\ *}
+\DoxyCodeLine{00838\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Pj\ *\ powEta3\ *\ dPk}
+\DoxyCodeLine{00839\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ );}
+\DoxyCodeLine{00840\ }
+\DoxyCodeLine{00841\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ++idx;}
+\DoxyCodeLine{00842\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00843\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00844\ \ \ \ \ \}}
+\DoxyCodeLine{00845\ \}}
+\DoxyCodeLine{00846\ }
+\DoxyCodeLine{00847\ \}\ \textcolor{comment}{//\ namespace\ Foam}}
+\DoxyCodeLine{00848\ }
+\DoxyCodeLine{00849\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00850\ }
+\DoxyCodeLine{00851\ \textcolor{comment}{//\ *************************************************************************\ //}}
 
 \end{DoxyCode}

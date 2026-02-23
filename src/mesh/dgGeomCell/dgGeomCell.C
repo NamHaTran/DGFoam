@@ -91,63 +91,6 @@ Foam::dgGeomCell::dgGeomCell
     {
         J3D_[gp] = mag(Foam::geometricJacobian::calcJacobianDetAtInteriorGaussPt(type_, gaussPts[gp], cellPoints_));
     }
-
-    // Precompute mass matrix
-    const List<List<scalar>>& basis = refCell_->basis();
-
-    // Gauss weights
-    const List<scalar>& w = refCell_->weights();
-
-    const label nDof = basis[0].size();
-
-    // Resize and initialize mass matrix
-    massMatrix_.resize(nDof);
-
-    // Assemble mass matrix directly at Gauss points
-    for (label i = 0; i < nDof; ++i)
-    {
-        for (label j = 0; j < nDof; ++j)
-        {
-            scalar mij = 0.0;
-
-            for (label gp = 0; gp < nGauss; ++gp)
-            {
-                scalar JDuffy = 0.0;
-
-                switch (type_)
-                {
-                    case dgCellType::HEX:
-                        JDuffy = 1.0; // No Duffy transformation for hex
-                        break;
-
-                    case dgCellType::PRISM:
-                        JDuffy = Foam::referenceJacobian::prismRefToHexRef(gaussPts[gp]);
-                        break;
-
-                    case dgCellType::PYRAMID:
-                        JDuffy = Foam::referenceJacobian::pyramidRefToHexRef(gaussPts[gp]);
-                        break;
-
-                    case dgCellType::TET:
-                        JDuffy = Foam::referenceJacobian::tetRefToHexRef(gaussPts[gp]);
-                        break;
-
-                    default:
-                        FatalErrorInFunction
-                            << "Unsupported cell type for mass matrix calculation: " << type_ << nl
-                            << abort(FatalError);
-                }
-
-                mij +=
-                    basis[gp][i]
-                  * basis[gp][j]
-                  * JDuffy // J3D_[gp]
-                  * w[gp];
-            }
-
-            massMatrix_[i][j] = mij;
-        }
-    }
 }
 
 Foam::dgGeomCell::~dgGeomCell()
@@ -245,7 +188,7 @@ void Foam::dgGeomCell::printDebugInfo() const
         Info << nl;
     }
 
-    Info << " - Mass matrix:" << massMatrix_ << nl;
+    Info << " - Mass matrix:" << this->massMatrix() << nl;
 
     Info << "==========================================" << endl;
 }

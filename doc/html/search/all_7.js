@@ -6,6 +6,5 @@ var searchData=
   ['hasdof_3',['hasdof',['../classFoam_1_1dgField.html#afc454ae18f85b23dfe80c0ebde8bbd8f',1,'Foam::dgField::hasDof() const'],['../classFoam_1_1dgField.html#afc454ae18f85b23dfe80c0ebde8bbd8f',1,'Foam::dgField::hasDof() const']]],
   ['hasdof_5f_4',['hasDof_',['../classFoam_1_1dgField.html#abfcbb698f99feb25b38a5b839d453e22',1,'Foam::dgField']]],
   ['hex_5',['hex',['../dgGeomCell_2dgCellType_8H.html#afaeb14dfc0cfab52916039ab825f34d5a58c9566f3c750ce7147b045fdd14202b',1,'HEX:&#160;dgCellType.H'],['../lnInclude_2dgCellType_8H.html#afaeb14dfc0cfab52916039ab825f34d5a58c9566f3c750ce7147b045fdd14202b',1,'HEX:&#160;dgCellType.H'],['../dgGeomCell_2dgCellType_8H.html#afaeb14dfc0cfab52916039ab825f34d5a58c9566f3c750ce7147b045fdd14202b',1,'HEX:&#160;dgCellType.H'],['../lnInclude_2dgCellType_8H.html#afaeb14dfc0cfab52916039ab825f34d5a58c9566f3c750ce7147b045fdd14202b',1,'HEX:&#160;dgCellType.H']]],
-  ['hexjacobian_6',['HexJacobian',['../namespaceFoam_1_1geometricJacobian.html#aaaea28dc5042c3e5886ee75df7b49035',1,'Foam::geometricJacobian']]],
-  ['hexrefjmontjoietodg_7',['hexRefJMontjoieToDG',['../namespaceFoam_1_1referenceJacobian.html#a64984e21afebfa72c8f6de170c44536f',1,'Foam::referenceJacobian']]]
+  ['hexjacobian_6',['HexJacobian',['../namespaceFoam_1_1geometricJacobian.html#aaaea28dc5042c3e5886ee75df7b49035',1,'Foam::geometricJacobian']]]
 ];

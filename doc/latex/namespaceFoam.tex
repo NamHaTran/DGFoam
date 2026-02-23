@@ -45,7 +45,7 @@ class \mbox{\hyperlink{classFoam_1_1dgGeneralSymmetryBoundaryField}{dg\+General\
 class \mbox{\hyperlink{classFoam_1_1dgGeneralZeroGradientBoundaryField}{dg\+General\+Zero\+Gradient\+Boundary\+Field}}
 \begin{DoxyCompactList}\small\item\em Zero-\/gradient (Neumann-\/type) boundary condition for DG fields. \end{DoxyCompactList}\item 
 class \mbox{\hyperlink{classFoam_1_1dgGeomCell}{dg\+Geom\+Cell}}
-\begin{DoxyCompactList}\small\item\em Geometric container for a DG cell. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Geometric container for a DG cell (affine formulation) \end{DoxyCompactList}\item 
 class \mbox{\hyperlink{classFoam_1_1dgGeomFace}{dg\+Geom\+Face}}
 \begin{DoxyCompactList}\small\item\em Geometric face data for DG discretization. \end{DoxyCompactList}\item 
 class \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}}
@@ -278,14 +278,14 @@ enum class \mbox{\hyperlink{namespaceFoam_a49389e037db4de91988ad16f0f8f1b54}{dg\
 \begin{DoxyCompactList}\small\item\em Stream output for \doxylink{classFoam_1_1dgFluxSolver_ac861a0350cf2f298fecfc97544af0572}{dg\+Flux\+Solver\+::equation\+Type}. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{namespaceFoam_a3f95ccd325596ba613b34ba6c0bf6c1f}{get\+Num\+Basis}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} p\+Order, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{dgGeomCell_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5}{dg\+Cell\+Type}} type)
 \begin{DoxyCompactList}\small\item\em Return number of basis functions. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{namespaceFoam_ab471416866fe7f72fb3585d9eec671c2}{compute\+Hex\+Basis\+And\+Derivatives}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} x, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} y, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} z, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} p\+Order, \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&basis, \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{d\+Basis\+\_\+dx}}, \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{d\+Basis\+\_\+dy}}, \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{d\+Basis\+\_\+dz}})
-\begin{DoxyCompactList}\small\item\em Evaluate orthogonal interior basis functions for hexahedral cells. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{namespaceFoam_ae93828b60c145d1eecf8e98706ef23f1}{compute\+Prism\+Basis\+And\+Derivatives}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} x, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} y, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} z, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} p\+Order, \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&basis, \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{d\+Basis\+\_\+dx}}, \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{d\+Basis\+\_\+dy}}, \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{d\+Basis\+\_\+dz}})
-\begin{DoxyCompactList}\small\item\em Evaluate orthogonal interior basis functions for prism (wedge) cells. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{namespaceFoam_a4f760deea79360afea19cc00a9c83e4e}{compute\+Pyramid\+Basis\+And\+Derivatives}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} x, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} y, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} z, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} p\+Order, \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&basis, \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{d\+Basis\+\_\+dx}}, \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{d\+Basis\+\_\+dy}}, \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{d\+Basis\+\_\+dz}})
-\begin{DoxyCompactList}\small\item\em Evaluate orthogonal interior basis functions for pyramid cells. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{namespaceFoam_a23972bd07000d4dc81ffd25cbf51968b}{compute\+Tet\+Basis\+And\+Derivatives}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} x, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} y, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} z, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} p\+Order, \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&basis, \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{d\+Basis\+\_\+dx}}, \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{d\+Basis\+\_\+dy}}, \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{d\+Basis\+\_\+dz}})
-\begin{DoxyCompactList}\small\item\em Evaluate orthogonal interior basis functions for tetrahedral cells. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{namespaceFoam_a3d4cf3a56a860f24e72885a6c8620308}{compute\+Hex\+Basis\+And\+Derivatives}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \mbox{\hyperlink{classFoam_1_1GaussField}{eta\+Pt}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} p\+Order, \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&basis, \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{d\+Basis\+\_\+dx}}, \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{d\+Basis\+\_\+dy}}, \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{d\+Basis\+\_\+dz}})
+\begin{DoxyCompactList}\small\item\em Evaluate orthonormal modal basis functions for hexahedral cells. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{namespaceFoam_a572c92c5c085d5804bdb33e46a35e840}{compute\+Prism\+Basis\+And\+Derivatives}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \mbox{\hyperlink{classFoam_1_1GaussField}{eta\+Pt}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} p\+Order, \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&basis, \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{d\+Basis\+\_\+dx}}, \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{d\+Basis\+\_\+dy}}, \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{d\+Basis\+\_\+dz}})
+\begin{DoxyCompactList}\small\item\em Evaluate L2-\/orthonormal modal basis functions for prism (wedge) cells. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{namespaceFoam_ae7f81f7453e04193254de9449cec0bdd}{compute\+Pyramid\+Basis\+And\+Derivatives}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \mbox{\hyperlink{classFoam_1_1GaussField}{eta\+Pt}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} p\+Order, \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&basis, \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{d\+Basis\+\_\+deta1}}, \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{d\+Basis\+\_\+deta2}}, \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{d\+Basis\+\_\+deta3}})
+\begin{DoxyCompactList}\small\item\em Evaluate L2-\/orthonormal modal basis functions for pyramid cells. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{namespaceFoam_a7065da252f9f281fe97569fbef1842b5}{compute\+Tet\+Basis\+And\+Derivatives}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \mbox{\hyperlink{classFoam_1_1GaussField}{eta\+Pt}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} p\+Order, \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&basis, \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{d\+Basis\+\_\+deta1}}, \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{d\+Basis\+\_\+deta2}}, \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{d\+Basis\+\_\+deta3}})
+\begin{DoxyCompactList}\small\item\em Evaluate L2-\/orthonormal modal basis functions for tetrahedral cells. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1cellDof}{cell\+Dof}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \mbox{\hyperlink{namespaceFoam_a1b943de77fdb1c2d70e3d6f447a2bd9d}{operator\texorpdfstring{$\ast$}{*}}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} \&a, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1cellDof}{cell\+Dof}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{A}})
 \item 
 \mbox{\hyperlink{classFoam_1_1cellDof}{cell\+Dof}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \mbox{\hyperlink{namespaceFoam_a36a7858ebec6d6d0de20684233ace9e7}{operator\texorpdfstring{$\ast$}{*}}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1cellDof}{cell\+Dof}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{A}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} \&a)
@@ -1728,254 +1728,541 @@ Return number of basis functions.
 \begin{DoxyReturn}{Returns}
 Number of basis functions 
 \end{DoxyReturn}
-\Hypertarget{namespaceFoam_ab471416866fe7f72fb3585d9eec671c2}\label{namespaceFoam_ab471416866fe7f72fb3585d9eec671c2} 
+\Hypertarget{namespaceFoam_a3d4cf3a56a860f24e72885a6c8620308}\label{namespaceFoam_a3d4cf3a56a860f24e72885a6c8620308} 
 \index{Foam@{Foam}!computeHexBasisAndDerivatives@{computeHexBasisAndDerivatives}}
 \index{computeHexBasisAndDerivatives@{computeHexBasisAndDerivatives}!Foam@{Foam}}
 \doxysubsubsection{\texorpdfstring{computeHexBasisAndDerivatives()}{computeHexBasisAndDerivatives()}}
-{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{void}} Foam\+::compute\+Hex\+Basis\+And\+Derivatives (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}}]{x,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}}]{y,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}}]{z,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{p\+Order,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{basis,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{d\+Basis\+\_\+dx,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{d\+Basis\+\_\+dy,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{d\+Basis\+\_\+dz }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{void}} Foam\+::compute\+Hex\+Basis\+And\+Derivatives (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}}}]{eta\+Pt,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{p\+Order,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{basis,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{d\+Basis\+\_\+dx,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{d\+Basis\+\_\+dy,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{d\+Basis\+\_\+dz }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
 
 
 
-Evaluate orthogonal interior basis functions for hexahedral cells. 
+Evaluate orthonormal modal basis functions for hexahedral cells. 
 
-This routine evaluates the orthogonal modal basis functions defined on a reference hexahedron, following the construction used in the Montjoie finite element framework\+:
+This routine evaluates an L2-\/orthonormal modal basis defined on the reference hexahedron using tensor products of Legendre polynomials.
 
-\href{https://www.math.u-bordeaux.fr/~durufle/montjoie/hexahedra.php}{\texttt{ https\+://www.\+math.\+u-\/bordeaux.\+fr/\texorpdfstring{$\sim$}{\string~}durufle/montjoie/hexahedra.\+php}}
-
-The orthogonal basis functions are defined as total-\/degree tensor products of Legendre polynomials\+:
+The orthonormal basis functions are defined as\+:
 
 \[
   \psi_{i,j,k}(x,y,z)
-  = P_i^{0,0}(x)\, P_j^{0,0}(y)\, P_k^{0,0}(z),
+  =
+  \sqrt{\frac{(2i+1)(2j+1)(2k+1)}{8}}
+  \;
+  P_i(x)\, P_j(y)\, P_k(z),
   \qquad i + j + k \le p
 \]
 
-where $P_n^{0,0}$ denotes the Legendre polynomial of degree $n$.
-
-The reference domain of the basis is the unit hexahedron\+:
+where\+:
+\begin{DoxyItemize}
+\item $P_n$ is the Legendre polynomial of degree $n$,
+\item $(x,y,z) \in [-1,1]^3$ is the reference hexahedral domain,
+\item the normalization factor ensures L²-\/orthonormality\+:
+\end{DoxyItemize}
 
 \[
-  (x,y,z) \in [0,1]^3
+  \int_{[-1,1]^3}
+  \psi_{i,j,k}\,\psi_{m,n,l}
+  \; dx\,dy\,dz
+  =
+  \delta_{im}\,\delta_{jn}\,\delta_{kl}.
 \]
 
-The basis functions are orthogonal with respect to the $L^2$ inner product over this domain.
+Therefore, the mass matrix on the reference element is exactly the identity matrix when exact integration is used.
 
-This function assumes that the input coordinates ( $x,y,z$) are already expressed in the reference basis domain $[0,1]^3$.
-
-When used inside DGFoam, Gauss points are often generated in the solver reference hexahedron $[-1,1]^3$. In that case, the caller is responsible for mapping those coordinates to $[0,1]^3$ before calling this routine.
-
-No geometric mapping, scaling, or coordinate transformation is performed internally. This routine strictly evaluates the basis functions and their derivatives at the provided reference coordinates.
+The routine evaluates\+:
+\begin{DoxyItemize}
+\item the values of all orthonormal modal basis functions at a given point,
+\item and their first derivatives with respect to each reference coordinate.
+\end{DoxyItemize}
 
 
 \begin{DoxyParams}{Parameters}
-{\em x} & Reference coordinate in the basis domain ( $x \in [0,1]$) \\
+{\em eta\+Pt} & Reference coordinates (x,y,z) in \mbox{[}-\/1,1\mbox{]}\texorpdfstring{$^\wedge$}{\string^}3 \\
 \hline
-{\em y} & Reference coordinate in the basis domain ( $y \in [0,1]$) \\
+{\em p\+Order} & Maximum total polynomial degree \\
 \hline
-{\em z} & Reference coordinate in the basis domain ( $z \in [0,1]$) \\
+{\em basis} & Values of the orthonormal basis functions \\
 \hline
-{\em p\+Order} & Polynomial order of the approximation \\
+{\em d\+Basis\+\_\+dx} & Derivatives with respect to x \\
 \hline
-{\em basis} & Values of the basis functions at the evaluation point \\
+{\em d\+Basis\+\_\+dy} & Derivatives with respect to y \\
 \hline
-{\em d\+Basis\+\_\+dx} & Derivatives with respect to $x$ \\
-\hline
-{\em d\+Basis\+\_\+dy} & Derivatives with respect to $y$ \\
-\hline
-{\em d\+Basis\+\_\+dz} & Derivatives with respect to $z$ \\
+{\em d\+Basis\+\_\+dz} & Derivatives with respect to z \\
 \hline
 \end{DoxyParams}
-\Hypertarget{namespaceFoam_ae93828b60c145d1eecf8e98706ef23f1}\label{namespaceFoam_ae93828b60c145d1eecf8e98706ef23f1} 
+\Hypertarget{namespaceFoam_a572c92c5c085d5804bdb33e46a35e840}\label{namespaceFoam_a572c92c5c085d5804bdb33e46a35e840} 
 \index{Foam@{Foam}!computePrismBasisAndDerivatives@{computePrismBasisAndDerivatives}}
 \index{computePrismBasisAndDerivatives@{computePrismBasisAndDerivatives}!Foam@{Foam}}
 \doxysubsubsection{\texorpdfstring{computePrismBasisAndDerivatives()}{computePrismBasisAndDerivatives()}}
-{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{void}} Foam\+::compute\+Prism\+Basis\+And\+Derivatives (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}}]{x,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}}]{y,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}}]{z,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{p\+Order,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{basis,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{d\+Basis\+\_\+dx,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{d\+Basis\+\_\+dy,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{d\+Basis\+\_\+dz }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{void}} Foam\+::compute\+Prism\+Basis\+And\+Derivatives (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}}}]{eta\+Pt,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{p\+Order,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{basis,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{d\+Basis\+\_\+dx,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{d\+Basis\+\_\+dy,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{d\+Basis\+\_\+dz }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
 
 
 
-Evaluate orthogonal interior basis functions for prism (wedge) cells. 
+Evaluate L2-\/orthonormal modal basis functions for prism (wedge) cells. 
 
-This routine evaluates the orthogonal modal basis functions defined on a reference wedge (prism), following the construction used in the Montjoie finite element framework\+:
+This routine evaluates an L²-\/orthonormal hierarchical modal basis defined on the reference prism element. The construction follows a Duffy-\/type tensor-\/product formulation combining\+:
 
-\href{https://www.math.u-bordeaux.fr/~durufle/montjoie/wedge.php}{\texttt{ https\+://www.\+math.\+u-\/bordeaux.\+fr/\texorpdfstring{$\sim$}{\string~}durufle/montjoie/wedge.\+php}}
 
-The finite element space is identical to that of the classical wedge element, but the basis functions are chosen to be orthogonal with respect to the $L^2$ inner product.
+\begin{DoxyItemize}
+\item Legendre polynomials in the η1-\/direction,
+\item collapsed Jacobi polynomials in the (η2,η3) triangular structure.
+\end{DoxyItemize}
 
-The orthogonal basis functions are defined as\+:
+The orthonormal basis functions are defined as\+:
 
 \[
-  \psi_{i,j,k}(x,y,z)
+  \psi_{i,j,k}(\eta_1,\eta_2,\eta_3)
   =
-  P_i^{0,0}\!\left(\frac{2x}{1-y} - 1\right)
-  (1 - y)^i
-  P_j^{2i+1,0}(2y - 1)
-  P_k^{0,0}(2z - 1),
-  \qquad i + j + k \le p
+  \sqrt{
+    \frac{
+      (2i+1)(2j+1)(2k+2j+2)
+    }{8}
+  }
+  \;
+  P_i^{0,0}(\eta_1)\;
+  P_j^{0,0}(\eta_2)\;
+  \left(\frac{1-\eta_3}{2}\right)^j
+  P_k^{2j+1,0}(\eta_3),
 \]
 
-where $P_n^{\alpha,\beta}$ denotes the Jacobi polynomial of degree $n$ with parameters $(\alpha,\beta)$.
-
-The reference domain of the basis is the unit wedge\+:
+with index constraints
 
 \[
-  (x,y,z) \in [0,1] \times [0,1] \times [0,1],
-  \quad x \le 1 - y
+  0 \le i \le p, \qquad
+  0 \le j \le p, \qquad
+  0 \le k \le p-j.
 \]
 
-This function assumes that the input coordinates ( $x,y,z$) are already expressed in this reference wedge coordinate system.
+where\+:
+\begin{DoxyItemize}
+\item $P_n^{\alpha,\beta}$ is the Jacobi polynomial of degree n,
+\item $(\eta_1,\eta_2,\eta_3) \in [-1,1]^3$ is the collapsed prism domain,
+\item the factor $\left(\frac{1-\eta_3}{2}\right)^j$ enforces the triangular structure in the (η2,η3) directions,
+\item the normalization factor guarantees L²-\/orthonormality.
+\end{DoxyItemize}
 
-When used inside DGFoam, Gauss points may be generated in a different solver reference domain. In that case, the caller is responsible for mapping those coordinates to the reference wedge domain before calling this routine.
+The basis satisfies\+:
 
-No geometric mapping or coordinate transformation is performed inside this routine. It strictly evaluates the basis functions and their derivatives at the provided reference coordinates.
+\[
+  \int_{\text{ref prism}}
+  \psi_{i,j,k}\,\psi_{m,n,l}
+  \; d\eta
+  =
+  \delta_{im}\,\delta_{jn}\,\delta_{kl}.
+\]
+
+Therefore, with exact integration, the reference-\/element mass matrix is the identity matrix.
+
+\DoxyHorRuler{0}
+ \hypertarget{namespaceFoam_autotoc_md1}{}\doxysubsubsection{\texorpdfstring{Note}{Note}}\label{namespaceFoam_autotoc_md1}
+Another commonly used orthogonal wedge basis is written in the form\+:
+
+\[
+  P_i^{0,0}(\eta_1)\;
+  P_j^{0,0}(\eta_2)\;
+  \left(\frac{1-\eta_3}{2}\right)^j
+  P_k^{2j+1,0}(\eta_3),
+  \qquad i \le p,\; j+k \le p,
+\]
+
+without explicit normalization.
+
+This alternative formulation appears in the Montjoie finite element framework and related spectral/hp literature.
+
+Reference\+: \href{https://www.math.u-bordeaux.fr/~durufle/montjoie/wedge.php}{\texttt{ https\+://www.\+math.\+u-\/bordeaux.\+fr/\texorpdfstring{$\sim$}{\string~}durufle/montjoie/wedge.\+php}}
+
+A detailed comparison between the present L²-\/orthonormal scaling and the Montjoie implementation will be investigated in future work.
+
+\DoxyHorRuler{0}
+
+
+The routine evaluates\+:
+\begin{DoxyItemize}
+\item the values of all orthonormal modal basis functions at a point,
+\item and their first derivatives with respect to each reference coordinate.
+\end{DoxyItemize}
 
 
 \begin{DoxyParams}{Parameters}
-{\em x} & Reference coordinate in the wedge basis domain \\
+{\em eta\+Pt} & Reference coordinates (η1,η2,η3) \\
 \hline
-{\em y} & Reference coordinate in the wedge basis domain \\
+{\em p\+Order} & Maximum polynomial order \\
 \hline
-{\em z} & Reference coordinate in the wedge basis domain \\
+{\em basis} & Values of the orthonormal basis functions \\
 \hline
-{\em p\+Order} & Polynomial order of the approximation \\
+{\em d\+Basis\+\_\+dx} & Derivatives with respect to η1 \\
 \hline
-{\em basis} & Values of the basis functions at the evaluation point \\
+{\em d\+Basis\+\_\+dy} & Derivatives with respect to η2 \\
 \hline
-{\em d\+Basis\+\_\+dx} & Derivatives with respect to $x$ \\
-\hline
-{\em d\+Basis\+\_\+dy} & Derivatives with respect to $y$ \\
-\hline
-{\em d\+Basis\+\_\+dz} & Derivatives with respect to $z$ \\
+{\em d\+Basis\+\_\+dz} & Derivatives with respect to η3\\
 \hline
 \end{DoxyParams}
-\Hypertarget{namespaceFoam_a4f760deea79360afea19cc00a9c83e4e}\label{namespaceFoam_a4f760deea79360afea19cc00a9c83e4e} 
+This routine evaluates an L²-\/orthonormal hierarchical modal basis defined on the reference prism element. The construction follows a Duffy-\/type tensor-\/product formulation combining\+:
+
+
+\begin{DoxyItemize}
+\item Legendre polynomials in the η1-\/direction,
+\item collapsed Jacobi polynomials in the (η2,η3) triangular structure.
+\end{DoxyItemize}
+
+The orthonormal basis functions are defined as\+:
+
+\[
+  \psi_{i,j,k}(\eta_1,\eta_2,\eta_3)
+  =
+  \sqrt{
+    \frac{
+      (2i+1)(2j+1)(2k+2j+2)
+    }{8}
+  }
+  \;
+  P_i^{0,0}(\eta_1)\;
+  P_j^{0,0}(\eta_2)\;
+  \left(\frac{1-\eta_3}{2}\right)^j
+  P_k^{2j+1,0}(\eta_3),
+\]
+
+with index constraints
+
+\[
+  0 \le i \le p, \qquad
+  0 \le j \le p, \qquad
+  0 \le k \le p-j.
+\]
+
+where\+:
+\begin{DoxyItemize}
+\item $P_n^{\alpha,\beta}$ is the Jacobi polynomial of degree n,
+\item $(\eta_1,\eta_2,\eta_3) \in [-1,1]^3$ is the collapsed prism domain,
+\item the factor $\left(\frac{1-\eta_3}{2}\right)^j$ enforces the triangular structure in the (η2,η3) directions,
+\item the normalization factor guarantees L²-\/orthonormality.
+\end{DoxyItemize}
+
+The basis satisfies\+:
+
+\[
+  \int_{\text{ref prism}}
+  \psi_{i,j,k}\,\psi_{m,n,l}
+  \; d\eta
+  =
+  \delta_{im}\,\delta_{jn}\,\delta_{kl}.
+\]
+
+Therefore, with exact integration, the reference-\/element mass matrix is the identity matrix.
+
+\DoxyHorRuler{0}
+ \hypertarget{namespaceFoam_autotoc_md7}{}\doxysubsubsection{\texorpdfstring{Note}{Note}}\label{namespaceFoam_autotoc_md7}
+Another commonly used orthogonal wedge basis is written in the form\+:
+
+\[
+  P_i^{0,0}(\eta_1)\;
+  P_j^{0,0}(\eta_2)\;
+  \left(\frac{1-\eta_3}{2}\right)^j
+  P_k^{2j+1,0}(\eta_3),
+  \qquad i \le p,\; j+k \le p,
+\]
+
+without explicit normalization.
+
+This alternative formulation appears in the Montjoie finite element framework and related spectral/hp literature.
+
+Reference\+: \href{https://www.math.u-bordeaux.fr/~durufle/montjoie/wedge.php}{\texttt{ https\+://www.\+math.\+u-\/bordeaux.\+fr/\texorpdfstring{$\sim$}{\string~}durufle/montjoie/wedge.\+php}}
+
+A detailed comparison between the present L²-\/orthonormal scaling and the Montjoie implementation will be investigated in future work.
+
+\DoxyHorRuler{0}
+
+
+The routine evaluates\+:
+\begin{DoxyItemize}
+\item the values of all orthonormal modal basis functions at a point,
+\item and their first derivatives with respect to each reference coordinate.
+\end{DoxyItemize}
+
+
+\begin{DoxyParams}{Parameters}
+{\em eta\+Pt} & Reference coordinates (η1,η2,η3) \\
+\hline
+{\em p\+Order} & Maximum polynomial order \\
+\hline
+{\em basis} & Values of the orthonormal basis functions \\
+\hline
+{\em d\+Basis\+\_\+dx} & Derivatives with respect to η1 \\
+\hline
+{\em d\+Basis\+\_\+dy} & Derivatives with respect to η2 \\
+\hline
+{\em d\+Basis\+\_\+dz} & Derivatives with respect to η3 \\
+\hline
+\end{DoxyParams}
+\Hypertarget{namespaceFoam_ae7f81f7453e04193254de9449cec0bdd}\label{namespaceFoam_ae7f81f7453e04193254de9449cec0bdd} 
 \index{Foam@{Foam}!computePyramidBasisAndDerivatives@{computePyramidBasisAndDerivatives}}
 \index{computePyramidBasisAndDerivatives@{computePyramidBasisAndDerivatives}!Foam@{Foam}}
 \doxysubsubsection{\texorpdfstring{computePyramidBasisAndDerivatives()}{computePyramidBasisAndDerivatives()}}
-{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{void}} Foam\+::compute\+Pyramid\+Basis\+And\+Derivatives (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}}]{x,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}}]{y,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}}]{z,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{p\+Order,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{basis,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{d\+Basis\+\_\+dx,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{d\+Basis\+\_\+dy,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{d\+Basis\+\_\+dz }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{void}} Foam\+::compute\+Pyramid\+Basis\+And\+Derivatives (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}}}]{eta\+Pt,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{p\+Order,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{basis,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{d\+Basis\+\_\+deta1,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{d\+Basis\+\_\+deta2,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{d\+Basis\+\_\+deta3 }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
 
 
 
-Evaluate orthogonal interior basis functions for pyramid cells. 
+Evaluate L2-\/orthonormal modal basis functions for pyramid cells. 
 
-This routine evaluates the orthogonal modal basis functions defined on a reference pyramid, following the construction used in the Montjoie finite element framework\+:
+This routine evaluates an L²-\/orthonormal hierarchical modal basis defined on the reference pyramid element. The construction follows the standard collapsed-\/coordinate formulation using Jacobi polynomials to ensure regular behaviour at the apex.
 
-\href{https://www.math.u-bordeaux.fr/~durufle/montjoie/pyramid.php}{\texttt{ https\+://www.\+math.\+u-\/bordeaux.\+fr/\texorpdfstring{$\sim$}{\string~}durufle/montjoie/pyramid.\+php}}
-
-The finite element space is identical to that of the classical pyramid element, but the basis functions are chosen to be orthogonal with respect to the $L^2$ inner product.
-
-The orthogonal basis functions are defined as\+:
+The orthonormal basis functions are defined as\+:
 
 \[
-  \psi_{i,j,k}(x,y,z)
+  \psi_{i,j,k}(\eta_1,\eta_2,\eta_3)
   =
-  P_i^{0,0}\!\left(\frac{x}{1-z}\right)
-  P_j^{0,0}\!\left(\frac{y}{1-z}\right)
-  (1-z)^{\max(i,j)}
-  P_k^{2\max(i,j)+2,0}(2z-1),
+  \sqrt{
+    \frac{
+      (2i+1)(2j+1)(2k+2(i+j)+3)
+    }{8}
+  }
+  \;
+  P_i^{0,0}(\eta_1)\,
+  P_j^{0,0}(\eta_2)\,
+  \left(\frac{1-\eta_3}{2}\right)^{i+j}\,
+  P_k^{2(i+j)+2,\,0}(\eta_3),
 \]
 
-with index ranges\+:
+with index ranges
 
 \[
-  0 \le i,j \le p-k,
-  \qquad 0 \le k \le p
+  0 \le i \le p, \qquad
+  0 \le j \le p-i, \qquad
+  0 \le k \le p-i-j.
 \]
 
-where $P_n^{\alpha,\beta}$ denotes the Jacobi polynomial of degree $n$ with parameters $(\alpha,\beta)$.
+where\+:
+\begin{DoxyItemize}
+\item $P_n^{\alpha,\beta}$ denotes the Jacobi polynomial,
+\item $(\eta_1,\eta_2,\eta_3) \in [-1,1]^3$ is the collapsed cube domain,
+\item the factor $\left(\frac{1-\eta_3}{2}\right)^{i+j}$ enforces the pyramid collapse and guarantees regularity at the apex,
+\item the normalization factor guarantees L²-\/orthonormality.
+\end{DoxyItemize}
 
-The reference domain of the basis is the unit pyramid\+:
+The basis satisfies\+:
 
 \[
-  (x,y,z) \in [0,1] \times [0,1] \times [0,1],
-  \quad x \le 1 - z,\; y \le 1 - z
+  \int_{\text{ref pyramid}}
+  \psi_{i,j,k}\,\psi_{m,n,l}
+  \; d\eta
+  =
+  \delta_{im}\,\delta_{jn}\,\delta_{kl}.
 \]
 
-This function assumes that the input coordinates ( $x,y,z$) are already expressed in this reference pyramid coordinate system.
+Therefore, with exact integration, the reference-\/element mass matrix is the identity matrix.
 
-When used inside DGFoam, Gauss points may be generated in a different solver reference domain. In that case, the caller is responsible for mapping those coordinates to the reference pyramid domain before calling this routine.
+\DoxyHorRuler{0}
+ \hypertarget{namespaceFoam_autotoc_md4}{}\doxysubsubsection{\texorpdfstring{Note}{Note}}\label{namespaceFoam_autotoc_md4}
+Another commonly used orthogonal pyramid basis is written as\+:
 
-No geometric mapping or coordinate transformation is performed inside this routine. It strictly evaluates the basis functions and their derivatives at the provided reference coordinates.
+\[
+  P_i^{0,0}(\eta_1)\,
+  P_j^{0,0}(\eta_2)\,
+  \left(\frac{1-\eta_3}{2}\right)^{\max(i,j)}\,
+  P_k^{2\max(i,j)+2,\,0}(\eta_3),
+\]
+
+with index constraints
+
+\[
+  i \le p,\quad j \le p,\quad k \le p-j.
+\]
+
+This formulation appears in the Montjoie finite element framework and related spectral/hp literature.
+
+Reference\+: \href{https://www.math.u-bordeaux.fr/~durufle/montjoie/pyramid.php}{\texttt{ https\+://www.\+math.\+u-\/bordeaux.\+fr/\texorpdfstring{$\sim$}{\string~}durufle/montjoie/pyramid.\+php}}
+
+A detailed comparison between the present L²-\/orthonormal scaling and the Montjoie implementation will be investigated in future work.
+
+\DoxyHorRuler{0}
+
+
+The routine evaluates\+:
+\begin{DoxyItemize}
+\item the values of all orthonormal modal basis functions at a point,
+\item and their first derivatives with respect to each reference coordinate.
+\end{DoxyItemize}
 
 
 \begin{DoxyParams}{Parameters}
-{\em x} & Reference coordinate in the pyramid basis domain \\
+{\em eta\+Pt} & Reference coordinates (η1,η2,η3) \\
 \hline
-{\em y} & Reference coordinate in the pyramid basis domain \\
+{\em p\+Order} & Maximum polynomial order \\
 \hline
-{\em z} & Reference coordinate in the pyramid basis domain \\
+{\em basis} & Values of the orthonormal basis functions \\
 \hline
-{\em p\+Order} & Polynomial order of the approximation \\
+{\em d\+Basis\+\_\+deta1} & Derivatives with respect to η1 \\
 \hline
-{\em basis} & Values of the basis functions at the evaluation point \\
+{\em d\+Basis\+\_\+deta2} & Derivatives with respect to η2 \\
 \hline
-{\em d\+Basis\+\_\+dx} & Derivatives with respect to $x$ \\
-\hline
-{\em d\+Basis\+\_\+dy} & Derivatives with respect to $y$ \\
-\hline
-{\em d\+Basis\+\_\+dz} & Derivatives with respect to $z$ \\
+{\em d\+Basis\+\_\+deta3} & Derivatives with respect to η3\\
 \hline
 \end{DoxyParams}
-\Hypertarget{namespaceFoam_a23972bd07000d4dc81ffd25cbf51968b}\label{namespaceFoam_a23972bd07000d4dc81ffd25cbf51968b} 
+This routine evaluates an L²-\/orthonormal hierarchical modal basis defined on the reference pyramid element. The construction follows the standard collapsed-\/coordinate formulation using Jacobi polynomials to ensure regular behaviour at the apex.
+
+The orthonormal basis functions are defined as\+:
+
+\[
+  \psi_{i,j,k}(\eta_1,\eta_2,\eta_3)
+  =
+  \sqrt{
+    \frac{
+      (2i+1)(2j+1)(2k+2(i+j)+3)
+    }{8}
+  }
+  \;
+  P_i^{0,0}(\eta_1)\,
+  P_j^{0,0}(\eta_2)\,
+  \left(\frac{1-\eta_3}{2}\right)^{i+j}\,
+  P_k^{2(i+j)+2,\,0}(\eta_3),
+\]
+
+with index ranges
+
+\[
+  0 \le i \le p, \qquad
+  0 \le j \le p-i, \qquad
+  0 \le k \le p-i-j.
+\]
+
+where\+:
+\begin{DoxyItemize}
+\item $P_n^{\alpha,\beta}$ denotes the Jacobi polynomial,
+\item $(\eta_1,\eta_2,\eta_3) \in [-1,1]^3$ is the collapsed cube domain,
+\item the factor $\left(\frac{1-\eta_3}{2}\right)^{i+j}$ enforces the pyramid collapse and guarantees regularity at the apex,
+\item the normalization factor guarantees L²-\/orthonormality.
+\end{DoxyItemize}
+
+The basis satisfies\+:
+
+\[
+  \int_{\text{ref pyramid}}
+  \psi_{i,j,k}\,\psi_{m,n,l}
+  \; d\eta
+  =
+  \delta_{im}\,\delta_{jn}\,\delta_{kl}.
+\]
+
+Therefore, with exact integration, the reference-\/element mass matrix is the identity matrix.
+
+\DoxyHorRuler{0}
+ \hypertarget{namespaceFoam_autotoc_md10}{}\doxysubsubsection{\texorpdfstring{Note}{Note}}\label{namespaceFoam_autotoc_md10}
+Another commonly used orthogonal pyramid basis is written as\+:
+
+\[
+  P_i^{0,0}(\eta_1)\,
+  P_j^{0,0}(\eta_2)\,
+  \left(\frac{1-\eta_3}{2}\right)^{\max(i,j)}\,
+  P_k^{2\max(i,j)+2,\,0}(\eta_3),
+\]
+
+with index constraints
+
+\[
+  i \le p,\quad j \le p,\quad k \le p-j.
+\]
+
+This formulation appears in the Montjoie finite element framework and related spectral/hp literature.
+
+Reference\+: \href{https://www.math.u-bordeaux.fr/~durufle/montjoie/pyramid.php}{\texttt{ https\+://www.\+math.\+u-\/bordeaux.\+fr/\texorpdfstring{$\sim$}{\string~}durufle/montjoie/pyramid.\+php}}
+
+A detailed comparison between the present L²-\/orthonormal scaling and the Montjoie implementation will be investigated in future work.
+
+\DoxyHorRuler{0}
+
+
+The routine evaluates\+:
+\begin{DoxyItemize}
+\item the values of all orthonormal modal basis functions at a point,
+\item and their first derivatives with respect to each reference coordinate.
+\end{DoxyItemize}
+
+
+\begin{DoxyParams}{Parameters}
+{\em eta\+Pt} & Reference coordinates (η1,η2,η3) \\
+\hline
+{\em p\+Order} & Maximum polynomial order \\
+\hline
+{\em basis} & Values of the orthonormal basis functions \\
+\hline
+{\em d\+Basis\+\_\+deta1} & Derivatives with respect to η1 \\
+\hline
+{\em d\+Basis\+\_\+deta2} & Derivatives with respect to η2 \\
+\hline
+{\em d\+Basis\+\_\+deta3} & Derivatives with respect to η3 \\
+\hline
+\end{DoxyParams}
+\Hypertarget{namespaceFoam_a7065da252f9f281fe97569fbef1842b5}\label{namespaceFoam_a7065da252f9f281fe97569fbef1842b5} 
 \index{Foam@{Foam}!computeTetBasisAndDerivatives@{computeTetBasisAndDerivatives}}
 \index{computeTetBasisAndDerivatives@{computeTetBasisAndDerivatives}!Foam@{Foam}}
 \doxysubsubsection{\texorpdfstring{computeTetBasisAndDerivatives()}{computeTetBasisAndDerivatives()}}
-{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{void}} Foam\+::compute\+Tet\+Basis\+And\+Derivatives (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}}]{x,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}}]{y,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}}}]{z,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{p\+Order,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{basis,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{d\+Basis\+\_\+dx,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{d\+Basis\+\_\+dy,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{d\+Basis\+\_\+dz }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{void}} Foam\+::compute\+Tet\+Basis\+And\+Derivatives (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}}}]{eta\+Pt,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{p\+Order,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{basis,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{d\+Basis\+\_\+deta1,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{d\+Basis\+\_\+deta2,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \&}]{d\+Basis\+\_\+deta3 }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
 
 
 
-Evaluate orthogonal interior basis functions for tetrahedral cells. 
+Evaluate L2-\/orthonormal modal basis functions for tetrahedral cells. 
 
-This routine evaluates the orthogonal modal basis functions defined on a reference tetrahedron, following the construction used in the Montjoie finite element framework\+:
+This routine evaluates an L²-\/orthonormal hierarchical modal basis defined on the reference tetrahedron. The polynomial space coincides with the classical tetrahedral finite element space of total degree less than or equal to p, but the basis is constructed to be orthonormal with respect to the L² inner product.
 
-\href{https://www.math.u-bordeaux.fr/~durufle/montjoie/tetrahedron.php}{\texttt{ https\+://www.\+math.\+u-\/bordeaux.\+fr/\texorpdfstring{$\sim$}{\string~}durufle/montjoie/tetrahedron.\+php}}
-
-The finite element space is identical to that of the classical tetrahedral element (polynomials of total degree less than or equal to $p$), but the basis functions are chosen to be orthogonal with respect to the $L^2$ inner product.
-
-The orthogonal basis functions are defined as\+:
+The orthonormal basis functions are defined as\+:
 
 \[
-  \psi_{i,j,k}(x,y,z)
+  \psi_{i,j,k}(\eta_1,\eta_2,\eta_3)
   =
-  P_i^{0,0}\!\left(\frac{2x}{1-y-z} - 1\right)
-  (1-y-z)^i
-  P_j^{2i+1,0}\!\left(\frac{2y}{1-z} - 1\right)
-  (1-z)^j
-  P_k^{2(i+j)+2,0}(2z-1),
-  \qquad i + j + k \le p
+  \sqrt{
+    \frac{
+      (2i+1)
+      (2j+2i+2)
+      (2k+2i+2j+3)
+    }{8}
+  }
+  \;
+  P_i^{0,0}(\eta_1)
+  \left(\frac{1-\eta_2}{2}\right)^i
+  P_j^{2i+1,0}(\eta_2)
+  \left(\frac{1-\eta_3}{2}\right)^{i+j}
+  P_k^{2i+2j+2,0}(\eta_3),
+  \qquad i + j + k \le p,
 \]
 
-where $P_n^{\alpha,\beta}$ denotes the Jacobi polynomial of degree $n$ with parameters $(\alpha,\beta)$.
+where\+:
+\begin{DoxyItemize}
+\item $P_n^{\alpha,\beta}$ denotes the Jacobi polynomial,
+\item $(\eta_1,\eta_2,\eta_3) \in [-1,1]^3$ is the collapsed cube domain,
+\item the factors $\left(\frac{1-\eta_2}{2}\right)^i$ and $\left(\frac{1-\eta_3}{2}\right)^{i+j}$ induce the tetrahedral collapse structure,
+\item the normalization factor guarantees L²-\/orthonormality.
+\end{DoxyItemize}
 
-The reference domain of the basis is the unit tetrahedron\+:
+The basis satisfies\+:
 
 \[
-  (x,y,z) \in [0,1] \times [0,1] \times [0,1],
-  \quad x + y + z \le 1
+  \int_{\text{ref tetra}}
+  \psi_{i,j,k}\,\psi_{m,n,l}
+  \; d\eta
+  =
+  \delta_{im}\,\delta_{jn}\,\delta_{kl}.
 \]
 
-This function assumes that the input coordinates ( $x,y,z$) are already expressed in this reference tetrahedral coordinate system.
+Therefore, with exact integration, the reference-\/element mass matrix is the identity matrix.
 
-When used inside DGFoam, Gauss points may be generated in a different solver reference domain. In that case, the caller is responsible for mapping those coordinates to the reference tetrahedron before calling this routine.
-
-No geometric mapping or coordinate transformation is performed inside this routine. It strictly evaluates the basis functions and their derivatives at the provided reference coordinates.
+The routine evaluates\+:
+\begin{DoxyItemize}
+\item the values of all orthonormal modal basis functions at a point,
+\item and their first derivatives with respect to each reference coordinate.
+\end{DoxyItemize}
 
 
 \begin{DoxyParams}{Parameters}
-{\em x} & Reference coordinate in the tetrahedral basis domain \\
+{\em eta\+Pt} & Reference coordinates (η1,η2,η3) \\
 \hline
-{\em y} & Reference coordinate in the tetrahedral basis domain \\
+{\em p\+Order} & Maximum polynomial order \\
 \hline
-{\em z} & Reference coordinate in the tetrahedral basis domain \\
+{\em basis} & Values of the orthonormal basis functions \\
 \hline
-{\em p\+Order} & Polynomial order of the approximation \\
+{\em d\+Basis\+\_\+deta1} & Derivatives with respect to η1 \\
 \hline
-{\em basis} & Values of the basis functions at the evaluation point \\
+{\em d\+Basis\+\_\+deta2} & Derivatives with respect to η2 \\
 \hline
-{\em d\+Basis\+\_\+dx} & Derivatives with respect to $x$ \\
-\hline
-{\em d\+Basis\+\_\+dy} & Derivatives with respect to $y$ \\
-\hline
-{\em d\+Basis\+\_\+dz} & Derivatives with respect to $z$ \\
+{\em d\+Basis\+\_\+deta3} & Derivatives with respect to η3 \\
 \hline
 \end{DoxyParams}
 \Hypertarget{namespaceFoam_a1b943de77fdb1c2d70e3d6f447a2bd9d}\label{namespaceFoam_a1b943de77fdb1c2d70e3d6f447a2bd9d} 

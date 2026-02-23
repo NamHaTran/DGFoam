@@ -80,11 +80,12 @@ int main(int argc, char *argv[])
 
         //#include "synchProcessors.H"
 
+        dgMesh.cells()[10]->printDebugInfo();
+        dgMesh.faces()[10]->printDebugInfo();
+
         // It's possible to iterate over every cell in a standard C++ for loop
         for (label cellI = 0; cellI < mesh.C().size(); cellI++)
         {
-            dgMesh.cells()[cellI]->printDebugInfo();
-
             Foam::dgBasisField basisField(cellI, dgMesh);
 
             // -------------------------------- Update BCs --------------------------------- //

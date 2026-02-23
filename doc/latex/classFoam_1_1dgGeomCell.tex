@@ -2,7 +2,7 @@
 \hypertarget{classFoam_1_1dgGeomCell}{}\label{classFoam_1_1dgGeomCell}\index{Foam::dgGeomCell@{Foam::dgGeomCell}}
 
 
-Geometric container for a DG cell.  
+Geometric container for a DG cell (affine formulation)  
 
 
 
@@ -32,7 +32,7 @@ Geometric container for a DG cell.
 \begin{DoxyCompactList}\small\item\em Return cell volume (from fv\+Mesh) \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgGeomCell_adeeaa6811720d545b5c057634ed65a88}{update\+Face\+Info}} (\mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1dgGeomFace}{dg\+Geom\+Face}} \texorpdfstring{$\ast$}{*} $>$ \&\mbox{\hyperlink{classFoam_1_1dgGeomCell_a0d2fd40e6f5e9455e351b4df36b5d457}{faces}})
 \begin{DoxyCompactList}\small\item\em Update face geometry information. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Square\+Matrix}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \& \mbox{\hyperlink{classFoam_1_1dgGeomCell_a634e56013462cb85e6fcab9c244f9968}{mass\+Matrix}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Square\+Matrix}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \mbox{\hyperlink{classFoam_1_1dgGeomCell_a9baf8486dfa1e035caf247e2a87361d5}{mass\+Matrix}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
 \begin{DoxyCompactList}\small\item\em Return the mass matrix for the cell. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$ \& \mbox{\hyperlink{classFoam_1_1dgGeomCell_af92c7ffb12fa956c9282b2092c810c90}{gauss\+Points}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
 \begin{DoxyCompactList}\small\item\em Return Gauss points in the reference cell. \end{DoxyCompactList}\item 
@@ -74,7 +74,7 @@ Geometric container for a DG cell.
 \begin{DoxyCompactList}\small\item\em Return cell volume (from fv\+Mesh) \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgGeomCell_adeeaa6811720d545b5c057634ed65a88}{update\+Face\+Info}} (\mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1dgGeomFace}{dg\+Geom\+Face}} \texorpdfstring{$\ast$}{*} $>$ \&\mbox{\hyperlink{classFoam_1_1dgGeomCell_a0d2fd40e6f5e9455e351b4df36b5d457}{faces}})
 \begin{DoxyCompactList}\small\item\em Update face geometry information. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Square\+Matrix}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \& \mbox{\hyperlink{classFoam_1_1dgGeomCell_a634e56013462cb85e6fcab9c244f9968}{mass\+Matrix}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Square\+Matrix}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \mbox{\hyperlink{classFoam_1_1dgGeomCell_a9baf8486dfa1e035caf247e2a87361d5}{mass\+Matrix}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
 \begin{DoxyCompactList}\small\item\em Return the mass matrix for the cell. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$ \& \mbox{\hyperlink{classFoam_1_1dgGeomCell_af92c7ffb12fa956c9282b2092c810c90}{gauss\+Points}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
 \begin{DoxyCompactList}\small\item\em Return Gauss points in the reference cell. \end{DoxyCompactList}\item 
@@ -118,24 +118,199 @@ std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classFoam_1_1dgRefFace}{dg\+Ref\+Face
 \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{label}} $>$ \mbox{\hyperlink{classFoam_1_1dgGeomCell_aef4d4a1ab162dda7651232e25129e6de}{cell\+Point\+Labels\+\_\+}}
 \begin{DoxyCompactList}\small\item\em Ordered list of vertex indices for consistent access. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \mbox{\hyperlink{classFoam_1_1dgGeomCell_a8e77726ecb45bb125a8b9ff3e05116f4}{J3\+D\+\_\+}}
-\begin{DoxyCompactList}\small\item\em List of internal Gauss Jacobian. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Square\+Matrix}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \mbox{\hyperlink{classFoam_1_1dgGeomCell_a28398a7d702f7ff51daac7f502f350fe}{mass\+Matrix\+\_\+}}
-\begin{DoxyCompactList}\small\item\em Mass matrix for the cell. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em List of internal Gauss Jacobian. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \doxysubsection{Detailed Description}
-Geometric container for a DG cell. 
+Geometric container for a DG cell (affine formulation) 
 
-The \doxylink{classFoam_1_1dgGeomCell}{dg\+Geom\+Cell} class represents the geometry of a single mesh cell tailored for Discontinuous Galerkin discretization.
+The \doxylink{classFoam_1_1dgGeomCell}{dg\+Geom\+Cell} class stores and manages the geometric information of a single mesh cell for Discontinuous Galerkin discretization.
 
 It provides\+:
 \begin{DoxyItemize}
-\item Access to mesh-\/based quantities (volume, centroid)
-\item Cell topology (faces, neighbors, vertices)
-\item Access to reference-\/cell data (Gauss points, weights, basis functions)
+\item Access to mesh-\/based geometric quantities (volume, centroid),
+\item Cell topology (faces, vertices, neighbors),
+\item Access to reference-\/element data (Gauss points, weights, orthonormal modal basis, reference mass matrix),
+\item Mapping information between physical and reference coordinates.
 \end{DoxyItemize}
 
-Geometry-\/specific face objects (\doxylink{classFoam_1_1dgGeomFace}{dg\+Geom\+Face}) are initialized using a shared reference face (\doxylink{classFoam_1_1dgRefFace}{dg\+Ref\+Face}). Reference-\/cell data is shared via \doxylink{classFoam_1_1dgRefCell}{dg\+Ref\+Cell} to avoid duplication and ensure consistency. 
+\DoxyHorRuler{0}
+ \hypertarget{classFoam_1_1dgGeomCell_autotoc_md13}{}\doxysubsubsection{\texorpdfstring{Affine-\/cell formulation}{Affine-cell formulation}}\label{classFoam_1_1dgGeomCell_autotoc_md13}
+The current implementation assumes that the cell mapping is affine. Let
+
+\[
+    \boldsymbol{\Xi} = (\xi_1,\xi_2,\xi_3)
+\]
+
+denote the reference coordinates and
+
+\[
+    \mathbf{X} = (x,y,z)
+\]
+
+the physical coordinates. The geometric transformation is
+
+\[
+    \mathbf{X} = \mathbf{X}(\boldsymbol{\Xi}),
+\]
+
+with Jacobian matrix
+
+\[
+    \mathbf{J}
+    =
+    \frac{\partial (x,y,z)}
+         {\partial (\xi_1,\xi_2,\xi_3)}.
+\]
+
+Under the affine assumption\+:
+
+\[
+    \mathbf{J} = \text{constant}, 
+    \qquad
+    |\mathbf{J}| = \text{constant}
+\]
+
+throughout the entire cell.
+
+Consequently\+:
+\begin{DoxyItemize}
+\item The determinant $|\mathbf{J}|$ is identical at all Gauss points.
+\item The geometric Jacobian needs to be evaluated only once per cell.
+\end{DoxyItemize}
+
+This assumption is valid for straight-\/sided affine elements such as\+:
+\begin{DoxyItemize}
+\item linear tetrahedra,
+\item parallelepiped hexahedra,
+\item straight prisms and pyramids.
+\end{DoxyItemize}
+
+\DoxyHorRuler{0}
+ \hypertarget{classFoam_1_1dgGeomCell_autotoc_md15}{}\doxysubsubsection{\texorpdfstring{Mass matrix structure}{Mass matrix structure}}\label{classFoam_1_1dgGeomCell_autotoc_md15}
+The modal basis defined on the reference element is L²-\/orthonormal. Therefore, the reference mass matrix satisfies
+
+\[
+    \mathbf{M}_{\text{ref}} = \mathbf{I},
+\]
+
+or more generally, it is diagonal.
+
+Under the affine mapping assumption, the physical mass matrix is
+
+\[
+    \mathbf{M}_{\text{phys}}
+    =
+    |\mathbf{J}|\,
+    \mathbf{M}_{\text{ref}}.
+\]
+
+Since $|\mathbf{J}|$ is constant, the physical-\/cell mass matrix remains diagonal.
+
+This property enables\+:
+\begin{DoxyItemize}
+\item Efficient modal DG implementation,
+\item Matrix-\/free operator evaluation,
+\end{DoxyItemize}
+
+\DoxyHorRuler{0}
+
+
+Geometry-\/specific face objects (\doxylink{classFoam_1_1dgGeomFace}{dg\+Geom\+Face}) are constructed using a shared reference face (\doxylink{classFoam_1_1dgRefFace}{dg\+Ref\+Face}). Reference-\/cell data is shared via \doxylink{classFoam_1_1dgRefCell}{dg\+Ref\+Cell} to avoid duplication and ensure consistency.
+
+The \doxylink{classFoam_1_1dgGeomCell}{dg\+Geom\+Cell} class stores and manages the geometric information of a single mesh cell for Discontinuous Galerkin discretization.
+
+It provides\+:
+\begin{DoxyItemize}
+\item Access to mesh-\/based geometric quantities (volume, centroid),
+\item Cell topology (faces, vertices, neighbors),
+\item Access to reference-\/element data (Gauss points, weights, orthonormal modal basis, reference mass matrix),
+\item Mapping information between physical and reference coordinates.
+\end{DoxyItemize}
+
+\DoxyHorRuler{0}
+ \hypertarget{classFoam_1_1dgGeomCell_autotoc_md18}{}\doxysubsubsection{\texorpdfstring{Affine-\/cell formulation}{Affine-cell formulation}}\label{classFoam_1_1dgGeomCell_autotoc_md18}
+The current implementation assumes that the cell mapping is affine. Let
+
+\[
+    \boldsymbol{\Xi} = (\xi_1,\xi_2,\xi_3)
+\]
+
+denote the reference coordinates and
+
+\[
+    \mathbf{X} = (x,y,z)
+\]
+
+the physical coordinates. The geometric transformation is
+
+\[
+    \mathbf{X} = \mathbf{X}(\boldsymbol{\Xi}),
+\]
+
+with Jacobian matrix
+
+\[
+    \mathbf{J}
+    =
+    \frac{\partial (x,y,z)}
+         {\partial (\xi_1,\xi_2,\xi_3)}.
+\]
+
+Under the affine assumption\+:
+
+\[
+    \mathbf{J} = \text{constant}, 
+    \qquad
+    |\mathbf{J}| = \text{constant}
+\]
+
+throughout the entire cell.
+
+Consequently\+:
+\begin{DoxyItemize}
+\item The determinant $|\mathbf{J}|$ is identical at all Gauss points.
+\item The geometric Jacobian needs to be evaluated only once per cell.
+\end{DoxyItemize}
+
+This assumption is valid for straight-\/sided affine elements such as\+:
+\begin{DoxyItemize}
+\item linear tetrahedra,
+\item parallelepiped hexahedra,
+\item straight prisms and pyramids.
+\end{DoxyItemize}
+
+\DoxyHorRuler{0}
+ \hypertarget{classFoam_1_1dgGeomCell_autotoc_md20}{}\doxysubsubsection{\texorpdfstring{Mass matrix structure}{Mass matrix structure}}\label{classFoam_1_1dgGeomCell_autotoc_md20}
+The modal basis defined on the reference element is L²-\/orthonormal. Therefore, the reference mass matrix satisfies
+
+\[
+    \mathbf{M}_{\text{ref}} = \mathbf{I},
+\]
+
+or more generally, it is diagonal.
+
+Under the affine mapping assumption, the physical mass matrix is
+
+\[
+    \mathbf{M}_{\text{phys}}
+    =
+    |\mathbf{J}|\,
+    \mathbf{M}_{\text{ref}}.
+\]
+
+Since $|\mathbf{J}|$ is constant, the physical-\/cell mass matrix remains diagonal.
+
+This property enables\+:
+\begin{DoxyItemize}
+\item Efficient modal DG implementation,
+\item Matrix-\/free operator evaluation,
+\end{DoxyItemize}
+
+\DoxyHorRuler{0}
+
+
+Geometry-\/specific face objects (\doxylink{classFoam_1_1dgGeomFace}{dg\+Geom\+Face}) are constructed using a shared reference face (\doxylink{classFoam_1_1dgRefFace}{dg\+Ref\+Face}). Reference-\/cell data is shared via \doxylink{classFoam_1_1dgRefCell}{dg\+Ref\+Cell} to avoid duplication and ensure consistency. 
 
 \doxysubsection{Constructor \& Destructor Documentation}
 \Hypertarget{classFoam_1_1dgGeomCell_a6063483d5693011f7e7b9bf7d4b8cd5a}\label{classFoam_1_1dgGeomCell_a6063483d5693011f7e7b9bf7d4b8cd5a} 
@@ -261,11 +436,11 @@ Return cell volume (from fv\+Mesh)
 
 Update face geometry information. 
 
-Initializes or updates \doxylink{classFoam_1_1dgGeomFace}{dg\+Geom\+Face} objects associated with this cell based on mesh connectivity. \Hypertarget{classFoam_1_1dgGeomCell_a634e56013462cb85e6fcab9c244f9968}\label{classFoam_1_1dgGeomCell_a634e56013462cb85e6fcab9c244f9968} 
+Initializes or updates \doxylink{classFoam_1_1dgGeomFace}{dg\+Geom\+Face} objects associated with this cell based on mesh connectivity. \Hypertarget{classFoam_1_1dgGeomCell_a9baf8486dfa1e035caf247e2a87361d5}\label{classFoam_1_1dgGeomCell_a9baf8486dfa1e035caf247e2a87361d5} 
 \index{Foam::dgGeomCell@{Foam::dgGeomCell}!massMatrix@{massMatrix}}
 \index{massMatrix@{massMatrix}!Foam::dgGeomCell@{Foam::dgGeomCell}}
 \doxysubsubsection{\texorpdfstring{massMatrix()}{massMatrix()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
-{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Square\+Matrix}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \& Foam\+::dg\+Geom\+Cell\+::mass\+Matrix (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Square\+Matrix}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ Foam\+::dg\+Geom\+Cell\+::mass\+Matrix (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
 
 
 
@@ -451,11 +626,11 @@ Return cell volume (from fv\+Mesh)
 
 Update face geometry information. 
 
-Initializes or updates \doxylink{classFoam_1_1dgGeomFace}{dg\+Geom\+Face} objects associated with this cell based on mesh connectivity. \Hypertarget{classFoam_1_1dgGeomCell_a634e56013462cb85e6fcab9c244f9968}\label{classFoam_1_1dgGeomCell_a634e56013462cb85e6fcab9c244f9968} 
+Initializes or updates \doxylink{classFoam_1_1dgGeomFace}{dg\+Geom\+Face} objects associated with this cell based on mesh connectivity. \Hypertarget{classFoam_1_1dgGeomCell_a9baf8486dfa1e035caf247e2a87361d5}\label{classFoam_1_1dgGeomCell_a9baf8486dfa1e035caf247e2a87361d5} 
 \index{Foam::dgGeomCell@{Foam::dgGeomCell}!massMatrix@{massMatrix}}
 \index{massMatrix@{massMatrix}!Foam::dgGeomCell@{Foam::dgGeomCell}}
 \doxysubsubsection{\texorpdfstring{massMatrix()}{massMatrix()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
-{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Square\+Matrix}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \& Foam\+::dg\+Geom\+Cell\+::mass\+Matrix (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Square\+Matrix}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ Foam\+::dg\+Geom\+Cell\+::mass\+Matrix (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
 
 
 
@@ -663,16 +838,6 @@ Ordered list of vertex indices for consistent access.
 
 
 List of internal Gauss Jacobian. 
-
-\Hypertarget{classFoam_1_1dgGeomCell_a28398a7d702f7ff51daac7f502f350fe}\label{classFoam_1_1dgGeomCell_a28398a7d702f7ff51daac7f502f350fe} 
-\index{Foam::dgGeomCell@{Foam::dgGeomCell}!massMatrix\_@{massMatrix\_}}
-\index{massMatrix\_@{massMatrix\_}!Foam::dgGeomCell@{Foam::dgGeomCell}}
-\doxysubsubsection{\texorpdfstring{massMatrix\_}{massMatrix\_}}
-{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Square\+Matrix}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ Foam\+::dg\+Geom\+Cell\+::mass\+Matrix\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
-
-
-
-Mass matrix for the cell. 
 
 
 

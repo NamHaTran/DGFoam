@@ -524,28 +524,28 @@ inline Foam::scalar calcJacobianDetAtInteriorGaussPt
 )
 {
     Foam::tensor J;
-    Foam::scalar JDuffy; // Jacobian determinant from Duffy transformation
+    //Foam::scalar JDuffy; // Jacobian determinant from Duffy transformation
 
     switch (cellType)
     {
         case dgCellType::HEX:
             J = HexJacobian(gaussPt, cellVertices);
-            JDuffy = 1.0; // No Duffy transformation for hex
+            //JDuffy = 1.0; // No Duffy transformation for hex
             break;
 
         case dgCellType::PRISM:
             J = PrismJacobian(gaussPt, cellVertices);
-            JDuffy = Foam::referenceJacobian::prismRefToHexRef(gaussPt);
+            //JDuffy = Foam::referenceJacobian::prismRefToHexRef(gaussPt);
             break;
 
         case dgCellType::PYRAMID:
             J = PyramidJacobian(gaussPt, cellVertices);
-            JDuffy = Foam::referenceJacobian::pyramidRefToHexRef(gaussPt);
+            //JDuffy = Foam::referenceJacobian::pyramidRefToHexRef(gaussPt);
             break;
 
         case dgCellType::TET:
             J = TetraJacobian(gaussPt, cellVertices);
-            JDuffy = Foam::referenceJacobian::tetRefToHexRef(gaussPt);
+            //JDuffy = Foam::referenceJacobian::tetRefToHexRef(gaussPt);
             break;
 
         default:
@@ -554,7 +554,7 @@ inline Foam::scalar calcJacobianDetAtInteriorGaussPt
                 << static_cast<int>(cellType) << abort(FatalError);
     }
 
-    return mag(det(J)/JDuffy);
+    return mag(det(J));
 }
 
 /**

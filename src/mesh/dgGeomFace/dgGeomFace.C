@@ -223,6 +223,15 @@ void Foam::dgGeomFace::printDebugInfo() const
     Info << "[dgGeomFace::printDebugInfo()] Face ID: " << faceID_ << nl;
     Info << "  Number of points: " << f.size() << " (original order):" << nl;
 
+    if (this->isBoundary())
+    {
+        Info << "  This face is a boundary face on patch " << patchID_ << nl;
+    }
+    else
+    {
+        Info << "  This face is an internal face." << nl;
+    }
+
     forAll(f, i)
     {
         label ptID = f[i];
@@ -277,6 +286,18 @@ void Foam::dgGeomFace::printDebugInfo() const
             Info << "      dBasis/dEta2 : " << neighborBasisData_.dBasis_dEta2[gp] << nl;
             Info << "      dBasis/dEta3 : " << neighborBasisData_.dBasis_dEta3[gp] << nl;
         }
+    }
+
+    Info << "  Lame parameters at Gauss points (owner side):" << nl;
+    forAll(ownerJ2D_, i)
+    {        
+        Info << "    Gauss point " << i << ": J2D = " << ownerJ2D_[i] << nl;
+    }
+
+    Info << "  Lame parameters at Gauss points (neighbor side):" << nl;
+    forAll(neighborJ2D_, i)
+    {        
+        Info << "    Gauss point " << i << ": J2D = " << neighborJ2D_[i] << nl;
     }
 }
 
@@ -469,25 +490,17 @@ void Foam::dgGeomFace::findGaussConnectivity()
         return;
     }
 
-    // Step 1: generate flippedPoints from flattenedPoints_
-    const label nPoints = flattenedPoints_.size();
-    List<vector2D> flippedPoints(nPoints);
-    for (label i = 0; i < nPoints; ++i)
-    {
-        flippedPoints[i] = flattenedPoints_[nPoints - 1 - i];
-    }
-
-    // Step 2: get Gauss points on neighbor side
+    // Get Gauss points on neighbor side
     const List<vector>& gaussNeighbor = gaussPointsNeighbor();
 
-    // Step 3: map to physical space
+    // Map to physical space
     List<vector2D> physicGaussOwner;
     List<vector2D> physicGaussNeighbor;
 
     mappingFromRefToReal(type_, gaussOwner, flattenedPoints_, physicGaussOwner);
-    mappingFromRefToReal(type_, gaussNeighbor, flippedPoints, physicGaussNeighbor);
+    mappingFromRefToReal(type_, gaussNeighbor, flattenedPoints_, physicGaussNeighbor);
 
-    // Step 4: compare and find connectivity
+    // Compare and find connectivity
     const scalar tol = 1e-10;
 
     for (label i = 0; i < nGauss; ++i)
