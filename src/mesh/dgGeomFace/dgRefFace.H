@@ -129,23 +129,8 @@ private:
         /** Gauss quadrature weights (shared for all faces) */
         List<scalar> wGauss_;
 
-        /** Gauss points on face ABCD in reference cube */
-        List<vector> gaussP_ABCD_;
-
-        /** Gauss points on face EFGH in reference cube */
-        List<vector> gaussP_EFGH_;
-
-        /** Gauss points on face ABEF in reference cube */
-        List<vector> gaussP_ABEF_;
-
-        /** Gauss points on face CDGH in reference cube */
-        List<vector> gaussP_CDGH_;
-
-        /** Gauss points on face BDFH in reference cube */
-        List<vector> gaussP_BDFH_;
-
-        /** Gauss points on face ACEG in reference cube */
-        List<vector> gaussP_ACEG_;
+        /** Gauss points on 2D reference quadrature face */
+        List<vector2D> gaussP_2D_;
 
 public:
 
@@ -178,12 +163,26 @@ public:
         inline const List<scalar>& weights() const { return wGauss_; }
 
         /**
-         * \brief Return Gauss points for a given face position
-         *
-         * The returned Gauss points are expressed in the
-         * reference-cube coordinate system.
+         * \brief Return Gauss points of the reference 2D quadrature face
          */
-        const List<vector>& gaussPoints(const dgFacePosition facePos) const;
+        inline const Foam::List<Foam::vector2D>& gaussPoints() const
+        {
+            return gaussP_2D_;
+        }
+
+        /**
+         * \brief Return basis functions and derivatives for a given cell type and face position
+         *
+         * \param cellType Cell type for which to compute basis functions
+         * \param pos Face position for which to compute basis functions
+         * \param gaussPt Gauss point in reference space (eta)
+         */
+        Foam::scalar calcDuffyJacobian
+        (
+            const dgCellType cellType,
+            const dgFacePosition facePos,
+            const vector& gaussPt
+        );
 
     //====================================================================//
     //                      Internal generation
@@ -198,15 +197,18 @@ public:
         void generateFaceGaussPointsAndWeights();
 
         /**
-         * \brief Compute basis functions and derivatives on a reference face
+         * \brief Compute basis functions and derivatives on a face
          *
          * Computes basis-function values and their derivatives
-         * for the specified cell type and face position.
+         * for the specified cell type at the Gauss points on the reference face.
+         * 
+         * \param etaPt List of Gauss points in reference coordinates
+         * \param cellType Cell type for which to compute basis functions
          */
         Foam::basisData computeBasisAndDerivatives
         (
-            const dgCellType cellType,
-            const dgFacePosition pos
+            const List<vector>& etaPt,// List ofGauss point in reference coordinates
+            const dgCellType cellType // Cell type for basis functions
         );
 };
 

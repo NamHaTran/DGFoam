@@ -41,6 +41,7 @@ Description
 
 #include "scalar.H"
 #include "vector.H"
+#include "vector2D.H"
 
 namespace Foam
 {
@@ -193,6 +194,47 @@ namespace Foam
 
         return etaPt;
     };
+
+    /**
+     * \brief Map a point from reference square [-1,1]^2 to reference triangle
+     *
+     * \details
+     * Applies the Duffy transformation to collapse one edge of the square
+     * into the triangle apex:
+     *   a = (1 + xi)/2
+     *   b = (1 + eta)/2
+     *   r = a
+     *   s = b*(1 - a)
+     *
+     * \param xi   First square coordinate
+     * \param eta  Second square coordinate
+     *
+     * \return Triangle coordinates (r, s)
+     */
+    inline vector2D squareToTriangle
+    (
+        const vector2D& etaPt
+    )
+    {
+        const scalar eta1 = etaPt.x();
+        const scalar eta2 = etaPt.y();
+
+        // ---------------------------------------------------------------------
+        // Map square [-1,1] -> [0,1]
+        // ---------------------------------------------------------------------
+
+        const scalar a = 0.5*(1.0 + eta1);
+        const scalar b = 0.5*(1.0 + eta2);
+
+        // ---------------------------------------------------------------------
+        // Duffy transform
+        // ---------------------------------------------------------------------
+
+        const scalar r = a;
+        const scalar s = b*(1.0 - a);
+
+        return vector2D(r, s);
+    }
 
 } // End namespace Foam
 

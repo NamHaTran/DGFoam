@@ -145,7 +145,7 @@ inline scalar surfaceIntegral(const faceGaussField<scalar>& phi, const faceGauss
         const vector n = F.faces()[faceI]->normal();
         const label nGauss = F.nGaussPerFace();
         const List<scalar>& w = F.faces()[faceI]->weights();
-        const List<scalar>& J2D = F.faces()[faceI]->ownerJ2D();
+        const List<scalar>& J2D = F.faces()[faceI]->J2D();
 
         for (label g = 0; g < nGauss; ++g)
         {
@@ -173,7 +173,7 @@ inline vector surfaceIntegral(const faceGaussField<scalar>& phi, const faceGauss
     {
         const label nGauss = F.nGaussPerFace();
         const List<scalar>& w = F.faces()[faceI]->weights();
-        const List<scalar>& J2D = F.faces()[faceI]->ownerJ2D();
+        const List<scalar>& J2D = F.faces()[faceI]->J2D();
 
         for (label g = 0; g < nGauss; ++g)
         {

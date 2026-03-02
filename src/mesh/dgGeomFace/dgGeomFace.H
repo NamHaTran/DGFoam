@@ -102,8 +102,17 @@ private:
         /** Shared reference-face data (basis, Gauss points, weights) */
         std::shared_ptr<dgRefFace> refFace_;
 
+        /** Number of Gauss points on face */
+        label nGauss_;
+
         /** Global face vertex coordinates */
         List<vector> globalPoints_;
+
+        /** Owner cell ID */
+        label ownerId_;
+
+        /** Neighbor cell ID (-1 for boundary faces) */
+        label neighborId_;
 
         /** Face position in the owner cell reference element */
         dgFacePosition ownerPos_;
@@ -120,8 +129,14 @@ private:
         /** Flattened 2D coordinates of face vertices */
         List<vector2D> flattenedPoints_;
 
-        /** Gauss-point connectivity between owner and neighbour */
-        List<label> connectivity_;
+        /** Physical coordinates of the face Gauss points */
+        List<vector> physGaussPoints_;
+
+        /** Gauss points on the face, respect to owner cell */
+        List<vector> gaussPointsOwner_;
+
+        /** Gauss points on the face, respect to neighbour cell */
+        List<vector> gaussPointsNeighbor_;
 
         /** Basis-function data on the owner side */
         Foam::basisData ownerBasisData_;
@@ -130,8 +145,7 @@ private:
         Foam::basisData neighborBasisData_;
 
         /** Jacobian 2D of faces */
-        List<scalar> ownerJ2D_;
-        List<scalar> neighborJ2D_;
+        List<scalar> J2D_;
 
         //====================== Boundary information ======================//
 
@@ -176,6 +190,9 @@ public:
         /** Return number of vertices of the face */
         label size() const;
 
+        /** Return nunber of Gauss points on the face */
+        inline label nGauss() { return nGauss_; }
+
         /** Return underlying OpenFOAM face */
         const face& baseFace() const;
 
@@ -197,23 +214,26 @@ public:
         /** Return face index */
         inline const label& id() const { return faceID_; }
 
-        /** Return Jacobian 2D at Gauss points on owner side */
-        inline const List<scalar>& ownerJ2D() const
+        /** Return Jacobian 2D at Gauss points */
+        inline const List<scalar>& J2D() const
         {
-            return ownerJ2D_;
+            return J2D_;
         }
 
-        /** Return Jacobian 2D at Gauss points on neighbour side */
-        inline const List<scalar>& neighborJ2D() const
-        {
-            return neighborJ2D_;
-        }
     //====================================================================//
     //                       Face processing utilities
     //====================================================================//
 
-        /** Flatten face vertices into a local 2D coordinate system */
-        void flattenFace();
+        /** \brief Compute Gauss-point connectivity between owner and neighbour cells
+         * 
+         *  \param globalPoints Global coordinates of the face vertices (in the order of owner cell)
+         *  \param flattenedPoints Flattened 2D coordinates of the face vertices (in the order of owner cell)
+         */
+        void flattenFace
+        (
+            const List<vector>& globalPoints,   // Input 3D coordinates
+            List<vector2D>& flattenedPoints     // Output 2D coordinates
+        ) const;
 
         /**
          * \brief Perform face flattening and ordering
@@ -222,6 +242,12 @@ public:
          * for basis-function evaluation on the face.
          */
         void processFlatAndSortedPoints();
+
+        /** Set face owner cell ID */
+        inline void setOwnerId(const label id) { ownerId_ = id; }
+
+        /** Set face neighbor cell ID */
+        inline void setNeighborId(const label id) { neighborId_ = id; }
 
         /** Set face position in owner cell */
         inline void setOwnerPos(const dgFacePosition pos) { ownerPos_ = pos; }
@@ -242,33 +268,10 @@ public:
         void computeBasisAndDerivatives();
 
         /**
-         * \brief Map Gauss points from reference to physical face
+         * \brief Compute Lame parameters at face Gauss points from both owner and neighbour cells
+         * This method MUST be called after setting ownerPos_, neighborPos_, ownerCellType_ and neighborCellType_.
          */
-        void mappingFromRefToReal
-        (
-            const dgFaceType type,
-            const List<vector>& gaussPoints,
-            const List<vector2D>& faceVertices,
-            List<vector2D>& physicGaussP
-        );
-
-        /** 
-         * \brief Compute Lame parameters at face Gauss points from owner cell
-         * This method MUST be called after setting ownerPos_ and ownerCellType_.
-         * Otherwise, incorrect results will be produced.
-         * 
-         * \param cellVertices Physical coordinates of the owner cell vertices
-         */
-        void computeOwnerLameParameters(const List<vector>& cellVertices);
-
-        /** 
-         * \brief Compute Lame parameters at face Gauss points from neighbour cell
-         * This method MUST be called after setting neighborPos_ and neighborCellType_.
-         * Otherwise, incorrect results will be produced.
-         * 
-         * \param cellVertices Physical coordinates of the neighbour cell vertices
-         */
-        void computeNeighborLameParameters(const List<vector>& cellVertices);
+        void computeLameParameters();
 
     //====================================================================//
     //                          Boundary queries
@@ -289,17 +292,22 @@ public:
     //====================================================================//
     //                    Reference-face data access
     //====================================================================//
+        /** Return physical Gauss points */
+        inline const List<vector>& physicGaussPoints() const
+        {
+            return physGaussPoints_;
+        }
 
         /** Return Gauss points on owner-side reference face */
         inline const List<vector>& gaussPointsOwner() const
         {
-            return refFace_->gaussPoints(ownerPos_);
+            return gaussPointsOwner_;
         }
 
         /** Return Gauss points on neighbour-side reference face */
         inline const List<vector>& gaussPointsNeighbor() const
         {
-            return refFace_->gaussPoints(neighborPos_);
+            return gaussPointsNeighbor_;
         }
 
         /** Return Gauss quadrature weights */
@@ -319,9 +327,6 @@ public:
 
         /** Return number of internal faces */
         inline label nInternalFaces() const { return mesh_.nInternalFaces(); }
-
-        /** Return Gauss-point connectivity */
-        inline const List<label>& connectivity() const { return connectivity_; }
 
         /** Return owner-side basis functions */
         inline const List<List<scalar>>& ownerBasis() const
@@ -373,11 +378,20 @@ public:
             isProcessorPatch_ = isProcPatch;
         }
 
-        /** Set Gauss-point connectivity for processor-patch faces */
-        inline void setConnectivity(const List<label>& conn)
+        /** Set Gauss points */
+        inline void setPhysicGaussPoints(const List<vector>& points)
         {
-            connectivity_ = conn;
+            physGaussPoints_ = points;
         }
+
+        /** Set Lame parameters */
+        inline void setLameParams(const List<scalar>& params)
+        {
+            J2D_ = params;
+        }
+
+        /** Calculate Gauss points from owner side, bases on physic Gauss */
+        void calcGaussPointsOnOwnerSide();
 
     //====================================================================//
     //                          Operators & debug
@@ -388,6 +402,9 @@ public:
 
         /** Print debug information */
         void printDebugInfo() const;
+
+        /** Print owner and neighbour cell information */
+        void printCellsInfo() const;
 };
 
 } // End namespace Foam

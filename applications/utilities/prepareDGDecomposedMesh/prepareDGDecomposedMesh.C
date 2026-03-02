@@ -169,12 +169,13 @@ int main(int argc, char *argv[])
         polyBoundaryMeshEntries boundaryEntries(boundaryIO);
 
         // --------------------------------------------------------------
-        // Storage for DG face connectivity
+        // Storage for DG face physical Gauss points and Jacobian 2D
         // Index: localProcFaceID
-        // Value: Gauss connectivity permutation
+        // Value: physical Gauss points and Jacobian 2D on processor faces
         // --------------------------------------------------------------
 
-        List<labelList> dgFaceConnectivity(faceProcAddressing.size());
+        List<List<vector>> dgFacePhysicGauss(faceProcAddressing.size());
+        List<List<scalar>> dgFaceJ2D(faceProcAddressing.size());
 
         // --------------------------------------------------------------
         // Loop over boundary entries and process processor patches
@@ -239,9 +240,9 @@ int main(int argc, char *argv[])
                 }
 
                 // Owner cell on processor mesh
-                const label localProcCellID = cellOwner[localProcFaceID];
+                //const label localProcCellID = cellOwner[localProcFaceID];
 
-                const label globalCellID = cellProcAddressing[localProcCellID];
+                //const label globalCellID = cellProcAddressing[localProcCellID];
 
                 // ------------------------------------------------------
                 // Access DG face on global mesh
@@ -249,59 +250,20 @@ int main(int argc, char *argv[])
 
                 const dgGeomFace* gFace =
                     dgMesh.faces()[globalFaceID];
+                
+                const List<vector>& physicGauss = gFace->physicGaussPoints();
+                const List<scalar>& faceJacobi = gFace->J2D();
 
-                const List<label>& connRef =
-                    gFace->connectivity();
-
-                List<label> procConnect(connRef.size(), -1);
-
-                if (gFace->isOwner(globalCellID))
-                {
-                    // Owner (master) side
-                    procConnect = connRef;
-                }
-                else
-                {
-                    // Neighbour (slave) side: reverse connectivity
-                    forAll(connRef, k)
-                    {
-                        const label j = connRef[k];
-                        procConnect[j] = k;
-                    }
-                }
-
-                dgFaceConnectivity[localProcFaceID] = procConnect;
+                dgFacePhysicGauss[localProcFaceID] = physicGauss;
+                dgFaceJ2D[localProcFaceID] = faceJacobi;
             }
         }
 
         // --------------------------------------------------------------
-        // Write DG face connectivity
+        // Write DG face connectivity (physical Gauss and Jacobian)
         // --------------------------------------------------------------
 
-        fileName outFile =
-            polyMeshDir / "dgFaceConnectivity";
-
-        OFstream os(outFile);
-
-        os  << "/*--------------------------------*- C++ -*----------------------------------*\\\n"
-            << "| =========                |                                                 |\n"
-            << "| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |\n"
-            << "|  \\    /   O peration     | Version:  2412                                  |\n"
-            << "|   \\  /    A nd           | Website:  www.openfoam.com                      |\n"
-            << "|    \\/     M anipulation  |                                                 |\n"
-            << "\\*---------------------------------------------------------------------------*/\n"
-            << "FoamFile\n"
-            << "{\n"
-            << "    version     2.0;\n"
-            << "    format      ascii;\n"
-            << "    class       labelListList;\n"
-            << "    location    \"constant/polyMesh\";\n"
-            << "    object      dgFaceConnectivity;\n"
-            << "}\n"
-            << "// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //\n\n";
-
-        // Write data
-        os << dgFaceConnectivity << nl;
+        #include "writeFiles.H"
     }
 
     Info<< nl << "prepareDGDecomposedMesh finished." << nl;

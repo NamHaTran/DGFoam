@@ -63,12 +63,7 @@ void Foam::dgRefFace::generateFaceGaussPointsAndWeights()
     label n1D = eta1D.size();
     nGauss_ = n1D * n1D;
 
-    gaussP_ABCD_.setSize(nGauss_);
-    gaussP_EFGH_.setSize(nGauss_);
-    gaussP_ABEF_.setSize(nGauss_);
-    gaussP_CDGH_.setSize(nGauss_);
-    gaussP_BDFH_.setSize(nGauss_);
-    gaussP_ACEG_.setSize(nGauss_);
+    gaussP_2D_.setSize(nGauss_);
     wGauss_.setSize(nGauss_);
 
     label idx = 0;
@@ -79,12 +74,7 @@ void Foam::dgRefFace::generateFaceGaussPointsAndWeights()
             scalar eta1 = eta1D[i];
             scalar eta2 = eta1D[j];
 
-            gaussP_ABCD_[idx] = vector(eta1, eta2, -1.0);
-            gaussP_EFGH_[idx] = vector(eta1, eta2,  1.0);
-            gaussP_ABEF_[idx] = vector(eta1, -1.0, eta2);
-            gaussP_CDGH_[idx] = vector(eta1,  1.0, eta2);
-            gaussP_ACEG_[idx] = vector(-1.0, eta1, eta2);
-            gaussP_BDFH_[idx] = vector( 1.0, eta1, eta2);
+            gaussP_2D_[idx] = vector2D(eta1, eta2);
 
             wGauss_[idx] = w1D[i] * w1D[j];
             ++idx;
@@ -92,41 +82,12 @@ void Foam::dgRefFace::generateFaceGaussPointsAndWeights()
     }
 }
 
-
-const Foam::List<Foam::vector>& Foam::dgRefFace::gaussPoints(const dgFacePosition pos) const
-{
-    switch (pos)
-    {
-        case dgFacePosition::ABCD:
-            return gaussP_ABCD_;
-        case dgFacePosition::EFGH:
-            return gaussP_EFGH_;
-        case dgFacePosition::ABEF:
-            return gaussP_ABEF_;
-        case dgFacePosition::CDGH:
-            return gaussP_CDGH_;
-        case dgFacePosition::ACEG:
-            return gaussP_ACEG_;
-        case dgFacePosition::BDFH:
-            return gaussP_BDFH_;
-        default:
-            FatalErrorInFunction
-                << "Invalid dgFacePosition enum value."
-                << abort(FatalError);
-    }
-
-    // Dummy
-    return gaussP_ABCD_; // Should never reach here
-}
-
 Foam::basisData Foam::dgRefFace::computeBasisAndDerivatives
 (
-    const dgCellType cellType, // Cell type for basis functions
-    const dgFacePosition pos // Face position for which to compute basis functions
+    const List<vector>& etaPt,// List ofGauss point in reference coordinates
+    const dgCellType cellType // Cell type for basis functions
 )
 {
-    // const label nBasis = Foam::math::getNumBasis(pOrder_, cellType);
-
     Foam::basisData basisData;
     basisData.basis.setSize(nGauss_);
     basisData.dBasis_dEta1.setSize(nGauss_);
@@ -134,42 +95,12 @@ Foam::basisData Foam::dgRefFace::computeBasisAndDerivatives
     basisData.dBasis_dEta3.setSize(nGauss_);
 
     for (label gp = 0; gp < nGauss_; ++gp)
-    {
-        vector etaPt;
-
-        // Get Gauss point coordinates based on face position
-        // and compute basis functions and derivatives
-        switch (pos)
-        {
-            case dgFacePosition::ABCD:
-                etaPt = gaussP_ABCD_[gp];
-                break;
-            case dgFacePosition::EFGH:
-                etaPt = gaussP_EFGH_[gp];
-                break;
-            case dgFacePosition::ABEF:
-                etaPt = gaussP_ABEF_[gp];
-                break;
-            case dgFacePosition::CDGH:
-                etaPt = gaussP_CDGH_[gp];
-                break;
-            case dgFacePosition::ACEG:
-                etaPt = gaussP_ACEG_[gp];
-                break;
-            case dgFacePosition::BDFH:
-                etaPt = gaussP_BDFH_[gp];
-                break;
-            default:
-                FatalErrorInFunction
-                    << "Invalid dgFacePosition enum value."
-                    << abort(FatalError);
-        }
-        
+    {   
         switch (cellType)
         {
             case dgCellType::HEX:
                 Foam::computeHexBasisAndDerivatives(
-                    etaPt, pOrder_,
+                    etaPt[gp], pOrder_,
                     //pos,
                     basisData.basis[gp],
                     basisData.dBasis_dEta1[gp],
@@ -180,7 +111,7 @@ Foam::basisData Foam::dgRefFace::computeBasisAndDerivatives
 
             case dgCellType::PRISM:
                 Foam::computePrismBasisAndDerivatives(
-                    etaPt, pOrder_,
+                    etaPt[gp], pOrder_,
                     //mapFacePositionToPrism(pos),
                     basisData.basis[gp],
                     basisData.dBasis_dEta1[gp],
@@ -191,7 +122,7 @@ Foam::basisData Foam::dgRefFace::computeBasisAndDerivatives
 
             case dgCellType::TET:
                 Foam::computeTetBasisAndDerivatives(
-                    etaPt, pOrder_,
+                    etaPt[gp], pOrder_,
                     //mapFacePositionToTet(pos),
                     basisData.basis[gp],
                     basisData.dBasis_dEta1[gp],
@@ -202,7 +133,7 @@ Foam::basisData Foam::dgRefFace::computeBasisAndDerivatives
 
             case dgCellType::PYRAMID:
                 Foam::computePyramidBasisAndDerivatives(
-                    etaPt, pOrder_,
+                    etaPt[gp], pOrder_,
                     //mapFacePositionToPyramid(pos),
                     basisData.basis[gp],
                     basisData.dBasis_dEta1[gp],
@@ -219,6 +150,60 @@ Foam::basisData Foam::dgRefFace::computeBasisAndDerivatives
     }
 
     return basisData;
+}
+
+Foam::scalar Foam::dgRefFace::calcDuffyJacobian
+(
+    const dgCellType cellType,
+    const dgFacePosition facePos,
+    const vector& gaussPt
+)
+{
+    Foam::scalar JDuffy = 1;
+    switch (cellType)
+    {
+        case dgCellType::HEX:
+            JDuffy = 1.0/4.0; // No Duffy transformation needed for hexahedron
+            break;
+
+        case dgCellType::PRISM:
+            if (mapFacePositionToPrism(facePos) == dgFacePositionOnPrism::ABE ||
+                mapFacePositionToPrism(facePos) == dgFacePositionOnPrism::CDF)
+            {
+                JDuffy = ((1 - gaussPt.z())/2)/2;
+            }
+            break;
+
+        case dgCellType::PYRAMID:
+            if (mapFacePositionToPyramid(facePos) == dgFacePositionOnPyramid::ACE ||
+                mapFacePositionToPyramid(facePos) == dgFacePositionOnPyramid::CDE ||
+                mapFacePositionToPyramid(facePos) == dgFacePositionOnPyramid::BDE ||
+                mapFacePositionToPyramid(facePos) == dgFacePositionOnPyramid::ABE)
+            {
+                JDuffy = ((1 - gaussPt.z())/2)/2;
+            }
+            break;
+
+        case dgCellType::TET:
+            if (mapFacePositionToTet(facePos) == dgFacePositionOnTet::BCE ||
+                mapFacePositionToTet(facePos) == dgFacePositionOnTet::ACE ||
+                mapFacePositionToTet(facePos) == dgFacePositionOnTet::ABE)
+            {
+                JDuffy = ((1 - gaussPt.z())/2)/2;
+            }
+            else if (mapFacePositionToTet(facePos) == dgFacePositionOnTet::ABC)
+            {
+                JDuffy = ((1 - gaussPt.y())/2)/2;
+            }
+            break;
+
+        default:
+            FatalErrorInFunction
+                << "Unsupported cell type for Duffy transformation: "
+                << static_cast<int>(cellType) << abort(FatalError);
+    }
+
+    return mag(JDuffy);
 }
 // ************************************************************************* //
 

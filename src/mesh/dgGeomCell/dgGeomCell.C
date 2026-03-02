@@ -248,11 +248,10 @@ void Foam::dgGeomCell::updateFaceInfo
 
         if (owner == cellID_)
         {
+            facePtr->setOwnerId(cellID_);
+            facePtr->setNeighborId(-1); // Will be set later if there's a neighbor
             facePtr->setOwnerPos(pos);
             facePtr->setOwnerCellType(type_);
-            
-            // Calculate Lame parameters at face Gauss points
-            facePtr->computeOwnerLameParameters(cellPoints_);
 
             if (isBoundaryFace)
             {
@@ -268,12 +267,11 @@ void Foam::dgGeomCell::updateFaceInfo
         }
         else
         {
+            facePtr->setOwnerId(owner);
+            facePtr->setNeighborId(cellID_);
             facePtr->setNeighborPos(pos);
             facePtr->setNeighborCellType(type_);
             neighborCellLabels_[localID] = owner;
-
-            // Calculate Lame parameters at face Gauss points
-            facePtr->computeNeighborLameParameters(cellPoints_);
         }
     }
 }

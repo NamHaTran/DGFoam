@@ -119,8 +119,8 @@ Foam::dgGeomMesh::dgGeomMesh
         // the connectivity is established, as it depends on the Gauss points.
         faces_[faceI]->computeBasisAndDerivatives();
 
-        // Print debug information for each face
-        // faces_[faceI]->printDebugInfo();
+        // Calculate Lame parameters at face Gauss points for both owner and neighbour cells
+        faces_[faceI]->computeLameParameters();
     }
 
     // Get boundary faces
@@ -255,16 +255,29 @@ Foam::label Foam::dgGeomMesh::getLocalFaceID
 
 void Foam::dgGeomMesh::assignFaceConnectivityToProcPatches()
 {
-    // Read dgFaceConnectivity when running in parallel
-    labelListList dgFaceConnectivity;
+    // Read dgFacePhysicGauss when running in parallel
+    //List<List<vector>> dgFacePhysicGauss;
+    //List<List<scalar>> dgFaceJacobian;
 
     if (Foam::Pstream::parRun())
     {
-        IOList<labelList> dgFaceConnectivity
+        IOList<List<vector>> dgFacePhysicGauss
         (
             IOobject
             (
-                "dgFaceConnectivity",
+                "dgFacePhysicGauss",
+                mesh_.time().constant()/"polyMesh",
+                mesh_,
+                IOobject::MUST_READ,
+                IOobject::NO_WRITE
+            )
+        );
+
+        IOList<List<scalar>> dgFaceJacobian
+        (
+            IOobject
+            (
+                "dgFaceJacobian",
                 mesh_.time().constant()/"polyMesh",
                 mesh_,
                 IOobject::MUST_READ,
@@ -297,7 +310,9 @@ void Foam::dgGeomMesh::assignFaceConnectivityToProcPatches()
             {
                 const label faceID = start + i;
                 faces_[faceID]->setProcessorPatch(true);
-                faces_[faceID]->setConnectivity(dgFaceConnectivity[faceID]);
+                faces_[faceID]->setPhysicGaussPoints(dgFacePhysicGauss[faceID]);
+                faces_[faceID]->setLameParams(dgFaceJacobian[faceID]);
+                faces_[faceID]->calcGaussPointsOnOwnerSide();
             }
         }
     }

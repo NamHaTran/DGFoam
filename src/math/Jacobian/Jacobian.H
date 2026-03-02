@@ -432,54 +432,61 @@ inline Foam::tensor TetraJacobian
     const scalar eta3 = gaussPt.z();
 
     // ---------------------------------------------------------------------
-    // Gradients of shape functions w.r.t eta (dPhi/dEta)
+    // Gradients of shape functions w.r.t eta: dNi/d(eta1,eta2,eta3)
+    //
+    // Shape functions (collapsed-cube -> tet):
+    //   NA = (1-eta1)(1-eta2)(1-eta3)/8
+    //   NB = (1+eta1)(1-eta2)(1-eta3)/8
+    //   NC = (1+eta2)(1-eta3)/4
+    //   ND = (1+eta3)/2
     //
     // Vertex correspondence:
-    //
-    //   cellVertices id -> tetrahedron vertex -> gradPhi_Eta id
-    //   ---------------------------------------------------
-    //        0        ->        A         ->        0
-    //        1        ->        B         ->        1
-    //        2        ->        C         ->        2
-    //        3        ->        D         ->        3
-    //
+    //   cellVertices[0] -> A
+    //   cellVertices[1] -> B
+    //   cellVertices[2] -> C
+    //   cellVertices[3] -> D
     // ---------------------------------------------------------------------
     List<vector> gradPhi_Eta(cellVertices.size(), Zero);
 
     // ---------------------------------------------------------------------
-    // Vertex A (cellVertices[0])
+    // Vertex A: NA = (1-eta1)(1-eta2)(1-eta3)/8
     // ---------------------------------------------------------------------
-    gradPhi_Eta[0].x() = -(1 - eta2)*(1 - eta3)/8;
-    gradPhi_Eta[0].y() = -(1 - eta1)*(1 - eta3)/8;
-    gradPhi_Eta[0].z() = -(1 - eta1)*(1 - eta2)/8;
+    gradPhi_Eta[0].x() = -(1 - eta2)*(1 - eta3)/8;  // dNA/deta1
+    gradPhi_Eta[0].y() = -(1 - eta1)*(1 - eta3)/8;  // dNA/deta2
+    gradPhi_Eta[0].z() = -(1 - eta1)*(1 - eta2)/8;  // dNA/deta3
 
     // ---------------------------------------------------------------------
-    // Vertex B (cellVertices[1])
+    // Vertex B: NB = (1+eta1)(1-eta2)(1-eta3)/8
     // ---------------------------------------------------------------------
-    gradPhi_Eta[1].x() =  (1 - eta2)*(1 - eta3)/8;
-    gradPhi_Eta[1].y() = -(1 + eta1)*(1 - eta3)/8;
-    gradPhi_Eta[1].z() = -(1 + eta1)*(1 - eta2)/8;
+    gradPhi_Eta[1].x() =  (1 - eta2)*(1 - eta3)/8;  // dNB/deta1
+    gradPhi_Eta[1].y() = -(1 + eta1)*(1 - eta3)/8;  // dNB/deta2
+    gradPhi_Eta[1].z() = -(1 + eta1)*(1 - eta2)/8;  // dNB/deta3
 
     // ---------------------------------------------------------------------
-    // Vertex C (cellVertices[2])
+    // Vertex C: NC = (1+eta2)(1-eta3)/4
+    //  - No dependence on eta1
     // ---------------------------------------------------------------------
-    gradPhi_Eta[2].x() = -(1 + eta2)*(1 - eta3)/8;
-    gradPhi_Eta[2].y() =  (1 - eta1)*(1 - eta3)/8;
-    gradPhi_Eta[2].z() = -(1 - eta1)*(1 + eta2)/8;
+    gradPhi_Eta[2].x() =  0.0;                      // dNC/deta1
+    gradPhi_Eta[2].y() =  (1 - eta3)/4;             // dNC/deta2
+    gradPhi_Eta[2].z() = -(1 + eta2)/4;             // dNC/deta3
 
     // ---------------------------------------------------------------------
-    // Vertex D (cellVertices[3])
+    // Vertex D: ND = (1+eta3)/2
     // ---------------------------------------------------------------------
-    gradPhi_Eta[3].x() = 0;
-    gradPhi_Eta[3].y() = 0;
-    gradPhi_Eta[3].z() = 0.5;
+    gradPhi_Eta[3].x() = 0.0;                       // dND/deta1
+    gradPhi_Eta[3].y() = 0.0;                       // dND/deta2
+    gradPhi_Eta[3].z() = 0.5;                       // dND/deta3
 
     // ---------------------------------------------------------------------
-    // Compute physical gradients: d(x,y,z)/d(eta1,eta2,eta3)
+    // Assemble Jacobian J = d(x,y,z)/d(eta1,eta2,eta3)
+    //
+    // gradX1_Eta = (dx/deta1, dx/deta2, dx/deta3)
+    // gradX2_Eta = (dy/deta1, dy/deta2, dy/deta3)
+    // gradX3_Eta = (dz/deta1, dz/deta2, dz/deta3)
     // ---------------------------------------------------------------------
-    vector gradX1_Eta(Zero); // d(x)/d(eta)
-    vector gradX2_Eta(Zero); // d(y)/d(eta)
-    vector gradX3_Eta(Zero); // d(z)/d(eta)
+    vector gradX1_Eta(Zero);
+    vector gradX2_Eta(Zero);
+    vector gradX3_Eta(Zero);
 
     for (label i = 0; i < cellVertices.size(); ++i)
     {
@@ -497,16 +504,16 @@ inline Foam::tensor TetraJacobian
     }
 
     // ---------------------------------------------------------------------
-    // Jacobian tensor (columns = gradients of x, y, z w.r.t eta)
+    // Jacobian tensor:
+    //  - Rows correspond to x,y,z components
+    //  - Columns correspond to eta1,eta2,eta3
     // ---------------------------------------------------------------------
-    const Foam::tensor Jacobian
+    return Foam::tensor
     (
         gradX1_Eta,
         gradX2_Eta,
         gradX3_Eta
     );
-
-    return Jacobian;
 }
 
 /**

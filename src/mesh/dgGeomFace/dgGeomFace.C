@@ -34,6 +34,8 @@ License
 #include "face.H"
 #include "pointField.H"
 #include "mathematicalConstants.H"
+#include "dgAffineMapping.H"
+#include "refCoordTransforms.H"
 
 #include <cmath>
 
@@ -69,6 +71,9 @@ Foam::dgGeomFace::dgGeomFace
     isBoundary_(false),
     isProcessorPatch_(false)
 {
+    // Get Number of Gauss point
+    nGauss_ = refFace_->nGauss();
+
     // Get face from faceID_
     const face& f = mesh_.faces()[faceID_];
 
@@ -119,11 +124,12 @@ Foam::dgGeomFace::dgGeomFace(const dgGeomFace& other)
     ownerCellType_(other.ownerCellType_),
     neighborCellType_(other.neighborCellType_),
     flattenedPoints_(other.flattenedPoints_),
-    connectivity_(other.connectivity_),
+    physGaussPoints_(other.physGaussPoints_),
+    gaussPointsOwner_(other.gaussPointsOwner_),
+    gaussPointsNeighbor_(other.gaussPointsNeighbor_),
     ownerBasisData_(other.ownerBasisData_),
     neighborBasisData_(other.neighborBasisData_),
-    ownerJ2D_(other.ownerJ2D_),
-    neighborJ2D_(other.neighborJ2D_),
+    J2D_(other.J2D_),
     patchID_(other.patchID_),
     isBoundary_(other.isBoundary_),
     isProcessorPatch_(other.isProcessorPatch_)
@@ -202,12 +208,13 @@ Foam::dgGeomFace& Foam::dgGeomFace::operator=(const dgGeomFace& other)
         neighborCellType_ = other.neighborCellType_;
         // sortedPointLabels_ = other.sortedPointLabels_;
         flattenedPoints_  = other.flattenedPoints_;
+        physGaussPoints_  = other.physGaussPoints_;
+        gaussPointsOwner_  = other.gaussPointsOwner_;
+        gaussPointsNeighbor_ = other.gaussPointsNeighbor_;
         type_             = other.type_;
-        connectivity_     = other.connectivity_;
         ownerBasisData_   = other.ownerBasisData_;
         neighborBasisData_ = other.neighborBasisData_;
-        ownerJ2D_         = other.ownerJ2D_;
-        neighborJ2D_      = other.neighborJ2D_;
+        J2D_              = other.J2D_;
         patchID_          = other.patchID_;
         isBoundary_       = other.isBoundary_;
         isProcessorPatch_ = other.isProcessorPatch_;
@@ -220,107 +227,188 @@ void Foam::dgGeomFace::printDebugInfo() const
     const face& f = mesh_.faces()[faceID_];
     const pointField& points = mesh_.points();
 
-    Info << "[dgGeomFace::printDebugInfo()] Face ID: " << faceID_ << nl;
-    Info << "  Number of points: " << f.size() << " (original order):" << nl;
+    Pout << "[dgGeomFace::printDebugInfo()] Face ID: " << faceID_ << nl;
+    Pout << "  Number of points: " << f.size() << " (original order):" << nl;
 
     if (this->isBoundary())
     {
-        Info << "  This face is a boundary face on patch " << patchID_ << nl;
+        Pout << "  This face is a boundary face on patch " << patchID_ << nl;
     }
     else
     {
-        Info << "  This face is an internal face." << nl;
+        Pout << "  This face is an internal face." << nl;
     }
 
     forAll(f, i)
     {
         label ptID = f[i];
         const point& pt = points[ptID];
-        Info << "    Point " << i << " (ID " << ptID << "): " << pt << nl;
+        Pout << "    Point " << i << " (ID " << ptID << "): " << pt << nl;
     }
 
-    Info << "  Type                 : " << type_ << nl;
-    Info << "  Owner position       : " << ownerPos_ << nl;
-    Info << "  Neighbor position    : " << neighborPos_ << nl;
-    Info << "  Owner cell type      : " << ownerCellType_ << nl;
-    Info << "  Neighbor cell type   : " << neighborCellType_ << nl;
+    Pout << "  Type                 : " << type_ << nl;
+    Pout << "  Owner position       : " << ownerPos_ << nl;
+    Pout << "  Neighbor position    : " << neighborPos_ << nl;
+    Pout << "  Owner cell type      : " << ownerCellType_ << nl;
+    Pout << "  Neighbor cell type   : " << neighborCellType_ << nl;
 
-    Info << "  Global points (CCW from owner):" << nl;
+    Pout << "  Global points (CCW from owner):" << nl;
     forAll(globalPoints_, i)
     {
-        Info << "    " << globalPoints_[i] << nl;
+        Pout << "    " << globalPoints_[i] << nl;
     }
 
-    Info << "  Flattened points:" << nl;
+    Pout << "  Flattened points:" << nl;
     forAll(flattenedPoints_, i)
     {
-        Info << "    " << flattenedPoints_[i] << nl;
+        Pout << "    " << flattenedPoints_[i] << nl;
     }
 
-    Info << "  Gauss connectivity (owner → neighbor):" << nl;
-    forAll(connectivity_, i)
-    {
-        Info << "    owner[" << i << "] → neighbor[" << connectivity_[i] << "]" << nl;
+    Pout << "  Physical Gauss points:" << nl;
+    forAll(physGaussPoints_, i)
+    {        
+        Pout << "    " << physGaussPoints_[i] << nl;
     }
 
-    Info << "  Basis functions at Gauss points (owner side):" << nl;
+    Pout << "  2D Gauss points on reference face:" << nl;
+    forAll(refFace_->gaussPoints(), i)
+    {        
+        Pout << "    " << refFace_->gaussPoints()[i] << nl;
+    }
+
+    Pout << "  Gauss points on owner reference face:" << nl;
+    forAll(gaussPointsOwner_, i)
+    {        
+        Pout << "    " << gaussPointsOwner_[i] << nl;
+    }
+
+    Pout << "  Gauss points on neighbor reference face:" << nl;
+    forAll(gaussPointsNeighbor_, i)
+    {        
+        Pout << "    " << gaussPointsNeighbor_[i] << nl;
+    }
+
+    Pout << "  Basis functions at Gauss points (owner side):" << nl;
     {
         for (label gp = 0; gp < ownerBasisData_.basis.size(); ++gp)
         {
-            Info << "    Gauss point " << gp << ":" << nl;
-            Info << "      basis        : " << ownerBasisData_.basis[gp] << nl;
-            Info << "      dBasis/dEta1 : " << ownerBasisData_.dBasis_dEta1[gp] << nl;
-            Info << "      dBasis/dEta2 : " << ownerBasisData_.dBasis_dEta2[gp] << nl;
-            Info << "      dBasis/dEta3 : " << ownerBasisData_.dBasis_dEta3[gp] << nl;
+            Pout << "    Gauss point " << gp << ":" << nl;
+            Pout << "      basis        : " << ownerBasisData_.basis[gp] << nl;
+            Pout << "      dBasis/dEta1 : " << ownerBasisData_.dBasis_dEta1[gp] << nl;
+            Pout << "      dBasis/dEta2 : " << ownerBasisData_.dBasis_dEta2[gp] << nl;
+            Pout << "      dBasis/dEta3 : " << ownerBasisData_.dBasis_dEta3[gp] << nl;
         }
     }
 
     if (neighborCellType_ != dgCellType::NONE)
     {
-        Info << "  Basis functions at Gauss points (neighbor side):" << nl;
+        Pout << "  Basis functions at Gauss points (neighbor side):" << nl;
         for (label gp = 0; gp < neighborBasisData_.basis.size(); ++gp)
         {
-            Info << "    Gauss point " << gp << ":" << nl;
-            Info << "      basis        : " << neighborBasisData_.basis[gp] << nl;
-            Info << "      dBasis/dEta1 : " << neighborBasisData_.dBasis_dEta1[gp] << nl;
-            Info << "      dBasis/dEta2 : " << neighborBasisData_.dBasis_dEta2[gp] << nl;
-            Info << "      dBasis/dEta3 : " << neighborBasisData_.dBasis_dEta3[gp] << nl;
+            Pout << "    Gauss point " << gp << ":" << nl;
+            Pout << "      basis        : " << neighborBasisData_.basis[gp] << nl;
+            Pout << "      dBasis/dEta1 : " << neighborBasisData_.dBasis_dEta1[gp] << nl;
+            Pout << "      dBasis/dEta2 : " << neighborBasisData_.dBasis_dEta2[gp] << nl;
+            Pout << "      dBasis/dEta3 : " << neighborBasisData_.dBasis_dEta3[gp] << nl;
         }
     }
 
-    Info << "  Lame parameters at Gauss points (owner side):" << nl;
-    forAll(ownerJ2D_, i)
+    Pout << "  Lame parameters at Gauss points:" << nl;
+    forAll(J2D_, i)
     {        
-        Info << "    Gauss point " << i << ": J2D = " << ownerJ2D_[i] << nl;
-    }
-
-    Info << "  Lame parameters at Gauss points (neighbor side):" << nl;
-    forAll(neighborJ2D_, i)
-    {        
-        Info << "    Gauss point " << i << ": J2D = " << neighborJ2D_[i] << nl;
+        Pout << "    Gauss point " << i << ": J2D = " << J2D_[i] << nl;
     }
 }
 
-// Flatten face points to 2D using face normal
-void Foam::dgGeomFace::flattenFace()
+void Foam::dgGeomFace::printCellsInfo() const
 {
-    const label nPoints = globalPoints_.size();
-    flattenedPoints_.setSize(nPoints);
-
-    // Compute centroid of face
-    vector centroid = vector::zero;
-    forAll(globalPoints_, i)
+    if (neighborId_ != -1)
     {
-        centroid += globalPoints_[i];
+        // Cells information
+        // Access cell shape
+        const cellShape& ownerShape = mesh_.cellShapes()[ownerId_];
+
+        // Get cell vertices in standard order
+        pointField ownerCellPoints = ownerShape.points(mesh_.points());
+
+        const cellShape& neighborShape = mesh_.cellShapes()[neighborId_];
+        pointField neighborCellPoints = neighborShape.points(mesh_.points());
+
+        labelList ownerFaceLabels_ = ownerShape.meshFaces(mesh_.faces(), mesh_.cells()[ownerId_]);
+        labelList neighborFaceLabels_ = neighborShape.meshFaces(mesh_.faces(), mesh_.cells()[neighborId_]);
+
+        Info << "Owner cell ID: " << ownerId_ << ", type: " << ownerCellType_ << nl;
+        Info << "Neighbor cell ID: " << neighborId_ << ", type: " << neighborCellType_ << nl;
+        Info << "Owner cell points:" << ownerCellPoints << nl;
+        Info << "Neighbor cell points:" << neighborCellPoints << nl;
+        Info << "Owner cell face labels:" << ownerFaceLabels_ << nl;
+        Info << "Neighbor cell face labels:" << neighborFaceLabels_ << nl;
+
+        Info << "  Check mapping consistency:" << nl;
+        forAll(gaussPointsOwner_, i)
+        {
+            vector physicPt = Foam::mapEtaToX(gaussPointsOwner_[i], ownerCellPoints, ownerCellType_);
+            Info << "    Owner Gauss point " << i << ": physPt = " << physicPt << nl;
+        }
+
+        if (neighborId_ != -1)
+        {
+            forAll(gaussPointsNeighbor_, i)
+            {
+                vector physicPt = Foam::mapEtaToX(gaussPointsNeighbor_[i], neighborCellPoints, neighborCellType_);
+                Info << "    Neighbor Gauss point " << i << ": physPt = " << physicPt << nl;
+            }
+        }
     }
+}
+
+// Flatten the face points to 2D coordinates in the face plane
+void Foam::dgGeomFace::flattenFace
+(
+    const List<vector>& globalPoints,   // Input 3D coordinates
+    List<vector2D>& flattenedPoints     // Output 2D coordinates
+) const
+{
+    // ---------------------------------------------------------------------
+    // Number of points
+    // ---------------------------------------------------------------------
+
+    const label nPoints = globalPoints.size();
+
+    flattenedPoints.setSize(nPoints);
+
+
+    // ---------------------------------------------------------------------
+    // Compute centroid of the face
+    // ---------------------------------------------------------------------
+
+    vector centroid = vector::zero;
+
+    forAll(globalPoints, i)
+    {
+        centroid += globalPoints[i];
+    }
+
     centroid /= nPoints;
 
-    // Compute face normal
+
+    // ---------------------------------------------------------------------
+    // Compute normalized face normal
+    // ---------------------------------------------------------------------
+
     vector n = normal();
+
+    // Normalize and avoid division by zero
     n /= mag(n) + VSMALL;
 
-    // Create orthonormal basis (u, v) on the face
+
+    // ---------------------------------------------------------------------
+    // Build orthonormal basis (u, v) on the face
+    // ---------------------------------------------------------------------
+
     vector u;
+
+    // Choose a reference vector not parallel to n
     if (mag(n ^ vector(1, 0, 0)) > VSMALL)
     {
         u = n ^ vector(1, 0, 0);
@@ -329,18 +417,26 @@ void Foam::dgGeomFace::flattenFace()
     {
         u = n ^ vector(0, 1, 0);
     }
+
     u /= mag(u) + VSMALL;
 
+    // v completes right-handed orthonormal system
     vector v = n ^ u;
     v /= mag(v) + VSMALL;
 
-    // Project each point onto (u,v) plane centered at centroid
+
+    // ---------------------------------------------------------------------
+    // Project each point onto (u,v) plane
+    // ---------------------------------------------------------------------
+
     for (label i = 0; i < nPoints; ++i)
     {
-        vector r = globalPoints_[i] - centroid;
-        scalar x = (r & u);
-        scalar y = (r & v);
-        flattenedPoints_[i] = vector2D(x, y);
+        const vector r = globalPoints[i] - centroid;
+
+        const scalar x = (r & u);   // Projection onto u
+        const scalar y = (r & v);   // Projection onto v
+
+        flattenedPoints[i] = vector2D(x, y);
     }
 }
 
@@ -394,177 +490,107 @@ void Foam::dgGeomFace::sortPointsCCW()
 // Perform flattening, sorting and store data
 void Foam::dgGeomFace::processFlatAndSortedPoints()
 {
-    flattenFace();
-    // sortPointsCCW();
+    flattenedPoints_.setSize(globalPoints_.size());
+    flattenFace(globalPoints_, flattenedPoints_);
 }
 
-// Mapping from reference to physical space for quad or tri face
-void Foam::dgGeomFace::mappingFromRefToReal
-(
-    const dgFaceType type,
-    const List<vector>& gaussPoints,
-    const List<vector2D>& faceVertices,
-    List<vector2D>& physicGaussP
-)
-{
-    physicGaussP.setSize(gaussPoints.size());
-
-    forAll(gaussPoints, i)
-    {
-        scalar eta1 = gaussPoints[i].x();
-        scalar eta2 = gaussPoints[i].y();
-        scalar eta3 = gaussPoints[i].z();
-
-        scalar eta1_flat = 0;
-        scalar eta2_flat = 0;
-
-        // Remove coordinate equal to 1 or -1 to get 2D projection
-        if (mag(eta1) == 1.0)
-        {
-            eta1_flat = eta2;
-            eta2_flat = eta3;
-        }
-        else if (mag(eta2) == 1.0)
-        {
-            eta1_flat = eta1;
-            eta2_flat = eta3;
-        }
-        else if (mag(eta3) == 1.0)
-        {
-            eta1_flat = eta1;
-            eta2_flat = eta2;
-        }
-
-        if (type == dgFaceType::QUAD)
-        {
-            scalar C1 = 0.25 * (1.0 - eta1_flat) * (1.0 - eta2_flat);
-            scalar C2 = 0.25 * (1.0 + eta1_flat) * (1.0 - eta2_flat);
-            scalar C3 = 0.25 * (1.0 + eta1_flat) * (1.0 + eta2_flat);
-            scalar C4 = 0.25 * (1.0 - eta1_flat) * (1.0 + eta2_flat);
-
-            const vector2D& v1 = faceVertices[0];
-            const vector2D& v2 = faceVertices[1];
-            const vector2D& v3 = faceVertices[2];
-            const vector2D& v4 = faceVertices[3];
-
-            scalar x = C1 * v1.x() + C2 * v2.x() + C3 * v3.x() + C4 * v4.x();
-            scalar y = C1 * v1.y() + C2 * v2.y() + C3 * v3.y() + C4 * v4.y();
-
-            physicGaussP[i] = vector2D(x, y);
-        }
-        else if (type == dgFaceType::TRI)
-        {
-            scalar C1 = 0.25 * (1.0 - eta1_flat) * (1.0 - eta2_flat);
-            scalar C2 = 0.25 * (1.0 + eta1_flat) * (1.0 - eta2_flat);
-            scalar C3 = 0.5  * (1.0 + eta2_flat);
-
-            const vector2D& v1 = faceVertices[0];
-            const vector2D& v2 = faceVertices[1];
-            const vector2D& v3 = faceVertices[2];
-
-            scalar x = C1 * v1.x() + C2 * v2.x() + C3 * v3.x();
-            scalar y = C1 * v1.y() + C2 * v2.y() + C3 * v3.y();
-
-            physicGaussP[i] = vector2D(x, y);
-        }
-        else
-        {
-            FatalErrorInFunction << "Unsupported face type." << abort(FatalError);
-        }
-    }
-}
-
-// Compute connectivity between Gauss points from owner and neighbor
+// Compute connectivity between Gauss points from owner and neighbor cells
 void Foam::dgGeomFace::findGaussConnectivity()
 {
-    const List<vector>& gaussOwner = gaussPointsOwner();
-    const label nGauss = gaussOwner.size();
-    connectivity_.setSize(nGauss);
-
-    if (neighborPos_ == dgFacePosition::NONE)
-    {
-        for (label i = 0; i < nGauss; ++i)
-        {
-            connectivity_[i] = i;
-        }
-        return;
-    }
-
-    // Get Gauss points on neighbor side
-    const List<vector>& gaussNeighbor = gaussPointsNeighbor();
+    // Get Gauss points 2D on the reference quad face
+    const List<vector2D>& gauss2D = refFace_->gaussPoints();
 
     // Map to physical space
-    List<vector2D> physicGaussOwner;
-    List<vector2D> physicGaussNeighbor;
+    physGaussPoints_.setSize(gauss2D.size());
 
-    mappingFromRefToReal(type_, gaussOwner, flattenedPoints_, physicGaussOwner);
-    mappingFromRefToReal(type_, gaussNeighbor, flattenedPoints_, physicGaussNeighbor);
-
-    // Compare and find connectivity
-    const scalar tol = 1e-10;
-
-    for (label i = 0; i < nGauss; ++i)
+    for (label i = 0; i < nGauss_; ++i)
     {
-        const vector2D& pO = physicGaussOwner[i];
-
-        for (label j = 0; j < nGauss; ++j)
+        if (type_ == dgFaceType::TRI)
         {
-            const vector2D& pN = physicGaussNeighbor[j];
+            // Calculate barycentric coordinates of the Gauss point in the reference face
+            vector2D rs = Foam::squareToTriangle(gauss2D[i]);
 
-            if
+            // Map to physical space using the actual face vertices
+            physGaussPoints_[i] = Foam::mapToPhysicalTriangle
             (
-                mag(pO.x() - pN.x()) < tol &&
-                mag(pO.y() - pN.y()) < tol
-            )
-            {
-                connectivity_[i] = j;
-                break;
-            }
+                rs,
+                globalPoints_
+            );
         }
+        else if (type_ == dgFaceType::QUAD)
+        {
+            // Use the original 2D Gauss points for quadrilateral faces
+            physGaussPoints_[i] = Foam::mapToPhysicalQuad
+            (
+                gauss2D[i],
+                globalPoints_
+            );
+        }
+    }
+
+    // Map Gauss points to owner and neighbor reference space
+    gaussPointsOwner_.setSize(nGauss_);
+    gaussPointsNeighbor_.setSize(nGauss_);
+
+    // Access cell shape
+    const cellShape& ownerShape = mesh_.cellShapes()[ownerId_];
+    pointField ownerCellPoints = ownerShape.points(mesh_.points());
+
+    for (label i = 0; i < nGauss_; ++i)
+    {
+        gaussPointsOwner_[i] = Foam::mapXToEta(physGaussPoints_[i], ownerCellPoints, ownerCellType_);
+        if (neighborPos_ != dgFacePosition::NONE)
+        {
+            const cellShape& neighborShape = mesh_.cellShapes()[neighborId_];
+            pointField neighborCellPoints = neighborShape.points(mesh_.points());
+            gaussPointsNeighbor_[i] = Foam::mapXToEta(physGaussPoints_[i], neighborCellPoints, neighborCellType_);
+        }
+        else // Boundary face, no neighbor
+        {
+            gaussPointsNeighbor_[i] = vector::zero; // or some invalid value
+        }
+    }
+}
+
+void Foam::dgGeomFace::calcGaussPointsOnOwnerSide()
+{
+    // Map Gauss points to owner and neighbor reference space
+    gaussPointsOwner_.setSize(nGauss_);
+
+    // Access cell shape
+    const cellShape& ownerShape = mesh_.cellShapes()[ownerId_];
+    pointField ownerCellPoints = ownerShape.points(mesh_.points());
+
+    for (label i = 0; i < nGauss_; ++i)
+    {
+        gaussPointsOwner_[i] = Foam::mapXToEta(physGaussPoints_[i], ownerCellPoints, ownerCellType_);
     }
 }
 
 void Foam::dgGeomFace::computeBasisAndDerivatives()
 {
     // Calculate basis functions and derivatives for both owner and neighbor
-    ownerBasisData_ = refFace_->computeBasisAndDerivatives(ownerCellType_, ownerPos_);
+    ownerBasisData_ = refFace_->computeBasisAndDerivatives(gaussPointsOwner_, ownerCellType_);
 
     // Only compute neighbor if it exists
     if (neighborPos_ != dgFacePosition::NONE)
     {
-        neighborBasisData_ = refFace_->computeBasisAndDerivatives(neighborCellType_, neighborPos_);
+        neighborBasisData_ = refFace_->computeBasisAndDerivatives(gaussPointsNeighbor_, neighborCellType_);
     }
 }
 
-void Foam::dgGeomFace::computeOwnerLameParameters
-(
-    const List<vector>& cellVertices
-)
+void Foam::dgGeomFace::computeLameParameters()
 {
+    // Access cell shape
+    const cellShape& ownerShape = mesh_.cellShapes()[ownerId_];
+    pointField ownerCellPoints = ownerShape.points(mesh_.points());
+
     // Calculate Jacobian 2D at Gauss points
-    const List<vector>& ownerGaussPts = refFace_->gaussPoints(ownerPos_);
-    const label nGauss = ownerGaussPts.size();
-    ownerJ2D_.setSize(nGauss);
+    J2D_.setSize(nGauss_);
 
-    for (label gp = 0; gp < nGauss; ++gp)
+    for (label gp = 0; gp < nGauss_; ++gp)
     {
-        ownerJ2D_[gp] = Foam::geometricJacobian::calcLameParam(ownerCellType_, ownerPos_, ownerGaussPts[gp], cellVertices);
-    }
-}
-
-void Foam::dgGeomFace::computeNeighborLameParameters
-(
-    const List<vector>& cellVertices
-)
-{
-    // Calculate Jacobian 2D at Gauss points
-    const List<vector>& neighborGaussPts = refFace_->gaussPoints(neighborPos_);
-    const label nGauss = neighborGaussPts.size();
-    neighborJ2D_.setSize(nGauss);
-
-    for (label gp = 0; gp < nGauss; ++gp)
-    {
-        neighborJ2D_[gp] = Foam::geometricJacobian::calcLameParam(neighborCellType_, neighborPos_, neighborGaussPts[gp], cellVertices);
+        J2D_[gp] = Foam::geometricJacobian::calcLameParam(ownerCellType_, ownerPos_, gaussPointsOwner_[gp], ownerCellPoints);
     }
 }
 

@@ -57,7 +57,7 @@ dgProcessorBoundaryField<Type>::dgProcessorBoundaryField
         const label faceID = procPatch_.start() + i;
         const dgGeomFace* gFace = this->dgMesh_.faces()[faceID];
 
-        totalGauss += gFace->connectivity().size();
+        totalGauss += gFace->nGauss();
     }
 
     // Allocate send and receive buffers
@@ -87,8 +87,7 @@ void dgProcessorBoundaryField<Type>::sendAll
         const label ownerCellID =
             this->dgMesh_.getFvMesh().faceOwner()[faceID];
 
-        const List<label>& conn = gFace->connectivity();
-        const label nGauss = conn.size();
+        const label nGauss = gFace->nGauss();
 
         for (label g = 0; g < nGauss; ++g)
         {
@@ -155,14 +154,13 @@ void dgProcessorBoundaryField<Type>::recvAll
         const label ownerCellID =
             this->dgMesh_.getFvMesh().faceOwner()[faceID];
 
-        const List<label>& conn = gFace->connectivity();
-        const label nGauss = conn.size();
+        const label nGauss = gFace->nGauss();
 
         for (label g = 0; g < nGauss; ++g)
         {
             field.gaussFields()[ownerCellID]
                  .faceField()
-                 .plusValueOnGlobalFace(faceID, conn[g]) = recvBuf_[k];
+                 .plusValueOnGlobalFace(faceID, g) = recvBuf_[k];
 
             ++k;
         }

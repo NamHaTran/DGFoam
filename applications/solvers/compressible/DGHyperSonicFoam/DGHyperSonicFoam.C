@@ -43,7 +43,7 @@ Description
 #include "dgField.H"
 #include "dgMath.H"
 #include "dgGeneralBoundaryManager.H"
-#include "dgProcessorBoundaryManager.H"
+//#include "dgProcessorBoundaryManager.H"
 #include "dgFluxSolverManager.H"
 #include "dgThermoConservative.H"
 #include "dgGeneralPDETerm.H"
@@ -80,8 +80,9 @@ int main(int argc, char *argv[])
 
         //#include "synchProcessors.H"
 
-        dgMesh.cells()[10]->printDebugInfo();
-        dgMesh.faces()[10]->printDebugInfo();
+        //dgMesh.cells()[10]->printDebugInfo();
+        dgMesh.faces()[2]->printDebugInfo();
+
 
         // It's possible to iterate over every cell in a standard C++ for loop
         for (label cellI = 0; cellI < mesh.C().size(); cellI++)
