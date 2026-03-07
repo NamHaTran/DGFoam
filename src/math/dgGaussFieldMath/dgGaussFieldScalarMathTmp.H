@@ -31,12 +31,14 @@ Description
 namespace Foam
 {
 
+/** \brief Allocate output GaussField with geometry copied from reference field. */
 template<class OutType, class RefType>
 inline tmp<GaussField<OutType>> dgGaussScalarNewLike(const GaussField<RefType>& A)
 {
     return tmp<GaussField<OutType>>(new GaussField<OutType>(A.cellID(), A.dgMesh()));
 }
 
+/** \brief Evaluate binary addition at one Gauss point. */
 struct DgGaussEvalAdd
 {
     template<class A, class B>
@@ -46,6 +48,7 @@ struct DgGaussEvalAdd
     }
 };
 
+/** \brief Evaluate binary subtraction at one Gauss point. */
 struct DgGaussEvalSub
 {
     template<class A, class B>
@@ -55,6 +58,7 @@ struct DgGaussEvalSub
     }
 };
 
+/** \brief Evaluate binary multiplication at one Gauss point. */
 struct DgGaussEvalMul
 {
     template<class A, class B>
@@ -64,6 +68,7 @@ struct DgGaussEvalMul
     }
 };
 
+/** \brief Evaluate binary division at one Gauss point. */
 struct DgGaussEvalDiv
 {
     template<class A, class B>
@@ -73,66 +78,77 @@ struct DgGaussEvalDiv
     }
 };
 
+/** \brief In-place mutate left operand for addition. */
 struct DgGaussMutAddLeft
 {
     template<class A, class B>
     inline void operator()(A& a, const B& b) const { a = a + b; }
 };
 
+/** \brief In-place mutate right operand for addition. */
 struct DgGaussMutAddRight
 {
     template<class A, class B>
     inline void operator()(const A& a, B& b) const { b = a + b; }
 };
 
+/** \brief In-place mutate left operand for subtraction. */
 struct DgGaussMutSubLeft
 {
     template<class A, class B>
     inline void operator()(A& a, const B& b) const { a = a - b; }
 };
 
+/** \brief In-place mutate right operand for subtraction. */
 struct DgGaussMutSubRight
 {
     template<class A, class B>
     inline void operator()(const A& a, B& b) const { b = a - b; }
 };
 
+/** \brief In-place mutate left operand for multiplication. */
 struct DgGaussMutMulLeft
 {
     template<class A, class B>
     inline void operator()(A& a, const B& b) const { a = a * b; }
 };
 
+/** \brief In-place mutate right operand for multiplication. */
 struct DgGaussMutMulRight
 {
     template<class A, class B>
     inline void operator()(const A& a, B& b) const { b = a * b; }
 };
 
+/** \brief In-place mutate left operand for division. */
 struct DgGaussMutDivLeft
 {
     template<class A, class B>
     inline void operator()(A& a, const B& b) const { a = a / b; }
 };
 
+/** \brief In-place mutate right operand for division. */
 struct DgGaussMutDivRight
 {
     template<class A, class B>
     inline void operator()(const A& a, B& b) const { b = a / b; }
 };
 
+/** \brief No-op mutator for left operand when tmp reuse is disabled. */
 struct DgGaussNoMutateLeft
 {
     template<class A, class B>
     inline void operator()(A&, const B&) const {}
 };
 
+/** \brief No-op mutator for right operand when tmp reuse is disabled. */
 struct DgGaussNoMutateRight
 {
     template<class A, class B>
     inline void operator()(const A&, B&) const {}
 };
 
+/** \brief Core binary dispatcher for non-tmp GaussField inputs. */
 template<class OutType, class AType, class BType, class Eval>
 inline tmp<GaussField<OutType>> dgGaussBinary
 (
@@ -277,36 +293,42 @@ inline bool dgGaussCompare
     return dgGaussCompare(tA(), tB(), pred);
 }
 
+/** \brief Predicate functor for `<` comparison. */
 struct DgGaussPredLess
 {
     template<class A, class B>
     inline bool operator()(const A& a, const B& b) const { return a < b; }
 };
 
+/** \brief Predicate functor for `<=` comparison. */
 struct DgGaussPredLessEq
 {
     template<class A, class B>
     inline bool operator()(const A& a, const B& b) const { return a <= b; }
 };
 
+/** \brief Predicate functor for `>` comparison. */
 struct DgGaussPredGreater
 {
     template<class A, class B>
     inline bool operator()(const A& a, const B& b) const { return a > b; }
 };
 
+/** \brief Predicate functor for `>=` comparison. */
 struct DgGaussPredGreaterEq
 {
     template<class A, class B>
     inline bool operator()(const A& a, const B& b) const { return a >= b; }
 };
 
+/** \brief Predicate functor for `==` comparison. */
 struct DgGaussPredEq
 {
     template<class A, class B>
     inline bool operator()(const A& a, const B& b) const { return a == b; }
 };
 
+/** \brief Predicate functor for `!=` comparison. */
 struct DgGaussPredNe
 {
     template<class A, class B>
@@ -349,32 +371,38 @@ inline bool operator OP (const tmp<GaussField<AF>>& tA, const tmp<GaussField<BF>
     return dgGaussCompare(tA, tB, PRED());                                                 \
 }
 
+/** \brief Scalar-scalar operators: `+`, `-`, `*`, `/`. */
 // Scalar - Scalar
 DG_GAUSS_TMP_DEFINE_BINARY(+, scalar, scalar, scalar, DgGaussEvalAdd, DgGaussMutAddLeft, DgGaussMutAddRight)
 DG_GAUSS_TMP_DEFINE_BINARY(-, scalar, scalar, scalar, DgGaussEvalSub, DgGaussMutSubLeft, DgGaussMutSubRight)
 DG_GAUSS_TMP_DEFINE_BINARY(*, scalar, scalar, scalar, DgGaussEvalMul, DgGaussMutMulLeft, DgGaussMutMulRight)
 DG_GAUSS_TMP_DEFINE_BINARY(/, scalar, scalar, scalar, DgGaussEvalDiv, DgGaussMutDivLeft, DgGaussMutDivRight)
 
+/** \brief Scalar-vector operators: `*` and vector `/` scalar. */
 // Scalar - Vector
 DG_GAUSS_TMP_DEFINE_BINARY(*, vector, scalar, vector, DgGaussEvalMul, DgGaussNoMutateLeft, DgGaussMutMulRight)
 DG_GAUSS_TMP_DEFINE_BINARY(*, vector, vector, scalar, DgGaussEvalMul, DgGaussMutMulLeft, DgGaussNoMutateRight)
 DG_GAUSS_TMP_DEFINE_BINARY(/, vector, vector, scalar, DgGaussEvalDiv, DgGaussMutDivLeft, DgGaussNoMutateRight)
 
+/** \brief Scalar-tensor operators: `*` and tensor `/` scalar. */
 // Scalar - Tensor
 DG_GAUSS_TMP_DEFINE_BINARY(*, tensor, scalar, tensor, DgGaussEvalMul, DgGaussNoMutateLeft, DgGaussMutMulRight)
 DG_GAUSS_TMP_DEFINE_BINARY(*, tensor, tensor, scalar, DgGaussEvalMul, DgGaussMutMulLeft, DgGaussNoMutateRight)
 DG_GAUSS_TMP_DEFINE_BINARY(/, tensor, tensor, scalar, DgGaussEvalDiv, DgGaussMutDivLeft, DgGaussNoMutateRight)
 
+/** \brief Scalar-symmTensor operators: `*` and symmTensor `/` scalar. */
 // Scalar - SymmTensor
 DG_GAUSS_TMP_DEFINE_BINARY(*, symmTensor, scalar, symmTensor, DgGaussEvalMul, DgGaussNoMutateLeft, DgGaussMutMulRight)
 DG_GAUSS_TMP_DEFINE_BINARY(*, symmTensor, symmTensor, scalar, DgGaussEvalMul, DgGaussMutMulLeft, DgGaussNoMutateRight)
 DG_GAUSS_TMP_DEFINE_BINARY(/, symmTensor, symmTensor, scalar, DgGaussEvalDiv, DgGaussMutDivLeft, DgGaussNoMutateRight)
 
+/** \brief Scalar-sphericalTensor operators: `*` and sphericalTensor `/` scalar. */
 // Scalar - SphericalTensor
 DG_GAUSS_TMP_DEFINE_BINARY(*, sphericalTensor, scalar, sphericalTensor, DgGaussEvalMul, DgGaussNoMutateLeft, DgGaussMutMulRight)
 DG_GAUSS_TMP_DEFINE_BINARY(*, sphericalTensor, sphericalTensor, scalar, DgGaussEvalMul, DgGaussMutMulLeft, DgGaussNoMutateRight)
 DG_GAUSS_TMP_DEFINE_BINARY(/, sphericalTensor, sphericalTensor, scalar, DgGaussEvalDiv, DgGaussMutDivLeft, DgGaussNoMutateRight)
 
+/** \brief Comparison operators on scalar GaussField pairs. */
 // Comparisons on scalar fields
 DG_GAUSS_TMP_DEFINE_COMPARE(<,  scalar, scalar, DgGaussPredLess)
 DG_GAUSS_TMP_DEFINE_COMPARE(<=, scalar, scalar, DgGaussPredLessEq)

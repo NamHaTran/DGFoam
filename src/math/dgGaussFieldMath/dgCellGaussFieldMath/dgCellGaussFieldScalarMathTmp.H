@@ -19,6 +19,7 @@ Description
 namespace Foam
 {
 
+/** \brief Evaluate binary addition at one Gauss point. */
 struct DgEvalAdd
 {
     template<class A, class B>
@@ -28,6 +29,7 @@ struct DgEvalAdd
     }
 };
 
+/** \brief Evaluate binary subtraction at one Gauss point. */
 struct DgEvalSub
 {
     template<class A, class B>
@@ -37,6 +39,7 @@ struct DgEvalSub
     }
 };
 
+/** \brief Evaluate binary multiplication at one Gauss point. */
 struct DgEvalMul
 {
     template<class A, class B>
@@ -46,6 +49,7 @@ struct DgEvalMul
     }
 };
 
+/** \brief Evaluate binary division at one Gauss point. */
 struct DgEvalDiv
 {
     template<class A, class B>
@@ -55,84 +59,99 @@ struct DgEvalDiv
     }
 };
 
+/** \brief In-place mutate left operand for addition. */
 struct DgMutAddA
 {
     template<class A, class B>
     inline void operator()(A& a, const B& b) const { a += b; }
 };
 
+/** \brief In-place mutate right operand for addition. */
 struct DgMutAddB
 {
     template<class A, class B>
     inline void operator()(const A& a, B& b) const { b += a; }
 };
 
+/** \brief In-place mutate left operand for subtraction. */
 struct DgMutSubA
 {
     template<class A, class B>
     inline void operator()(A& a, const B& b) const { a -= b; }
 };
 
+/** \brief In-place mutate right operand for subtraction. */
 struct DgMutSubB
 {
     template<class A, class B>
     inline void operator()(const A& a, B& b) const { b = a - b; }
 };
 
+/** \brief In-place mutate left operand for multiplication. */
 struct DgMutMulA
 {
     template<class A, class B>
     inline void operator()(A& a, const B& b) const { a *= b; }
 };
 
+/** \brief In-place mutate right operand for multiplication. */
 struct DgMutMulB
 {
     template<class A, class B>
     inline void operator()(const A& a, B& b) const { b *= a; }
 };
 
+/** \brief In-place mutate left operand for division. */
 struct DgMutDivA
 {
     template<class A, class B>
     inline void operator()(A& a, const B& b) const { a /= b; }
 };
 
+/** \brief In-place mutate right operand for division. */
 struct DgMutDivB
 {
     template<class A, class B>
     inline void operator()(const A& a, B& b) const { b = a / b; }
 };
 
+/** \brief Predicate functor for `<` on scalar fields. */
 struct DgPredLess
 {
     inline bool operator()(const scalar& a, const scalar& b) const { return a < b; }
 };
 
+/** \brief Predicate functor for `<=` on scalar fields. */
 struct DgPredLessEq
 {
     inline bool operator()(const scalar& a, const scalar& b) const { return a <= b; }
 };
 
+/** \brief Predicate functor for `>` on scalar fields. */
 struct DgPredGreater
 {
     inline bool operator()(const scalar& a, const scalar& b) const { return a > b; }
 };
 
+/** \brief Predicate functor for `>=` on scalar fields. */
 struct DgPredGreaterEq
 {
     inline bool operator()(const scalar& a, const scalar& b) const { return a >= b; }
 };
 
+/** \brief Predicate functor for `==` on scalar fields. */
 struct DgPredEq
 {
     inline bool operator()(const scalar& a, const scalar& b) const { return a == b; }
 };
 
+/** \brief Predicate functor for `!=` on scalar fields. */
 struct DgPredNe
 {
     inline bool operator()(const scalar& a, const scalar& b) const { return a != b; }
 };
 
+/** \brief Scalar-scalar operators: `+`, `-`, `*`, `/`. */
 // Scalar - Scalar
 DG_CELL_TMP_DEFINE_BINARY_OPERATOR
 (
@@ -178,6 +197,7 @@ DG_CELL_TMP_DEFINE_BINARY_OPERATOR
     DgMutDivB
 )
 
+/** \brief Scalar-vector operators: `*` and vector `/` scalar. */
 // Scalar - Vector
 DG_CELL_TMP_DEFINE_BINARY_OPERATOR
 (
@@ -212,6 +232,7 @@ DG_CELL_TMP_DEFINE_BINARY_OPERATOR
     Foam::dgCellTmp::NoMutateRight
 )
 
+/** \brief Scalar-tensor operators: `*` and tensor `/` scalar. */
 // Scalar - tensor
 DG_CELL_TMP_DEFINE_BINARY_OPERATOR
 (
@@ -246,6 +267,7 @@ DG_CELL_TMP_DEFINE_BINARY_OPERATOR
     Foam::dgCellTmp::NoMutateRight
 )
 
+/** \brief Scalar-symmTensor operators: `*` and symmTensor `/` scalar. */
 // Scalar - symmTensor
 DG_CELL_TMP_DEFINE_BINARY_OPERATOR
 (
@@ -280,6 +302,7 @@ DG_CELL_TMP_DEFINE_BINARY_OPERATOR
     Foam::dgCellTmp::NoMutateRight
 )
 
+/** \brief Scalar-sphericalTensor operators: `*` and sphericalTensor `/` scalar. */
 // Scalar - sphericalTensor
 DG_CELL_TMP_DEFINE_BINARY_OPERATOR
 (
@@ -314,6 +337,7 @@ DG_CELL_TMP_DEFINE_BINARY_OPERATOR
     Foam::dgCellTmp::NoMutateRight
 )
 
+/** \brief Comparison operators between two scalar cellGaussField objects. */
 // Comparison operators between cellGaussField<scalar>
 DG_CELL_TMP_DEFINE_COMPARE_OPERATOR
 (
@@ -368,4 +392,3 @@ DG_CELL_TMP_DEFINE_COMPARE_OPERATOR
 #endif
 
 // ************************************************************************* //
-

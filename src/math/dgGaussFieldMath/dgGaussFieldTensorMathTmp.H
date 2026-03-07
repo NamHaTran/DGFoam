@@ -25,12 +25,14 @@ Description
 namespace Foam
 {
 
+/** \brief Allocate output GaussField with geometry copied from reference field. */
 template<class OutType, class RefType>
 inline tmp<GaussField<OutType>> dgGaussTensorNewLike(const GaussField<RefType>& A)
 {
     return tmp<GaussField<OutType>>(new GaussField<OutType>(A.cellID(), A.dgMesh()));
 }
 
+/** \brief Core unary dispatcher for non-tmp tensor GaussField input. */
 template<class OutType, class InType, class Eval>
 inline tmp<GaussField<OutType>> dgGaussTensorUnary
 (
@@ -76,6 +78,7 @@ dgGaussTensorUnary
     return dgGaussTensorUnary<OutType>(tA(), eval);
 }
 
+/** \brief Core binary dispatcher for non-tmp tensor GaussField inputs. */
 template<class OutType, class AType, class BType, class Eval>
 inline tmp<GaussField<OutType>> dgGaussTensorBinary
 (
@@ -174,60 +177,70 @@ inline tmp<GaussField<OutType>> dgGaussTensorBinary
     return dgGaussTensorBinary<OutType>(tA(), tB, eval, mutB);
 }
 
+/** \brief Evaluate `dev(.)` at one Gauss point. */
 struct DgGaussTensorEvalDev
 {
     template<class A>
     inline auto operator()(const A& a) const -> decltype(dev(a)) { return dev(a); }
 };
 
+/** \brief Evaluate `symm(.)` at one Gauss point. */
 struct DgGaussTensorEvalSymm
 {
     template<class A>
     inline auto operator()(const A& a) const -> decltype(symm(a)) { return symm(a); }
 };
 
+/** \brief Evaluate `skew(.)` at one Gauss point. */
 struct DgGaussTensorEvalSkew
 {
     template<class A>
     inline auto operator()(const A& a) const -> decltype(skew(a)) { return skew(a); }
 };
 
+/** \brief Evaluate `tr(.)` at one Gauss point. */
 struct DgGaussTensorEvalTr
 {
     template<class A>
     inline auto operator()(const A& a) const -> decltype(tr(a)) { return tr(a); }
 };
 
+/** \brief Evaluate `det(.)` at one Gauss point. */
 struct DgGaussTensorEvalDet
 {
     template<class A>
     inline auto operator()(const A& a) const -> decltype(det(a)) { return det(a); }
 };
 
+/** \brief Evaluate transpose `T(.)` at one Gauss point. */
 struct DgGaussTensorEvalT
 {
     template<class A>
     inline auto operator()(const A& a) const -> decltype(T(a)) { return T(a); }
 };
 
+/** \brief Evaluate `inv(.)` at one Gauss point. */
 struct DgGaussTensorEvalInv
 {
     template<class A>
     inline auto operator()(const A& a) const -> decltype(inv(a)) { return inv(a); }
 };
 
+/** \brief In-place mutate tensor by `dev(.)`. */
 struct DgGaussTensorMutDev
 {
     template<class A>
     inline void operator()(A& a) const { a = dev(a); }
 };
 
+/** \brief In-place mutate tensor by `skew(.)`. */
 struct DgGaussTensorMutSkew
 {
     template<class A>
     inline void operator()(A& a) const { a = skew(a); }
 };
 
+/** \brief In-place mutate tensor by transpose `T(.)`. */
 struct DgGaussTensorMutT
 {
     template<class A>
@@ -240,36 +253,42 @@ struct DgGaussTensorMutNoop
     inline void operator()(A&) const {}
 };
 
+/** \brief Evaluate binary addition at one Gauss point. */
 struct DgGaussTensorEvalAdd
 {
     template<class A, class B>
     inline auto operator()(const A& a, const B& b) const -> decltype(a + b) { return a + b; }
 };
 
+/** \brief Evaluate binary subtraction at one Gauss point. */
 struct DgGaussTensorEvalSub
 {
     template<class A, class B>
     inline auto operator()(const A& a, const B& b) const -> decltype(a - b) { return a - b; }
 };
 
+/** \brief Evaluate single contraction `&` at one Gauss point. */
 struct DgGaussTensorEvalAnd
 {
     template<class A, class B>
     inline auto operator()(const A& a, const B& b) const -> decltype(a & b) { return a & b; }
 };
 
+/** \brief Evaluate reverse contraction `b & a` at one Gauss point. */
 struct DgGaussTensorEvalAndRev
 {
     template<class A, class B>
     inline auto operator()(const A& a, const B& b) const -> decltype(b & a) { return b & a; }
 };
 
+/** \brief Evaluate double contraction `&&` at one Gauss point. */
 struct DgGaussTensorEvalAndAnd
 {
     template<class A, class B>
     inline auto operator()(const A& a, const B& b) const -> decltype(a && b) { return a && b; }
 };
 
+/** \brief Evaluate reverse double contraction `b && a` at one Gauss point. */
 struct DgGaussTensorEvalAndAndRev
 {
     template<class A, class B>
@@ -358,6 +377,7 @@ inline tmp<GaussField<OUTF>> operator OP (const tmp<GaussField<AF>>& tA, const t
     return dgGaussTensorBinary<OUTF>(tA, tB, EVAL(), MUTA(), MUTB());                          \
 }
 
+/** \brief Unary tensor utilities: `dev`, `symm`, `skew`, `T`, `tr`, `det`, `inv`. */
 // tensor utilities
 DG_GAUSS_TENSOR_DEFINE_UNARY(dev,  tensor,     tensor,     DgGaussTensorEvalDev,   DgGaussTensorMutDev)
 DG_GAUSS_TENSOR_DEFINE_UNARY(symm, symmTensor, tensor,     DgGaussTensorEvalSymm,  DgGaussTensorMutNoop)
@@ -367,29 +387,34 @@ DG_GAUSS_TENSOR_DEFINE_UNARY(tr,   scalar,     tensor,     DgGaussTensorEvalTr, 
 DG_GAUSS_TENSOR_DEFINE_UNARY(det,  scalar,     tensor,     DgGaussTensorEvalDet,   DgGaussTensorMutNoop)
 DG_GAUSS_TENSOR_DEFINE_UNARY(inv,  tensor,     tensor,     DgGaussTensorEvalInv,   DgGaussTensorMutNoop)
 
+/** \brief Unary symmTensor utilities: `tr`, `dev`, `inv`. */
 // symmTensor utilities
 DG_GAUSS_TENSOR_DEFINE_UNARY(tr,   scalar,     symmTensor, DgGaussTensorEvalTr,    DgGaussTensorMutNoop)
 DG_GAUSS_TENSOR_DEFINE_UNARY(dev,  symmTensor, symmTensor, DgGaussTensorEvalDev,   DgGaussTensorMutDev)
 DG_GAUSS_TENSOR_DEFINE_UNARY(inv,  tensor,     symmTensor, DgGaussTensorEvalInv,   DgGaussTensorMutNoop)
 
+/** \brief Binary tensor-tensor operators: `+`, `-`, `&`, `&&`. */
 // tensor - tensor
 DG_GAUSS_TENSOR_DEFINE_BINARY(+,  tensor, tensor,     tensor,     DgGaussTensorEvalAdd,    DgGaussTensorMutAddLeft, DgGaussTensorMutAddRight)
 DG_GAUSS_TENSOR_DEFINE_BINARY(-,  tensor, tensor,     tensor,     DgGaussTensorEvalSub,    DgGaussTensorMutSubLeft, DgGaussTensorMutSubRight)
 DG_GAUSS_TENSOR_DEFINE_BINARY(&,  tensor, tensor,     tensor,     DgGaussTensorEvalAnd,    DgGaussTensorMutAndLeft, DgGaussTensorMutAndRight)
 DG_GAUSS_TENSOR_DEFINE_BINARY(&&, scalar, tensor,     tensor,     DgGaussTensorEvalAndAnd, DgGaussTensorNoMutLeft,  DgGaussTensorNoMutRight)
 
+/** \brief Binary tensor-symmTensor operators: `+`, `-`, `&`, `&&`. */
 // tensor - symmTensor
 DG_GAUSS_TENSOR_DEFINE_BINARY(+,  tensor, tensor,     symmTensor, DgGaussTensorEvalAdd,    DgGaussTensorMutAddLeft, DgGaussTensorNoMutRight)
 DG_GAUSS_TENSOR_DEFINE_BINARY(-,  tensor, tensor,     symmTensor, DgGaussTensorEvalSub,    DgGaussTensorMutSubLeft, DgGaussTensorNoMutRight)
 DG_GAUSS_TENSOR_DEFINE_BINARY(&,  tensor, tensor,     symmTensor, DgGaussTensorEvalAnd,    DgGaussTensorMutAndLeft, DgGaussTensorNoMutRight)
 DG_GAUSS_TENSOR_DEFINE_BINARY(&&, scalar, tensor,     symmTensor, DgGaussTensorEvalAndAnd, DgGaussTensorNoMutLeft,  DgGaussTensorNoMutRight)
 
+/** \brief Binary symmTensor-tensor operators: `+`, `-`, `&`, `&&`. */
 // symmTensor - tensor (keep original semantics for &, && as B & A, B && A)
 DG_GAUSS_TENSOR_DEFINE_BINARY(+,  tensor, symmTensor, tensor,     DgGaussTensorEvalAdd,    DgGaussTensorNoMutLeft,  DgGaussTensorMutAddRight)
 DG_GAUSS_TENSOR_DEFINE_BINARY(-,  tensor, symmTensor, tensor,     DgGaussTensorEvalSub,    DgGaussTensorNoMutLeft,  DgGaussTensorMutSubRight)
 DG_GAUSS_TENSOR_DEFINE_BINARY(&,  tensor, symmTensor, tensor,     DgGaussTensorEvalAndRev, DgGaussTensorNoMutLeft,  DgGaussTensorMutAndRightRev)
 DG_GAUSS_TENSOR_DEFINE_BINARY(&&, scalar, symmTensor, tensor,     DgGaussTensorEvalAndAndRev, DgGaussTensorNoMutLeft, DgGaussTensorNoMutRight)
 
+/** \brief Binary symmTensor-symmTensor operators: `+`, `-`, `&`, `&&`. */
 // symmTensor - symmTensor
 DG_GAUSS_TENSOR_DEFINE_BINARY(+,  symmTensor, symmTensor, symmTensor, DgGaussTensorEvalAdd,    DgGaussTensorMutAddLeft, DgGaussTensorMutAddRight)
 DG_GAUSS_TENSOR_DEFINE_BINARY(-,  symmTensor, symmTensor, symmTensor, DgGaussTensorEvalSub,    DgGaussTensorMutSubLeft, DgGaussTensorMutSubRight)

@@ -19,6 +19,7 @@ Description
 namespace Foam
 {
 
+/** \brief Evaluate binary addition at one face Gauss point. */
 struct DgFaceEvalAdd
 {
     template<class A, class B>
@@ -28,6 +29,7 @@ struct DgFaceEvalAdd
     }
 };
 
+/** \brief Evaluate binary subtraction at one face Gauss point. */
 struct DgFaceEvalSub
 {
     template<class A, class B>
@@ -37,6 +39,7 @@ struct DgFaceEvalSub
     }
 };
 
+/** \brief Evaluate binary multiplication at one face Gauss point. */
 struct DgFaceEvalMul
 {
     template<class A, class B>
@@ -46,6 +49,7 @@ struct DgFaceEvalMul
     }
 };
 
+/** \brief Evaluate binary division at one face Gauss point. */
 struct DgFaceEvalDiv
 {
     template<class A, class B>
@@ -55,6 +59,7 @@ struct DgFaceEvalDiv
     }
 };
 
+/** \brief In-place mutate left operand for addition. */
 struct DgFaceMutAddA
 {
     template<class A, class B>
@@ -65,6 +70,7 @@ struct DgFaceMutAddA
     }
 };
 
+/** \brief In-place mutate right operand for addition. */
 struct DgFaceMutAddB
 {
     template<class A, class B>
@@ -75,6 +81,7 @@ struct DgFaceMutAddB
     }
 };
 
+/** \brief In-place mutate left operand for subtraction. */
 struct DgFaceMutSubA
 {
     template<class A, class B>
@@ -85,6 +92,7 @@ struct DgFaceMutSubA
     }
 };
 
+/** \brief In-place mutate right operand for subtraction. */
 struct DgFaceMutSubB
 {
     template<class A, class B>
@@ -95,6 +103,7 @@ struct DgFaceMutSubB
     }
 };
 
+/** \brief In-place mutate left operand for multiplication. */
 struct DgFaceMutMulA
 {
     template<class A, class B>
@@ -105,6 +114,7 @@ struct DgFaceMutMulA
     }
 };
 
+/** \brief In-place mutate right operand for multiplication. */
 struct DgFaceMutMulB
 {
     template<class A, class B>
@@ -115,6 +125,7 @@ struct DgFaceMutMulB
     }
 };
 
+/** \brief In-place mutate left operand for division. */
 struct DgFaceMutDivA
 {
     template<class A, class B>
@@ -125,6 +136,7 @@ struct DgFaceMutDivA
     }
 };
 
+/** \brief In-place mutate right operand for division. */
 struct DgFaceMutDivB
 {
     template<class A, class B>
@@ -135,36 +147,43 @@ struct DgFaceMutDivB
     }
 };
 
+/** \brief Predicate functor for `<` on scalar face fields. */
 struct DgFacePredLess
 {
     inline bool operator()(const scalar& a, const scalar& b) const { return a < b; }
 };
 
+/** \brief Predicate functor for `<=` on scalar face fields. */
 struct DgFacePredLessEq
 {
     inline bool operator()(const scalar& a, const scalar& b) const { return a <= b; }
 };
 
+/** \brief Predicate functor for `>` on scalar face fields. */
 struct DgFacePredGreater
 {
     inline bool operator()(const scalar& a, const scalar& b) const { return a > b; }
 };
 
+/** \brief Predicate functor for `>=` on scalar face fields. */
 struct DgFacePredGreaterEq
 {
     inline bool operator()(const scalar& a, const scalar& b) const { return a >= b; }
 };
 
+/** \brief Predicate functor for `==` on scalar face fields. */
 struct DgFacePredEq
 {
     inline bool operator()(const scalar& a, const scalar& b) const { return a == b; }
 };
 
+/** \brief Predicate functor for `!=` on scalar face fields. */
 struct DgFacePredNe
 {
     inline bool operator()(const scalar& a, const scalar& b) const { return a != b; }
 };
 
+/** \brief Scalar-scalar operators: `+`, `-`, `*`, `/`. */
 // Scalar - Scalar
 DG_FACE_TMP_DEFINE_BINARY_OPERATOR
 (
@@ -400,4 +419,3 @@ DG_FACE_TMP_DEFINE_COMPARE_OPERATOR
 #endif
 
 // ************************************************************************* //
-

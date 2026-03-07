@@ -24,12 +24,14 @@ Description
 namespace Foam
 {
 
+/** \brief Allocate output GaussField with geometry copied from reference field. */
 template<class Type>
 inline tmp<GaussField<Type>> dgGaussNewLike(const GaussField<Type>& A)
 {
     return tmp<GaussField<Type>>(new GaussField<Type>(A.cellID(), A.dgMesh()));
 }
 
+/** \brief Multiply GaussField by scalar literal (`s * A`). */
 template<class Type>
 inline tmp<GaussField<Type>> dgMul
 (
@@ -44,6 +46,7 @@ inline tmp<GaussField<Type>> dgMul
     return tRes;
 }
 
+/** \brief Multiply tmp GaussField by scalar literal with in-place reuse when possible. */
 template<class Type>
 inline tmp<GaussField<Type>> dgMul
 (
@@ -62,6 +65,7 @@ inline tmp<GaussField<Type>> dgMul
     return dgMul(s, tA());
 }
 
+/** \brief Divide GaussField by scalar literal (`A / s`). */
 template<class Type>
 inline tmp<GaussField<Type>> dgDiv
 (
@@ -76,6 +80,7 @@ inline tmp<GaussField<Type>> dgDiv
     return tRes;
 }
 
+/** \brief Divide tmp GaussField by scalar literal with in-place reuse when possible. */
 template<class Type>
 inline tmp<GaussField<Type>> dgDiv
 (
@@ -94,6 +99,7 @@ inline tmp<GaussField<Type>> dgDiv
     return dgDiv(tA(), s);
 }
 
+/** \brief Left division for scalar field (`s / A`). */
 inline tmp<GaussField<scalar>> dgDivLeft
 (
     const scalar& s,
@@ -107,6 +113,7 @@ inline tmp<GaussField<scalar>> dgDivLeft
     return tRes;
 }
 
+/** \brief Left division for tmp scalar field (`s / tA`). */
 inline tmp<GaussField<scalar>> dgDivLeft
 (
     const scalar& s,
@@ -124,6 +131,7 @@ inline tmp<GaussField<scalar>> dgDivLeft
     return dgDivLeft(s, tA());
 }
 
+/** \brief Add scalar literal to scalar field (`s + A`). */
 inline tmp<GaussField<scalar>> dgAdd
 (
     const scalar& s,
@@ -137,6 +145,7 @@ inline tmp<GaussField<scalar>> dgAdd
     return tRes;
 }
 
+/** \brief Add scalar literal to tmp scalar field (`s + tA`). */
 inline tmp<GaussField<scalar>> dgAdd
 (
     const scalar& s,
@@ -154,6 +163,7 @@ inline tmp<GaussField<scalar>> dgAdd
     return dgAdd(s, tA());
 }
 
+/** \brief Left subtraction for scalar field (`s - A`). */
 inline tmp<GaussField<scalar>> dgSubLeft
 (
     const scalar& s,
@@ -167,6 +177,7 @@ inline tmp<GaussField<scalar>> dgSubLeft
     return tRes;
 }
 
+/** \brief Left subtraction for tmp scalar field (`s - tA`). */
 inline tmp<GaussField<scalar>> dgSubLeft
 (
     const scalar& s,
@@ -184,6 +195,7 @@ inline tmp<GaussField<scalar>> dgSubLeft
     return dgSubLeft(s, tA());
 }
 
+/** \brief Right subtraction for scalar field (`A - s`). */
 inline tmp<GaussField<scalar>> dgSubRight
 (
     const GaussField<scalar>& A,
@@ -197,6 +209,7 @@ inline tmp<GaussField<scalar>> dgSubRight
     return tRes;
 }
 
+/** \brief Right subtraction for tmp scalar field (`tA - s`). */
 inline tmp<GaussField<scalar>> dgSubRight
 (
     const tmp<GaussField<scalar>>& tA,
@@ -214,6 +227,7 @@ inline tmp<GaussField<scalar>> dgSubRight
     return dgSubRight(tA(), s);
 }
 
+/** \brief Compare all scalar field values against a scalar literal. */
 template<class Pred>
 inline bool dgCompareFieldScalar
 (
@@ -225,6 +239,7 @@ inline bool dgCompareFieldScalar
     return pred(A.cellField(), b) && pred(A.faceField(), b);
 }
 
+/** \brief Compare tmp scalar field values against a scalar literal. */
 template<class Pred>
 inline bool dgCompareFieldScalar
 (
@@ -236,6 +251,7 @@ inline bool dgCompareFieldScalar
     return dgCompareFieldScalar(tA(), b, pred);
 }
 
+/** \brief Compare a scalar literal against all scalar field values. */
 template<class Pred>
 inline bool dgCompareScalarField
 (
@@ -247,6 +263,7 @@ inline bool dgCompareScalarField
     return pred(a, B.cellField()) && pred(a, B.faceField());
 }
 
+/** \brief Compare a scalar literal against tmp scalar field values. */
 template<class Pred>
 inline bool dgCompareScalarField
 (
@@ -258,36 +275,42 @@ inline bool dgCompareScalarField
     return dgCompareScalarField(a, tB(), pred);
 }
 
+/** \brief Predicate functor for `<` comparison. */
 struct DgGaussLessPred
 {
     template<class A, class B>
     inline bool operator()(const A& a, const B& b) const { return a < b; }
 };
 
+/** \brief Predicate functor for `<=` comparison. */
 struct DgGaussLessEqPred
 {
     template<class A, class B>
     inline bool operator()(const A& a, const B& b) const { return a <= b; }
 };
 
+/** \brief Predicate functor for `>` comparison. */
 struct DgGaussGreaterPred
 {
     template<class A, class B>
     inline bool operator()(const A& a, const B& b) const { return a > b; }
 };
 
+/** \brief Predicate functor for `>=` comparison. */
 struct DgGaussGreaterEqPred
 {
     template<class A, class B>
     inline bool operator()(const A& a, const B& b) const { return a >= b; }
 };
 
+/** \brief Predicate functor for `==` comparison. */
 struct DgGaussEqPred
 {
     template<class A, class B>
     inline bool operator()(const A& a, const B& b) const { return a == b; }
 };
 
+/** \brief Predicate functor for `!=` comparison. */
 struct DgGaussNePred
 {
     template<class A, class B>

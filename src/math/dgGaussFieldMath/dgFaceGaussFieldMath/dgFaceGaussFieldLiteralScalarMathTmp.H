@@ -23,18 +23,21 @@ Description
 namespace Foam
 {
 
+/** \brief Evaluate `field * scalar` at one face Gauss point. */
 template<class Type>
 struct DgFaceMulFieldScalarEval
 {
     inline Type operator()(const Type& a, const scalar& b) const { return a*b; }
 };
 
+/** \brief Evaluate `scalar * field` at one face Gauss point. */
 template<class Type>
 struct DgFaceMulScalarFieldEval
 {
     inline Type operator()(const scalar& a, const Type& b) const { return a*b; }
 };
 
+/** \brief In-place mutator for scalar multiplication on face fields. */
 template<class Type>
 struct DgFaceMulInPlace
 {
@@ -51,12 +54,14 @@ struct DgFaceMulInPlace
     }
 };
 
+/** \brief Evaluate `field / scalar` at one face Gauss point. */
 template<class Type>
 struct DgFaceDivFieldScalarEval
 {
     inline Type operator()(const Type& a, const scalar& b) const { return a/b; }
 };
 
+/** \brief In-place mutator for `field / scalar` on face fields. */
 template<class Type>
 struct DgFaceDivFieldScalarInPlace
 {
@@ -67,11 +72,13 @@ struct DgFaceDivFieldScalarInPlace
     }
 };
 
+/** \brief Evaluate `scalar / field` for scalar face fields. */
 struct DgFaceDivScalarFieldScalarEval
 {
     inline scalar operator()(const scalar& a, const scalar& b) const { return a/b; }
 };
 
+/** \brief In-place mutator for `scalar / scalarFaceField`. */
 struct DgFaceDivScalarFieldScalarInPlace
 {
     inline void operator()(const scalar& a, scalar& bp, scalar& bm) const
@@ -81,11 +88,13 @@ struct DgFaceDivScalarFieldScalarInPlace
     }
 };
 
+/** \brief Evaluate `field + scalar` for scalar face fields. */
 struct DgFaceAddFieldScalarEval
 {
     inline scalar operator()(const scalar& a, const scalar& b) const { return a + b; }
 };
 
+/** \brief In-place mutator for `field + scalar`. */
 struct DgFaceAddFieldScalarInPlace
 {
     inline void operator()(scalar& ap, scalar& am, const scalar& b) const
@@ -95,11 +104,13 @@ struct DgFaceAddFieldScalarInPlace
     }
 };
 
+/** \brief Evaluate `scalar + field` for scalar face fields. */
 struct DgFaceAddScalarFieldEval
 {
     inline scalar operator()(const scalar& a, const scalar& b) const { return a + b; }
 };
 
+/** \brief In-place mutator for `scalar + field`. */
 struct DgFaceAddScalarFieldInPlace
 {
     inline void operator()(const scalar& a, scalar& bp, scalar& bm) const
@@ -109,11 +120,13 @@ struct DgFaceAddScalarFieldInPlace
     }
 };
 
+/** \brief Evaluate `field - scalar` for scalar face fields. */
 struct DgFaceSubFieldScalarEval
 {
     inline scalar operator()(const scalar& a, const scalar& b) const { return a - b; }
 };
 
+/** \brief In-place mutator for `field - scalar`. */
 struct DgFaceSubFieldScalarInPlace
 {
     inline void operator()(scalar& ap, scalar& am, const scalar& b) const
@@ -123,11 +136,13 @@ struct DgFaceSubFieldScalarInPlace
     }
 };
 
+/** \brief Evaluate `scalar - field` for scalar face fields. */
 struct DgFaceSubScalarFieldEval
 {
     inline scalar operator()(const scalar& a, const scalar& b) const { return a - b; }
 };
 
+/** \brief In-place mutator for `scalar - field`. */
 struct DgFaceSubScalarFieldInPlace
 {
     inline void operator()(const scalar& a, scalar& bp, scalar& bm) const
@@ -137,6 +152,7 @@ struct DgFaceSubScalarFieldInPlace
     }
 };
 
+/** \brief Evaluate `pow(fieldScalar, literalScalar)`. */
 struct DgFacePowEval
 {
     inline scalar operator()(const scalar& a, const scalar& b) const
@@ -145,6 +161,7 @@ struct DgFacePowEval
     }
 };
 
+/** \brief In-place mutator for `pow(fieldScalar, literalScalar)`. */
 struct DgFacePowMutate
 {
     inline void operator()(scalar& ap, scalar& am, const scalar& b) const
@@ -154,6 +171,7 @@ struct DgFacePowMutate
     }
 };
 
+/** \brief Evaluate `sqrt(fieldScalar)` at one face Gauss point. */
 struct DgFaceSqrtEval
 {
     inline scalar operator()(const scalar& a) const
@@ -162,6 +180,7 @@ struct DgFaceSqrtEval
     }
 };
 
+/** \brief In-place mutator for `sqrt(fieldScalar)`. */
 struct DgFaceSqrtMutate
 {
     inline void operator()(scalar& ap, scalar& am) const
@@ -171,36 +190,43 @@ struct DgFaceSqrtMutate
     }
 };
 
+/** \brief Predicate functor for `<` against scalar literal. */
 struct DgFaceLessPred
 {
     inline bool operator()(const scalar& a, const scalar& b) const { return a < b; }
 };
 
+/** \brief Predicate functor for `<=` against scalar literal. */
 struct DgFaceLessEqPred
 {
     inline bool operator()(const scalar& a, const scalar& b) const { return a <= b; }
 };
 
+/** \brief Predicate functor for `>` against scalar literal. */
 struct DgFaceGreaterPred
 {
     inline bool operator()(const scalar& a, const scalar& b) const { return a > b; }
 };
 
+/** \brief Predicate functor for `>=` against scalar literal. */
 struct DgFaceGreaterEqPred
 {
     inline bool operator()(const scalar& a, const scalar& b) const { return a >= b; }
 };
 
+/** \brief Predicate functor for `==` against scalar literal. */
 struct DgFaceEqPred
 {
     inline bool operator()(const scalar& a, const scalar& b) const { return a == b; }
 };
 
+/** \brief Predicate functor for `!=` against scalar literal. */
 struct DgFaceNePred
 {
     inline bool operator()(const scalar& a, const scalar& b) const { return a != b; }
 };
 
+/** \brief Multiplication operators between scalar literal and face field types. */
 // scalar * field and field * scalar
 DG_FACE_TMP_DEFINE_SCALAR_FIELD_OPERATOR
 (
