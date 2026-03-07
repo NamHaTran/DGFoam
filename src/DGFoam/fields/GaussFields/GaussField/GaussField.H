@@ -47,6 +47,7 @@ SourceFiles
 #include "faceGaussField.H"
 #include "dofField.H"
 #include "dgGeomMesh.H"
+#include "refCount.H"
 
 namespace Foam
 {
@@ -76,6 +77,8 @@ namespace Foam
  */
 template<class Type>
 class GaussField
+:
+    public refCount
 {
 private:
 
@@ -142,6 +145,25 @@ public:
         /** Copy constructor */
         GaussField(const GaussField<Type>& other);
 
+        /** Construct from tmp */
+        GaussField
+        (
+            const tmp<GaussField<Type>>& t
+        );
+
+        //- Construct tmp GaussField
+        static tmp<GaussField<Type>> New
+        (
+            label cellID,
+            const dgGeomMesh* mesh
+        );
+
+        /** Move constructor */
+        GaussField
+        (
+            GaussField<Type>&& other
+        ) noexcept;
+
 
     //====================================================================//
     //                           Assignment
@@ -153,6 +175,17 @@ public:
         /** Assign uniform value */
         GaussField<Type>& operator=(const Type& value);
 
+        /** Move assignment */
+        GaussField<Type>& operator=
+        (
+            GaussField<Type>&& other
+        ) noexcept;
+
+        /** Assignment from tmp */
+        GaussField<Type>& operator=
+        (
+            const tmp<GaussField<Type>>& t
+        );
 
     //====================================================================//
     //                             Access

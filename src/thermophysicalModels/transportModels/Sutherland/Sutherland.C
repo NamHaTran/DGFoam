@@ -31,12 +31,14 @@ License
 
 namespace Foam
 {
-// * * * * * * * * * * * * * * Static Data Members * * * * * * * * * * * * * //
+
+// * * * * * * * * * * * * * Static Data Members * * * * * * * * * * * * * //
 
 defineTypeNameAndDebug(Sutherland, 0);
 addToRunTimeSelectionTable(transportLaw, Sutherland, dictionary);
 
-// * * * * * * * * * * * * * * * * Constructors  * * * * * * * * * * * * * * //
+
+// * * * * * * * * * * * * * * Constructors * * * * * * * * * * * * * //
 
 Sutherland::Sutherland
 (
@@ -54,7 +56,8 @@ Sutherland::Sutherland
     read();
 }
 
-// * * * * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * //
+
+// * * * * * * * * * * * * Member Functions * * * * * * * * * * * * //
 
 void Sutherland::calcMu
 (
@@ -63,24 +66,27 @@ void Sutherland::calcMu
     GaussField<scalar>& mu
 ) const
 {
-    // μ = As * T^(3/2) / (T + S)
-
     // Guard: T must be positive
     if (T <= scalar(0))
     {
         FatalErrorInFunction
-            << "Non-positive temperature in Sutherland::calcMu()" << nl
-            << exit(FatalError);
+            << "Non-positive temperature in Sutherland::calcMu()"
+            << nl << exit(FatalError);
     }
 
-    GaussField<scalar> denom(cellI, &mesh_);
-    denom = T + S_;   // S_ is scalar, auto-broadcast
+    // denom = T + S
+    tmp<GaussField<scalar>> tDenom = T + S_;
 
-    GaussField<scalar> T32(cellI, &mesh_);
-    T32 = pow(T, scalar(1.5));
+    // T^(3/2)
+    tmp<GaussField<scalar>> tT32 = pow(T, scalar(1.5));
 
-    mu = (As_ * T32) / denom;
+    // μ = As * T^(3/2) / (T + S)
+    mu = (As_ * tT32()) / tDenom();
+
+    tDenom.clear();
+    tT32.clear();
 }
+
 
 void Sutherland::calcKappa
 (
@@ -89,18 +95,22 @@ void Sutherland::calcKappa
     GaussField<scalar>& kappa
 ) const
 {
-    // classical: k = μ Cp / Pr
-    GaussField<scalar> mu(cellI, &mesh_);
-    calcMu(cellI, T, mu);
+    // μ
+    tmp<GaussField<scalar>> tMu = GaussField<scalar>::New(cellI, &mesh_);
+    calcMu(cellI, T, tMu.ref());
 
-    GaussField<scalar> Cp(cellI, &mesh_);
-    thermo_.calcCp(cellI, T, Cp);
+    // Cp
+    tmp<GaussField<scalar>> tCp = GaussField<scalar>::New(cellI, &mesh_);
+    thermo_.calcCp(cellI, T, tCp.ref());
 
-    // Pr constant
+    // κ = μ Cp / Pr
     const scalar Pr = Pr0_;
+    kappa = (tMu() * tCp()) / Pr;
 
-    kappa = (mu * Cp) / Pr;
+    tMu.clear();
+    tCp.clear();
 }
+
 
 void Sutherland::calcPr
 (
@@ -109,29 +119,46 @@ void Sutherland::calcPr
     GaussField<scalar>& Pr
 ) const
 {
-    Pr = Pr0_;   // broadcast assignment to all Gauss points
+    Pr = Pr0_;
 }
+
 
 void Sutherland::read()
 {
-    if (coeff_.found("As")) { As_  = readScalar(coeff_.lookup("As")); }
-    if (coeff_.found("S"))  { S_   = readScalar(coeff_.lookup("S")); }
-    if (coeff_.found("Pr")) { Pr0_ = readScalar(coeff_.lookup("Pr")); }
+    if (coeff_.found("As"))
+    {
+        As_ = readScalar(coeff_.lookup("As"));
+    }
+
+    if (coeff_.found("S"))
+    {
+        S_ = readScalar(coeff_.lookup("S"));
+    }
+
+    if (coeff_.found("Pr"))
+    {
+        Pr0_ = readScalar(coeff_.lookup("Pr"));
+    }
 
     if (As_ <= 0)
     {
         FatalErrorInFunction
-            << "Invalid Sutherland 'As'. Must be > 0." << exit(FatalError);
+            << "Invalid Sutherland 'As'. Must be > 0."
+            << exit(FatalError);
     }
+
     if (S_ <= 0)
     {
         FatalErrorInFunction
-            << "Invalid Sutherland 'S'. Must be > 0." << exit(FatalError);
+            << "Invalid Sutherland 'S'. Must be > 0."
+            << exit(FatalError);
     }
+
     if (Pr0_ <= 0)
     {
         FatalErrorInFunction
-            << "Invalid Prandtl number. Must be > 0." << exit(FatalError);
+            << "Invalid Prandtl number. Must be > 0."
+            << exit(FatalError);
     }
 }
 

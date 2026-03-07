@@ -184,12 +184,12 @@ void Foam::rhoBasedConservative::validateModels()
 
 void Foam::rhoBasedConservative::update(const label& cellI)
 {
-    // Conservative fields at Gauss points
+    // Conservative fields
     const GaussField<scalar>& rhoG  = rho_.gaussFields()[cellI];
     const GaussField<vector>& rhoUG = rhoU_.gaussFields()[cellI];
     const GaussField<scalar>& EG    = E_.gaussFields()[cellI];
 
-    // Thermo fields at Gauss points (references into storage)
+    // Thermo fields
     GaussField<scalar>& TG      = T_.gaussFields()[cellI];
     GaussField<scalar>& pG      = p_.gaussFields()[cellI];
     GaussField<scalar>& CpG     = Cp_.gaussFields()[cellI];
@@ -202,31 +202,31 @@ void Foam::rhoBasedConservative::update(const label& cellI)
     GaussField<scalar>& PrG     = Pr_.gaussFields()[cellI];
     GaussField<scalar>& aG      = a_.gaussFields()[cellI];
 
-    // Reconstruct velocity at Gauss points: U = rhoU / rho
-    GaussField<vector> UG = rhoUG/rhoG;
+    // Velocity at Gauss points
+    tmp<GaussField<vector>> tUG = rhoUG/rhoG;
 
-    // Kinetic energy per unit mass at Gauss points
-    GaussField<scalar> kineticE = 0.5*magSqr(UG);
+    // Kinetic energy
+    tmp<GaussField<scalar>> tK = 0.5*magSqr(tUG());
 
-    // Internal energy per unit mass:
-    //   e = E/rho - 0.5|U|^2
-    GaussField<scalar> internalE = EG/rhoG - kineticE;
-    eG = internalE;
+    // Internal energy
+    tmp<GaussField<scalar>> te = EG/rhoG - tK();
 
-    // Temperature from internal energy
-    thermo_().calcT(cellI, internalE, TG);
+    eG = te();
 
-    // Pressure from EOS: p = p(rho, T)
+    // Temperature
+    thermo_().calcT(cellI, eG, TG);
+
+    // Pressure
     eqnState_().calcPFromRhoT(cellI, rhoG, TG, pG);
 
-    // Thermodynamic properties
+    // Thermodynamics
     thermo_().calcCp(cellI, TG, CpG);
     thermo_().calcCv(cellI, TG, CvG);
     thermo_().calcGamma(cellI, CpG, CvG, gammaG);
     thermo_().calcH(cellI, TG, hG);
     thermo_().calcSpeedOfSound(cellI, TG, gammaG, aG);
 
-    // Transport properties
+    // Transport
     transport_().calcMu(cellI, TG, muG);
     transport_().calcKappa(cellI, TG, kappaG);
     transport_().calcPr(cellI, TG, PrG);

@@ -62,7 +62,7 @@ Foam::dgGeneralPDETerm<UType, FType>::dgGeneralPDETerm
     dgMesh_(mesh),
     basis_(cellID_, dgMesh_),
     U_(U),
-    F_(F),
+    F_(new GaussField<FType>(F)),
     fluxSolver_(fluxSolver),
     nDof_(basis_.nDof()),
     R_(nDof_, pTraits<UType>::zero)
@@ -70,7 +70,39 @@ Foam::dgGeneralPDETerm<UType, FType>::dgGeneralPDETerm
     checkTypes();
 
     // Initialize flux field
-    F_.faceField().initFlux();
+    F_.ref().faceField().initFlux();
+
+    // Set equation type in flux solver
+    fluxSolver_.solver(termName_+"Flux").setEquationType(eqnType_);
+}
+
+template<class UType, class FType>
+Foam::dgGeneralPDETerm<UType, FType>::dgGeneralPDETerm
+(
+    const word& termName,
+    dgFluxSolver::equationType eqnType,
+    const label cellID,
+    dgGeomMesh& mesh,
+    const GaussField<UType>& U,
+    const tmp<GaussField<FType>>& tF,
+    dgFluxSolverManager& fluxSolver
+)
+:
+    termName_(termName),
+    eqnType_(eqnType),
+    cellID_(cellID),
+    dgMesh_(mesh),
+    basis_(cellID_, dgMesh_),
+    U_(U),
+    F_(tF),
+    fluxSolver_(fluxSolver),
+    nDof_(basis_.nDof()),
+    R_(nDof_, pTraits<UType>::zero)
+{
+    checkTypes();
+
+    // Initialize flux field
+    F_.ref().faceField().initFlux();
 
     // Set equation type in flux solver
     fluxSolver_.solver(termName_+"Flux").setEquationType(eqnType_);
@@ -85,7 +117,7 @@ void Foam::dgGeneralPDETerm<UType, FType>::updateFlux()
     fluxSolver_.solver(termName_+"Flux").computeFlux
     (
         cellID_,
-        F_.faceField(),
+        F_.ref().faceField(),
         U_.faceField()
     );
 }
@@ -104,12 +136,12 @@ void Foam::dgGeneralPDETerm<UType, FType>::calcResidual()
         // Gradient of basis phi_i
         const GaussField<vector>& gradPhi = basis_.getDBasis(i);
 
-        const UType volTerm = Foam::volumeIntegral(gradPhi.cellField(), F_.cellField());
+        const UType volTerm = Foam::volumeIntegral(gradPhi.cellField(), F_().cellField());
 
         // Basis phi_i on faces
         const GaussField<scalar>& phi = basis_.getBasis(i);
 
-        const UType surfTerm = Foam::surfaceIntegral(phi.faceField(), F_.faceField());
+        const UType surfTerm = Foam::surfaceIntegral(phi.faceField(), F_().faceField());
 
         R_[i] -= volTerm;
         R_[i] += surfTerm;
@@ -117,4 +149,3 @@ void Foam::dgGeneralPDETerm<UType, FType>::calcResidual()
 }
 
 // ************************************************************************* //
-

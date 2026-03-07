@@ -115,7 +115,7 @@ private:
     const GaussField<UType>& U_;
 
     /** Flux field evaluated at Gauss points */
-    GaussField<FType>& F_;
+    tmp<GaussField<FType>> F_;
 
     /** Flux solver manager */
     dgFluxSolverManager& fluxSolver_;
@@ -156,6 +156,28 @@ public:
         dgGeomMesh& mesh,
         const GaussField<UType>& U,
         GaussField<FType>& F,
+        dgFluxSolverManager& fluxSolver
+    );
+
+    /**
+     * \brief Construct PDE term for a given cell, with Flux field is tmp
+     *
+     * \param termName   Name of PDE term (used for flux solver lookup)
+     * \param eqnType    Equation type (mass, momentum, energy, scalar)
+     * \param cellID     Owner cell index
+     * \param mesh       DG geometric mesh
+     * \param U          Solution field at Gauss points
+     * \param F          Flux field at Gauss points
+     * \param fluxSolver Flux solver manager
+     */
+    dgGeneralPDETerm
+    (
+        const word& termName,
+        dgFluxSolver::equationType eqnType,
+        const label cellID,
+        dgGeomMesh& mesh,
+        const GaussField<UType>& U,
+        const tmp<GaussField<FType>>& tF,
         dgFluxSolverManager& fluxSolver
     );
 

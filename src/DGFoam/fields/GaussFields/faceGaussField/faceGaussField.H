@@ -46,6 +46,7 @@ SourceFiles
 #include "dgGeomFace.H"
 #include "cellDof.H"
 #include "List.H"
+#include "refCount.H"
 
 namespace Foam
 {
@@ -77,6 +78,8 @@ namespace Foam
  */
 template<class Type>
 class faceGaussField
+:
+    public refCount
 {
 private:
 
@@ -156,6 +159,9 @@ public:
         /** Copy constructor */
         faceGaussField(const faceGaussField<Type>& other);
 
+        /** Move constructor */
+        faceGaussField(faceGaussField<Type>&& other) noexcept;
+
         /**
          * \brief Construct with uniform initial value
          */
@@ -174,6 +180,11 @@ public:
             const label cellID,
             const dgGeomMesh* mesh
         );
+
+        /**
+         * \brief Construct from tmp
+         */
+        faceGaussField(const tmp<faceGaussField<Type>>& t);
 
     //====================================================================//
     //                              Access
@@ -360,6 +371,18 @@ public:
 
         /** Copy assignment */
         faceGaussField<Type>& operator=(const faceGaussField<Type>& other);
+
+        /** Move assignment */
+        faceGaussField<Type>& operator=
+        (
+            faceGaussField<Type>&& other
+        ) noexcept;
+
+        /** Assignment from tmp */
+        faceGaussField<Type>& operator=
+        (
+            const tmp<faceGaussField<Type>>& t
+        );
 
         /** Assign uniform value */
         faceGaussField<Type>& operator=(const Type& v);

@@ -73,7 +73,6 @@ cellGaussField<Type>::cellGaussField
     }
 }
 
-
 // Copy constructor
 template<class Type>
 cellGaussField<Type>::cellGaussField
@@ -90,6 +89,21 @@ cellGaussField<Type>::cellGaussField
     values_(other.values_)
 {}
 
+// Move constructor
+template<class Type>
+cellGaussField<Type>::cellGaussField
+(
+    cellGaussField<Type>&& other
+) noexcept
+:
+    cellID_(other.cellID_),
+    dgMesh_(other.dgMesh_),
+    cell_(other.cell_),
+    nGauss_(other.nGauss_),
+    nDof_(other.nDof_),
+    dof_(other.dof_),
+    values_(std::move(other.values_))
+{}
 
 // Uniform value constructor
 template<class Type>
@@ -114,7 +128,6 @@ cellGaussField<Type>::cellGaussField
     }
 }
 
-
 // Zero-init constructor
 template<class Type>
 cellGaussField<Type>::cellGaussField
@@ -137,6 +150,55 @@ cellGaussField<Type>::cellGaussField
     }
 }
 
+/*
+template<class Type>
+cellGaussField<Type>::cellGaussField(const tmp<cellGaussField<Type>>& t)
+{
+    if (t.isTmp())
+    {
+        this->operator=(std::move(const_cast<cellGaussField<Type>&>(t())));
+        t.clear();
+    }
+    else
+    {
+        *this = t();
+    }
+}
+
+template<class Type>
+Foam::cellGaussField<Type>::cellGaussField
+(
+    const tmp<cellGaussField<Type>>& t
+)
+:
+    cellGaussField<Type>(t())
+{
+    // Release ownership from tmp to avoid deletion of the internal object
+    t.clear();
+}
+*/
+
+template<class Type>
+Foam::cellGaussField<Type>::cellGaussField
+(
+    const tmp<cellGaussField<Type>>& t
+)
+{
+    cellGaussField<Type>& tf =
+        const_cast<tmp<cellGaussField<Type>>&>(t).ref();
+
+    cellID_ = tf.cellID_;
+    dgMesh_ = tf.dgMesh_;
+    cell_   = tf.cell_;
+    nGauss_ = tf.nGauss_;
+    nDof_   = tf.nDof_;
+    dof_    = tf.dof_;
+
+    // Transfer storage instead of copy
+    values_.transfer(tf.values_);
+
+    t.clear();
+}
 
 // * * * * * * * * Member Functions * * * * * * * * //
 
@@ -185,6 +247,56 @@ inline cellGaussField<Type>& cellGaussField<Type>::operator=
     return *this;
 }
 
+// Move assignment
+template<class Type>
+inline cellGaussField<Type>& cellGaussField<Type>::operator=
+(
+    cellGaussField<Type>&& other
+) noexcept
+{
+    if (this != &other)
+    {
+        cellID_ = other.cellID_;
+        dgMesh_ = other.dgMesh_;
+        cell_   = other.cell_;
+        nGauss_ = other.nGauss_;
+        nDof_   = other.nDof_;
+        dof_    = other.dof_;
+
+        values_ = std::move(other.values_);
+    }
+    return *this;
+}
+
+// Assign tmp
+template<class Type>
+cellGaussField<Type>& Foam::cellGaussField<Type>::operator=
+(
+    const tmp<cellGaussField<Type>>& t
+)
+{
+    /*
+    *this = t();
+    t.clear();
+    return *this;
+    */
+   
+    cellGaussField<Type>& tf =
+        const_cast<tmp<cellGaussField<Type>>&>(t).ref();
+
+    cellID_ = tf.cellID_;
+    dgMesh_ = tf.dgMesh_;
+    cell_   = tf.cell_;
+    nGauss_ = tf.nGauss_;
+    nDof_   = tf.nDof_;
+    dof_    = tf.dof_;
+
+    values_.transfer(tf.values_);
+
+    t.clear();
+
+    return *this;
+}
 
 // Assign uniform value
 template<class Type>

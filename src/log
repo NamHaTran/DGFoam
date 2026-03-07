@@ -1,0 +1,13 @@
+==> Linking includes in mesh/
+==> Linking includes in math/
+==> Linking includes in DGFoam/
+==> Linking includes in DGMethod/
+==> Building libDGMesh from mesh/
+wmake libso (mesh)
+==> Building libDGFoam from DGFoam/
+wmake libso (DGFoam)
+==> Building libDGMethod from DGMethod/
+wmake libso (DGMethod)
+==> Building libDGFluidThermophysicalModels from thermophysicalModels/
+wmake libso (thermophysicalModels)
+g++ -std=c++17 -m64 -pthread -DOPENFOAM=2412 -DWM_DP -DWM_LABEL_SIZE=32 -Wall -Wextra -Wold-style-cast -Wnon-virtual-dtor -Wno-unused-parameter -Wno-invalid-offsetof -Wno-attributes -Wno-unknown-pragmas -O0 -fdefault-inline -ggdb3 -DFULLDEBUG -DNoRepository -ftemplate-depth-100  -I/home/nam-ha-tran/OpenFOAM/DGFoam/src/thermophysicalModels -I/home/nam-ha-tran/OpenFOAM/OpenFOAM-v2412/src/OpenFOAM/lnInclude -I/home/nam-ha-tran/OpenFOAM/OpenFOAM-v2412/src/meshTools/lnInclude -I/home/nam-ha-tran/OpenFOAM/OpenFOAM-v2412/src/finiteVolume/lnInclude -I/home/nam-ha-tran/OpenFOAM/DGFoam/src/math/lnInclude -I/home/nam-ha-tran/OpenFOAM/DGFoam/src/mesh/lnInclude -I/home/nam-ha-tran/OpenFOAM/DGFoam/src/DGFoam/lnInclude -I/home/nam-ha-tran/OpenFOAM/DGFoam/src/DGMethod/lnInclude -I/home/nam-ha-tran/OpenFOAM/DGFoam/thirdPartySources/boost_1_88_0 -iquote. -IlnInclude -I/home/nam-ha-tran/OpenFOAM/OpenFOAM-v2412/src/OpenFOAM/lnInclude -I/home/nam-ha-tran/OpenFOAM/OpenFOAM-v2412/src/OSspecific/POSIX/lnInclude   -fPIC -c basic/thermoConservative/dgThermoConservative.C -o Make/linux64GccDPInt32Opt/basic/thermoConservative/dgThermoConservative.o

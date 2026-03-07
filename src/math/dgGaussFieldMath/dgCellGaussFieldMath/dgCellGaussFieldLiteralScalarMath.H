@@ -46,6 +46,133 @@ SourceFiles
 
 namespace Foam
 {
+
+// * * * * * * * * * In-place operators with literal scalar * * * * * * * * //
+// scalarField *= scalar
+inline cellGaussField<scalar>& operator*=
+(
+    cellGaussField<scalar>& A,
+    const scalar& a
+)
+{
+    for (label i = 0; i < A.size(); ++i) A[i] *= a;
+    return A;
+}
+
+inline cellGaussField<vector>& operator*=
+(
+    cellGaussField<vector>& A,
+    const scalar& a
+)
+{
+    for (label i = 0; i < A.size(); ++i) A[i] *= a;
+    return A;
+}
+
+inline cellGaussField<tensor>& operator*=
+(
+    cellGaussField<tensor>& A,
+    const scalar& a
+)
+{
+    for (label i = 0; i < A.size(); ++i) A[i] *= a;
+    return A;
+}
+
+inline cellGaussField<symmTensor>& operator*=
+(
+    cellGaussField<symmTensor>& A,
+    const scalar& a
+)
+{
+    for (label i = 0; i < A.size(); ++i) A[i] *= a;
+    return A;
+}
+
+inline cellGaussField<sphericalTensor>& operator*=
+(
+    cellGaussField<sphericalTensor>& A,
+    const scalar& a
+)
+{
+    for (label i = 0; i < A.size(); ++i) A[i] *= a;
+    return A;
+}
+
+
+// scalarField /= scalar
+inline cellGaussField<scalar>& operator/=
+(
+    cellGaussField<scalar>& A,
+    const scalar& a
+)
+{
+    for (label i = 0; i < A.size(); ++i) A[i] /= a;
+    return A;
+}
+
+inline cellGaussField<vector>& operator/=
+(
+    cellGaussField<vector>& A,
+    const scalar& a
+)
+{
+    for (label i = 0; i < A.size(); ++i) A[i] /= a;
+    return A;
+}
+
+inline cellGaussField<tensor>& operator/=
+(
+    cellGaussField<tensor>& A,
+    const scalar& a
+)
+{
+    for (label i = 0; i < A.size(); ++i) A[i] /= a;
+    return A;
+}
+
+inline cellGaussField<symmTensor>& operator/=
+(
+    cellGaussField<symmTensor>& A,
+    const scalar& a
+)
+{
+    for (label i = 0; i < A.size(); ++i) A[i] /= a;
+    return A;
+}
+
+inline cellGaussField<sphericalTensor>& operator/=
+(
+    cellGaussField<sphericalTensor>& A,
+    const scalar& a
+)
+{
+    for (label i = 0; i < A.size(); ++i) A[i] /= a;
+    return A;
+}
+
+// scalarField += scalar  (only for scalar field per original file semantics)
+inline cellGaussField<scalar>& operator+=
+(
+    cellGaussField<scalar>& A,
+    const scalar& a
+)
+{
+    for (label i = 0; i < A.size(); ++i) A[i] += a;
+    return A;
+}
+
+// scalarField -= scalar  (only for scalar field per original file semantics)
+inline cellGaussField<scalar>& operator-=
+(
+    cellGaussField<scalar>& A,
+    const scalar& a
+)
+{
+    for (label i = 0; i < A.size(); ++i) A[i] -= a;
+    return A;
+}
+
 // * * * * * * * * * * * Scalar * Field * * * * * * * * * * * * * * * //
 
 inline cellGaussField<scalar> operator*

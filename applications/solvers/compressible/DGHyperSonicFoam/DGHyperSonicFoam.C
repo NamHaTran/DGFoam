@@ -43,7 +43,7 @@ Description
 #include "dgField.H"
 #include "dgMath.H"
 #include "dgGeneralBoundaryManager.H"
-//#include "dgProcessorBoundaryManager.H"
+#include "dgProcessorBoundaryManager.H"
 #include "dgFluxSolverManager.H"
 #include "dgThermoConservative.H"
 #include "dgGeneralPDETerm.H"
@@ -71,18 +71,19 @@ int main(int argc, char *argv[])
     #include "createDGMesh.H"
 
     // Create the DG fields
-    //#include "createDGFields.H"
+    #include "createDGFields.H"
 
     // Read solver settings
-    //#include "readSolverSettings.H"
+    #include "readSolverSettings.H"
 
     // TIME LOOP
 
-        //#include "synchProcessors.H"
+        #include "synchProcessors.H"
 
-        //dgMesh.cells()[10]->printDebugInfo();
-        dgMesh.faces()[2]->printDebugInfo();
-
+        //#include "testLiteralScalarMath.H"
+        //#include "testScalarMath.H"
+        //#include "testVectorMath.H"
+        //#include "testTensorMath.H"
 
         // It's possible to iterate over every cell in a standard C++ for loop
         for (label cellI = 0; cellI < mesh.C().size(); cellI++)
@@ -91,26 +92,25 @@ int main(int argc, char *argv[])
 
             // -------------------------------- Update BCs --------------------------------- //
             // Declare primitive Gauss fields
-            //GaussField<vector>& UG      = U.gaussFields()[cellI];
-            //GaussField<scalar>& TG      = T.gaussFields()[cellI];
-            //GaussField<scalar>& pG      = p.gaussFields()[cellI];
-            //GaussField<scalar>& rhoG    = rho.gaussFields()[cellI];
+            GaussField<vector>& UG      = U.gaussFields()[cellI];
+            GaussField<scalar>& TG      = T.gaussFields()[cellI];
+            GaussField<scalar>& pG      = p.gaussFields()[cellI];
+            GaussField<scalar>& rhoG    = rho.gaussFields()[cellI];
 
             // Update ghost states
-            //pBC     ->updateValue(pG);
-            //TBC     ->updateValue(TG);
-            //rhoBC   ->updateValue(rhoG);
-            //UBC     ->updateValue(UG);
+            pBC     ->updateValue(pG);
+            TBC     ->updateValue(TG);
+            rhoBC   ->updateValue(rhoG);
+            UBC     ->updateValue(UG);
 
             // Update thermo
-            //thermo->update(cellI);
+            thermo->update(cellI);
             // ---------------------------------------------------------------------------- //
 
 
             // ---------------------------- Build equation terms -------------------------- //
             // Mass convection term
-            /*
-            GaussField<vector> rhoUG = rhoG*UG;
+            tmp<GaussField<vector>> tRhoUG = rhoG*UG;
             dgGeneralPDETerm<scalar, vector> massConvTerm
             (
                 "massConvTerm",
@@ -118,7 +118,7 @@ int main(int argc, char *argv[])
                 cellI,
                 dgMesh,
                 rhoG,
-                rhoUG,
+                tRhoUG,
                 fluxSolverManager
             );
 
@@ -129,13 +129,14 @@ int main(int argc, char *argv[])
             const List<scalar>& res = massConvTerm.R();
 
             Pout<< "Cell " << cellI << " residual: " << res << endl;
-            */
+
+            tRhoUG.clear();
         }
 
-        //vectorInterfaceBC->update(U);
+        vectorProcBC->update(U);
 
         // Reset necessary objects before next time step
-        //#include "resetAll.H"
+        #include "resetAll.H"
     
     // END TIME LOOP
 

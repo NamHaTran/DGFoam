@@ -191,7 +191,7 @@ public:
         label size() const;
 
         /** Return nunber of Gauss points on the face */
-        inline label nGauss() { return nGauss_; }
+        inline label nGauss() const { return nGauss_; }
 
         /** Return underlying OpenFOAM face */
         const face& baseFace() const;

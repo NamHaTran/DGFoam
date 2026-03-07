@@ -34,20 +34,20 @@ SourceFiles
 #ifndef Foam_dgGaussFieldMath_H
 #define Foam_dgGaussFieldMath_H
 
-#include "dgFaceGaussFieldLiteralScalarMath.H"
-#include "dgFaceGaussFieldScalarMath.H"
-#include "dgFaceGaussFieldVectorMath.H"
-#include "dgFaceGaussFieldTensorMath.H"
+#include "dgFaceGaussFieldLiteralScalarMathTmp.H"
+#include "dgFaceGaussFieldScalarMathTmp.H"
+#include "dgFaceGaussFieldVectorMathTmp.H"
+#include "dgFaceGaussFieldTensorMathTmp.H"
 
-#include "dgCellGaussFieldLiteralScalarMath.H"
-#include "dgCellGaussFieldScalarMath.H"
-#include "dgCellGaussFieldVectorMath.H"
-#include "dgCellGaussFieldTensorMath.H"
+#include "dgCellGaussFieldLiteralScalarMathTmp.H"
+#include "dgCellGaussFieldScalarMathTmp.H"
+#include "dgCellGaussFieldVectorMathTmp.H"
+#include "dgCellGaussFieldTensorMathTmp.H"
 
-#include "dgGaussFieldLiteralScalarMath.H"
-#include "dgGaussFieldScalarMath.H"
-#include "dgGaussFieldVectorMath.H"
-#include "dgGaussFieldTensorMath.H"
+#include "dgGaussFieldLiteralScalarMathTmp.H"
+#include "dgGaussFieldScalarMathTmp.H"
+#include "dgGaussFieldVectorMathTmp.H"
+#include "dgGaussFieldTensorMathTmp.H"
 
 #endif
 

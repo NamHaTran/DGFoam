@@ -236,6 +236,92 @@ faceGaussField<Type>::faceGaussField
     flux_(other.flux_)
 {}
 
+// Move constructor
+template<class Type>
+faceGaussField<Type>::faceGaussField
+(
+    faceGaussField<Type>&& other
+) noexcept
+:
+    mesh_(other.mesh_),
+    cellID_(other.cellID_),
+    cell_(other.cell_),
+    facesID_(other.facesID_),
+    nFaces_(other.nFaces_),
+    nGaussPerFace_(other.nGaussPerFace_),
+    nGauss_(other.nGauss_),
+    faces_(std::move(other.faces_)),
+    cellsDof_(std::move(other.cellsDof_)),
+    gaussOffset_(std::move(other.gaussOffset_)),
+    ownerPatchIDs_(std::move(other.ownerPatchIDs_)),
+    n_(std::move(other.n_)),
+    faceAreas_(std::move(other.faceAreas_)),
+    plusValues_(std::move(other.plusValues_)),
+    minusValues_(std::move(other.minusValues_)),
+    flux_(std::move(other.flux_))
+{}
+
+// Construct from tmp
+/*
+template<class Type>
+faceGaussField<Type>::faceGaussField
+(
+    const tmp<faceGaussField<Type>>& t
+)
+{
+    if (t.isTmp())
+    {
+        this->operator=(std::move(const_cast<faceGaussField<Type>&>(t())));
+        t.clear();
+    }
+    else
+    {
+        *this = t();
+    }
+}
+
+
+template<class Type>
+Foam::faceGaussField<Type>::faceGaussField
+(
+    const tmp<faceGaussField<Type>>& t
+)
+:
+    faceGaussField<Type>(t())
+{
+    t.clear();
+}
+*/
+
+template<class Type>
+Foam::faceGaussField<Type>::faceGaussField
+(
+    const tmp<faceGaussField<Type>>& t
+)
+{
+    faceGaussField<Type>& tf =
+        const_cast<tmp<faceGaussField<Type>>&>(t).ref();
+
+    mesh_          = tf.mesh_;
+    cellID_        = tf.cellID_;
+    cell_          = tf.cell_;
+    facesID_       = tf.facesID_;
+    nFaces_        = tf.nFaces_;
+    nGaussPerFace_ = tf.nGaussPerFace_;
+    nGauss_        = tf.nGauss_;
+
+    faces_.transfer(tf.faces_);
+    cellsDof_.transfer(tf.cellsDof_);
+    gaussOffset_.transfer(tf.gaussOffset_);
+    ownerPatchIDs_.transfer(tf.ownerPatchIDs_);
+    n_.transfer(tf.n_);
+    faceAreas_.transfer(tf.faceAreas_);
+    plusValues_.transfer(tf.plusValues_);
+    minusValues_.transfer(tf.minusValues_);
+    flux_.transfer(tf.flux_);
+
+    t.clear();
+}
 
 // * * * * * * * * Member Functions * * * * * * * * //
 
@@ -361,6 +447,75 @@ inline faceGaussField<Type>& faceGaussField<Type>::operator=
     return *this;
 }
 
+// Move assignment
+template<class Type>
+inline faceGaussField<Type>& faceGaussField<Type>::operator=
+(
+    faceGaussField<Type>&& other
+) noexcept
+{
+    if (this != &other)
+    {
+        mesh_          = other.mesh_;
+        cellID_        = other.cellID_;
+        cell_          = other.cell_;
+        facesID_       = other.facesID_;
+        nFaces_        = other.nFaces_;
+        nGaussPerFace_ = other.nGaussPerFace_;
+        nGauss_        = other.nGauss_;
+
+        faces_         = std::move(other.faces_);
+        cellsDof_      = std::move(other.cellsDof_);
+        gaussOffset_   = std::move(other.gaussOffset_);
+        ownerPatchIDs_ = std::move(other.ownerPatchIDs_);
+        n_             = std::move(other.n_);
+        faceAreas_     = std::move(other.faceAreas_);
+        plusValues_    = std::move(other.plusValues_);
+        minusValues_   = std::move(other.minusValues_);
+        flux_          = std::move(other.flux_);
+    }
+
+    return *this;
+}
+
+// Assign tmp
+template<class Type>
+inline faceGaussField<Type>& faceGaussField<Type>::operator=
+(
+    const tmp<faceGaussField<Type>>& t
+)
+{
+    /*
+    *this = t();
+    t.clear();
+    return *this;
+    */
+
+    faceGaussField<Type>& tf =
+        const_cast<tmp<faceGaussField<Type>>&>(t).ref();
+
+    mesh_          = tf.mesh_;
+    cellID_        = tf.cellID_;
+    cell_          = tf.cell_;
+    facesID_       = tf.facesID_;
+    nFaces_        = tf.nFaces_;
+    nGaussPerFace_ = tf.nGaussPerFace_;
+    nGauss_        = tf.nGauss_;
+
+    faces_.transfer(tf.faces_);
+    cellsDof_.transfer(tf.cellsDof_);
+    gaussOffset_.transfer(tf.gaussOffset_);
+    ownerPatchIDs_.transfer(tf.ownerPatchIDs_);
+    n_.transfer(tf.n_);
+    faceAreas_.transfer(tf.faceAreas_);
+    plusValues_.transfer(tf.plusValues_);
+    minusValues_.transfer(tf.minusValues_);
+    flux_.transfer(tf.flux_);
+
+    t.clear();
+
+    return *this;
+}
 
 // Assign uniform value
 template<class Type>

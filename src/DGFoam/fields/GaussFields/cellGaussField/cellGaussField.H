@@ -43,6 +43,7 @@ SourceFiles
 
 #include "label.H"
 #include "List.H"
+#include "refCount.H"
 #include "dgGeomMesh.H"
 #include "dgGeomCell.H"
 #include "cellDof.H"
@@ -73,6 +74,8 @@ namespace Foam
  */
 template<class Type>
 class cellGaussField
+:
+    public refCount
 {
 private:
 
@@ -149,6 +152,21 @@ public:
         (
             const label cellID,
             const dgGeomMesh* dgMesh
+        );
+
+        /**
+         * \brief Move constructor
+         *
+         * Transfers internal storage without copying.
+         */
+        cellGaussField(cellGaussField<Type>&& other) noexcept;
+
+        /**
+         * \brief Construct from tmp
+         */
+        cellGaussField
+        (
+            const tmp<cellGaussField<Type>>& t
         );
 
     //====================================================================//
@@ -237,6 +255,24 @@ public:
         cellGaussField<Type>& operator=
         (
             const Type& value
+        );
+
+        /**
+         * \brief Move assignment
+         *
+         * Transfers internal storage without copying.
+         */
+        cellGaussField<Type>& operator=
+        (
+            cellGaussField<Type>&& other
+        ) noexcept;
+
+        /** 
+         * \brief Assignment from tmp 
+         */
+        cellGaussField<Type>& operator=
+        (
+            const tmp<cellGaussField<Type>>& t
         );
 
     //====================================================================//

@@ -126,6 +126,78 @@ GaussField<Type>::GaussField(const GaussField<Type>& other)
     faceField_(other.faceField_)
 {}
 
+/*
+template<class Type>
+GaussField<Type>::GaussField(const tmp<GaussField<Type>>& t)
+{
+    if (t.isTmp())
+    {
+        // Thực hiện Move assignment từ đối tượng bên trong t
+        this->operator=(std::move(const_cast<GaussField<Type>&>(t())));
+        t.clear();
+    }
+    else
+    {
+        *this = t(); // Copy nếu là biến cố định
+    }
+}
+
+template<class Type>
+GaussField<Type>::GaussField
+(
+    const tmp<GaussField<Type>>& t
+)
+:
+    GaussField<Type>(t())
+{
+    t.clear();
+}
+*/
+
+template<class Type>
+GaussField<Type>::GaussField
+(
+    const tmp<GaussField<Type>>& t
+)
+{
+    GaussField<Type>& tf =
+        const_cast<tmp<GaussField<Type>>&>(t).ref();
+
+    dofField_ = tf.dofField_;
+    cellID_   = tf.cellID_;
+    mesh_     = tf.mesh_;
+
+    cellField_ = std::move(tf.cellField_);
+    faceField_ = std::move(tf.faceField_);
+
+    t.clear();
+}
+
+template<class Type>
+GaussField<Type>::GaussField
+(
+    GaussField<Type>&& other
+) noexcept
+:
+    dofField_(other.dofField_),
+    cellID_(other.cellID_),
+    mesh_(other.mesh_),
+    cellField_(std::move(other.cellField_)),
+    faceField_(std::move(other.faceField_))
+{}
+
+template<class Type>
+tmp<GaussField<Type>> GaussField<Type>::New
+(
+    label cellID,
+    const dgGeomMesh* mesh
+)
+{
+    return tmp<GaussField<Type>>
+    (
+        new GaussField<Type>(cellID, mesh)
+    );
+}
 
 // * * * * * * Assignment * * * * * //
 
@@ -146,7 +218,6 @@ inline GaussField<Type>& GaussField<Type>::operator=
     return *this;
 }
 
-
 template<class Type>
 inline GaussField<Type>& GaussField<Type>::operator=
 (
@@ -158,6 +229,51 @@ inline GaussField<Type>& GaussField<Type>::operator=
     return *this;
 }
 
+template<class Type>
+GaussField<Type>& Foam::GaussField<Type>::operator=
+(
+    GaussField<Type>&& other
+) noexcept
+{
+    if (this != &other)
+    {
+        dofField_  = other.dofField_;
+        cellID_    = other.cellID_;
+        mesh_      = other.mesh_;
+
+        cellField_ = std::move(other.cellField_);
+        faceField_ = std::move(other.faceField_);
+    }
+
+    return *this;
+}
+
+template<class Type>
+GaussField<Type>& Foam::GaussField<Type>::operator=
+(
+    const tmp<GaussField<Type>>& t
+)
+{
+    /*
+    *this = t();
+    t.clear();
+    return *this;
+    */
+
+    GaussField<Type>& tf =
+        const_cast<tmp<GaussField<Type>>&>(t).ref();
+
+    dofField_ = tf.dofField_;
+    cellID_   = tf.cellID_;
+    mesh_     = tf.mesh_;
+
+    cellField_ = std::move(tf.cellField_);
+    faceField_ = std::move(tf.faceField_);
+
+    t.clear();
+
+    return *this;
+}
 
 // * * * * * Access helpers * * * * * //
 

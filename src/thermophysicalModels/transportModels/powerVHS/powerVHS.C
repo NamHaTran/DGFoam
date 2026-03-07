@@ -81,14 +81,17 @@ void Foam::powerVHS::calcMu
             << exit(FatalError);
     }
 
-    // μ = μRef * (T/TRef)^ω
-    GaussField<scalar> theta(cellI, &mesh_);
-    theta = T / TRef_;
+    // theta = T/TRef
+    tmp<GaussField<scalar>> tTheta = T / TRef_;
 
-    GaussField<scalar> thetaW(cellI, &mesh_);
-    thetaW = pow(theta, omega_);
+    // theta^omega
+    tmp<GaussField<scalar>> tThetaW = pow(tTheta(), omega_);
 
-    mu = muRef_ * thetaW;
+    // μ = μRef * theta^omega
+    mu = muRef_ * tThetaW();
+
+    tTheta.clear();
+    tThetaW.clear();
 }
 
 
@@ -101,13 +104,19 @@ void Foam::powerVHS::calcKappa
 {
     // classical energy transport: κ = μ Cp / Pr
   
-    GaussField<scalar> mu(cellI, &mesh_);
-    calcMu(cellI, T, mu);
+    // μ
+    tmp<GaussField<scalar>> tMu = GaussField<scalar>::New(cellI, &mesh_);
+    calcMu(cellI, T, tMu.ref());
 
-    GaussField<scalar> Cp(cellI, &mesh_);
-    thermo_.calcCp(cellI, T, Cp);
+    // Cp
+    tmp<GaussField<scalar>> tCp = GaussField<scalar>::New(cellI, &mesh_);
+    thermo_.calcCp(cellI, T, tCp.ref());
 
-    kappa = (mu * Cp) / Pr0_;
+    // κ = μ Cp / Pr
+    kappa = (tMu() * tCp()) / Pr0_;
+
+    tMu.clear();
+    tCp.clear();
 }
 
 

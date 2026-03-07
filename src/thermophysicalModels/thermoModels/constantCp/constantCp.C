@@ -219,7 +219,9 @@ void Foam::constantCp::calcSpeedOfSound
     GaussField<scalar>& a
 ) const
 {
-    a = sqrt(gamma * eos_.R() * T);
+    a = gamma * T;
+    a = a * eos_.R();
+    a = sqrt(a);
 }
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  * * * //
