@@ -24,32 +24,6 @@ License
     You should have received a copy of the GNU General Public License
     along with OpenFOAM.  If not, see <http://www.gnu.org/licenses/>.
 
-  Class dgGeneralSymmetryBoundaryField Declaration
-
-  Description
-    - Implements a general symmetry boundary condition for scalar, vector, and
-      tensor fields.
-
-    - This condition assumes the boundary is a symmetry plane:
-        * No flux passes through the boundary.
-        * Useful for reducing domain size in symmetric problems.
-
-  Usage
-    boundaryField
-    {
-        patchName
-        {
-            type    generalSymmetry;
-        }
-    }
-
-  Note
-    - Only geometric information (normal vector n) and internal values are
-      used. No input parameters required from dictionary.
-
-SourceFiles
-    dgGeneralZeroGradientBoundaryField.C
-
 \*---------------------------------------------------------------------------*/
 
 #ifndef dgGeneralSymmetryBoundaryFieldI_H

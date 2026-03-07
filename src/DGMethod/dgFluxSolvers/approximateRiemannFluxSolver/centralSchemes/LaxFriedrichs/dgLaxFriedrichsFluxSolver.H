@@ -32,6 +32,7 @@ Description
 
 SourceFiles
     dgLaxFriedrichsFluxSolver.C
+
 \*---------------------------------------------------------------------------*/
 
 #ifndef Foam_dgLaxFriedrichsFluxSolver_H
