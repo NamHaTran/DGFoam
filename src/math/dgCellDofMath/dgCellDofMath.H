@@ -38,6 +38,7 @@ SourceFiles
 #ifndef Foam_dgCellDofMath_H
 #define Foam_dgCellDofMath_H
 
+#include "dgCellDofTmpOpCore.H"
 #include "dgCellDofLiteralScalarMath.H"
 #include "dgCellDofScalarMath.H"
 #include "dgCellDofVectorMath.H"

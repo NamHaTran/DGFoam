@@ -39,32 +39,57 @@ Description
 namespace Foam
 {
 
-// No-op mutators for operations that cannot/should not reuse tmp storage
+/**
+ * \brief Quick guide to add a new tmp-aware operator using this core.
+ *
+ * Steps:
+ * 1. Define `Eval` functor for element-wise computation.
+ * 2. Define optional `Mutate` functors for in-place tmp reuse.
+ * 3. Use macro generators at file end:
+ *    - `DG_TMP_DEFINE_BINARY_OPERATOR`
+ *    - `DG_TMP_DEFINE_UNARY_FUNCTION`
+ *    - `DG_TMP_DEFINE_COMPARE_OPERATOR`
+ * 4. For mixed scalar-field operators, reuse helpers:
+ *    - `dgTmpBinary`, `dgTmpUnary`, `dgTmpCompare`
+ *    - or the field-scalar helpers in specialized cores.
+ * 5. Use `dgNoMutateLeft/Right/Unary` when in-place reuse is not valid.
+ *
+ * Core function roles:
+ * - `dgNewLike`: allocate result field with same geometry metadata.
+ * - `dgTmpUnary`: unary kernels for non-tmp/tmp inputs.
+ * - `dgTmpBinary`: binary kernels for all tmp/non-tmp combinations.
+ * - `dgTmpCompare`: element-wise predicate checks with early exit.
+ */
+
+/** \brief No-op mutator for lhs when tmp reuse is disabled. */
 struct dgNoMutateLeft
 {
     template<class LhsElem, class RhsElem>
     inline void operator()(LhsElem&, const RhsElem&) const {}
 };
 
+/** \brief No-op mutator for rhs when tmp reuse is disabled. */
 struct dgNoMutateRight
 {
     template<class LhsElem, class RhsElem>
     inline void operator()(const LhsElem&, RhsElem&) const {}
 };
 
+/** \brief No-op mutator for unary tmp reuse-disabled paths. */
 struct dgNoMutateUnary
 {
     template<class Elem>
     inline void operator()(Elem&) const {}
 };
 
+/** \brief Allocate output field with mesh/cell metadata copied from reference field. */
 template<class FieldType>
 inline tmp<FieldType> dgNewLike(const FieldType& A)
 {
     return tmp<FieldType>(new FieldType(A.cellID(), A.dgMesh()));
 }
 
-// --------------------------- Unary core --------------------------- //
+/** \brief Unary core for non-tmp input fields. */
 
 template<class OutField, class InField, class Eval>
 inline tmp<OutField> dgTmpUnary
@@ -84,6 +109,7 @@ inline tmp<OutField> dgTmpUnary
     return tRes;
 }
 
+/** \brief Unary core for tmp inputs with possible in-place reuse. */
 template<class OutField, class InField, class Eval, class Mutate>
 inline typename std::enable_if<std::is_same<OutField, InField>::value, tmp<OutField>>::type
 dgTmpUnary
@@ -108,6 +134,7 @@ dgTmpUnary
     return dgTmpUnary<OutField>(tA(), eval);
 }
 
+/** \brief Unary core for tmp inputs when in-place reuse is not possible. */
 template<class OutField, class InField, class Eval, class Mutate>
 inline typename std::enable_if<!std::is_same<OutField, InField>::value, tmp<OutField>>::type
 dgTmpUnary
@@ -120,7 +147,7 @@ dgTmpUnary
     return dgTmpUnary<OutField>(tA(), eval);
 }
 
-// --------------------------- Binary core -------------------------- //
+/** \brief Binary core for non-tmp/non-tmp inputs. */
 
 template<class OutField, class AField, class BField, class Eval>
 inline tmp<OutField> dgTmpBinary
@@ -141,6 +168,7 @@ inline tmp<OutField> dgTmpBinary
     return tRes;
 }
 
+/** \brief Binary core for tmp lhs + non-tmp rhs with optional lhs reuse. */
 template<class OutField, class AField, class BField, class Eval, class MutateA>
 inline typename std::enable_if<std::is_same<OutField, AField>::value, tmp<OutField>>::type
 dgTmpBinary
@@ -166,6 +194,7 @@ dgTmpBinary
     return dgTmpBinary<OutField>(tA(), B, eval);
 }
 
+/** \brief Binary core for tmp lhs + non-tmp rhs without lhs reuse. */
 template<class OutField, class AField, class BField, class Eval, class MutateA>
 inline typename std::enable_if<!std::is_same<OutField, AField>::value, tmp<OutField>>::type
 dgTmpBinary
@@ -179,6 +208,7 @@ dgTmpBinary
     return dgTmpBinary<OutField>(tA(), B, eval);
 }
 
+/** \brief Binary core for non-tmp lhs + tmp rhs with optional rhs reuse. */
 template<class OutField, class AField, class BField, class Eval, class MutateB>
 inline typename std::enable_if<std::is_same<OutField, BField>::value, tmp<OutField>>::type
 dgTmpBinary
@@ -204,6 +234,7 @@ dgTmpBinary
     return dgTmpBinary<OutField>(A, tB(), eval);
 }
 
+/** \brief Binary core for non-tmp lhs + tmp rhs without rhs reuse. */
 template<class OutField, class AField, class BField, class Eval, class MutateB>
 inline typename std::enable_if<!std::is_same<OutField, BField>::value, tmp<OutField>>::type
 dgTmpBinary
@@ -217,6 +248,7 @@ dgTmpBinary
     return dgTmpBinary<OutField>(A, tB(), eval);
 }
 
+/** \brief Binary core for tmp/tmp inputs, preferring lhs reuse path first. */
 template<class OutField, class AField, class BField, class Eval, class MutateA, class MutateB>
 inline tmp<OutField> dgTmpBinary
 (
@@ -235,8 +267,9 @@ inline tmp<OutField> dgTmpBinary
     return dgTmpBinary<OutField>(tA(), tB, eval, mutateB);
 }
 
-// ------------------------- Compare core --------------------------- //
+/** \brief Compare two non-tmp fields element-wise with early exit. */
 
+/** \brief Compare tmp lhs against non-tmp rhs. */
 template<class AField, class BField, class Pred>
 inline bool dgTmpCompare
 (
@@ -256,6 +289,7 @@ inline bool dgTmpCompare
     return true;
 }
 
+/** \brief Compare non-tmp lhs against tmp rhs. */
 template<class AField, class BField, class Pred>
 inline bool dgTmpCompare
 (
@@ -267,6 +301,7 @@ inline bool dgTmpCompare
     return dgTmpCompare(tA(), B, pred);
 }
 
+/** \brief Compare tmp lhs against tmp rhs. */
 template<class AField, class BField, class Pred>
 inline bool dgTmpCompare
 (
@@ -292,11 +327,9 @@ inline bool dgTmpCompare
 } // End namespace Foam
 
 
-// ---------------------------- Macros ------------------------------ //
-// Eval:    ElemOut operator()(const ElemA&, const ElemB&) const;
-// MutateA: void operator()(ElemA&, const ElemB&) const;
-// MutateB: void operator()(const ElemA&, ElemB&) const;
+/** \brief Macro family to generate binary operator overloads for all tmp/non-tmp combinations. */
 
+/** \brief Generate binary operator overloads for all tmp/non-tmp combinations. */
 #define DG_TMP_DEFINE_BINARY_OPERATOR(OP, OUTFIELD, AFIELD, BFIELD, EVAL, MUTA, MUTB) \
 inline tmp<OUTFIELD> operator OP (const AFIELD& A, const BFIELD& B)                     \
 {                                                                                         \
@@ -315,8 +348,8 @@ inline tmp<OUTFIELD> operator OP (const tmp<AFIELD>& tA, const tmp<BFIELD>& tB) 
     return dgTmpBinary<OUTFIELD>(tA, tB, EVAL(), MUTA(), MUTB());                         \
 }
 
-// Eval: ElemOut operator()(const ElemIn&) const;
-// Mut:  void operator()(ElemIn&) const;
+/** \brief Macro family to generate unary function overloads for non-tmp/tmp inputs. */
+/** \brief Generate unary function overloads for non-tmp/tmp inputs. */
 #define DG_TMP_DEFINE_UNARY_FUNCTION(FUNC, OUTFIELD, INFIELD, EVAL, MUT) \
 inline tmp<OUTFIELD> FUNC (const INFIELD& A)                              \
 {                                                                          \
@@ -328,6 +361,7 @@ inline tmp<OUTFIELD> FUNC (const tmp<INFIELD>& tA)                        \
 }
 
 // Pred: bool operator()(const ElemA&, const ElemB&) const;
+/** \brief Generate `(field OP field)` comparison overloads with tmp-aware path. */
 #define DG_TMP_DEFINE_COMPARE_OPERATOR(OP, AFIELD, BFIELD, PRED) \
 inline bool operator OP (const AFIELD& A, const BFIELD& B)       \
 {                                                                 \
@@ -347,4 +381,3 @@ inline bool operator OP (const tmp<AFIELD>& tA, const tmp<BFIELD>& tB) \
 }
 
 #endif
-

@@ -67,49 +67,86 @@
 \DoxyCodeLine{00063\ \{\}}
 \DoxyCodeLine{00064\ }
 \DoxyCodeLine{00065\ }
-\DoxyCodeLine{00066\ \textcolor{comment}{//\ Construct\ from\ ID\ +\ DoF\ list}}
-\DoxyCodeLine{00067\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Type>}
-\DoxyCodeLine{00068\ cellDof<Type>::cellDof}
-\DoxyCodeLine{00069\ (}
-\DoxyCodeLine{00070\ \ \ \ \ \textcolor{keyword}{const}\ label\ cellID,}
-\DoxyCodeLine{00071\ \ \ \ \ \textcolor{keyword}{const}\ label\ nDof,}
-\DoxyCodeLine{00072\ \ \ \ \ \textcolor{keyword}{const}\ UList<Type>\&\ inputDof}
-\DoxyCodeLine{00073\ )}
-\DoxyCodeLine{00074\ :}
-\DoxyCodeLine{00075\ \ \ \ \ cellID\_(cellID),}
-\DoxyCodeLine{00076\ \ \ \ \ nDof\_(nDof),}
-\DoxyCodeLine{00077\ \ \ \ \ dof\_(nDof,\ pTraits<Type>::zero)}
-\DoxyCodeLine{00078\ \{}
-\DoxyCodeLine{00079\ \ \ \ \ \textcolor{keyword}{const}\ label\ inputSize\ =\ inputDof.size();}
-\DoxyCodeLine{00080\ \ \ \ \ \textcolor{keyword}{const}\ label\ minSize\ =\ min(inputSize,\ nDof\_);}
+\DoxyCodeLine{00066\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Type>}
+\DoxyCodeLine{00067\ cellDof<Type>::cellDof}
+\DoxyCodeLine{00068\ (}
+\DoxyCodeLine{00069\ \ \ \ \ \textcolor{keyword}{const}\ tmp<cellDof<Type>>\&\ \mbox{\hyperlink{testLiteralScalarMath_8H_a2cbefcb18b5f85ba6e8f976ed412c061}{t}}}
+\DoxyCodeLine{00070\ )}
+\DoxyCodeLine{00071\ :}
+\DoxyCodeLine{00072\ \ \ \ \ cellID\_(-\/1),}
+\DoxyCodeLine{00073\ \ \ \ \ nDof\_(0),}
+\DoxyCodeLine{00074\ \ \ \ \ dof\_()}
+\DoxyCodeLine{00075\ \{}
+\DoxyCodeLine{00076\ \ \ \ \ cellDof<Type>\&\ tf\ =\ \textcolor{keyword}{const\_cast<}tmp<cellDof<Type>\textcolor{keyword}{>}\&>(\mbox{\hyperlink{testLiteralScalarMath_8H_a2cbefcb18b5f85ba6e8f976ed412c061}{t}}).ref();}
+\DoxyCodeLine{00077\ }
+\DoxyCodeLine{00078\ \ \ \ \ cellID\_\ =\ tf.cellID\_;}
+\DoxyCodeLine{00079\ \ \ \ \ nDof\_\ \ \ =\ tf.nDof\_;}
+\DoxyCodeLine{00080\ \ \ \ \ dof\_.transfer(tf.dof\_);}
 \DoxyCodeLine{00081\ }
-\DoxyCodeLine{00082\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <\ minSize;\ ++i)}
-\DoxyCodeLine{00083\ \ \ \ \ \{}
-\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ dof\_[i]\ =\ inputDof[i];}
-\DoxyCodeLine{00085\ \ \ \ \ \}}
-\DoxyCodeLine{00086\ \}}
-\DoxyCodeLine{00087\ }
-\DoxyCodeLine{00088\ }
-\DoxyCodeLine{00089\ \textcolor{comment}{//\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ Assignment\ \ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ //}}
-\DoxyCodeLine{00090\ }
-\DoxyCodeLine{00091\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Type>}
-\DoxyCodeLine{00092\ cellDof<Type>\&\ cellDof<Type>::operator=(\textcolor{keyword}{const}\ cellDof<Type>\&\ other)}
-\DoxyCodeLine{00093\ \{}
-\DoxyCodeLine{00094\ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{this}\ !=\ \&other)}
-\DoxyCodeLine{00095\ \ \ \ \ \{}
-\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ cellID\_\ =\ other.cellID\_;}
-\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ nDof\_\ =\ other.nDof\_;}
-\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ dof\_\ =\ other.dof\_;}
-\DoxyCodeLine{00099\ \ \ \ \ \}}
-\DoxyCodeLine{00100\ }
-\DoxyCodeLine{00101\ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
-\DoxyCodeLine{00102\ \}}
-\DoxyCodeLine{00103\ }
-\DoxyCodeLine{00104\ \}\ \textcolor{comment}{//\ End\ namespace\ Foam}}
-\DoxyCodeLine{00105\ }
-\DoxyCodeLine{00106\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00082\ \ \ \ \ \mbox{\hyperlink{testLiteralScalarMath_8H_a2cbefcb18b5f85ba6e8f976ed412c061}{t}}.clear();}
+\DoxyCodeLine{00083\ \}}
+\DoxyCodeLine{00084\ }
+\DoxyCodeLine{00085\ }
+\DoxyCodeLine{00086\ \textcolor{comment}{//\ Construct\ from\ ID\ +\ DoF\ list}}
+\DoxyCodeLine{00087\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Type>}
+\DoxyCodeLine{00088\ cellDof<Type>::cellDof}
+\DoxyCodeLine{00089\ (}
+\DoxyCodeLine{00090\ \ \ \ \ \textcolor{keyword}{const}\ label\ cellID,}
+\DoxyCodeLine{00091\ \ \ \ \ \textcolor{keyword}{const}\ label\ nDof,}
+\DoxyCodeLine{00092\ \ \ \ \ \textcolor{keyword}{const}\ UList<Type>\&\ inputDof}
+\DoxyCodeLine{00093\ )}
+\DoxyCodeLine{00094\ :}
+\DoxyCodeLine{00095\ \ \ \ \ cellID\_(cellID),}
+\DoxyCodeLine{00096\ \ \ \ \ nDof\_(nDof),}
+\DoxyCodeLine{00097\ \ \ \ \ dof\_(nDof,\ pTraits<Type>::zero)}
+\DoxyCodeLine{00098\ \{}
+\DoxyCodeLine{00099\ \ \ \ \ \textcolor{keyword}{const}\ label\ inputSize\ =\ inputDof.size();}
+\DoxyCodeLine{00100\ \ \ \ \ \textcolor{keyword}{const}\ label\ minSize\ =\ min(inputSize,\ nDof\_);}
+\DoxyCodeLine{00101\ }
+\DoxyCodeLine{00102\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <\ minSize;\ ++i)}
+\DoxyCodeLine{00103\ \ \ \ \ \{}
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ dof\_[i]\ =\ inputDof[i];}
+\DoxyCodeLine{00105\ \ \ \ \ \}}
+\DoxyCodeLine{00106\ \}}
 \DoxyCodeLine{00107\ }
-\DoxyCodeLine{00108\ \textcolor{comment}{//\ *************************************************************************\ //}}
-\DoxyCodeLine{00109\ }
+\DoxyCodeLine{00108\ }
+\DoxyCodeLine{00109\ \textcolor{comment}{//\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ Assignment\ \ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ //}}
+\DoxyCodeLine{00110\ }
+\DoxyCodeLine{00111\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Type>}
+\DoxyCodeLine{00112\ cellDof<Type>\&\ cellDof<Type>::operator=(\textcolor{keyword}{const}\ cellDof<Type>\&\ other)}
+\DoxyCodeLine{00113\ \{}
+\DoxyCodeLine{00114\ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{this}\ !=\ \&other)}
+\DoxyCodeLine{00115\ \ \ \ \ \{}
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ cellID\_\ =\ other.cellID\_;}
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ nDof\_\ =\ other.nDof\_;}
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ dof\_\ =\ other.dof\_;}
+\DoxyCodeLine{00119\ \ \ \ \ \}}
+\DoxyCodeLine{00120\ }
+\DoxyCodeLine{00121\ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00122\ \}}
+\DoxyCodeLine{00123\ }
+\DoxyCodeLine{00124\ }
+\DoxyCodeLine{00125\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Type>}
+\DoxyCodeLine{00126\ cellDof<Type>\&\ cellDof<Type>::operator=}
+\DoxyCodeLine{00127\ (}
+\DoxyCodeLine{00128\ \ \ \ \ \textcolor{keyword}{const}\ tmp<cellDof<Type>>\&\ \mbox{\hyperlink{testLiteralScalarMath_8H_a2cbefcb18b5f85ba6e8f976ed412c061}{t}}}
+\DoxyCodeLine{00129\ )}
+\DoxyCodeLine{00130\ \{}
+\DoxyCodeLine{00131\ \ \ \ \ cellDof<Type>\&\ tf\ =\ \textcolor{keyword}{const\_cast<}tmp<cellDof<Type>\textcolor{keyword}{>}\&>(\mbox{\hyperlink{testLiteralScalarMath_8H_a2cbefcb18b5f85ba6e8f976ed412c061}{t}}).ref();}
+\DoxyCodeLine{00132\ }
+\DoxyCodeLine{00133\ \ \ \ \ cellID\_\ =\ tf.cellID\_;}
+\DoxyCodeLine{00134\ \ \ \ \ nDof\_\ \ \ =\ tf.nDof\_;}
+\DoxyCodeLine{00135\ \ \ \ \ dof\_.transfer(tf.dof\_);}
+\DoxyCodeLine{00136\ }
+\DoxyCodeLine{00137\ \ \ \ \ \mbox{\hyperlink{testLiteralScalarMath_8H_a2cbefcb18b5f85ba6e8f976ed412c061}{t}}.clear();}
+\DoxyCodeLine{00138\ }
+\DoxyCodeLine{00139\ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00140\ \}}
+\DoxyCodeLine{00141\ }
+\DoxyCodeLine{00142\ \}\ \textcolor{comment}{//\ End\ namespace\ Foam}}
+\DoxyCodeLine{00143\ }
+\DoxyCodeLine{00144\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00145\ }
+\DoxyCodeLine{00146\ \textcolor{comment}{//\ *************************************************************************\ //}}
 
 \end{DoxyCode}

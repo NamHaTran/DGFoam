@@ -41,6 +41,30 @@ namespace Foam
 namespace dgFaceTmp
 {
 
+/**
+ * \brief Quick guide to add a new operator using this core.
+ *
+ * Steps:
+ * 1. Define an `Eval` functor for one Gauss point value pair.
+ * 2. Define optional `Mutate` functors for in-place tmp reuse on plus/minus
+ *    values when output type matches lhs/rhs type.
+ * 3. Generate overloads using one of macros at file end:
+ *    - `DG_FACE_TMP_DEFINE_BINARY_OPERATOR`
+ *    - `DG_FACE_TMP_DEFINE_UNARY_FUNCTION`
+ *    - `DG_FACE_TMP_DEFINE_FIELD_SCALAR_OPERATOR`
+ *    - `DG_FACE_TMP_DEFINE_SCALAR_FIELD_OPERATOR`
+ *    - `DG_FACE_TMP_DEFINE_FIELD_SCALAR_FUNCTION`
+ *    - comparison macros for boolean operators
+ * 4. Use `NoMutateLeft/Right/Unary` for non-reusable cases.
+ *
+ * Core function roles:
+ * - `newLike`: allocate output face field with same metadata.
+ * - `unary`: unary kernels for non-tmp/tmp inputs.
+ * - `binary`: binary kernels for all tmp/non-tmp combinations.
+ * - `binaryFieldScalar`/`binaryScalarField`: mixed field-scalar kernels.
+ * - `compare`/`compareFieldScalar`/`compareScalarField`: predicate kernels.
+ */
+
 struct NoMutateLeft
 {
     template<class LhsElem, class RhsElem>
@@ -71,12 +95,14 @@ struct NoMutateUnary
     inline void operator()(Elem&, Elem&) const {}
 };
 
+/** \brief Allocate output face field with geometry copied from reference field. */
 template<class OutField, class RefField>
 inline tmp<OutField> newLike(const RefField& A)
 {
     return tmp<OutField>(new OutField(A.cellID(), A.dgMesh()));
 }
 
+/** \brief Unary kernel for non-tmp face field input. */
 template<class OutField, class InField, class Eval>
 inline tmp<OutField> unary
 (
@@ -96,6 +122,7 @@ inline tmp<OutField> unary
     return tRes;
 }
 
+/** \brief Unary kernel for tmp face field input with optional in-place reuse. */
 template<class OutField, class InField, class Eval, class Mutate>
 inline typename std::enable_if<std::is_same<OutField, InField>::value, tmp<OutField>>::type
 unary
@@ -132,6 +159,7 @@ unary
     return unary<OutField>(tA(), eval);
 }
 
+/** \brief Binary kernel for non-tmp/non-tmp face fields. */
 template<class OutField, class AField, class BField, class Eval>
 inline tmp<OutField> binary
 (
@@ -152,6 +180,7 @@ inline tmp<OutField> binary
     return tRes;
 }
 
+/** \brief Binary kernel for tmp lhs + non-tmp rhs with optional lhs reuse. */
 template<class OutField, class AField, class BField, class Eval, class MutateA>
 inline typename std::enable_if<std::is_same<OutField, AField>::value, tmp<OutField>>::type
 binary
@@ -196,6 +225,7 @@ binary
     return binary<OutField>(tA(), B, eval);
 }
 
+/** \brief Binary kernel for non-tmp lhs + tmp rhs with optional rhs reuse. */
 template<class OutField, class AField, class BField, class Eval, class MutateB>
 inline typename std::enable_if<std::is_same<OutField, BField>::value, tmp<OutField>>::type
 binary
@@ -258,6 +288,7 @@ inline tmp<OutField> binary
     return binary<OutField>(tA(), tB, eval, mutateB);
 }
 
+/** \brief Field-scalar kernel for non-tmp face field input. */
 template<class OutField, class AField, class ScalarType, class Eval>
 inline tmp<OutField> binaryFieldScalar
 (
@@ -316,6 +347,7 @@ binaryFieldScalar
     return binaryFieldScalar<OutField>(tA(), b, eval);
 }
 
+/** \brief Scalar-field kernel for non-tmp face field input. */
 template<class OutField, class ScalarType, class BField, class Eval>
 inline tmp<OutField> binaryScalarField
 (
@@ -374,6 +406,7 @@ binaryScalarField
     return binaryScalarField<OutField>(a, tB(), eval);
 }
 
+/** \brief Compare two face fields element-wise (plus/minus sides). */
 template<class AField, class BField, class Pred>
 inline bool compare
 (
@@ -436,6 +469,7 @@ inline bool compare
     return compare(tA(), tB(), pred);
 }
 
+/** \brief Compare each face field value against one scalar. */
 template<class AField, class ScalarType, class Pred>
 inline bool compareFieldScalar
 (
@@ -471,6 +505,7 @@ inline bool compareFieldScalar
     return compareFieldScalar(tA(), b, pred);
 }
 
+/** \brief Compare one scalar against each face field value. */
 template<class ScalarType, class BField, class Pred>
 inline bool compareScalarField
 (
@@ -509,6 +544,7 @@ inline bool compareScalarField
 } // End namespace dgFaceTmp
 } // End namespace Foam
 
+/** \brief Generate binary operator overloads for all tmp/non-tmp combinations. */
 #define DG_FACE_TMP_DEFINE_BINARY_OPERATOR(OP, OUTFIELD, AFIELD, BFIELD, EVAL, MUTA, MUTB) \
 inline tmp<OUTFIELD> operator OP (const AFIELD& A, const BFIELD& B)                          \
 {                                                                                              \
@@ -527,6 +563,7 @@ inline tmp<OUTFIELD> operator OP (const tmp<AFIELD>& tA, const tmp<BFIELD>& tB) 
     return Foam::dgFaceTmp::binary<OUTFIELD>(tA, tB, EVAL(), MUTA(), MUTB());                 \
 }
 
+/** \brief Generate unary function overloads for non-tmp/tmp inputs. */
 #define DG_FACE_TMP_DEFINE_UNARY_FUNCTION(FUNC, OUTFIELD, INFIELD, EVAL, MUT) \
 inline tmp<OUTFIELD> FUNC (const INFIELD& A)                                   \
 {                                                                               \
@@ -537,6 +574,7 @@ inline tmp<OUTFIELD> FUNC (const tmp<INFIELD>& tA)                             \
     return Foam::dgFaceTmp::unary<OUTFIELD>(tA, EVAL(), MUT());                \
 }
 
+/** \brief Generate `(field OP scalar)` overloads with tmp-aware path. */
 #define DG_FACE_TMP_DEFINE_FIELD_SCALAR_OPERATOR(OP, OUTFIELD, AFIELD, SCALART, EVAL, MUTA) \
 inline tmp<OUTFIELD> operator OP (const AFIELD& A, const SCALART& b)                          \
 {                                                                                               \
@@ -547,6 +585,7 @@ inline tmp<OUTFIELD> operator OP (const tmp<AFIELD>& tA, const SCALART& b)      
     return Foam::dgFaceTmp::binaryFieldScalar<OUTFIELD>(tA, b, EVAL(), MUTA());                \
 }
 
+/** \brief Generate `(scalar OP field)` overloads with tmp-aware path. */
 #define DG_FACE_TMP_DEFINE_SCALAR_FIELD_OPERATOR(OP, OUTFIELD, SCALART, BFIELD, EVAL, MUTB) \
 inline tmp<OUTFIELD> operator OP (const SCALART& a, const BFIELD& B)                         \
 {                                                                                              \
@@ -557,6 +596,7 @@ inline tmp<OUTFIELD> operator OP (const SCALART& a, const tmp<BFIELD>& tB)      
     return Foam::dgFaceTmp::binaryScalarField<OUTFIELD>(a, tB, EVAL(), MUTB());               \
 }
 
+/** \brief Generate `(FUNC(field, scalar))` overloads with tmp-aware path. */
 #define DG_FACE_TMP_DEFINE_FIELD_SCALAR_FUNCTION(FUNC, OUTFIELD, AFIELD, SCALART, EVAL, MUTA) \
 inline tmp<OUTFIELD> FUNC (const AFIELD& A, const SCALART& b)                                   \
 {                                                                                                 \
@@ -567,6 +607,7 @@ inline tmp<OUTFIELD> FUNC (const tmp<AFIELD>& tA, const SCALART& b)             
     return Foam::dgFaceTmp::binaryFieldScalar<OUTFIELD>(tA, b, EVAL(), MUTA());                  \
 }
 
+/** \brief Generate `(field OP field)` comparison overloads with tmp-aware path. */
 #define DG_FACE_TMP_DEFINE_COMPARE_OPERATOR(OP, AFIELD, BFIELD, PRED) \
 inline bool operator OP (const AFIELD& A, const BFIELD& B)            \
 {                                                                      \
@@ -585,6 +626,7 @@ inline bool operator OP (const tmp<AFIELD>& tA, const tmp<BFIELD>& tB)\
     return Foam::dgFaceTmp::compare(tA, tB, PRED());                   \
 }
 
+/** \brief Generate `(field OP scalar)` comparison overloads with tmp-aware path. */
 #define DG_FACE_TMP_DEFINE_COMPARE_FIELD_SCALAR(OP, AFIELD, SCALART, PRED) \
 inline bool operator OP (const AFIELD& A, const SCALART& b)                \
 {                                                                           \
@@ -595,6 +637,7 @@ inline bool operator OP (const tmp<AFIELD>& tA, const SCALART& b)          \
     return Foam::dgFaceTmp::compareFieldScalar(tA, b, PRED());              \
 }
 
+/** \brief Generate `(scalar OP field)` comparison overloads with tmp-aware path. */
 #define DG_FACE_TMP_DEFINE_COMPARE_SCALAR_FIELD(OP, SCALART, BFIELD, PRED) \
 inline bool operator OP (const SCALART& a, const BFIELD& B)                \
 {                                                                           \

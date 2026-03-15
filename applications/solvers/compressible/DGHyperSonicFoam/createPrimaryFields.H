@@ -1,7 +1,6 @@
 Info<< "Creating primitive fields\n" << endl;
 
-// Only create pField and UField, all fields relating to thermo are
-// processed internally inside thermo
+// Primitive fields are created by the solver and updated by thermo.
 
 dgField<scalar> p
 (
@@ -46,20 +45,6 @@ dgField<vector> U
 );
 
 // Declare boundary condition managers
-IOobject pBCIO
-(
-    "pBC",
-    runTime.constant(),
-    mesh,
-    IOobject::MUST_READ,
-    IOobject::NO_WRITE
-);
-
-autoPtr<dgGeneralBoundaryManager<scalar>> pBC
-(
-    new dgGeneralBoundaryManager<scalar>(pBCIO, dgMesh)
-);
-
 IOobject TBCIO
 (
     "TBC",
@@ -72,6 +57,20 @@ IOobject TBCIO
 autoPtr<dgGeneralBoundaryManager<scalar>> TBC
 (
     new dgGeneralBoundaryManager<scalar>(TBCIO, dgMesh)
+);
+
+IOobject pBCIO
+(
+    "pBC",
+    runTime.constant(),
+    mesh,
+    IOobject::MUST_READ,
+    IOobject::NO_WRITE
+);
+
+autoPtr<dgGeneralBoundaryManager<scalar>> pBC
+(
+    new dgGeneralBoundaryManager<scalar>(pBCIO, dgMesh)
 );
 
 IOobject rhoBCIO

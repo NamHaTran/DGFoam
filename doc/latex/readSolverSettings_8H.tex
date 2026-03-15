@@ -1,24 +1,71 @@
 \doxysection{/home/nam-\/ha-\/tran/\+Open\+FOAM/\+DGFoam/applications/solvers/compressible/\+DGHyper\+Sonic\+Foam/read\+Solver\+Settings.H File Reference}
 \hypertarget{readSolverSettings_8H}{}\label{readSolverSettings_8H}\index{/home/nam-\/ha-\/tran/OpenFOAM/DGFoam/applications/solvers/compressible/DGHyperSonicFoam/readSolverSettings.H@{/home/nam-\/ha-\/tran/OpenFOAM/DGFoam/applications/solvers/compressible/DGHyperSonicFoam/readSolverSettings.H}}
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=265pt]{readSolverSettings_8H__dep__incl}
+\end{center}
+\end{figure}
 \doxysubsubsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-IOdictionary \mbox{\hyperlink{readSolverSettings_8H_a2da3680fdfb9d4b668ac0729576b16cd}{flux\+Solver\+Dict}} (IOobject("{}dg\+Schemes"{}, run\+Time.\+system(), mesh, IOobject\+::\+MUST\+\_\+\+READ, IOobject\+::\+NO\+\_\+\+WRITE))
+IOdictionary \mbox{\hyperlink{readSolverSettings_8H_a5fe45979d786d7fef7e805a5a2736c48}{dg\+Schemes\+Dict}} (IOobject("{}dg\+Schemes"{}, run\+Time.\+system(), mesh, IOobject\+::\+MUST\+\_\+\+READ, IOobject\+::\+NO\+\_\+\+WRITE))
 \item 
-dg\+Flux\+Solver\+Manager \mbox{\hyperlink{readSolverSettings_8H_ab1b597d6f01e60a213a0683a26a35e2c}{flux\+Solver\+Manager}} (\mbox{\hyperlink{readSolverSettings_8H_a2da3680fdfb9d4b668ac0729576b16cd}{flux\+Solver\+Dict}}, dg\+Mesh)
+dg\+Flux\+Solver\+Manager \mbox{\hyperlink{readSolverSettings_8H_abc8b9b91a9193e1e23bcd871dcdff481}{flux\+Solver\+Manager}} (\mbox{\hyperlink{readSolverSettings_8H_a5fe45979d786d7fef7e805a5a2736c48}{dg\+Schemes\+Dict}}, dg\+Mesh)
+\item 
+dg\+Time\+Discretization \mbox{\hyperlink{readSolverSettings_8H_a731ad9087afece7da5cbd3261100a133}{time\+Discretization}} (\mbox{\hyperlink{readSolverSettings_8H_a5fe45979d786d7fef7e805a5a2736c48}{dg\+Schemes\+Dict}}, \mbox{\hyperlink{VarDeclaration_8h_a122df5dd52660cdfcef00ba179bd53a7}{run\+Time}}, dg\+Mesh)
+\item 
+\mbox{\hyperlink{readSolverSettings_8H_a731ad9087afece7da5cbd3261100a133}{time\+Discretization}} \mbox{\hyperlink{readSolverSettings_8H_ad2797295764c0d7e098cb8682b701e00}{register\+Field}} (\mbox{\hyperlink{dynamicVarDeclaration_8cpp_ae7a21fded6f5e50f59fb05c0735f2479}{rho}})
+\item 
+\mbox{\hyperlink{readSolverSettings_8H_a731ad9087afece7da5cbd3261100a133}{time\+Discretization}} \mbox{\hyperlink{readSolverSettings_8H_a86db4ebc52b540c9af356a11309c5c73}{register\+Field}} (\mbox{\hyperlink{createConservativeFields_8H_a4f450f5e1994b9626ccd4ea0964b1918}{rhoU}})
+\item 
+\mbox{\hyperlink{readSolverSettings_8H_a731ad9087afece7da5cbd3261100a133}{time\+Discretization}} \mbox{\hyperlink{readSolverSettings_8H_adf655be49f40514baaaee247cf057ce2}{register\+Field}} (\mbox{\hyperlink{createConservativeFields_8H_a3f370753d9872dffe05120a7a166ba5b}{E}})
+\item 
+\mbox{\hyperlink{readSolverSettings_8H_a731ad9087afece7da5cbd3261100a133}{time\+Discretization}} \mbox{\hyperlink{readSolverSettings_8H_a7be859dd105ac8931fcfcdfe30b6b975}{write\+Info}} (Info)
 \end{DoxyCompactItemize}
 
 
 \doxysubsection{Function Documentation}
-\Hypertarget{readSolverSettings_8H_a2da3680fdfb9d4b668ac0729576b16cd}\label{readSolverSettings_8H_a2da3680fdfb9d4b668ac0729576b16cd} 
-\index{readSolverSettings.H@{readSolverSettings.H}!fluxSolverDict@{fluxSolverDict}}
-\index{fluxSolverDict@{fluxSolverDict}!readSolverSettings.H@{readSolverSettings.H}}
-\doxysubsubsection{\texorpdfstring{fluxSolverDict()}{fluxSolverDict()}}
-{\footnotesize\ttfamily IOdictionary flux\+Solver\+Dict (\begin{DoxyParamCaption}\item[{IOobject("{}dg\+Schemes"{}, run\+Time.\+system(), mesh, IOobject\+::\+MUST\+\_\+\+READ, IOobject\+::\+NO\+\_\+\+WRITE)}]{ }\end{DoxyParamCaption})}
+\Hypertarget{readSolverSettings_8H_a5fe45979d786d7fef7e805a5a2736c48}\label{readSolverSettings_8H_a5fe45979d786d7fef7e805a5a2736c48} 
+\index{readSolverSettings.H@{readSolverSettings.H}!dgSchemesDict@{dgSchemesDict}}
+\index{dgSchemesDict@{dgSchemesDict}!readSolverSettings.H@{readSolverSettings.H}}
+\doxysubsubsection{\texorpdfstring{dgSchemesDict()}{dgSchemesDict()}}
+{\footnotesize\ttfamily IOdictionary dg\+Schemes\+Dict (\begin{DoxyParamCaption}\item[{IOobject("{}dg\+Schemes"{}, run\+Time.\+system(), mesh, IOobject\+::\+MUST\+\_\+\+READ, IOobject\+::\+NO\+\_\+\+WRITE)}]{ }\end{DoxyParamCaption})}
 
-\Hypertarget{readSolverSettings_8H_ab1b597d6f01e60a213a0683a26a35e2c}\label{readSolverSettings_8H_ab1b597d6f01e60a213a0683a26a35e2c} 
+\Hypertarget{readSolverSettings_8H_abc8b9b91a9193e1e23bcd871dcdff481}\label{readSolverSettings_8H_abc8b9b91a9193e1e23bcd871dcdff481} 
 \index{readSolverSettings.H@{readSolverSettings.H}!fluxSolverManager@{fluxSolverManager}}
 \index{fluxSolverManager@{fluxSolverManager}!readSolverSettings.H@{readSolverSettings.H}}
 \doxysubsubsection{\texorpdfstring{fluxSolverManager()}{fluxSolverManager()}}
-{\footnotesize\ttfamily dg\+Flux\+Solver\+Manager flux\+Solver\+Manager (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{readSolverSettings_8H_a2da3680fdfb9d4b668ac0729576b16cd}{flux\+Solver\+Dict}}}]{,  }\item[{dg\+Mesh}]{ }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily dg\+Flux\+Solver\+Manager flux\+Solver\+Manager (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{readSolverSettings_8H_a5fe45979d786d7fef7e805a5a2736c48}{dg\+Schemes\+Dict}}}]{,  }\item[{dg\+Mesh}]{ }\end{DoxyParamCaption})}
+
+\Hypertarget{readSolverSettings_8H_a731ad9087afece7da5cbd3261100a133}\label{readSolverSettings_8H_a731ad9087afece7da5cbd3261100a133} 
+\index{readSolverSettings.H@{readSolverSettings.H}!timeDiscretization@{timeDiscretization}}
+\index{timeDiscretization@{timeDiscretization}!readSolverSettings.H@{readSolverSettings.H}}
+\doxysubsubsection{\texorpdfstring{timeDiscretization()}{timeDiscretization()}}
+{\footnotesize\ttfamily dg\+Time\+Discretization time\+Discretization (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{readSolverSettings_8H_a5fe45979d786d7fef7e805a5a2736c48}{dg\+Schemes\+Dict}}}]{,  }\item[{\mbox{\hyperlink{VarDeclaration_8h_a122df5dd52660cdfcef00ba179bd53a7}{run\+Time}}}]{,  }\item[{dg\+Mesh}]{ }\end{DoxyParamCaption})}
+
+\Hypertarget{readSolverSettings_8H_ad2797295764c0d7e098cb8682b701e00}\label{readSolverSettings_8H_ad2797295764c0d7e098cb8682b701e00} 
+\index{readSolverSettings.H@{readSolverSettings.H}!registerField@{registerField}}
+\index{registerField@{registerField}!readSolverSettings.H@{readSolverSettings.H}}
+\doxysubsubsection{\texorpdfstring{registerField()}{registerField()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{readSolverSettings_8H_a731ad9087afece7da5cbd3261100a133}{time\+Discretization}} register\+Field (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{dynamicVarDeclaration_8cpp_ae7a21fded6f5e50f59fb05c0735f2479}{rho}}}]{ }\end{DoxyParamCaption})}
+
+\Hypertarget{readSolverSettings_8H_a86db4ebc52b540c9af356a11309c5c73}\label{readSolverSettings_8H_a86db4ebc52b540c9af356a11309c5c73} 
+\index{readSolverSettings.H@{readSolverSettings.H}!registerField@{registerField}}
+\index{registerField@{registerField}!readSolverSettings.H@{readSolverSettings.H}}
+\doxysubsubsection{\texorpdfstring{registerField()}{registerField()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{readSolverSettings_8H_a731ad9087afece7da5cbd3261100a133}{time\+Discretization}} register\+Field (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{createConservativeFields_8H_a4f450f5e1994b9626ccd4ea0964b1918}{rhoU}}}]{ }\end{DoxyParamCaption})}
+
+\Hypertarget{readSolverSettings_8H_adf655be49f40514baaaee247cf057ce2}\label{readSolverSettings_8H_adf655be49f40514baaaee247cf057ce2} 
+\index{readSolverSettings.H@{readSolverSettings.H}!registerField@{registerField}}
+\index{registerField@{registerField}!readSolverSettings.H@{readSolverSettings.H}}
+\doxysubsubsection{\texorpdfstring{registerField()}{registerField()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{readSolverSettings_8H_a731ad9087afece7da5cbd3261100a133}{time\+Discretization}} register\+Field (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{createConservativeFields_8H_a3f370753d9872dffe05120a7a166ba5b}{E}}}]{ }\end{DoxyParamCaption})}
+
+\Hypertarget{readSolverSettings_8H_a7be859dd105ac8931fcfcdfe30b6b975}\label{readSolverSettings_8H_a7be859dd105ac8931fcfcdfe30b6b975} 
+\index{readSolverSettings.H@{readSolverSettings.H}!writeInfo@{writeInfo}}
+\index{writeInfo@{writeInfo}!readSolverSettings.H@{readSolverSettings.H}}
+\doxysubsubsection{\texorpdfstring{writeInfo()}{writeInfo()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{readSolverSettings_8H_a731ad9087afece7da5cbd3261100a133}{time\+Discretization}} write\+Info (\begin{DoxyParamCaption}\item[{Info}]{ }\end{DoxyParamCaption})}
 

@@ -145,6 +145,12 @@ public:
          */
         const GaussField<vector>& getDBasis(const label dof) const;
 
+        /** Return owner cell index */
+        inline label cellID() const { return cellID_; }
+
+        /** Return DG mesh associated with this cell basis */
+        inline const dgGeomMesh& dgMesh() const { return mesh_; }
+
         /** Return number of degrees of freedom */
         inline label nDof() const { return nDof_; }
 };

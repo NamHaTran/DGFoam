@@ -39,6 +39,7 @@ Description
 #include "dgGeneralBoundaryManager.H"
 #include "dgProcessorBoundaryManager.H"
 #include "dgFluxSolverManager.H"
+#include "dgTimeDiscretization.H"
 #include "dgThermoConservative.H"
 #include "dgGeneralPDETerm.H"
 
@@ -71,66 +72,31 @@ int main(int argc, char *argv[])
     #include "readSolverSettings.H"
 
     // TIME LOOP
+    while (runTime.run())
+    {
+        const scalar dtCandidate = timeDiscretization.deltaTValue();
+        runTime.setDeltaT(dtCandidate, runTime.isAdjustTimeStep());
 
-        #include "synchProcessors.H"
+        ++runTime;
 
-        //#include "testLiteralScalarMath.H"
-        //#include "testScalarMath.H"
-        //#include "testVectorMath.H"
-        //#include "testTensorMath.H"
+        Info<< "Time = " << runTime.timeName() << nl
+            << "deltaT = " << runTime.deltaTValue() << nl << endl;
 
-        // It's possible to iterate over every cell in a standard C++ for loop
-        for (label cellI = 0; cellI < mesh.C().size(); cellI++)
+        while (timeDiscretization.loop())
         {
-            Foam::dgBasisField basisField(cellI, dgMesh);
-
-            // -------------------------------- Update BCs --------------------------------- //
-            // Declare primitive Gauss fields
-            GaussField<vector>& UG      = U.gaussFields()[cellI];
-            GaussField<scalar>& TG      = T.gaussFields()[cellI];
-            GaussField<scalar>& pG      = p.gaussFields()[cellI];
-            GaussField<scalar>& rhoG    = rho.gaussFields()[cellI];
-
-            // Update ghost states
-            pBC     ->updateValue(pG);
-            TBC     ->updateValue(TG);
-            rhoBC   ->updateValue(rhoG);
-            UBC     ->updateValue(UG);
-
-            // Update thermo
-            thermo->update(cellI);
-            // ---------------------------------------------------------------------------- //
-
-
-            // ---------------------------- Build equation terms -------------------------- //
-            // Mass convection term
-            tmp<GaussField<vector>> tRhoUG = rhoG*UG;
-            dgGeneralPDETerm<scalar, vector> massConvTerm
-            (
-                "massConvTerm",
-                dgFluxSolver::equationType::massTransport,
-                cellI,
-                dgMesh,
-                rhoG,
-                tRhoUG,
-                fluxSolverManager
-            );
-
-            massConvTerm.updateFlux();
-            massConvTerm.calcResidual();
-
-            // Get residual
-            const List<scalar>& res = massConvTerm.R();
-
-            Pout<< "Cell " << cellI << " residual: " << res << endl;
-
-            tRhoUG.clear();
+            #include "synchProcessors.H"
+            #include "prepareStageFields.H"
+            #include "assembleStageResiduals.H"
+            #include "advanceStage.H"
         }
 
-        vectorProcBC->update(U);
+        timeDiscretization.reset();
 
         // Reset necessary objects before next time step
         #include "resetAll.H"
+        runTime.write();
+        runTime.printExecutionTime(Info);
+    }
     
     // END TIME LOOP
 

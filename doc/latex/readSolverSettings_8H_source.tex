@@ -4,22 +4,35 @@
 \begin{DoxyCode}{0}
 \DoxyCodeLine{00001\ }
 \DoxyCodeLine{00002\ \textcolor{comment}{//\ Read\ solver\ settings\ for\ DGHyperSonicFoam}}
-\DoxyCodeLine{00003\ IOdictionary\ \mbox{\hyperlink{readSolverSettings_8H_a2da3680fdfb9d4b668ac0729576b16cd}{fluxSolverDict}}}
+\DoxyCodeLine{00003\ IOdictionary\ \mbox{\hyperlink{readSolverSettings_8H_a5fe45979d786d7fef7e805a5a2736c48}{dgSchemesDict}}}
 \DoxyCodeLine{00004\ (}
 \DoxyCodeLine{00005\ \ \ \ \ IOobject}
 \DoxyCodeLine{00006\ \ \ \ \ (}
 \DoxyCodeLine{00007\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}dgSchemes"{}},}
-\DoxyCodeLine{00008\ \ \ \ \ \ \ \ \ runTime.system(),}
+\DoxyCodeLine{00008\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{VarDeclaration_8h_a122df5dd52660cdfcef00ba179bd53a7}{runTime}}.system(),}
 \DoxyCodeLine{00009\ \ \ \ \ \ \ \ \ mesh,}
 \DoxyCodeLine{00010\ \ \ \ \ \ \ \ \ IOobject::MUST\_READ,}
 \DoxyCodeLine{00011\ \ \ \ \ \ \ \ \ IOobject::NO\_WRITE}
 \DoxyCodeLine{00012\ \ \ \ \ )}
 \DoxyCodeLine{00013\ );}
 \DoxyCodeLine{00014\ }
-\DoxyCodeLine{00015\ dgFluxSolverManager\ \mbox{\hyperlink{readSolverSettings_8H_ab1b597d6f01e60a213a0683a26a35e2c}{fluxSolverManager}}}
+\DoxyCodeLine{00015\ dgFluxSolverManager\ \mbox{\hyperlink{readSolverSettings_8H_abc8b9b91a9193e1e23bcd871dcdff481}{fluxSolverManager}}}
 \DoxyCodeLine{00016\ (}
-\DoxyCodeLine{00017\ \ \ \ \ \mbox{\hyperlink{readSolverSettings_8H_a2da3680fdfb9d4b668ac0729576b16cd}{fluxSolverDict}},}
+\DoxyCodeLine{00017\ \ \ \ \ \mbox{\hyperlink{readSolverSettings_8H_a5fe45979d786d7fef7e805a5a2736c48}{dgSchemesDict}},}
 \DoxyCodeLine{00018\ \ \ \ \ dgMesh}
 \DoxyCodeLine{00019\ );}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ dgTimeDiscretization\ \mbox{\hyperlink{readSolverSettings_8H_a731ad9087afece7da5cbd3261100a133}{timeDiscretization}}}
+\DoxyCodeLine{00022\ (}
+\DoxyCodeLine{00023\ \ \ \ \ \mbox{\hyperlink{readSolverSettings_8H_a5fe45979d786d7fef7e805a5a2736c48}{dgSchemesDict}},}
+\DoxyCodeLine{00024\ \ \ \ \ \mbox{\hyperlink{VarDeclaration_8h_a122df5dd52660cdfcef00ba179bd53a7}{runTime}},}
+\DoxyCodeLine{00025\ \ \ \ \ dgMesh}
+\DoxyCodeLine{00026\ );}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \mbox{\hyperlink{readSolverSettings_8H_a731ad9087afece7da5cbd3261100a133}{timeDiscretization}}.registerField(\mbox{\hyperlink{dynamicVarDeclaration_8cpp_ae7a21fded6f5e50f59fb05c0735f2479}{rho}});}
+\DoxyCodeLine{00029\ \mbox{\hyperlink{readSolverSettings_8H_a731ad9087afece7da5cbd3261100a133}{timeDiscretization}}.registerField(\mbox{\hyperlink{createConservativeFields_8H_a4f450f5e1994b9626ccd4ea0964b1918}{rhoU}});}
+\DoxyCodeLine{00030\ \mbox{\hyperlink{readSolverSettings_8H_a731ad9087afece7da5cbd3261100a133}{timeDiscretization}}.registerField(\mbox{\hyperlink{createConservativeFields_8H_a3f370753d9872dffe05120a7a166ba5b}{E}});}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \mbox{\hyperlink{readSolverSettings_8H_a731ad9087afece7da5cbd3261100a133}{timeDiscretization}}.writeInfo(Info);}
 
 \end{DoxyCode}

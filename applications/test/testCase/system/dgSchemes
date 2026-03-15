@@ -15,6 +15,10 @@ FoamFile
     object      dgSchemes;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+ddtSchemes
+{
+	scheme					Euler;
+}
 fluxSchemes
 {
 	fluxSolvers
@@ -23,12 +27,13 @@ fluxSchemes
 		
 		massConvTermFlux		HLLC;
 		momentumConvTermFlux		LaxFriedrichs;
+		energyConvTermFlux		HLLC;
 		
 		/* Các flux khác bao gồm:
 		- auxiliaryFlux
 		- massDiffusiveFlux
 		- momentumDiffusiveFlux
-		- energyConvectiveFlux
+		- energyConvTermFlux
 		- energyDiffusiveFlux
 		Vì không khai báo trong dict nên nhận scheme pureCentral
 		*/

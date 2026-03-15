@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['idealgas_0',['idealGas',['../classFoam_1_1idealGas.html',1,'Foam']]]
+  ['gaussfield_0',['GaussField',['../classFoam_1_1GaussField.html',1,'Foam']]],
+  ['gaussfield_3c_20utype_20_3e_1',['GaussField&lt; UType &gt;',['../classFoam_1_1GaussField.html',1,'Foam']]]
 ];

@@ -1,6 +1,6 @@
 
 // Read solver settings for DGHyperSonicFoam
-IOdictionary fluxSolverDict
+IOdictionary dgSchemesDict
 (
     IOobject
     (
@@ -14,6 +14,19 @@ IOdictionary fluxSolverDict
 
 dgFluxSolverManager fluxSolverManager
 (
-    fluxSolverDict,
+    dgSchemesDict,
     dgMesh
 );
+
+dgTimeDiscretization timeDiscretization
+(
+    dgSchemesDict,
+    runTime,
+    dgMesh
+);
+
+timeDiscretization.registerField(rho);
+timeDiscretization.registerField(rhoU);
+timeDiscretization.registerField(E);
+
+timeDiscretization.writeInfo(Info);

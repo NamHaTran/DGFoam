@@ -239,4 +239,3 @@ bool Foam::dgThermoConservative::writeData(Ostream& os) const
 } // End namespace Foam
 
 // ************************************************************************* //
-

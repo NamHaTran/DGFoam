@@ -1,0 +1,13 @@
+#!/bin/sh
+#Settings-----------------------------#
+src="validate_Cyl_Kn005_pp"
+des="validate_Cyl_Kn005_order2"
+time=148000
+nproc=7
+#-------------------------------------#
+
+for i in $(seq 0 1 $nproc)
+do
+	cp -a ./CASES/$src/Processor$i/Constant ./CASES/$des/Processor$i/.
+	cp -a ./CASES/$src/Processor$i/$time ./CASES/$des/Processor$i/.
+done

@@ -186,6 +186,12 @@ public:
             return gaussFields_.size();
         }
 
+        /** Return field object name */
+        inline const word& name() const
+        {
+            return regIOobject::name();
+        }
+
     //====================================================================//
     //                              I/O
     //====================================================================//

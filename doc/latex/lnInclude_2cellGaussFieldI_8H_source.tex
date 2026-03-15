@@ -13,14 +13,14 @@
 \DoxyCodeLine{00009\ \textcolor{comment}{\ \ \ \ Copyright\ (C)\ 2024-\/2025\ Ha\ Nam\ Tran}}
 \DoxyCodeLine{00010\ \textcolor{comment}{-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
 \DoxyCodeLine{00011\ \textcolor{comment}{License}}
-\DoxyCodeLine{00012\ \textcolor{comment}{\ \ \ \ This\ file\ is\ part\ of\ OpenFOAM.}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ \ \ \ This\ file\ is\ part\ of\ DGFoam.}}
 \DoxyCodeLine{00013\ \textcolor{comment}{}}
-\DoxyCodeLine{00014\ \textcolor{comment}{\ \ \ \ OpenFOAM\ is\ free\ software:\ you\ can\ redistribute\ it\ and/or\ modify\ it}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ \ \ \ DGFoam\ is\ free\ software:\ you\ can\ redistribute\ it\ and/or\ modify\ it}}
 \DoxyCodeLine{00015\ \textcolor{comment}{\ \ \ \ under\ the\ terms\ of\ the\ GNU\ General\ Public\ License\ as\ published\ by}}
 \DoxyCodeLine{00016\ \textcolor{comment}{\ \ \ \ the\ Free\ Software\ Foundation,\ either\ version\ 3\ of\ the\ License,\ or}}
 \DoxyCodeLine{00017\ \textcolor{comment}{\ \ \ \ (at\ your\ option)\ any\ later\ version.}}
 \DoxyCodeLine{00018\ \textcolor{comment}{}}
-\DoxyCodeLine{00019\ \textcolor{comment}{\ \ \ \ OpenFOAM\ is\ distributed\ in\ the\ hope\ that\ it\ will\ be\ useful,\ but\ WITHOUT}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ \ \ \ DGFoam\ is\ distributed\ in\ the\ hope\ that\ it\ will\ be\ useful,\ but\ WITHOUT}}
 \DoxyCodeLine{00020\ \textcolor{comment}{\ \ \ \ ANY\ WARRANTY;\ without\ even\ the\ implied\ warranty\ of\ MERCHANTABILITY\ or}}
 \DoxyCodeLine{00021\ \textcolor{comment}{\ \ \ \ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE.\ \ See\ the\ GNU\ General\ Public\ License}}
 \DoxyCodeLine{00022\ \textcolor{comment}{\ \ \ \ for\ more\ details.}}
@@ -77,138 +77,250 @@
 \DoxyCodeLine{00073\ \ \ \ \ \}}
 \DoxyCodeLine{00074\ \}}
 \DoxyCodeLine{00075\ }
-\DoxyCodeLine{00076\ }
-\DoxyCodeLine{00077\ \textcolor{comment}{//\ Copy\ constructor}}
-\DoxyCodeLine{00078\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Type>}
-\DoxyCodeLine{00079\ cellGaussField<Type>::cellGaussField}
-\DoxyCodeLine{00080\ (}
-\DoxyCodeLine{00081\ \ \ \ \ \textcolor{keyword}{const}\ cellGaussField<Type>\&\ other}
-\DoxyCodeLine{00082\ )}
-\DoxyCodeLine{00083\ :}
-\DoxyCodeLine{00084\ \ \ \ \ cellID\_(other.cellID\_),}
-\DoxyCodeLine{00085\ \ \ \ \ dgMesh\_(other.dgMesh\_),}
-\DoxyCodeLine{00086\ \ \ \ \ cell\_(other.cell\_),}
-\DoxyCodeLine{00087\ \ \ \ \ nGauss\_(other.nGauss\_),}
-\DoxyCodeLine{00088\ \ \ \ \ nDof\_(other.nDof\_),}
-\DoxyCodeLine{00089\ \ \ \ \ dof\_(other.dof\_),}
-\DoxyCodeLine{00090\ \ \ \ \ values\_(other.values\_)}
-\DoxyCodeLine{00091\ \{\}}
-\DoxyCodeLine{00092\ }
-\DoxyCodeLine{00093\ }
-\DoxyCodeLine{00094\ \textcolor{comment}{//\ Uniform\ value\ constructor}}
-\DoxyCodeLine{00095\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Type>}
-\DoxyCodeLine{00096\ cellGaussField<Type>::cellGaussField}
-\DoxyCodeLine{00097\ (}
-\DoxyCodeLine{00098\ \ \ \ \ \textcolor{keyword}{const}\ label\ cellID,}
-\DoxyCodeLine{00099\ \ \ \ \ \textcolor{keyword}{const}\ dgGeomMesh*\ dgMesh,}
-\DoxyCodeLine{00100\ \ \ \ \ \textcolor{keyword}{const}\ Type\&\ initVal}
-\DoxyCodeLine{00101\ )}
-\DoxyCodeLine{00102\ :}
-\DoxyCodeLine{00103\ \ \ \ \ cellID\_(cellID),}
-\DoxyCodeLine{00104\ \ \ \ \ dgMesh\_(dgMesh),}
-\DoxyCodeLine{00105\ \ \ \ \ cell\_(dgMesh-\/>cells()[cellID]),}
-\DoxyCodeLine{00106\ \ \ \ \ nGauss\_(cell\_-\/>gaussPoints().size()),}
-\DoxyCodeLine{00107\ \ \ \ \ nDof\_(0),}
-\DoxyCodeLine{00108\ \ \ \ \ dof\_(nullptr),}
-\DoxyCodeLine{00109\ \ \ \ \ values\_(nGauss\_,\ initVal)}
-\DoxyCodeLine{00110\ \{}
-\DoxyCodeLine{00111\ \ \ \ \ \textcolor{keywordflow}{if}\ (!dgMesh\_)}
-\DoxyCodeLine{00112\ \ \ \ \ \{}
-\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ FatalErrorInFunction\ <<\ \textcolor{stringliteral}{"{}dgMesh\ pointer\ is\ null"{}}\ <<\ abort(FatalError);}
-\DoxyCodeLine{00114\ \ \ \ \ \}}
-\DoxyCodeLine{00115\ \}}
-\DoxyCodeLine{00116\ }
-\DoxyCodeLine{00117\ }
-\DoxyCodeLine{00118\ \textcolor{comment}{//\ Zero-\/init\ constructor}}
-\DoxyCodeLine{00119\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Type>}
-\DoxyCodeLine{00120\ cellGaussField<Type>::cellGaussField}
-\DoxyCodeLine{00121\ (}
-\DoxyCodeLine{00122\ \ \ \ \ \textcolor{keyword}{const}\ label\ cellID,}
-\DoxyCodeLine{00123\ \ \ \ \ \textcolor{keyword}{const}\ dgGeomMesh*\ dgMesh}
-\DoxyCodeLine{00124\ )}
-\DoxyCodeLine{00125\ :}
-\DoxyCodeLine{00126\ \ \ \ \ cellID\_(cellID),}
-\DoxyCodeLine{00127\ \ \ \ \ dgMesh\_(dgMesh),}
-\DoxyCodeLine{00128\ \ \ \ \ cell\_(dgMesh-\/>cells()[cellID]),}
-\DoxyCodeLine{00129\ \ \ \ \ nGauss\_(cell\_-\/>gaussPoints().size()),}
-\DoxyCodeLine{00130\ \ \ \ \ nDof\_(0),}
-\DoxyCodeLine{00131\ \ \ \ \ dof\_(nullptr),}
-\DoxyCodeLine{00132\ \ \ \ \ values\_(nGauss\_)}
-\DoxyCodeLine{00133\ \{}
-\DoxyCodeLine{00134\ \ \ \ \ \textcolor{keywordflow}{if}\ (!dgMesh\_)}
-\DoxyCodeLine{00135\ \ \ \ \ \{}
-\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ FatalErrorInFunction\ <<\ \textcolor{stringliteral}{"{}dgMesh\ pointer\ is\ null"{}}\ <<\ abort(FatalError);}
-\DoxyCodeLine{00137\ \ \ \ \ \}}
-\DoxyCodeLine{00138\ \}}
-\DoxyCodeLine{00139\ }
-\DoxyCodeLine{00140\ }
-\DoxyCodeLine{00141\ \textcolor{comment}{//\ *\ *\ *\ *\ *\ *\ *\ *\ Member\ Functions\ *\ *\ *\ *\ *\ *\ *\ *\ //}}
-\DoxyCodeLine{00142\ }
-\DoxyCodeLine{00143\ \textcolor{comment}{//\ Interpolate\ DOF\ →\ Gauss\ values}}
-\DoxyCodeLine{00144\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Type>}
-\DoxyCodeLine{00145\ \textcolor{keywordtype}{void}\ cellGaussField<Type>::interpolateFromDof()}
+\DoxyCodeLine{00076\ \textcolor{comment}{//\ Copy\ constructor}}
+\DoxyCodeLine{00077\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Type>}
+\DoxyCodeLine{00078\ cellGaussField<Type>::cellGaussField}
+\DoxyCodeLine{00079\ (}
+\DoxyCodeLine{00080\ \ \ \ \ \textcolor{keyword}{const}\ cellGaussField<Type>\&\ other}
+\DoxyCodeLine{00081\ )}
+\DoxyCodeLine{00082\ :}
+\DoxyCodeLine{00083\ \ \ \ \ cellID\_(other.cellID\_),}
+\DoxyCodeLine{00084\ \ \ \ \ dgMesh\_(other.dgMesh\_),}
+\DoxyCodeLine{00085\ \ \ \ \ cell\_(other.cell\_),}
+\DoxyCodeLine{00086\ \ \ \ \ nGauss\_(other.nGauss\_),}
+\DoxyCodeLine{00087\ \ \ \ \ nDof\_(other.nDof\_),}
+\DoxyCodeLine{00088\ \ \ \ \ dof\_(other.dof\_),}
+\DoxyCodeLine{00089\ \ \ \ \ values\_(other.values\_)}
+\DoxyCodeLine{00090\ \{\}}
+\DoxyCodeLine{00091\ }
+\DoxyCodeLine{00092\ \textcolor{comment}{//\ Move\ constructor}}
+\DoxyCodeLine{00093\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Type>}
+\DoxyCodeLine{00094\ cellGaussField<Type>::cellGaussField}
+\DoxyCodeLine{00095\ (}
+\DoxyCodeLine{00096\ \ \ \ \ cellGaussField<Type>\&\&\ other}
+\DoxyCodeLine{00097\ )\ noexcept}
+\DoxyCodeLine{00098\ :}
+\DoxyCodeLine{00099\ \ \ \ \ cellID\_(other.cellID\_),}
+\DoxyCodeLine{00100\ \ \ \ \ dgMesh\_(other.dgMesh\_),}
+\DoxyCodeLine{00101\ \ \ \ \ cell\_(other.cell\_),}
+\DoxyCodeLine{00102\ \ \ \ \ nGauss\_(other.nGauss\_),}
+\DoxyCodeLine{00103\ \ \ \ \ nDof\_(other.nDof\_),}
+\DoxyCodeLine{00104\ \ \ \ \ dof\_(other.dof\_),}
+\DoxyCodeLine{00105\ \ \ \ \ values\_(std::move(other.values\_))}
+\DoxyCodeLine{00106\ \{\}}
+\DoxyCodeLine{00107\ }
+\DoxyCodeLine{00108\ \textcolor{comment}{//\ Uniform\ value\ constructor}}
+\DoxyCodeLine{00109\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Type>}
+\DoxyCodeLine{00110\ cellGaussField<Type>::cellGaussField}
+\DoxyCodeLine{00111\ (}
+\DoxyCodeLine{00112\ \ \ \ \ \textcolor{keyword}{const}\ label\ cellID,}
+\DoxyCodeLine{00113\ \ \ \ \ \textcolor{keyword}{const}\ dgGeomMesh*\ dgMesh,}
+\DoxyCodeLine{00114\ \ \ \ \ \textcolor{keyword}{const}\ Type\&\ initVal}
+\DoxyCodeLine{00115\ )}
+\DoxyCodeLine{00116\ :}
+\DoxyCodeLine{00117\ \ \ \ \ cellID\_(cellID),}
+\DoxyCodeLine{00118\ \ \ \ \ dgMesh\_(dgMesh),}
+\DoxyCodeLine{00119\ \ \ \ \ cell\_(dgMesh-\/>cells()[cellID]),}
+\DoxyCodeLine{00120\ \ \ \ \ nGauss\_(cell\_-\/>gaussPoints().size()),}
+\DoxyCodeLine{00121\ \ \ \ \ nDof\_(0),}
+\DoxyCodeLine{00122\ \ \ \ \ dof\_(nullptr),}
+\DoxyCodeLine{00123\ \ \ \ \ values\_(nGauss\_,\ initVal)}
+\DoxyCodeLine{00124\ \{}
+\DoxyCodeLine{00125\ \ \ \ \ \textcolor{keywordflow}{if}\ (!dgMesh\_)}
+\DoxyCodeLine{00126\ \ \ \ \ \{}
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ FatalErrorInFunction\ <<\ \textcolor{stringliteral}{"{}dgMesh\ pointer\ is\ null"{}}\ <<\ abort(FatalError);}
+\DoxyCodeLine{00128\ \ \ \ \ \}}
+\DoxyCodeLine{00129\ \}}
+\DoxyCodeLine{00130\ }
+\DoxyCodeLine{00131\ \textcolor{comment}{//\ Zero-\/init\ constructor}}
+\DoxyCodeLine{00132\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Type>}
+\DoxyCodeLine{00133\ cellGaussField<Type>::cellGaussField}
+\DoxyCodeLine{00134\ (}
+\DoxyCodeLine{00135\ \ \ \ \ \textcolor{keyword}{const}\ label\ cellID,}
+\DoxyCodeLine{00136\ \ \ \ \ \textcolor{keyword}{const}\ dgGeomMesh*\ dgMesh}
+\DoxyCodeLine{00137\ )}
+\DoxyCodeLine{00138\ :}
+\DoxyCodeLine{00139\ \ \ \ \ cellID\_(cellID),}
+\DoxyCodeLine{00140\ \ \ \ \ dgMesh\_(dgMesh),}
+\DoxyCodeLine{00141\ \ \ \ \ cell\_(dgMesh-\/>cells()[cellID]),}
+\DoxyCodeLine{00142\ \ \ \ \ nGauss\_(cell\_-\/>gaussPoints().size()),}
+\DoxyCodeLine{00143\ \ \ \ \ nDof\_(0),}
+\DoxyCodeLine{00144\ \ \ \ \ dof\_(nullptr),}
+\DoxyCodeLine{00145\ \ \ \ \ values\_(nGauss\_)}
 \DoxyCodeLine{00146\ \{}
-\DoxyCodeLine{00147\ \ \ \ \ \textcolor{keywordflow}{if}\ (!dof\_)}
+\DoxyCodeLine{00147\ \ \ \ \ \textcolor{keywordflow}{if}\ (!dgMesh\_)}
 \DoxyCodeLine{00148\ \ \ \ \ \{}
-\DoxyCodeLine{00149\ \ \ \ \ \ \ \ \ FatalErrorInFunction\ <<\ \textcolor{stringliteral}{"{}No\ DOF\ data\ to\ interpolate"{}}\ <<\ abort(FatalError);}
+\DoxyCodeLine{00149\ \ \ \ \ \ \ \ \ FatalErrorInFunction\ <<\ \textcolor{stringliteral}{"{}dgMesh\ pointer\ is\ null"{}}\ <<\ abort(FatalError);}
 \DoxyCodeLine{00150\ \ \ \ \ \}}
-\DoxyCodeLine{00151\ }
-\DoxyCodeLine{00152\ \ \ \ \ \textcolor{keyword}{const}\ List<List<scalar>>\&\ B\ =\ cell\_-\/>basis();}
-\DoxyCodeLine{00153\ }
-\DoxyCodeLine{00154\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ gp\ =\ 0;\ gp\ <\ nGauss\_;\ ++gp)}
-\DoxyCodeLine{00155\ \ \ \ \ \{}
-\DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ Type\ val\ =\ pTraits<Type>::zero;}
-\DoxyCodeLine{00157\ }
-\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ k\ =\ 0;\ k\ <\ nDof\_;\ ++k)}
-\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ \ \ \ \ val\ +=\ dof\_-\/>dof()[k]\ *\ B[gp][k];}
-\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00162\ }
-\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ values\_[gp]\ =\ val;}
-\DoxyCodeLine{00164\ \ \ \ \ \}}
-\DoxyCodeLine{00165\ \}}
-\DoxyCodeLine{00166\ }
-\DoxyCodeLine{00167\ }
-\DoxyCodeLine{00168\ \textcolor{comment}{//\ Copy\ assignment}}
-\DoxyCodeLine{00169\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Type>}
-\DoxyCodeLine{00170\ \textcolor{keyword}{inline}\ cellGaussField<Type>\&\ cellGaussField<Type>::operator=}
-\DoxyCodeLine{00171\ (}
-\DoxyCodeLine{00172\ \ \ \ \ \textcolor{keyword}{const}\ cellGaussField<Type>\&\ other}
-\DoxyCodeLine{00173\ )}
-\DoxyCodeLine{00174\ \{}
-\DoxyCodeLine{00175\ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{this}\ ==\ \&other)\ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
-\DoxyCodeLine{00176\ }
-\DoxyCodeLine{00177\ \ \ \ \ cellID\_\ =\ other.cellID\_;}
-\DoxyCodeLine{00178\ \ \ \ \ dgMesh\_\ =\ other.dgMesh\_;}
-\DoxyCodeLine{00179\ \ \ \ \ cell\_\ \ \ =\ other.cell\_;}
-\DoxyCodeLine{00180\ \ \ \ \ nGauss\_\ =\ other.nGauss\_;}
-\DoxyCodeLine{00181\ \ \ \ \ nDof\_\ \ \ =\ other.nDof\_;}
-\DoxyCodeLine{00182\ \ \ \ \ dof\_\ \ \ \ =\ other.dof\_;}
-\DoxyCodeLine{00183\ \ \ \ \ values\_\ =\ other.values\_;}
-\DoxyCodeLine{00184\ }
-\DoxyCodeLine{00185\ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
-\DoxyCodeLine{00186\ \}}
-\DoxyCodeLine{00187\ }
-\DoxyCodeLine{00188\ }
-\DoxyCodeLine{00189\ \textcolor{comment}{//\ Assign\ uniform\ value}}
-\DoxyCodeLine{00190\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Type>}
-\DoxyCodeLine{00191\ \textcolor{keyword}{inline}\ cellGaussField<Type>\&\ cellGaussField<Type>::operator=}
-\DoxyCodeLine{00192\ (}
-\DoxyCodeLine{00193\ \ \ \ \ \textcolor{keyword}{const}\ Type\&\ value}
-\DoxyCodeLine{00194\ )}
-\DoxyCodeLine{00195\ \{}
-\DoxyCodeLine{00196\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ gp\ =\ 0;\ gp\ <\ nGauss\_;\ ++gp)}
-\DoxyCodeLine{00197\ \ \ \ \ \{}
-\DoxyCodeLine{00198\ \ \ \ \ \ \ \ \ values\_[gp]\ =\ value;}
-\DoxyCodeLine{00199\ \ \ \ \ \}}
-\DoxyCodeLine{00200\ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00151\ \}}
+\DoxyCodeLine{00152\ }
+\DoxyCodeLine{00153\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00154\ \textcolor{comment}{template<class\ Type>}}
+\DoxyCodeLine{00155\ \textcolor{comment}{cellGaussField<Type>::cellGaussField(const\ tmp<cellGaussField<Type>>\&\ t)}}
+\DoxyCodeLine{00156\ \textcolor{comment}{\{}}
+\DoxyCodeLine{00157\ \textcolor{comment}{\ \ \ \ if\ (t.isTmp())}}
+\DoxyCodeLine{00158\ \textcolor{comment}{\ \ \ \ \{}}
+\DoxyCodeLine{00159\ \textcolor{comment}{\ \ \ \ \ \ \ \ this-\/>operator=(std::move(const\_cast<cellGaussField<Type>\&>(t())));}}
+\DoxyCodeLine{00160\ \textcolor{comment}{\ \ \ \ \ \ \ \ t.clear();}}
+\DoxyCodeLine{00161\ \textcolor{comment}{\ \ \ \ \}}}
+\DoxyCodeLine{00162\ \textcolor{comment}{\ \ \ \ else}}
+\DoxyCodeLine{00163\ \textcolor{comment}{\ \ \ \ \{}}
+\DoxyCodeLine{00164\ \textcolor{comment}{\ \ \ \ \ \ \ \ *this\ =\ t();}}
+\DoxyCodeLine{00165\ \textcolor{comment}{\ \ \ \ \}}}
+\DoxyCodeLine{00166\ \textcolor{comment}{\}}}
+\DoxyCodeLine{00167\ \textcolor{comment}{}}
+\DoxyCodeLine{00168\ \textcolor{comment}{template<class\ Type>}}
+\DoxyCodeLine{00169\ \textcolor{comment}{Foam::cellGaussField<Type>::cellGaussField}}
+\DoxyCodeLine{00170\ \textcolor{comment}{(}}
+\DoxyCodeLine{00171\ \textcolor{comment}{\ \ \ \ const\ tmp<cellGaussField<Type>>\&\ t}}
+\DoxyCodeLine{00172\ \textcolor{comment}{)}}
+\DoxyCodeLine{00173\ \textcolor{comment}{:}}
+\DoxyCodeLine{00174\ \textcolor{comment}{\ \ \ \ cellGaussField<Type>(t())}}
+\DoxyCodeLine{00175\ \textcolor{comment}{\{}}
+\DoxyCodeLine{00176\ \textcolor{comment}{\ \ \ \ //\ Release\ ownership\ from\ tmp\ to\ avoid\ deletion\ of\ the\ internal\ object}}
+\DoxyCodeLine{00177\ \textcolor{comment}{\ \ \ \ t.clear();}}
+\DoxyCodeLine{00178\ \textcolor{comment}{\}}}
+\DoxyCodeLine{00179\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00180\ }
+\DoxyCodeLine{00181\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Type>}
+\DoxyCodeLine{00182\ \mbox{\hyperlink{classFoam_1_1cellGaussField_a54b216aa0dbe24c6019bc4cbd59478eb}{Foam::cellGaussField<Type>::cellGaussField}}}
+\DoxyCodeLine{00183\ (}
+\DoxyCodeLine{00184\ \ \ \ \ \textcolor{keyword}{const}\ tmp<cellGaussField<Type>>\&\ \mbox{\hyperlink{testLiteralScalarMath_8H_a2cbefcb18b5f85ba6e8f976ed412c061}{t}}}
+\DoxyCodeLine{00185\ )}
+\DoxyCodeLine{00186\ \{}
+\DoxyCodeLine{00187\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField_a962e524110de8fe842a07f16521c7086}{cellGaussField<Type>}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField_a962e524110de8fe842a07f16521c7086}{tf}}\ =}
+\DoxyCodeLine{00188\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const\_cast<}\mbox{\hyperlink{classFoam_1_1GaussField_a962e524110de8fe842a07f16521c7086}{tmp<cellGaussField<Type>}}\textcolor{keyword}{>}\&>(\mbox{\hyperlink{testLiteralScalarMath_8H_a2cbefcb18b5f85ba6e8f976ed412c061}{t}}).\mbox{\hyperlink{classFoam_1_1GaussField_a962e524110de8fe842a07f16521c7086}{ref}}();}
+\DoxyCodeLine{00189\ }
+\DoxyCodeLine{00190\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField_a938849a2c6069d93ad5b4a1926511fd9}{cellID\_}}\ =\ \mbox{\hyperlink{classFoam_1_1GaussField_a962e524110de8fe842a07f16521c7086}{tf}}.\mbox{\hyperlink{classFoam_1_1GaussField_a938849a2c6069d93ad5b4a1926511fd9}{cellID\_}};}
+\DoxyCodeLine{00191\ \ \ \ \ dgMesh\_\ =\ \mbox{\hyperlink{classFoam_1_1GaussField_a962e524110de8fe842a07f16521c7086}{tf}}.dgMesh\_;}
+\DoxyCodeLine{00192\ \ \ \ \ cell\_\ \ \ =\ \mbox{\hyperlink{classFoam_1_1GaussField_a962e524110de8fe842a07f16521c7086}{tf}}.cell\_;}
+\DoxyCodeLine{00193\ \ \ \ \ nGauss\_\ =\ \mbox{\hyperlink{classFoam_1_1GaussField_a962e524110de8fe842a07f16521c7086}{tf}}.nGauss\_;}
+\DoxyCodeLine{00194\ \ \ \ \ nDof\_\ \ \ =\ \mbox{\hyperlink{classFoam_1_1GaussField_a962e524110de8fe842a07f16521c7086}{tf}}.nDof\_;}
+\DoxyCodeLine{00195\ \ \ \ \ dof\_\ \ \ \ =\ \mbox{\hyperlink{classFoam_1_1GaussField_a962e524110de8fe842a07f16521c7086}{tf}}.dof\_;}
+\DoxyCodeLine{00196\ }
+\DoxyCodeLine{00197\ \ \ \ \ \textcolor{comment}{//\ Transfer\ storage\ instead\ of\ copy}}
+\DoxyCodeLine{00198\ \ \ \ \ values\_.transfer(\mbox{\hyperlink{classFoam_1_1GaussField_a962e524110de8fe842a07f16521c7086}{tf}}.values\_);}
+\DoxyCodeLine{00199\ }
+\DoxyCodeLine{00200\ \ \ \ \ \mbox{\hyperlink{testLiteralScalarMath_8H_a2cbefcb18b5f85ba6e8f976ed412c061}{t}}.clear();}
 \DoxyCodeLine{00201\ \}}
 \DoxyCodeLine{00202\ }
-\DoxyCodeLine{00203\ \}\ \textcolor{comment}{//\ namespace\ Foam}}
+\DoxyCodeLine{00203\ \textcolor{comment}{//\ *\ *\ *\ *\ *\ *\ *\ *\ Member\ Functions\ *\ *\ *\ *\ *\ *\ *\ *\ //}}
 \DoxyCodeLine{00204\ }
-\DoxyCodeLine{00205\ \textcolor{preprocessor}{\#endif}}
-\DoxyCodeLine{00206\ }
-\DoxyCodeLine{00207\ \textcolor{comment}{//\ *************************************************************************\ //}}
-\DoxyCodeLine{00208\ }
+\DoxyCodeLine{00205\ \textcolor{comment}{//\ Interpolate\ DOF\ →\ Gauss\ values}}
+\DoxyCodeLine{00206\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Type>}
+\DoxyCodeLine{00207\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classFoam_1_1cellGaussField_aaf8bfcab0613fa1b2921c0f01d69777c}{cellGaussField<Type>::interpolateFromDof}}()}
+\DoxyCodeLine{00208\ \{}
+\DoxyCodeLine{00209\ \ \ \ \ \textcolor{keywordflow}{if}\ (!dof\_)}
+\DoxyCodeLine{00210\ \ \ \ \ \{}
+\DoxyCodeLine{00211\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField_a962e524110de8fe842a07f16521c7086}{FatalErrorInFunction}}\ <<\ \textcolor{stringliteral}{"{}No\ DOF\ data\ to\ interpolate"{}}\ <<\ \mbox{\hyperlink{classFoam_1_1GaussField_a962e524110de8fe842a07f16521c7086}{abort}}(\mbox{\hyperlink{classFoam_1_1GaussField_a962e524110de8fe842a07f16521c7086}{FatalError}});}
+\DoxyCodeLine{00212\ \ \ \ \ \}}
+\DoxyCodeLine{00213\ }
+\DoxyCodeLine{00214\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField_a962e524110de8fe842a07f16521c7086}{List<List<scalar>}}>\&\ \mbox{\hyperlink{namespacemathVar_a162d62d3cdd05c849a2f116c4700bb21}{B}}\ =\ cell\_-\/>basis();}
+\DoxyCodeLine{00215\ }
+\DoxyCodeLine{00216\ \ \ \ \ \textcolor{keywordflow}{for}\ (\mbox{\hyperlink{classFoam_1_1GaussField_a962e524110de8fe842a07f16521c7086}{label}}\ \mbox{\hyperlink{classFoam_1_1GaussField_a962e524110de8fe842a07f16521c7086}{gp}}\ =\ 0;\ \mbox{\hyperlink{classFoam_1_1GaussField_a962e524110de8fe842a07f16521c7086}{gp}}\ <\ nGauss\_;\ ++\mbox{\hyperlink{classFoam_1_1GaussField_a962e524110de8fe842a07f16521c7086}{gp}})}
+\DoxyCodeLine{00217\ \ \ \ \ \{}
+\DoxyCodeLine{00218\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField_a962e524110de8fe842a07f16521c7086}{Type}}\ \mbox{\hyperlink{classFoam_1_1GaussField_a962e524110de8fe842a07f16521c7086}{val}}\ =\ pTraits<Type>::zero;}
+\DoxyCodeLine{00219\ }
+\DoxyCodeLine{00220\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\mbox{\hyperlink{classFoam_1_1GaussField_a962e524110de8fe842a07f16521c7086}{label}}\ \mbox{\hyperlink{classFoam_1_1GaussField_a962e524110de8fe842a07f16521c7086}{k}}\ =\ 0;\ \mbox{\hyperlink{classFoam_1_1GaussField_a962e524110de8fe842a07f16521c7086}{k}}\ <\ nDof\_;\ ++\mbox{\hyperlink{classFoam_1_1GaussField_a962e524110de8fe842a07f16521c7086}{k}})}
+\DoxyCodeLine{00221\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00222\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField_a962e524110de8fe842a07f16521c7086}{val}}\ +=\ dof\_-\/>dof()[\mbox{\hyperlink{classFoam_1_1GaussField_a962e524110de8fe842a07f16521c7086}{k}}]\ *\ \mbox{\hyperlink{namespacemathVar_a162d62d3cdd05c849a2f116c4700bb21}{B}}[\mbox{\hyperlink{classFoam_1_1GaussField_a962e524110de8fe842a07f16521c7086}{gp}}][\mbox{\hyperlink{classFoam_1_1GaussField_a962e524110de8fe842a07f16521c7086}{k}}];}
+\DoxyCodeLine{00223\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00224\ }
+\DoxyCodeLine{00225\ \ \ \ \ \ \ \ \ values\_[\mbox{\hyperlink{classFoam_1_1GaussField_a962e524110de8fe842a07f16521c7086}{gp}}]\ =\ \mbox{\hyperlink{classFoam_1_1GaussField_a962e524110de8fe842a07f16521c7086}{val}};}
+\DoxyCodeLine{00226\ \ \ \ \ \}}
+\DoxyCodeLine{00227\ \}}
+\DoxyCodeLine{00228\ }
+\DoxyCodeLine{00229\ }
+\DoxyCodeLine{00230\ \textcolor{comment}{//\ Copy\ assignment}}
+\DoxyCodeLine{00231\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Type>}
+\DoxyCodeLine{00232\ \textcolor{keyword}{inline}\ cellGaussField<Type>\&\ cellGaussField<Type>::operator=}
+\DoxyCodeLine{00233\ (}
+\DoxyCodeLine{00234\ \ \ \ \ \textcolor{keyword}{const}\ cellGaussField<Type>\&\ other}
+\DoxyCodeLine{00235\ )}
+\DoxyCodeLine{00236\ \{}
+\DoxyCodeLine{00237\ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{this}\ ==\ \&other)\ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00238\ }
+\DoxyCodeLine{00239\ \ \ \ \ cellID\_\ =\ other.cellID\_;}
+\DoxyCodeLine{00240\ \ \ \ \ dgMesh\_\ =\ other.dgMesh\_;}
+\DoxyCodeLine{00241\ \ \ \ \ cell\_\ \ \ =\ other.cell\_;}
+\DoxyCodeLine{00242\ \ \ \ \ nGauss\_\ =\ other.nGauss\_;}
+\DoxyCodeLine{00243\ \ \ \ \ nDof\_\ \ \ =\ other.nDof\_;}
+\DoxyCodeLine{00244\ \ \ \ \ dof\_\ \ \ \ =\ other.dof\_;}
+\DoxyCodeLine{00245\ \ \ \ \ values\_\ =\ other.values\_;}
+\DoxyCodeLine{00246\ }
+\DoxyCodeLine{00247\ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00248\ \}}
+\DoxyCodeLine{00249\ }
+\DoxyCodeLine{00250\ \textcolor{comment}{//\ Move\ assignment}}
+\DoxyCodeLine{00251\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Type>}
+\DoxyCodeLine{00252\ \textcolor{keyword}{inline}\ cellGaussField<Type>\&\ cellGaussField<Type>::operator=}
+\DoxyCodeLine{00253\ (}
+\DoxyCodeLine{00254\ \ \ \ \ cellGaussField<Type>\&\&\ other}
+\DoxyCodeLine{00255\ )\ \textcolor{keyword}{noexcept}}
+\DoxyCodeLine{00256\ \{}
+\DoxyCodeLine{00257\ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{this}\ !=\ \&other)}
+\DoxyCodeLine{00258\ \ \ \ \ \{}
+\DoxyCodeLine{00259\ \ \ \ \ \ \ \ \ cellID\_\ =\ other.cellID\_;}
+\DoxyCodeLine{00260\ \ \ \ \ \ \ \ \ dgMesh\_\ =\ other.dgMesh\_;}
+\DoxyCodeLine{00261\ \ \ \ \ \ \ \ \ cell\_\ \ \ =\ other.cell\_;}
+\DoxyCodeLine{00262\ \ \ \ \ \ \ \ \ nGauss\_\ =\ other.nGauss\_;}
+\DoxyCodeLine{00263\ \ \ \ \ \ \ \ \ nDof\_\ \ \ =\ other.nDof\_;}
+\DoxyCodeLine{00264\ \ \ \ \ \ \ \ \ dof\_\ \ \ \ =\ other.dof\_;}
+\DoxyCodeLine{00265\ }
+\DoxyCodeLine{00266\ \ \ \ \ \ \ \ \ values\_\ =\ std::move(other.values\_);}
+\DoxyCodeLine{00267\ \ \ \ \ \}}
+\DoxyCodeLine{00268\ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00269\ \}}
+\DoxyCodeLine{00270\ }
+\DoxyCodeLine{00271\ \textcolor{comment}{//\ Assign\ tmp}}
+\DoxyCodeLine{00272\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Type>}
+\DoxyCodeLine{00273\ cellGaussField<Type>\&\ \mbox{\hyperlink{classFoam_1_1cellGaussField}{Foam::cellGaussField<Type>::operator}}=}
+\DoxyCodeLine{00274\ (}
+\DoxyCodeLine{00275\ \ \ \ \ \textcolor{keyword}{const}\ tmp<cellGaussField<Type>>\&\ \mbox{\hyperlink{testLiteralScalarMath_8H_a2cbefcb18b5f85ba6e8f976ed412c061}{t}}}
+\DoxyCodeLine{00276\ )}
+\DoxyCodeLine{00277\ \{}
+\DoxyCodeLine{00278\ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00279\ \textcolor{comment}{\ \ \ \ *this\ =\ t();}}
+\DoxyCodeLine{00280\ \textcolor{comment}{\ \ \ \ t.clear();}}
+\DoxyCodeLine{00281\ \textcolor{comment}{\ \ \ \ return\ *this;}}
+\DoxyCodeLine{00282\ \textcolor{comment}{\ \ \ \ */}}
+\DoxyCodeLine{00283\ \ \ \ }
+\DoxyCodeLine{00284\ \ \ \ \ cellGaussField<Type>\&\ tf\ =}
+\DoxyCodeLine{00285\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const\_cast<}tmp<cellGaussField<Type>\textcolor{keyword}{>}\&>(\mbox{\hyperlink{testLiteralScalarMath_8H_a2cbefcb18b5f85ba6e8f976ed412c061}{t}}).ref();}
+\DoxyCodeLine{00286\ }
+\DoxyCodeLine{00287\ \ \ \ \ cellID\_\ =\ tf.cellID\_;}
+\DoxyCodeLine{00288\ \ \ \ \ dgMesh\_\ =\ tf.dgMesh\_;}
+\DoxyCodeLine{00289\ \ \ \ \ cell\_\ \ \ =\ tf.cell\_;}
+\DoxyCodeLine{00290\ \ \ \ \ nGauss\_\ =\ tf.nGauss\_;}
+\DoxyCodeLine{00291\ \ \ \ \ nDof\_\ \ \ =\ tf.nDof\_;}
+\DoxyCodeLine{00292\ \ \ \ \ dof\_\ \ \ \ =\ tf.dof\_;}
+\DoxyCodeLine{00293\ }
+\DoxyCodeLine{00294\ \ \ \ \ values\_.transfer(tf.values\_);}
+\DoxyCodeLine{00295\ }
+\DoxyCodeLine{00296\ \ \ \ \ \mbox{\hyperlink{testLiteralScalarMath_8H_a2cbefcb18b5f85ba6e8f976ed412c061}{t}}.clear();}
+\DoxyCodeLine{00297\ }
+\DoxyCodeLine{00298\ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00299\ \}}
+\DoxyCodeLine{00300\ }
+\DoxyCodeLine{00301\ \textcolor{comment}{//\ Assign\ uniform\ value}}
+\DoxyCodeLine{00302\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Type>}
+\DoxyCodeLine{00303\ \textcolor{keyword}{inline}\ cellGaussField<Type>\&\ cellGaussField<Type>::operator=}
+\DoxyCodeLine{00304\ (}
+\DoxyCodeLine{00305\ \ \ \ \ \textcolor{keyword}{const}\ Type\&\ value}
+\DoxyCodeLine{00306\ )}
+\DoxyCodeLine{00307\ \{}
+\DoxyCodeLine{00308\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ gp\ =\ 0;\ gp\ <\ nGauss\_;\ ++gp)}
+\DoxyCodeLine{00309\ \ \ \ \ \{}
+\DoxyCodeLine{00310\ \ \ \ \ \ \ \ \ values\_[gp]\ =\ value;}
+\DoxyCodeLine{00311\ \ \ \ \ \}}
+\DoxyCodeLine{00312\ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00313\ \}}
+\DoxyCodeLine{00314\ }
+\DoxyCodeLine{00315\ \}\ \textcolor{comment}{//\ namespace\ Foam}}
+\DoxyCodeLine{00316\ }
+\DoxyCodeLine{00317\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00318\ }
+\DoxyCodeLine{00319\ \textcolor{comment}{//\ *************************************************************************\ //}}
+\DoxyCodeLine{00320\ }
 
 \end{DoxyCode}

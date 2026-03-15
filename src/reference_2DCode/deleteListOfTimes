@@ -1,0 +1,17 @@
+#!/bin/sh
+#Settings-----------------------------#
+case="cyl_Kn005_mass"
+startTimeToDel=153550
+endTimeToDel=458550
+interval=1000
+nproc=11
+#-------------------------------------#
+
+for i in $(seq 0 1 $nproc)
+do
+	for j in $(seq $startTimeToDel $interval $endTimeToDel)
+	do
+		rm -rf ./CASES/$case/Processor$i/$j
+		rm -rf ./CASES/$case/Processor$i/TecplotFile/$j
+	done
+done

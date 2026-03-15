@@ -105,11 +105,8 @@ private:
     /** Owner cell index */
     label cellID_;
 
-    /** Reference to DG geometric mesh */
-    dgGeomMesh& dgMesh_;
-
     /** Basis functions associated with this cell */
-    dgBasisField basis_;
+    const dgBasisField& basis_;
 
     /** Solution field evaluated at Gauss points */
     const GaussField<UType>& U_;
@@ -135,6 +132,9 @@ private:
 
 public:
 
+    using solution_type = UType;
+    using flux_type = FType;
+
     // Constructors --------------------------------------------------------
 
     /**
@@ -142,8 +142,7 @@ public:
      *
      * \param termName   Name of PDE term (used for flux solver lookup)
      * \param eqnType    Equation type (mass, momentum, energy, scalar)
-     * \param cellID     Owner cell index
-     * \param mesh       DG geometric mesh
+     * \param basis      Basis field associated with the owner cell
      * \param U          Solution field at Gauss points
      * \param F          Flux field at Gauss points
      * \param fluxSolver Flux solver manager
@@ -152,8 +151,7 @@ public:
     (
         const word& termName,
         dgFluxSolver::equationType eqnType,
-        const label cellID,
-        dgGeomMesh& mesh,
+        const dgBasisField& basis,
         const GaussField<UType>& U,
         GaussField<FType>& F,
         dgFluxSolverManager& fluxSolver
@@ -164,8 +162,7 @@ public:
      *
      * \param termName   Name of PDE term (used for flux solver lookup)
      * \param eqnType    Equation type (mass, momentum, energy, scalar)
-     * \param cellID     Owner cell index
-     * \param mesh       DG geometric mesh
+     * \param basis      Basis field associated with the owner cell
      * \param U          Solution field at Gauss points
      * \param F          Flux field at Gauss points
      * \param fluxSolver Flux solver manager
@@ -174,8 +171,7 @@ public:
     (
         const word& termName,
         dgFluxSolver::equationType eqnType,
-        const label cellID,
-        dgGeomMesh& mesh,
+        const dgBasisField& basis,
         const GaussField<UType>& U,
         const tmp<GaussField<FType>>& tF,
         dgFluxSolverManager& fluxSolver

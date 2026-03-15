@@ -49,8 +49,7 @@ Foam::dgGeneralPDETerm<UType, FType>::dgGeneralPDETerm
 (
     const word& termName,
     dgFluxSolver::equationType eqnType,
-    const label cellID,
-    dgGeomMesh& mesh,
+    const dgBasisField& basis,
     const GaussField<UType>& U,
     GaussField<FType>& F,
     dgFluxSolverManager& fluxSolver
@@ -58,9 +57,8 @@ Foam::dgGeneralPDETerm<UType, FType>::dgGeneralPDETerm
 :
     termName_(termName),
     eqnType_(eqnType),
-    cellID_(cellID),
-    dgMesh_(mesh),
-    basis_(cellID_, dgMesh_),
+    cellID_(basis.cellID()),
+    basis_(basis),
     U_(U),
     F_(new GaussField<FType>(F)),
     fluxSolver_(fluxSolver),
@@ -81,8 +79,7 @@ Foam::dgGeneralPDETerm<UType, FType>::dgGeneralPDETerm
 (
     const word& termName,
     dgFluxSolver::equationType eqnType,
-    const label cellID,
-    dgGeomMesh& mesh,
+    const dgBasisField& basis,
     const GaussField<UType>& U,
     const tmp<GaussField<FType>>& tF,
     dgFluxSolverManager& fluxSolver
@@ -90,9 +87,8 @@ Foam::dgGeneralPDETerm<UType, FType>::dgGeneralPDETerm
 :
     termName_(termName),
     eqnType_(eqnType),
-    cellID_(cellID),
-    dgMesh_(mesh),
-    basis_(cellID_, dgMesh_),
+    cellID_(basis.cellID()),
+    basis_(basis),
     U_(U),
     F_(tF),
     fluxSolver_(fluxSolver),

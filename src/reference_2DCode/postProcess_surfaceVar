@@ -1,0 +1,24 @@
+#!/bin/sh
+#Settings-----------------------------#
+caseName="w_Kn001_4_mass"
+nProc=6
+iter=98700
+#-------------------------------------#
+cd ./CASES/$caseName
+mkdir postProcessing
+cd ./postProcessing
+mkdir surfaceVar
+cd ./surfaceVar
+mkdir $iter
+cd ../../
+pwd
+
+START=0
+END=$(($nProc-1))
+## save $START, just in case if we need it later ##
+i=$START
+while [ $i -le $END ]
+do
+    cp ./Processor$i/$iter/surfaceVariables_proc$i.txt ./postProcessing/surfaceVar/$iter
+    i=$((i+1))
+done

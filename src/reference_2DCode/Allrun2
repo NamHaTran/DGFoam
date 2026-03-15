@@ -1,0 +1,39 @@
+#!/bin/sh
+#Settings-----------------------------#
+caseName="w_Kn001_6"
+nProc=8
+meshName="wedge1.unv"
+#-------------------------------------#
+
+cp ./CASES/$caseName/Constant/boundaryPatch.txt ./CASES/$caseName/.
+
+echo "READ MESH" #khong tao file template
+#printf $meshName"\n""n" | ./UnvToDG
+
+cp ./CASES/$caseName/boundaryPatch.txt ./CASES/$caseName/Constant/.
+
+echo "RUN dgmeshtometis"
+printf "dgmeshtometis""\n""end" | mpirun -n $nProc ./DG2DSolver
+
+cp ./CASES/$caseName/DGMesh.mesh .
+
+echo "DECOMPOSE MESH"
+./mpmetis -gtype="nodal" DGMesh.mesh $nProc
+
+cp ./DGMesh.mesh.epart.$nProc ./CASES/$caseName/.
+
+#decomposecase
+echo "RUN decomposecase"
+printf "decomposecase""\n""y""\n""end" | mpirun -n $nProc ./DG2DSolver
+
+#check par mesh
+echo "RUN checkParMesh"
+printf "checkParMesh""\n""end" | mpirun -n $nProc ./DG2DSolver
+
+#decompose lai
+echo "RUN decomposecase lan nua"
+printf "decomposecase""\n""y""\n""end" | mpirun -n $nProc ./DG2DSolver
+
+#run
+echo "RUN dg2d"
+printf "dg2d""\n""y" | mpirun -n $nProc ./DG2DSolver

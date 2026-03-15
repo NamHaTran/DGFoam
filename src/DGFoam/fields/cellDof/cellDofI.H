@@ -63,6 +63,26 @@ cellDof<Type>::cellDof(const cellDof<Type>& other)
 {}
 
 
+template<class Type>
+cellDof<Type>::cellDof
+(
+    const tmp<cellDof<Type>>& t
+)
+:
+    cellID_(-1),
+    nDof_(0),
+    dof_()
+{
+    cellDof<Type>& tf = const_cast<tmp<cellDof<Type>>&>(t).ref();
+
+    cellID_ = tf.cellID_;
+    nDof_   = tf.nDof_;
+    dof_.transfer(tf.dof_);
+
+    t.clear();
+}
+
+
 // Construct from ID + DoF list
 template<class Type>
 cellDof<Type>::cellDof
@@ -101,9 +121,26 @@ cellDof<Type>& cellDof<Type>::operator=(const cellDof<Type>& other)
     return *this;
 }
 
+
+template<class Type>
+cellDof<Type>& cellDof<Type>::operator=
+(
+    const tmp<cellDof<Type>>& t
+)
+{
+    cellDof<Type>& tf = const_cast<tmp<cellDof<Type>>&>(t).ref();
+
+    cellID_ = tf.cellID_;
+    nDof_   = tf.nDof_;
+    dof_.transfer(tf.dof_);
+
+    t.clear();
+
+    return *this;
+}
+
 } // End namespace Foam
 
 #endif
 
 // ************************************************************************* //
-

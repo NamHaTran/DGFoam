@@ -1,19 +1,13 @@
 var searchData=
 [
-  ['cell_5f_0',['cell_',['../classFoam_1_1faceGaussField.html#ab5a0336d3dce9df6d6a2aacdacc1d8da',1,'Foam::faceGaussField::cell_'],['../classFoam_1_1cellGaussField.html#a1c0b8377818a9a25867635f8a2fe095e',1,'Foam::cellGaussField::cell_']]],
-  ['celldofs_5f_1',['cellDofs_',['../classFoam_1_1dofField.html#a01beb8110d74104665b40842e1d63325',1,'Foam::dofField']]],
-  ['cellfield_5f_2',['cellField_',['../classFoam_1_1GaussField.html#a5a060a96c564d80b1a9864beef7388a4',1,'Foam::GaussField']]],
-  ['cellid_5f_3',['cellid_',['../classFoam_1_1cellDof.html#a322b3131c4e448294d42f432a1fcc7e3',1,'Foam::cellDof::cellID_'],['../classFoam_1_1dgBasisField.html#a6f67002d887f567a177d616e2d7420de',1,'Foam::dgBasisField::cellID_'],['../classFoam_1_1cellGaussField.html#af8acc6ac72c6d645e1b3128cb8bdab88',1,'Foam::cellGaussField::cellID_'],['../classFoam_1_1faceGaussField.html#afcfb8360ee8d156e3d873a803d674b95',1,'Foam::faceGaussField::cellID_'],['../classFoam_1_1GaussField.html#a938849a2c6069d93ad5b4a1926511fd9',1,'Foam::GaussField::cellID_'],['../classFoam_1_1dgGeneralPDETerm.html#a84a99e91e4d9406788c6e644d823b1bb',1,'Foam::dgGeneralPDETerm::cellID_'],['../classFoam_1_1dgGeomCell.html#ad6e26f83b3010e84e5dc5f5edb927e10',1,'Foam::dgGeomCell::cellID_']]],
-  ['cellpointlabels_5f_4',['cellPointLabels_',['../classFoam_1_1dgGeomCell.html#aef4d4a1ab162dda7651232e25129e6de',1,'Foam::dgGeomCell']]],
-  ['cellpoints_5f_5',['cellPoints_',['../classFoam_1_1dgGeomCell.html#a479044081a813785e4403ae06c566c9d',1,'Foam::dgGeomCell']]],
-  ['cells_5f_6',['cells_',['../classFoam_1_1dgGeomMesh.html#aa3408ee8829a77921a103a4916428de2',1,'Foam::dgGeomMesh']]],
-  ['cellsdof_5f_7',['cellsDof_',['../classFoam_1_1faceGaussField.html#a97d269515a28146e2d175f1ac67e7785',1,'Foam::faceGaussField']]],
-  ['cl_5flist_5f_8',['CL_list_',['../classFoam_1_1dgHLLCFluxSolver.html#a9cd9d1b2e5c8003a773e373312f973f8',1,'Foam::dgHLLCFluxSolver']]],
-  ['coeff_5f_9',['coeff_',['../classFoam_1_1transportLaw.html#a1caff737ca4620445c9fa1a7615fb152',1,'Foam::transportLaw']]],
-  ['coeffdict_5f_10',['coeffDict_',['../classFoam_1_1sensibleInternalEnergy.html#a5e31783df255d1a3590f4756b3ccbe46',1,'Foam::sensibleInternalEnergy']]],
-  ['coeffs_5f_11',['coeffs_',['../classFoam_1_1energy.html#a196e297d7caf016e0eea6385994ab918',1,'Foam::energy']]],
-  ['connectivity_5f_12',['connectivity_',['../classFoam_1_1dgGeomFace.html#a1164d63def2527682d7a426ec9c8d89f',1,'Foam::dgGeomFace']]],
-  ['cp_5f_13',['cp_',['../classFoam_1_1dgThermoConservative.html#a62de9bdd12feab77e593901bb6ccc23c',1,'Foam::dgThermoConservative::Cp_'],['../classFoam_1_1constantCp.html#ad5c15ea785d985cf940e75c8e43d6b92',1,'Foam::constantCp::Cp_']]],
-  ['cr_5flist_5f_14',['CR_list_',['../classFoam_1_1dgHLLCFluxSolver.html#ad1fc58c95763c4a1252fbc7000d6422c',1,'Foam::dgHLLCFluxSolver']]],
-  ['cv_5f_15',['cv_',['../classFoam_1_1dgThermoConservative.html#aa09335eeb1725bbe30eb00d61dd230f3',1,'Foam::dgThermoConservative::Cv_'],['../classFoam_1_1constantCp.html#a5709794b95feb4419d37e8caef53aa7b',1,'Foam::constantCp::Cv_']]]
+  ['b_0',['B',['../namespacemathVar.html#a162d62d3cdd05c849a2f116c4700bb21',1,'mathVar']]],
+  ['basis_1',['basis',['../structFoam_1_1basisData.html#aaa813d9164befcbfc77b45c951453acb',1,'Foam::basisData']]],
+  ['basis_5f_2',['basis_',['../classFoam_1_1dgBasisField.html#aac1d0ec113ce6c98bfe7484e95e3d62e',1,'Foam::dgBasisField::basis_'],['../classFoam_1_1dgGeneralPDETerm.html#af9c16e3a03b971a09086d589520a178c',1,'Foam::dgGeneralPDETerm::basis_'],['../classFoam_1_1dgRefCell.html#a2149bc751cbc81b3558b7bc90a63db85',1,'Foam::dgRefCell::basis_']]],
+  ['bconditions_5f_3',['bconditions_',['../classFoam_1_1dgGeneralBoundaryManager.html#afd6dccbb0880b0ce0df9c42c21c43769',1,'Foam::dgGeneralBoundaryManager::bConditions_'],['../classFoam_1_1dgProcessorBoundaryManager.html#a517dcd1a6551dad072dbf1e87d68b77c',1,'Foam::dgProcessorBoundaryManager::bConditions_']]],
+  ['bcpointsinfor_4',['BCPointsInfor',['../namespaceSurfaceBCFields.html#ac3e24908e43f9190de82ae5aeb34d99c',1,'SurfaceBCFields']]],
+  ['blending_5',['blending',['../namespaceextNSF__Durst.html#aeb7885b3cf7022069ed9fde882b19c66',1,'extNSF_Durst']]],
+  ['boundaryfaces_5f_6',['boundaryFaces_',['../classFoam_1_1dgGeomMesh.html#a4950aaef8c0192b99c0daf0d425f2f42',1,'Foam::dgGeomMesh']]],
+  ['boundarytype_7',['BoundaryType',['../namespacemeshVar.html#ac84f2adfa6c64068c8807e0ff7361aa2',1,'meshVar']]],
+  ['bpts_5fquad_8',['BPts_Quad',['../namespacemathVar.html#a71a75963a313ba47802b8f2083bcbd56',1,'mathVar']]],
+  ['bpts_5ftri_9',['BPts_Tri',['../namespacemathVar.html#a8b55e87ccfc0740fe43480ea7f21de75',1,'mathVar']]]
 ];

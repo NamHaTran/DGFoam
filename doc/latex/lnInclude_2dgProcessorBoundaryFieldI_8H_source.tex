@@ -4,169 +4,169 @@
 \begin{DoxyCode}{0}
 \DoxyCodeLine{00001\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*\(\backslash\)}}
 \DoxyCodeLine{00002\ \textcolor{comment}{\ \ =========\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
-\DoxyCodeLine{00003\ \textcolor{comment}{\ \ \(\backslash\)\(\backslash\)\ \ \ \ \ \ /\ \ F\ ield\ \ \ \ \ \ \ \ \ |\ DGFoam:\ Discontinuous\ Galerkin\ CFD\ Toolbox}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ \ \(\backslash\)\(\backslash\)\ \ \ \ \ \ /\ \ F\ ield\ \ \ \ \ \ \ \ \ |\ OpenFOAM:\ The\ Open\ Source\ CFD\ Toolbox}}
 \DoxyCodeLine{00004\ \textcolor{comment}{\ \ \ \(\backslash\)\(\backslash\)\ \ \ \ /\ \ \ O\ peration\ \ \ \ \ |}}
-\DoxyCodeLine{00005\ \textcolor{comment}{\ \ \ \ \(\backslash\)\(\backslash\)\ \ /\ \ \ \ A\ nd\ \ \ \ \ \ \ \ \ \ \ |\ GPU-\/friendly\ CFD\ solver\ framework}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ \ \ \ \(\backslash\)\(\backslash\)\ \ /\ \ \ \ A\ nd\ \ \ \ \ \ \ \ \ \ \ |\ www.openfoam.com}}
 \DoxyCodeLine{00006\ \textcolor{comment}{\ \ \ \ \ \(\backslash\)\(\backslash\)/\ \ \ \ \ M\ anipulation\ \ |}}
 \DoxyCodeLine{00007\ \textcolor{comment}{-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00008\ \textcolor{comment}{}}
-\DoxyCodeLine{00009\ \textcolor{comment}{License}}
-\DoxyCodeLine{00010\ \textcolor{comment}{\ \ \ \ This\ file\ is\ part\ of\ DGFoam.}}
-\DoxyCodeLine{00011\ \textcolor{comment}{}}
-\DoxyCodeLine{00012\ \textcolor{comment}{\ \ \ \ DGFoam\ is\ free\ software:\ you\ can\ redistribute\ it\ and/or\ modify\ it}}
-\DoxyCodeLine{00013\ \textcolor{comment}{\ \ \ \ under\ the\ terms\ of\ the\ GNU\ General\ Public\ License\ as\ published\ by}}
-\DoxyCodeLine{00014\ \textcolor{comment}{\ \ \ \ the\ Free\ Software\ Foundation,\ either\ version\ 3\ of\ the\ License,\ or}}
-\DoxyCodeLine{00015\ \textcolor{comment}{\ \ \ \ (at\ your\ option)\ any\ later\ version.}}
-\DoxyCodeLine{00016\ \textcolor{comment}{}}
-\DoxyCodeLine{00017\ \textcolor{comment}{\ \ \ \ DGFoam\ is\ distributed\ in\ the\ hope\ that\ it\ will\ be\ useful,\ but\ WITHOUT}}
-\DoxyCodeLine{00018\ \textcolor{comment}{\ \ \ \ ANY\ WARRANTY;\ without\ even\ the\ implied\ warranty\ of\ MERCHANTABILITY\ or}}
-\DoxyCodeLine{00019\ \textcolor{comment}{\ \ \ \ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE.\ \ See\ the\ GNU\ General\ Public\ License}}
-\DoxyCodeLine{00020\ \textcolor{comment}{\ \ \ \ for\ more\ details.}}
-\DoxyCodeLine{00021\ \textcolor{comment}{}}
-\DoxyCodeLine{00022\ \textcolor{comment}{\ \ \ \ You\ should\ have\ received\ a\ copy\ of\ the\ GNU\ General\ Public\ License}}
-\DoxyCodeLine{00023\ \textcolor{comment}{\ \ \ \ along\ with\ DGFoam.\ \ If\ not,\ see\ <http://www.gnu.org/licenses/>.}}
-\DoxyCodeLine{00024\ \textcolor{comment}{}}
-\DoxyCodeLine{00025\ \textcolor{comment}{Class}}
-\DoxyCodeLine{00026\ \textcolor{comment}{\ \ \ \ Foam::dgProcessorBoundaryField}}
-\DoxyCodeLine{00027\ \textcolor{comment}{}}
-\DoxyCodeLine{00028\ \textcolor{comment}{\(\backslash\)*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
-\DoxyCodeLine{00029\ }
-\DoxyCodeLine{00030\ \textcolor{preprocessor}{\#ifndef\ dgProcessorBoundaryFieldI\_H}}
-\DoxyCodeLine{00031\ \textcolor{preprocessor}{\#define\ dgProcessorBoundaryFieldI\_H}}
-\DoxyCodeLine{00032\ }
-\DoxyCodeLine{00033\ \textcolor{preprocessor}{\#include\ "{}PstreamBuffers.H"{}}}
-\DoxyCodeLine{00034\ \textcolor{preprocessor}{\#include\ "{}Pstream.H"{}}}
-\DoxyCodeLine{00035\ }
-\DoxyCodeLine{00036\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespaceFoam}{Foam}}}
-\DoxyCodeLine{00037\ \{}
-\DoxyCodeLine{00038\ }
-\DoxyCodeLine{00039\ \textcolor{comment}{//\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ Constructor\ \ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ //}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ \ \ \ Copyright\ (C)\ 2015-\/2024\ OpenCFD\ Ltd.}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ \ \ \ Copyright\ (C)\ 2024-\/2025\ Ha\ Nam\ Tran}}
+\DoxyCodeLine{00010\ \textcolor{comment}{-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00011\ \textcolor{comment}{License}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ \ \ \ This\ file\ is\ part\ of\ DGFoam.}}
+\DoxyCodeLine{00013\ \textcolor{comment}{}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ \ \ \ DGFoam\ is\ free\ software:\ you\ can\ redistribute\ it\ and/or\ modify\ it}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ \ \ \ under\ the\ terms\ of\ the\ GNU\ General\ Public\ License\ as\ published\ by}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ \ \ \ the\ Free\ Software\ Foundation,\ either\ version\ 3\ of\ the\ License,\ or}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ \ \ \ (at\ your\ option)\ any\ later\ version.}}
+\DoxyCodeLine{00018\ \textcolor{comment}{}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ \ \ \ DGFoam\ is\ distributed\ in\ the\ hope\ that\ it\ will\ be\ useful,\ but\ WITHOUT}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ \ \ \ ANY\ WARRANTY;\ without\ even\ the\ implied\ warranty\ of\ MERCHANTABILITY\ or}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ \ \ \ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE.\ \ See\ the\ GNU\ General\ Public\ License}}
+\DoxyCodeLine{00022\ \textcolor{comment}{\ \ \ \ for\ more\ details.}}
+\DoxyCodeLine{00023\ \textcolor{comment}{}}
+\DoxyCodeLine{00024\ \textcolor{comment}{\ \ \ \ You\ should\ have\ received\ a\ copy\ of\ the\ GNU\ General\ Public\ License}}
+\DoxyCodeLine{00025\ \textcolor{comment}{\ \ \ \ along\ with\ OpenFOAM.\ \ If\ not,\ see\ <http://www.gnu.org/licenses/>.}}
+\DoxyCodeLine{00026\ \textcolor{comment}{}}
+\DoxyCodeLine{00027\ \textcolor{comment}{Class}}
+\DoxyCodeLine{00028\ \textcolor{comment}{\ \ \ \ Foam::dgProcessorBoundaryField}}
+\DoxyCodeLine{00029\ \textcolor{comment}{}}
+\DoxyCodeLine{00030\ \textcolor{comment}{\(\backslash\)*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \textcolor{preprocessor}{\#ifndef\ dgProcessorBoundaryFieldI\_H}}
+\DoxyCodeLine{00033\ \textcolor{preprocessor}{\#define\ dgProcessorBoundaryFieldI\_H}}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ \textcolor{preprocessor}{\#include\ "{}PstreamBuffers.H"{}}}
+\DoxyCodeLine{00036\ \textcolor{preprocessor}{\#include\ "{}Pstream.H"{}}}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespaceFoam}{Foam}}}
+\DoxyCodeLine{00039\ \{}
 \DoxyCodeLine{00040\ }
-\DoxyCodeLine{00041\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Type>}
-\DoxyCodeLine{00042\ \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField_a7e67388024a3c92eb8e7959700d3e9ab}{dgProcessorBoundaryField<Type>::dgProcessorBoundaryField}}}
-\DoxyCodeLine{00043\ (}
-\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keyword}{const}\ fvPatch\&\ patch,}
-\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keyword}{const}\ dgGeomMesh\&\ dgMesh}
-\DoxyCodeLine{00046\ )}
-\DoxyCodeLine{00047\ :}
-\DoxyCodeLine{00048\ \ \ \ \ procPatch\_(refCast<const\ processorFvPatch>(patch)),}
-\DoxyCodeLine{00049\ \ \ \ \ dgMesh\_(dgMesh),}
-\DoxyCodeLine{00050\ \ \ \ \ neighbProc\_(procPatch\_.neighbProcNo())}
-\DoxyCodeLine{00051\ \{}
-\DoxyCodeLine{00052\ \ \ \ \ \textcolor{comment}{//\ Compute\ total\ Gauss\ points\ on\ this\ patch}}
-\DoxyCodeLine{00053\ \ \ \ \ label\ totalGauss\ =\ 0;}
-\DoxyCodeLine{00054\ }
-\DoxyCodeLine{00055\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <\ procPatch\_.size();\ ++i)}
-\DoxyCodeLine{00056\ \ \ \ \ \{}
-\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ label\ faceID\ =\ procPatch\_.start()\ +\ i;}
-\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ dgGeomFace*\ gFace\ =\ this-\/>dgMesh\_.faces()[faceID];}
-\DoxyCodeLine{00059\ }
-\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ totalGauss\ +=\ gFace-\/>connectivity().size();}
-\DoxyCodeLine{00061\ \ \ \ \ \}}
-\DoxyCodeLine{00062\ }
-\DoxyCodeLine{00063\ \ \ \ \ \textcolor{comment}{//\ Allocate\ send\ and\ receive\ buffers}}
-\DoxyCodeLine{00064\ \ \ \ \ sendBuf\_.setSize(totalGauss);}
-\DoxyCodeLine{00065\ \ \ \ \ recvBuf\_.setSize(totalGauss);}
-\DoxyCodeLine{00066\ \}}
-\DoxyCodeLine{00067\ }
-\DoxyCodeLine{00068\ \textcolor{comment}{//\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ Member\ Functions\ \ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ //}}
-\DoxyCodeLine{00069\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Type>}
-\DoxyCodeLine{00070\ \textcolor{keywordtype}{void}\ dgProcessorBoundaryField<Type>::sendAll}
-\DoxyCodeLine{00071\ (}
-\DoxyCodeLine{00072\ \ \ \ \ dgField<Type>\&\ field}
-\DoxyCodeLine{00073\ )\textcolor{keyword}{\ const}}
-\DoxyCodeLine{00074\ \textcolor{keyword}{}\{}
-\DoxyCodeLine{00075\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ tag\ =\ genSendTag();}
-\DoxyCodeLine{00076\ }
-\DoxyCodeLine{00077\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00078\ \ \ \ \ \textcolor{comment}{//\ Pack}}
+\DoxyCodeLine{00041\ \textcolor{comment}{//\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ Constructor\ \ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ //}}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Type>}
+\DoxyCodeLine{00044\ \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField_a7e67388024a3c92eb8e7959700d3e9ab}{dgProcessorBoundaryField<Type>::dgProcessorBoundaryField}}}
+\DoxyCodeLine{00045\ (}
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keyword}{const}\ fvPatch\&\ patch,}
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keyword}{const}\ dgGeomMesh\&\ dgMesh}
+\DoxyCodeLine{00048\ )}
+\DoxyCodeLine{00049\ :}
+\DoxyCodeLine{00050\ \ \ \ \ procPatch\_(refCast<const\ processorFvPatch>(patch)),}
+\DoxyCodeLine{00051\ \ \ \ \ dgMesh\_(dgMesh),}
+\DoxyCodeLine{00052\ \ \ \ \ neighbProc\_(procPatch\_.neighbProcNo())}
+\DoxyCodeLine{00053\ \{}
+\DoxyCodeLine{00054\ \ \ \ \ \textcolor{comment}{//\ Compute\ total\ Gauss\ points\ on\ this\ patch}}
+\DoxyCodeLine{00055\ \ \ \ \ label\ totalGauss\ =\ 0;}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00057\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <\ procPatch\_.size();\ ++i)}
+\DoxyCodeLine{00058\ \ \ \ \ \{}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ label\ faceID\ =\ procPatch\_.start()\ +\ i;}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ dgGeomFace*\ gFace\ =\ this-\/>dgMesh\_.faces()[faceID];}
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ totalGauss\ +=\ gFace-\/>nGauss();}
+\DoxyCodeLine{00063\ \ \ \ \ \}}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00065\ \ \ \ \ \textcolor{comment}{//\ Allocate\ send\ and\ receive\ buffers}}
+\DoxyCodeLine{00066\ \ \ \ \ sendBuf\_.setSize(totalGauss);}
+\DoxyCodeLine{00067\ \ \ \ \ recvBuf\_.setSize(totalGauss);}
+\DoxyCodeLine{00068\ \}}
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00070\ \textcolor{comment}{//\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ Member\ Functions\ \ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ //}}
+\DoxyCodeLine{00071\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Type>}
+\DoxyCodeLine{00072\ \textcolor{keywordtype}{void}\ dgProcessorBoundaryField<Type>::sendAll}
+\DoxyCodeLine{00073\ (}
+\DoxyCodeLine{00074\ \ \ \ \ dgField<Type>\&\ field}
+\DoxyCodeLine{00075\ )\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00076\ \textcolor{keyword}{}\{}
+\DoxyCodeLine{00077\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ tag\ =\ genSendTag();}
+\DoxyCodeLine{00078\ }
 \DoxyCodeLine{00079\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00080\ \ \ \ \ label\ k\ =\ 0;}
-\DoxyCodeLine{00081\ }
-\DoxyCodeLine{00082\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <\ procPatch\_.size();\ ++i)}
-\DoxyCodeLine{00083\ \ \ \ \ \{}
-\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ label\ faceID\ =\ procPatch\_.start()\ +\ i;}
-\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ dgGeomFace*\ gFace\ =\ this-\/>dgMesh\_.faces()[faceID];}
-\DoxyCodeLine{00086\ }
-\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ label\ ownerCellID\ =}
-\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>dgMesh\_.getFvMesh().faceOwner()[faceID];}
-\DoxyCodeLine{00089\ }
-\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ List<label>\&\ conn\ =\ gFace-\/>connectivity();}
-\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ label\ nGauss\ =\ conn.size();}
-\DoxyCodeLine{00092\ }
-\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ g\ =\ 0;\ g\ <\ nGauss;\ ++g)}
-\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \ \ \ \ sendBuf\_[k]\ =}
-\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ field.gaussFields()[ownerCellID]}
-\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ .faceField()}
-\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ .minusValueOnGlobalFace(faceID,\ g);}
-\DoxyCodeLine{00099\ }
-\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \ \ \ \ ++k;}
-\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00102\ \ \ \ \ \}}
-\DoxyCodeLine{00103\ \ \ \ \ }
-\DoxyCodeLine{00104\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00105\ \ \ \ \ \textcolor{comment}{//\ Send\ to\ neighbour}}
-\DoxyCodeLine{00106\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00107\ }
-\DoxyCodeLine{00108\ \ \ \ \ \{}
-\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ OPstream\ toNbr}
-\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ (}
-\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ \ \ \ \ Pstream::commsTypes::scheduled,}
-\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \ \ \ \ neighbProc\_,}
-\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \ \ \ \ 0,}
-\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ \ \ \ \ tag}
-\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ );}
-\DoxyCodeLine{00116\ }
-\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ toNbr\ <<\ sendBuf\_;}
-\DoxyCodeLine{00118\ \ \ \ \ \}}
-\DoxyCodeLine{00119\ \}}
-\DoxyCodeLine{00120\ }
-\DoxyCodeLine{00121\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Type>}
-\DoxyCodeLine{00122\ \textcolor{keywordtype}{void}\ dgProcessorBoundaryField<Type>::recvAll}
-\DoxyCodeLine{00123\ (}
-\DoxyCodeLine{00124\ \ \ \ \ dgField<Type>\&\ field}
-\DoxyCodeLine{00125\ )\textcolor{keyword}{\ const}}
-\DoxyCodeLine{00126\ \textcolor{keyword}{}\{}
-\DoxyCodeLine{00127\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ tag\ =\ genRecvTag();}
-\DoxyCodeLine{00128\ }
-\DoxyCodeLine{00129\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00130\ \ \ \ \ \textcolor{comment}{//\ Receive\ from\ neighbour}}
-\DoxyCodeLine{00131\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00132\ }
-\DoxyCodeLine{00133\ \ \ \ \ \{}
-\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ IPstream\ fromNbr}
-\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ (}
-\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ \ \ \ \ Pstream::commsTypes::scheduled,}
-\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ \ \ \ \ neighbProc\_,}
-\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ \ \ \ \ 0,}
-\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ \ \ \ \ tag}
-\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ );}
-\DoxyCodeLine{00141\ }
-\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ fromNbr\ >>\ recvBuf\_;}
-\DoxyCodeLine{00143\ \ \ \ \ \}}
-\DoxyCodeLine{00144\ }
-\DoxyCodeLine{00145\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00146\ \ \ \ \ \textcolor{comment}{//\ Unpack}}
-\DoxyCodeLine{00147\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00148\ \ \ \ \ label\ k\ =\ 0;}
-\DoxyCodeLine{00149\ }
-\DoxyCodeLine{00150\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <\ procPatch\_.size();\ ++i)}
-\DoxyCodeLine{00151\ \ \ \ \ \{}
-\DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ label\ faceID\ =\ procPatch\_.start()\ +\ i;}
-\DoxyCodeLine{00153\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ dgGeomFace*\ gFace\ =\ this-\/>dgMesh\_.faces()[faceID];}
-\DoxyCodeLine{00154\ }
-\DoxyCodeLine{00155\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ label\ ownerCellID\ =}
-\DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>dgMesh\_.getFvMesh().faceOwner()[faceID];}
-\DoxyCodeLine{00157\ }
-\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ List<label>\&\ conn\ =\ gFace-\/>connectivity();}
-\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ label\ nGauss\ =\ conn.size();}
+\DoxyCodeLine{00080\ \ \ \ \ \textcolor{comment}{//\ Pack}}
+\DoxyCodeLine{00081\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00082\ \ \ \ \ label\ k\ =\ 0;}
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00084\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <\ procPatch\_.size();\ ++i)}
+\DoxyCodeLine{00085\ \ \ \ \ \{}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ label\ faceID\ =\ procPatch\_.start()\ +\ i;}
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ dgGeomFace*\ gFace\ =\ this-\/>dgMesh\_.faces()[faceID];}
+\DoxyCodeLine{00088\ }
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ label\ ownerCellID\ =}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>dgMesh\_.getFvMesh().faceOwner()[faceID];}
+\DoxyCodeLine{00091\ }
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ label\ nGauss\ =\ gFace-\/>nGauss();}
+\DoxyCodeLine{00093\ }
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ g\ =\ 0;\ g\ <\ nGauss;\ ++g)}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \ \ \ \ sendBuf\_[k]\ =}
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ field.gaussFields()[ownerCellID]}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ .faceField()}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ .minusValueOnGlobalFace(faceID,\ g);}
+\DoxyCodeLine{00100\ }
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \ \ \ \ ++k;}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00103\ \ \ \ \ \}}
+\DoxyCodeLine{00104\ \ \ \ \ }
+\DoxyCodeLine{00105\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00106\ \ \ \ \ \textcolor{comment}{//\ Send\ to\ neighbour}}
+\DoxyCodeLine{00107\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00108\ }
+\DoxyCodeLine{00109\ \ \ \ \ \{}
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ OPstream\ toNbr}
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ (}
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \ \ \ \ Pstream::commsTypes::scheduled,}
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \ \ \ \ neighbProc\_,}
+\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ \ \ \ \ 0,}
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ \ \ \ \ tag}
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ );}
+\DoxyCodeLine{00117\ }
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ toNbr\ <<\ sendBuf\_;}
+\DoxyCodeLine{00119\ \ \ \ \ \}}
+\DoxyCodeLine{00120\ \}}
+\DoxyCodeLine{00121\ }
+\DoxyCodeLine{00122\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Type>}
+\DoxyCodeLine{00123\ \textcolor{keywordtype}{void}\ dgProcessorBoundaryField<Type>::recvAll}
+\DoxyCodeLine{00124\ (}
+\DoxyCodeLine{00125\ \ \ \ \ dgField<Type>\&\ field}
+\DoxyCodeLine{00126\ )\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00127\ \textcolor{keyword}{}\{}
+\DoxyCodeLine{00128\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ tag\ =\ genRecvTag();}
+\DoxyCodeLine{00129\ }
+\DoxyCodeLine{00130\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00131\ \ \ \ \ \textcolor{comment}{//\ Receive\ from\ neighbour}}
+\DoxyCodeLine{00132\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00133\ }
+\DoxyCodeLine{00134\ \ \ \ \ \{}
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ IPstream\ fromNbr}
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ (}
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ \ \ \ \ Pstream::commsTypes::scheduled,}
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ \ \ \ \ neighbProc\_,}
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ \ \ \ \ 0,}
+\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ \ \ \ \ tag}
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ );}
+\DoxyCodeLine{00142\ }
+\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ fromNbr\ >>\ recvBuf\_;}
+\DoxyCodeLine{00144\ \ \ \ \ \}}
+\DoxyCodeLine{00145\ }
+\DoxyCodeLine{00146\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00147\ \ \ \ \ \textcolor{comment}{//\ Unpack}}
+\DoxyCodeLine{00148\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00149\ \ \ \ \ label\ k\ =\ 0;}
+\DoxyCodeLine{00150\ }
+\DoxyCodeLine{00151\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <\ procPatch\_.size();\ ++i)}
+\DoxyCodeLine{00152\ \ \ \ \ \{}
+\DoxyCodeLine{00153\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ label\ faceID\ =\ procPatch\_.start()\ +\ i;}
+\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ dgGeomFace*\ gFace\ =\ this-\/>dgMesh\_.faces()[faceID];}
+\DoxyCodeLine{00155\ }
+\DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ label\ ownerCellID\ =}
+\DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>dgMesh\_.getFvMesh().faceOwner()[faceID];}
+\DoxyCodeLine{00158\ }
+\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ label\ nGauss\ =\ gFace-\/>nGauss();}
 \DoxyCodeLine{00160\ }
 \DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ g\ =\ 0;\ g\ <\ nGauss;\ ++g)}
 \DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ \{}
 \DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ \ \ \ \ field.gaussFields()[ownerCellID]}
 \DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ .faceField()}
-\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ .plusValueOnGlobalFace(faceID,\ conn[g])\ =\ recvBuf\_[k];}
+\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ .plusValueOnGlobalFace(faceID,\ g)\ =\ recvBuf\_[k];}
 \DoxyCodeLine{00166\ }
 \DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ \ \ \ \ ++k;}
 \DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ \}}

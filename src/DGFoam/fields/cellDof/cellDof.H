@@ -43,6 +43,8 @@ SourceFiles
 
 #include "label.H"
 #include "List.H"
+#include "tmp.H"
+#include "refCount.H"
 
 // Forward declarations of tensor types
 #include "tensor.H"
@@ -75,6 +77,8 @@ namespace Foam
  */
 template<class Type>
 class cellDof
+:
+    public refCount
 {
 private:
 
@@ -121,6 +125,14 @@ public:
             const UList<Type>& inputDof
         );
 
+        /**
+         * \brief Construct from tmp
+         */
+        cellDof
+        (
+            const tmp<cellDof<Type>>& t
+        );
+
     //====================================================================//
     //                         Assignment
     //====================================================================//
@@ -129,6 +141,14 @@ public:
          * \brief Copy assignment operator
          */
         cellDof<Type>& operator=(const cellDof<Type>& other);
+
+        /**
+         * \brief Assignment from tmp
+         */
+        cellDof<Type>& operator=
+        (
+            const tmp<cellDof<Type>>& t
+        );
 
     //====================================================================//
     //                           Access

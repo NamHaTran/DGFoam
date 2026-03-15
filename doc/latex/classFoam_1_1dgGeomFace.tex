@@ -23,7 +23,7 @@ Collaboration diagram for Foam\+::dg\+Geom\+Face\+:\nopagebreak
 \item 
 \mbox{\hyperlink{classFoam_1_1dgGeomFace_a327980787b5ca0d3e68bf1e44650c548}{dg\+Geom\+Face}} ()
 \begin{DoxyCompactList}\small\item\em Default constructor. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{classFoam_1_1dgGeomFace_abb1edb1fe16efa514ad1c92b2e40735b}{dg\+Geom\+Face}} (\mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1GaussField}{face\+ID}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{fv\+Mesh}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{mesh}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classFoam_1_1dgRefFace}{dg\+Ref\+Face}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{ref\+Face}})
+\mbox{\hyperlink{classFoam_1_1dgGeomFace_abb1edb1fe16efa514ad1c92b2e40735b}{dg\+Geom\+Face}} (\mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1GaussField}{face\+ID}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{fv\+Mesh}} \&mesh, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classFoam_1_1dgRefFace}{dg\+Ref\+Face}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{ref\+Face}})
 \begin{DoxyCompactList}\small\item\em Construct from face ID, mesh, and reference-\/face data. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1dgGeomFace_ac1e97feaac60c8e42c6d7f0a5757588b}{dg\+Geom\+Face}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomFace}{dg\+Geom\+Face}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{other}})
 \begin{DoxyCompactList}\small\item\em Copy constructor. \end{DoxyCompactList}\item 
@@ -31,6 +31,8 @@ Collaboration diagram for Foam\+::dg\+Geom\+Face\+:\nopagebreak
 \begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1dgGeomFace_a882b6e5b102ab3bc0cb67c9bab78cc10}{size}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
 \begin{DoxyCompactList}\small\item\em Return number of vertices of the face. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1dgGeomFace_acf7577d8b01880c8c7ff74107f4f9f6f}{n\+Gauss}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\begin{DoxyCompactList}\small\item\em Return nunber of Gauss points on the face. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{face}} \& \mbox{\hyperlink{classFoam_1_1dgGeomFace_ac8af00f68995c0f2a058577e62aee942}{base\+Face}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
 \begin{DoxyCompactList}\small\item\em Return underlying Open\+FOAM face. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{point}} \& \mbox{\hyperlink{classFoam_1_1dgGeomFace_a9c7fa50a073bd5e90efcc4b585ce6cde}{get\+Point}} (\mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1GaussField}{i}}) \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
@@ -41,18 +43,20 @@ Collaboration diagram for Foam\+::dg\+Geom\+Face\+:\nopagebreak
 \begin{DoxyCompactList}\small\item\em Return face unit normal (planar assumption) \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \mbox{\hyperlink{classFoam_1_1dgGeomFace_acb31dd9cdb257630fe9b17d8bbe2297f}{area\+Normal}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
 \begin{DoxyCompactList}\small\item\em Return area-\/normal vector. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} \mbox{\hyperlink{classFoam_1_1dgGeomFace_aefe00addc1582cda51767a038f801b33}{area}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} \mbox{\hyperlink{classFoam_1_1dgGeomFace_aefe00addc1582cda51767a038f801b33}{area}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
 \begin{DoxyCompactList}\small\item\em Return face area. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \& \mbox{\hyperlink{classFoam_1_1dgGeomFace_adf132311f0a5c4869cbbb239080959e1}{id}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
 \begin{DoxyCompactList}\small\item\em Return face index. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \& \mbox{\hyperlink{classFoam_1_1dgGeomFace_a6e6d583c810e55f3286555b7c4f61d6f}{owner\+J2D}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
-\begin{DoxyCompactList}\small\item\em Return Jacobian 2D at Gauss points on owner side. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \& \mbox{\hyperlink{classFoam_1_1dgGeomFace_ac1abf018365fcae490f4c41242821db3}{neighbor\+J2D}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
-\begin{DoxyCompactList}\small\item\em Return Jacobian 2D at Gauss points on neighbour side. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgGeomFace_aeee449e860eb4f6dea88096f66b3c771}{flatten\+Face}} ()
-\begin{DoxyCompactList}\small\item\em Flatten face vertices into a local 2D coordinate system. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} $>$ \& \mbox{\hyperlink{classFoam_1_1dgGeomFace_a6e154bebc183b009cbf354723cd36da9}{J2D}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\begin{DoxyCompactList}\small\item\em Return Jacobian 2D at Gauss points. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgGeomFace_a3299b9ccce971e63722aeeb75c36f26a}{flatten\+Face}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{global\+Points}}, \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector2D}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{flattened\+Points}}) \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\begin{DoxyCompactList}\small\item\em Compute Gauss-\/point connectivity between owner and neighbour cells. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgGeomFace_a8725821726d73118866669b0d6ef6fac}{process\+Flat\+And\+Sorted\+Points}} ()
 \begin{DoxyCompactList}\small\item\em Perform face flattening and ordering. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgGeomFace_ac09f8f0378a30a431390140ddc0dada2}{set\+Owner\+Id}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1dgGeomFace_adf132311f0a5c4869cbbb239080959e1}{id}})
+\begin{DoxyCompactList}\small\item\em Set face owner cell ID. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgGeomFace_a98737815449b9a1004f091613ee70954}{set\+Neighbor\+Id}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1dgGeomFace_adf132311f0a5c4869cbbb239080959e1}{id}})
+\begin{DoxyCompactList}\small\item\em Set face neighbor cell ID. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgGeomFace_a6f5ae2ee2542d4c2e405b6d6adbbeb57}{set\+Owner\+Pos}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682}{dg\+Face\+Position}} \mbox{\hyperlink{classFoam_1_1GaussField}{pos}})
 \begin{DoxyCompactList}\small\item\em Set face position in owner cell. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgGeomFace_a6e07123ecf92e9fe6978be1e7a3f087e}{set\+Neighbor\+Pos}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682}{dg\+Face\+Position}} \mbox{\hyperlink{classFoam_1_1GaussField}{pos}})
@@ -65,23 +69,21 @@ Collaboration diagram for Foam\+::dg\+Geom\+Face\+:\nopagebreak
 \begin{DoxyCompactList}\small\item\em Compute Gauss-\/point connectivity between owner and neighbour. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgGeomFace_ac10889873b5c566cb9d69bd44c7a3e0c}{compute\+Basis\+And\+Derivatives}} ()
 \begin{DoxyCompactList}\small\item\em Compute basis functions and derivatives on the face. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgGeomFace_a14db0f8947be33e31f8175368ea9f924}{mapping\+From\+Ref\+To\+Real}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{dgGeomFace_2dgFaceType_8H_a8f34e6eff8ddd9d85fe9358a8a6248f6}{dg\+Face\+Type}} type, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$ \&gauss\+Points, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector2D}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{face\+Vertices}}, \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector2D}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{physic\+GaussP}})
-\begin{DoxyCompactList}\small\item\em Map Gauss points from reference to physical face. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgGeomFace_a12ffd795ee8c299f6b90426e3fd707a8}{compute\+Owner\+Lame\+Parameters}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{cell\+Vertices}})
-\begin{DoxyCompactList}\small\item\em Compute Lame parameters at face Gauss points from owner cell This method MUST be called after setting owner\+Pos\+\_\+ and owner\+Cell\+Type\+\_\+. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgGeomFace_aa9e0e84d15e1464a6c72f5473340a40d}{compute\+Neighbor\+Lame\+Parameters}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{cell\+Vertices}})
-\begin{DoxyCompactList}\small\item\em Compute Lame parameters at face Gauss points from neighbour cell This method MUST be called after setting neighbor\+Pos\+\_\+ and neighbor\+Cell\+Type\+\_\+. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgGeomFace_aca30ae273f33aecd8fb64665ac085585}{compute\+Lame\+Parameters}} ()
+\begin{DoxyCompactList}\small\item\em Compute Lame parameters at face Gauss points from both owner and neighbour cells This method MUST be called after setting owner\+Pos\+\_\+, neighbor\+Pos\+\_\+, owner\+Cell\+Type\+\_\+ and neighbor\+Cell\+Type\+\_\+. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{bool}} \mbox{\hyperlink{classFoam_1_1dgGeomFace_a087f32d8da851e4179eacdd115b9cf2e}{is\+Boundary}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
 \begin{DoxyCompactList}\small\item\em Return true if this face is a boundary face. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1dgGeomFace_a6d6fc4ab987c6b87ac2da6a5ae613528}{patch\+ID}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
 \begin{DoxyCompactList}\small\item\em Return patch index of the face. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{bool}} \mbox{\hyperlink{classFoam_1_1dgGeomFace_af3e00be622221f4026782f2fa665cb96}{is\+Owner}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} cell\+ID) \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
 \begin{DoxyCompactList}\small\item\em Check if the given cell is the owner of this face. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$ \& \mbox{\hyperlink{classFoam_1_1dgGeomFace_a232f90735be37e8a9dfb55b06511b073}{physic\+Gauss\+Points}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\begin{DoxyCompactList}\small\item\em Return physical Gauss points. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$ \& \mbox{\hyperlink{classFoam_1_1dgGeomFace_a8b115ef5a964d8816db91eb10559aa30}{gauss\+Points\+Owner}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
 \begin{DoxyCompactList}\small\item\em Return Gauss points on owner-\/side reference face. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$ \& \mbox{\hyperlink{classFoam_1_1dgGeomFace_a9ce7eebf204ab3d41b293f64d628d124}{gauss\+Points\+Neighbor}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
 \begin{DoxyCompactList}\small\item\em Return Gauss points on neighbour-\/side reference face. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \& \mbox{\hyperlink{classFoam_1_1dgGeomFace_a91b5ae11e3518d25101dc64e685cbdc8}{weights}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} $>$ \& \mbox{\hyperlink{classFoam_1_1dgGeomFace_a91b5ae11e3518d25101dc64e685cbdc8}{weights}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
 \begin{DoxyCompactList}\small\item\em Return Gauss quadrature weights. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector2D}} $>$ \& \mbox{\hyperlink{classFoam_1_1dgGeomFace_a05b0e0671ac770a6c46362b37f759283}{flat\+Coords}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
 \begin{DoxyCompactList}\small\item\em Return flattened 2D face coordinates. \end{DoxyCompactList}\item 
@@ -89,35 +91,39 @@ Collaboration diagram for Foam\+::dg\+Geom\+Face\+:\nopagebreak
 \begin{DoxyCompactList}\small\item\em Return fv\+Mesh face-\/owner list. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1dgGeomFace_a2aceeca7d04e0857d7d733a2fa5f725e}{n\+Internal\+Faces}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
 \begin{DoxyCompactList}\small\item\em Return number of internal faces. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{label}} $>$ \& \mbox{\hyperlink{classFoam_1_1dgGeomFace_ad55fa893a76fc052b06a761e13db6a0a}{connectivity}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
-\begin{DoxyCompactList}\small\item\em Return Gauss-\/point connectivity. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ $>$ \& \mbox{\hyperlink{classFoam_1_1dgGeomFace_a2be89c915a9c35c8d534d4f7437461fc}{owner\+Basis}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} $>$ $>$ \& \mbox{\hyperlink{classFoam_1_1dgGeomFace_a2be89c915a9c35c8d534d4f7437461fc}{owner\+Basis}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
 \begin{DoxyCompactList}\small\item\em Return owner-\/side basis functions. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ $>$ \& \mbox{\hyperlink{classFoam_1_1dgGeomFace_a6ef2ed18cf6a4f17c945cd7f148f3369}{neighbor\+Basis}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} $>$ $>$ \& \mbox{\hyperlink{classFoam_1_1dgGeomFace_a6ef2ed18cf6a4f17c945cd7f148f3369}{neighbor\+Basis}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
 \begin{DoxyCompactList}\small\item\em Return neighbour-\/side basis functions. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ $>$ \& \mbox{\hyperlink{classFoam_1_1dgGeomFace_a484d664cabb6c939f2f6bd8bffb29524}{owner\+\_\+d\+Basis\+\_\+d\+Eta1}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} $>$ $>$ \& \mbox{\hyperlink{classFoam_1_1dgGeomFace_a484d664cabb6c939f2f6bd8bffb29524}{owner\+\_\+d\+Basis\+\_\+d\+Eta1}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
 \begin{DoxyCompactList}\small\item\em Return owner-\/side basis derivatives. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ $>$ \& \mbox{\hyperlink{classFoam_1_1dgGeomFace_ad778a85c42501aa9ccd9b8ad7a78cda4}{owner\+\_\+d\+Basis\+\_\+d\+Eta2}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} $>$ $>$ \& \mbox{\hyperlink{classFoam_1_1dgGeomFace_ad778a85c42501aa9ccd9b8ad7a78cda4}{owner\+\_\+d\+Basis\+\_\+d\+Eta2}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
 \item 
-\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ $>$ \& \mbox{\hyperlink{classFoam_1_1dgGeomFace_aef0cec851d21b4e880e073251499924a}{owner\+\_\+d\+Basis\+\_\+d\+Eta3}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} $>$ $>$ \& \mbox{\hyperlink{classFoam_1_1dgGeomFace_aef0cec851d21b4e880e073251499924a}{owner\+\_\+d\+Basis\+\_\+d\+Eta3}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
 \item 
-\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ $>$ \& \mbox{\hyperlink{classFoam_1_1dgGeomFace_a534a13061982feba35bbbb79d3915787}{neighbor\+\_\+d\+Basis\+\_\+d\+Eta1}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} $>$ $>$ \& \mbox{\hyperlink{classFoam_1_1dgGeomFace_a534a13061982feba35bbbb79d3915787}{neighbor\+\_\+d\+Basis\+\_\+d\+Eta1}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
 \begin{DoxyCompactList}\small\item\em Return neighbour-\/side basis derivatives. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ $>$ \& \mbox{\hyperlink{classFoam_1_1dgGeomFace_a2c268271b83967f4484579f6492a3aa5}{neighbor\+\_\+d\+Basis\+\_\+d\+Eta2}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} $>$ $>$ \& \mbox{\hyperlink{classFoam_1_1dgGeomFace_a2c268271b83967f4484579f6492a3aa5}{neighbor\+\_\+d\+Basis\+\_\+d\+Eta2}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
 \item 
-\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ $>$ \& \mbox{\hyperlink{classFoam_1_1dgGeomFace_afc29b9370297a4a16da45e1775cd1033}{neighbor\+\_\+d\+Basis\+\_\+d\+Eta3}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} $>$ $>$ \& \mbox{\hyperlink{classFoam_1_1dgGeomFace_afc29b9370297a4a16da45e1775cd1033}{neighbor\+\_\+d\+Basis\+\_\+d\+Eta3}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
 \item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgGeomFace_ad8e48f2989775fb3523794baffe6f855}{set\+Processor\+Patch}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{bool}} \mbox{\hyperlink{classFoam_1_1GaussField}{is\+Proc\+Patch}})
 \begin{DoxyCompactList}\small\item\em Mark this face as a processor-\/patch face. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgGeomFace_af670cd817df2555b34de86ac3831aee6}{set\+Connectivity}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{label}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{conn}})
-\begin{DoxyCompactList}\small\item\em Set Gauss-\/point connectivity for processor-\/patch faces. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgGeomFace_a4bc337f835c61982d7951111d41f757b}{set\+Physic\+Gauss\+Points}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$ \&points)
+\begin{DoxyCompactList}\small\item\em Set Gauss points. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgGeomFace_acdc77e5aa3b0d47f031b0fa9160e30c2}{set\+Lame\+Params}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{params}})
+\begin{DoxyCompactList}\small\item\em Set Lame parameters. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgGeomFace_afea021336481517ff0c6a67f913c88ef}{calc\+Gauss\+Points\+On\+Owner\+Side}} ()
+\begin{DoxyCompactList}\small\item\em Calculate Gauss points from owner side, bases on physic Gauss. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1dgGeomFace}{dg\+Geom\+Face}} \& \mbox{\hyperlink{classFoam_1_1dgGeomFace_ae17aea055f96ef95e04d2659044725bf}{operator=}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomFace}{dg\+Geom\+Face}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{other}})
 \begin{DoxyCompactList}\small\item\em Copy assignment operator. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgGeomFace_a6916f773f4ba82d5e5aee6110772ea42}{print\+Debug\+Info}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
 \begin{DoxyCompactList}\small\item\em Print debug information. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgGeomFace_aff0eaa4ce16592a62dce0fac1a1ad288}{print\+Cells\+Info}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\begin{DoxyCompactList}\small\item\em Print owner and neighbour cell information. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1dgGeomFace_a327980787b5ca0d3e68bf1e44650c548}{dg\+Geom\+Face}} ()
 \begin{DoxyCompactList}\small\item\em Default constructor. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{classFoam_1_1dgGeomFace_abb1edb1fe16efa514ad1c92b2e40735b}{dg\+Geom\+Face}} (\mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1GaussField}{face\+ID}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{fv\+Mesh}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{mesh}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classFoam_1_1dgRefFace}{dg\+Ref\+Face}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{ref\+Face}})
+\mbox{\hyperlink{classFoam_1_1dgGeomFace_abb1edb1fe16efa514ad1c92b2e40735b}{dg\+Geom\+Face}} (\mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1GaussField}{face\+ID}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{fv\+Mesh}} \&mesh, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classFoam_1_1dgRefFace}{dg\+Ref\+Face}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{ref\+Face}})
 \begin{DoxyCompactList}\small\item\em Construct from face ID, mesh, and reference-\/face data. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1dgGeomFace_ac1e97feaac60c8e42c6d7f0a5757588b}{dg\+Geom\+Face}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomFace}{dg\+Geom\+Face}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{other}})
 \begin{DoxyCompactList}\small\item\em Copy constructor. \end{DoxyCompactList}\item 
@@ -125,6 +131,8 @@ Collaboration diagram for Foam\+::dg\+Geom\+Face\+:\nopagebreak
 \begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1dgGeomFace_a446ef95068e43a7a490aa44d8163ea41}{size}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
 \begin{DoxyCompactList}\small\item\em Return number of vertices of the face. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1dgGeomFace_acf7577d8b01880c8c7ff74107f4f9f6f}{n\+Gauss}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\begin{DoxyCompactList}\small\item\em Return nunber of Gauss points on the face. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{face}} \& \mbox{\hyperlink{classFoam_1_1dgGeomFace_a9726491adcb5074eb8524b868ca35d42}{base\+Face}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
 \begin{DoxyCompactList}\small\item\em Return underlying Open\+FOAM face. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{point}} \& \mbox{\hyperlink{classFoam_1_1dgGeomFace_a5227f3c03b22a0fcf8e953e8740088c1}{get\+Point}} (\mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1GaussField}{i}}) \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
@@ -135,18 +143,20 @@ Collaboration diagram for Foam\+::dg\+Geom\+Face\+:\nopagebreak
 \begin{DoxyCompactList}\small\item\em Return face unit normal (planar assumption) \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \mbox{\hyperlink{classFoam_1_1dgGeomFace_a2cc97849bbb985c3dd77c9e8e2c43400}{area\+Normal}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
 \begin{DoxyCompactList}\small\item\em Return area-\/normal vector. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} \mbox{\hyperlink{classFoam_1_1dgGeomFace_a5e46b06de9178a6bfb1b246254c0b146}{area}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} \mbox{\hyperlink{classFoam_1_1dgGeomFace_a5e46b06de9178a6bfb1b246254c0b146}{area}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
 \begin{DoxyCompactList}\small\item\em Return face area. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \& \mbox{\hyperlink{classFoam_1_1dgGeomFace_adf132311f0a5c4869cbbb239080959e1}{id}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
 \begin{DoxyCompactList}\small\item\em Return face index. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \& \mbox{\hyperlink{classFoam_1_1dgGeomFace_a6e6d583c810e55f3286555b7c4f61d6f}{owner\+J2D}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
-\begin{DoxyCompactList}\small\item\em Return Jacobian 2D at Gauss points on owner side. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \& \mbox{\hyperlink{classFoam_1_1dgGeomFace_ac1abf018365fcae490f4c41242821db3}{neighbor\+J2D}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
-\begin{DoxyCompactList}\small\item\em Return Jacobian 2D at Gauss points on neighbour side. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgGeomFace_aeee449e860eb4f6dea88096f66b3c771}{flatten\+Face}} ()
-\begin{DoxyCompactList}\small\item\em Flatten face vertices into a local 2D coordinate system. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} $>$ \& \mbox{\hyperlink{classFoam_1_1dgGeomFace_a6e154bebc183b009cbf354723cd36da9}{J2D}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\begin{DoxyCompactList}\small\item\em Return Jacobian 2D at Gauss points. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgGeomFace_a3299b9ccce971e63722aeeb75c36f26a}{flatten\+Face}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{global\+Points}}, \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector2D}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{flattened\+Points}}) \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\begin{DoxyCompactList}\small\item\em Compute Gauss-\/point connectivity between owner and neighbour cells. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgGeomFace_a8725821726d73118866669b0d6ef6fac}{process\+Flat\+And\+Sorted\+Points}} ()
 \begin{DoxyCompactList}\small\item\em Perform face flattening and ordering. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgGeomFace_ac09f8f0378a30a431390140ddc0dada2}{set\+Owner\+Id}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1dgGeomFace_adf132311f0a5c4869cbbb239080959e1}{id}})
+\begin{DoxyCompactList}\small\item\em Set face owner cell ID. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgGeomFace_a98737815449b9a1004f091613ee70954}{set\+Neighbor\+Id}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1dgGeomFace_adf132311f0a5c4869cbbb239080959e1}{id}})
+\begin{DoxyCompactList}\small\item\em Set face neighbor cell ID. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgGeomFace_a6f5ae2ee2542d4c2e405b6d6adbbeb57}{set\+Owner\+Pos}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682}{dg\+Face\+Position}} \mbox{\hyperlink{classFoam_1_1GaussField}{pos}})
 \begin{DoxyCompactList}\small\item\em Set face position in owner cell. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgGeomFace_a6e07123ecf92e9fe6978be1e7a3f087e}{set\+Neighbor\+Pos}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682}{dg\+Face\+Position}} \mbox{\hyperlink{classFoam_1_1GaussField}{pos}})
@@ -159,23 +169,21 @@ Collaboration diagram for Foam\+::dg\+Geom\+Face\+:\nopagebreak
 \begin{DoxyCompactList}\small\item\em Compute Gauss-\/point connectivity between owner and neighbour. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgGeomFace_ac10889873b5c566cb9d69bd44c7a3e0c}{compute\+Basis\+And\+Derivatives}} ()
 \begin{DoxyCompactList}\small\item\em Compute basis functions and derivatives on the face. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgGeomFace_a14db0f8947be33e31f8175368ea9f924}{mapping\+From\+Ref\+To\+Real}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{dgGeomFace_2dgFaceType_8H_a8f34e6eff8ddd9d85fe9358a8a6248f6}{dg\+Face\+Type}} type, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$ \&gauss\+Points, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector2D}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{face\+Vertices}}, \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector2D}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{physic\+GaussP}})
-\begin{DoxyCompactList}\small\item\em Map Gauss points from reference to physical face. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgGeomFace_a12ffd795ee8c299f6b90426e3fd707a8}{compute\+Owner\+Lame\+Parameters}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{cell\+Vertices}})
-\begin{DoxyCompactList}\small\item\em Compute Lame parameters at face Gauss points from owner cell This method MUST be called after setting owner\+Pos\+\_\+ and owner\+Cell\+Type\+\_\+. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgGeomFace_aa9e0e84d15e1464a6c72f5473340a40d}{compute\+Neighbor\+Lame\+Parameters}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{cell\+Vertices}})
-\begin{DoxyCompactList}\small\item\em Compute Lame parameters at face Gauss points from neighbour cell This method MUST be called after setting neighbor\+Pos\+\_\+ and neighbor\+Cell\+Type\+\_\+. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgGeomFace_aca30ae273f33aecd8fb64665ac085585}{compute\+Lame\+Parameters}} ()
+\begin{DoxyCompactList}\small\item\em Compute Lame parameters at face Gauss points from both owner and neighbour cells This method MUST be called after setting owner\+Pos\+\_\+, neighbor\+Pos\+\_\+, owner\+Cell\+Type\+\_\+ and neighbor\+Cell\+Type\+\_\+. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{bool}} \mbox{\hyperlink{classFoam_1_1dgGeomFace_a087f32d8da851e4179eacdd115b9cf2e}{is\+Boundary}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
 \begin{DoxyCompactList}\small\item\em Return true if this face is a boundary face. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1dgGeomFace_a6d6fc4ab987c6b87ac2da6a5ae613528}{patch\+ID}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
 \begin{DoxyCompactList}\small\item\em Return patch index of the face. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{bool}} \mbox{\hyperlink{classFoam_1_1dgGeomFace_af3e00be622221f4026782f2fa665cb96}{is\+Owner}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} cell\+ID) \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
 \begin{DoxyCompactList}\small\item\em Check if the given cell is the owner of this face. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$ \& \mbox{\hyperlink{classFoam_1_1dgGeomFace_a232f90735be37e8a9dfb55b06511b073}{physic\+Gauss\+Points}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\begin{DoxyCompactList}\small\item\em Return physical Gauss points. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$ \& \mbox{\hyperlink{classFoam_1_1dgGeomFace_a8b115ef5a964d8816db91eb10559aa30}{gauss\+Points\+Owner}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
 \begin{DoxyCompactList}\small\item\em Return Gauss points on owner-\/side reference face. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$ \& \mbox{\hyperlink{classFoam_1_1dgGeomFace_a9ce7eebf204ab3d41b293f64d628d124}{gauss\+Points\+Neighbor}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
 \begin{DoxyCompactList}\small\item\em Return Gauss points on neighbour-\/side reference face. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \& \mbox{\hyperlink{classFoam_1_1dgGeomFace_a91b5ae11e3518d25101dc64e685cbdc8}{weights}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} $>$ \& \mbox{\hyperlink{classFoam_1_1dgGeomFace_a91b5ae11e3518d25101dc64e685cbdc8}{weights}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
 \begin{DoxyCompactList}\small\item\em Return Gauss quadrature weights. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector2D}} $>$ \& \mbox{\hyperlink{classFoam_1_1dgGeomFace_a05b0e0671ac770a6c46362b37f759283}{flat\+Coords}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
 \begin{DoxyCompactList}\small\item\em Return flattened 2D face coordinates. \end{DoxyCompactList}\item 
@@ -183,32 +191,36 @@ Collaboration diagram for Foam\+::dg\+Geom\+Face\+:\nopagebreak
 \begin{DoxyCompactList}\small\item\em Return fv\+Mesh face-\/owner list. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1dgGeomFace_a2aceeca7d04e0857d7d733a2fa5f725e}{n\+Internal\+Faces}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
 \begin{DoxyCompactList}\small\item\em Return number of internal faces. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{label}} $>$ \& \mbox{\hyperlink{classFoam_1_1dgGeomFace_ad55fa893a76fc052b06a761e13db6a0a}{connectivity}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
-\begin{DoxyCompactList}\small\item\em Return Gauss-\/point connectivity. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ $>$ \& \mbox{\hyperlink{classFoam_1_1dgGeomFace_a2be89c915a9c35c8d534d4f7437461fc}{owner\+Basis}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} $>$ $>$ \& \mbox{\hyperlink{classFoam_1_1dgGeomFace_a2be89c915a9c35c8d534d4f7437461fc}{owner\+Basis}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
 \begin{DoxyCompactList}\small\item\em Return owner-\/side basis functions. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ $>$ \& \mbox{\hyperlink{classFoam_1_1dgGeomFace_a6ef2ed18cf6a4f17c945cd7f148f3369}{neighbor\+Basis}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} $>$ $>$ \& \mbox{\hyperlink{classFoam_1_1dgGeomFace_a6ef2ed18cf6a4f17c945cd7f148f3369}{neighbor\+Basis}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
 \begin{DoxyCompactList}\small\item\em Return neighbour-\/side basis functions. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ $>$ \& \mbox{\hyperlink{classFoam_1_1dgGeomFace_a484d664cabb6c939f2f6bd8bffb29524}{owner\+\_\+d\+Basis\+\_\+d\+Eta1}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} $>$ $>$ \& \mbox{\hyperlink{classFoam_1_1dgGeomFace_a484d664cabb6c939f2f6bd8bffb29524}{owner\+\_\+d\+Basis\+\_\+d\+Eta1}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
 \begin{DoxyCompactList}\small\item\em Return owner-\/side basis derivatives. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ $>$ \& \mbox{\hyperlink{classFoam_1_1dgGeomFace_ad778a85c42501aa9ccd9b8ad7a78cda4}{owner\+\_\+d\+Basis\+\_\+d\+Eta2}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} $>$ $>$ \& \mbox{\hyperlink{classFoam_1_1dgGeomFace_ad778a85c42501aa9ccd9b8ad7a78cda4}{owner\+\_\+d\+Basis\+\_\+d\+Eta2}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
 \item 
-\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ $>$ \& \mbox{\hyperlink{classFoam_1_1dgGeomFace_aef0cec851d21b4e880e073251499924a}{owner\+\_\+d\+Basis\+\_\+d\+Eta3}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} $>$ $>$ \& \mbox{\hyperlink{classFoam_1_1dgGeomFace_aef0cec851d21b4e880e073251499924a}{owner\+\_\+d\+Basis\+\_\+d\+Eta3}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
 \item 
-\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ $>$ \& \mbox{\hyperlink{classFoam_1_1dgGeomFace_a534a13061982feba35bbbb79d3915787}{neighbor\+\_\+d\+Basis\+\_\+d\+Eta1}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} $>$ $>$ \& \mbox{\hyperlink{classFoam_1_1dgGeomFace_a534a13061982feba35bbbb79d3915787}{neighbor\+\_\+d\+Basis\+\_\+d\+Eta1}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
 \begin{DoxyCompactList}\small\item\em Return neighbour-\/side basis derivatives. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ $>$ \& \mbox{\hyperlink{classFoam_1_1dgGeomFace_a2c268271b83967f4484579f6492a3aa5}{neighbor\+\_\+d\+Basis\+\_\+d\+Eta2}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} $>$ $>$ \& \mbox{\hyperlink{classFoam_1_1dgGeomFace_a2c268271b83967f4484579f6492a3aa5}{neighbor\+\_\+d\+Basis\+\_\+d\+Eta2}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
 \item 
-\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ $>$ \& \mbox{\hyperlink{classFoam_1_1dgGeomFace_afc29b9370297a4a16da45e1775cd1033}{neighbor\+\_\+d\+Basis\+\_\+d\+Eta3}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} $>$ $>$ \& \mbox{\hyperlink{classFoam_1_1dgGeomFace_afc29b9370297a4a16da45e1775cd1033}{neighbor\+\_\+d\+Basis\+\_\+d\+Eta3}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
 \item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgGeomFace_ad8e48f2989775fb3523794baffe6f855}{set\+Processor\+Patch}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{bool}} \mbox{\hyperlink{classFoam_1_1GaussField}{is\+Proc\+Patch}})
 \begin{DoxyCompactList}\small\item\em Mark this face as a processor-\/patch face. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgGeomFace_af670cd817df2555b34de86ac3831aee6}{set\+Connectivity}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{label}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{conn}})
-\begin{DoxyCompactList}\small\item\em Set Gauss-\/point connectivity for processor-\/patch faces. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgGeomFace_a4bc337f835c61982d7951111d41f757b}{set\+Physic\+Gauss\+Points}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$ \&points)
+\begin{DoxyCompactList}\small\item\em Set Gauss points. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgGeomFace_acdc77e5aa3b0d47f031b0fa9160e30c2}{set\+Lame\+Params}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{params}})
+\begin{DoxyCompactList}\small\item\em Set Lame parameters. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgGeomFace_afea021336481517ff0c6a67f913c88ef}{calc\+Gauss\+Points\+On\+Owner\+Side}} ()
+\begin{DoxyCompactList}\small\item\em Calculate Gauss points from owner side, bases on physic Gauss. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1dgGeomFace}{dg\+Geom\+Face}} \& \mbox{\hyperlink{classFoam_1_1dgGeomFace_aa4dac4c89ead5324c0db406bec2e608c}{operator=}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomFace}{dg\+Geom\+Face}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{other}})
 \begin{DoxyCompactList}\small\item\em Copy assignment operator. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgGeomFace_a6916f773f4ba82d5e5aee6110772ea42}{print\+Debug\+Info}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
-\begin{DoxyCompactList}\small\item\em Print debug information. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Print debug information. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgGeomFace_aff0eaa4ce16592a62dce0fac1a1ad288}{print\+Cells\+Info}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\begin{DoxyCompactList}\small\item\em Print owner and neighbour cell information. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsubsection*{Private Attributes}
 \begin{DoxyCompactItemize}
 \item 
@@ -220,8 +232,14 @@ Collaboration diagram for Foam\+::dg\+Geom\+Face\+:\nopagebreak
 \begin{DoxyCompactList}\small\item\em Reference to the finite-\/volume mesh. \end{DoxyCompactList}\item 
 std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classFoam_1_1dgRefFace}{dg\+Ref\+Face}} $>$ \mbox{\hyperlink{classFoam_1_1dgGeomFace_aa638dde4d85714a8708f4c235ccd8074}{ref\+Face\+\_\+}}
 \begin{DoxyCompactList}\small\item\em Shared reference-\/face data (basis, Gauss points, weights) \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1dgGeomFace_a2da442db6d574b9b376a3c16177fd00a}{n\+Gauss\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Number of Gauss points on face. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$ \mbox{\hyperlink{classFoam_1_1dgGeomFace_a112bbe617c78cbd204e716c77973fe49}{global\+Points\+\_\+}}
 \begin{DoxyCompactList}\small\item\em Global face vertex coordinates. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1dgGeomFace_ace35e51ff3c160407f6fe2a23a73d50c}{owner\+Id\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Owner cell ID. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1dgGeomFace_ab9058b5b69b4e728ef4e2455d49956d6}{neighbor\+Id\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Neighbor cell ID (-\/1 for boundary faces) \end{DoxyCompactList}\item 
 \mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682}{dg\+Face\+Position}} \mbox{\hyperlink{classFoam_1_1dgGeomFace_afcc78c820cc9c1e85c45a8f503ed43fd}{owner\+Pos\+\_\+}}
 \begin{DoxyCompactList}\small\item\em Face position in the owner cell reference element. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682}{dg\+Face\+Position}} \mbox{\hyperlink{classFoam_1_1dgGeomFace_a430631f7524988beeebf978cc1e7cbaa}{neighbor\+Pos\+\_\+}}
@@ -232,16 +250,18 @@ std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classFoam_1_1dgRefFace}{dg\+Ref\+Face
 \begin{DoxyCompactList}\small\item\em Neighbour cell type. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector2D}} $>$ \mbox{\hyperlink{classFoam_1_1dgGeomFace_aae0978e24ba077ce475821959f6b784d}{flattened\+Points\+\_\+}}
 \begin{DoxyCompactList}\small\item\em Flattened 2D coordinates of face vertices. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{label}} $>$ \mbox{\hyperlink{classFoam_1_1dgGeomFace_a1164d63def2527682d7a426ec9c8d89f}{connectivity\+\_\+}}
-\begin{DoxyCompactList}\small\item\em Gauss-\/point connectivity between owner and neighbour. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$ \mbox{\hyperlink{classFoam_1_1dgGeomFace_af7a02744f359e9963095db12c4e20985}{phys\+Gauss\+Points\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Physical coordinates of the face Gauss points. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$ \mbox{\hyperlink{classFoam_1_1dgGeomFace_a6497aee75b84d75f068247d2bd492b12}{gauss\+Points\+Owner\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Gauss points on the face, respect to owner cell. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$ \mbox{\hyperlink{classFoam_1_1dgGeomFace_ac78efba28c23b468fe59660fe96ae1be}{gauss\+Points\+Neighbor\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Gauss points on the face, respect to neighbour cell. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{structFoam_1_1basisData}{Foam\+::basis\+Data}} \mbox{\hyperlink{classFoam_1_1dgGeomFace_af814e80b8f825ba8f1252f840f8f862a}{owner\+Basis\+Data\+\_\+}}
 \begin{DoxyCompactList}\small\item\em Basis-\/function data on the owner side. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{structFoam_1_1basisData}{Foam\+::basis\+Data}} \mbox{\hyperlink{classFoam_1_1dgGeomFace_aa418b5f5d38e6c735640041b4f8274d5}{neighbor\+Basis\+Data\+\_\+}}
 \begin{DoxyCompactList}\small\item\em Basis-\/function data on the neighbour side. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \mbox{\hyperlink{classFoam_1_1dgGeomFace_af52ec7067410d1533cc3cc05c24e9d9c}{owner\+J2\+D\+\_\+}}
+\mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} $>$ \mbox{\hyperlink{classFoam_1_1dgGeomFace_a50e7517fd1de85476609f88486d294f1}{J2\+D\+\_\+}}
 \begin{DoxyCompactList}\small\item\em Jacobian 2D of faces. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \mbox{\hyperlink{classFoam_1_1dgGeomFace_af122e558beadb39a48c554c9109283c5}{neighbor\+J2\+D\+\_\+}}
-\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1dgGeomFace_a9715c226a4685d6ebd59a69610d1ed83}{patch\+ID\+\_\+}}
 \begin{DoxyCompactList}\small\item\em Patch index owning this face (-\/1 for internal faces) \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{bool}} \mbox{\hyperlink{classFoam_1_1dgGeomFace_ad1a56311846c92e1ffdbc93e88f38d59}{is\+Boundary\+\_\+}}
@@ -357,6 +377,16 @@ Destructor.
 
 Return number of vertices of the face. 
 
+\Hypertarget{classFoam_1_1dgGeomFace_acf7577d8b01880c8c7ff74107f4f9f6f}\label{classFoam_1_1dgGeomFace_acf7577d8b01880c8c7ff74107f4f9f6f} 
+\index{Foam::dgGeomFace@{Foam::dgGeomFace}!nGauss@{nGauss}}
+\index{nGauss@{nGauss}!Foam::dgGeomFace@{Foam::dgGeomFace}}
+\doxysubsubsection{\texorpdfstring{nGauss()}{nGauss()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{label}} Foam\+::dg\+Geom\+Face\+::n\+Gauss (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Return nunber of Gauss points on the face. 
+
 \Hypertarget{classFoam_1_1dgGeomFace_ac8af00f68995c0f2a058577e62aee942}\label{classFoam_1_1dgGeomFace_ac8af00f68995c0f2a058577e62aee942} 
 \index{Foam::dgGeomFace@{Foam::dgGeomFace}!baseFace@{baseFace}}
 \index{baseFace@{baseFace}!Foam::dgGeomFace@{Foam::dgGeomFace}}
@@ -411,7 +441,7 @@ Return area-\/normal vector.
 \index{Foam::dgGeomFace@{Foam::dgGeomFace}!area@{area}}
 \index{area@{area}!Foam::dgGeomFace@{Foam::dgGeomFace}}
 \doxysubsubsection{\texorpdfstring{area()}{area()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
-{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::scalar}} Foam\+::dg\+Geom\+Face\+::area (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{Foam\+::scalar}} Foam\+::dg\+Geom\+Face\+::area (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
 
 
 
@@ -427,36 +457,33 @@ Return face area.
 
 Return face index. 
 
-\Hypertarget{classFoam_1_1dgGeomFace_a6e6d583c810e55f3286555b7c4f61d6f}\label{classFoam_1_1dgGeomFace_a6e6d583c810e55f3286555b7c4f61d6f} 
-\index{Foam::dgGeomFace@{Foam::dgGeomFace}!ownerJ2D@{ownerJ2D}}
-\index{ownerJ2D@{ownerJ2D}!Foam::dgGeomFace@{Foam::dgGeomFace}}
-\doxysubsubsection{\texorpdfstring{ownerJ2D()}{ownerJ2D()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
-{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \& Foam\+::dg\+Geom\+Face\+::owner\+J2D (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+\Hypertarget{classFoam_1_1dgGeomFace_a6e154bebc183b009cbf354723cd36da9}\label{classFoam_1_1dgGeomFace_a6e154bebc183b009cbf354723cd36da9} 
+\index{Foam::dgGeomFace@{Foam::dgGeomFace}!J2D@{J2D}}
+\index{J2D@{J2D}!Foam::dgGeomFace@{Foam::dgGeomFace}}
+\doxysubsubsection{\texorpdfstring{J2D()}{J2D()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} $>$ \& Foam\+::dg\+Geom\+Face\+::\+J2D (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
 
 
 
-Return Jacobian 2D at Gauss points on owner side. 
+Return Jacobian 2D at Gauss points. 
 
-\Hypertarget{classFoam_1_1dgGeomFace_ac1abf018365fcae490f4c41242821db3}\label{classFoam_1_1dgGeomFace_ac1abf018365fcae490f4c41242821db3} 
-\index{Foam::dgGeomFace@{Foam::dgGeomFace}!neighborJ2D@{neighborJ2D}}
-\index{neighborJ2D@{neighborJ2D}!Foam::dgGeomFace@{Foam::dgGeomFace}}
-\doxysubsubsection{\texorpdfstring{neighborJ2D()}{neighborJ2D()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
-{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \& Foam\+::dg\+Geom\+Face\+::neighbor\+J2D (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
-
-
-
-Return Jacobian 2D at Gauss points on neighbour side. 
-
-\Hypertarget{classFoam_1_1dgGeomFace_aeee449e860eb4f6dea88096f66b3c771}\label{classFoam_1_1dgGeomFace_aeee449e860eb4f6dea88096f66b3c771} 
+\Hypertarget{classFoam_1_1dgGeomFace_a3299b9ccce971e63722aeeb75c36f26a}\label{classFoam_1_1dgGeomFace_a3299b9ccce971e63722aeeb75c36f26a} 
 \index{Foam::dgGeomFace@{Foam::dgGeomFace}!flattenFace@{flattenFace}}
 \index{flattenFace@{flattenFace}!Foam::dgGeomFace@{Foam::dgGeomFace}}
 \doxysubsubsection{\texorpdfstring{flattenFace()}{flattenFace()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
-{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{void}} Foam\+::dg\+Geom\+Face\+::flatten\+Face (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{void}} Foam\+::dg\+Geom\+Face\+::flatten\+Face (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$ \&}]{global\+Points,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector2D}} $>$ \&}]{flattened\+Points }\end{DoxyParamCaption}) const}
 
 
 
-Flatten face vertices into a local 2D coordinate system. 
+Compute Gauss-\/point connectivity between owner and neighbour cells. 
 
+
+\begin{DoxyParams}{Parameters}
+{\em global\+Points} & Global coordinates of the face vertices (in the order of owner cell) \\
+\hline
+{\em flattened\+Points} & Flattened 2D coordinates of the face vertices (in the order of owner cell) \\
+\hline
+\end{DoxyParams}
 \Hypertarget{classFoam_1_1dgGeomFace_a8725821726d73118866669b0d6ef6fac}\label{classFoam_1_1dgGeomFace_a8725821726d73118866669b0d6ef6fac} 
 \index{Foam::dgGeomFace@{Foam::dgGeomFace}!processFlatAndSortedPoints@{processFlatAndSortedPoints}}
 \index{processFlatAndSortedPoints@{processFlatAndSortedPoints}!Foam::dgGeomFace@{Foam::dgGeomFace}}
@@ -467,7 +494,27 @@ Flatten face vertices into a local 2D coordinate system.
 
 Perform face flattening and ordering. 
 
-Computes flattened coordinates and prepares data required for basis-\/function evaluation on the face. \Hypertarget{classFoam_1_1dgGeomFace_a6f5ae2ee2542d4c2e405b6d6adbbeb57}\label{classFoam_1_1dgGeomFace_a6f5ae2ee2542d4c2e405b6d6adbbeb57} 
+Computes flattened coordinates and prepares data required for basis-\/function evaluation on the face. \Hypertarget{classFoam_1_1dgGeomFace_ac09f8f0378a30a431390140ddc0dada2}\label{classFoam_1_1dgGeomFace_ac09f8f0378a30a431390140ddc0dada2} 
+\index{Foam::dgGeomFace@{Foam::dgGeomFace}!setOwnerId@{setOwnerId}}
+\index{setOwnerId@{setOwnerId}!Foam::dgGeomFace@{Foam::dgGeomFace}}
+\doxysubsubsection{\texorpdfstring{setOwnerId()}{setOwnerId()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{void}} Foam\+::dg\+Geom\+Face\+::set\+Owner\+Id (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{id }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Set face owner cell ID. 
+
+\Hypertarget{classFoam_1_1dgGeomFace_a98737815449b9a1004f091613ee70954}\label{classFoam_1_1dgGeomFace_a98737815449b9a1004f091613ee70954} 
+\index{Foam::dgGeomFace@{Foam::dgGeomFace}!setNeighborId@{setNeighborId}}
+\index{setNeighborId@{setNeighborId}!Foam::dgGeomFace@{Foam::dgGeomFace}}
+\doxysubsubsection{\texorpdfstring{setNeighborId()}{setNeighborId()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{void}} Foam\+::dg\+Geom\+Face\+::set\+Neighbor\+Id (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{id }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Set face neighbor cell ID. 
+
+\Hypertarget{classFoam_1_1dgGeomFace_a6f5ae2ee2542d4c2e405b6d6adbbeb57}\label{classFoam_1_1dgGeomFace_a6f5ae2ee2542d4c2e405b6d6adbbeb57} 
 \index{Foam::dgGeomFace@{Foam::dgGeomFace}!setOwnerPos@{setOwnerPos}}
 \index{setOwnerPos@{setOwnerPos}!Foam::dgGeomFace@{Foam::dgGeomFace}}
 \doxysubsubsection{\texorpdfstring{setOwnerPos()}{setOwnerPos()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
@@ -527,50 +574,16 @@ Compute Gauss-\/point connectivity between owner and neighbour.
 
 Compute basis functions and derivatives on the face. 
 
-\Hypertarget{classFoam_1_1dgGeomFace_a14db0f8947be33e31f8175368ea9f924}\label{classFoam_1_1dgGeomFace_a14db0f8947be33e31f8175368ea9f924} 
-\index{Foam::dgGeomFace@{Foam::dgGeomFace}!mappingFromRefToReal@{mappingFromRefToReal}}
-\index{mappingFromRefToReal@{mappingFromRefToReal}!Foam::dgGeomFace@{Foam::dgGeomFace}}
-\doxysubsubsection{\texorpdfstring{mappingFromRefToReal()}{mappingFromRefToReal()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
-{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{void}} Foam\+::dg\+Geom\+Face\+::mapping\+From\+Ref\+To\+Real (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{dgGeomFace_2dgFaceType_8H_a8f34e6eff8ddd9d85fe9358a8a6248f6}{dg\+Face\+Type}}}]{type,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$ \&}]{gauss\+Points,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector2D}} $>$ \&}]{face\+Vertices,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector2D}} $>$ \&}]{physic\+GaussP }\end{DoxyParamCaption})}
+\Hypertarget{classFoam_1_1dgGeomFace_aca30ae273f33aecd8fb64665ac085585}\label{classFoam_1_1dgGeomFace_aca30ae273f33aecd8fb64665ac085585} 
+\index{Foam::dgGeomFace@{Foam::dgGeomFace}!computeLameParameters@{computeLameParameters}}
+\index{computeLameParameters@{computeLameParameters}!Foam::dgGeomFace@{Foam::dgGeomFace}}
+\doxysubsubsection{\texorpdfstring{computeLameParameters()}{computeLameParameters()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{void}} Foam\+::dg\+Geom\+Face\+::compute\+Lame\+Parameters (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
 
 
 
-Map Gauss points from reference to physical face. 
+Compute Lame parameters at face Gauss points from both owner and neighbour cells This method MUST be called after setting owner\+Pos\+\_\+, neighbor\+Pos\+\_\+, owner\+Cell\+Type\+\_\+ and neighbor\+Cell\+Type\+\_\+. 
 
-\Hypertarget{classFoam_1_1dgGeomFace_a12ffd795ee8c299f6b90426e3fd707a8}\label{classFoam_1_1dgGeomFace_a12ffd795ee8c299f6b90426e3fd707a8} 
-\index{Foam::dgGeomFace@{Foam::dgGeomFace}!computeOwnerLameParameters@{computeOwnerLameParameters}}
-\index{computeOwnerLameParameters@{computeOwnerLameParameters}!Foam::dgGeomFace@{Foam::dgGeomFace}}
-\doxysubsubsection{\texorpdfstring{computeOwnerLameParameters()}{computeOwnerLameParameters()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
-{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{void}} Foam\+::dg\+Geom\+Face\+::compute\+Owner\+Lame\+Parameters (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$ \&}]{cell\+Vertices }\end{DoxyParamCaption})}
-
-
-
-Compute Lame parameters at face Gauss points from owner cell This method MUST be called after setting owner\+Pos\+\_\+ and owner\+Cell\+Type\+\_\+. 
-
-Otherwise, incorrect results will be produced.
-
-
-\begin{DoxyParams}{Parameters}
-{\em cell\+Vertices} & Physical coordinates of the owner cell vertices \\
-\hline
-\end{DoxyParams}
-\Hypertarget{classFoam_1_1dgGeomFace_aa9e0e84d15e1464a6c72f5473340a40d}\label{classFoam_1_1dgGeomFace_aa9e0e84d15e1464a6c72f5473340a40d} 
-\index{Foam::dgGeomFace@{Foam::dgGeomFace}!computeNeighborLameParameters@{computeNeighborLameParameters}}
-\index{computeNeighborLameParameters@{computeNeighborLameParameters}!Foam::dgGeomFace@{Foam::dgGeomFace}}
-\doxysubsubsection{\texorpdfstring{computeNeighborLameParameters()}{computeNeighborLameParameters()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
-{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{void}} Foam\+::dg\+Geom\+Face\+::compute\+Neighbor\+Lame\+Parameters (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$ \&}]{cell\+Vertices }\end{DoxyParamCaption})}
-
-
-
-Compute Lame parameters at face Gauss points from neighbour cell This method MUST be called after setting neighbor\+Pos\+\_\+ and neighbor\+Cell\+Type\+\_\+. 
-
-Otherwise, incorrect results will be produced.
-
-
-\begin{DoxyParams}{Parameters}
-{\em cell\+Vertices} & Physical coordinates of the neighbour cell vertices \\
-\hline
-\end{DoxyParams}
 \Hypertarget{classFoam_1_1dgGeomFace_a087f32d8da851e4179eacdd115b9cf2e}\label{classFoam_1_1dgGeomFace_a087f32d8da851e4179eacdd115b9cf2e} 
 \index{Foam::dgGeomFace@{Foam::dgGeomFace}!isBoundary@{isBoundary}}
 \index{isBoundary@{isBoundary}!Foam::dgGeomFace@{Foam::dgGeomFace}}
@@ -601,6 +614,16 @@ Return patch index of the face.
 
 Check if the given cell is the owner of this face. 
 
+\Hypertarget{classFoam_1_1dgGeomFace_a232f90735be37e8a9dfb55b06511b073}\label{classFoam_1_1dgGeomFace_a232f90735be37e8a9dfb55b06511b073} 
+\index{Foam::dgGeomFace@{Foam::dgGeomFace}!physicGaussPoints@{physicGaussPoints}}
+\index{physicGaussPoints@{physicGaussPoints}!Foam::dgGeomFace@{Foam::dgGeomFace}}
+\doxysubsubsection{\texorpdfstring{physicGaussPoints()}{physicGaussPoints()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$ \& Foam\+::dg\+Geom\+Face\+::physic\+Gauss\+Points (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Return physical Gauss points. 
+
 \Hypertarget{classFoam_1_1dgGeomFace_a8b115ef5a964d8816db91eb10559aa30}\label{classFoam_1_1dgGeomFace_a8b115ef5a964d8816db91eb10559aa30} 
 \index{Foam::dgGeomFace@{Foam::dgGeomFace}!gaussPointsOwner@{gaussPointsOwner}}
 \index{gaussPointsOwner@{gaussPointsOwner}!Foam::dgGeomFace@{Foam::dgGeomFace}}
@@ -625,7 +648,7 @@ Return Gauss points on neighbour-\/side reference face.
 \index{Foam::dgGeomFace@{Foam::dgGeomFace}!weights@{weights}}
 \index{weights@{weights}!Foam::dgGeomFace@{Foam::dgGeomFace}}
 \doxysubsubsection{\texorpdfstring{weights()}{weights()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
-{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \& Foam\+::dg\+Geom\+Face\+::weights (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} $>$ \& Foam\+::dg\+Geom\+Face\+::weights (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
 
 
 
@@ -661,21 +684,11 @@ Return fv\+Mesh face-\/owner list.
 
 Return number of internal faces. 
 
-\Hypertarget{classFoam_1_1dgGeomFace_ad55fa893a76fc052b06a761e13db6a0a}\label{classFoam_1_1dgGeomFace_ad55fa893a76fc052b06a761e13db6a0a} 
-\index{Foam::dgGeomFace@{Foam::dgGeomFace}!connectivity@{connectivity}}
-\index{connectivity@{connectivity}!Foam::dgGeomFace@{Foam::dgGeomFace}}
-\doxysubsubsection{\texorpdfstring{connectivity()}{connectivity()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
-{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{label}} $>$ \& Foam\+::dg\+Geom\+Face\+::connectivity (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
-
-
-
-Return Gauss-\/point connectivity. 
-
 \Hypertarget{classFoam_1_1dgGeomFace_a2be89c915a9c35c8d534d4f7437461fc}\label{classFoam_1_1dgGeomFace_a2be89c915a9c35c8d534d4f7437461fc} 
 \index{Foam::dgGeomFace@{Foam::dgGeomFace}!ownerBasis@{ownerBasis}}
 \index{ownerBasis@{ownerBasis}!Foam::dgGeomFace@{Foam::dgGeomFace}}
 \doxysubsubsection{\texorpdfstring{ownerBasis()}{ownerBasis()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
-{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ $>$ \& Foam\+::dg\+Geom\+Face\+::owner\+Basis (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} $>$ $>$ \& Foam\+::dg\+Geom\+Face\+::owner\+Basis (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
 
 
 
@@ -685,7 +698,7 @@ Return owner-\/side basis functions.
 \index{Foam::dgGeomFace@{Foam::dgGeomFace}!neighborBasis@{neighborBasis}}
 \index{neighborBasis@{neighborBasis}!Foam::dgGeomFace@{Foam::dgGeomFace}}
 \doxysubsubsection{\texorpdfstring{neighborBasis()}{neighborBasis()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
-{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ $>$ \& Foam\+::dg\+Geom\+Face\+::neighbor\+Basis (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} $>$ $>$ \& Foam\+::dg\+Geom\+Face\+::neighbor\+Basis (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
 
 
 
@@ -695,7 +708,7 @@ Return neighbour-\/side basis functions.
 \index{Foam::dgGeomFace@{Foam::dgGeomFace}!owner\_dBasis\_dEta1@{owner\_dBasis\_dEta1}}
 \index{owner\_dBasis\_dEta1@{owner\_dBasis\_dEta1}!Foam::dgGeomFace@{Foam::dgGeomFace}}
 \doxysubsubsection{\texorpdfstring{owner\_dBasis\_dEta1()}{owner\_dBasis\_dEta1()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
-{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ $>$ \& Foam\+::dg\+Geom\+Face\+::owner\+\_\+d\+Basis\+\_\+d\+Eta1 (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} $>$ $>$ \& Foam\+::dg\+Geom\+Face\+::owner\+\_\+d\+Basis\+\_\+d\+Eta1 (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
 
 
 
@@ -705,19 +718,19 @@ Return owner-\/side basis derivatives.
 \index{Foam::dgGeomFace@{Foam::dgGeomFace}!owner\_dBasis\_dEta2@{owner\_dBasis\_dEta2}}
 \index{owner\_dBasis\_dEta2@{owner\_dBasis\_dEta2}!Foam::dgGeomFace@{Foam::dgGeomFace}}
 \doxysubsubsection{\texorpdfstring{owner\_dBasis\_dEta2()}{owner\_dBasis\_dEta2()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
-{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ $>$ \& Foam\+::dg\+Geom\+Face\+::owner\+\_\+d\+Basis\+\_\+d\+Eta2 (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} $>$ $>$ \& Foam\+::dg\+Geom\+Face\+::owner\+\_\+d\+Basis\+\_\+d\+Eta2 (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
 
 \Hypertarget{classFoam_1_1dgGeomFace_aef0cec851d21b4e880e073251499924a}\label{classFoam_1_1dgGeomFace_aef0cec851d21b4e880e073251499924a} 
 \index{Foam::dgGeomFace@{Foam::dgGeomFace}!owner\_dBasis\_dEta3@{owner\_dBasis\_dEta3}}
 \index{owner\_dBasis\_dEta3@{owner\_dBasis\_dEta3}!Foam::dgGeomFace@{Foam::dgGeomFace}}
 \doxysubsubsection{\texorpdfstring{owner\_dBasis\_dEta3()}{owner\_dBasis\_dEta3()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
-{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ $>$ \& Foam\+::dg\+Geom\+Face\+::owner\+\_\+d\+Basis\+\_\+d\+Eta3 (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} $>$ $>$ \& Foam\+::dg\+Geom\+Face\+::owner\+\_\+d\+Basis\+\_\+d\+Eta3 (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
 
 \Hypertarget{classFoam_1_1dgGeomFace_a534a13061982feba35bbbb79d3915787}\label{classFoam_1_1dgGeomFace_a534a13061982feba35bbbb79d3915787} 
 \index{Foam::dgGeomFace@{Foam::dgGeomFace}!neighbor\_dBasis\_dEta1@{neighbor\_dBasis\_dEta1}}
 \index{neighbor\_dBasis\_dEta1@{neighbor\_dBasis\_dEta1}!Foam::dgGeomFace@{Foam::dgGeomFace}}
 \doxysubsubsection{\texorpdfstring{neighbor\_dBasis\_dEta1()}{neighbor\_dBasis\_dEta1()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
-{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ $>$ \& Foam\+::dg\+Geom\+Face\+::neighbor\+\_\+d\+Basis\+\_\+d\+Eta1 (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} $>$ $>$ \& Foam\+::dg\+Geom\+Face\+::neighbor\+\_\+d\+Basis\+\_\+d\+Eta1 (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
 
 
 
@@ -727,13 +740,13 @@ Return neighbour-\/side basis derivatives.
 \index{Foam::dgGeomFace@{Foam::dgGeomFace}!neighbor\_dBasis\_dEta2@{neighbor\_dBasis\_dEta2}}
 \index{neighbor\_dBasis\_dEta2@{neighbor\_dBasis\_dEta2}!Foam::dgGeomFace@{Foam::dgGeomFace}}
 \doxysubsubsection{\texorpdfstring{neighbor\_dBasis\_dEta2()}{neighbor\_dBasis\_dEta2()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
-{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ $>$ \& Foam\+::dg\+Geom\+Face\+::neighbor\+\_\+d\+Basis\+\_\+d\+Eta2 (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} $>$ $>$ \& Foam\+::dg\+Geom\+Face\+::neighbor\+\_\+d\+Basis\+\_\+d\+Eta2 (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
 
 \Hypertarget{classFoam_1_1dgGeomFace_afc29b9370297a4a16da45e1775cd1033}\label{classFoam_1_1dgGeomFace_afc29b9370297a4a16da45e1775cd1033} 
 \index{Foam::dgGeomFace@{Foam::dgGeomFace}!neighbor\_dBasis\_dEta3@{neighbor\_dBasis\_dEta3}}
 \index{neighbor\_dBasis\_dEta3@{neighbor\_dBasis\_dEta3}!Foam::dgGeomFace@{Foam::dgGeomFace}}
 \doxysubsubsection{\texorpdfstring{neighbor\_dBasis\_dEta3()}{neighbor\_dBasis\_dEta3()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
-{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ $>$ \& Foam\+::dg\+Geom\+Face\+::neighbor\+\_\+d\+Basis\+\_\+d\+Eta3 (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} $>$ $>$ \& Foam\+::dg\+Geom\+Face\+::neighbor\+\_\+d\+Basis\+\_\+d\+Eta3 (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
 
 \Hypertarget{classFoam_1_1dgGeomFace_ad8e48f2989775fb3523794baffe6f855}\label{classFoam_1_1dgGeomFace_ad8e48f2989775fb3523794baffe6f855} 
 \index{Foam::dgGeomFace@{Foam::dgGeomFace}!setProcessorPatch@{setProcessorPatch}}
@@ -745,15 +758,35 @@ Return neighbour-\/side basis derivatives.
 
 Mark this face as a processor-\/patch face. 
 
-\Hypertarget{classFoam_1_1dgGeomFace_af670cd817df2555b34de86ac3831aee6}\label{classFoam_1_1dgGeomFace_af670cd817df2555b34de86ac3831aee6} 
-\index{Foam::dgGeomFace@{Foam::dgGeomFace}!setConnectivity@{setConnectivity}}
-\index{setConnectivity@{setConnectivity}!Foam::dgGeomFace@{Foam::dgGeomFace}}
-\doxysubsubsection{\texorpdfstring{setConnectivity()}{setConnectivity()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
-{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{void}} Foam\+::dg\+Geom\+Face\+::set\+Connectivity (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{label}} $>$ \&}]{conn }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+\Hypertarget{classFoam_1_1dgGeomFace_a4bc337f835c61982d7951111d41f757b}\label{classFoam_1_1dgGeomFace_a4bc337f835c61982d7951111d41f757b} 
+\index{Foam::dgGeomFace@{Foam::dgGeomFace}!setPhysicGaussPoints@{setPhysicGaussPoints}}
+\index{setPhysicGaussPoints@{setPhysicGaussPoints}!Foam::dgGeomFace@{Foam::dgGeomFace}}
+\doxysubsubsection{\texorpdfstring{setPhysicGaussPoints()}{setPhysicGaussPoints()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{void}} Foam\+::dg\+Geom\+Face\+::set\+Physic\+Gauss\+Points (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$ \&}]{points }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
 
 
 
-Set Gauss-\/point connectivity for processor-\/patch faces. 
+Set Gauss points. 
+
+\Hypertarget{classFoam_1_1dgGeomFace_acdc77e5aa3b0d47f031b0fa9160e30c2}\label{classFoam_1_1dgGeomFace_acdc77e5aa3b0d47f031b0fa9160e30c2} 
+\index{Foam::dgGeomFace@{Foam::dgGeomFace}!setLameParams@{setLameParams}}
+\index{setLameParams@{setLameParams}!Foam::dgGeomFace@{Foam::dgGeomFace}}
+\doxysubsubsection{\texorpdfstring{setLameParams()}{setLameParams()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{void}} Foam\+::dg\+Geom\+Face\+::set\+Lame\+Params (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} $>$ \&}]{params }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Set Lame parameters. 
+
+\Hypertarget{classFoam_1_1dgGeomFace_afea021336481517ff0c6a67f913c88ef}\label{classFoam_1_1dgGeomFace_afea021336481517ff0c6a67f913c88ef} 
+\index{Foam::dgGeomFace@{Foam::dgGeomFace}!calcGaussPointsOnOwnerSide@{calcGaussPointsOnOwnerSide}}
+\index{calcGaussPointsOnOwnerSide@{calcGaussPointsOnOwnerSide}!Foam::dgGeomFace@{Foam::dgGeomFace}}
+\doxysubsubsection{\texorpdfstring{calcGaussPointsOnOwnerSide()}{calcGaussPointsOnOwnerSide()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{void}} Foam\+::dg\+Geom\+Face\+::calc\+Gauss\+Points\+On\+Owner\+Side (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Calculate Gauss points from owner side, bases on physic Gauss. 
 
 \Hypertarget{classFoam_1_1dgGeomFace_ae17aea055f96ef95e04d2659044725bf}\label{classFoam_1_1dgGeomFace_ae17aea055f96ef95e04d2659044725bf} 
 \index{Foam::dgGeomFace@{Foam::dgGeomFace}!operator=@{operator=}}
@@ -775,6 +808,16 @@ Copy assignment operator.
 
 Print debug information. 
 
+\Hypertarget{classFoam_1_1dgGeomFace_aff0eaa4ce16592a62dce0fac1a1ad288}\label{classFoam_1_1dgGeomFace_aff0eaa4ce16592a62dce0fac1a1ad288} 
+\index{Foam::dgGeomFace@{Foam::dgGeomFace}!printCellsInfo@{printCellsInfo}}
+\index{printCellsInfo@{printCellsInfo}!Foam::dgGeomFace@{Foam::dgGeomFace}}
+\doxysubsubsection{\texorpdfstring{printCellsInfo()}{printCellsInfo()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{void}} Foam\+::dg\+Geom\+Face\+::print\+Cells\+Info (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Print owner and neighbour cell information. 
+
 \Hypertarget{classFoam_1_1dgGeomFace_a446ef95068e43a7a490aa44d8163ea41}\label{classFoam_1_1dgGeomFace_a446ef95068e43a7a490aa44d8163ea41} 
 \index{Foam::dgGeomFace@{Foam::dgGeomFace}!size@{size}}
 \index{size@{size}!Foam::dgGeomFace@{Foam::dgGeomFace}}
@@ -784,6 +827,16 @@ Print debug information.
 
 
 Return number of vertices of the face. 
+
+\Hypertarget{classFoam_1_1dgGeomFace_acf7577d8b01880c8c7ff74107f4f9f6f}\label{classFoam_1_1dgGeomFace_acf7577d8b01880c8c7ff74107f4f9f6f} 
+\index{Foam::dgGeomFace@{Foam::dgGeomFace}!nGauss@{nGauss}}
+\index{nGauss@{nGauss}!Foam::dgGeomFace@{Foam::dgGeomFace}}
+\doxysubsubsection{\texorpdfstring{nGauss()}{nGauss()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{label}} Foam\+::dg\+Geom\+Face\+::n\+Gauss (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Return nunber of Gauss points on the face. 
 
 \Hypertarget{classFoam_1_1dgGeomFace_a9726491adcb5074eb8524b868ca35d42}\label{classFoam_1_1dgGeomFace_a9726491adcb5074eb8524b868ca35d42} 
 \index{Foam::dgGeomFace@{Foam::dgGeomFace}!baseFace@{baseFace}}
@@ -839,7 +892,7 @@ Return area-\/normal vector.
 \index{Foam::dgGeomFace@{Foam::dgGeomFace}!area@{area}}
 \index{area@{area}!Foam::dgGeomFace@{Foam::dgGeomFace}}
 \doxysubsubsection{\texorpdfstring{area()}{area()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
-{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} Foam\+::dg\+Geom\+Face\+::area (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} Foam\+::dg\+Geom\+Face\+::area (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
 
 
 
@@ -855,36 +908,33 @@ Return face area.
 
 Return face index. 
 
-\Hypertarget{classFoam_1_1dgGeomFace_a6e6d583c810e55f3286555b7c4f61d6f}\label{classFoam_1_1dgGeomFace_a6e6d583c810e55f3286555b7c4f61d6f} 
-\index{Foam::dgGeomFace@{Foam::dgGeomFace}!ownerJ2D@{ownerJ2D}}
-\index{ownerJ2D@{ownerJ2D}!Foam::dgGeomFace@{Foam::dgGeomFace}}
-\doxysubsubsection{\texorpdfstring{ownerJ2D()}{ownerJ2D()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
-{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \& Foam\+::dg\+Geom\+Face\+::owner\+J2D (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+\Hypertarget{classFoam_1_1dgGeomFace_a6e154bebc183b009cbf354723cd36da9}\label{classFoam_1_1dgGeomFace_a6e154bebc183b009cbf354723cd36da9} 
+\index{Foam::dgGeomFace@{Foam::dgGeomFace}!J2D@{J2D}}
+\index{J2D@{J2D}!Foam::dgGeomFace@{Foam::dgGeomFace}}
+\doxysubsubsection{\texorpdfstring{J2D()}{J2D()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} $>$ \& Foam\+::dg\+Geom\+Face\+::\+J2D (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
 
 
 
-Return Jacobian 2D at Gauss points on owner side. 
+Return Jacobian 2D at Gauss points. 
 
-\Hypertarget{classFoam_1_1dgGeomFace_ac1abf018365fcae490f4c41242821db3}\label{classFoam_1_1dgGeomFace_ac1abf018365fcae490f4c41242821db3} 
-\index{Foam::dgGeomFace@{Foam::dgGeomFace}!neighborJ2D@{neighborJ2D}}
-\index{neighborJ2D@{neighborJ2D}!Foam::dgGeomFace@{Foam::dgGeomFace}}
-\doxysubsubsection{\texorpdfstring{neighborJ2D()}{neighborJ2D()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
-{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \& Foam\+::dg\+Geom\+Face\+::neighbor\+J2D (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
-
-
-
-Return Jacobian 2D at Gauss points on neighbour side. 
-
-\Hypertarget{classFoam_1_1dgGeomFace_aeee449e860eb4f6dea88096f66b3c771}\label{classFoam_1_1dgGeomFace_aeee449e860eb4f6dea88096f66b3c771} 
+\Hypertarget{classFoam_1_1dgGeomFace_a3299b9ccce971e63722aeeb75c36f26a}\label{classFoam_1_1dgGeomFace_a3299b9ccce971e63722aeeb75c36f26a} 
 \index{Foam::dgGeomFace@{Foam::dgGeomFace}!flattenFace@{flattenFace}}
 \index{flattenFace@{flattenFace}!Foam::dgGeomFace@{Foam::dgGeomFace}}
 \doxysubsubsection{\texorpdfstring{flattenFace()}{flattenFace()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
-{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{void}} Foam\+::dg\+Geom\+Face\+::flatten\+Face (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{void}} Foam\+::dg\+Geom\+Face\+::flatten\+Face (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$ \&}]{global\+Points,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector2D}} $>$ \&}]{flattened\+Points }\end{DoxyParamCaption}) const}
 
 
 
-Flatten face vertices into a local 2D coordinate system. 
+Compute Gauss-\/point connectivity between owner and neighbour cells. 
 
+
+\begin{DoxyParams}{Parameters}
+{\em global\+Points} & Global coordinates of the face vertices (in the order of owner cell) \\
+\hline
+{\em flattened\+Points} & Flattened 2D coordinates of the face vertices (in the order of owner cell) \\
+\hline
+\end{DoxyParams}
 \Hypertarget{classFoam_1_1dgGeomFace_a8725821726d73118866669b0d6ef6fac}\label{classFoam_1_1dgGeomFace_a8725821726d73118866669b0d6ef6fac} 
 \index{Foam::dgGeomFace@{Foam::dgGeomFace}!processFlatAndSortedPoints@{processFlatAndSortedPoints}}
 \index{processFlatAndSortedPoints@{processFlatAndSortedPoints}!Foam::dgGeomFace@{Foam::dgGeomFace}}
@@ -895,7 +945,27 @@ Flatten face vertices into a local 2D coordinate system.
 
 Perform face flattening and ordering. 
 
-Computes flattened coordinates and prepares data required for basis-\/function evaluation on the face. \Hypertarget{classFoam_1_1dgGeomFace_a6f5ae2ee2542d4c2e405b6d6adbbeb57}\label{classFoam_1_1dgGeomFace_a6f5ae2ee2542d4c2e405b6d6adbbeb57} 
+Computes flattened coordinates and prepares data required for basis-\/function evaluation on the face. \Hypertarget{classFoam_1_1dgGeomFace_ac09f8f0378a30a431390140ddc0dada2}\label{classFoam_1_1dgGeomFace_ac09f8f0378a30a431390140ddc0dada2} 
+\index{Foam::dgGeomFace@{Foam::dgGeomFace}!setOwnerId@{setOwnerId}}
+\index{setOwnerId@{setOwnerId}!Foam::dgGeomFace@{Foam::dgGeomFace}}
+\doxysubsubsection{\texorpdfstring{setOwnerId()}{setOwnerId()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{void}} Foam\+::dg\+Geom\+Face\+::set\+Owner\+Id (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{id }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Set face owner cell ID. 
+
+\Hypertarget{classFoam_1_1dgGeomFace_a98737815449b9a1004f091613ee70954}\label{classFoam_1_1dgGeomFace_a98737815449b9a1004f091613ee70954} 
+\index{Foam::dgGeomFace@{Foam::dgGeomFace}!setNeighborId@{setNeighborId}}
+\index{setNeighborId@{setNeighborId}!Foam::dgGeomFace@{Foam::dgGeomFace}}
+\doxysubsubsection{\texorpdfstring{setNeighborId()}{setNeighborId()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{void}} Foam\+::dg\+Geom\+Face\+::set\+Neighbor\+Id (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{id }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Set face neighbor cell ID. 
+
+\Hypertarget{classFoam_1_1dgGeomFace_a6f5ae2ee2542d4c2e405b6d6adbbeb57}\label{classFoam_1_1dgGeomFace_a6f5ae2ee2542d4c2e405b6d6adbbeb57} 
 \index{Foam::dgGeomFace@{Foam::dgGeomFace}!setOwnerPos@{setOwnerPos}}
 \index{setOwnerPos@{setOwnerPos}!Foam::dgGeomFace@{Foam::dgGeomFace}}
 \doxysubsubsection{\texorpdfstring{setOwnerPos()}{setOwnerPos()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
@@ -955,50 +1025,16 @@ Compute Gauss-\/point connectivity between owner and neighbour.
 
 Compute basis functions and derivatives on the face. 
 
-\Hypertarget{classFoam_1_1dgGeomFace_a14db0f8947be33e31f8175368ea9f924}\label{classFoam_1_1dgGeomFace_a14db0f8947be33e31f8175368ea9f924} 
-\index{Foam::dgGeomFace@{Foam::dgGeomFace}!mappingFromRefToReal@{mappingFromRefToReal}}
-\index{mappingFromRefToReal@{mappingFromRefToReal}!Foam::dgGeomFace@{Foam::dgGeomFace}}
-\doxysubsubsection{\texorpdfstring{mappingFromRefToReal()}{mappingFromRefToReal()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
-{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{void}} Foam\+::dg\+Geom\+Face\+::mapping\+From\+Ref\+To\+Real (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{dgGeomFace_2dgFaceType_8H_a8f34e6eff8ddd9d85fe9358a8a6248f6}{dg\+Face\+Type}}}]{type,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$ \&}]{gauss\+Points,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector2D}} $>$ \&}]{face\+Vertices,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector2D}} $>$ \&}]{physic\+GaussP }\end{DoxyParamCaption})}
+\Hypertarget{classFoam_1_1dgGeomFace_aca30ae273f33aecd8fb64665ac085585}\label{classFoam_1_1dgGeomFace_aca30ae273f33aecd8fb64665ac085585} 
+\index{Foam::dgGeomFace@{Foam::dgGeomFace}!computeLameParameters@{computeLameParameters}}
+\index{computeLameParameters@{computeLameParameters}!Foam::dgGeomFace@{Foam::dgGeomFace}}
+\doxysubsubsection{\texorpdfstring{computeLameParameters()}{computeLameParameters()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{void}} Foam\+::dg\+Geom\+Face\+::compute\+Lame\+Parameters (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
 
 
 
-Map Gauss points from reference to physical face. 
+Compute Lame parameters at face Gauss points from both owner and neighbour cells This method MUST be called after setting owner\+Pos\+\_\+, neighbor\+Pos\+\_\+, owner\+Cell\+Type\+\_\+ and neighbor\+Cell\+Type\+\_\+. 
 
-\Hypertarget{classFoam_1_1dgGeomFace_a12ffd795ee8c299f6b90426e3fd707a8}\label{classFoam_1_1dgGeomFace_a12ffd795ee8c299f6b90426e3fd707a8} 
-\index{Foam::dgGeomFace@{Foam::dgGeomFace}!computeOwnerLameParameters@{computeOwnerLameParameters}}
-\index{computeOwnerLameParameters@{computeOwnerLameParameters}!Foam::dgGeomFace@{Foam::dgGeomFace}}
-\doxysubsubsection{\texorpdfstring{computeOwnerLameParameters()}{computeOwnerLameParameters()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
-{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{void}} Foam\+::dg\+Geom\+Face\+::compute\+Owner\+Lame\+Parameters (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$ \&}]{cell\+Vertices }\end{DoxyParamCaption})}
-
-
-
-Compute Lame parameters at face Gauss points from owner cell This method MUST be called after setting owner\+Pos\+\_\+ and owner\+Cell\+Type\+\_\+. 
-
-Otherwise, incorrect results will be produced.
-
-
-\begin{DoxyParams}{Parameters}
-{\em cell\+Vertices} & Physical coordinates of the owner cell vertices \\
-\hline
-\end{DoxyParams}
-\Hypertarget{classFoam_1_1dgGeomFace_aa9e0e84d15e1464a6c72f5473340a40d}\label{classFoam_1_1dgGeomFace_aa9e0e84d15e1464a6c72f5473340a40d} 
-\index{Foam::dgGeomFace@{Foam::dgGeomFace}!computeNeighborLameParameters@{computeNeighborLameParameters}}
-\index{computeNeighborLameParameters@{computeNeighborLameParameters}!Foam::dgGeomFace@{Foam::dgGeomFace}}
-\doxysubsubsection{\texorpdfstring{computeNeighborLameParameters()}{computeNeighborLameParameters()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
-{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{void}} Foam\+::dg\+Geom\+Face\+::compute\+Neighbor\+Lame\+Parameters (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$ \&}]{cell\+Vertices }\end{DoxyParamCaption})}
-
-
-
-Compute Lame parameters at face Gauss points from neighbour cell This method MUST be called after setting neighbor\+Pos\+\_\+ and neighbor\+Cell\+Type\+\_\+. 
-
-Otherwise, incorrect results will be produced.
-
-
-\begin{DoxyParams}{Parameters}
-{\em cell\+Vertices} & Physical coordinates of the neighbour cell vertices \\
-\hline
-\end{DoxyParams}
 \Hypertarget{classFoam_1_1dgGeomFace_a087f32d8da851e4179eacdd115b9cf2e}\label{classFoam_1_1dgGeomFace_a087f32d8da851e4179eacdd115b9cf2e} 
 \index{Foam::dgGeomFace@{Foam::dgGeomFace}!isBoundary@{isBoundary}}
 \index{isBoundary@{isBoundary}!Foam::dgGeomFace@{Foam::dgGeomFace}}
@@ -1029,6 +1065,16 @@ Return patch index of the face.
 
 Check if the given cell is the owner of this face. 
 
+\Hypertarget{classFoam_1_1dgGeomFace_a232f90735be37e8a9dfb55b06511b073}\label{classFoam_1_1dgGeomFace_a232f90735be37e8a9dfb55b06511b073} 
+\index{Foam::dgGeomFace@{Foam::dgGeomFace}!physicGaussPoints@{physicGaussPoints}}
+\index{physicGaussPoints@{physicGaussPoints}!Foam::dgGeomFace@{Foam::dgGeomFace}}
+\doxysubsubsection{\texorpdfstring{physicGaussPoints()}{physicGaussPoints()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$ \& Foam\+::dg\+Geom\+Face\+::physic\+Gauss\+Points (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Return physical Gauss points. 
+
 \Hypertarget{classFoam_1_1dgGeomFace_a8b115ef5a964d8816db91eb10559aa30}\label{classFoam_1_1dgGeomFace_a8b115ef5a964d8816db91eb10559aa30} 
 \index{Foam::dgGeomFace@{Foam::dgGeomFace}!gaussPointsOwner@{gaussPointsOwner}}
 \index{gaussPointsOwner@{gaussPointsOwner}!Foam::dgGeomFace@{Foam::dgGeomFace}}
@@ -1053,7 +1099,7 @@ Return Gauss points on neighbour-\/side reference face.
 \index{Foam::dgGeomFace@{Foam::dgGeomFace}!weights@{weights}}
 \index{weights@{weights}!Foam::dgGeomFace@{Foam::dgGeomFace}}
 \doxysubsubsection{\texorpdfstring{weights()}{weights()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
-{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ \& Foam\+::dg\+Geom\+Face\+::weights (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} $>$ \& Foam\+::dg\+Geom\+Face\+::weights (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
 
 
 
@@ -1089,21 +1135,11 @@ Return fv\+Mesh face-\/owner list.
 
 Return number of internal faces. 
 
-\Hypertarget{classFoam_1_1dgGeomFace_ad55fa893a76fc052b06a761e13db6a0a}\label{classFoam_1_1dgGeomFace_ad55fa893a76fc052b06a761e13db6a0a} 
-\index{Foam::dgGeomFace@{Foam::dgGeomFace}!connectivity@{connectivity}}
-\index{connectivity@{connectivity}!Foam::dgGeomFace@{Foam::dgGeomFace}}
-\doxysubsubsection{\texorpdfstring{connectivity()}{connectivity()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
-{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{label}} $>$ \& Foam\+::dg\+Geom\+Face\+::connectivity (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
-
-
-
-Return Gauss-\/point connectivity. 
-
 \Hypertarget{classFoam_1_1dgGeomFace_a2be89c915a9c35c8d534d4f7437461fc}\label{classFoam_1_1dgGeomFace_a2be89c915a9c35c8d534d4f7437461fc} 
 \index{Foam::dgGeomFace@{Foam::dgGeomFace}!ownerBasis@{ownerBasis}}
 \index{ownerBasis@{ownerBasis}!Foam::dgGeomFace@{Foam::dgGeomFace}}
 \doxysubsubsection{\texorpdfstring{ownerBasis()}{ownerBasis()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
-{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ $>$ \& Foam\+::dg\+Geom\+Face\+::owner\+Basis (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} $>$ $>$ \& Foam\+::dg\+Geom\+Face\+::owner\+Basis (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
 
 
 
@@ -1113,7 +1149,7 @@ Return owner-\/side basis functions.
 \index{Foam::dgGeomFace@{Foam::dgGeomFace}!neighborBasis@{neighborBasis}}
 \index{neighborBasis@{neighborBasis}!Foam::dgGeomFace@{Foam::dgGeomFace}}
 \doxysubsubsection{\texorpdfstring{neighborBasis()}{neighborBasis()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
-{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ $>$ \& Foam\+::dg\+Geom\+Face\+::neighbor\+Basis (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} $>$ $>$ \& Foam\+::dg\+Geom\+Face\+::neighbor\+Basis (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
 
 
 
@@ -1123,7 +1159,7 @@ Return neighbour-\/side basis functions.
 \index{Foam::dgGeomFace@{Foam::dgGeomFace}!owner\_dBasis\_dEta1@{owner\_dBasis\_dEta1}}
 \index{owner\_dBasis\_dEta1@{owner\_dBasis\_dEta1}!Foam::dgGeomFace@{Foam::dgGeomFace}}
 \doxysubsubsection{\texorpdfstring{owner\_dBasis\_dEta1()}{owner\_dBasis\_dEta1()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
-{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ $>$ \& Foam\+::dg\+Geom\+Face\+::owner\+\_\+d\+Basis\+\_\+d\+Eta1 (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} $>$ $>$ \& Foam\+::dg\+Geom\+Face\+::owner\+\_\+d\+Basis\+\_\+d\+Eta1 (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
 
 
 
@@ -1133,19 +1169,19 @@ Return owner-\/side basis derivatives.
 \index{Foam::dgGeomFace@{Foam::dgGeomFace}!owner\_dBasis\_dEta2@{owner\_dBasis\_dEta2}}
 \index{owner\_dBasis\_dEta2@{owner\_dBasis\_dEta2}!Foam::dgGeomFace@{Foam::dgGeomFace}}
 \doxysubsubsection{\texorpdfstring{owner\_dBasis\_dEta2()}{owner\_dBasis\_dEta2()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
-{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ $>$ \& Foam\+::dg\+Geom\+Face\+::owner\+\_\+d\+Basis\+\_\+d\+Eta2 (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} $>$ $>$ \& Foam\+::dg\+Geom\+Face\+::owner\+\_\+d\+Basis\+\_\+d\+Eta2 (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
 
 \Hypertarget{classFoam_1_1dgGeomFace_aef0cec851d21b4e880e073251499924a}\label{classFoam_1_1dgGeomFace_aef0cec851d21b4e880e073251499924a} 
 \index{Foam::dgGeomFace@{Foam::dgGeomFace}!owner\_dBasis\_dEta3@{owner\_dBasis\_dEta3}}
 \index{owner\_dBasis\_dEta3@{owner\_dBasis\_dEta3}!Foam::dgGeomFace@{Foam::dgGeomFace}}
 \doxysubsubsection{\texorpdfstring{owner\_dBasis\_dEta3()}{owner\_dBasis\_dEta3()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
-{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ $>$ \& Foam\+::dg\+Geom\+Face\+::owner\+\_\+d\+Basis\+\_\+d\+Eta3 (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} $>$ $>$ \& Foam\+::dg\+Geom\+Face\+::owner\+\_\+d\+Basis\+\_\+d\+Eta3 (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
 
 \Hypertarget{classFoam_1_1dgGeomFace_a534a13061982feba35bbbb79d3915787}\label{classFoam_1_1dgGeomFace_a534a13061982feba35bbbb79d3915787} 
 \index{Foam::dgGeomFace@{Foam::dgGeomFace}!neighbor\_dBasis\_dEta1@{neighbor\_dBasis\_dEta1}}
 \index{neighbor\_dBasis\_dEta1@{neighbor\_dBasis\_dEta1}!Foam::dgGeomFace@{Foam::dgGeomFace}}
 \doxysubsubsection{\texorpdfstring{neighbor\_dBasis\_dEta1()}{neighbor\_dBasis\_dEta1()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
-{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ $>$ \& Foam\+::dg\+Geom\+Face\+::neighbor\+\_\+d\+Basis\+\_\+d\+Eta1 (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} $>$ $>$ \& Foam\+::dg\+Geom\+Face\+::neighbor\+\_\+d\+Basis\+\_\+d\+Eta1 (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
 
 
 
@@ -1155,13 +1191,13 @@ Return neighbour-\/side basis derivatives.
 \index{Foam::dgGeomFace@{Foam::dgGeomFace}!neighbor\_dBasis\_dEta2@{neighbor\_dBasis\_dEta2}}
 \index{neighbor\_dBasis\_dEta2@{neighbor\_dBasis\_dEta2}!Foam::dgGeomFace@{Foam::dgGeomFace}}
 \doxysubsubsection{\texorpdfstring{neighbor\_dBasis\_dEta2()}{neighbor\_dBasis\_dEta2()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
-{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ $>$ \& Foam\+::dg\+Geom\+Face\+::neighbor\+\_\+d\+Basis\+\_\+d\+Eta2 (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} $>$ $>$ \& Foam\+::dg\+Geom\+Face\+::neighbor\+\_\+d\+Basis\+\_\+d\+Eta2 (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
 
 \Hypertarget{classFoam_1_1dgGeomFace_afc29b9370297a4a16da45e1775cd1033}\label{classFoam_1_1dgGeomFace_afc29b9370297a4a16da45e1775cd1033} 
 \index{Foam::dgGeomFace@{Foam::dgGeomFace}!neighbor\_dBasis\_dEta3@{neighbor\_dBasis\_dEta3}}
 \index{neighbor\_dBasis\_dEta3@{neighbor\_dBasis\_dEta3}!Foam::dgGeomFace@{Foam::dgGeomFace}}
 \doxysubsubsection{\texorpdfstring{neighbor\_dBasis\_dEta3()}{neighbor\_dBasis\_dEta3()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
-{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ $>$ \& Foam\+::dg\+Geom\+Face\+::neighbor\+\_\+d\+Basis\+\_\+d\+Eta3 (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} $>$ $>$ \& Foam\+::dg\+Geom\+Face\+::neighbor\+\_\+d\+Basis\+\_\+d\+Eta3 (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
 
 \Hypertarget{classFoam_1_1dgGeomFace_ad8e48f2989775fb3523794baffe6f855}\label{classFoam_1_1dgGeomFace_ad8e48f2989775fb3523794baffe6f855} 
 \index{Foam::dgGeomFace@{Foam::dgGeomFace}!setProcessorPatch@{setProcessorPatch}}
@@ -1173,15 +1209,35 @@ Return neighbour-\/side basis derivatives.
 
 Mark this face as a processor-\/patch face. 
 
-\Hypertarget{classFoam_1_1dgGeomFace_af670cd817df2555b34de86ac3831aee6}\label{classFoam_1_1dgGeomFace_af670cd817df2555b34de86ac3831aee6} 
-\index{Foam::dgGeomFace@{Foam::dgGeomFace}!setConnectivity@{setConnectivity}}
-\index{setConnectivity@{setConnectivity}!Foam::dgGeomFace@{Foam::dgGeomFace}}
-\doxysubsubsection{\texorpdfstring{setConnectivity()}{setConnectivity()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
-{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{void}} Foam\+::dg\+Geom\+Face\+::set\+Connectivity (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{label}} $>$ \&}]{conn }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+\Hypertarget{classFoam_1_1dgGeomFace_a4bc337f835c61982d7951111d41f757b}\label{classFoam_1_1dgGeomFace_a4bc337f835c61982d7951111d41f757b} 
+\index{Foam::dgGeomFace@{Foam::dgGeomFace}!setPhysicGaussPoints@{setPhysicGaussPoints}}
+\index{setPhysicGaussPoints@{setPhysicGaussPoints}!Foam::dgGeomFace@{Foam::dgGeomFace}}
+\doxysubsubsection{\texorpdfstring{setPhysicGaussPoints()}{setPhysicGaussPoints()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{void}} Foam\+::dg\+Geom\+Face\+::set\+Physic\+Gauss\+Points (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$ \&}]{points }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
 
 
 
-Set Gauss-\/point connectivity for processor-\/patch faces. 
+Set Gauss points. 
+
+\Hypertarget{classFoam_1_1dgGeomFace_acdc77e5aa3b0d47f031b0fa9160e30c2}\label{classFoam_1_1dgGeomFace_acdc77e5aa3b0d47f031b0fa9160e30c2} 
+\index{Foam::dgGeomFace@{Foam::dgGeomFace}!setLameParams@{setLameParams}}
+\index{setLameParams@{setLameParams}!Foam::dgGeomFace@{Foam::dgGeomFace}}
+\doxysubsubsection{\texorpdfstring{setLameParams()}{setLameParams()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{void}} Foam\+::dg\+Geom\+Face\+::set\+Lame\+Params (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} $>$ \&}]{params }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Set Lame parameters. 
+
+\Hypertarget{classFoam_1_1dgGeomFace_afea021336481517ff0c6a67f913c88ef}\label{classFoam_1_1dgGeomFace_afea021336481517ff0c6a67f913c88ef} 
+\index{Foam::dgGeomFace@{Foam::dgGeomFace}!calcGaussPointsOnOwnerSide@{calcGaussPointsOnOwnerSide}}
+\index{calcGaussPointsOnOwnerSide@{calcGaussPointsOnOwnerSide}!Foam::dgGeomFace@{Foam::dgGeomFace}}
+\doxysubsubsection{\texorpdfstring{calcGaussPointsOnOwnerSide()}{calcGaussPointsOnOwnerSide()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{void}} Foam\+::dg\+Geom\+Face\+::calc\+Gauss\+Points\+On\+Owner\+Side (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Calculate Gauss points from owner side, bases on physic Gauss. 
 
 \Hypertarget{classFoam_1_1dgGeomFace_aa4dac4c89ead5324c0db406bec2e608c}\label{classFoam_1_1dgGeomFace_aa4dac4c89ead5324c0db406bec2e608c} 
 \index{Foam::dgGeomFace@{Foam::dgGeomFace}!operator=@{operator=}}
@@ -1202,6 +1258,16 @@ Copy assignment operator.
 
 
 Print debug information. 
+
+\Hypertarget{classFoam_1_1dgGeomFace_aff0eaa4ce16592a62dce0fac1a1ad288}\label{classFoam_1_1dgGeomFace_aff0eaa4ce16592a62dce0fac1a1ad288} 
+\index{Foam::dgGeomFace@{Foam::dgGeomFace}!printCellsInfo@{printCellsInfo}}
+\index{printCellsInfo@{printCellsInfo}!Foam::dgGeomFace@{Foam::dgGeomFace}}
+\doxysubsubsection{\texorpdfstring{printCellsInfo()}{printCellsInfo()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{void}} Foam\+::dg\+Geom\+Face\+::print\+Cells\+Info (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Print owner and neighbour cell information. 
 
 
 
@@ -1246,6 +1312,16 @@ Reference to the finite-\/volume mesh.
 
 Shared reference-\/face data (basis, Gauss points, weights) 
 
+\Hypertarget{classFoam_1_1dgGeomFace_a2da442db6d574b9b376a3c16177fd00a}\label{classFoam_1_1dgGeomFace_a2da442db6d574b9b376a3c16177fd00a} 
+\index{Foam::dgGeomFace@{Foam::dgGeomFace}!nGauss\_@{nGauss\_}}
+\index{nGauss\_@{nGauss\_}!Foam::dgGeomFace@{Foam::dgGeomFace}}
+\doxysubsubsection{\texorpdfstring{nGauss\_}{nGauss\_}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{label}} Foam\+::dg\+Geom\+Face\+::n\+Gauss\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Number of Gauss points on face. 
+
 \Hypertarget{classFoam_1_1dgGeomFace_a112bbe617c78cbd204e716c77973fe49}\label{classFoam_1_1dgGeomFace_a112bbe617c78cbd204e716c77973fe49} 
 \index{Foam::dgGeomFace@{Foam::dgGeomFace}!globalPoints\_@{globalPoints\_}}
 \index{globalPoints\_@{globalPoints\_}!Foam::dgGeomFace@{Foam::dgGeomFace}}
@@ -1255,6 +1331,26 @@ Shared reference-\/face data (basis, Gauss points, weights)
 
 
 Global face vertex coordinates. 
+
+\Hypertarget{classFoam_1_1dgGeomFace_ace35e51ff3c160407f6fe2a23a73d50c}\label{classFoam_1_1dgGeomFace_ace35e51ff3c160407f6fe2a23a73d50c} 
+\index{Foam::dgGeomFace@{Foam::dgGeomFace}!ownerId\_@{ownerId\_}}
+\index{ownerId\_@{ownerId\_}!Foam::dgGeomFace@{Foam::dgGeomFace}}
+\doxysubsubsection{\texorpdfstring{ownerId\_}{ownerId\_}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{label}} Foam\+::dg\+Geom\+Face\+::owner\+Id\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Owner cell ID. 
+
+\Hypertarget{classFoam_1_1dgGeomFace_ab9058b5b69b4e728ef4e2455d49956d6}\label{classFoam_1_1dgGeomFace_ab9058b5b69b4e728ef4e2455d49956d6} 
+\index{Foam::dgGeomFace@{Foam::dgGeomFace}!neighborId\_@{neighborId\_}}
+\index{neighborId\_@{neighborId\_}!Foam::dgGeomFace@{Foam::dgGeomFace}}
+\doxysubsubsection{\texorpdfstring{neighborId\_}{neighborId\_}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{label}} Foam\+::dg\+Geom\+Face\+::neighbor\+Id\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Neighbor cell ID (-\/1 for boundary faces) 
 
 \Hypertarget{classFoam_1_1dgGeomFace_afcc78c820cc9c1e85c45a8f503ed43fd}\label{classFoam_1_1dgGeomFace_afcc78c820cc9c1e85c45a8f503ed43fd} 
 \index{Foam::dgGeomFace@{Foam::dgGeomFace}!ownerPos\_@{ownerPos\_}}
@@ -1306,15 +1402,35 @@ Neighbour cell type.
 
 Flattened 2D coordinates of face vertices. 
 
-\Hypertarget{classFoam_1_1dgGeomFace_a1164d63def2527682d7a426ec9c8d89f}\label{classFoam_1_1dgGeomFace_a1164d63def2527682d7a426ec9c8d89f} 
-\index{Foam::dgGeomFace@{Foam::dgGeomFace}!connectivity\_@{connectivity\_}}
-\index{connectivity\_@{connectivity\_}!Foam::dgGeomFace@{Foam::dgGeomFace}}
-\doxysubsubsection{\texorpdfstring{connectivity\_}{connectivity\_}}
-{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{label}} $>$ Foam\+::dg\+Geom\+Face\+::connectivity\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+\Hypertarget{classFoam_1_1dgGeomFace_af7a02744f359e9963095db12c4e20985}\label{classFoam_1_1dgGeomFace_af7a02744f359e9963095db12c4e20985} 
+\index{Foam::dgGeomFace@{Foam::dgGeomFace}!physGaussPoints\_@{physGaussPoints\_}}
+\index{physGaussPoints\_@{physGaussPoints\_}!Foam::dgGeomFace@{Foam::dgGeomFace}}
+\doxysubsubsection{\texorpdfstring{physGaussPoints\_}{physGaussPoints\_}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$ Foam\+::dg\+Geom\+Face\+::phys\+Gauss\+Points\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
 
 
 
-Gauss-\/point connectivity between owner and neighbour. 
+Physical coordinates of the face Gauss points. 
+
+\Hypertarget{classFoam_1_1dgGeomFace_a6497aee75b84d75f068247d2bd492b12}\label{classFoam_1_1dgGeomFace_a6497aee75b84d75f068247d2bd492b12} 
+\index{Foam::dgGeomFace@{Foam::dgGeomFace}!gaussPointsOwner\_@{gaussPointsOwner\_}}
+\index{gaussPointsOwner\_@{gaussPointsOwner\_}!Foam::dgGeomFace@{Foam::dgGeomFace}}
+\doxysubsubsection{\texorpdfstring{gaussPointsOwner\_}{gaussPointsOwner\_}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$ Foam\+::dg\+Geom\+Face\+::gauss\+Points\+Owner\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Gauss points on the face, respect to owner cell. 
+
+\Hypertarget{classFoam_1_1dgGeomFace_ac78efba28c23b468fe59660fe96ae1be}\label{classFoam_1_1dgGeomFace_ac78efba28c23b468fe59660fe96ae1be} 
+\index{Foam::dgGeomFace@{Foam::dgGeomFace}!gaussPointsNeighbor\_@{gaussPointsNeighbor\_}}
+\index{gaussPointsNeighbor\_@{gaussPointsNeighbor\_}!Foam::dgGeomFace@{Foam::dgGeomFace}}
+\doxysubsubsection{\texorpdfstring{gaussPointsNeighbor\_}{gaussPointsNeighbor\_}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$ Foam\+::dg\+Geom\+Face\+::gauss\+Points\+Neighbor\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Gauss points on the face, respect to neighbour cell. 
 
 \Hypertarget{classFoam_1_1dgGeomFace_af814e80b8f825ba8f1252f840f8f862a}\label{classFoam_1_1dgGeomFace_af814e80b8f825ba8f1252f840f8f862a} 
 \index{Foam::dgGeomFace@{Foam::dgGeomFace}!ownerBasisData\_@{ownerBasisData\_}}
@@ -1336,21 +1452,15 @@ Basis-\/function data on the owner side.
 
 Basis-\/function data on the neighbour side. 
 
-\Hypertarget{classFoam_1_1dgGeomFace_af52ec7067410d1533cc3cc05c24e9d9c}\label{classFoam_1_1dgGeomFace_af52ec7067410d1533cc3cc05c24e9d9c} 
-\index{Foam::dgGeomFace@{Foam::dgGeomFace}!ownerJ2D\_@{ownerJ2D\_}}
-\index{ownerJ2D\_@{ownerJ2D\_}!Foam::dgGeomFace@{Foam::dgGeomFace}}
-\doxysubsubsection{\texorpdfstring{ownerJ2D\_}{ownerJ2D\_}}
-{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ Foam\+::dg\+Geom\+Face\+::owner\+J2\+D\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+\Hypertarget{classFoam_1_1dgGeomFace_a50e7517fd1de85476609f88486d294f1}\label{classFoam_1_1dgGeomFace_a50e7517fd1de85476609f88486d294f1} 
+\index{Foam::dgGeomFace@{Foam::dgGeomFace}!J2D\_@{J2D\_}}
+\index{J2D\_@{J2D\_}!Foam::dgGeomFace@{Foam::dgGeomFace}}
+\doxysubsubsection{\texorpdfstring{J2D\_}{J2D\_}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} $>$ Foam\+::dg\+Geom\+Face\+::\+J2\+D\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
 
 
 
 Jacobian 2D of faces. 
-
-\Hypertarget{classFoam_1_1dgGeomFace_af122e558beadb39a48c554c9109283c5}\label{classFoam_1_1dgGeomFace_af122e558beadb39a48c554c9109283c5} 
-\index{Foam::dgGeomFace@{Foam::dgGeomFace}!neighborJ2D\_@{neighborJ2D\_}}
-\index{neighborJ2D\_@{neighborJ2D\_}!Foam::dgGeomFace@{Foam::dgGeomFace}}
-\doxysubsubsection{\texorpdfstring{neighborJ2D\_}{neighborJ2D\_}}
-{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{scalar}} $>$ Foam\+::dg\+Geom\+Face\+::neighbor\+J2\+D\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
 
 \Hypertarget{classFoam_1_1dgGeomFace_a9715c226a4685d6ebd59a69610d1ed83}\label{classFoam_1_1dgGeomFace_a9715c226a4685d6ebd59a69610d1ed83} 
 \index{Foam::dgGeomFace@{Foam::dgGeomFace}!patchID\_@{patchID\_}}

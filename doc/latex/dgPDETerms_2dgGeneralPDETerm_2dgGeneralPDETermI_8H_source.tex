@@ -49,78 +49,105 @@
 \DoxyCodeLine{00045\ \textcolor{comment}{//\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ Constructors\ \ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ //}}
 \DoxyCodeLine{00046\ }
 \DoxyCodeLine{00047\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ UType,\ \textcolor{keyword}{class}\ FType>}
-\DoxyCodeLine{00048\ \mbox{\hyperlink{classFoam_1_1dgGeneralPDETerm_a9f92cf11e7a539d55d0c5c3ab8e63d52}{Foam::dgGeneralPDETerm<UType,\ FType>::dgGeneralPDETerm}}}
+\DoxyCodeLine{00048\ \mbox{\hyperlink{classFoam_1_1dgGeneralPDETerm_a3812580772bb4eb5418a5777352b595e}{Foam::dgGeneralPDETerm<UType,\ FType>::dgGeneralPDETerm}}}
 \DoxyCodeLine{00049\ (}
 \DoxyCodeLine{00050\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{word}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{termName}},}
 \DoxyCodeLine{00051\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1dgFluxSolver_ac861a0350cf2f298fecfc97544af0572}{dgFluxSolver::equationType}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{eqnType}},}
-\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ cellID,}
-\DoxyCodeLine{00053\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dgGeomMesh}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{mesh}},}
-\DoxyCodeLine{00054\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{GaussField<UType>}}\&\ \mbox{\hyperlink{createPrimaryFields_8H_acaa7fe8168a3a866f1958b3663d384c6}{U}},}
-\DoxyCodeLine{00055\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{GaussField<FType>}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{F}},}
-\DoxyCodeLine{00056\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1dgFluxSolverManager}{dgFluxSolverManager}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{fluxSolver}}}
-\DoxyCodeLine{00057\ )}
-\DoxyCodeLine{00058\ :}
-\DoxyCodeLine{00059\ \ \ \ \ termName\_(\mbox{\hyperlink{classFoam_1_1GaussField}{termName}}),}
-\DoxyCodeLine{00060\ \ \ \ \ eqnType\_(\mbox{\hyperlink{classFoam_1_1GaussField}{eqnType}}),}
-\DoxyCodeLine{00061\ \ \ \ \ cellID\_(cellID),}
-\DoxyCodeLine{00062\ \ \ \ \ dgMesh\_(\mbox{\hyperlink{classFoam_1_1GaussField}{mesh}}),}
-\DoxyCodeLine{00063\ \ \ \ \ basis\_(cellID\_,\ dgMesh\_),}
-\DoxyCodeLine{00064\ \ \ \ \ U\_(\mbox{\hyperlink{createPrimaryFields_8H_acaa7fe8168a3a866f1958b3663d384c6}{U}}),}
-\DoxyCodeLine{00065\ \ \ \ \ F\_(\mbox{\hyperlink{classFoam_1_1GaussField}{F}}),}
-\DoxyCodeLine{00066\ \ \ \ \ fluxSolver\_(\mbox{\hyperlink{classFoam_1_1GaussField}{fluxSolver}}),}
-\DoxyCodeLine{00067\ \ \ \ \ nDof\_(basis\_.nDof()),}
-\DoxyCodeLine{00068\ \ \ \ \ R\_(nDof\_,\ \mbox{\hyperlink{classFoam_1_1GaussField}{pTraits}}<\mbox{\hyperlink{classFoam_1_1GaussField}{UType}}>::\mbox{\hyperlink{classFoam_1_1GaussField}{zero}})}
-\DoxyCodeLine{00069\ \{}
-\DoxyCodeLine{00070\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1dgGeneralPDETerm_a0713b3ac251c38e5af3ea4e67aeb850d}{checkTypes}}();}
-\DoxyCodeLine{00071\ }
-\DoxyCodeLine{00072\ \ \ \ \ \textcolor{comment}{//\ Initialize\ flux\ field}}
-\DoxyCodeLine{00073\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1dgGeneralPDETerm_a9d0450b82e3cfc4564069f664f63c3b2}{F\_}}.\mbox{\hyperlink{classFoam_1_1GaussField_a11bd1d315e54f3b9c65366000219d8a1}{faceField}}().\mbox{\hyperlink{classFoam_1_1faceGaussField_a7d5725fddd0ef2440225ab1dd9056c6e}{initFlux}}();}
-\DoxyCodeLine{00074\ }
-\DoxyCodeLine{00075\ \ \ \ \ \textcolor{comment}{//\ Set\ equation\ type\ in\ flux\ solver}}
-\DoxyCodeLine{00076\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1dgGeneralPDETerm_a4468ee8ffcee03b95f200daab2098098}{fluxSolver\_}}.\mbox{\hyperlink{classFoam_1_1dgFluxSolverManager_a315cf94beebd434c9ea7d1090e9b79cc}{solver}}(\mbox{\hyperlink{classFoam_1_1dgGeneralPDETerm_a34a9456ee2e860eed1c42b205bb9d9b5}{termName\_}}+\textcolor{stringliteral}{"{}Flux"{}}).setEquationType(\mbox{\hyperlink{classFoam_1_1dgGeneralPDETerm_abfe4fd642952df397cd63ed85a18ba87}{eqnType\_}});}
-\DoxyCodeLine{00077\ \}}
-\DoxyCodeLine{00078\ }
-\DoxyCodeLine{00079\ }
-\DoxyCodeLine{00080\ \textcolor{comment}{//\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ Member\ Functions\ \ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ //}}
-\DoxyCodeLine{00081\ }
-\DoxyCodeLine{00082\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ UType,\ \textcolor{keyword}{class}\ FType>}
-\DoxyCodeLine{00083\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classFoam_1_1dgGeneralPDETerm_a3f5d88b1a330b1860b070054283f09c3}{Foam::dgGeneralPDETerm<UType,\ FType>::updateFlux}}()}
-\DoxyCodeLine{00084\ \{}
-\DoxyCodeLine{00085\ \ \ \ \ fluxSolver\_.solver(termName\_+\textcolor{stringliteral}{"{}Flux"{}}).computeFlux}
-\DoxyCodeLine{00086\ \ \ \ \ (}
-\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ cellID\_,}
-\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ F\_.faceField(),}
-\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ U\_.faceField()}
-\DoxyCodeLine{00090\ \ \ \ \ );}
-\DoxyCodeLine{00091\ \}}
-\DoxyCodeLine{00092\ }
-\DoxyCodeLine{00093\ }
-\DoxyCodeLine{00094\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ UType,\ \textcolor{keyword}{class}\ FType>}
-\DoxyCodeLine{00095\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classFoam_1_1dgGeneralPDETerm_abab32003212bb5e043f4a5f86de1c266}{Foam::dgGeneralPDETerm<UType,\ FType>::calcResidual}}()}
-\DoxyCodeLine{00096\ \{}
-\DoxyCodeLine{00097\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{forAll}}\ (R\_,\ \mbox{\hyperlink{classFoam_1_1GaussField}{i}})}
-\DoxyCodeLine{00098\ \ \ \ \ \{}
-\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ R\_[\mbox{\hyperlink{classFoam_1_1GaussField}{i}}]\ =\ \mbox{\hyperlink{classFoam_1_1GaussField}{pTraits<UType>::zero}};}
-\DoxyCodeLine{00100\ \ \ \ \ \}}
-\DoxyCodeLine{00101\ }
-\DoxyCodeLine{00102\ \ \ \ \ \textcolor{keywordflow}{for}\ (\mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{i}}\ =\ 0;\ \mbox{\hyperlink{classFoam_1_1GaussField}{i}}\ <\ nDof\_;\ ++\mbox{\hyperlink{classFoam_1_1GaussField}{i}})}
-\DoxyCodeLine{00103\ \ \ \ \ \{}
-\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Gradient\ of\ basis\ phi\_i}}
-\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{GaussField<vector>}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{gradPhi}}\ =\ basis\_.getDBasis(\mbox{\hyperlink{classFoam_1_1GaussField}{i}});}
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1dgBasisField}{dgBasisField}}\&\ basis,}
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{GaussField<UType>}}\&\ \mbox{\hyperlink{createPrimaryFields_8H_acaa7fe8168a3a866f1958b3663d384c6}{U}},}
+\DoxyCodeLine{00054\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{GaussField<FType>}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{F}},}
+\DoxyCodeLine{00055\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1dgFluxSolverManager}{dgFluxSolverManager}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{fluxSolver}}}
+\DoxyCodeLine{00056\ )}
+\DoxyCodeLine{00057\ :}
+\DoxyCodeLine{00058\ \ \ \ \ termName\_(\mbox{\hyperlink{classFoam_1_1GaussField}{termName}}),}
+\DoxyCodeLine{00059\ \ \ \ \ eqnType\_(\mbox{\hyperlink{classFoam_1_1GaussField}{eqnType}}),}
+\DoxyCodeLine{00060\ \ \ \ \ cellID\_(basis.cellID()),}
+\DoxyCodeLine{00061\ \ \ \ \ basis\_(basis),}
+\DoxyCodeLine{00062\ \ \ \ \ U\_(\mbox{\hyperlink{createPrimaryFields_8H_acaa7fe8168a3a866f1958b3663d384c6}{U}}),}
+\DoxyCodeLine{00063\ \ \ \ \ F\_(\mbox{\hyperlink{classFoam_1_1GaussField}{new}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{GaussField}}<\mbox{\hyperlink{classFoam_1_1GaussField}{FType}}>(\mbox{\hyperlink{classFoam_1_1GaussField}{F}})),}
+\DoxyCodeLine{00064\ \ \ \ \ fluxSolver\_(\mbox{\hyperlink{classFoam_1_1GaussField}{fluxSolver}}),}
+\DoxyCodeLine{00065\ \ \ \ \ nDof\_(basis\_.nDof()),}
+\DoxyCodeLine{00066\ \ \ \ \ R\_(nDof\_,\ \mbox{\hyperlink{classFoam_1_1GaussField}{pTraits}}<\mbox{\hyperlink{classFoam_1_1GaussField}{UType}}>::\mbox{\hyperlink{classFoam_1_1GaussField}{zero}})}
+\DoxyCodeLine{00067\ \{}
+\DoxyCodeLine{00068\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1dgGeneralPDETerm_a0713b3ac251c38e5af3ea4e67aeb850d}{checkTypes}}();}
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00070\ \ \ \ \ \textcolor{comment}{//\ Initialize\ flux\ field}}
+\DoxyCodeLine{00071\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1dgGeneralPDETerm_a5cc359bdbdec6653fe9ac604652a74cb}{F\_}}.ref().\mbox{\hyperlink{classFoam_1_1GaussField_a11bd1d315e54f3b9c65366000219d8a1}{faceField}}().initFlux();}
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00073\ \ \ \ \ \textcolor{comment}{//\ Set\ equation\ type\ in\ flux\ solver}}
+\DoxyCodeLine{00074\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1dgGeneralPDETerm_a4468ee8ffcee03b95f200daab2098098}{fluxSolver\_}}.\mbox{\hyperlink{classFoam_1_1dgFluxSolverManager_a315cf94beebd434c9ea7d1090e9b79cc}{solver}}(\mbox{\hyperlink{classFoam_1_1dgGeneralPDETerm_a34a9456ee2e860eed1c42b205bb9d9b5}{termName\_}}+\textcolor{stringliteral}{"{}Flux"{}}).setEquationType(\mbox{\hyperlink{classFoam_1_1dgGeneralPDETerm_abfe4fd642952df397cd63ed85a18ba87}{eqnType\_}});}
+\DoxyCodeLine{00075\ \}}
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00077\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ UType,\ \textcolor{keyword}{class}\ FType>}
+\DoxyCodeLine{00078\ \mbox{\hyperlink{classFoam_1_1dgGeneralPDETerm_a3812580772bb4eb5418a5777352b595e}{Foam::dgGeneralPDETerm<UType,\ FType>::dgGeneralPDETerm}}}
+\DoxyCodeLine{00079\ (}
+\DoxyCodeLine{00080\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{word}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{termName}},}
+\DoxyCodeLine{00081\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1dgFluxSolver_ac861a0350cf2f298fecfc97544af0572}{dgFluxSolver::equationType}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{eqnType}},}
+\DoxyCodeLine{00082\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1dgBasisField}{dgBasisField}}\&\ basis,}
+\DoxyCodeLine{00083\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{GaussField<UType>}}\&\ \mbox{\hyperlink{createPrimaryFields_8H_acaa7fe8168a3a866f1958b3663d384c6}{U}},}
+\DoxyCodeLine{00084\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{tmp}}<\mbox{\hyperlink{classFoam_1_1GaussField}{GaussField<FType>}}>\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{tF}},}
+\DoxyCodeLine{00085\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1dgFluxSolverManager}{dgFluxSolverManager}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{fluxSolver}}}
+\DoxyCodeLine{00086\ )}
+\DoxyCodeLine{00087\ :}
+\DoxyCodeLine{00088\ \ \ \ \ termName\_(\mbox{\hyperlink{classFoam_1_1GaussField}{termName}}),}
+\DoxyCodeLine{00089\ \ \ \ \ eqnType\_(\mbox{\hyperlink{classFoam_1_1GaussField}{eqnType}}),}
+\DoxyCodeLine{00090\ \ \ \ \ cellID\_(basis.cellID()),}
+\DoxyCodeLine{00091\ \ \ \ \ basis\_(basis),}
+\DoxyCodeLine{00092\ \ \ \ \ U\_(\mbox{\hyperlink{createPrimaryFields_8H_acaa7fe8168a3a866f1958b3663d384c6}{U}}),}
+\DoxyCodeLine{00093\ \ \ \ \ F\_(\mbox{\hyperlink{classFoam_1_1GaussField}{tF}}),}
+\DoxyCodeLine{00094\ \ \ \ \ fluxSolver\_(\mbox{\hyperlink{classFoam_1_1GaussField}{fluxSolver}}),}
+\DoxyCodeLine{00095\ \ \ \ \ nDof\_(basis\_.nDof()),}
+\DoxyCodeLine{00096\ \ \ \ \ R\_(nDof\_,\ \mbox{\hyperlink{classFoam_1_1GaussField}{pTraits}}<\mbox{\hyperlink{classFoam_1_1GaussField}{UType}}>::\mbox{\hyperlink{classFoam_1_1GaussField}{zero}})}
+\DoxyCodeLine{00097\ \{}
+\DoxyCodeLine{00098\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1dgGeneralPDETerm_a0713b3ac251c38e5af3ea4e67aeb850d}{checkTypes}}();}
+\DoxyCodeLine{00099\ }
+\DoxyCodeLine{00100\ \ \ \ \ \textcolor{comment}{//\ Initialize\ flux\ field}}
+\DoxyCodeLine{00101\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1dgGeneralPDETerm_a5cc359bdbdec6653fe9ac604652a74cb}{F\_}}.ref().\mbox{\hyperlink{classFoam_1_1GaussField_a11bd1d315e54f3b9c65366000219d8a1}{faceField}}().initFlux();}
+\DoxyCodeLine{00102\ }
+\DoxyCodeLine{00103\ \ \ \ \ \textcolor{comment}{//\ Set\ equation\ type\ in\ flux\ solver}}
+\DoxyCodeLine{00104\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1dgGeneralPDETerm_a4468ee8ffcee03b95f200daab2098098}{fluxSolver\_}}.\mbox{\hyperlink{classFoam_1_1dgFluxSolverManager_a315cf94beebd434c9ea7d1090e9b79cc}{solver}}(\mbox{\hyperlink{classFoam_1_1dgGeneralPDETerm_a34a9456ee2e860eed1c42b205bb9d9b5}{termName\_}}+\textcolor{stringliteral}{"{}Flux"{}}).setEquationType(\mbox{\hyperlink{classFoam_1_1dgGeneralPDETerm_abfe4fd642952df397cd63ed85a18ba87}{eqnType\_}});}
+\DoxyCodeLine{00105\ \}}
 \DoxyCodeLine{00106\ }
-\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{UType}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{volTerm}}\ =\ \mbox{\hyperlink{namespaceFoam_abb4da9f774dc94a34630ee9ed788ec81}{Foam::volumeIntegral}}(\mbox{\hyperlink{classFoam_1_1GaussField}{gradPhi}}.\mbox{\hyperlink{classFoam_1_1GaussField_a50fbcbf2b466b2c03538549f32dd5a5e}{cellField}}(),\ F\_.\mbox{\hyperlink{classFoam_1_1GaussField_a50fbcbf2b466b2c03538549f32dd5a5e}{cellField}}());}
-\DoxyCodeLine{00108\ }
-\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Basis\ phi\_i\ on\ faces}}
-\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{GaussField<scalar>}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{phi}}\ =\ basis\_.getBasis(\mbox{\hyperlink{classFoam_1_1GaussField}{i}});}
-\DoxyCodeLine{00111\ }
-\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{UType}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{surfTerm}}\ =\ \mbox{\hyperlink{namespaceFoam_ab4801fef406a81dc437da35df1149328}{Foam::surfaceIntegral}}(\mbox{\hyperlink{classFoam_1_1GaussField}{phi}}.\mbox{\hyperlink{classFoam_1_1GaussField_a11bd1d315e54f3b9c65366000219d8a1}{faceField}}(),\ F\_.\mbox{\hyperlink{classFoam_1_1GaussField_a11bd1d315e54f3b9c65366000219d8a1}{faceField}}());}
-\DoxyCodeLine{00113\ }
-\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ R\_[\mbox{\hyperlink{classFoam_1_1GaussField}{i}}]\ -\/=\ \mbox{\hyperlink{classFoam_1_1GaussField}{volTerm}};}
-\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ R\_[\mbox{\hyperlink{classFoam_1_1GaussField}{i}}]\ +=\ \mbox{\hyperlink{classFoam_1_1GaussField}{surfTerm}};}
-\DoxyCodeLine{00116\ \ \ \ \ \}}
-\DoxyCodeLine{00117\ \}}
-\DoxyCodeLine{00118\ }
-\DoxyCodeLine{00119\ \textcolor{comment}{//\ *************************************************************************\ //}}
+\DoxyCodeLine{00107\ }
+\DoxyCodeLine{00108\ \textcolor{comment}{//\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ Member\ Functions\ \ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ //}}
+\DoxyCodeLine{00109\ }
+\DoxyCodeLine{00110\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ UType,\ \textcolor{keyword}{class}\ FType>}
+\DoxyCodeLine{00111\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classFoam_1_1dgGeneralPDETerm_a3f5d88b1a330b1860b070054283f09c3}{Foam::dgGeneralPDETerm<UType,\ FType>::updateFlux}}()}
+\DoxyCodeLine{00112\ \{}
+\DoxyCodeLine{00113\ \ \ \ \ fluxSolver\_.solver(termName\_+\textcolor{stringliteral}{"{}Flux"{}}).computeFlux}
+\DoxyCodeLine{00114\ \ \ \ \ (}
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ cellID\_,}
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ F\_.ref().faceField(),}
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ U\_.faceField()}
+\DoxyCodeLine{00118\ \ \ \ \ );}
+\DoxyCodeLine{00119\ \}}
 \DoxyCodeLine{00120\ }
+\DoxyCodeLine{00121\ }
+\DoxyCodeLine{00122\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ UType,\ \textcolor{keyword}{class}\ FType>}
+\DoxyCodeLine{00123\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classFoam_1_1dgGeneralPDETerm_abab32003212bb5e043f4a5f86de1c266}{Foam::dgGeneralPDETerm<UType,\ FType>::calcResidual}}()}
+\DoxyCodeLine{00124\ \{}
+\DoxyCodeLine{00125\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{forAll}}\ (R\_,\ \mbox{\hyperlink{classFoam_1_1GaussField}{i}})}
+\DoxyCodeLine{00126\ \ \ \ \ \{}
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ R\_[\mbox{\hyperlink{classFoam_1_1GaussField}{i}}]\ =\ \mbox{\hyperlink{classFoam_1_1GaussField}{pTraits<UType>::zero}};}
+\DoxyCodeLine{00128\ \ \ \ \ \}}
+\DoxyCodeLine{00129\ }
+\DoxyCodeLine{00130\ \ \ \ \ \textcolor{keywordflow}{for}\ (\mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{i}}\ =\ 0;\ \mbox{\hyperlink{classFoam_1_1GaussField}{i}}\ <\ nDof\_;\ ++\mbox{\hyperlink{classFoam_1_1GaussField}{i}})}
+\DoxyCodeLine{00131\ \ \ \ \ \{}
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Gradient\ of\ basis\ phi\_i}}
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{GaussField<vector>}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{gradPhi}}\ =\ basis\_.getDBasis(\mbox{\hyperlink{classFoam_1_1GaussField}{i}});}
+\DoxyCodeLine{00134\ }
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{UType}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{volTerm}}\ =\ \mbox{\hyperlink{namespaceFoam_abb4da9f774dc94a34630ee9ed788ec81}{Foam::volumeIntegral}}(\mbox{\hyperlink{classFoam_1_1GaussField}{gradPhi}}.\mbox{\hyperlink{classFoam_1_1GaussField_a50fbcbf2b466b2c03538549f32dd5a5e}{cellField}}(),\ F\_().cellField());}
+\DoxyCodeLine{00136\ }
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Basis\ phi\_i\ on\ faces}}
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{GaussField<scalar>}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{phi}}\ =\ basis\_.getBasis(\mbox{\hyperlink{classFoam_1_1GaussField}{i}});}
+\DoxyCodeLine{00139\ }
+\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{UType}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{surfTerm}}\ =\ \mbox{\hyperlink{namespaceFoam_ab4801fef406a81dc437da35df1149328}{Foam::surfaceIntegral}}(\mbox{\hyperlink{classFoam_1_1GaussField}{phi}}.\mbox{\hyperlink{classFoam_1_1GaussField_a11bd1d315e54f3b9c65366000219d8a1}{faceField}}(),\ F\_().faceField());}
+\DoxyCodeLine{00141\ }
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ R\_[\mbox{\hyperlink{classFoam_1_1GaussField}{i}}]\ -\/=\ \mbox{\hyperlink{classFoam_1_1GaussField}{volTerm}};}
+\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ R\_[\mbox{\hyperlink{classFoam_1_1GaussField}{i}}]\ +=\ \mbox{\hyperlink{classFoam_1_1GaussField}{surfTerm}};}
+\DoxyCodeLine{00144\ \ \ \ \ \}}
+\DoxyCodeLine{00145\ \}}
+\DoxyCodeLine{00146\ }
+\DoxyCodeLine{00147\ \textcolor{comment}{//\ *************************************************************************\ //}}
 
 \end{DoxyCode}

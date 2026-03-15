@@ -1,5 +1,29 @@
 var searchData=
 [
-  ['u_5f_0',['u_',['../classFoam_1_1dgGeneralInletOutletBoundaryField.html#a577c6f3deff7a4743d4b33167614ea1b',1,'Foam::dgGeneralInletOutletBoundaryField::U_'],['../classFoam_1_1dgLaxFriedrichsFluxSolver.html#aa47fbf51fc143c0ef8c307e4abefc165',1,'Foam::dgLaxFriedrichsFluxSolver::U_'],['../classFoam_1_1dgHLLCFluxSolver.html#a6bcceb3e91092002afcf9cac16d81f81',1,'Foam::dgHLLCFluxSolver::U_'],['../classFoam_1_1dgHLLEFluxSolver.html#a9af1eef99a262413000cdcd891bb6974',1,'Foam::dgHLLEFluxSolver::U_'],['../classFoam_1_1dgGeneralPDETerm.html#a69230ab8b16a53f5f6383e5af27db35a',1,'Foam::dgGeneralPDETerm::U_']]],
-  ['uname_5f_1',['UName_',['../classFoam_1_1dgGeneralInletOutletBoundaryField.html#ab64cb886c62ad7d208d1c19d98936192',1,'Foam::dgGeneralInletOutletBoundaryField']]]
+  ['s_5f_0',['S_',['../classFoam_1_1Sutherland.html#ae57207de99175b457cd78061d83ae141',1,'Foam::Sutherland']]],
+  ['savingcout_1',['savingCout',['../namespacesystemVar.html#a807efe6d88c70ce1f6554dada76f3a9c',1,'systemVar']]],
+  ['scalar_2',['scalar',['../namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8',1,'Foam']]],
+  ['scalarnames_5f_3',['scalarnames_',['../classFoam_1_1dgEulerTimeScheme.html#a38d96e07ddad928aa499692a1f02e1cb',1,'Foam::dgEulerTimeScheme::scalarNames_'],['../classFoam_1_1dgRK4TimeScheme.html#a96bafb635d9ca0579059334c1564e414',1,'Foam::dgRK4TimeScheme::scalarNames_'],['../classFoam_1_1dgSSPRK2TimeScheme.html#a12ec687a2fcde4820eaee5589bf40c37',1,'Foam::dgSSPRK2TimeScheme::scalarNames_'],['../classFoam_1_1dgSSPRK3TimeScheme.html#ada29966e977970b2cac6690b428ea7b8',1,'Foam::dgSSPRK3TimeScheme::scalarNames_'],['../classFoam_1_1dgSSPRK4TimeScheme.html#a1033f4f5495c571dcbc9202a2d9ee7e2',1,'Foam::dgSSPRK4TimeScheme::scalarNames_']]],
+  ['scalarstates_5f_4',['scalarstates_',['../classFoam_1_1dgEulerTimeScheme.html#a43958c0767fbdb081f9e126e99623daf',1,'Foam::dgEulerTimeScheme::scalarStates_'],['../classFoam_1_1dgRK4TimeScheme.html#a4054bf9351022dad9b19bdeba5a5b958',1,'Foam::dgRK4TimeScheme::scalarStates_'],['../classFoam_1_1dgSSPRK2TimeScheme.html#a30775cdc2526adb1c85baf6e989d13f3',1,'Foam::dgSSPRK2TimeScheme::scalarStates_'],['../classFoam_1_1dgSSPRK3TimeScheme.html#a3d2aadf169dfd67af5370390f0084efc',1,'Foam::dgSSPRK3TimeScheme::scalarStates_'],['../classFoam_1_1dgSSPRK4TimeScheme.html#ad432781f6ab2c033e729824871aa33ef',1,'Foam::dgSSPRK4TimeScheme::scalarStates_']]],
+  ['scalebymach_5f_5',['scaleByMach_',['../classFoam_1_1dgLaxFriedrichsFluxSolver.html#a95ef67c7bb8ae02201275ea226dc37e3',1,'Foam::dgLaxFriedrichsFluxSolver']]],
+  ['schemetype_5f_6',['schemeType_',['../classFoam_1_1dgTimeDiscretization.html#ae9dc0775097958a63da20f726fb5485e',1,'Foam::dgTimeDiscretization']]],
+  ['sendbuf_5f_7',['sendBuf_',['../classFoam_1_1dgProcessorBoundaryField.html#a8a48c87af06db1a7c43686f234832962',1,'Foam::dgProcessorBoundaryField']]],
+  ['sendrecvorder_8',['sendRecvOrder',['../namespacesystemVar.html#ad7abdb9b09154f981c0892085ecda341',1,'systemVar']]],
+  ['sendrecvorder_5flength_9',['sendRecvOrder_length',['../namespacesystemVar.html#a0e4babff09d2574da52d50fae81912b9',1,'systemVar']]],
+  ['sigmat_10',['sigmaT',['../namespacebcValues.html#a8f718a199896c0a8a9968db526fe9d67',1,'bcValues']]],
+  ['sigmau_11',['sigmaU',['../namespacebcValues.html#abe5b2f98ad5fe031cba63a35993effa0',1,'bcValues']]],
+  ['sl_5flist_5f_12',['SL_list_',['../classFoam_1_1dgHLLCFluxSolver.html#a014f374502b37fab5fe114cc7cb7c023',1,'Foam::dgHLLCFluxSolver']]],
+  ['slipbcflag_13',['slipBCFlag',['../namespacebcValues.html#a696acc36d1f876df8848f25c801474dc',1,'bcValues']]],
+  ['slipwall_14',['slipWall',['../namespaceBCVars_1_1velocityBCId.html#a49e9f825e8a194cff053192151496de3',1,'BCVars::velocityBCId']]],
+  ['smoluchowskytjump_15',['SmoluchowskyTJump',['../namespaceBCVars_1_1temperatureBCId.html#add26eff723d3d3f55b265e4c77c16f45',1,'BCVars::temperatureBCId']]],
+  ['solvetfailed_16',['solveTFailed',['../namespacemathVar.html#a18208e6cf4b115cfa5542d9148d1d220',1,'mathVar']]],
+  ['solvetimplicitly_17',['solveTImplicitly',['../namespaceDGSchemes.html#ae648366cd7311a684d3634918ba5ea24',1,'DGSchemes']]],
+  ['speedest_5f_18',['speedest_',['../classFoam_1_1dgHLLEFluxSolver.html#a603b8dfb17f4865fcafd1d499a0f743f',1,'Foam::dgHLLEFluxSolver::speedEst_'],['../classFoam_1_1dgHLLCFluxSolver.html#a68cacbb4eabda82e607756d13d28087d',1,'Foam::dgHLLCFluxSolver::speedEst_']]],
+  ['sr_5flist_5f_19',['SR_list_',['../classFoam_1_1dgHLLCFluxSolver.html#a13bda7d1a0b98b870ac0ed587b9a2299',1,'Foam::dgHLLCFluxSolver']]],
+  ['sstar_5flist_5f_20',['SStar_list_',['../classFoam_1_1dgHLLCFluxSolver.html#ab636f6eab7a057143c08fa96f9728d25',1,'Foam::dgHLLCFluxSolver']]],
+  ['stagei_5f_21',['stagei_',['../classFoam_1_1dgTimeDiscretization.html#ae1299b37a76a7af6012d362a241bceb4',1,'Foam::dgTimeDiscretization::stageI_'],['../classFoam_1_1dgTimeScheme.html#ae088778cd9e26352b23598261283653e',1,'Foam::dgTimeScheme::stageI_']]],
+  ['stiffmatrixcoeffs_22',['stiffmatrixcoeffs',['../dynamicVarDeclaration_8cpp.html#a53ded1e3ef39a15ff101a1dadfcc181c',1,'stiffMatrixCoeffs:&#160;dynamicVarDeclaration.cpp'],['../dynamicVarDeclaration_8h.html#a53ded1e3ef39a15ff101a1dadfcc181c',1,'stiffMatrixCoeffs:&#160;dynamicVarDeclaration.cpp']]],
+  ['subsonic_23',['subsonic',['../namespaceflowProperties.html#a28b8433bccd1c52810b6dac3426d35e8',1,'flowProperties']]],
+  ['sutherland_24',['sutherland',['../namespacematerial_1_1viscousityModel.html#a5eae4eeea20df95800f8b1be0a6d4526',1,'material::viscousityModel']]],
+  ['symmetry_25',['symmetry',['../namespaceBCVars_1_1generalBCId.html#a95367cc84e1753c46aba9f86bb4e9426',1,'BCVars::generalBCId::symmetry'],['../namespacemeshVar_1_1BCTypeID.html#a07dc69d3904dfd05ea5911a9049b8f29',1,'meshVar::BCTypeID::symmetry']]]
 ];

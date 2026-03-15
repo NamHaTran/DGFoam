@@ -1,5 +1,7 @@
 var searchData=
 [
-  ['kappa_5f_0',['kappa_',['../classFoam_1_1dgThermoConservative.html#ac6ec7c58b98813ffd2beb38db9859644',1,'Foam::dgThermoConservative']]],
-  ['kb_5f_1',['kB_',['../classFoam_1_1powerVHS.html#a5f9e3f14db245463c0d3bc7b48ed3452',1,'Foam::powerVHS']]]
+  ['j1d_0',['J1D',['../namespacemeshVar.html#ac0804d8f6057f90b991d777c72819ce5',1,'meshVar']]],
+  ['j2d_1',['J2D',['../namespacemeshVar.html#a5251cb6d813b3fef07aabd08f31fc87c',1,'meshVar']]],
+  ['j2d_5f_2',['J2D_',['../classFoam_1_1dgGeomFace.html#a50e7517fd1de85476609f88486d294f1',1,'Foam::dgGeomFace']]],
+  ['j3d_5f_3',['J3D_',['../classFoam_1_1dgGeomCell.html#a8e77726ecb45bb125a8b9ff3e05116f4',1,'Foam::dgGeomCell']]]
 ];

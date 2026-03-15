@@ -299,6 +299,14 @@ public:
 
         /** Return heat-capacity ratio field */
         inline const dgField<scalar>& gamma() const { return gamma_; }
+
+        /** Return pressure field */
+        inline dgField<scalar>& p() { return p_; }
+        inline const dgField<scalar>& p() const { return p_; }
+
+        /** Return temperature field */
+        inline dgField<scalar>& T() { return T_; }
+        inline const dgField<scalar>& T() const { return T_; }
 };
 
 } // End namespace Foam
