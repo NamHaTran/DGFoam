@@ -68,6 +68,16 @@ void Foam::sensibleInternalEnergy::calcEnthalpy
 }
 
 
+void Foam::sensibleInternalEnergy::calcEnthalpy
+(
+    const boundaryGaussField<scalar>& T,
+    boundaryGaussField<scalar>& h
+) const
+{
+    thermo_.calcH(T, h);
+}
+
+
 void Foam::sensibleInternalEnergy::calcEnergy
 (
     const label cellI,
@@ -78,6 +88,16 @@ void Foam::sensibleInternalEnergy::calcEnergy
     // Use thermoLaw to compute:
     //     e = e(T)
     thermo_.calcInternalE(cellI, T, e);
+}
+
+
+void Foam::sensibleInternalEnergy::calcEnergy
+(
+    const boundaryGaussField<scalar>& T,
+    boundaryGaussField<scalar>& e
+) const
+{
+    thermo_.calcInternalE(T, e);
 }
 
 
@@ -94,7 +114,16 @@ void Foam::sensibleInternalEnergy::calcTfromEnergy
 }
 
 
+void Foam::sensibleInternalEnergy::calcTfromEnergy
+(
+    const boundaryGaussField<scalar>& e,
+    boundaryGaussField<scalar>& T
+) const
+{
+    thermo_.calcT(e, T);
+}
+
+
 // ************************************************************************* //
 
 } // End namespace Foam
-

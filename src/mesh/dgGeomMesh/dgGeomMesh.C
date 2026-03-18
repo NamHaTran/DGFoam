@@ -27,6 +27,7 @@ License
 \*---------------------------------------------------------------------------*/
 
 #include "dgGeomMesh.H"
+#include "dgBasisField.H"
 #include "dgGeomFace.H"
 #include "dgRefFace.H"
 #include "dgGeomCell.H"
@@ -128,6 +129,13 @@ Foam::dgGeomMesh::dgGeomMesh
 
     // Assign face connectivity to processor patches if running in parallel
     assignFaceConnectivityToProcPatches();
+
+    // Basis data depend only on geometry/p-order, so cache them once here.
+    basisFields_.setSize(mesh_.nCells());
+    for (label cellI = 0; cellI < mesh_.nCells(); ++cellI)
+    {
+        basisFields_[cellI] = new dgBasisField(cellI, *this);
+    }
 }
 
 
@@ -145,6 +153,11 @@ Foam::dgGeomMesh::~dgGeomMesh()
     forAll(cells_, i)
     {
         delete cells_[i];
+    }
+
+    forAll(basisFields_, i)
+    {
+        delete basisFields_[i];
     }
 }
 
@@ -316,5 +329,18 @@ void Foam::dgGeomMesh::assignFaceConnectivityToProcPatches()
             }
         }
     }
+}
+
+
+const Foam::dgBasisField& Foam::dgGeomMesh::basisField(const label cellID) const
+{
+    if (cellID < 0 || cellID >= basisFields_.size() || !basisFields_[cellID])
+    {
+        FatalErrorInFunction
+            << "Invalid cached dgBasisField access for cell " << cellID
+            << abort(FatalError);
+    }
+
+    return *basisFields_[cellID];
 }
 // ************************************************************************* //

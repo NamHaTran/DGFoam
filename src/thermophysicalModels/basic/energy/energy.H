@@ -46,6 +46,7 @@ SourceFiles
 #include "autoPtr.H"
 #include "runTimeSelectionTables.H"
 #include "GaussField.H"
+#include "boundaryGaussField.H"
 #include "dgGeomMesh.H"
 #include "dgMath.H"
 #include "thermoLaw.H"
@@ -178,31 +179,67 @@ public:
     ) const = 0;
 
     /**
+     * \brief Compute enthalpy from boundary Gauss-point temperatures
+     *
+     * \param T Boundary temperature values
+     * \param h Boundary enthalpy values to be written
+     */
+    virtual void calcEnthalpy
+    (
+        const boundaryGaussField<scalar>& T,
+        boundaryGaussField<scalar>& h
+    ) const = 0;
+
+    /**
      * \brief Compute energy variable (e or h depending on model)
      *
      * \param cellI Cell index
      * \param T     Temperature field at Gauss points
-     * \param E     Energy field to be written
+     * \param e     Internal energy field to be written
      */
     virtual void calcEnergy
     (
         const label cellI,
         const GaussField<scalar>& T,
-        GaussField<scalar>& E
+        GaussField<scalar>& e
+    ) const = 0;
+
+    /**
+     * \brief Compute energy variable on boundary Gauss points
+     *
+     * \param T Boundary temperature values
+     * \param e Boundary energy values to be written
+     */
+    virtual void calcEnergy
+    (
+        const boundaryGaussField<scalar>& T,
+        boundaryGaussField<scalar>& e
     ) const = 0;
 
     /**
      * \brief Compute temperature from energy (energy inversion)
      *
      * \param cellI Cell index
-     * \param E     Energy field at Gauss points
+     * \param e     Internal energy field at Gauss points
      * \param T     Temperature field to be written
      */
     virtual void calcTfromEnergy
     (
         const label cellI,
-        const GaussField<scalar>& E,
+        const GaussField<scalar>& e,
         GaussField<scalar>& T
+    ) const = 0;
+
+    /**
+     * \brief Compute temperature from boundary energy values
+     *
+     * \param e Boundary energy values
+     * \param T Boundary temperature values to be written
+     */
+    virtual void calcTfromEnergy
+    (
+        const boundaryGaussField<scalar>& e,
+        boundaryGaussField<scalar>& T
     ) const = 0;
 
     // Energy model identification

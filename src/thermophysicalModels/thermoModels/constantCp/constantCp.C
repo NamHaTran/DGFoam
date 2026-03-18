@@ -154,11 +154,31 @@ void Foam::constantCp::calcCp
 }
 
 
+void Foam::constantCp::calcCp
+(
+    const boundaryGaussField<scalar>& T,
+    boundaryGaussField<scalar>& Cp
+) const
+{
+    Cp = Cp_;
+}
+
+
 void Foam::constantCp::calcCv
 (
     const label cellI,
     const GaussField<scalar>& T,
     GaussField<scalar>& Cv
+) const
+{
+    Cv = Cv_;
+}
+
+
+void Foam::constantCp::calcCv
+(
+    const boundaryGaussField<scalar>& T,
+    boundaryGaussField<scalar>& Cv
 ) const
 {
     Cv = Cv_;
@@ -177,6 +197,17 @@ void Foam::constantCp::calcGamma
 }
 
 
+void Foam::constantCp::calcGamma
+(
+    const boundaryGaussField<scalar>& CpField,
+    const boundaryGaussField<scalar>& CvField,
+    boundaryGaussField<scalar>& gamma
+) const
+{
+    gamma = gamma_;
+}
+
+
 void Foam::constantCp::calcT
 (
     const label cellI,
@@ -189,11 +220,31 @@ void Foam::constantCp::calcT
 }
 
 
+void Foam::constantCp::calcT
+(
+    const boundaryGaussField<scalar>& energy,
+    boundaryGaussField<scalar>& T
+) const
+{
+    T = energy / Cv_;
+}
+
+
 void Foam::constantCp::calcInternalE
 (
     const label cellI,
     const GaussField<scalar>& T,
     GaussField<scalar>& e
+) const
+{
+    e = T * Cv_;
+}
+
+
+void Foam::constantCp::calcInternalE
+(
+    const boundaryGaussField<scalar>& T,
+    boundaryGaussField<scalar>& e
 ) const
 {
     e = T * Cv_;
@@ -211,6 +262,16 @@ void Foam::constantCp::calcH
 }
 
 
+void Foam::constantCp::calcH
+(
+    const boundaryGaussField<scalar>& T,
+    boundaryGaussField<scalar>& h
+) const
+{
+    h = T * Cp_;
+}
+
+
 void Foam::constantCp::calcSpeedOfSound
 (
     const label cellI,
@@ -222,6 +283,23 @@ void Foam::constantCp::calcSpeedOfSound
     a = gamma * T;
     a = a * eos_.R();
     a = sqrt(a);
+}
+
+
+void Foam::constantCp::calcSpeedOfSound
+(
+    const boundaryGaussField<scalar>& T,
+    const boundaryGaussField<scalar>& gamma,
+    boundaryGaussField<scalar>& a
+) const
+{
+    a = gamma * T;
+    a = a * eos_.R();
+
+    for (label i = 0; i < a.size(); ++i)
+    {
+        a[i] = std::sqrt(a[i]);
+    }
 }
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  * * * //

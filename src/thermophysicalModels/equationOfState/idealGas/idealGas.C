@@ -71,6 +71,17 @@ void Foam::idealGas::calcRhoFromPT
 }
 
 
+void Foam::idealGas::calcRhoFromPT
+(
+    const boundaryGaussField<scalar>& p,
+    const boundaryGaussField<scalar>& T,
+    boundaryGaussField<scalar>& rho
+) const
+{
+    rho = p / (R_ * T);
+}
+
+
 // p = rho * R * T
 void Foam::idealGas::calcPFromRhoT
 (
@@ -84,6 +95,17 @@ void Foam::idealGas::calcPFromRhoT
 }
 
 
+void Foam::idealGas::calcPFromRhoT
+(
+    const boundaryGaussField<scalar>& rho,
+    const boundaryGaussField<scalar>& T,
+    boundaryGaussField<scalar>& p
+) const
+{
+    p = rho * (R_ * T);
+}
+
+
 // T = p / (rho * R)
 void Foam::idealGas::calcTFromPRho
 (
@@ -91,6 +113,17 @@ void Foam::idealGas::calcTFromPRho
     const GaussField<scalar>& p,
     const GaussField<scalar>& rho,
     GaussField<scalar>& T
+) const
+{
+    T = p / (rho * R_);
+}
+
+
+void Foam::idealGas::calcTFromPRho
+(
+    const boundaryGaussField<scalar>& p,
+    const boundaryGaussField<scalar>& rho,
+    boundaryGaussField<scalar>& T
 ) const
 {
     T = p / (rho * R_);

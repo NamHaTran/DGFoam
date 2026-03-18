@@ -160,6 +160,13 @@ public:
          * \param cellID Cell index
          */
         virtual void update(const label& cellID) override;
+
+        /**
+         * \brief Update thermodynamic state on boundary Gauss points
+         *
+         * \param cellID Cell index
+         */
+        virtual void updateBC(const label& cellID) override;
 };
 
 } // End namespace Foam

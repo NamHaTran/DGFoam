@@ -147,6 +147,12 @@ public:
         GaussField<scalar>& Cp
     ) const override;
 
+    virtual void calcCp
+    (
+        const boundaryGaussField<scalar>& T,
+        boundaryGaussField<scalar>& Cp
+    ) const override;
+
     /**
      * \brief Compute heat capacity at constant volume
      *
@@ -157,6 +163,12 @@ public:
         const label cellI,
         const GaussField<scalar>& T,
         GaussField<scalar>& Cv
+    ) const override;
+
+    virtual void calcCv
+    (
+        const boundaryGaussField<scalar>& T,
+        boundaryGaussField<scalar>& Cv
     ) const override;
 
     /**
@@ -175,6 +187,13 @@ public:
         GaussField<scalar>& gamma
     ) const override;
 
+    virtual void calcGamma
+    (
+        const boundaryGaussField<scalar>& CpField,
+        const boundaryGaussField<scalar>& CvField,
+        boundaryGaussField<scalar>& gamma
+    ) const override;
+
     /**
      * \brief Compute temperature from energy
      *
@@ -187,6 +206,12 @@ public:
         const label cellI,
         const GaussField<scalar>& energy,
         GaussField<scalar>& T
+    ) const override;
+
+    virtual void calcT
+    (
+        const boundaryGaussField<scalar>& energy,
+        boundaryGaussField<scalar>& T
     ) const override;
 
     /**
@@ -204,6 +229,12 @@ public:
         GaussField<scalar>& e
     ) const override;
 
+    virtual void calcInternalE
+    (
+        const boundaryGaussField<scalar>& T,
+        boundaryGaussField<scalar>& e
+    ) const override;
+
     /**
      * \brief Compute enthalpy
      *
@@ -217,6 +248,12 @@ public:
         const label cellI,
         const GaussField<scalar>& T,
         GaussField<scalar>& h
+    ) const override;
+
+    virtual void calcH
+    (
+        const boundaryGaussField<scalar>& T,
+        boundaryGaussField<scalar>& h
     ) const override;
 
     /**
@@ -233,6 +270,13 @@ public:
         const GaussField<scalar>& T,
         const GaussField<scalar>& gamma,
         GaussField<scalar>& a
+    ) const override;
+
+    virtual void calcSpeedOfSound
+    (
+        const boundaryGaussField<scalar>& T,
+        const boundaryGaussField<scalar>& gamma,
+        boundaryGaussField<scalar>& a
     ) const override;
 
     /**

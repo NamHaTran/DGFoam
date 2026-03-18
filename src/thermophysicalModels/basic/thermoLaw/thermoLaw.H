@@ -44,6 +44,7 @@ SourceFiles
 #include "scalar.H"
 #include "word.H"
 #include "GaussField.H"
+#include "boundaryGaussField.H"
 #include "dgGeomMesh.H"
 #include "eqnOfState.H"
 #include "dgMath.H"
@@ -193,6 +194,12 @@ public:
         GaussField<scalar>& T
     ) const = 0;
 
+    virtual void calcT
+    (
+        const boundaryGaussField<scalar>& energy,
+        boundaryGaussField<scalar>& T
+    ) const = 0;
+
     /**
      * \brief Compute heat capacity at constant pressure
      *
@@ -205,6 +212,12 @@ public:
         const label cellI,
         const GaussField<scalar>& T,
         GaussField<scalar>& Cp
+    ) const = 0;
+
+    virtual void calcCp
+    (
+        const boundaryGaussField<scalar>& T,
+        boundaryGaussField<scalar>& Cp
     ) const = 0;
 
     /**
@@ -221,6 +234,12 @@ public:
         GaussField<scalar>& Cv
     ) const = 0;
 
+    virtual void calcCv
+    (
+        const boundaryGaussField<scalar>& T,
+        boundaryGaussField<scalar>& Cv
+    ) const = 0;
+
     /**
      * \brief Compute heat-capacity ratio
      *
@@ -232,6 +251,13 @@ public:
         const GaussField<scalar>& Cp,
         const GaussField<scalar>& Cv,
         GaussField<scalar>& gamma
+    ) const = 0;
+
+    virtual void calcGamma
+    (
+        const boundaryGaussField<scalar>& Cp,
+        const boundaryGaussField<scalar>& Cv,
+        boundaryGaussField<scalar>& gamma
     ) const = 0;
 
     /**
@@ -246,6 +272,12 @@ public:
         GaussField<scalar>& e
     ) const = 0;
 
+    virtual void calcInternalE
+    (
+        const boundaryGaussField<scalar>& T,
+        boundaryGaussField<scalar>& e
+    ) const = 0;
+
     /**
      * \brief Compute enthalpy
      *
@@ -256,6 +288,12 @@ public:
         const label cellI,
         const GaussField<scalar>& T,
         GaussField<scalar>& h
+    ) const = 0;
+
+    virtual void calcH
+    (
+        const boundaryGaussField<scalar>& T,
+        boundaryGaussField<scalar>& h
     ) const = 0;
 
     /**
@@ -270,6 +308,13 @@ public:
         const GaussField<scalar>& T,
         const GaussField<scalar>& gamma,
         GaussField<scalar>& a
+    ) const = 0;
+
+    virtual void calcSpeedOfSound
+    (
+        const boundaryGaussField<scalar>& T,
+        const boundaryGaussField<scalar>& gamma,
+        boundaryGaussField<scalar>& a
     ) const = 0;
 
     //====================================================================//

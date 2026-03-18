@@ -98,6 +98,26 @@ void Foam::powerVHS::calcMu
 }
 
 
+void Foam::powerVHS::calcMu
+(
+    const boundaryGaussField<scalar>& T,
+    boundaryGaussField<scalar>& mu
+) const
+{
+    for (label i = 0; i < T.size(); ++i)
+    {
+        if (T[i] <= scalar(0))
+        {
+            FatalErrorInFunction
+                << "Temperature must be strictly positive in powerVHS::calcMu()."
+                << nl << exit(FatalError);
+        }
+
+        mu[i] = muRef_ * std::pow(T[i]/TRef_, omega_);
+    }
+}
+
+
 void Foam::powerVHS::calcKappa
 (
     const label cellI,
@@ -123,6 +143,22 @@ void Foam::powerVHS::calcKappa
 }
 
 
+void Foam::powerVHS::calcKappa
+(
+    const boundaryGaussField<scalar>& T,
+    boundaryGaussField<scalar>& kappa
+) const
+{
+    boundaryGaussField<scalar> mu(T.size());
+    boundaryGaussField<scalar> Cp(T.size());
+
+    calcMu(T, mu);
+    thermo_.calcCp(T, Cp);
+
+    kappa = (mu * Cp) / Pr0_;
+}
+
+
 void Foam::powerVHS::calcPr
 (
     const label cellI,
@@ -131,6 +167,16 @@ void Foam::powerVHS::calcPr
 ) const
 {
     Pr = Pr0_;   // broadcast to all Gauss points
+}
+
+
+void Foam::powerVHS::calcPr
+(
+    const boundaryGaussField<scalar>& T,
+    boundaryGaussField<scalar>& Pr
+) const
+{
+    Pr = Pr0_;
 }
 
 

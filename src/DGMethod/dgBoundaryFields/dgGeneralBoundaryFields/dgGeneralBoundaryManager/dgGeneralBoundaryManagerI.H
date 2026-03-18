@@ -29,6 +29,8 @@ License
 #ifndef Foam_dgGeneralBoundaryManagerI_H
 #define Foam_dgGeneralBoundaryManagerI_H
 
+#include "dgField.H"
+
 // * * * * * * * * * * * * * Constructors  * * * * * * * * * * * * * * * //
 
 template<class Type>
@@ -183,6 +185,15 @@ Foam::dgGeneralBoundaryManager<Type>::dgGeneralBoundaryManager
 }
 
 // * * * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * * //
+
+template<class Type>
+void dgGeneralBoundaryManager<Type>::initializeField
+(
+    dgField<Type>& GField
+)
+{
+    GField = internalValue_;
+}
 
 template<class Type>
 void dgGeneralBoundaryManager<Type>::updateValue

@@ -1,3 +1,6 @@
+// Conservative fields are the actual unknowns advanced in time.
+// They are read from disk because the solver expects an initial condition
+// in terms of rho, rhoU, and total energy E.
 Info<< "Creating conservative fields\n" << endl;
 
 dgField<scalar> rho
@@ -14,6 +17,7 @@ dgField<scalar> rho
     true
 );
 
+// rhoU stores the momentum vector, not the primitive velocity.
 dgField<vector> rhoU
 (
     IOobject
@@ -28,6 +32,8 @@ dgField<vector> rhoU
     true
 );
 
+// E denotes the total energy per unit volume used by the conservative
+// thermo reconstruction.
 dgField<scalar> E
 (
     IOobject
@@ -41,4 +47,3 @@ dgField<scalar> E
     dgMesh,
     true
 );
-

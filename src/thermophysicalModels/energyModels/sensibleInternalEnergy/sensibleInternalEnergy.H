@@ -131,6 +131,12 @@ public:
         GaussField<scalar>& h
     ) const override;
 
+    virtual void calcEnthalpy
+    (
+        const boundaryGaussField<scalar>& T,
+        boundaryGaussField<scalar>& h
+    ) const override;
+
     /**
      * \brief Compute internal energy from temperature
      *
@@ -150,6 +156,12 @@ public:
         GaussField<scalar>& e
     ) const override;
 
+    virtual void calcEnergy
+    (
+        const boundaryGaussField<scalar>& T,
+        boundaryGaussField<scalar>& e
+    ) const override;
+
     /**
      * \brief Compute temperature from internal energy
      *
@@ -167,6 +179,12 @@ public:
         const label cellI,
         const GaussField<scalar>& e,
         GaussField<scalar>& T
+    ) const override;
+
+    virtual void calcTfromEnergy
+    (
+        const boundaryGaussField<scalar>& e,
+        boundaryGaussField<scalar>& T
     ) const override;
 
     /**

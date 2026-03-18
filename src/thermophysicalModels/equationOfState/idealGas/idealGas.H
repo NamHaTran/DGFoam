@@ -152,6 +152,13 @@ public:
         GaussField<scalar>& rho
     ) const override;
 
+    virtual void calcRhoFromPT
+    (
+        const boundaryGaussField<scalar>& p,
+        const boundaryGaussField<scalar>& T,
+        boundaryGaussField<scalar>& rho
+    ) const override;
+
     /**
      * \brief Compute pressure from density and temperature
      *
@@ -168,6 +175,13 @@ public:
         GaussField<scalar>& p
     ) const override;
 
+    virtual void calcPFromRhoT
+    (
+        const boundaryGaussField<scalar>& rho,
+        const boundaryGaussField<scalar>& T,
+        boundaryGaussField<scalar>& p
+    ) const override;
+
     /**
      * \brief Compute temperature from pressure and density
      *
@@ -182,6 +196,13 @@ public:
         const GaussField<scalar>& p,
         const GaussField<scalar>& rho,
         GaussField<scalar>& T
+    ) const override;
+
+    virtual void calcTFromPRho
+    (
+        const boundaryGaussField<scalar>& p,
+        const boundaryGaussField<scalar>& rho,
+        boundaryGaussField<scalar>& T
     ) const override;
 
     //==============================================================//

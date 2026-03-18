@@ -189,6 +189,18 @@ public:
         /** \brief Return a registered vector solution field by name. */
         virtual const dgField<vector>& vectorField(const word& fieldName) const override;
 
+        /** \brief Return the names of all registered scalar DG fields. */
+        virtual const List<word>& scalarFieldNames() const override
+        {
+            return scalarNames_;
+        }
+
+        /** \brief Return the names of all registered vector DG fields. */
+        virtual const List<word>& vectorFieldNames() const override
+        {
+            return vectorNames_;
+        }
+
         /**
          * \brief Return the scalar residual buffer of one SSPRK4 stage.
          *

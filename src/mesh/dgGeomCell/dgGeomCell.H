@@ -201,6 +201,9 @@ private:
     /** Ordered list of vertex indices for consistent access */
     List<label> cellPointLabels_;
 
+    /** Characteristic cell size derived from volume and total face area */
+    scalar cellSize_;
+
     /** List of internal Gauss Jacobian */
     List<scalar> J3D_;
 
@@ -269,6 +272,18 @@ public:
 
         /** Return cell volume (from fvMesh) */
         scalar volume() const;
+
+        /**
+         * \brief Return characteristic cell size
+         *
+         * Computed from the cell volume and total face area as
+         * \f$h = 3V / \sum_f |S_f|\f$, which is an inradius-like length scale
+         * for 3D polyhedra.
+         */
+        inline scalar cellSize() const
+        {
+            return cellSize_;
+        }
 
         /**
          * \brief Update face geometry information

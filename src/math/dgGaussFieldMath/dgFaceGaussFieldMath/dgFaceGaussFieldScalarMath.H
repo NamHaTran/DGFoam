@@ -47,6 +47,32 @@ Description
 namespace Foam
 {
 // * * * * * * * * * * Scalar - Scalar * * * * * * * * * * //
+inline scalar maxValue(const faceGaussField<scalar>& A)
+{
+    scalar result = -GREAT;
+
+    for (label gp = 0; gp < A.nGauss(); ++gp)
+    {
+        result = max(result, A.plusValue(gp));
+        result = max(result, A.minusValue(gp));
+    }
+
+    return result;
+}
+
+inline scalar minValue(const faceGaussField<scalar>& A)
+{
+    scalar result = GREAT;
+
+    for (label gp = 0; gp < A.nGauss(); ++gp)
+    {
+        result = min(result, A.plusValue(gp));
+        result = min(result, A.minusValue(gp));
+    }
+
+    return result;
+}
+
 inline faceGaussField<scalar> operator+
 (
     const faceGaussField<scalar>& A,

@@ -30,6 +30,8 @@ License
 #include "addToRunTimeSelectionTable.H"
 #include "IOstreams.H"
 
+#include <cmath>
+
 namespace Foam
 {
 
@@ -89,6 +91,26 @@ void Sutherland::calcMu
 }
 
 
+void Sutherland::calcMu
+(
+    const boundaryGaussField<scalar>& T,
+    boundaryGaussField<scalar>& mu
+) const
+{
+    for (label i = 0; i < T.size(); ++i)
+    {
+        if (T[i] <= scalar(0))
+        {
+            FatalErrorInFunction
+                << "Non-positive temperature in Sutherland::calcMu()"
+                << nl << exit(FatalError);
+        }
+
+        mu[i] = As_ * std::pow(T[i], 1.5)/(T[i] + S_);
+    }
+}
+
+
 void Sutherland::calcKappa
 (
     const label cellI,
@@ -113,11 +135,37 @@ void Sutherland::calcKappa
 }
 
 
+void Sutherland::calcKappa
+(
+    const boundaryGaussField<scalar>& T,
+    boundaryGaussField<scalar>& kappa
+) const
+{
+    boundaryGaussField<scalar> mu(T.size());
+    boundaryGaussField<scalar> Cp(T.size());
+
+    calcMu(T, mu);
+    thermo_.calcCp(T, Cp);
+
+    kappa = (mu * Cp) / Pr0_;
+}
+
+
 void Sutherland::calcPr
 (
     const label cellI,
     const GaussField<scalar>& T,
     GaussField<scalar>& Pr
+) const
+{
+    Pr = Pr0_;
+}
+
+
+void Sutherland::calcPr
+(
+    const boundaryGaussField<scalar>& T,
+    boundaryGaussField<scalar>& Pr
 ) const
 {
     Pr = Pr0_;

@@ -51,6 +51,16 @@ Description
 namespace Foam
 {
 // * * * * * * * * * * Scalar - Scalar * * * * * * * * * * //
+inline scalar maxValue(const GaussField<scalar>& A)
+{
+    return max(maxValue(A.cellField()), maxValue(A.faceField()));
+}
+
+inline scalar minValue(const GaussField<scalar>& A)
+{
+    return min(minValue(A.cellField()), minValue(A.faceField()));
+}
+
 inline GaussField<scalar> operator+
 (
     const GaussField<scalar>& A,

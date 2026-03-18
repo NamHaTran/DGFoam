@@ -46,7 +46,8 @@ Foam::dgGeomCell::dgGeomCell
 :
     cellID_(cellID),
     mesh_(mesh),
-    refCell_(refCell)
+    refCell_(refCell),
+    cellSize_(0)
 {
     // Access cell shape
     const cellShape& shape = mesh_.cellShapes()[cellID_];
@@ -81,6 +82,25 @@ Foam::dgGeomCell::dgGeomCell
 
     // Get face labels in model order (global face IDs)
     faceLabels_ = shape.meshFaces(mesh_.faces(), mesh_.cells()[cellID_]);
+
+    // Build an inradius-like characteristic length from cell volume and
+    // the total area of its bounding faces.
+    scalar totalFaceArea = 0;
+    forAll(faceLabels_, localFaceI)
+    {
+        const label faceI = faceLabels_[localFaceI];
+        totalFaceArea += mag(mesh_.faceAreas()[faceI]);
+    }
+
+    if (totalFaceArea <= SMALL)
+    {
+        FatalErrorInFunction
+            << "Non-positive total face area for cell " << cellID_ << nl
+            << "Cannot compute characteristic cell size."
+            << abort(FatalError);
+    }
+
+    cellSize_ = 3.0*volume()/totalFaceArea;
 
     // Calculate internal Jacobians at Gauss points
     const List<vector>& gaussPts = refCell_->gaussPoints();
@@ -128,6 +148,7 @@ void Foam::dgGeomCell::printDebugInfo() const
     Info << "\n========== Cell " << cellID_ << " ==========" << nl;
     Info << " - Centre: " << centre() << nl;
     Info << " - Volume: " << volume() << nl;
+    Info << " - Cell size: " << cellSize() << nl;
 
     Info << " - Number of faces: " << nFaces() << nl;
     Info << " - Number of points: " << nPoints() << nl;
@@ -277,4 +298,3 @@ void Foam::dgGeomCell::updateFaceInfo
 }
 
 // ************************************************************************* //
-

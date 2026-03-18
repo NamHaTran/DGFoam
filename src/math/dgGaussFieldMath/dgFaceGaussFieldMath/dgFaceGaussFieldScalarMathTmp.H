@@ -38,6 +38,36 @@ Description
 namespace Foam
 {
 
+inline scalar maxValue(const tmp<faceGaussField<scalar>>& tA)
+{
+    const faceGaussField<scalar>& A = tA();
+    scalar result = -GREAT;
+
+    for (label gp = 0; gp < A.nGauss(); ++gp)
+    {
+        result = max(result, A.plusValue(gp));
+        result = max(result, A.minusValue(gp));
+    }
+
+    tA.clear();
+    return result;
+}
+
+inline scalar minValue(const tmp<faceGaussField<scalar>>& tA)
+{
+    const faceGaussField<scalar>& A = tA();
+    scalar result = GREAT;
+
+    for (label gp = 0; gp < A.nGauss(); ++gp)
+    {
+        result = min(result, A.plusValue(gp));
+        result = min(result, A.minusValue(gp));
+    }
+
+    tA.clear();
+    return result;
+}
+
 /** \brief Evaluate binary addition at one face Gauss point. */
 struct DgFaceEvalAdd
 {

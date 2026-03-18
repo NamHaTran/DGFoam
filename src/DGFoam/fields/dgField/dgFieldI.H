@@ -84,9 +84,9 @@ dgField<Type>::dgField
             gaussFields_[cellI].interpolateFromDof();
         }
 
-        Info<< "dgField<" << pTraits<Type>::typeName
-            << ">: constructed conservative field " << io.name()
-            << " with " << nCells << " cells." << nl;
+        //Info<< "dgField<" << pTraits<Type>::typeName
+        //    << ">: constructed conservative field " << io.name()
+        //    << " with " << nCells << " cells." << nl;
     }
     else
     {
@@ -96,9 +96,9 @@ dgField<Type>::dgField
             gaussFields_[cellI] = GaussField<Type>(cellI, &mesh_);
         }
 
-        Info<< "dgField<" << pTraits<Type>::typeName
-            << ">: constructed primary field " << io.name()
-            << " (no DOF)." << nl;
+        //Info<< "dgField<" << pTraits<Type>::typeName
+        //    << ">: constructed primary field " << io.name()
+        //    << " (no DOF)." << nl;
     }
 }
 

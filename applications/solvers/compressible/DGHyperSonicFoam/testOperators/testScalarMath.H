@@ -1,5 +1,6 @@
 
 {
+    // Tutorial helper: verifies field-field scalar algebra and tmp-aware paths.
     Info<< "\n===== testScalarMath (GaussField scalar-math tmp) =====\n" << endl;
 
     if (mesh.C().size() == 0)

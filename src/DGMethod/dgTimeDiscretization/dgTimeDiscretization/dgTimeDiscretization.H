@@ -564,6 +564,16 @@ public:
          * \param os Output stream
          */
         void writeInfo(Ostream& os) const;
+
+        /**
+         * \brief Write the maximum absolute residual of every DOF over the whole mesh.
+         *
+         * Scalar fields print one value per DOF. Vector fields print the
+         * component-wise maxima for each DOF, using the current stage.
+         *
+         * \param os Output stream
+         */
+        void writeResiduals(Ostream& os) const;
 };
 
 } // End namespace Foam

@@ -90,7 +90,7 @@ dofField<Type>::dofField
         // Determine if volField file exists
         if (probeIO.typeHeaderOk<GeometricField<Type, fvPatchField, volMesh>>(true))
         {
-            Info<< "Reading DoF volField: " << fieldName << nl;
+            //Info<< "Reading DoF volField: " << fieldName << nl;
 
             foamFields_[d].reset
             (
@@ -110,8 +110,8 @@ dofField<Type>::dofField
         }
         else
         {
-            Info<< "DoF volField not found: " << fieldName
-                << " → creating zero field." << nl;
+            //Info<< "DoF volField not found: " << fieldName
+            //    << " → creating zero field." << nl;
 
             foamFields_[d].reset
             (
@@ -186,22 +186,27 @@ dofField<Type>::dofField
 // * * * * * * * * * * Member Functions  * * * * * * * * * //
 
 template<class Type>
-void dofField<Type>::updateFoamFields()
+void dofField<Type>::updateCellDof(const label cellID)
 {
-    for (label c = 0; c < nCells_; ++c)
+    if (cellID < 0 || cellID >= nCells_)
     {
-        const label nDof = dofPerCell_[c];
+        FatalErrorInFunction
+            << "Cell index " << cellID << " is out of range [0, "
+            << nCells_ - 1 << "]"
+            << abort(FatalError);
+    }
 
-        for (label d = 0; d < maxDoF_; ++d)
+    const label nDof = dofPerCell_[cellID];
+
+    for (label d = 0; d < maxDoF_; ++d)
+    {
+        if (d < nDof)
         {
-            if (d < nDof)
-            {
-                (*foamFields_[d])[c] = cellDofs_[c][d];
-            }
-            else
-            {
-                (*foamFields_[d])[c] = pTraits<Type>::zero;
-            }
+            (*foamFields_[d])[cellID] = cellDofs_[cellID][d];
+        }
+        else
+        {
+            (*foamFields_[d])[cellID] = pTraits<Type>::zero;
         }
     }
 }

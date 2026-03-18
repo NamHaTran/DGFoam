@@ -132,15 +132,20 @@ void Foam::dgGeneralPDETerm<UType, FType>::calcResidual()
         // Gradient of basis phi_i
         const GaussField<vector>& gradPhi = basis_.getDBasis(i);
 
-        const UType volTerm = Foam::volumeIntegral(gradPhi.cellField(), F_().cellField());
+        const UType volTerm =
+        (
+            i == 0
+          ? pTraits<UType>::zero
+          : Foam::volumeIntegral(gradPhi.cellField(), F_().cellField())
+        );
 
         // Basis phi_i on faces
         const GaussField<scalar>& phi = basis_.getBasis(i);
 
         const UType surfTerm = Foam::surfaceIntegral(phi.faceField(), F_().faceField());
 
-        R_[i] -= volTerm;
-        R_[i] += surfTerm;
+        R_[i] += volTerm;
+        R_[i] -= surfTerm;
     }
 }
 

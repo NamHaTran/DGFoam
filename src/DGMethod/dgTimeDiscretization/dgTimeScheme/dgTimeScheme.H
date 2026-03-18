@@ -279,6 +279,12 @@ public:
          */
         virtual const dgField<vector>& vectorField(const word& fieldName) const = 0;
 
+        /** \brief Return the names of all registered scalar DG fields. */
+        virtual const List<word>& scalarFieldNames() const = 0;
+
+        /** \brief Return the names of all registered vector DG fields. */
+        virtual const List<word>& vectorFieldNames() const = 0;
+
         /**
          * \brief Return one scalar residual buffer for a given stage.
          *

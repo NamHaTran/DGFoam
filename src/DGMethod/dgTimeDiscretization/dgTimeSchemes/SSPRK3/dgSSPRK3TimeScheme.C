@@ -92,7 +92,7 @@ template<class Type>
 void syncUpdatedCell(dgField<Type>& U, const label cellID)
 {
     U.gaussFields()[cellID].interpolateFromDof();
-    U.dof().updateFoamFields();
+    U.dof().updateCellDof(cellID);
 }
 
 

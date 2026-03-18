@@ -196,6 +196,12 @@ public:
         GaussField<scalar>& mu
     ) const override;
 
+    virtual void calcMu
+    (
+        const boundaryGaussField<scalar>& T,
+        boundaryGaussField<scalar>& mu
+    ) const override;
+
     /**
      * \brief Compute thermal conductivity
      *
@@ -211,6 +217,12 @@ public:
         GaussField<scalar>& kappa
     ) const override;
 
+    virtual void calcKappa
+    (
+        const boundaryGaussField<scalar>& T,
+        boundaryGaussField<scalar>& kappa
+    ) const override;
+
     /**
      * \brief Return Prandtl number
      *
@@ -224,6 +236,12 @@ public:
         const label cellI,
         const GaussField<scalar>& T,
         GaussField<scalar>& Pr
+    ) const override;
+
+    virtual void calcPr
+    (
+        const boundaryGaussField<scalar>& T,
+        boundaryGaussField<scalar>& Pr
     ) const override;
 
     /**

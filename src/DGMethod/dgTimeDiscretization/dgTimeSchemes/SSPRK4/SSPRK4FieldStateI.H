@@ -147,9 +147,8 @@ void SSPRK4FieldState<Type>::copyField
         {
             dst.dof()[cellI] = src.dof()[cellI];
             dst.gaussFields()[cellI] = src.gaussFields()[cellI];
+            dst.dof().updateCellDof(cellI);
         }
-
-        dst.dof().updateFoamFields();
     }
     else
     {

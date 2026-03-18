@@ -202,7 +202,7 @@ public:
 
             if (defaultFluxSolver_.valid())
             {
-                defaultFluxSolver_.reset();
+                defaultFluxSolver_().reset();
             }
         }
 

@@ -55,6 +55,8 @@ SourceFiles
 namespace Foam
 {
 
+class dgBasisField;
+
 /*---------------------------------------------------------------------------*\
                            Class dgGeomMesh Declaration
 \*---------------------------------------------------------------------------*/
@@ -112,6 +114,9 @@ private:
         /** List of DG geometric cells */
         List<dgGeomCell*> cells_;
 
+        /** Cached basis/gradient-basis fields, one per cell */
+        List<dgBasisField*> basisFields_;
+
         /** List of boundary face indices */
         labelList boundaryFaces_;
 
@@ -166,6 +171,14 @@ public:
         {
             return cells_.size();
         }
+
+        /**
+         * \brief Return cached basis data for one cell
+         *
+         * Basis fields depend only on mesh geometry and polynomial order, so
+         * they are built once and reused across all stages/time steps.
+         */
+        const dgBasisField& basisField(const label cellID) const;
 
         /** Return fvMesh face-owner list */
         inline const labelList& faceOwner() const

@@ -38,6 +38,34 @@ Description
 namespace Foam
 {
 
+inline scalar maxValue(const tmp<cellGaussField<scalar>>& tA)
+{
+    const cellGaussField<scalar>& A = tA();
+    scalar result = -GREAT;
+
+    for (label i = 0; i < A.size(); ++i)
+    {
+        result = max(result, A[i]);
+    }
+
+    tA.clear();
+    return result;
+}
+
+inline scalar minValue(const tmp<cellGaussField<scalar>>& tA)
+{
+    const cellGaussField<scalar>& A = tA();
+    scalar result = GREAT;
+
+    for (label i = 0; i < A.size(); ++i)
+    {
+        result = min(result, A[i]);
+    }
+
+    tA.clear();
+    return result;
+}
+
 /** \brief Evaluate binary addition at one Gauss point. */
 struct DgEvalAdd
 {

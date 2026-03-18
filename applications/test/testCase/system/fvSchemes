@@ -10,42 +10,39 @@ FoamFile
     version     2.0;
     format      ascii;
     class       dictionary;
-    object      rhoBC;
+    object      fvSchemes;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-internalField   uniform 2.8e-5;
-
-boundaryField
+ddtSchemes
 {
-    inlet
-    {
-        type            generalZeroGradient;
-    }
-    outlet2
-    {
-        type            generalZeroGradient;
-    }
-    outlet1
-    {
-        type            generalZeroGradient;
-    }
-    wall
-    {
-        type            generalZeroGradient;
-    }
-    symmetryBottom
-    {
-        type            generalZeroGradient;
-    }
-    symmetryZ0
-    {
-        type            generalZeroGradient;
-    }
-    symmetryZ05
-    {
-        type            generalZeroGradient;
-    }
+    default         Euler;
+}
+
+gradSchemes
+{
+    default         Gauss linear;
+}
+
+divSchemes
+{
+    default         none;
+    div(phi,U)      Gauss limitedLinearV 1;
+}
+
+laplacianSchemes
+{
+    default         Gauss linear corrected;
+}
+
+interpolationSchemes
+{
+    default         linear;
+}
+
+snGradSchemes
+{
+    default         corrected;
 }
 
 

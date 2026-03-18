@@ -44,6 +44,30 @@ namespace Foam
 {
 // * * * * * * * * * * * * * * * Scalar - Scalar * * * * * * * * * * * * * * * //
 
+inline scalar maxValue(const cellGaussField<scalar>& A)
+{
+    scalar result = -GREAT;
+
+    for (label i = 0; i < A.size(); ++i)
+    {
+        result = max(result, A[i]);
+    }
+
+    return result;
+}
+
+inline scalar minValue(const cellGaussField<scalar>& A)
+{
+    scalar result = GREAT;
+
+    for (label i = 0; i < A.size(); ++i)
+    {
+        result = min(result, A[i]);
+    }
+
+    return result;
+}
+
 inline cellGaussField<scalar> operator+
 (
     const cellGaussField<scalar>& A,

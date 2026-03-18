@@ -49,6 +49,8 @@ SourceFiles
 #include "dgGaussFieldVectorMathTmp.H"
 #include "dgGaussFieldTensorMathTmp.H"
 
+#include "boundaryGaussFieldMath.H"
+
 #endif
 
 // ************************************************************************* //

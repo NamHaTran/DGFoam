@@ -44,6 +44,7 @@ SourceFiles
 #include "scalar.H"
 #include "word.H"
 #include "dgField.H"
+#include "boundaryGaussField.H"
 #include "dgGeomMesh.H"
 #include "dgMath.H"
 
@@ -211,6 +212,18 @@ public:
             << exit(FatalError);
     }
 
+    virtual void calcRhoFromPT
+    (
+        const boundaryGaussField<scalar>& p,
+        const boundaryGaussField<scalar>& T,
+        boundaryGaussField<scalar>& rho
+    ) const
+    {
+        FatalErrorInFunction
+            << "calcRhoFromPT() not supported by this EOS model"
+            << exit(FatalError);
+    }
+
     /**
      * \brief Compute pressure from density and temperature
      *
@@ -229,6 +242,18 @@ public:
             << exit(FatalError);
     }
 
+    virtual void calcPFromRhoT
+    (
+        const boundaryGaussField<scalar>& rho,
+        const boundaryGaussField<scalar>& T,
+        boundaryGaussField<scalar>& p
+    ) const
+    {
+        FatalErrorInFunction
+            << "calcPFromRhoT() not supported by this EOS model"
+            << exit(FatalError);
+    }
+
     /**
      * \brief Compute temperature from pressure and density
      *
@@ -240,6 +265,18 @@ public:
         const GaussField<scalar>& p,
         const GaussField<scalar>& rho,
         GaussField<scalar>& T
+    ) const
+    {
+        FatalErrorInFunction
+            << "calcTFromPRho() not supported by this EOS model"
+            << exit(FatalError);
+    }
+
+    virtual void calcTFromPRho
+    (
+        const boundaryGaussField<scalar>& p,
+        const boundaryGaussField<scalar>& rho,
+        boundaryGaussField<scalar>& T
     ) const
     {
         FatalErrorInFunction

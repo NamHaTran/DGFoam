@@ -195,6 +195,10 @@ Foam::dgThermoConservative::dgThermoConservative
     (
         mesh_.getFvMesh().lookupObject<dgField<scalar>>("E")
     ),
+    U_
+    (
+        mesh_.getFvMesh().lookupObjectRef<dgField<vector>>("U")
+    ),
     p_
     (
         mesh_.getFvMesh().lookupObjectRef<dgField<scalar>>("p")

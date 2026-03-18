@@ -46,6 +46,7 @@ SourceFiles
 #include "dgGeomFace.H"
 #include "cellDof.H"
 #include "List.H"
+#include "boundaryGaussField.H"
 #include "refCount.H"
 
 namespace Foam
@@ -355,6 +356,19 @@ public:
         {
             cellsDof_ = lst;
         }
+
+        /**
+         * \brief Extract ghost-state values on boundary faces into a flat
+         * boundaryGaussField using local-face order then Gauss-point order.
+         */
+        boundaryGaussField<Type> extractBCGhostState() const;
+
+        /**
+         * \brief Assign flat boundaryGaussField values back to ghost-state
+         * values on boundary faces using the same ordering as
+         * extractBCGhostState().
+         */
+        void assignBCGhostState(const boundaryGaussField<Type>& bgf);
 
     //====================================================================//
     //                        Interpolation

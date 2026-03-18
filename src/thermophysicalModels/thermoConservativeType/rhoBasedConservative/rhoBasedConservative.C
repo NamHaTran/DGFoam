@@ -214,7 +214,7 @@ void Foam::rhoBasedConservative::update(const label& cellI)
     // Internal energy
     tmp<GaussField<scalar>> te = EG/rhoG - tK();
 
-    eG = te();
+    eG = te;
 
     // Temperature
     thermo_().calcT(cellI, eG, TG);
@@ -233,6 +233,90 @@ void Foam::rhoBasedConservative::update(const label& cellI)
     transport_().calcMu(cellI, TG, muG);
     transport_().calcKappa(cellI, TG, kappaG);
     transport_().calcPr(cellI, TG, PrG);
+}
+
+
+void Foam::rhoBasedConservative::updateBC(const label& cellI)
+{
+    // Precondition:
+    // - the solver has already imposed primitive ghost values on U/T/p,
+    // - the matching ghost conservative state (rho, rhoU, E) has already been
+    //   rebuilt from those primitive boundary values.
+    //
+    // This routine must therefore be called after the primary BC update step.
+    // It does not re-impose or recompute the primary boundary fields; it only
+    // derives the remaining thermo/transport quantities on the boundary state.
+    const GaussField<scalar>& rhoG  = rho_.gaussFields()[cellI];
+    const GaussField<scalar>& EG    = E_.gaussFields()[cellI];
+
+    GaussField<vector>& UG     = U_.gaussFields()[cellI];
+    GaussField<scalar>& TG     = T_.gaussFields()[cellI];
+    GaussField<scalar>& pG     = p_.gaussFields()[cellI];
+    GaussField<scalar>& CpG    = Cp_.gaussFields()[cellI];
+    GaussField<scalar>& CvG    = Cv_.gaussFields()[cellI];
+    GaussField<scalar>& eG     = e_.gaussFields()[cellI];
+    GaussField<scalar>& hG     = h_.gaussFields()[cellI];
+    GaussField<scalar>& gammaG = gamma_.gaussFields()[cellI];
+    GaussField<scalar>& kappaG = kappa_.gaussFields()[cellI];
+    GaussField<scalar>& muG    = mu_.gaussFields()[cellI];
+    GaussField<scalar>& PrG    = Pr_.gaussFields()[cellI];
+    GaussField<scalar>& aG     = a_.gaussFields()[cellI];
+
+    // Read back the already-prepared ghost boundary state from the plus side of
+    // the face Gauss storage so the derived thermo quantities can be updated.
+    const boundaryGaussField<scalar> rhoB =
+        rhoG.faceField().extractBCGhostState();
+    const boundaryGaussField<scalar> EB =
+        EG.faceField().extractBCGhostState();
+
+    boundaryGaussField<vector> UB =
+        UG.faceField().extractBCGhostState();
+    boundaryGaussField<scalar> TB =
+        TG.faceField().extractBCGhostState();
+    boundaryGaussField<scalar> pB =
+        pG.faceField().extractBCGhostState();
+    boundaryGaussField<scalar> CpB =
+        CpG.faceField().extractBCGhostState();
+    boundaryGaussField<scalar> CvB =
+        CvG.faceField().extractBCGhostState();
+    boundaryGaussField<scalar> eB =
+        eG.faceField().extractBCGhostState();
+    boundaryGaussField<scalar> hB =
+        hG.faceField().extractBCGhostState();
+    boundaryGaussField<scalar> gammaB =
+        gammaG.faceField().extractBCGhostState();
+    boundaryGaussField<scalar> kappaB =
+        kappaG.faceField().extractBCGhostState();
+    boundaryGaussField<scalar> muB =
+        muG.faceField().extractBCGhostState();
+    boundaryGaussField<scalar> PrB =
+        PrG.faceField().extractBCGhostState();
+    boundaryGaussField<scalar> aB =
+        aG.faceField().extractBCGhostState();
+
+    thermo_().calcInternalE(TB, eB);
+    thermo_().calcCp(TB, CpB);
+    thermo_().calcCv(TB, CvB);
+    thermo_().calcGamma(CpB, CvB, gammaB);
+    thermo_().calcH(TB, hB);
+    thermo_().calcSpeedOfSound(TB, gammaB, aB);
+
+    transport_().calcMu(TB, muB);
+    transport_().calcKappa(TB, kappaB);
+    transport_().calcPr(TB, PrB);
+
+    // Write back the derived quantities. T and p are assigned unchanged on
+    // purpose so the full boundary thermo state stays synchronized in the
+    // face storage, but they remain authoritative inputs from the BC stage.
+    CpG.faceField().assignBCGhostState(CpB);
+    CvG.faceField().assignBCGhostState(CvB);
+    eG.faceField().assignBCGhostState(eB);
+    hG.faceField().assignBCGhostState(hB);
+    gammaG.faceField().assignBCGhostState(gammaB);
+    muG.faceField().assignBCGhostState(muB);
+    kappaG.faceField().assignBCGhostState(kappaB);
+    PrG.faceField().assignBCGhostState(PrB);
+    aG.faceField().assignBCGhostState(aB);
 }
 
 } // End namespace Foam

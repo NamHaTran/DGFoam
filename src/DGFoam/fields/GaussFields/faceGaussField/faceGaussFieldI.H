@@ -418,6 +418,81 @@ void Foam::faceGaussField<Type>::interpolateFromDof()
 }
 
 
+template<class Type>
+boundaryGaussField<Type> Foam::faceGaussField<Type>::extractBCGhostState() const
+{
+    label nBoundaryGauss = 0;
+
+    for (label faceI = 0; faceI < nFaces_; ++faceI)
+    {
+        if (isBoundary(faceI))
+        {
+            nBoundaryGauss += nGaussPerFace_;
+        }
+    }
+
+    boundaryGaussField<Type> bgf(nBoundaryGauss);
+
+    label bgi = 0;
+
+    for (label faceI = 0; faceI < nFaces_; ++faceI)
+    {
+        if (!isBoundary(faceI))
+        {
+            continue;
+        }
+
+        for (label gI = 0; gI < nGaussPerFace_; ++gI)
+        {
+            bgf[bgi++] = plusValueOnFace(faceI, gI);
+        }
+    }
+
+    return bgf;
+}
+
+
+template<class Type>
+void Foam::faceGaussField<Type>::assignBCGhostState
+(
+    const boundaryGaussField<Type>& bgf
+)
+{
+    label expectedSize = 0;
+
+    for (label faceI = 0; faceI < nFaces_; ++faceI)
+    {
+        if (isBoundary(faceI))
+        {
+            expectedSize += nGaussPerFace_;
+        }
+    }
+
+    if (bgf.size() != expectedSize)
+    {
+        FatalErrorInFunction
+            << "boundaryGaussField size mismatch for cell " << cellID_ << nl
+            << "Expected " << expectedSize << " values but received "
+            << bgf.size() << abort(FatalError);
+    }
+
+    label bgi = 0;
+
+    for (label faceI = 0; faceI < nFaces_; ++faceI)
+    {
+        if (!isBoundary(faceI))
+        {
+            continue;
+        }
+
+        for (label gI = 0; gI < nGaussPerFace_; ++gI)
+        {
+            plusValueOnFace(faceI, gI) = bgf[bgi++];
+        }
+    }
+}
+
+
 // Assignment operator
 template<class Type>
 inline faceGaussField<Type>& faceGaussField<Type>::operator=
@@ -537,4 +612,3 @@ inline faceGaussField<Type>& faceGaussField<Type>::operator=
 #endif
 
 // ************************************************************************* //
-

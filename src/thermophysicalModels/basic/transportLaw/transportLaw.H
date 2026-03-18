@@ -44,6 +44,7 @@ SourceFiles
 #include "scalar.H"
 #include "word.H"
 #include "GaussField.H"
+#include "boundaryGaussField.H"
 #include "dgGeomMesh.H"
 #include "dgMath.H"
 #include "thermoLaw.H"
@@ -184,6 +185,12 @@ public:
             GaussField<scalar>& mu
         ) const = 0;
 
+        virtual void calcMu
+        (
+            const boundaryGaussField<scalar>& T,
+            boundaryGaussField<scalar>& mu
+        ) const = 0;
+
         /**
          * \brief Compute thermal conductivity
          *
@@ -198,6 +205,12 @@ public:
             GaussField<scalar>& kappa
         ) const = 0;
 
+        virtual void calcKappa
+        (
+            const boundaryGaussField<scalar>& T,
+            boundaryGaussField<scalar>& kappa
+        ) const = 0;
+
         /**
          * \brief Compute Prandtl number
          *
@@ -210,6 +223,12 @@ public:
             const label cellI,
             const GaussField<scalar>& T,
             GaussField<scalar>& Pr
+        ) const = 0;
+
+        virtual void calcPr
+        (
+            const boundaryGaussField<scalar>& T,
+            boundaryGaussField<scalar>& Pr
         ) const = 0;
 
     //====================================================================//

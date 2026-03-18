@@ -89,8 +89,6 @@ Foam::dgHLLCFluxSolver::dgHLLCFluxSolver
     // Loop over each face
     for (label fI = 0; fI < nFaces; ++fI)
     {
-        isStateComputed_[fI] = false;
-
         // Pointer to geometric face
         const dgGeomFace* gf = gFaces[fI];
 
@@ -103,6 +101,7 @@ Foam::dgHLLCFluxSolver::dgHLLCFluxSolver
         SStar_list_[fI].resize(nGauss);
         CL_list_[fI].resize(nGauss);
         CR_list_[fI].resize(nGauss);
+        isStateComputed_[fI].resize(nGauss);
 
         // Initialize
         for (label gI = 0; gI < nGauss; ++gI)
@@ -112,6 +111,7 @@ Foam::dgHLLCFluxSolver::dgHLLCFluxSolver
             SStar_list_[fI][gI] = 0.0;
             CL_list_[fI][gI]    = 0.0;
             CR_list_[fI][gI]    = 0.0;
+            isStateComputed_[fI][gI] = false;
         }
     }
 
@@ -163,10 +163,14 @@ void Foam::dgHLLCFluxSolver::calcIntermediateState
     const label globalFaceID = rhoF.globalFaceID(localFaceID);
 
     // Check whether the cell is owner, and state hasn't been calculated
-    if (rhoF.isOwner(localFaceID, cellID) && !isStateComputed_[globalFaceID])
+    if
+    (
+        rhoF.isOwner(localFaceID, cellID)
+     && !isStateComputed_[globalFaceID][localGaussID]
+    )
     {
         // Set flag
-        isStateComputed_[globalFaceID] = true;
+        isStateComputed_[globalFaceID][localGaussID] = true;
 
         // Calculate and cache intermediate states if the cell is owner
         const faceGaussField<vector>& UF   = U_.gaussFields()[cellID].faceField();
@@ -495,16 +499,18 @@ void Foam::dgHLLCFluxSolver::computeFlux
 
 void Foam::dgHLLCFluxSolver::reset()
 {
-    // Reset isStateComputed_ flag
+    // Reset cached state flags for every face/Gauss-point pair.
     const label nFaces = mesh_.nFaces();
 
     for (label fI = 0; fI < nFaces; ++fI)
     {
-        isStateComputed_[fI] = false;
+        forAll(isStateComputed_[fI], gI)
+        {
+            isStateComputed_[fI][gI] = false;
+        }
     }
 }
 
 } // End namespace Foam
 
 // ************************************************************************* //
-

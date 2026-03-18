@@ -1,6 +1,7 @@
 #include "dgGaussFieldLiteralScalarMathTmp.H"
 
 {
+    // Tutorial helper: exercises literal-scalar overloads for GaussField math.
     Info<< "\n===== testLiteralScalarMath (GaussField literal-scalar tmp) =====\n" << endl;
 
     if (mesh.C().size() == 0)

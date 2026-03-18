@@ -163,6 +163,9 @@ protected:
         /** Conservative total energy field (read-only) */
         const dgField<scalar>& E_;
 
+        /** Velocity field (output storage) */
+        dgField<vector>& U_;
+
         /** Pressure field (output storage) */
         dgField<scalar>& p_;
 
@@ -250,6 +253,13 @@ public:
         virtual void update(const label& cellID) = 0;
 
         /**
+         * \brief Update thermodynamic fields on boundary face Gauss points
+         *
+         * \param cellID DG cell index
+         */
+        virtual void updateBC(const label& cellID) = 0;
+
+        /**
          * \brief Write model data
          *
          * \param os Output stream
@@ -307,6 +317,10 @@ public:
         /** Return temperature field */
         inline dgField<scalar>& T() { return T_; }
         inline const dgField<scalar>& T() const { return T_; }
+
+        /** Return velocity field */
+        inline dgField<vector>& U() { return U_; }
+        inline const dgField<vector>& U() const { return U_; }
 };
 
 } // End namespace Foam

@@ -1,6 +1,11 @@
+// Primitive fields are reconstructed from the conservative variables and
+// are used to evaluate fluxes and boundary conditions in a more natural form.
 Info<< "Creating primitive fields\n" << endl;
 
-// Primitive fields are created by the solver and updated by thermo.
+// The solver owns p, T, and U, but their values are refreshed by the thermo
+// model and by stage-update logic after rho/rhoU/E change. These are still
+// dgField objects, so they carry high-order Gauss-point data, not only one
+// cell-average value per control volume.
 
 dgField<scalar> p
 (
@@ -44,7 +49,10 @@ dgField<vector> U
     false
 );
 
-// Declare boundary condition managers
+// Boundary managers read user-specified DG boundary data from constant/
+// and know how to inject those values into face Gauss points. The result is
+// a boundary state defined at quadrature points, which is exactly what the
+// numerical flux routines need.
 IOobject TBCIO
 (
     "TBC",
@@ -73,20 +81,6 @@ autoPtr<dgGeneralBoundaryManager<scalar>> pBC
     new dgGeneralBoundaryManager<scalar>(pBCIO, dgMesh)
 );
 
-IOobject rhoBCIO
-(
-    "rhoBC",
-    runTime.constant(),
-    mesh,
-    IOobject::MUST_READ,
-    IOobject::NO_WRITE
-);
-
-autoPtr<dgGeneralBoundaryManager<scalar>> rhoBC
-(
-    new dgGeneralBoundaryManager<scalar>(rhoBCIO, dgMesh)
-);
-
 IOobject UBCIO
 (
     "UBC",
@@ -101,8 +95,14 @@ autoPtr<dgGeneralBoundaryManager<vector>> UBC
     new dgGeneralBoundaryManager<vector>(UBCIO, dgMesh)
 );
 
+// Initialize primary fields by initial values read from BC settings in constant
+TBC->initializeField(T);
+pBC->initializeField(p);
+UBC->initializeField(U);
 
-// Declare interface boundary condition manager
+// Processor boundary managers synchronize primitive fields across partition
+// interfaces before each residual assembly on parallel runs. They play the
+// same role as processor patches in OpenFOAM, but at the DG Gauss-point level.
 autoPtr<dgProcessorBoundaryManager<scalar>> scalarProcBC
 (
     new dgProcessorBoundaryManager<scalar>(dgMesh)

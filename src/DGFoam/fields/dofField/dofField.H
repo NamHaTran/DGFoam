@@ -168,12 +168,13 @@ public:
     //====================================================================//
 
         /**
-         * \brief Update OpenFOAM volFields from DG DoF values
+         * \brief Update OpenFOAM volFields from DG DoF values of one cell
          *
-         * Copies cell-local DG DoF values into the corresponding
-         * OpenFOAM volFields.
+         * Copies the DoFs of a single DG cell into the corresponding
+         * OpenFOAM volFields. This is the preferred hot-path synchronization
+         * helper during explicit stage updates.
          */
-        void updateFoamFields();
+        void updateCellDof(const label cellID);
 
         /**
          * \brief Write OpenFOAM volFields to disk

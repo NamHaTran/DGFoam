@@ -41,11 +41,12 @@ Description
 #include "IOdictionary.H"
 #include "PtrList.H"
 #include "dgGeneralBoundaryField.H"
-#include "dgField.H"
 #include "dgBoundaryHelper.H"
 
 namespace Foam
 {
+
+template<class Type> class dgField;
 
 /*---------------------------------------------------------------------------*\
                     Class dgGeneralBoundaryManager Declaration
@@ -162,6 +163,16 @@ public:
     }
 
     // Core methods --------------------------------------------------------
+
+    /**
+     * \brief Initialize a GaussField with the uniform internal value
+     *
+     * \param GField GaussField to initialize
+     */
+    void initializeField
+    (
+        dgField<Type>& GField
+    );
 
     /**
      * \brief Update ghost-state values on boundary faces

@@ -50,6 +50,22 @@ Description
 namespace Foam
 {
 
+inline scalar maxValue(const tmp<GaussField<scalar>>& tA)
+{
+    const GaussField<scalar>& A = tA();
+    scalar result = max(maxValue(A.cellField()), maxValue(A.faceField()));
+    tA.clear();
+    return result;
+}
+
+inline scalar minValue(const tmp<GaussField<scalar>>& tA)
+{
+    const GaussField<scalar>& A = tA();
+    scalar result = min(minValue(A.cellField()), minValue(A.faceField()));
+    tA.clear();
+    return result;
+}
+
 /** \brief Allocate output GaussField with geometry copied from reference field. */
 template<class OutType, class RefType>
 inline tmp<GaussField<OutType>> dgGaussScalarNewLike(const GaussField<RefType>& A)

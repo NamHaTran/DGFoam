@@ -1,6 +1,7 @@
 #include "dgGaussFieldTensorMathTmp.H"
 
 {
+    // Tutorial helper: demonstrates tensor/symmTensor algebra on GaussField.
     Info<< "\n===== testTensorMath (GaussField tensor-math tmp) =====\n" << endl;
 
     if (mesh.C().size() == 0)

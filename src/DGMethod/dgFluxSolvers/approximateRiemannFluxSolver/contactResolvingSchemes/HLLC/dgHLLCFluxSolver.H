@@ -135,8 +135,8 @@ private:
     /** Cached right star-state coefficients */
     List<List<scalar>> CR_list_;
 
-    /** Flags indicating whether intermediate states are computed */
-    List<bool> isStateComputed_;
+    /** Flags indicating whether intermediate states are computed per face/Gauss point */
+    List<List<bool>> isStateComputed_;
 
 public:
 

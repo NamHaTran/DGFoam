@@ -1,6 +1,7 @@
 #include "dgGaussFieldVectorMathTmp.H"
 
 {
+    // Tutorial helper: demonstrates vector algebra and tensor coupling terms.
     Info<< "\n===== testVectorMath (GaussField vector-math tmp) =====\n" << endl;
 
     if (mesh.C().size() == 0)
