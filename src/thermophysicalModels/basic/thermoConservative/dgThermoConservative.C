@@ -66,24 +66,11 @@ Foam::dgThermoConservative::dgThermoConservative
     transport_(nullptr),
     energy_(nullptr),
     R_(Zero),
-    h_
+    he_
     (
         IOobject
         (
-            "h", 
-            mesh.getFvMesh().time().timeName(), 
-            mesh.getFvMesh(), 
-            IOobject::NO_READ, 
-            IOobject::NO_WRITE
-        ),
-        mesh,
-        false
-    ),
-    e_
-    (
-        IOobject
-        (
-            "e", 
+            "he",
             mesh.getFvMesh().time().timeName(), 
             mesh.getFvMesh(),
             IOobject::NO_READ,
@@ -160,6 +147,50 @@ Foam::autoPtr<Foam::dgThermoConservative> Foam::dgThermoConservative::New
 bool Foam::dgThermoConservative::writeData(Ostream& os) const
 {
     return true;
+}
+
+
+tmp<GaussField<scalar>> Foam::dgThermoConservative::calcH
+(
+    const label cellID
+) const
+{
+    tmp<GaussField<scalar>> th = GaussField<scalar>::New(cellID, &mesh_);
+    GaussField<scalar>& h = th.ref();
+
+    if (heIsEnthalpy())
+    {
+        h = he_.gaussFields()[cellID];
+    }
+    else
+    {
+        h = he_.gaussFields()[cellID]
+          + p_.gaussFields()[cellID]/rho_.gaussFields()[cellID];
+    }
+
+    return th;
+}
+
+
+tmp<GaussField<scalar>> Foam::dgThermoConservative::calcE
+(
+    const label cellID
+) const
+{
+    tmp<GaussField<scalar>> te = GaussField<scalar>::New(cellID, &mesh_);
+    GaussField<scalar>& e = te.ref();
+
+    if (heIsInternalEnergy())
+    {
+        e = he_.gaussFields()[cellID];
+    }
+    else
+    {
+        e = he_.gaussFields()[cellID]
+          - p_.gaussFields()[cellID]/rho_.gaussFields()[cellID];
+    }
+
+    return te;
 }
 
 } // End namespace Foam

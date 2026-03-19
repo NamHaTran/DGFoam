@@ -12,7 +12,7 @@ forAll(mesh.cells(), cellI)
     // the updated conservative variables.
     U.gaussFields()[cellI] = rhoU.gaussFields()[cellI] / rho.gaussFields()[cellI];
 
-    // Reconstruct p, T, a, mu, gamma, etc. from the stage-consistent
+    // Reconstruct p, T, he, a, gamma, etc. from the stage-consistent
     // conservative state. This keeps the primitive and thermo layers in sync
     // before the next stage begins.
     thermo->update(cellI);

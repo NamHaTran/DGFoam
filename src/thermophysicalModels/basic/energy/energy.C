@@ -35,12 +35,39 @@ namespace Foam
 defineTypeNameAndDebug(energy, 0);
 defineRunTimeSelectionTable(energy, dictionary);
 
-energy::energy(const word& name, const dictionary& dict, const dgGeomMesh& mesh, const thermoLaw& thermo)
+word energy::heName(const heType heTypeValue)
+{
+    switch (heTypeValue)
+    {
+        case heType::internalEnergy:
+            return "e";
+
+        case heType::enthalpy:
+            return "h";
+    }
+
+    FatalErrorInFunction
+        << "Unknown heType value." << exit(FatalError);
+
+    return word::null;
+}
+
+
+energy::energy
+(
+    const word& name,
+    const dictionary& dict,
+    const dgGeomMesh& mesh,
+    const thermoLaw& thermo,
+    const heType heTypeValue
+)
 :
     name_(name),
     coeffs_(dict),
     mesh_(mesh),
-    thermo_(thermo)
+    thermo_(thermo),
+    he_(energy::heName(heTypeValue)),
+    heType_(heTypeValue)
 {}
 
 autoPtr<energy> energy::New(const word& name, const dictionary& dict, const dgGeomMesh& mesh, const thermoLaw& thermo)
@@ -61,4 +88,3 @@ autoPtr<energy> energy::New(const word& name, const dictionary& dict, const dgGe
 } // namespace Foam
 
 // ************************************************************************* //
-

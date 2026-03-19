@@ -187,7 +187,8 @@ void Foam::dgHLLCFluxSolver::calcIntermediateState
         // Calculate and cache intermediate states if the cell is owner
         const faceGaussField<vector>& UF   = U_.gaussFields()[cellID].faceField();
         const faceGaussField<scalar>& pF   = p_.gaussFields()[cellID].faceField();
-        const faceGaussField<scalar>& hF   = thermo_.h().gaussFields()[cellID].faceField();
+        tmp<GaussField<scalar>> tH = thermo_.calcH(cellID);
+        const faceGaussField<scalar>& hF   = tH().faceField();
 
         // Left (-) and right (+) states
         const scalar rhoR = rhoF.plusValueOnFace(localFaceID, localGaussID);

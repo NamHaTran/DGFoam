@@ -18,7 +18,7 @@ Tutorial note:
 #include "createPrimaryFields.H"
 
 // Thermo reconstruction is separated from the solver loop so that the solver
-// can ask for p, T, a, mu, gamma, etc. without duplicating thermodynamic
+// can ask for p, T, he-derived properties, a, gamma, etc. without duplicating thermodynamic
 // formulas in every include file. In practice, thermo becomes the bridge
 // between conservative unknowns and the primitive quantities used in fluxes.
 Info<< "Reading thermophysical properties\n" << endl;

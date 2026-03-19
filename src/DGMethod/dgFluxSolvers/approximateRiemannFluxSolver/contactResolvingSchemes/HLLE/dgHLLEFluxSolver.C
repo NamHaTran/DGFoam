@@ -172,7 +172,8 @@ void Foam::dgHLLEFluxSolver::computeFlux
     const faceGaussField<vector>& UF   = U_.gaussFields()[cellID].faceField();
     const faceGaussField<scalar>& pF   = p_.gaussFields()[cellID].faceField();
     const faceGaussField<scalar>& aF   = thermo_.a().gaussFields()[cellID].faceField();
-    const faceGaussField<scalar>& hF   = thermo_.h().gaussFields()[cellID].faceField();
+    tmp<GaussField<scalar>> tH = thermo_.calcH(cellID);
+    const faceGaussField<scalar>& hF   = tH().faceField();
 
     tmp<GaussField<scalar>> tGamma = GaussField<scalar>::New(cellID, &mesh_);
     calcGamma(cellID, tGamma.ref());
@@ -251,7 +252,8 @@ void Foam::dgHLLEFluxSolver::computeFlux
     const faceGaussField<vector>& UF   = U_.gaussFields()[cellID].faceField();
     const faceGaussField<scalar>& pF   = p_.gaussFields()[cellID].faceField();
     const faceGaussField<scalar>& aF   = thermo_.a().gaussFields()[cellID].faceField();
-    const faceGaussField<scalar>& hF   = thermo_.h().gaussFields()[cellID].faceField();
+    tmp<GaussField<scalar>> tH = thermo_.calcH(cellID);
+    const faceGaussField<scalar>& hF   = tH().faceField();
 
     tmp<GaussField<scalar>> tGamma = GaussField<scalar>::New(cellID, &mesh_);
     calcGamma(cellID, tGamma.ref());

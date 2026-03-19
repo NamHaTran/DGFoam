@@ -48,7 +48,7 @@ Foam::sensibleInternalEnergy::sensibleInternalEnergy
     const thermoLaw& thermo
 )
 :
-    energy(name, dict, mesh, thermo),
+    energy(name, dict, mesh, thermo, energy::heType::internalEnergy),
     coeffDict_(dict)
 {}
 
@@ -78,49 +78,47 @@ void Foam::sensibleInternalEnergy::calcEnthalpy
 }
 
 
-void Foam::sensibleInternalEnergy::calcEnergy
+void Foam::sensibleInternalEnergy::calcHe
 (
     const label cellI,
     const GaussField<scalar>& T,
-    GaussField<scalar>& e
+    GaussField<scalar>& he
 ) const
 {
     // Use thermoLaw to compute:
     //     e = e(T)
-    thermo_.calcInternalE(cellI, T, e);
+    thermo_.calcInternalE(cellI, T, he);
 }
 
 
-void Foam::sensibleInternalEnergy::calcEnergy
+void Foam::sensibleInternalEnergy::calcHe
 (
     const boundaryGaussField<scalar>& T,
-    boundaryGaussField<scalar>& e
+    boundaryGaussField<scalar>& he
 ) const
 {
-    thermo_.calcInternalE(T, e);
+    thermo_.calcInternalE(T, he);
 }
 
 
-void Foam::sensibleInternalEnergy::calcTfromEnergy
+void Foam::sensibleInternalEnergy::calcTfromHe
 (
     const label cellI,
-    const GaussField<scalar>& e,
+    const GaussField<scalar>& he,
     GaussField<scalar>& T
 ) const
 {
-    // Use thermoLaw to invert:
-    //     T = T(e)
-    thermo_.calcT(cellI, e, T);
+    thermo_.calcTFromInternalE(cellI, he, T);
 }
 
 
-void Foam::sensibleInternalEnergy::calcTfromEnergy
+void Foam::sensibleInternalEnergy::calcTfromHe
 (
-    const boundaryGaussField<scalar>& e,
+    const boundaryGaussField<scalar>& he,
     boundaryGaussField<scalar>& T
 ) const
 {
-    thermo_.calcT(e, T);
+    thermo_.calcTFromInternalE(he, T);
 }
 
 

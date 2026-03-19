@@ -76,7 +76,7 @@ class energy;
  * \f[
  *   (\rho,\; \rho\mathbf{U},\; E)
  * \;\longrightarrow\;
- * (T,\; p,\; e,\; h,\; a)
+ * (T,\; p,\; he,\; a)
  * \f]
  *
  * The model operates in a fully cell-local and Gauss-point-resolved
@@ -85,6 +85,9 @@ class energy;
  * \f$C_p\f$, \f$C_v\f$, \f$\gamma\f$, \f$\kappa\f$, \f$\mu\f$, and
  * \f$\mathrm{Pr}\f$ are intended to be evaluated on demand through the
  * thermoLaw and transportLaw APIs instead of being stored as dgField data.
+ * The stored thermodynamic energy variable \c he may represent either
+ * sensible internal energy or sensible enthalpy, depending on the selected
+ * energy model.
  *
  * Supported model structure:
  * - Equation of state (eqnOfState)
@@ -130,11 +133,8 @@ protected:
         /** Gas constant */
         scalar R_;
 
-        /** Specific enthalpy */
-        dgField<scalar> h_;
-
-        /** Specific internal energy */
-        dgField<scalar> e_;
+        /** Stored thermodynamic energy variable */
+        dgField<scalar> he_;
 
         /** Speed of sound */
         dgField<scalar> a_;
@@ -265,17 +265,38 @@ public:
         /** Return transport law */
         inline const transportLaw& transport() const { return transport_(); }
 
+        /** Return energy model */
+        inline const energy& energyModel() const { return energy_(); }
+
         /** Return gas constant */
         inline scalar R() const { return R_; }
 
-        /** Return enthalpy field */
-        inline const dgField<scalar>& h() const { return h_; }
+        /** Return stored energy variable name ("e" or "h") */
+        inline const word& heName() const { return energy_().he(); }
 
-        /** Return internal energy field */
-        inline const dgField<scalar>& e() const { return e_; }
+        /** Return true if he stores sensible internal energy */
+        inline bool heIsInternalEnergy() const
+        {
+            return energy_().heIsInternalEnergy();
+        }
+
+        /** Return true if he stores sensible enthalpy */
+        inline bool heIsEnthalpy() const
+        {
+            return energy_().heIsEnthalpy();
+        }
+
+        /** Return stored thermodynamic energy field */
+        inline const dgField<scalar>& he() const { return he_; }
 
         /** Return speed-of-sound field */
         inline const dgField<scalar>& a() const { return a_; }
+
+        /** Return enthalpy reconstructed from the stored energy variable */
+        tmp<GaussField<scalar>> calcH(const label cellID) const;
+
+        /** Return internal energy reconstructed from the stored energy variable */
+        tmp<GaussField<scalar>> calcE(const label cellID) const;
 
         /** Return pressure field */
         inline dgField<scalar>& p() { return p_; }

@@ -138,7 +138,7 @@ public:
     ) const override;
 
     /**
-     * \brief Compute internal energy from temperature
+     * \brief Compute the stored energy variable he from temperature
      *
      * Computes sensible internal energy:
      * \f[
@@ -147,23 +147,23 @@ public:
      *
      * \param cellI Cell index
      * \param T     Temperature field at Gauss points
-     * \param e     Internal energy field to be written
+     * \param he    Stored energy field to be written
      */
-    virtual void calcEnergy
+    virtual void calcHe
     (
         const label cellI,
         const GaussField<scalar>& T,
-        GaussField<scalar>& e
+        GaussField<scalar>& he
     ) const override;
 
-    virtual void calcEnergy
+    virtual void calcHe
     (
         const boundaryGaussField<scalar>& T,
-        boundaryGaussField<scalar>& e
+        boundaryGaussField<scalar>& he
     ) const override;
 
     /**
-     * \brief Compute temperature from internal energy
+     * \brief Compute temperature from the stored energy variable he
      *
      * Inverts the relation:
      * \f[
@@ -171,28 +171,21 @@ public:
      * \f]
      *
      * \param cellI Cell index
-     * \param e     Internal energy field at Gauss points
+     * \param he    Stored energy field at Gauss points
      * \param T     Temperature field to be written
      */
-    virtual void calcTfromEnergy
+    virtual void calcTfromHe
     (
         const label cellI,
-        const GaussField<scalar>& e,
+        const GaussField<scalar>& he,
         GaussField<scalar>& T
     ) const override;
 
-    virtual void calcTfromEnergy
+    virtual void calcTfromHe
     (
-        const boundaryGaussField<scalar>& e,
+        const boundaryGaussField<scalar>& he,
         boundaryGaussField<scalar>& T
     ) const override;
-
-    /**
-     * \brief Identify internal-energy formulation
-     *
-     * \return True, since this model is internal-energy based
-     */
-    virtual bool energyInternal() const override { return true; }
 };
 
 } // End namespace Foam

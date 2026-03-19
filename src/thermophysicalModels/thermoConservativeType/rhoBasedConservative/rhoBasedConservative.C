@@ -164,12 +164,12 @@ void Foam::rhoBasedConservative::validateModels()
             << exit(FatalError);
     }
 
-    // Energy: internal-energy-based formulation
-    if (!eng.energyInternal())
+    // Energy: currently only internal-energy-based formulation is supported
+    if (!eng.heIsInternalEnergy())
     {
         FatalErrorInFunction
             << "rhoBasedConservative currently supports only internal-energy "
-            << "based energy models (energyInternal() == true)." << nl
+            << "based energy models (heType == internalEnergy)." << nl
             << "Detected energy type: " << eng.type()
             << exit(FatalError);
     }
@@ -195,8 +195,7 @@ void Foam::rhoBasedConservative::update(const label& cellI)
     // Thermo fields
     GaussField<scalar>& TG      = T_.gaussFields()[cellI];
     GaussField<scalar>& pG      = p_.gaussFields()[cellI];
-    GaussField<scalar>& eG      = e_.gaussFields()[cellI];
-    GaussField<scalar>& hG      = h_.gaussFields()[cellI];
+    GaussField<scalar>& heG     = he_.gaussFields()[cellI];
     GaussField<scalar>& aG      = a_.gaussFields()[cellI];
 
     // Velocity at Gauss points
@@ -206,15 +205,12 @@ void Foam::rhoBasedConservative::update(const label& cellI)
     tmp<GaussField<scalar>> tK = 0.5*magSqr(tUG());
 
     // Internal energy
-    tmp<GaussField<scalar>> te = EG/rhoG - tK();
+    tmp<GaussField<scalar>> the = EG/rhoG - tK();
 
-    eG = te;
+    heG = the;
 
     // Temperature
-    thermo_().calcT(cellI, eG, TG);
-
-    // Thermo
-    thermo_().calcH(cellI, TG, hG);
+    energy_().calcTfromHe(cellI, heG, TG);
 
     // Pressure
     eqnState_().calcPFromRhoT(cellI, rhoG, TG, pG);
@@ -246,8 +242,7 @@ void Foam::rhoBasedConservative::updateBC(const label& cellI)
     GaussField<vector>& UG     = U_.gaussFields()[cellI];
     GaussField<scalar>& TG     = T_.gaussFields()[cellI];
     GaussField<scalar>& pG     = p_.gaussFields()[cellI];
-    GaussField<scalar>& eG     = e_.gaussFields()[cellI];
-    GaussField<scalar>& hG     = h_.gaussFields()[cellI];
+    GaussField<scalar>& heG    = he_.gaussFields()[cellI];
     GaussField<scalar>& aG     = a_.gaussFields()[cellI];
 
     // Read back the already-prepared ghost boundary state from the plus side of
@@ -263,15 +258,12 @@ void Foam::rhoBasedConservative::updateBC(const label& cellI)
         TG.faceField().extractBCGhostState();
     boundaryGaussField<scalar> pB =
         pG.faceField().extractBCGhostState();
-    boundaryGaussField<scalar> eB =
-        eG.faceField().extractBCGhostState();
-    boundaryGaussField<scalar> hB =
-        hG.faceField().extractBCGhostState();
+    boundaryGaussField<scalar> heB =
+        heG.faceField().extractBCGhostState();
     boundaryGaussField<scalar> aB =
         aG.faceField().extractBCGhostState();
 
-    thermo_().calcInternalE(TB, eB);
-    thermo_().calcH(TB, hB);
+    energy_().calcHe(TB, heB);
 
     boundaryGaussField<scalar> CpB(TB.size());
     boundaryGaussField<scalar> CvB(TB.size());
@@ -285,8 +277,7 @@ void Foam::rhoBasedConservative::updateBC(const label& cellI)
     // Write back the derived quantities. T and p are assigned unchanged on
     // purpose so the full boundary thermo state stays synchronized in the
     // face storage, but they remain authoritative inputs from the BC stage.
-    eG.faceField().assignBCGhostState(eB);
-    hG.faceField().assignBCGhostState(hB);
+    heG.faceField().assignBCGhostState(heB);
     aG.faceField().assignBCGhostState(aB);
 }
 

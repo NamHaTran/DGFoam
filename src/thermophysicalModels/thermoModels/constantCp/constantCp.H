@@ -195,22 +195,44 @@ public:
     ) const override;
 
     /**
-     * \brief Compute temperature from energy
+     * \brief Compute temperature from sensible internal energy
      *
      * Inverts:
-     * \li \f$e = C_v T\f$ (internal-energy formulation)
-     * \li \f$h = C_p T\f$ (enthalpy formulation)
+     * \f[
+     *   e = C_v T
+     * \f]
      */
-    virtual void calcT
+    virtual void calcTFromInternalE
     (
         const label cellI,
-        const GaussField<scalar>& energy,
+        const GaussField<scalar>& e,
         GaussField<scalar>& T
     ) const override;
 
-    virtual void calcT
+    virtual void calcTFromInternalE
     (
-        const boundaryGaussField<scalar>& energy,
+        const boundaryGaussField<scalar>& e,
+        boundaryGaussField<scalar>& T
+    ) const override;
+
+    /**
+     * \brief Compute temperature from sensible enthalpy
+     *
+     * Inverts:
+     * \f[
+     *   h = C_p T
+     * \f]
+     */
+    virtual void calcTFromH
+    (
+        const label cellI,
+        const GaussField<scalar>& h,
+        GaussField<scalar>& T
+    ) const override;
+
+    virtual void calcTFromH
+    (
+        const boundaryGaussField<scalar>& h,
         boundaryGaussField<scalar>& T
     ) const override;
 

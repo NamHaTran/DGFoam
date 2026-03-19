@@ -91,6 +91,15 @@ namespace Foam
  */
 class energy
 {
+public:
+
+    //- Type of the stored thermodynamic energy variable he
+    enum class heType
+    {
+        internalEnergy,
+        enthalpy
+    };
+
 protected:
 
     /** Model name (used for logging and diagnostics) */
@@ -104,6 +113,12 @@ protected:
 
     /** Reference to thermoLaw (non-owning) */
     const thermoLaw& thermo_;
+
+    /** Name of the stored thermodynamic energy variable ("e" or "h") */
+    const word he_;
+
+    /** Type of the stored thermodynamic energy variable */
+    const heType heType_;
 
 public:
 
@@ -136,7 +151,8 @@ public:
         const word& name,
         const dictionary& dict,
         const dgGeomMesh& mesh,
-        const thermoLaw& thermo
+        const thermoLaw& thermo,
+        const heType heTypeValue
     );
 
     /** Virtual destructor */
@@ -191,64 +207,81 @@ public:
     ) const = 0;
 
     /**
-     * \brief Compute energy variable (e or h depending on model)
+     * \brief Compute the stored thermodynamic energy variable he
      *
      * \param cellI Cell index
      * \param T     Temperature field at Gauss points
-     * \param e     Internal energy field to be written
+     * \param he    Stored energy field to be written
      */
-    virtual void calcEnergy
+    virtual void calcHe
     (
         const label cellI,
         const GaussField<scalar>& T,
-        GaussField<scalar>& e
+        GaussField<scalar>& he
     ) const = 0;
 
     /**
-     * \brief Compute energy variable on boundary Gauss points
+     * \brief Compute the stored thermodynamic energy variable on boundary
+     * Gauss points
      *
      * \param T Boundary temperature values
-     * \param e Boundary energy values to be written
+     * \param he Boundary energy values to be written
      */
-    virtual void calcEnergy
+    virtual void calcHe
     (
         const boundaryGaussField<scalar>& T,
-        boundaryGaussField<scalar>& e
+        boundaryGaussField<scalar>& he
     ) const = 0;
 
     /**
-     * \brief Compute temperature from energy (energy inversion)
+     * \brief Compute temperature from the stored energy variable he
      *
      * \param cellI Cell index
-     * \param e     Internal energy field at Gauss points
+     * \param he    Stored energy field at Gauss points
      * \param T     Temperature field to be written
      */
-    virtual void calcTfromEnergy
+    virtual void calcTfromHe
     (
         const label cellI,
-        const GaussField<scalar>& e,
+        const GaussField<scalar>& he,
         GaussField<scalar>& T
     ) const = 0;
 
     /**
-     * \brief Compute temperature from boundary energy values
+     * \brief Compute temperature from boundary stored-energy values
      *
-     * \param e Boundary energy values
+     * \param he Boundary energy values
      * \param T Boundary temperature values to be written
      */
-    virtual void calcTfromEnergy
+    virtual void calcTfromHe
     (
-        const boundaryGaussField<scalar>& e,
+        const boundaryGaussField<scalar>& he,
         boundaryGaussField<scalar>& T
     ) const = 0;
 
-    // Energy model identification
+    // Generic he interface
 
-        /** Return true if the model is internal-energy based */
-        virtual bool energyInternal() const { return false; }
+        /** Return the stored energy variable name ("e" or "h") */
+        const word& he() const { return he_; }
 
-        /** Return true if the model is enthalpy-based */
-        virtual bool energyEnthalpy() const { return false; }
+        /** Return the type of the stored thermodynamic energy variable */
+        heType heTypeValue() const { return heType_; }
+
+        /** Return true if he stores sensible internal energy */
+        bool heIsInternalEnergy() const
+        {
+            return heType_ == heType::internalEnergy;
+        }
+
+        /** Return true if he stores sensible enthalpy */
+        bool heIsEnthalpy() const
+        {
+            return heType_ == heType::enthalpy;
+        }
+
+        /** Return the canonical variable name for a given heType */
+        static word heName(const heType heTypeValue);
+
 };
 
 } // End namespace Foam

@@ -63,14 +63,14 @@ namespace Foam
  * The stored reconstructed quantities include:
  * \li Temperature \f$T\f$
  * \li Pressure \f$p\f$
- * \li Internal energy \f$e\f$
- * \li Enthalpy \f$h\f$
+ * \li Stored energy variable \f$he\f$
  * \li Speed of sound \f$a\f$
  *
  * Additional thermodynamic and transport properties such as
  * \f$C_p\f$, \f$C_v\f$, \f$\gamma\f$, \f$\kappa\f$, \f$\mu\f$, and
  * \f$\mathrm{Pr}\f$ are evaluated on demand through the thermoLaw and
- * transportLaw APIs instead of being stored as dgField data.
+ * transportLaw APIs instead of being stored as dgField data. The meaning of
+ * \f$he\f$ is determined by the selected energy model.
  *
  * All operations are performed locally at Gauss points of each DG cell,
  * which is consistent with high-order discontinuous Galerkin discretizations.

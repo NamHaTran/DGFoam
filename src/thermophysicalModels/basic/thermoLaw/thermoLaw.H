@@ -178,25 +178,46 @@ public:
     //====================================================================//
 
     /**
-     * \brief Compute temperature from energy
+     * \brief Compute temperature from sensible internal energy
      *
-     * Computes temperature $T$ from internal energy $e(T)$ or enthalpy $h(T)$,
-     * depending on the specific thermoLaw model.
+     * Computes temperature \f$T\f$ from \f$e(T)\f$.
      *
-     * \param cellI  Cell index
-     * \param energy Energy field (\f$e\f$ or \f$h\f$)
-     * \param T      Temperature field to be written
+     * \param cellI Cell index
+     * \param e     Internal-energy field
+     * \param T     Temperature field to be written
      */
-    virtual void calcT
+    virtual void calcTFromInternalE
     (
         const label cellI,
-        const GaussField<scalar>& energy,
+        const GaussField<scalar>& e,
         GaussField<scalar>& T
     ) const = 0;
 
-    virtual void calcT
+    virtual void calcTFromInternalE
     (
-        const boundaryGaussField<scalar>& energy,
+        const boundaryGaussField<scalar>& e,
+        boundaryGaussField<scalar>& T
+    ) const = 0;
+
+    /**
+     * \brief Compute temperature from sensible enthalpy
+     *
+     * Computes temperature \f$T\f$ from \f$h(T)\f$.
+     *
+     * \param cellI Cell index
+     * \param h     Enthalpy field
+     * \param T     Temperature field to be written
+     */
+    virtual void calcTFromH
+    (
+        const label cellI,
+        const GaussField<scalar>& h,
+        GaussField<scalar>& T
+    ) const = 0;
+
+    virtual void calcTFromH
+    (
+        const boundaryGaussField<scalar>& h,
         boundaryGaussField<scalar>& T
     ) const = 0;
 

@@ -32,7 +32,7 @@ boundaryGaussField<vector> Ub = UG.faceField().extractBCGhostState();
 // can work with the same variable set everywhere.
 // Notice how the code reads almost like the formulas themselves:
 //     rhoU_b = rho_b * U_b
-//     E_b    = rho_b * (e_b + 0.5*|U_b|^2)
+//     E_b    = f(rho_b, U_b, p_b, he_b)
 boundaryGaussField<scalar> rhob(pb.size());
 thermo->eos().calcRhoFromPT(pb, Tb, rhob);
 rhoG.faceField().assignBCGhostState(rhob);
@@ -40,12 +40,22 @@ rhoG.faceField().assignBCGhostState(rhob);
 boundaryGaussField<vector> rhoUb = rhob*Ub;
 rhoUG.faceField().assignBCGhostState(rhoUb);
 
-boundaryGaussField<scalar> eb(Tb.size());
-thermo->thermo().calcInternalE(Tb, eb);
+boundaryGaussField<scalar> heb(Tb.size());
+thermo->energyModel().calcHe(Tb, heb);
 
-boundaryGaussField<scalar> Eb = rhob*(eb + 0.5*magSqr(Ub));
+boundaryGaussField<scalar> Eb(Tb.size());
+
+if (thermo->heIsInternalEnergy())
+{
+    Eb = rhob*(heb + 0.5*magSqr(Ub));
+}
+else
+{
+    Eb = rhob*(heb + 0.5*magSqr(Ub)) - pb;
+}
+
 EG.faceField().assignBCGhostState(Eb);
 
-// Fill the derived thermo boundary fields (a, mu, gamma, etc.) while keeping
+// Fill the derived thermo boundary fields (a, he, gamma, etc.) while keeping
 // the primitive ghost values imposed above as the authoritative BC state.
 thermo->updateBC(cellI);

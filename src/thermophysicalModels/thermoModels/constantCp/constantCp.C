@@ -208,25 +208,45 @@ void Foam::constantCp::calcGamma
 }
 
 
-void Foam::constantCp::calcT
+void Foam::constantCp::calcTFromInternalE
 (
     const label cellI,
-    const GaussField<scalar>& energy,
+    const GaussField<scalar>& e,
     GaussField<scalar>& T
 ) const
 {
-    // T = e/Cv  (energy model decides if energy is e or h)
-    T = energy / Cv_;
+    T = e / Cv_;
 }
 
 
-void Foam::constantCp::calcT
+void Foam::constantCp::calcTFromInternalE
 (
-    const boundaryGaussField<scalar>& energy,
+    const boundaryGaussField<scalar>& e,
     boundaryGaussField<scalar>& T
 ) const
 {
-    T = energy / Cv_;
+    T = e / Cv_;
+}
+
+
+void Foam::constantCp::calcTFromH
+(
+    const label cellI,
+    const GaussField<scalar>& h,
+    GaussField<scalar>& T
+) const
+{
+    T = h / Cp_;
+}
+
+
+void Foam::constantCp::calcTFromH
+(
+    const boundaryGaussField<scalar>& h,
+    boundaryGaussField<scalar>& T
+) const
+{
+    T = h / Cp_;
 }
 
 
