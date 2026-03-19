@@ -28,6 +28,7 @@ License
 
 #include "dgHLLCFluxSolver.H"
 #include "addToRunTimeSelectionTable.H"
+#include "dgThermoConservative.H"
 #include "error.H"
 #include <cmath>
 
@@ -46,6 +47,10 @@ Foam::dgHLLCFluxSolver::dgHLLCFluxSolver
 )
 :
     dgFluxSolver(name, dict, mesh),
+    thermo_
+    (
+        mesh.getFvMesh().lookupObject<dgThermoConservative>("dgThermoConservative")
+    ),
     rho_
     (
         mesh.getFvMesh().lookupObject<dgField<scalar>>("rho")
@@ -57,18 +62,6 @@ Foam::dgHLLCFluxSolver::dgHLLCFluxSolver
     p_
     (
         mesh.getFvMesh().lookupObject<dgField<scalar>>("p")
-    ),
-    a_
-    (
-        mesh.getFvMesh().lookupObject<dgField<scalar>>("a")
-    ),
-    h_
-    (
-        mesh.getFvMesh().lookupObject<dgField<scalar>>("h")
-    ),
-    gamma_
-    (
-        mesh.getFvMesh().lookupObject<dgField<scalar>>("gamma")
     )
 {
     read(dict);
@@ -117,6 +110,23 @@ Foam::dgHLLCFluxSolver::dgHLLCFluxSolver
 
 }
 
+
+void Foam::dgHLLCFluxSolver::calcGamma
+(
+    const label cellID,
+    GaussField<scalar>& gamma
+) const
+{
+    const GaussField<scalar>& TG = thermo_.T().gaussFields()[cellID];
+
+    tmp<GaussField<scalar>> tCp = GaussField<scalar>::New(cellID, &mesh_);
+    tmp<GaussField<scalar>> tCv = GaussField<scalar>::New(cellID, &mesh_);
+
+    thermo_.thermo().calcCp(cellID, TG, tCp.ref());
+    thermo_.thermo().calcCv(cellID, TG, tCv.ref());
+    thermo_.thermo().calcGamma(cellID, tCp(), tCv(), gamma);
+}
+
 // * * * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * * //
 
 void Foam::dgHLLCFluxSolver::read(const dictionary& dict)
@@ -147,6 +157,7 @@ void Foam::dgHLLCFluxSolver::calcIntermediateState
     const label localFaceID,
     const label localGaussID,
     const vector& n,
+    const faceGaussField<scalar>& gammaF,
 
     // Output
     scalar& SL,
@@ -158,6 +169,7 @@ void Foam::dgHLLCFluxSolver::calcIntermediateState
 {
     // Access left and right side values at this Gauss point
     const faceGaussField<scalar>& rhoF = rho_.gaussFields()[cellID].faceField();
+    const faceGaussField<scalar>& aF = thermo_.a().gaussFields()[cellID].faceField();
 
     // Get global face ID from any faceGaussField
     const label globalFaceID = rhoF.globalFaceID(localFaceID);
@@ -175,9 +187,7 @@ void Foam::dgHLLCFluxSolver::calcIntermediateState
         // Calculate and cache intermediate states if the cell is owner
         const faceGaussField<vector>& UF   = U_.gaussFields()[cellID].faceField();
         const faceGaussField<scalar>& pF   = p_.gaussFields()[cellID].faceField();
-        const faceGaussField<scalar>& aF   = a_.gaussFields()[cellID].faceField();
-        const faceGaussField<scalar>& hF   = h_.gaussFields()[cellID].faceField();
-        const faceGaussField<scalar>& gammaF = gamma_.gaussFields()[cellID].faceField();
+        const faceGaussField<scalar>& hF   = thermo_.h().gaussFields()[cellID].faceField();
 
         // Left (-) and right (+) states
         const scalar rhoR = rhoF.plusValueOnFace(localFaceID, localGaussID);
@@ -295,6 +305,10 @@ void Foam::dgHLLCFluxSolver::computeFlux
     const label nFaces(F.nFaces());
     const label nGaussPerFace(F.nGaussPerFace());
 
+    tmp<GaussField<scalar>> tGamma = GaussField<scalar>::New(cellID, &mesh_);
+    calcGamma(cellID, tGamma.ref());
+    const faceGaussField<scalar>& gammaF = tGamma().faceField();
+
     // Loop over faces
     for (label fI = 0; fI < nFaces; fI++)
     {
@@ -313,6 +327,7 @@ void Foam::dgHLLCFluxSolver::computeFlux
                 fI,
                 nG,
                 n,
+                gammaF,
 
                 // output
                 SL,
@@ -418,6 +433,10 @@ void Foam::dgHLLCFluxSolver::computeFlux
     const label nFaces(F.nFaces());
     const label nGaussPerFace(F.nGaussPerFace());
 
+    tmp<GaussField<scalar>> tGamma = GaussField<scalar>::New(cellID, &mesh_);
+    calcGamma(cellID, tGamma.ref());
+    const faceGaussField<scalar>& gammaF = tGamma().faceField();
+
     // Loop over faces
     for (label fI = 0; fI < nFaces; fI++)
     {
@@ -436,6 +455,7 @@ void Foam::dgHLLCFluxSolver::computeFlux
                 fI,
                 nG,
                 n,
+                gammaF,
 
                 // output
                 SL,

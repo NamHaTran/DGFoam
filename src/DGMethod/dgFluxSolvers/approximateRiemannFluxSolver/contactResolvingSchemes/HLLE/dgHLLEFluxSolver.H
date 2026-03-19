@@ -45,6 +45,7 @@ SourceFiles
 
 namespace Foam
 {
+class dgThermoConservative;
 
 template<class Type> class faceGaussField;
 
@@ -117,6 +118,9 @@ public:
 
 private:
 
+    /** Thermodynamics wrapper (read-only, non-owning) */
+    const dgThermoConservative& thermo_;
+
     /** Density field (read-only, non-owning) */
     const dgField<scalar>& rho_;
 
@@ -126,17 +130,15 @@ private:
     /** Pressure field (read-only, non-owning) */
     const dgField<scalar>& p_;
 
-    /** Speed of sound field (read-only, non-owning) */
-    const dgField<scalar>& a_;
-
-    /** Enthalpy field (read-only, non-owning) */
-    const dgField<scalar>& h_;
-
-    /** Heat-capacity ratio Cp/Cv (read-only, non-owning) */
-    const dgField<scalar>& gamma_;
-
     /** Selected wave-speed estimation method */
     speedEstimateType speedEst_;
+
+    /** Compute gamma on demand for the given cell */
+    void calcGamma
+    (
+        const label cellID,
+        GaussField<scalar>& gamma
+    ) const;
 
     /**
      * \brief Compute HLLE wave speeds

@@ -45,6 +45,7 @@ SourceFiles
 
 namespace Foam
 {
+    class dgThermoConservative;
     template<class Type> class faceGaussField;
 }
 
@@ -99,6 +100,9 @@ public:
 
 private:
 
+    /** Thermodynamics wrapper (read-only, non-owning) */
+    const dgThermoConservative& thermo_;
+
     /** Pointer to density field (read-only, non-owning) */
     const dgField<scalar>& rho_;
 
@@ -107,15 +111,6 @@ private:
 
     /** Pointer to pressure field (read-only, non-owning) */
     const dgField<scalar>& p_;
-
-    /** Pointer to speed-of-sound field (read-only, non-owning) */
-    const dgField<scalar>& a_;
-
-    /** Pointer to enthalpy field (read-only, non-owning) */
-    const dgField<scalar>& h_;
-
-    /** Pointer to heat-capacity ratio field (read-only, non-owning) */
-    const dgField<scalar>& gamma_;
 
     /** Selected wave-speed estimation method */
     speedEstimateType speedEst_;
@@ -137,6 +132,13 @@ private:
 
     /** Flags indicating whether intermediate states are computed per face/Gauss point */
     List<List<bool>> isStateComputed_;
+
+    /** Compute gamma on demand for the given cell */
+    void calcGamma
+    (
+        const label cellID,
+        GaussField<scalar>& gamma
+    ) const;
 
 public:
 
@@ -185,6 +187,7 @@ public:
         const label localFaceID,
         const label localGaussID,
         const vector& n,
+        const faceGaussField<scalar>& gammaF,
         scalar& SL,
         scalar& SR,
         scalar& SStar,

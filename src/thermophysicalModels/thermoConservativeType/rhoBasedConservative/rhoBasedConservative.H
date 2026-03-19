@@ -60,15 +60,17 @@ namespace Foam
  * at Gauss points from the conservative variables
  * \f$(\rho, \rho\mathbf{U}, E)\f$.
  *
- * The reconstructed quantities include:
+ * The stored reconstructed quantities include:
  * \li Temperature \f$T\f$
  * \li Pressure \f$p\f$
  * \li Internal energy \f$e\f$
  * \li Enthalpy \f$h\f$
- * \li Heat capacities \f$C_p\f$, \f$C_v\f$
- * \li Heat-capacity ratio \f$\gamma\f$
  * \li Speed of sound \f$a\f$
- * \li Transport properties \f$\mu\f$, \f$\kappa\f$, \f$\mathrm{Pr}\f$
+ *
+ * Additional thermodynamic and transport properties such as
+ * \f$C_p\f$, \f$C_v\f$, \f$\gamma\f$, \f$\kappa\f$, \f$\mu\f$, and
+ * \f$\mathrm{Pr}\f$ are evaluated on demand through the thermoLaw and
+ * transportLaw APIs instead of being stored as dgField data.
  *
  * All operations are performed locally at Gauss points of each DG cell,
  * which is consistent with high-order discontinuous Galerkin discretizations.

@@ -27,14 +27,11 @@ if (runTime.isAdjustTimeStep())
         // layer overloads operators on it pointwise.
         const cellGaussField<vector>& UCell = U.gaussFields()[cellI].cellField();
         const cellGaussField<scalar>& aCell = thermo->a().gaussFields()[cellI].cellField();
-        const cellGaussField<scalar>& muCell = thermo->mu().gaussFields()[cellI].cellField();
 
         // lambdaMax approximates the stiffest local wave/transport speed.
         // Build the pointwise sum in smaller tmp-backed steps to avoid
         // over-referencing the same temporary cellGaussField object.
-        tmp<cellGaussField<scalar>> tLambdaCell = muCell/h;
-        tLambdaCell = tLambdaCell + aCell;
-        tLambdaCell = tLambdaCell + mag(UCell);
+        tmp<cellGaussField<scalar>> tLambdaCell = aCell + mag(UCell);
 
         const scalar lambdaMax = maxValue(tLambdaCell);
 

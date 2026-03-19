@@ -45,6 +45,7 @@ SourceFiles
 
 namespace Foam
 {
+    class dgThermoConservative;
     template<class Type> class faceGaussField;
 }
 
@@ -97,11 +98,11 @@ class dgLaxFriedrichsFluxSolver
 {
 private:
 
+    /** Thermodynamics wrapper (read-only, non-owning) */
+    const dgThermoConservative& thermo_;
+
     /** Pointer to velocity field (read-only, non-owning) */
     const dgField<vector>& U_;
-
-    /** Pointer to speed-of-sound field (read-only, non-owning) */
-    const dgField<scalar>& a_;
 
     /** Enable Mach-number-based dissipation scaling */
     bool scaleByMach_;

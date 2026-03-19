@@ -66,32 +66,6 @@ Foam::dgThermoConservative::dgThermoConservative
     transport_(nullptr),
     energy_(nullptr),
     R_(Zero),
-    Cp_
-    (
-        IOobject
-        (
-            "Cp", 
-            mesh.getFvMesh().time().timeName(), 
-            mesh.getFvMesh(), 
-            IOobject::NO_READ, 
-            IOobject::NO_WRITE
-        ),
-        mesh,
-        false
-    ),
-    Cv_
-    (
-        IOobject
-        (
-            "Cv", 
-            mesh.getFvMesh().time().timeName(), 
-            mesh.getFvMesh(), 
-            IOobject::NO_READ, 
-            IOobject::NO_WRITE
-        ),
-        mesh,
-        false
-    ),
     h_
     (
         IOobject
@@ -118,63 +92,11 @@ Foam::dgThermoConservative::dgThermoConservative
         mesh,
         false
     ),
-    mu_
-    (
-        IOobject
-        (
-            "mu", 
-            mesh.getFvMesh().time().timeName(), 
-            mesh.getFvMesh(), 
-            IOobject::NO_READ, 
-            IOobject::NO_WRITE
-        ),
-        mesh,
-        false
-    ),
-    kappa_
-    (
-        IOobject
-        (
-            "kappa", 
-            mesh.getFvMesh().time().timeName(), 
-            mesh.getFvMesh(), 
-            IOobject::NO_READ, 
-            IOobject::NO_WRITE
-        ),
-        mesh,
-        false
-    ),
-    Pr_
-    (
-        IOobject
-        (
-            "Pr", 
-            mesh.getFvMesh().time().timeName(), 
-            mesh.getFvMesh(), 
-            IOobject::NO_READ, 
-            IOobject::NO_WRITE
-        ),
-        mesh,
-        false
-    ),
     a_
     (
         IOobject
         (
             "a", 
-            mesh.getFvMesh().time().timeName(), 
-            mesh.getFvMesh(), 
-            IOobject::NO_READ, 
-            IOobject::NO_WRITE
-        ),
-        mesh,
-        false
-    ),
-    gamma_
-    (
-        IOobject
-        (
-            "gamma", 
             mesh.getFvMesh().time().timeName(), 
             mesh.getFvMesh(), 
             IOobject::NO_READ, 

@@ -76,12 +76,15 @@ class energy;
  * \f[
  *   (\rho,\; \rho\mathbf{U},\; E)
  * \;\longrightarrow\;
- * (T,\; p,\; e,\; h,\; C_p,\; C_v,\; \gamma,\; a)
+ * (T,\; p,\; e,\; h,\; a)
  * \f]
  *
  * The model operates in a fully cell-local and Gauss-point-resolved
- * manner and provides thermodynamic and transport properties required
- * by compressible DG formulations.
+ * manner and provides the stored thermodynamic and transport quantities
+ * required by compressible DG formulations. Additional properties such as
+ * \f$C_p\f$, \f$C_v\f$, \f$\gamma\f$, \f$\kappa\f$, \f$\mu\f$, and
+ * \f$\mathrm{Pr}\f$ are intended to be evaluated on demand through the
+ * thermoLaw and transportLaw APIs instead of being stored as dgField data.
  *
  * Supported model structure:
  * - Equation of state (eqnOfState)
@@ -127,32 +130,14 @@ protected:
         /** Gas constant */
         scalar R_;
 
-        /** Heat capacity at constant pressure */
-        dgField<scalar> Cp_;
-
-        /** Heat capacity at constant volume */
-        dgField<scalar> Cv_;
-
         /** Specific enthalpy */
         dgField<scalar> h_;
 
         /** Specific internal energy */
         dgField<scalar> e_;
 
-        /** Dynamic viscosity */
-        dgField<scalar> mu_;
-
-        /** Thermal conductivity */
-        dgField<scalar> kappa_;
-
-        /** Prandtl number */
-        dgField<scalar> Pr_;
-
         /** Speed of sound */
         dgField<scalar> a_;
-
-        /** Heat-capacity ratio */
-        dgField<scalar> gamma_;
 
         /** Conservative density field (read-only) */
         const dgField<scalar>& rho_;
@@ -283,32 +268,14 @@ public:
         /** Return gas constant */
         inline scalar R() const { return R_; }
 
-        /** Return Cp field */
-        inline const dgField<scalar>& Cp() const { return Cp_; }
-
-        /** Return Cv field */
-        inline const dgField<scalar>& Cv() const { return Cv_; }
-
         /** Return enthalpy field */
         inline const dgField<scalar>& h() const { return h_; }
 
         /** Return internal energy field */
         inline const dgField<scalar>& e() const { return e_; }
 
-        /** Return viscosity field */
-        inline const dgField<scalar>& mu() const { return mu_; }
-
-        /** Return thermal conductivity field */
-        inline const dgField<scalar>& kappa() const { return kappa_; }
-
-        /** Return Prandtl number field */
-        inline const dgField<scalar>& Pr() const { return Pr_; }
-
         /** Return speed-of-sound field */
         inline const dgField<scalar>& a() const { return a_; }
-
-        /** Return heat-capacity ratio field */
-        inline const dgField<scalar>& gamma() const { return gamma_; }
 
         /** Return pressure field */
         inline dgField<scalar>& p() { return p_; }

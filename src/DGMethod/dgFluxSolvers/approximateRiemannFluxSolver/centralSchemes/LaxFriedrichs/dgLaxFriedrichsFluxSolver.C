@@ -28,6 +28,7 @@ License
 
 #include "dgLaxFriedrichsFluxSolver.H"
 #include "addToRunTimeSelectionTable.H"
+#include "dgThermoConservative.H"
 #include "error.H"
 #include <cmath>
 
@@ -49,8 +50,8 @@ dgLaxFriedrichsFluxSolver::dgLaxFriedrichsFluxSolver
 :
     dgFluxSolver(name, dict, mesh),
 
+    thermo_( mesh.getFvMesh().lookupObject<dgThermoConservative>("dgThermoConservative") ),
     U_( mesh.getFvMesh().lookupObject<dgField<vector>>("U") ),
-    a_( mesh.getFvMesh().lookupObject<dgField<scalar>>("a") ),
     scaleByMach_(false)
 {
     read(dict);
@@ -63,7 +64,6 @@ void dgLaxFriedrichsFluxSolver::read(const dictionary& dict)
 {
     scaleByMach_ = dict.lookupOrDefault<bool>("scaleByMach", false);
 }
-
 
 // * * * * * * * * * * Dissipation coefficient * * * * * * * * * * //
 
@@ -113,7 +113,7 @@ void dgLaxFriedrichsFluxSolver::computeFlux
 )
 {
     const faceGaussField<vector>& UF = U_.gaussFields()[cellID].faceField();
-    const faceGaussField<scalar>& aF = a_.gaussFields()[cellID].faceField();
+    const faceGaussField<scalar>& aF = thermo_.a().gaussFields()[cellID].faceField();
 
     const label nFaces = F.nFaces();
     const label nGauss = F.nGaussPerFace();
@@ -158,7 +158,7 @@ void dgLaxFriedrichsFluxSolver::computeFlux
 )
 {
     const faceGaussField<vector>& UF = U_.gaussFields()[cellID].faceField();
-    const faceGaussField<scalar>& aF = a_.gaussFields()[cellID].faceField();
+    const faceGaussField<scalar>& aF = thermo_.a().gaussFields()[cellID].faceField();
 
     const label nFaces = F.nFaces();
     const label nGauss = F.nGaussPerFace();
@@ -195,4 +195,3 @@ void dgLaxFriedrichsFluxSolver::computeFlux
 } // End namespace Foam
 
 // ************************************************************************* //
-

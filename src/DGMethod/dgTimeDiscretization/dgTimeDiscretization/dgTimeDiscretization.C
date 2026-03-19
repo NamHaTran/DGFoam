@@ -28,6 +28,7 @@ License
 
 #include "dgTimeDiscretization.H"
 #include "IOstreams.H"
+#include "PstreamReduceOps.H"
 #include "error.H"
 
 namespace Foam
@@ -69,7 +70,8 @@ void writeScalarResidualSummary
     const List<List<scalar>>& residual
 )
 {
-    const label maxDof = maxDofCount(residual);
+    label maxDof = maxDofCount(residual);
+    reduce(maxDof, maxOp<label>());
 
     os  << "  scalar field " << fieldName << ':' << nl;
 
@@ -97,6 +99,11 @@ void writeScalarResidualSummary
 
     forAll(maxResidual, dofI)
     {
+        reduce(maxResidual[dofI], maxOp<scalar>());
+    }
+
+    forAll(maxResidual, dofI)
+    {
         os  << "    dof " << dofI
             << " : max(|R|) = " << maxResidual[dofI] << nl;
     }
@@ -110,7 +117,8 @@ void writeVectorResidualSummary
     const List<List<vector>>& residual
 )
 {
-    const label maxDof = maxDofCount(residual);
+    label maxDof = maxDofCount(residual);
+    reduce(maxDof, maxOp<label>());
 
     os  << "  vector field " << fieldName << ':' << nl;
 
@@ -136,6 +144,13 @@ void writeVectorResidualSummary
             maxResidualY[dofI] = max(maxResidualY[dofI], mag(residualDof.y()));
             maxResidualZ[dofI] = max(maxResidualZ[dofI], mag(residualDof.z()));
         }
+    }
+
+    forAll(maxResidualX, dofI)
+    {
+        reduce(maxResidualX[dofI], maxOp<scalar>());
+        reduce(maxResidualY[dofI], maxOp<scalar>());
+        reduce(maxResidualZ[dofI], maxOp<scalar>());
     }
 
     forAll(maxResidualX, dofI)

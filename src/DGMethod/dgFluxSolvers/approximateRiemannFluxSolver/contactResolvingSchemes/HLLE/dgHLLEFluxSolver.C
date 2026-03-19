@@ -28,6 +28,7 @@ License
 
 #include "dgHLLEFluxSolver.H"
 #include "addToRunTimeSelectionTable.H"
+#include "dgThermoConservative.H"
 #include "error.H"
 #include <cmath>
 
@@ -49,12 +50,10 @@ Foam::dgHLLEFluxSolver::dgHLLEFluxSolver
 :
     dgFluxSolver(name, dict, mesh),
 
+    thermo_( mesh.getFvMesh().lookupObject<dgThermoConservative>("dgThermoConservative") ),
     rho_( mesh.getFvMesh().lookupObject<dgField<scalar>>("rho") ),
     U_  ( mesh.getFvMesh().lookupObject<dgField<vector>>("U")   ),
-    p_  ( mesh.getFvMesh().lookupObject<dgField<scalar>>("p")   ),
-    a_  ( mesh.getFvMesh().lookupObject<dgField<scalar>>("a")   ),
-    h_  ( mesh.getFvMesh().lookupObject<dgField<scalar>>("h")   ),
-    gamma_( mesh.getFvMesh().lookupObject<dgField<scalar>>("gamma") )
+    p_  ( mesh.getFvMesh().lookupObject<dgField<scalar>>("p")   )
 {
     read(dict);
 }
@@ -78,6 +77,23 @@ void Foam::dgHLLEFluxSolver::read(const dictionary& dict)
 
         speedEst_ = seDavis;
     }
+}
+
+
+void Foam::dgHLLEFluxSolver::calcGamma
+(
+    const label cellID,
+    GaussField<scalar>& gamma
+) const
+{
+    const GaussField<scalar>& TG = thermo_.T().gaussFields()[cellID];
+
+    tmp<GaussField<scalar>> tCp = GaussField<scalar>::New(cellID, &mesh_);
+    tmp<GaussField<scalar>> tCv = GaussField<scalar>::New(cellID, &mesh_);
+
+    thermo_.thermo().calcCp(cellID, TG, tCp.ref());
+    thermo_.thermo().calcCv(cellID, TG, tCv.ref());
+    thermo_.thermo().calcGamma(cellID, tCp(), tCv(), gamma);
 }
 
 
@@ -155,9 +171,12 @@ void Foam::dgHLLEFluxSolver::computeFlux
     const faceGaussField<scalar>& rhoF = rho_.gaussFields()[cellID].faceField();
     const faceGaussField<vector>& UF   = U_.gaussFields()[cellID].faceField();
     const faceGaussField<scalar>& pF   = p_.gaussFields()[cellID].faceField();
-    const faceGaussField<scalar>& aF   = a_.gaussFields()[cellID].faceField();
-    const faceGaussField<scalar>& hF   = h_.gaussFields()[cellID].faceField();
-    const faceGaussField<scalar>& gF   = gamma_.gaussFields()[cellID].faceField();
+    const faceGaussField<scalar>& aF   = thermo_.a().gaussFields()[cellID].faceField();
+    const faceGaussField<scalar>& hF   = thermo_.h().gaussFields()[cellID].faceField();
+
+    tmp<GaussField<scalar>> tGamma = GaussField<scalar>::New(cellID, &mesh_);
+    calcGamma(cellID, tGamma.ref());
+    const faceGaussField<scalar>& gF   = tGamma().faceField();
 
     const label nFaces = F.nFaces();
     const label nGauss = F.nGaussPerFace();
@@ -231,9 +250,12 @@ void Foam::dgHLLEFluxSolver::computeFlux
     const faceGaussField<scalar>& rhoF = rho_.gaussFields()[cellID].faceField();
     const faceGaussField<vector>& UF   = U_.gaussFields()[cellID].faceField();
     const faceGaussField<scalar>& pF   = p_.gaussFields()[cellID].faceField();
-    const faceGaussField<scalar>& aF   = a_.gaussFields()[cellID].faceField();
-    const faceGaussField<scalar>& hF   = h_.gaussFields()[cellID].faceField();
-    const faceGaussField<scalar>& gF   = gamma_.gaussFields()[cellID].faceField();
+    const faceGaussField<scalar>& aF   = thermo_.a().gaussFields()[cellID].faceField();
+    const faceGaussField<scalar>& hF   = thermo_.h().gaussFields()[cellID].faceField();
+
+    tmp<GaussField<scalar>> tGamma = GaussField<scalar>::New(cellID, &mesh_);
+    calcGamma(cellID, tGamma.ref());
+    const faceGaussField<scalar>& gF   = tGamma().faceField();
 
     const label nFaces = F.nFaces();
     const label nGauss = F.nGaussPerFace();
@@ -300,4 +322,3 @@ void Foam::dgHLLEFluxSolver::computeFlux
 } // End namespace Foam
 
 // ************************************************************************* //
-

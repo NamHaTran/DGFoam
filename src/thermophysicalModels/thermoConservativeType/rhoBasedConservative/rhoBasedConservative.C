@@ -195,14 +195,8 @@ void Foam::rhoBasedConservative::update(const label& cellI)
     // Thermo fields
     GaussField<scalar>& TG      = T_.gaussFields()[cellI];
     GaussField<scalar>& pG      = p_.gaussFields()[cellI];
-    GaussField<scalar>& CpG     = Cp_.gaussFields()[cellI];
-    GaussField<scalar>& CvG     = Cv_.gaussFields()[cellI];
     GaussField<scalar>& eG      = e_.gaussFields()[cellI];
     GaussField<scalar>& hG      = h_.gaussFields()[cellI];
-    GaussField<scalar>& gammaG  = gamma_.gaussFields()[cellI];
-    GaussField<scalar>& kappaG  = kappa_.gaussFields()[cellI];
-    GaussField<scalar>& muG     = mu_.gaussFields()[cellI];
-    GaussField<scalar>& PrG     = Pr_.gaussFields()[cellI];
     GaussField<scalar>& aG      = a_.gaussFields()[cellI];
 
     // Velocity at Gauss points
@@ -219,20 +213,20 @@ void Foam::rhoBasedConservative::update(const label& cellI)
     // Temperature
     thermo_().calcT(cellI, eG, TG);
 
+    // Thermo
+    thermo_().calcH(cellI, TG, hG);
+
     // Pressure
     eqnState_().calcPFromRhoT(cellI, rhoG, TG, pG);
 
-    // Thermodynamics
-    thermo_().calcCp(cellI, TG, CpG);
-    thermo_().calcCv(cellI, TG, CvG);
-    thermo_().calcGamma(cellI, CpG, CvG, gammaG);
-    thermo_().calcH(cellI, TG, hG);
-    thermo_().calcSpeedOfSound(cellI, TG, gammaG, aG);
+    tmp<GaussField<scalar>> tCp = GaussField<scalar>::New(cellI, &mesh_);
+    tmp<GaussField<scalar>> tCv = GaussField<scalar>::New(cellI, &mesh_);
+    tmp<GaussField<scalar>> tGamma = GaussField<scalar>::New(cellI, &mesh_);
 
-    // Transport
-    transport_().calcMu(cellI, TG, muG);
-    transport_().calcKappa(cellI, TG, kappaG);
-    transport_().calcPr(cellI, TG, PrG);
+    thermo_().calcCp(cellI, TG, tCp.ref());
+    thermo_().calcCv(cellI, TG, tCv.ref());
+    thermo_().calcGamma(cellI, tCp(), tCv(), tGamma.ref());
+    thermo_().calcSpeedOfSound(cellI, TG, tGamma(), aG);
 }
 
 
@@ -252,14 +246,8 @@ void Foam::rhoBasedConservative::updateBC(const label& cellI)
     GaussField<vector>& UG     = U_.gaussFields()[cellI];
     GaussField<scalar>& TG     = T_.gaussFields()[cellI];
     GaussField<scalar>& pG     = p_.gaussFields()[cellI];
-    GaussField<scalar>& CpG    = Cp_.gaussFields()[cellI];
-    GaussField<scalar>& CvG    = Cv_.gaussFields()[cellI];
     GaussField<scalar>& eG     = e_.gaussFields()[cellI];
     GaussField<scalar>& hG     = h_.gaussFields()[cellI];
-    GaussField<scalar>& gammaG = gamma_.gaussFields()[cellI];
-    GaussField<scalar>& kappaG = kappa_.gaussFields()[cellI];
-    GaussField<scalar>& muG    = mu_.gaussFields()[cellI];
-    GaussField<scalar>& PrG    = Pr_.gaussFields()[cellI];
     GaussField<scalar>& aG     = a_.gaussFields()[cellI];
 
     // Read back the already-prepared ghost boundary state from the plus side of
@@ -275,47 +263,30 @@ void Foam::rhoBasedConservative::updateBC(const label& cellI)
         TG.faceField().extractBCGhostState();
     boundaryGaussField<scalar> pB =
         pG.faceField().extractBCGhostState();
-    boundaryGaussField<scalar> CpB =
-        CpG.faceField().extractBCGhostState();
-    boundaryGaussField<scalar> CvB =
-        CvG.faceField().extractBCGhostState();
     boundaryGaussField<scalar> eB =
         eG.faceField().extractBCGhostState();
     boundaryGaussField<scalar> hB =
         hG.faceField().extractBCGhostState();
-    boundaryGaussField<scalar> gammaB =
-        gammaG.faceField().extractBCGhostState();
-    boundaryGaussField<scalar> kappaB =
-        kappaG.faceField().extractBCGhostState();
-    boundaryGaussField<scalar> muB =
-        muG.faceField().extractBCGhostState();
-    boundaryGaussField<scalar> PrB =
-        PrG.faceField().extractBCGhostState();
     boundaryGaussField<scalar> aB =
         aG.faceField().extractBCGhostState();
 
     thermo_().calcInternalE(TB, eB);
+    thermo_().calcH(TB, hB);
+
+    boundaryGaussField<scalar> CpB(TB.size());
+    boundaryGaussField<scalar> CvB(TB.size());
+    boundaryGaussField<scalar> gammaB(TB.size());
+
     thermo_().calcCp(TB, CpB);
     thermo_().calcCv(TB, CvB);
     thermo_().calcGamma(CpB, CvB, gammaB);
-    thermo_().calcH(TB, hB);
     thermo_().calcSpeedOfSound(TB, gammaB, aB);
-
-    transport_().calcMu(TB, muB);
-    transport_().calcKappa(TB, kappaB);
-    transport_().calcPr(TB, PrB);
 
     // Write back the derived quantities. T and p are assigned unchanged on
     // purpose so the full boundary thermo state stays synchronized in the
     // face storage, but they remain authoritative inputs from the BC stage.
-    CpG.faceField().assignBCGhostState(CpB);
-    CvG.faceField().assignBCGhostState(CvB);
     eG.faceField().assignBCGhostState(eB);
     hG.faceField().assignBCGhostState(hB);
-    gammaG.faceField().assignBCGhostState(gammaB);
-    muG.faceField().assignBCGhostState(muB);
-    kappaG.faceField().assignBCGhostState(kappaB);
-    PrG.faceField().assignBCGhostState(PrB);
     aG.faceField().assignBCGhostState(aB);
 }
 
