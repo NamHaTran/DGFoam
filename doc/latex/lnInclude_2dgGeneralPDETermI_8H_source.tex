@@ -126,7 +126,7 @@
 \DoxyCodeLine{00122\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ UType,\ \textcolor{keyword}{class}\ FType>}
 \DoxyCodeLine{00123\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classFoam_1_1dgGeneralPDETerm_abab32003212bb5e043f4a5f86de1c266}{Foam::dgGeneralPDETerm<UType,\ FType>::calcResidual}}()}
 \DoxyCodeLine{00124\ \{}
-\DoxyCodeLine{00125\ \ \ \ \ forAll\ (R\_,\ i)}
+\DoxyCodeLine{00125\ \ \ \ \ \mbox{\hyperlink{advanceStage_8H_a64a669ced2293965f99538a37d2c80d8}{forAll}}\ (R\_,\ i)}
 \DoxyCodeLine{00126\ \ \ \ \ \{}
 \DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ R\_[i]\ =\ pTraits<UType>::zero;}
 \DoxyCodeLine{00128\ \ \ \ \ \}}
@@ -136,18 +136,23 @@
 \DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Gradient\ of\ basis\ phi\_i}}
 \DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ GaussField<vector>\&\ gradPhi\ =\ basis\_.getDBasis(i);}
 \DoxyCodeLine{00134\ }
-\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ UType\ volTerm\ =\ \mbox{\hyperlink{namespaceFoam_abb4da9f774dc94a34630ee9ed788ec81}{Foam::volumeIntegral}}(gradPhi.cellField(),\ F\_().cellField());}
-\DoxyCodeLine{00136\ }
-\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Basis\ phi\_i\ on\ faces}}
-\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ GaussField<scalar>\&\ phi\ =\ basis\_.getBasis(i);}
-\DoxyCodeLine{00139\ }
-\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ UType\ surfTerm\ =\ \mbox{\hyperlink{namespaceFoam_ab4801fef406a81dc437da35df1149328}{Foam::surfaceIntegral}}(phi.faceField(),\ F\_().faceField());}
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ UType\ volTerm\ =}
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ (}
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ \ \ \ \ i\ ==\ 0}
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ \ \ ?\ pTraits<UType>::zero}
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ \ \ :\ \mbox{\hyperlink{namespaceFoam_abb4da9f774dc94a34630ee9ed788ec81}{Foam::volumeIntegral}}(gradPhi.cellField(),\ F\_().cellField())}
+\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ );}
 \DoxyCodeLine{00141\ }
-\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ R\_[i]\ -\/=\ volTerm;}
-\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ R\_[i]\ +=\ surfTerm;}
-\DoxyCodeLine{00144\ \ \ \ \ \}}
-\DoxyCodeLine{00145\ \}}
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Basis\ phi\_i\ on\ faces}}
+\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ GaussField<scalar>\&\ phi\ =\ basis\_.getBasis(i);}
+\DoxyCodeLine{00144\ }
+\DoxyCodeLine{00145\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ UType\ surfTerm\ =\ \mbox{\hyperlink{namespaceFoam_ab4801fef406a81dc437da35df1149328}{Foam::surfaceIntegral}}(phi.faceField(),\ F\_().\mbox{\hyperlink{updateBC_8H_a2b150f8b087228e2022aab1a5cf6ff58}{faceField}}());}
 \DoxyCodeLine{00146\ }
-\DoxyCodeLine{00147\ \textcolor{comment}{//\ *************************************************************************\ //}}
+\DoxyCodeLine{00147\ \ \ \ \ \ \ \ \ R\_[i]\ +=\ volTerm;}
+\DoxyCodeLine{00148\ \ \ \ \ \ \ \ \ R\_[i]\ -\/=\ surfTerm;}
+\DoxyCodeLine{00149\ \ \ \ \ \}}
+\DoxyCodeLine{00150\ \}}
+\DoxyCodeLine{00151\ }
+\DoxyCodeLine{00152\ \textcolor{comment}{//\ *************************************************************************\ //}}
 
 \end{DoxyCode}

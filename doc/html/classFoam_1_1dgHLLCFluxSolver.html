@@ -84,6 +84,7 @@ $(function() {
   <div class="summary">
 <a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
 <a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="classFoam_1_1dgHLLCFluxSolver-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">Foam::dgHLLCFluxSolver Class Reference</div></div>
@@ -110,23 +111,30 @@ Collaboration diagram for Foam::dgHLLCFluxSolver:</div>
 <div class="dyncontent">
 <div class="center"><img src="classFoam_1_1dgHLLCFluxSolver__coll__graph.png" border="0" usemap="#aFoam_1_1dgHLLCFluxSolver_coll__map" alt="Collaboration graph"/></div>
 <map name="aFoam_1_1dgHLLCFluxSolver_coll__map" id="aFoam_1_1dgHLLCFluxSolver_coll__map">
-<area shape="rect" title="HLLC approximate Riemann solver for DG methods." alt="" coords="85,240,269,265"/>
-<area shape="rect" href="classFoam_1_1dgFluxSolver.html" title="Base class for DG numerical flux solvers." alt="" coords="5,93,156,119"/>
-<area shape="poly" title=" " alt="" coords="92,130,128,187,166,238,162,241,124,190,87,132"/>
-<area shape="poly" title=" " alt="" coords="105,128,145,186,176,238,172,241,141,189,100,131"/>
-<area shape="rect" href="classFoam_1_1dgGeomMesh.html" title="DG geometric mesh wrapper around fvMesh." alt="" coords="187,5,343,31"/>
-<area shape="poly" title=" " alt="" coords="228,39,107,95,105,91,226,34"/>
-<area shape="rect" href="classFoam_1_1dgField.html" title=" " alt="" coords="389,93,572,119"/>
-<area shape="poly" title=" " alt="" coords="307,33,453,91,451,96,305,38"/>
-<area shape="rect" href="classFoam_1_1dgField.html" title=" " alt="" coords="181,93,365,119"/>
-<area shape="poly" title=" " alt="" coords="267,45,269,69,273,93,267,93,263,70,262,45"/>
-<area shape="poly" title=" " alt="" coords="450,128,371,171,274,218,212,242,210,237,272,214,369,166,448,123"/>
-<area shape="rect" title=" " alt="" coords="403,5,500,31"/>
-<area shape="poly" title=" " alt="" coords="454,43,473,92,468,94,449,45"/>
-<area shape="poly" title=" " alt="" coords="470,42,486,92,480,94,465,44"/>
-<area shape="poly" title=" " alt="" coords="423,42,382,72,350,86,319,96,317,91,348,81,379,67,420,37"/>
-<area shape="poly" title=" " alt="" coords="442,44,406,72,374,86,341,96,339,91,372,81,403,67,439,39"/>
-<area shape="poly" title=" " alt="" coords="259,132,187,241,182,238,255,129"/>
+<area shape="rect" title="HLLC approximate Riemann solver for DG methods." alt="" coords="853,226,1037,251"/>
+<area shape="rect" href="classFoam_1_1dgFluxSolver.html" title="Base class for DG numerical flux solvers." alt="" coords="562,287,713,313"/>
+<area shape="poly" title=" " alt="" coords="726,288,910,249,911,254,727,293"/>
+<area shape="poly" title=" " alt="" coords="685,281,852,246,853,251,686,286"/>
+<area shape="rect" href="classFoam_1_1dgGeomMesh.html" title="DG geometric mesh wrapper around fvMesh." alt="" coords="5,237,161,262"/>
+<area shape="poly" title=" " alt="" coords="122,266,184,293,258,313,338,322,420,322,496,317,561,310,562,315,497,322,420,327,338,327,257,319,182,298,119,270"/>
+<area shape="rect" href="classFoam_1_1dgThermoConservative.html" title="Conservative thermodynamics wrapper for DG solvers." alt="" coords="528,147,747,173"/>
+<area shape="poly" title=" " alt="" coords="175,254,303,253,372,246,441,232,472,218,503,199,527,186,575,170,577,175,529,190,505,204,475,223,442,237,373,251,303,258,175,259"/>
+<area shape="rect" href="classFoam_1_1dgField.html" title=" " alt="" coords="258,66,441,91"/>
+<area shape="poly" title=" " alt="" coords="114,227,327,89,330,94,117,231"/>
+<area shape="rect" href="classFoam_1_1dgField.html" title=" " alt="" coords="257,182,441,207"/>
+<area shape="poly" title=" " alt="" coords="174,235,233,224,306,205,308,210,234,229,175,240"/>
+<area shape="poly" title=" " alt="" coords="702,174,895,223,894,229,701,179"/>
+<area shape="rect" title=" " alt="" coords="35,66,132,91"/>
+<area shape="poly" title=" " alt="" coords="145,62,220,44,311,29,360,27,409,28,458,36,505,50,554,89,617,145,614,149,550,93,503,54,457,41,409,34,360,32,311,35,221,49,146,67"/>
+<area shape="poly" title=" " alt="" coords="115,58,187,32,286,10,340,4,396,4,452,10,505,26,528,42,564,76,630,145,626,149,560,79,525,47,503,30,451,16,396,9,340,9,286,15,189,37,117,63"/>
+<area shape="poly" title=" " alt="" coords="146,84,258,85,258,90,146,89"/>
+<area shape="poly" title=" " alt="" coords="146,68,258,67,258,73,146,74"/>
+<area shape="poly" title=" " alt="" coords="116,95,207,139,304,179,302,184,205,143,113,100"/>
+<area shape="poly" title=" " alt="" coords="143,94,245,137,331,179,328,184,243,142,141,99"/>
+<area shape="poly" title=" " alt="" coords="391,58,444,44,475,41,504,43,570,58,636,79,758,131,859,184,926,224,923,228,857,188,756,135,634,84,569,63,504,48,475,46,445,49,392,63"/>
+<area shape="poly" title=" " alt="" coords="386,96,424,114,466,131,529,145,527,151,465,136,422,119,384,101"/>
+<area shape="poly" title=" " alt="" coords="455,200,853,229,853,235,455,205"/>
+<area shape="poly" title=" " alt="" coords="455,194,504,191,551,182,595,170,597,175,553,187,504,196,456,200"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -183,9 +191,9 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ade670792fbd21685fbbda20e179c86ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6f3b45ed5adc99bee0e92516a3e29f57" id="r_a6f3b45ed5adc99bee0e92516a3e29f57"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">virtual</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1dgHLLCFluxSolver.html#a6f3b45ed5adc99bee0e92516a3e29f57">~dgHLLCFluxSolver</a> ()=<a class="el" href="classFoam_1_1GaussField.html">default</a></td></tr>
 <tr class="separator:a6f3b45ed5adc99bee0e92516a3e29f57"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2a7b418b4a893136cf67f05a35cccef0" id="r_a2a7b418b4a893136cf67f05a35cccef0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1dgHLLCFluxSolver.html#a2a7b418b4a893136cf67f05a35cccef0">calcIntermediateState</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">label</a> cellID, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">label</a> <a class="el" href="classFoam_1_1GaussField.html">localFaceID</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">label</a> <a class="el" href="classFoam_1_1GaussField.html">localGaussID</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">vector</a> &amp;<a class="el" href="classFoam_1_1GaussField.html">n</a>, <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &amp;<a class="el" href="classFoam_1_1GaussField.html">SL</a>, <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &amp;<a class="el" href="classFoam_1_1GaussField.html">SR</a>, <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &amp;<a class="el" href="classFoam_1_1GaussField.html">SStar</a>, <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &amp;<a class="el" href="classFoam_1_1GaussField.html">CL</a>, <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &amp;<a class="el" href="classFoam_1_1GaussField.html">CR</a>)</td></tr>
-<tr class="memdesc:a2a7b418b4a893136cf67f05a35cccef0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute intermediate wave speeds and star-state coefficients.  <br /></td></tr>
-<tr class="separator:a2a7b418b4a893136cf67f05a35cccef0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac3cc0c62d5f6b1ee23f7d525666a97c6" id="r_ac3cc0c62d5f6b1ee23f7d525666a97c6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1dgHLLCFluxSolver.html#ac3cc0c62d5f6b1ee23f7d525666a97c6">calcIntermediateState</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">label</a> cellID, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">label</a> <a class="el" href="classFoam_1_1GaussField.html">localFaceID</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">label</a> <a class="el" href="classFoam_1_1GaussField.html">localGaussID</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">vector</a> &amp;<a class="el" href="classFoam_1_1GaussField.html">n</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1faceGaussField.html">faceGaussField</a>&lt; <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &gt; &amp;<a class="el" href="classFoam_1_1GaussField.html">gammaF</a>, <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &amp;<a class="el" href="classFoam_1_1GaussField.html">SL</a>, <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &amp;<a class="el" href="classFoam_1_1GaussField.html">SR</a>, <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &amp;<a class="el" href="classFoam_1_1GaussField.html">SStar</a>, <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &amp;<a class="el" href="classFoam_1_1GaussField.html">CL</a>, <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &amp;<a class="el" href="classFoam_1_1GaussField.html">CR</a>)</td></tr>
+<tr class="memdesc:ac3cc0c62d5f6b1ee23f7d525666a97c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute intermediate wave speeds and star-state coefficients.  <br /></td></tr>
+<tr class="separator:ac3cc0c62d5f6b1ee23f7d525666a97c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8f1280d3b30a07801232658956bea663" id="r_a8f1280d3b30a07801232658956bea663"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="classFoam_1_1GaussField.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1dgHLLCFluxSolver.html#a8f1280d3b30a07801232658956bea663">computeFlux</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">label</a> cellID, <a class="el" href="classFoam_1_1faceGaussField.html">faceGaussField</a>&lt; <a class="el" href="classFoam_1_1GaussField.html">vector</a> &gt; &amp;<a class="el" href="classFoam_1_1GaussField.html">F</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1faceGaussField.html">faceGaussField</a>&lt; <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &gt; &amp;<a class="el" href="createPrimaryFields_8H.html#acaa7fe8168a3a866f1958b3663d384c6">U</a>) <a class="el" href="classFoam_1_1GaussField.html">override</a></td></tr>
 <tr class="memdesc:a8f1280d3b30a07801232658956bea663"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute numerical flux for scalar conserved variable.  <br /></td></tr>
 <tr class="separator:a8f1280d3b30a07801232658956bea663"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -205,9 +213,9 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ade670792fbd21685fbbda20e179c86ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6f3b45ed5adc99bee0e92516a3e29f57" id="r_a6f3b45ed5adc99bee0e92516a3e29f57"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">virtual</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1dgHLLCFluxSolver.html#a6f3b45ed5adc99bee0e92516a3e29f57">~dgHLLCFluxSolver</a> ()=<a class="el" href="classFoam_1_1GaussField.html">default</a></td></tr>
 <tr class="separator:a6f3b45ed5adc99bee0e92516a3e29f57"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2a7b418b4a893136cf67f05a35cccef0" id="r_a2a7b418b4a893136cf67f05a35cccef0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1dgHLLCFluxSolver.html#a2a7b418b4a893136cf67f05a35cccef0">calcIntermediateState</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">label</a> cellID, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">label</a> <a class="el" href="classFoam_1_1GaussField.html">localFaceID</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">label</a> <a class="el" href="classFoam_1_1GaussField.html">localGaussID</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">vector</a> &amp;<a class="el" href="classFoam_1_1GaussField.html">n</a>, <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &amp;<a class="el" href="classFoam_1_1GaussField.html">SL</a>, <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &amp;<a class="el" href="classFoam_1_1GaussField.html">SR</a>, <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &amp;<a class="el" href="classFoam_1_1GaussField.html">SStar</a>, <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &amp;<a class="el" href="classFoam_1_1GaussField.html">CL</a>, <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &amp;<a class="el" href="classFoam_1_1GaussField.html">CR</a>)</td></tr>
-<tr class="memdesc:a2a7b418b4a893136cf67f05a35cccef0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute intermediate wave speeds and star-state coefficients.  <br /></td></tr>
-<tr class="separator:a2a7b418b4a893136cf67f05a35cccef0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac3cc0c62d5f6b1ee23f7d525666a97c6" id="r_ac3cc0c62d5f6b1ee23f7d525666a97c6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1dgHLLCFluxSolver.html#ac3cc0c62d5f6b1ee23f7d525666a97c6">calcIntermediateState</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">label</a> cellID, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">label</a> <a class="el" href="classFoam_1_1GaussField.html">localFaceID</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">label</a> <a class="el" href="classFoam_1_1GaussField.html">localGaussID</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">vector</a> &amp;<a class="el" href="classFoam_1_1GaussField.html">n</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1faceGaussField.html">faceGaussField</a>&lt; <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &gt; &amp;<a class="el" href="classFoam_1_1GaussField.html">gammaF</a>, <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &amp;<a class="el" href="classFoam_1_1GaussField.html">SL</a>, <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &amp;<a class="el" href="classFoam_1_1GaussField.html">SR</a>, <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &amp;<a class="el" href="classFoam_1_1GaussField.html">SStar</a>, <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &amp;<a class="el" href="classFoam_1_1GaussField.html">CL</a>, <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &amp;<a class="el" href="classFoam_1_1GaussField.html">CR</a>)</td></tr>
+<tr class="memdesc:ac3cc0c62d5f6b1ee23f7d525666a97c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute intermediate wave speeds and star-state coefficients.  <br /></td></tr>
+<tr class="separator:ac3cc0c62d5f6b1ee23f7d525666a97c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab87d6824b803bd5a773fe2cf126d87a3" id="r_ab87d6824b803bd5a773fe2cf126d87a3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="classFoam_1_1GaussField.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1dgHLLCFluxSolver.html#ab87d6824b803bd5a773fe2cf126d87a3">computeFlux</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">label</a> cellID, <a class="el" href="classFoam_1_1faceGaussField.html">faceGaussField</a>&lt; <a class="el" href="classFoam_1_1GaussField.html">vector</a> &gt; &amp;<a class="el" href="classFoam_1_1GaussField.html">F</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1faceGaussField.html">faceGaussField</a>&lt; <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &gt; &amp;<a class="el" href="createPrimaryFields_8H.html#acaa7fe8168a3a866f1958b3663d384c6">U</a>) <a class="el" href="classFoam_1_1GaussField.html">override</a></td></tr>
 <tr class="memdesc:ab87d6824b803bd5a773fe2cf126d87a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute numerical flux for scalar conserved variable.  <br /></td></tr>
 <tr class="separator:ab87d6824b803bd5a773fe2cf126d87a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -280,8 +288,20 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a09aac3f56d63fa367f9d2b3e3f897a4b inherit pub_methods_classFoam_1_1dgFluxSolver"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return equation type.  <br /></td></tr>
 <tr class="separator:a09aac3f56d63fa367f9d2b3e3f897a4b inherit pub_methods_classFoam_1_1dgFluxSolver"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-methods" name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a465cd7189e97cda352c932e579544bf9" id="r_a465cd7189e97cda352c932e579544bf9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1dgHLLCFluxSolver.html#a465cd7189e97cda352c932e579544bf9">calcGamma</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">label</a> cellID, <a class="el" href="classFoam_1_1GaussField.html">GaussField</a>&lt; <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &gt; &amp;gamma) <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
+<tr class="memdesc:a465cd7189e97cda352c932e579544bf9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute gamma on demand for the given cell.  <br /></td></tr>
+<tr class="separator:a465cd7189e97cda352c932e579544bf9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a465cd7189e97cda352c932e579544bf9" id="r_a465cd7189e97cda352c932e579544bf9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1dgHLLCFluxSolver.html#a465cd7189e97cda352c932e579544bf9">calcGamma</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">label</a> cellID, <a class="el" href="classFoam_1_1GaussField.html">GaussField</a>&lt; <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &gt; &amp;gamma) <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
+<tr class="memdesc:a465cd7189e97cda352c932e579544bf9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute gamma on demand for the given cell.  <br /></td></tr>
+<tr class="separator:a465cd7189e97cda352c932e579544bf9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
+<tr class="memitem:ad6fc2e608b1c812a5035d5498f51d7ed" id="r_ad6fc2e608b1c812a5035d5498f51d7ed"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1dgThermoConservative.html">dgThermoConservative</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1dgHLLCFluxSolver.html#ad6fc2e608b1c812a5035d5498f51d7ed">thermo_</a></td></tr>
+<tr class="memdesc:ad6fc2e608b1c812a5035d5498f51d7ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Thermodynamics wrapper (read-only, non-owning)  <br /></td></tr>
+<tr class="separator:ad6fc2e608b1c812a5035d5498f51d7ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac7257b5c49d5b833e0944eca756a9349" id="r_ac7257b5c49d5b833e0944eca756a9349"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1dgField.html">dgField</a>&lt; <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1dgHLLCFluxSolver.html#ac7257b5c49d5b833e0944eca756a9349">rho_</a></td></tr>
 <tr class="memdesc:ac7257b5c49d5b833e0944eca756a9349"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to density field (read-only, non-owning)  <br /></td></tr>
 <tr class="separator:ac7257b5c49d5b833e0944eca756a9349"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -291,15 +311,6 @@ Private Attributes</h2></td></tr>
 <tr class="memitem:a403e05ab1d7b1d85f1bf9fca5f2768b9" id="r_a403e05ab1d7b1d85f1bf9fca5f2768b9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1dgField.html">dgField</a>&lt; <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1dgHLLCFluxSolver.html#a403e05ab1d7b1d85f1bf9fca5f2768b9">p_</a></td></tr>
 <tr class="memdesc:a403e05ab1d7b1d85f1bf9fca5f2768b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to pressure field (read-only, non-owning)  <br /></td></tr>
 <tr class="separator:a403e05ab1d7b1d85f1bf9fca5f2768b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abe39fd77f0373cb4e0b80bf9bb60ea22" id="r_abe39fd77f0373cb4e0b80bf9bb60ea22"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1dgField.html">dgField</a>&lt; <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1dgHLLCFluxSolver.html#abe39fd77f0373cb4e0b80bf9bb60ea22">a_</a></td></tr>
-<tr class="memdesc:abe39fd77f0373cb4e0b80bf9bb60ea22"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to speed-of-sound field (read-only, non-owning)  <br /></td></tr>
-<tr class="separator:abe39fd77f0373cb4e0b80bf9bb60ea22"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1949926e50a63b312e811c43273377ef" id="r_a1949926e50a63b312e811c43273377ef"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1dgField.html">dgField</a>&lt; <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1dgHLLCFluxSolver.html#a1949926e50a63b312e811c43273377ef">h_</a></td></tr>
-<tr class="memdesc:a1949926e50a63b312e811c43273377ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to enthalpy field (read-only, non-owning)  <br /></td></tr>
-<tr class="separator:a1949926e50a63b312e811c43273377ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af4fa1c2be91e1835b0e7c0fae8ea1844" id="r_af4fa1c2be91e1835b0e7c0fae8ea1844"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1dgField.html">dgField</a>&lt; <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1dgHLLCFluxSolver.html#af4fa1c2be91e1835b0e7c0fae8ea1844">gamma_</a></td></tr>
-<tr class="memdesc:af4fa1c2be91e1835b0e7c0fae8ea1844"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to heat-capacity ratio field (read-only, non-owning)  <br /></td></tr>
-<tr class="separator:af4fa1c2be91e1835b0e7c0fae8ea1844"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a68cacbb4eabda82e607756d13d28087d" id="r_a68cacbb4eabda82e607756d13d28087d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1dgHLLCFluxSolver.html#a29fdd170dbcb706e2d99dd94d0ab8ada">speedEstimateType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1dgHLLCFluxSolver.html#a68cacbb4eabda82e607756d13d28087d">speedEst_</a></td></tr>
 <tr class="memdesc:a68cacbb4eabda82e607756d13d28087d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selected wave-speed estimation method.  <br /></td></tr>
 <tr class="separator:a68cacbb4eabda82e607756d13d28087d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -318,9 +329,9 @@ Private Attributes</h2></td></tr>
 <tr class="memitem:ad1fc58c95763c4a1252fbc7000d6422c" id="r_ad1fc58c95763c4a1252fbc7000d6422c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">List</a>&lt; <a class="el" href="classFoam_1_1GaussField.html">List</a>&lt; <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1dgHLLCFluxSolver.html#ad1fc58c95763c4a1252fbc7000d6422c">CR_list_</a></td></tr>
 <tr class="memdesc:ad1fc58c95763c4a1252fbc7000d6422c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cached right star-state coefficients.  <br /></td></tr>
 <tr class="separator:ad1fc58c95763c4a1252fbc7000d6422c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a698ceb63cc965fd958faf0480af9b5d3" id="r_a698ceb63cc965fd958faf0480af9b5d3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">List</a>&lt; <a class="el" href="classFoam_1_1GaussField.html">bool</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1dgHLLCFluxSolver.html#a698ceb63cc965fd958faf0480af9b5d3">isStateComputed_</a></td></tr>
-<tr class="memdesc:a698ceb63cc965fd958faf0480af9b5d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flags indicating whether intermediate states are computed.  <br /></td></tr>
-<tr class="separator:a698ceb63cc965fd958faf0480af9b5d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a15d49af57e723f193dd6bf703dbdc02d" id="r_a15d49af57e723f193dd6bf703dbdc02d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">List</a>&lt; <a class="el" href="classFoam_1_1GaussField.html">List</a>&lt; <a class="el" href="classFoam_1_1GaussField.html">bool</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1dgHLLCFluxSolver.html#a15d49af57e723f193dd6bf703dbdc02d">isStateComputed_</a></td></tr>
+<tr class="memdesc:a15d49af57e723f193dd6bf703dbdc02d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flags indicating whether intermediate states are computed per face/Gauss point.  <br /></td></tr>
+<tr class="separator:a15d49af57e723f193dd6bf703dbdc02d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="inherited" name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
@@ -560,6 +571,44 @@ Additional Inherited Members</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="a465cd7189e97cda352c932e579544bf9" name="a465cd7189e97cda352c932e579544bf9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a465cd7189e97cda352c932e579544bf9">&#9670;&#160;</a></span>calcGamma() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classFoam_1_1GaussField.html">void</a> Foam::dgHLLCFluxSolver::calcGamma </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">label</a>&#160;</td>
+          <td class="paramname"><em>cellID</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classFoam_1_1GaussField.html">GaussField</a>&lt; <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>gamma</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Compute gamma on demand for the given cell. </p>
+
+</div>
+</div>
 <a id="a7493e780ad9cdd0c6f2045599b9ae6a7" name="a7493e780ad9cdd0c6f2045599b9ae6a7"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a7493e780ad9cdd0c6f2045599b9ae6a7">&#9670;&#160;</a></span>TypeName() <span class="overload">[1/2]</span></h2>
 
@@ -578,8 +627,8 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a id="a2a7b418b4a893136cf67f05a35cccef0" name="a2a7b418b4a893136cf67f05a35cccef0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2a7b418b4a893136cf67f05a35cccef0">&#9670;&#160;</a></span>calcIntermediateState() <span class="overload">[1/2]</span></h2>
+<a id="ac3cc0c62d5f6b1ee23f7d525666a97c6" name="ac3cc0c62d5f6b1ee23f7d525666a97c6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac3cc0c62d5f6b1ee23f7d525666a97c6">&#9670;&#160;</a></span>calcIntermediateState() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -607,6 +656,12 @@ Additional Inherited Members</h2></td></tr>
           <td></td>
           <td class="paramtype"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">vector</a> &amp;&#160;</td>
           <td class="paramname"><em>n</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1faceGaussField.html">faceGaussField</a>&lt; <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>gammaF</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -838,6 +893,44 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
+<a id="a465cd7189e97cda352c932e579544bf9" name="a465cd7189e97cda352c932e579544bf9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a465cd7189e97cda352c932e579544bf9">&#9670;&#160;</a></span>calcGamma() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classFoam_1_1GaussField.html">void</a> Foam::dgHLLCFluxSolver::calcGamma </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">label</a>&#160;</td>
+          <td class="paramname"><em>cellID</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classFoam_1_1GaussField.html">GaussField</a>&lt; <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>gamma</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Compute gamma on demand for the given cell. </p>
+
+</div>
+</div>
 <a id="a7493e780ad9cdd0c6f2045599b9ae6a7" name="a7493e780ad9cdd0c6f2045599b9ae6a7"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a7493e780ad9cdd0c6f2045599b9ae6a7">&#9670;&#160;</a></span>TypeName() <span class="overload">[2/2]</span></h2>
 
@@ -856,8 +949,8 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a id="a2a7b418b4a893136cf67f05a35cccef0" name="a2a7b418b4a893136cf67f05a35cccef0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2a7b418b4a893136cf67f05a35cccef0">&#9670;&#160;</a></span>calcIntermediateState() <span class="overload">[2/2]</span></h2>
+<a id="ac3cc0c62d5f6b1ee23f7d525666a97c6" name="ac3cc0c62d5f6b1ee23f7d525666a97c6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac3cc0c62d5f6b1ee23f7d525666a97c6">&#9670;&#160;</a></span>calcIntermediateState() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -885,6 +978,12 @@ Additional Inherited Members</h2></td></tr>
           <td></td>
           <td class="paramtype"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">vector</a> &amp;&#160;</td>
           <td class="paramname"><em>n</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1faceGaussField.html">faceGaussField</a>&lt; <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>gammaF</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -1117,6 +1216,30 @@ Additional Inherited Members</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
+<a id="ad6fc2e608b1c812a5035d5498f51d7ed" name="ad6fc2e608b1c812a5035d5498f51d7ed"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad6fc2e608b1c812a5035d5498f51d7ed">&#9670;&#160;</a></span>thermo_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1dgThermoConservative.html">dgThermoConservative</a> &amp; Foam::dgHLLCFluxSolver::thermo_</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Thermodynamics wrapper (read-only, non-owning) </p>
+
+</div>
+</div>
 <a id="ac7257b5c49d5b833e0944eca756a9349" name="ac7257b5c49d5b833e0944eca756a9349"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ac7257b5c49d5b833e0944eca756a9349">&#9670;&#160;</a></span>rho_</h2>
 
@@ -1186,78 +1309,6 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Pointer to pressure field (read-only, non-owning) </p>
-
-</div>
-</div>
-<a id="abe39fd77f0373cb4e0b80bf9bb60ea22" name="abe39fd77f0373cb4e0b80bf9bb60ea22"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abe39fd77f0373cb4e0b80bf9bb60ea22">&#9670;&#160;</a></span>a_</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1dgField.html">dgField</a>&lt; <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &gt; &amp; Foam::dgHLLCFluxSolver::a_</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Pointer to speed-of-sound field (read-only, non-owning) </p>
-
-</div>
-</div>
-<a id="a1949926e50a63b312e811c43273377ef" name="a1949926e50a63b312e811c43273377ef"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1949926e50a63b312e811c43273377ef">&#9670;&#160;</a></span>h_</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1dgField.html">dgField</a>&lt; <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &gt; &amp; Foam::dgHLLCFluxSolver::h_</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Pointer to enthalpy field (read-only, non-owning) </p>
-
-</div>
-</div>
-<a id="af4fa1c2be91e1835b0e7c0fae8ea1844" name="af4fa1c2be91e1835b0e7c0fae8ea1844"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af4fa1c2be91e1835b0e7c0fae8ea1844">&#9670;&#160;</a></span>gamma_</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1dgField.html">dgField</a>&lt; <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &gt; &amp; Foam::dgHLLCFluxSolver::gamma_</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Pointer to heat-capacity ratio field (read-only, non-owning) </p>
 
 </div>
 </div>
@@ -1405,8 +1456,8 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a id="a698ceb63cc965fd958faf0480af9b5d3" name="a698ceb63cc965fd958faf0480af9b5d3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a698ceb63cc965fd958faf0480af9b5d3">&#9670;&#160;</a></span>isStateComputed_</h2>
+<a id="a15d49af57e723f193dd6bf703dbdc02d" name="a15d49af57e723f193dd6bf703dbdc02d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a15d49af57e723f193dd6bf703dbdc02d">&#9670;&#160;</a></span>isStateComputed_</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1415,7 +1466,7 @@ Additional Inherited Members</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classFoam_1_1GaussField.html">List</a>&lt; <a class="el" href="classFoam_1_1GaussField.html">bool</a> &gt; Foam::dgHLLCFluxSolver::isStateComputed_</td>
+          <td class="memname"><a class="el" href="classFoam_1_1GaussField.html">List</a>&lt; <a class="el" href="classFoam_1_1GaussField.html">List</a>&lt; <a class="el" href="classFoam_1_1GaussField.html">bool</a> &gt; &gt; Foam::dgHLLCFluxSolver::isStateComputed_</td>
         </tr>
       </table>
   </td>
@@ -1425,7 +1476,7 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Flags indicating whether intermediate states are computed. </p>
+<p>Flags indicating whether intermediate states are computed per face/Gauss point. </p>
 
 </div>
 </div>

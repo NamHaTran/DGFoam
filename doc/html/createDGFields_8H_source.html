@@ -89,49 +89,53 @@ $(document).ready(function() { init_codefold(0); });
   <div class="headertitle"><div class="title">createDGFields.H</div></div>
 </div><!--header-->
 <div class="contents">
-<a href="createDGFields_8H.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/* Process:</span></div>
-<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="comment">    - Create conservatives fields: rho, rhoU, E</span></div>
-<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="comment">    - Create primary fields: p, T, U</span></div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="comment">    - Convert conservative to primary (only calculate U)</span></div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="comment">    - Create thermo: thermo must be created AFTER creating fields because it needs to</span></div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="comment">    look up the fields to calculate T and p</span></div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="comment">*/</span></div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="comment">// Create conservative fields</span></div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &quot;<a class="code" href="createConservativeFields_8H.html">createConservativeFields.H</a>&quot;</span></div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="comment">// Create primary fields</span></div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#include &quot;<a class="code" href="createPrimaryFields_8H.html">createPrimaryFields.H</a>&quot;</span></div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="comment">// Convert conservative to primary (only calculate U)</span></div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#include &quot;<a class="code" href="conservativeToPrimary_8H.html">conservativeToPrimary.H</a>&quot;</span></div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="comment">// Declare thermo</span></div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>Info&lt;&lt; <span class="stringliteral">&quot;Reading thermophysical properties\n&quot;</span> &lt;&lt; endl;</div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>IOdictionary thermoDict</div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>(</div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>    IOobject</div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>    (</div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>        <span class="stringliteral">&quot;thermophysicalProperties&quot;</span>,</div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>        <a class="code hl_variable" href="VarDeclaration_8h.html#a122df5dd52660cdfcef00ba179bd53a7">runTime</a>.constant(),</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>        mesh,</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>        IOobject::MUST_READ,</div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>        IOobject::NO_WRITE</div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>    )</div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>);</div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> </div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span><span class="comment">// Get thermo type and create dgThermo instance</span></div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>dictionary thermoType(thermoDict.subDict(<span class="stringliteral">&quot;dgThermo&quot;</span>));</div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>word dgThermoTypeName(thermoType.lookup(<span class="stringliteral">&quot;type&quot;</span>));</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span> </div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno"><a class="line" href="createDGFields_8H.html#a9925ad70d4a9bc708442f7d79d009002">   37</a></span>autoPtr&lt;dgThermoConservative&gt; <a class="code hl_variable" href="createDGFields_8H.html#a9925ad70d4a9bc708442f7d79d009002">thermo</a> = dgThermoConservative::New(dgThermoTypeName, thermoDict, dgMesh);</div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span><span class="comment">// T and p is calculated internally right after themo is constructed</span></div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span> </div>
+<a href="createDGFields_8H.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/*</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="comment">Tutorial note:</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="comment">- The conservative fields must exist first because they are the solved</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="comment">  variables and the thermo model looks them up by name from the registry.</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="comment">- The primitive fields must also exist before thermo construction because</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="comment">  thermo writes reconstructed p/T/U into those DG fields.</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="comment">- Once the thermo object is constructed, it can update all primitive and</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="comment">  transport quantities cell by cell from rho, rhoU, and E.</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="comment">- A dgField can be thought of as a whole-mesh DG variable; each cell entry is</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="comment">  a GaussField, and each GaussField contains both cellGaussField and</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="comment">  faceGaussField data. That layering is what makes local DG algebra compact.</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="comment">*/</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="comment">// Create conservative fields</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#include &quot;<a class="code" href="createConservativeFields_8H.html">createConservativeFields.H</a>&quot;</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span> </div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="comment">// Create primary fields</span></div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="preprocessor">#include &quot;<a class="code" href="createPrimaryFields_8H.html">createPrimaryFields.H</a>&quot;</span></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span> </div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="comment">// Thermo reconstruction is separated from the solver loop so that the solver</span></div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="comment">// can ask for p, T, he-derived properties, a, gamma, etc. without duplicating thermodynamic</span></div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="comment">// formulas in every include file. In practice, thermo becomes the bridge</span></div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="comment">// between conservative unknowns and the primitive quantities used in fluxes.</span></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>Info&lt;&lt; <span class="stringliteral">&quot;Reading thermophysical properties\n&quot;</span> &lt;&lt; endl;</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>IOdictionary thermoDict</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>(</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>    IOobject</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>    (</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>        <span class="stringliteral">&quot;thermophysicalProperties&quot;</span>,</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>        <a class="code hl_variable" href="VarDeclaration_8h.html#a122df5dd52660cdfcef00ba179bd53a7">runTime</a>.constant(),</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>        mesh,</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>        IOobject::MUST_READ,</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>        IOobject::NO_WRITE</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    )</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>);</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span> </div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span><span class="comment">// Get thermo type and create dgThermo instance</span></div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>dictionary thermoType(thermoDict.subDict(<span class="stringliteral">&quot;dgThermo&quot;</span>));</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>word dgThermoTypeName(thermoType.lookup(<span class="stringliteral">&quot;type&quot;</span>));</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span> </div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span><span class="comment">// The constructor immediately looks up the already-created DG fields and</span></div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span><span class="comment">// initializes thermo-derived quantities on all cells.</span></div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno"><a class="line" href="createDGFields_8H.html#a9925ad70d4a9bc708442f7d79d009002">   44</a></span>autoPtr&lt;dgThermoConservative&gt; <a class="code hl_variable" href="createDGFields_8H.html#a9925ad70d4a9bc708442f7d79d009002">thermo</a> = dgThermoConservative::New(dgThermoTypeName, thermoDict, dgMesh);</div>
 <div class="ttc" id="aVarDeclaration_8h_html_a122df5dd52660cdfcef00ba179bd53a7"><div class="ttname"><a href="VarDeclaration_8h.html#a122df5dd52660cdfcef00ba179bd53a7">runTime</a></div><div class="ttdeci">double runTime</div></div>
-<div class="ttc" id="aconservativeToPrimary_8H_html"><div class="ttname"><a href="conservativeToPrimary_8H.html">conservativeToPrimary.H</a></div></div>
 <div class="ttc" id="acreateConservativeFields_8H_html"><div class="ttname"><a href="createConservativeFields_8H.html">createConservativeFields.H</a></div></div>
-<div class="ttc" id="acreateDGFields_8H_html_a9925ad70d4a9bc708442f7d79d009002"><div class="ttname"><a href="createDGFields_8H.html#a9925ad70d4a9bc708442f7d79d009002">thermo</a></div><div class="ttdeci">Info&lt;&lt; &quot;Reading thermophysical properties\n&quot;&lt;&lt; endl;IOdictionary thermoDict(IOobject(&quot;thermophysicalProperties&quot;, runTime.constant(), mesh, IOobject::MUST_READ, IOobject::NO_WRITE));dictionary thermoType(thermoDict.subDict(&quot;dgThermo&quot;));word dgThermoTypeName(thermoType.lookup(&quot;type&quot;));autoPtr&lt; dgThermoConservative &gt; thermo</div><div class="ttdef"><b>Definition</b> createDGFields.H:37</div></div>
+<div class="ttc" id="acreateDGFields_8H_html_a9925ad70d4a9bc708442f7d79d009002"><div class="ttname"><a href="createDGFields_8H.html#a9925ad70d4a9bc708442f7d79d009002">thermo</a></div><div class="ttdeci">Info&lt;&lt; &quot;Reading thermophysical properties\n&quot;&lt;&lt; endl;IOdictionary thermoDict(IOobject(&quot;thermophysicalProperties&quot;, runTime.constant(), mesh, IOobject::MUST_READ, IOobject::NO_WRITE));dictionary thermoType(thermoDict.subDict(&quot;dgThermo&quot;));word dgThermoTypeName(thermoType.lookup(&quot;type&quot;));autoPtr&lt; dgThermoConservative &gt; thermo</div><div class="ttdef"><b>Definition</b> createDGFields.H:44</div></div>
 <div class="ttc" id="acreatePrimaryFields_8H_html"><div class="ttname"><a href="createPrimaryFields_8H.html">createPrimaryFields.H</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->

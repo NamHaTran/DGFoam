@@ -26,6 +26,8 @@ DG geometric mesh wrapper around fv\+Mesh.
 \begin{DoxyCompactList}\small\item\em Return number of DG faces. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh_a10b6113882370db9119e7a0ff8096719}{n\+Cells}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
 \begin{DoxyCompactList}\small\item\em Return number of DG cells. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgBasisField}{dg\+Basis\+Field}} \& \mbox{\hyperlink{classFoam_1_1dgGeomMesh_a7293ac2589ede3f91135b921950ae9f1}{basis\+Field}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} cell\+ID) \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\begin{DoxyCompactList}\small\item\em Return cached basis data for one cell. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label\+List}} \& \mbox{\hyperlink{classFoam_1_1dgGeomMesh_a00f81928dd80b14069c4269527649911}{face\+Owner}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
 \begin{DoxyCompactList}\small\item\em Return fv\+Mesh face-\/owner list. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh_a89c3dd48bb42589b8e57c520a2cf63e2}{n\+Internal\+Faces}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
@@ -56,6 +58,8 @@ DG geometric mesh wrapper around fv\+Mesh.
 \begin{DoxyCompactList}\small\item\em Return number of DG faces. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh_a10b6113882370db9119e7a0ff8096719}{n\+Cells}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
 \begin{DoxyCompactList}\small\item\em Return number of DG cells. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgBasisField}{dg\+Basis\+Field}} \& \mbox{\hyperlink{classFoam_1_1dgGeomMesh_ae7d0eae37f3a3835a7e3b3de458dae4f}{basis\+Field}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} cell\+ID) \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\begin{DoxyCompactList}\small\item\em Return cached basis data for one cell. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label\+List}} \& \mbox{\hyperlink{classFoam_1_1dgGeomMesh_a00f81928dd80b14069c4269527649911}{face\+Owner}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
 \begin{DoxyCompactList}\small\item\em Return fv\+Mesh face-\/owner list. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh_a89c3dd48bb42589b8e57c520a2cf63e2}{n\+Internal\+Faces}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
@@ -93,6 +97,8 @@ std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classFoam_1_1dgRefCell}{dg\+Ref\+Cell
 \begin{DoxyCompactList}\small\item\em List of DG geometric faces. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1dgGeomCell}{dg\+Geom\+Cell}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{classFoam_1_1dgGeomMesh_aa3408ee8829a77921a103a4916428de2}{cells\+\_\+}}
 \begin{DoxyCompactList}\small\item\em List of DG geometric cells. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1dgBasisField}{dg\+Basis\+Field}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{classFoam_1_1dgGeomMesh_a10774320ac508d03d36382273f1d98e5}{basis\+Fields\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Cached basis/gradient-\/basis fields, one per cell. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{label\+List}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh_a4950aaef8c0192b99c0daf0d425f2f42}{boundary\+Faces\+\_\+}}
 \begin{DoxyCompactList}\small\item\em List of boundary face indices. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
@@ -206,7 +212,17 @@ Return number of DG faces.
 
 Return number of DG cells. 
 
-\Hypertarget{classFoam_1_1dgGeomMesh_a00f81928dd80b14069c4269527649911}\label{classFoam_1_1dgGeomMesh_a00f81928dd80b14069c4269527649911} 
+\Hypertarget{classFoam_1_1dgGeomMesh_a7293ac2589ede3f91135b921950ae9f1}\label{classFoam_1_1dgGeomMesh_a7293ac2589ede3f91135b921950ae9f1} 
+\index{Foam::dgGeomMesh@{Foam::dgGeomMesh}!basisField@{basisField}}
+\index{basisField@{basisField}!Foam::dgGeomMesh@{Foam::dgGeomMesh}}
+\doxysubsubsection{\texorpdfstring{basisField()}{basisField()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgBasisField}{Foam\+::dg\+Basis\+Field}} \& Foam\+::dg\+Geom\+Mesh\+::basis\+Field (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{cell\+ID }\end{DoxyParamCaption}) const}
+
+
+
+Return cached basis data for one cell. 
+
+Basis fields depend only on mesh geometry and polynomial order, so they are built once and reused across all stages/time steps. \Hypertarget{classFoam_1_1dgGeomMesh_a00f81928dd80b14069c4269527649911}\label{classFoam_1_1dgGeomMesh_a00f81928dd80b14069c4269527649911} 
 \index{Foam::dgGeomMesh@{Foam::dgGeomMesh}!faceOwner@{faceOwner}}
 \index{faceOwner@{faceOwner}!Foam::dgGeomMesh@{Foam::dgGeomMesh}}
 \doxysubsubsection{\texorpdfstring{faceOwner()}{faceOwner()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
@@ -336,7 +352,17 @@ Return number of DG faces.
 
 Return number of DG cells. 
 
-\Hypertarget{classFoam_1_1dgGeomMesh_a00f81928dd80b14069c4269527649911}\label{classFoam_1_1dgGeomMesh_a00f81928dd80b14069c4269527649911} 
+\Hypertarget{classFoam_1_1dgGeomMesh_ae7d0eae37f3a3835a7e3b3de458dae4f}\label{classFoam_1_1dgGeomMesh_ae7d0eae37f3a3835a7e3b3de458dae4f} 
+\index{Foam::dgGeomMesh@{Foam::dgGeomMesh}!basisField@{basisField}}
+\index{basisField@{basisField}!Foam::dgGeomMesh@{Foam::dgGeomMesh}}
+\doxysubsubsection{\texorpdfstring{basisField()}{basisField()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgBasisField}{dg\+Basis\+Field}} \& Foam\+::dg\+Geom\+Mesh\+::basis\+Field (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{cell\+ID }\end{DoxyParamCaption}) const}
+
+
+
+Return cached basis data for one cell. 
+
+Basis fields depend only on mesh geometry and polynomial order, so they are built once and reused across all stages/time steps. \Hypertarget{classFoam_1_1dgGeomMesh_a00f81928dd80b14069c4269527649911}\label{classFoam_1_1dgGeomMesh_a00f81928dd80b14069c4269527649911} 
 \index{Foam::dgGeomMesh@{Foam::dgGeomMesh}!faceOwner@{faceOwner}}
 \index{faceOwner@{faceOwner}!Foam::dgGeomMesh@{Foam::dgGeomMesh}}
 \doxysubsubsection{\texorpdfstring{faceOwner()}{faceOwner()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
@@ -508,6 +534,16 @@ List of DG geometric faces.
 
 
 List of DG geometric cells. 
+
+\Hypertarget{classFoam_1_1dgGeomMesh_a10774320ac508d03d36382273f1d98e5}\label{classFoam_1_1dgGeomMesh_a10774320ac508d03d36382273f1d98e5} 
+\index{Foam::dgGeomMesh@{Foam::dgGeomMesh}!basisFields\_@{basisFields\_}}
+\index{basisFields\_@{basisFields\_}!Foam::dgGeomMesh@{Foam::dgGeomMesh}}
+\doxysubsubsection{\texorpdfstring{basisFields\_}{basisFields\_}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1dgBasisField}{dg\+Basis\+Field}} \texorpdfstring{$\ast$}{*} $>$ Foam\+::dg\+Geom\+Mesh\+::basis\+Fields\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Cached basis/gradient-\/basis fields, one per cell. 
 
 \Hypertarget{classFoam_1_1dgGeomMesh_a4950aaef8c0192b99c0daf0d425f2f42}\label{classFoam_1_1dgGeomMesh_a4950aaef8c0192b99c0daf0d425f2f42} 
 \index{Foam::dgGeomMesh@{Foam::dgGeomMesh}!boundaryFaces\_@{boundaryFaces\_}}

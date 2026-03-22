@@ -37,6 +37,8 @@ Collaboration diagram for Foam\+::dg\+General\+Boundary\+Manager\texorpdfstring{
 \begin{DoxyCompactList}\small\item\em Return internal field value. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{bool}} \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryManager_af63c22719ba1a4e2f95ea2fb32362170}{is\+General\+Patch}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} patch\+ID) \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
 \begin{DoxyCompactList}\small\item\em Return true if patch is a general (physical) boundary. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryManager_a4b1674a91d5b7ae4fde6f5033f2758b7}{initialize\+Field}} (\mbox{\hyperlink{classFoam_1_1dgField}{dg\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{GField}})
+\begin{DoxyCompactList}\small\item\em Initialize a \doxylink{classFoam_1_1GaussField}{Gauss\+Field} with the uniform internal value. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryManager_a49ca4d69931cac3a1fc1e9d9827a4551}{update\+Value}} (\mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{GField}})
 \begin{DoxyCompactList}\small\item\em Update ghost-\/state values on boundary faces. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryManager_a5ee4e829f0774b1b97a5b9b6691c2b6e}{update\+Grad}} (\mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{GField}})
@@ -57,6 +59,8 @@ Collaboration diagram for Foam\+::dg\+General\+Boundary\+Manager\texorpdfstring{
 \begin{DoxyCompactList}\small\item\em Return internal field value. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{bool}} \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryManager_af63c22719ba1a4e2f95ea2fb32362170}{is\+General\+Patch}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} patch\+ID) \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
 \begin{DoxyCompactList}\small\item\em Return true if patch is a general (physical) boundary. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryManager_aebc072972e70ac1d3fc3b2de626b1485}{initialize\+Field}} (\mbox{\hyperlink{classFoam_1_1dgField}{dg\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{GField}})
+\begin{DoxyCompactList}\small\item\em Initialize a \doxylink{classFoam_1_1GaussField}{Gauss\+Field} with the uniform internal value. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryManager_ade7936a952e3eaf65d4103f21d54a4ed}{update\+Value}} (\mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{GField}})
 \begin{DoxyCompactList}\small\item\em Update ghost-\/state values on boundary faces. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryManager_a2a233700ba5b11194d22de18332ffc7b}{update\+Grad}} (\mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{GField}})
@@ -266,6 +270,22 @@ Interface and constraint patches are excluded.
 \begin{DoxyReturn}{Returns}
 true if patch is a general boundary 
 \end{DoxyReturn}
+\Hypertarget{classFoam_1_1dgGeneralBoundaryManager_a4b1674a91d5b7ae4fde6f5033f2758b7}\label{classFoam_1_1dgGeneralBoundaryManager_a4b1674a91d5b7ae4fde6f5033f2758b7} 
+\index{Foam::dgGeneralBoundaryManager$<$ Type $>$@{Foam::dgGeneralBoundaryManager$<$ Type $>$}!initializeField@{initializeField}}
+\index{initializeField@{initializeField}!Foam::dgGeneralBoundaryManager$<$ Type $>$@{Foam::dgGeneralBoundaryManager$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{initializeField()}{initializeField()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryManager}{Foam\+::dg\+General\+Boundary\+Manager}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::initialize\+Field (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1dgField}{dg\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \&}]{GField }\end{DoxyParamCaption})}
+
+
+
+Initialize a \doxylink{classFoam_1_1GaussField}{Gauss\+Field} with the uniform internal value. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em GField} & \doxylink{classFoam_1_1GaussField}{Gauss\+Field} to initialize \\
+\hline
+\end{DoxyParams}
 \Hypertarget{classFoam_1_1dgGeneralBoundaryManager_a49ca4d69931cac3a1fc1e9d9827a4551}\label{classFoam_1_1dgGeneralBoundaryManager_a49ca4d69931cac3a1fc1e9d9827a4551} 
 \index{Foam::dgGeneralBoundaryManager$<$ Type $>$@{Foam::dgGeneralBoundaryManager$<$ Type $>$}!updateValue@{updateValue}}
 \index{updateValue@{updateValue}!Foam::dgGeneralBoundaryManager$<$ Type $>$@{Foam::dgGeneralBoundaryManager$<$ Type $>$}}
@@ -383,6 +403,22 @@ Interface and constraint patches are excluded.
 \begin{DoxyReturn}{Returns}
 true if patch is a general boundary 
 \end{DoxyReturn}
+\Hypertarget{classFoam_1_1dgGeneralBoundaryManager_aebc072972e70ac1d3fc3b2de626b1485}\label{classFoam_1_1dgGeneralBoundaryManager_aebc072972e70ac1d3fc3b2de626b1485} 
+\index{Foam::dgGeneralBoundaryManager$<$ Type $>$@{Foam::dgGeneralBoundaryManager$<$ Type $>$}!initializeField@{initializeField}}
+\index{initializeField@{initializeField}!Foam::dgGeneralBoundaryManager$<$ Type $>$@{Foam::dgGeneralBoundaryManager$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{initializeField()}{initializeField()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} dg\+General\+Boundary\+Manager\+::initialize\+Field (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1dgField}{dg\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \&}]{GField }\end{DoxyParamCaption})}
+
+
+
+Initialize a \doxylink{classFoam_1_1GaussField}{Gauss\+Field} with the uniform internal value. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em GField} & \doxylink{classFoam_1_1GaussField}{Gauss\+Field} to initialize \\
+\hline
+\end{DoxyParams}
 \Hypertarget{classFoam_1_1dgGeneralBoundaryManager_ade7936a952e3eaf65d4103f21d54a4ed}\label{classFoam_1_1dgGeneralBoundaryManager_ade7936a952e3eaf65d4103f21d54a4ed} 
 \index{Foam::dgGeneralBoundaryManager$<$ Type $>$@{Foam::dgGeneralBoundaryManager$<$ Type $>$}!updateValue@{updateValue}}
 \index{updateValue@{updateValue}!Foam::dgGeneralBoundaryManager$<$ Type $>$@{Foam::dgGeneralBoundaryManager$<$ Type $>$}}

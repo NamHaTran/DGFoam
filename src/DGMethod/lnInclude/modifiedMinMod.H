@@ -1,1 +1,0 @@
-../dgLimiters/troubleCellDetectors/basic/modifiedMinMod/modifiedMinMod.H

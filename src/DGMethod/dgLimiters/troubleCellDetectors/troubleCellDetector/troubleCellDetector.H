@@ -30,14 +30,6 @@ Class
 Description
     Runtime-selectable wrapper for troubled-cell detection.
 
-    The detector stores references to the conservative DG fields required by
-    the current 2D detector logic:
-      - Persson-Peraire uses density only
-      - modified minmod uses all conservative variables
-
-    The actual detection API receives only a cell id and derived classes
-    obtain the needed GaussField data from these stored field references.
-
 SourceFiles
     troubleCellDetector.C
 
@@ -49,8 +41,9 @@ SourceFiles
 #include "autoPtr.H"
 #include "dictionary.H"
 #include "runTimeSelectionTables.H"
-#include "dgGeomMesh.H"
 #include "dgField.H"
+#include "dgGeomMesh.H"
+#include "volFieldsFwd.H"
 
 namespace Foam
 {
@@ -64,26 +57,34 @@ namespace Foam
  * \brief Runtime-selectable base class for troubled-cell sensors.
  *
  * \details
- * This wrapper mirrors the design used elsewhere in the codebase, such as
- * \c dgTimeScheme and \c dgThermoConservative:
- * - the concrete detector type is selected at run time from a dictionary,
- * - the base class stores the shared configuration dictionary and mesh,
- * - the base class also performs all field lookup once in the constructor.
- *
- * The field-lookup step is important because the legacy 2D detectors are not
- * purely local-in-cell. Even though the public API is simply
- * \c detect(cellID), the implementation may need to inspect:
- * - the density field \c rho for Persson-Peraire,
- * - the full conservative state \c rho, \c rhoU, and \c E for detectors
- *   derived from the modified-minmod/p-adaptive logic.
- *
- * Storing references centrally avoids repeated registry lookups inside the
- * hot detection loop and gives all derived classes a consistent way to access
- * the current Gauss-point representation through \c rhoGauss(),
- * \c rhoUGauss(), and \c EGauss().
+ * The wrapper stores the shared detector dictionary, the DG mesh,
+ * the resolved list of fields to be checked, and optional reporting state.
+ * Concrete detectors remain responsible only for any extra mandatory fields
+ * that are not part of \c checkFields.
  */
 class troubleCellDetector
 {
+public:
+
+        /** \brief Runtime wrapper for one field listed in \c checkFields. */
+        struct checkedField
+        {
+            /** Entry name as written in the detector dictionary. */
+            word entryName;
+
+            /** Resolved object name after applying lookupFieldName(). */
+            word fieldName;
+
+            /** True when the resolved field is a vector DG field. */
+            bool isVector;
+
+            /** Pointer to scalar DG field when \c isVector is false. */
+            const dgField<scalar>* scalarFieldPtr;
+
+            /** Pointer to vector DG field when \c isVector is true. */
+            const dgField<vector>* vectorFieldPtr;
+        };
+
 protected:
 
         /** Local detector dictionary copied from the caller. */
@@ -92,14 +93,14 @@ protected:
         /** Shared DG geometric mesh used for connectivity and basis access. */
         const dgGeomMesh& mesh_;
 
-        /** Density field looked up from the fvMesh object registry. */
-        const dgField<scalar>& rho_;
+        /** Flag enabling troubled-cell reporting to a volume indicator field. */
+        bool report_;
 
-        /** Momentum field looked up from the fvMesh object registry. */
-        const dgField<vector>& rhoU_;
+        /** Resolved list of fields that this detector should check. */
+        List<checkedField> checkFields_;
 
-        /** Total-energy field looked up from the fvMesh object registry. */
-        const dgField<scalar>& E_;
+        /** Optional cell-wise 0/1 field marking troubled cells. */
+        mutable autoPtr<VolumeField<label>> limitingIndicatorPtr_;
 
         /**
          * \brief Read an optional field-name override from the detector dictionary.
@@ -116,7 +117,13 @@ protected:
             const word& defaultName
         );
 
-public:
+        /** \brief Build the resolved check-field list from the detector dictionary. */
+        void initializeCheckFields();
+
+        /** \brief Set one cell entry in the limiting indicator if reporting is enabled. */
+        void setLimitingIndicator(const label cellID, const bool flagged) const;
+
+   public:
 
     /** \brief Runtime type information for the detector base class. */
     TypeName("troubleCellDetector");
@@ -132,23 +139,18 @@ public:
     );
 
     /**
-     * \brief Construct the base detector and cache all required field references.
+     * \brief Construct the base detector and initialize shared reporting state.
      *
-     * The constructor follows the same lookup pattern used by
-     * \c dgThermoConservative: fields are fetched from the fvMesh registry once
-     * and then reused by every subsequent \c detect() call.
-     *
-     * The following optional dictionary entries are recognized:
+     * The following dictionary entries are recognized:
      * \verbatim
-     * rho   rho;
-     * rhoU  rhoU;
-     * E     E;
+     * checkFields (<field1> <field2> ...);
+     * report false;
      * \endverbatim
      *
-     * If omitted, the standard conservative field names are used.
+     * The \c checkFields entry is required and must not be empty.
      *
      * \param dict Detector-specific dictionary
-     * \param mesh DG mesh that owns the registered DG fields
+     * \param mesh DG mesh shared by the detector hierarchy
      */
     troubleCellDetector
     (
@@ -189,62 +191,26 @@ public:
         return mesh_;
     }
 
-    /** \brief Return the cached density field reference. */
-    inline const dgField<scalar>& rho() const
+    /** \brief Return true when reporting to the limiting indicator is enabled. */
+    inline bool report() const
     {
-        return rho_;
+        return report_;
     }
 
-    /** \brief Return the cached momentum field reference. */
-    inline const dgField<vector>& rhoU() const
+    /** \brief Return the resolved list of fields to be checked. */
+    inline const List<checkedField>& checkFields() const
     {
-        return rhoU_;
+        return checkFields_;
     }
 
-    /** \brief Return the cached total-energy field reference. */
-    inline const dgField<scalar>& E() const
-    {
-        return E_;
-    }
-
-    /**
-     * \brief Return density Gauss data for one cell.
-     *
-     * \param cellID Target cell index
-     * \return Cell-local GaussField view of \c rho
-     */
-    inline const GaussField<scalar>& rhoGauss(const label cellID) const
-    {
-        return rho_.gaussFields()[cellID];
-    }
-
-    /**
-     * \brief Return momentum Gauss data for one cell.
-     *
-     * \param cellID Target cell index
-     * \return Cell-local GaussField view of \c rhoU
-     */
-    inline const GaussField<vector>& rhoUGauss(const label cellID) const
-    {
-        return rhoU_.gaussFields()[cellID];
-    }
-
-    /**
-     * \brief Return total-energy Gauss data for one cell.
-     *
-     * \param cellID Target cell index
-     * \return Cell-local GaussField view of \c E
-     */
-    inline const GaussField<scalar>& EGauss(const label cellID) const
-    {
-        return E_.gaussFields()[cellID];
-    }
+    /** \brief Reset the limiting-indicator field to zero on all cells. */
+    void resetLimitingIndicator() const;
 
     /**
      * \brief Detect whether a cell should be marked as troubled.
      *
-     * Derived classes are expected to gather any additional Gauss-point or
-     * modal information they need from the cached field references above.
+     * Derived classes are expected to gather any additional field, Gauss-point,
+     * or modal information they need from their own cached data.
      *
      * \param cellID Target cell index
      * \return True if the cell is detected as troubled

@@ -1,7 +1,7 @@
 var searchData=
 [
   ['gamma_0',['gamma',['../namespacematerial.html#aff90297c031fd24e0ad43da10703e493',1,'material']]],
-  ['gamma_5f_1',['gamma_',['../classFoam_1_1dgHLLEFluxSolver.html#ac6f56a6b1b426f70a33fa843877548cb',1,'Foam::dgHLLEFluxSolver::gamma_'],['../classFoam_1_1dgHLLCFluxSolver.html#af4fa1c2be91e1835b0e7c0fae8ea1844',1,'Foam::dgHLLCFluxSolver::gamma_'],['../classFoam_1_1constantCp.html#aa8787e1a51c897a546235e39adf9367b',1,'Foam::constantCp::gamma_'],['../classFoam_1_1dgThermoConservative.html#af5941f3c02390c2531bd2d483ef4eb78',1,'Foam::dgThermoConservative::gamma_']]],
+  ['gamma_5f_1',['gamma_',['../classFoam_1_1constantCp.html#aa8787e1a51c897a546235e39adf9367b',1,'Foam::constantCp']]],
   ['gaussfields_5f_2',['gaussFields_',['../classFoam_1_1dgField.html#ae0ec2ac3d571c7ff2188c199482e234a',1,'Foam::dgField']]],
   ['gausslobattopts_3',['GaussLobattoPts',['../namespacemathVar.html#a074477d4642d4085fc61cb88f5187473',1,'mathVar']]],
   ['gaussoffset_5f_4',['gaussOffset_',['../classFoam_1_1faceGaussField.html#ac0ad2da84b1031ed739ce6b886445632',1,'Foam::faceGaussField']]],
@@ -19,11 +19,11 @@ var searchData=
   ['gs_16',['gS',['../testLiteralScalarMath_8H.html#a51eed178703fb32c103fbb5565b564f1',1,'testLiteralScalarMath.H']]],
   ['gs1_17',['gS1',['../testScalarMath_8H.html#a699c7506e5743f0cf86c2f94672f68ae',1,'testScalarMath.H']]],
   ['gs2_18',['gS2',['../testScalarMath_8H.html#ae3e99cd185a84ae6452998ec90475b41',1,'testScalarMath.H']]],
-  ['gsph_19',['gsph',['../testLiteralScalarMath_8H.html#aedf5d5a4492527f14895d069b8743ac6',1,'gSph:&#160;testLiteralScalarMath.H'],['../testScalarMath_8H.html#aedf5d5a4492527f14895d069b8743ac6',1,'gSph:&#160;testScalarMath.H'],['../testVectorMath_8H.html#aedf5d5a4492527f14895d069b8743ac6',1,'gSph:&#160;testVectorMath.H']]],
+  ['gsph_19',['gsph',['../testScalarMath_8H.html#aedf5d5a4492527f14895d069b8743ac6',1,'gSph:&#160;testScalarMath.H'],['../testVectorMath_8H.html#aedf5d5a4492527f14895d069b8743ac6',1,'gSph:&#160;testVectorMath.H'],['../testLiteralScalarMath_8H.html#aedf5d5a4492527f14895d069b8743ac6',1,'gSph:&#160;testLiteralScalarMath.H']]],
   ['gsym_20',['gsym',['../testLiteralScalarMath_8H.html#a61b1fce2242c97bc328df3af80bc2288',1,'gSym:&#160;testLiteralScalarMath.H'],['../testScalarMath_8H.html#a61b1fce2242c97bc328df3af80bc2288',1,'gSym:&#160;testScalarMath.H'],['../testVectorMath_8H.html#a61b1fce2242c97bc328df3af80bc2288',1,'gSym:&#160;testVectorMath.H']]],
   ['gsym1_21',['gSym1',['../testTensorMath_8H.html#a9ec45d3f3f855d1ee9d51319341ebc90',1,'testTensorMath.H']]],
   ['gsym2_22',['gSym2',['../testTensorMath_8H.html#ad43e751130f6f48fb7422f5023a8c4a9',1,'testTensorMath.H']]],
-  ['gt_23',['gt',['../testLiteralScalarMath_8H.html#aad2f08d3d4818f57063fcd88104f51bc',1,'gT:&#160;testLiteralScalarMath.H'],['../testScalarMath_8H.html#aad2f08d3d4818f57063fcd88104f51bc',1,'gT:&#160;testScalarMath.H'],['../testVectorMath_8H.html#aad2f08d3d4818f57063fcd88104f51bc',1,'gT:&#160;testVectorMath.H']]],
+  ['gt_23',['gt',['../testLiteralScalarMath_8H.html#aad2f08d3d4818f57063fcd88104f51bc',1,'gT:&#160;testLiteralScalarMath.H'],['../testVectorMath_8H.html#aad2f08d3d4818f57063fcd88104f51bc',1,'gT:&#160;testVectorMath.H'],['../testScalarMath_8H.html#aad2f08d3d4818f57063fcd88104f51bc',1,'gT:&#160;testScalarMath.H']]],
   ['gt1_24',['gT1',['../testTensorMath_8H.html#ab9ec8d4c3697d0a1d55f878c49a481ff',1,'testTensorMath.H']]],
   ['gt2_25',['gT2',['../testTensorMath_8H.html#aacfd7a8ece7b56e54c6e1d70321d6d16',1,'testTensorMath.H']]],
   ['gv_26',['gv',['../testLiteralScalarMath_8H.html#a2a3aaeecb452e864ff43bf3a5050191a',1,'gV:&#160;testLiteralScalarMath.H'],['../testScalarMath_8H.html#a2a3aaeecb452e864ff43bf3a5050191a',1,'gV:&#160;testScalarMath.H']]],

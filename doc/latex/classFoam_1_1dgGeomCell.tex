@@ -30,6 +30,8 @@ Geometric container for a DG cell (affine formulation)
 \begin{DoxyCompactList}\small\item\em Return cell centroid (from fv\+Mesh) \end{DoxyCompactList}\item 
 \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} \mbox{\hyperlink{classFoam_1_1dgGeomCell_a13a509976d92d7891d741d9d58d4cba7}{volume}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
 \begin{DoxyCompactList}\small\item\em Return cell volume (from fv\+Mesh) \end{DoxyCompactList}\item 
+\mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} \mbox{\hyperlink{classFoam_1_1dgGeomCell_a0e92302ade0b0affcd5ca224db4deb97}{cell\+Size}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\begin{DoxyCompactList}\small\item\em Return characteristic cell size. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgGeomCell_adeeaa6811720d545b5c057634ed65a88}{update\+Face\+Info}} (\mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1dgGeomFace}{dg\+Geom\+Face}} \texorpdfstring{$\ast$}{*} $>$ \&\mbox{\hyperlink{classFoam_1_1dgGeomCell_a0d2fd40e6f5e9455e351b4df36b5d457}{faces}})
 \begin{DoxyCompactList}\small\item\em Update face geometry information. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Square\+Matrix}}$<$ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} $>$ \mbox{\hyperlink{classFoam_1_1dgGeomCell_a9baf8486dfa1e035caf247e2a87361d5}{mass\+Matrix}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
@@ -74,6 +76,8 @@ Geometric container for a DG cell (affine formulation)
 \begin{DoxyCompactList}\small\item\em Return cell centroid (from fv\+Mesh) \end{DoxyCompactList}\item 
 \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} \mbox{\hyperlink{classFoam_1_1dgGeomCell_a70056ac0283a6a21216d7250d0d3fda1}{volume}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
 \begin{DoxyCompactList}\small\item\em Return cell volume (from fv\+Mesh) \end{DoxyCompactList}\item 
+\mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} \mbox{\hyperlink{classFoam_1_1dgGeomCell_a0e92302ade0b0affcd5ca224db4deb97}{cell\+Size}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\begin{DoxyCompactList}\small\item\em Return characteristic cell size. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgGeomCell_adeeaa6811720d545b5c057634ed65a88}{update\+Face\+Info}} (\mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1dgGeomFace}{dg\+Geom\+Face}} \texorpdfstring{$\ast$}{*} $>$ \&\mbox{\hyperlink{classFoam_1_1dgGeomCell_a0d2fd40e6f5e9455e351b4df36b5d457}{faces}})
 \begin{DoxyCompactList}\small\item\em Update face geometry information. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::\+Square\+Matrix}}$<$ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} $>$ \mbox{\hyperlink{classFoam_1_1dgGeomCell_a9baf8486dfa1e035caf247e2a87361d5}{mass\+Matrix}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
@@ -121,6 +125,8 @@ std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classFoam_1_1dgRefFace}{dg\+Ref\+Face
 \begin{DoxyCompactList}\small\item\em Unique list of vertex coordinates of the cell. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{label}} $>$ \mbox{\hyperlink{classFoam_1_1dgGeomCell_aef4d4a1ab162dda7651232e25129e6de}{cell\+Point\+Labels\+\_\+}}
 \begin{DoxyCompactList}\small\item\em Ordered list of vertex indices for consistent access. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} \mbox{\hyperlink{classFoam_1_1dgGeomCell_a0f8d955d89b2632b44fbc1a6b496bc27}{cell\+Size\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Characteristic cell size derived from volume and total face area. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} $>$ \mbox{\hyperlink{classFoam_1_1dgGeomCell_a8e77726ecb45bb125a8b9ff3e05116f4}{J3\+D\+\_\+}}
 \begin{DoxyCompactList}\small\item\em List of internal Gauss Jacobian. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
@@ -430,7 +436,17 @@ Return cell centroid (from fv\+Mesh)
 
 Return cell volume (from fv\+Mesh) 
 
-\Hypertarget{classFoam_1_1dgGeomCell_adeeaa6811720d545b5c057634ed65a88}\label{classFoam_1_1dgGeomCell_adeeaa6811720d545b5c057634ed65a88} 
+\Hypertarget{classFoam_1_1dgGeomCell_a0e92302ade0b0affcd5ca224db4deb97}\label{classFoam_1_1dgGeomCell_a0e92302ade0b0affcd5ca224db4deb97} 
+\index{Foam::dgGeomCell@{Foam::dgGeomCell}!cellSize@{cellSize}}
+\index{cellSize@{cellSize}!Foam::dgGeomCell@{Foam::dgGeomCell}}
+\doxysubsubsection{\texorpdfstring{cellSize()}{cellSize()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} Foam\+::dg\+Geom\+Cell\+::cell\+Size (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Return characteristic cell size. 
+
+Computed from the cell volume and total face area as $h = 3V / \sum_f |S_f|$, which is an inradius-\/like length scale for 3D polyhedra. \Hypertarget{classFoam_1_1dgGeomCell_adeeaa6811720d545b5c057634ed65a88}\label{classFoam_1_1dgGeomCell_adeeaa6811720d545b5c057634ed65a88} 
 \index{Foam::dgGeomCell@{Foam::dgGeomCell}!updateFaceInfo@{updateFaceInfo}}
 \index{updateFaceInfo@{updateFaceInfo}!Foam::dgGeomCell@{Foam::dgGeomCell}}
 \doxysubsubsection{\texorpdfstring{updateFaceInfo()}{updateFaceInfo()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
@@ -630,7 +646,17 @@ Return cell centroid (from fv\+Mesh)
 
 Return cell volume (from fv\+Mesh) 
 
-\Hypertarget{classFoam_1_1dgGeomCell_adeeaa6811720d545b5c057634ed65a88}\label{classFoam_1_1dgGeomCell_adeeaa6811720d545b5c057634ed65a88} 
+\Hypertarget{classFoam_1_1dgGeomCell_a0e92302ade0b0affcd5ca224db4deb97}\label{classFoam_1_1dgGeomCell_a0e92302ade0b0affcd5ca224db4deb97} 
+\index{Foam::dgGeomCell@{Foam::dgGeomCell}!cellSize@{cellSize}}
+\index{cellSize@{cellSize}!Foam::dgGeomCell@{Foam::dgGeomCell}}
+\doxysubsubsection{\texorpdfstring{cellSize()}{cellSize()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} Foam\+::dg\+Geom\+Cell\+::cell\+Size (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Return characteristic cell size. 
+
+Computed from the cell volume and total face area as $h = 3V / \sum_f |S_f|$, which is an inradius-\/like length scale for 3D polyhedra. \Hypertarget{classFoam_1_1dgGeomCell_adeeaa6811720d545b5c057634ed65a88}\label{classFoam_1_1dgGeomCell_adeeaa6811720d545b5c057634ed65a88} 
 \index{Foam::dgGeomCell@{Foam::dgGeomCell}!updateFaceInfo@{updateFaceInfo}}
 \index{updateFaceInfo@{updateFaceInfo}!Foam::dgGeomCell@{Foam::dgGeomCell}}
 \doxysubsubsection{\texorpdfstring{updateFaceInfo()}{updateFaceInfo()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
@@ -852,6 +878,16 @@ Unique list of vertex coordinates of the cell.
 
 
 Ordered list of vertex indices for consistent access. 
+
+\Hypertarget{classFoam_1_1dgGeomCell_a0f8d955d89b2632b44fbc1a6b496bc27}\label{classFoam_1_1dgGeomCell_a0f8d955d89b2632b44fbc1a6b496bc27} 
+\index{Foam::dgGeomCell@{Foam::dgGeomCell}!cellSize\_@{cellSize\_}}
+\index{cellSize\_@{cellSize\_}!Foam::dgGeomCell@{Foam::dgGeomCell}}
+\doxysubsubsection{\texorpdfstring{cellSize\_}{cellSize\_}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} Foam\+::dg\+Geom\+Cell\+::cell\+Size\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Characteristic cell size derived from volume and total face area. 
 
 \Hypertarget{classFoam_1_1dgGeomCell_a8e77726ecb45bb125a8b9ff3e05116f4}\label{classFoam_1_1dgGeomCell_a8e77726ecb45bb125a8b9ff3e05116f4} 
 \index{Foam::dgGeomCell@{Foam::dgGeomCell}!J3D\_@{J3D\_}}

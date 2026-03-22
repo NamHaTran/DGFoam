@@ -48,325 +48,349 @@
 \DoxyCodeLine{00044\ \{}
 \DoxyCodeLine{00045\ \textcolor{comment}{//\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ Scalar\ -\/\ Scalar\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ //}}
 \DoxyCodeLine{00046\ }
-\DoxyCodeLine{00047\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{namespaceFoam_ac5efbe63fe37045046c15ea47591e3db}{cellGaussField<scalar>}}\ \textcolor{keyword}{operator}+}
-\DoxyCodeLine{00048\ (}
-\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_ac5efbe63fe37045046c15ea47591e3db}{cellGaussField<scalar>}}\&\ A,}
-\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_ac5efbe63fe37045046c15ea47591e3db}{cellGaussField<scalar>}}\&\ \mbox{\hyperlink{namespacemathVar_a162d62d3cdd05c849a2f116c4700bb21}{B}}}
-\DoxyCodeLine{00051\ )}
-\DoxyCodeLine{00052\ \{}
-\DoxyCodeLine{00053\ \ \ \ \ \mbox{\hyperlink{namespaceFoam_ac5efbe63fe37045046c15ea47591e3db}{cellGaussField<scalar>}}\ result(A.cellID(),\ A.dgMesh());}
-\DoxyCodeLine{00054\ \ \ \ \ }
-\DoxyCodeLine{00055\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <\ A.size();\ ++i)}
-\DoxyCodeLine{00056\ \ \ \ \ \{}
-\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ result[i]\ =\ A[i]\ +\ \mbox{\hyperlink{namespacemathVar_a162d62d3cdd05c849a2f116c4700bb21}{B}}[i];}
-\DoxyCodeLine{00058\ \ \ \ \ \}}
-\DoxyCodeLine{00059\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
-\DoxyCodeLine{00060\ \}}
-\DoxyCodeLine{00061\ }
-\DoxyCodeLine{00062\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{namespaceFoam_ac5efbe63fe37045046c15ea47591e3db}{cellGaussField<scalar>}}\ \textcolor{keyword}{operator}-\/}
-\DoxyCodeLine{00063\ (}
-\DoxyCodeLine{00064\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_ac5efbe63fe37045046c15ea47591e3db}{cellGaussField<scalar>}}\&\ A,}
-\DoxyCodeLine{00065\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_ac5efbe63fe37045046c15ea47591e3db}{cellGaussField<scalar>}}\&\ \mbox{\hyperlink{namespacemathVar_a162d62d3cdd05c849a2f116c4700bb21}{B}}}
-\DoxyCodeLine{00066\ )}
-\DoxyCodeLine{00067\ \{}
-\DoxyCodeLine{00068\ \ \ \ \ \mbox{\hyperlink{namespaceFoam_ac5efbe63fe37045046c15ea47591e3db}{cellGaussField<scalar>}}\ result(A.cellID(),\ A.dgMesh());}
-\DoxyCodeLine{00069\ \ \ \ \ }
-\DoxyCodeLine{00070\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <\ A.size();\ ++i)}
-\DoxyCodeLine{00071\ \ \ \ \ \{}
-\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ result[i]\ =\ A[i]\ -\/\ \mbox{\hyperlink{namespacemathVar_a162d62d3cdd05c849a2f116c4700bb21}{B}}[i];}
-\DoxyCodeLine{00073\ \ \ \ \ \}}
-\DoxyCodeLine{00074\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
-\DoxyCodeLine{00075\ \}}
-\DoxyCodeLine{00076\ }
-\DoxyCodeLine{00077\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{namespaceFoam_ac5efbe63fe37045046c15ea47591e3db}{cellGaussField<scalar>}}\ \textcolor{keyword}{operator}*}
-\DoxyCodeLine{00078\ (}
-\DoxyCodeLine{00079\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_ac5efbe63fe37045046c15ea47591e3db}{cellGaussField<scalar>}}\&\ A,}
-\DoxyCodeLine{00080\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_ac5efbe63fe37045046c15ea47591e3db}{cellGaussField<scalar>}}\&\ \mbox{\hyperlink{namespacemathVar_a162d62d3cdd05c849a2f116c4700bb21}{B}}}
-\DoxyCodeLine{00081\ )}
-\DoxyCodeLine{00082\ \{}
-\DoxyCodeLine{00083\ \ \ \ \ \mbox{\hyperlink{namespaceFoam_ac5efbe63fe37045046c15ea47591e3db}{cellGaussField<scalar>}}\ result(A.cellID(),\ A.dgMesh());}
-\DoxyCodeLine{00084\ \ \ \ \ }
-\DoxyCodeLine{00085\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <\ A.size();\ ++i)}
-\DoxyCodeLine{00086\ \ \ \ \ \{}
-\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ result[i]\ =\ A[i]\ *\ \mbox{\hyperlink{namespacemathVar_a162d62d3cdd05c849a2f116c4700bb21}{B}}[i];}
-\DoxyCodeLine{00088\ \ \ \ \ \}}
-\DoxyCodeLine{00089\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
-\DoxyCodeLine{00090\ \}}
-\DoxyCodeLine{00091\ }
-\DoxyCodeLine{00092\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{namespaceFoam_ac5efbe63fe37045046c15ea47591e3db}{cellGaussField<scalar>}}\ \textcolor{keyword}{operator}/}
-\DoxyCodeLine{00093\ (}
-\DoxyCodeLine{00094\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_ac5efbe63fe37045046c15ea47591e3db}{cellGaussField<scalar>}}\&\ A,}
-\DoxyCodeLine{00095\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_ac5efbe63fe37045046c15ea47591e3db}{cellGaussField<scalar>}}\&\ \mbox{\hyperlink{namespacemathVar_a162d62d3cdd05c849a2f116c4700bb21}{B}}}
-\DoxyCodeLine{00096\ )}
-\DoxyCodeLine{00097\ \{}
-\DoxyCodeLine{00098\ \ \ \ \ \mbox{\hyperlink{namespaceFoam_ac5efbe63fe37045046c15ea47591e3db}{cellGaussField<scalar>}}\ result(A.cellID(),\ A.dgMesh());}
-\DoxyCodeLine{00099\ \ \ \ \ }
-\DoxyCodeLine{00100\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <\ A.size();\ ++i)}
-\DoxyCodeLine{00101\ \ \ \ \ \{}
-\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ result[i]\ =\ A[i]\ /\ \mbox{\hyperlink{namespacemathVar_a162d62d3cdd05c849a2f116c4700bb21}{B}}[i];}
-\DoxyCodeLine{00103\ \ \ \ \ \}}
-\DoxyCodeLine{00104\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
-\DoxyCodeLine{00105\ \}}
-\DoxyCodeLine{00106\ }
-\DoxyCodeLine{00107\ \textcolor{comment}{//\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ Scalar\ -\/\ Vector\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ //}}
-\DoxyCodeLine{00108\ }
-\DoxyCodeLine{00109\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{namespaceFoam_ad37b81e04f62bcb189d6bf06799468ca}{cellGaussField<vector>}}\ \textcolor{keyword}{operator}*}
-\DoxyCodeLine{00110\ (}
-\DoxyCodeLine{00111\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_ac5efbe63fe37045046c15ea47591e3db}{cellGaussField<scalar>}}\&\ A,}
-\DoxyCodeLine{00112\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_ad37b81e04f62bcb189d6bf06799468ca}{cellGaussField<vector>}}\&\ \mbox{\hyperlink{namespacemathVar_a162d62d3cdd05c849a2f116c4700bb21}{B}}}
-\DoxyCodeLine{00113\ )}
-\DoxyCodeLine{00114\ \{}
-\DoxyCodeLine{00115\ \ \ \ \ \mbox{\hyperlink{namespaceFoam_ad37b81e04f62bcb189d6bf06799468ca}{cellGaussField<vector>}}\ result(A.cellID(),\ A.dgMesh());}
-\DoxyCodeLine{00116\ \ \ \ \ }
-\DoxyCodeLine{00117\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <\ A.size();\ ++i)}
-\DoxyCodeLine{00118\ \ \ \ \ \{}
-\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ result[i]\ =\ A[i]\ *\ \mbox{\hyperlink{namespacemathVar_a162d62d3cdd05c849a2f116c4700bb21}{B}}[i];}
-\DoxyCodeLine{00120\ \ \ \ \ \}}
-\DoxyCodeLine{00121\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
-\DoxyCodeLine{00122\ \}}
-\DoxyCodeLine{00123\ }
-\DoxyCodeLine{00124\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{namespaceFoam_ad37b81e04f62bcb189d6bf06799468ca}{cellGaussField<vector>}}\ \textcolor{keyword}{operator}*}
-\DoxyCodeLine{00125\ (}
-\DoxyCodeLine{00126\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_ad37b81e04f62bcb189d6bf06799468ca}{cellGaussField<vector>}}\&\ A,}
-\DoxyCodeLine{00127\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_ac5efbe63fe37045046c15ea47591e3db}{cellGaussField<scalar>}}\&\ \mbox{\hyperlink{namespacemathVar_a162d62d3cdd05c849a2f116c4700bb21}{B}}}
-\DoxyCodeLine{00128\ )}
-\DoxyCodeLine{00129\ \{}
-\DoxyCodeLine{00130\ \ \ \ \ \mbox{\hyperlink{namespaceFoam_ad37b81e04f62bcb189d6bf06799468ca}{cellGaussField<vector>}}\ result(A.cellID(),\ A.dgMesh());}
-\DoxyCodeLine{00131\ \ \ \ \ }
-\DoxyCodeLine{00132\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <\ A.size();\ ++i)}
-\DoxyCodeLine{00133\ \ \ \ \ \{}
-\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ result[i]\ =\ A[i]\ *\ \mbox{\hyperlink{namespacemathVar_a162d62d3cdd05c849a2f116c4700bb21}{B}}[i];}
-\DoxyCodeLine{00135\ \ \ \ \ \}}
-\DoxyCodeLine{00136\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
-\DoxyCodeLine{00137\ \}}
-\DoxyCodeLine{00138\ }
-\DoxyCodeLine{00139\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{namespaceFoam_ad37b81e04f62bcb189d6bf06799468ca}{cellGaussField<vector>}}\ \textcolor{keyword}{operator}/}
-\DoxyCodeLine{00140\ (}
-\DoxyCodeLine{00141\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_ad37b81e04f62bcb189d6bf06799468ca}{cellGaussField<vector>}}\&\ A,}
-\DoxyCodeLine{00142\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_ac5efbe63fe37045046c15ea47591e3db}{cellGaussField<scalar>}}\&\ \mbox{\hyperlink{namespacemathVar_a162d62d3cdd05c849a2f116c4700bb21}{B}}}
-\DoxyCodeLine{00143\ )}
-\DoxyCodeLine{00144\ \{}
-\DoxyCodeLine{00145\ \ \ \ \ \mbox{\hyperlink{namespaceFoam_ad37b81e04f62bcb189d6bf06799468ca}{cellGaussField<vector>}}\ result(A.cellID(),\ A.dgMesh());}
-\DoxyCodeLine{00146\ \ \ \ \ }
-\DoxyCodeLine{00147\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <\ A.size();\ ++i)}
-\DoxyCodeLine{00148\ \ \ \ \ \{}
-\DoxyCodeLine{00149\ \ \ \ \ \ \ \ \ result[i]\ =\ A[i]\ /\ \mbox{\hyperlink{namespacemathVar_a162d62d3cdd05c849a2f116c4700bb21}{B}}[i];}
-\DoxyCodeLine{00150\ \ \ \ \ \}}
-\DoxyCodeLine{00151\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
-\DoxyCodeLine{00152\ \}}
-\DoxyCodeLine{00153\ }
-\DoxyCodeLine{00154\ \textcolor{comment}{//\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ Scalar\ -\/\ tensor\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ //}}
-\DoxyCodeLine{00155\ }
-\DoxyCodeLine{00156\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{namespaceFoam_acf5dd77db12499c0c5608dcec9267343}{cellGaussField<tensor>}}\ \textcolor{keyword}{operator}*}
-\DoxyCodeLine{00157\ (}
-\DoxyCodeLine{00158\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_ac5efbe63fe37045046c15ea47591e3db}{cellGaussField<scalar>}}\&\ A,}
-\DoxyCodeLine{00159\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_acf5dd77db12499c0c5608dcec9267343}{cellGaussField<tensor>}}\&\ \mbox{\hyperlink{namespacemathVar_a162d62d3cdd05c849a2f116c4700bb21}{B}}}
-\DoxyCodeLine{00160\ )}
-\DoxyCodeLine{00161\ \{}
-\DoxyCodeLine{00162\ \ \ \ \ \mbox{\hyperlink{namespaceFoam_acf5dd77db12499c0c5608dcec9267343}{cellGaussField<tensor>}}\ result(A.cellID(),\ A.dgMesh());}
-\DoxyCodeLine{00163\ \ \ \ \ }
-\DoxyCodeLine{00164\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <\ A.size();\ ++i)}
-\DoxyCodeLine{00165\ \ \ \ \ \{}
-\DoxyCodeLine{00166\ \ \ \ \ \ \ \ \ result[i]\ =\ A[i]\ *\ \mbox{\hyperlink{namespacemathVar_a162d62d3cdd05c849a2f116c4700bb21}{B}}[i];}
-\DoxyCodeLine{00167\ \ \ \ \ \}}
-\DoxyCodeLine{00168\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
-\DoxyCodeLine{00169\ \}}
-\DoxyCodeLine{00170\ }
-\DoxyCodeLine{00171\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{namespaceFoam_acf5dd77db12499c0c5608dcec9267343}{cellGaussField<tensor>}}\ \textcolor{keyword}{operator}*}
-\DoxyCodeLine{00172\ (}
-\DoxyCodeLine{00173\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_acf5dd77db12499c0c5608dcec9267343}{cellGaussField<tensor>}}\&\ A,}
-\DoxyCodeLine{00174\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_ac5efbe63fe37045046c15ea47591e3db}{cellGaussField<scalar>}}\&\ \mbox{\hyperlink{namespacemathVar_a162d62d3cdd05c849a2f116c4700bb21}{B}}}
-\DoxyCodeLine{00175\ )}
-\DoxyCodeLine{00176\ \{}
-\DoxyCodeLine{00177\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{namespacemathVar_a162d62d3cdd05c849a2f116c4700bb21}{B}}\ *\ A;}
-\DoxyCodeLine{00178\ \}}
+\DoxyCodeLine{00047\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}}\ \mbox{\hyperlink{namespaceFoam_a6a7846270c47686cd3a5f972ffd8583b}{maxValue}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_ac5efbe63fe37045046c15ea47591e3db}{cellGaussField<scalar>}}\&\ A)}
+\DoxyCodeLine{00048\ \{}
+\DoxyCodeLine{00049\ \ \ \ \ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}}\ result\ =\ -\/GREAT;}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <\ A.size();\ ++i)}
+\DoxyCodeLine{00052\ \ \ \ \ \{}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ result\ =\ max(result,\ A[i]);}
+\DoxyCodeLine{00054\ \ \ \ \ \}}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00057\ \}}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00059\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}}\ \mbox{\hyperlink{namespaceFoam_a63bebc8df61bd87341ab4d08ec2b2914}{minValue}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_ac5efbe63fe37045046c15ea47591e3db}{cellGaussField<scalar>}}\&\ A)}
+\DoxyCodeLine{00060\ \{}
+\DoxyCodeLine{00061\ \ \ \ \ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}}\ result\ =\ GREAT;}
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <\ A.size();\ ++i)}
+\DoxyCodeLine{00064\ \ \ \ \ \{}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ result\ =\ min(result,\ A[i]);}
+\DoxyCodeLine{00066\ \ \ \ \ \}}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00068\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00069\ \}}
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00071\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{namespaceFoam_ac5efbe63fe37045046c15ea47591e3db}{cellGaussField<scalar>}}\ \textcolor{keyword}{operator}+}
+\DoxyCodeLine{00072\ (}
+\DoxyCodeLine{00073\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_ac5efbe63fe37045046c15ea47591e3db}{cellGaussField<scalar>}}\&\ A,}
+\DoxyCodeLine{00074\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_ac5efbe63fe37045046c15ea47591e3db}{cellGaussField<scalar>}}\&\ \mbox{\hyperlink{namespacemathVar_a162d62d3cdd05c849a2f116c4700bb21}{B}}}
+\DoxyCodeLine{00075\ )}
+\DoxyCodeLine{00076\ \{}
+\DoxyCodeLine{00077\ \ \ \ \ \mbox{\hyperlink{namespaceFoam_ac5efbe63fe37045046c15ea47591e3db}{cellGaussField<scalar>}}\ result(A.cellID(),\ A.dgMesh());}
+\DoxyCodeLine{00078\ \ \ \ \ }
+\DoxyCodeLine{00079\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <\ A.size();\ ++i)}
+\DoxyCodeLine{00080\ \ \ \ \ \{}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ result[i]\ =\ A[i]\ +\ \mbox{\hyperlink{namespacemathVar_a162d62d3cdd05c849a2f116c4700bb21}{B}}[i];}
+\DoxyCodeLine{00082\ \ \ \ \ \}}
+\DoxyCodeLine{00083\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00084\ \}}
+\DoxyCodeLine{00085\ }
+\DoxyCodeLine{00086\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{namespaceFoam_ac5efbe63fe37045046c15ea47591e3db}{cellGaussField<scalar>}}\ \textcolor{keyword}{operator}-\/}
+\DoxyCodeLine{00087\ (}
+\DoxyCodeLine{00088\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_ac5efbe63fe37045046c15ea47591e3db}{cellGaussField<scalar>}}\&\ A,}
+\DoxyCodeLine{00089\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_ac5efbe63fe37045046c15ea47591e3db}{cellGaussField<scalar>}}\&\ \mbox{\hyperlink{namespacemathVar_a162d62d3cdd05c849a2f116c4700bb21}{B}}}
+\DoxyCodeLine{00090\ )}
+\DoxyCodeLine{00091\ \{}
+\DoxyCodeLine{00092\ \ \ \ \ \mbox{\hyperlink{namespaceFoam_ac5efbe63fe37045046c15ea47591e3db}{cellGaussField<scalar>}}\ result(A.cellID(),\ A.dgMesh());}
+\DoxyCodeLine{00093\ \ \ \ \ }
+\DoxyCodeLine{00094\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <\ A.size();\ ++i)}
+\DoxyCodeLine{00095\ \ \ \ \ \{}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ result[i]\ =\ A[i]\ -\/\ \mbox{\hyperlink{namespacemathVar_a162d62d3cdd05c849a2f116c4700bb21}{B}}[i];}
+\DoxyCodeLine{00097\ \ \ \ \ \}}
+\DoxyCodeLine{00098\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00099\ \}}
+\DoxyCodeLine{00100\ }
+\DoxyCodeLine{00101\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{namespaceFoam_ac5efbe63fe37045046c15ea47591e3db}{cellGaussField<scalar>}}\ \textcolor{keyword}{operator}*}
+\DoxyCodeLine{00102\ (}
+\DoxyCodeLine{00103\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_ac5efbe63fe37045046c15ea47591e3db}{cellGaussField<scalar>}}\&\ A,}
+\DoxyCodeLine{00104\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_ac5efbe63fe37045046c15ea47591e3db}{cellGaussField<scalar>}}\&\ \mbox{\hyperlink{namespacemathVar_a162d62d3cdd05c849a2f116c4700bb21}{B}}}
+\DoxyCodeLine{00105\ )}
+\DoxyCodeLine{00106\ \{}
+\DoxyCodeLine{00107\ \ \ \ \ \mbox{\hyperlink{namespaceFoam_ac5efbe63fe37045046c15ea47591e3db}{cellGaussField<scalar>}}\ result(A.cellID(),\ A.dgMesh());}
+\DoxyCodeLine{00108\ \ \ \ \ }
+\DoxyCodeLine{00109\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <\ A.size();\ ++i)}
+\DoxyCodeLine{00110\ \ \ \ \ \{}
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ result[i]\ =\ A[i]\ *\ \mbox{\hyperlink{namespacemathVar_a162d62d3cdd05c849a2f116c4700bb21}{B}}[i];}
+\DoxyCodeLine{00112\ \ \ \ \ \}}
+\DoxyCodeLine{00113\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00114\ \}}
+\DoxyCodeLine{00115\ }
+\DoxyCodeLine{00116\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{namespaceFoam_ac5efbe63fe37045046c15ea47591e3db}{cellGaussField<scalar>}}\ \textcolor{keyword}{operator}/}
+\DoxyCodeLine{00117\ (}
+\DoxyCodeLine{00118\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_ac5efbe63fe37045046c15ea47591e3db}{cellGaussField<scalar>}}\&\ A,}
+\DoxyCodeLine{00119\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_ac5efbe63fe37045046c15ea47591e3db}{cellGaussField<scalar>}}\&\ \mbox{\hyperlink{namespacemathVar_a162d62d3cdd05c849a2f116c4700bb21}{B}}}
+\DoxyCodeLine{00120\ )}
+\DoxyCodeLine{00121\ \{}
+\DoxyCodeLine{00122\ \ \ \ \ \mbox{\hyperlink{namespaceFoam_ac5efbe63fe37045046c15ea47591e3db}{cellGaussField<scalar>}}\ result(A.cellID(),\ A.dgMesh());}
+\DoxyCodeLine{00123\ \ \ \ \ }
+\DoxyCodeLine{00124\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <\ A.size();\ ++i)}
+\DoxyCodeLine{00125\ \ \ \ \ \{}
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ result[i]\ =\ A[i]\ /\ \mbox{\hyperlink{namespacemathVar_a162d62d3cdd05c849a2f116c4700bb21}{B}}[i];}
+\DoxyCodeLine{00127\ \ \ \ \ \}}
+\DoxyCodeLine{00128\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00129\ \}}
+\DoxyCodeLine{00130\ }
+\DoxyCodeLine{00131\ \textcolor{comment}{//\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ Scalar\ -\/\ Vector\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ //}}
+\DoxyCodeLine{00132\ }
+\DoxyCodeLine{00133\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{namespaceFoam_ad37b81e04f62bcb189d6bf06799468ca}{cellGaussField<vector>}}\ \textcolor{keyword}{operator}*}
+\DoxyCodeLine{00134\ (}
+\DoxyCodeLine{00135\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_ac5efbe63fe37045046c15ea47591e3db}{cellGaussField<scalar>}}\&\ A,}
+\DoxyCodeLine{00136\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_ad37b81e04f62bcb189d6bf06799468ca}{cellGaussField<vector>}}\&\ \mbox{\hyperlink{namespacemathVar_a162d62d3cdd05c849a2f116c4700bb21}{B}}}
+\DoxyCodeLine{00137\ )}
+\DoxyCodeLine{00138\ \{}
+\DoxyCodeLine{00139\ \ \ \ \ \mbox{\hyperlink{namespaceFoam_ad37b81e04f62bcb189d6bf06799468ca}{cellGaussField<vector>}}\ result(A.cellID(),\ A.dgMesh());}
+\DoxyCodeLine{00140\ \ \ \ \ }
+\DoxyCodeLine{00141\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <\ A.size();\ ++i)}
+\DoxyCodeLine{00142\ \ \ \ \ \{}
+\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ result[i]\ =\ A[i]\ *\ \mbox{\hyperlink{namespacemathVar_a162d62d3cdd05c849a2f116c4700bb21}{B}}[i];}
+\DoxyCodeLine{00144\ \ \ \ \ \}}
+\DoxyCodeLine{00145\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00146\ \}}
+\DoxyCodeLine{00147\ }
+\DoxyCodeLine{00148\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{namespaceFoam_ad37b81e04f62bcb189d6bf06799468ca}{cellGaussField<vector>}}\ \textcolor{keyword}{operator}*}
+\DoxyCodeLine{00149\ (}
+\DoxyCodeLine{00150\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_ad37b81e04f62bcb189d6bf06799468ca}{cellGaussField<vector>}}\&\ A,}
+\DoxyCodeLine{00151\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_ac5efbe63fe37045046c15ea47591e3db}{cellGaussField<scalar>}}\&\ \mbox{\hyperlink{namespacemathVar_a162d62d3cdd05c849a2f116c4700bb21}{B}}}
+\DoxyCodeLine{00152\ )}
+\DoxyCodeLine{00153\ \{}
+\DoxyCodeLine{00154\ \ \ \ \ \mbox{\hyperlink{namespaceFoam_ad37b81e04f62bcb189d6bf06799468ca}{cellGaussField<vector>}}\ result(A.cellID(),\ A.dgMesh());}
+\DoxyCodeLine{00155\ \ \ \ \ }
+\DoxyCodeLine{00156\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <\ A.size();\ ++i)}
+\DoxyCodeLine{00157\ \ \ \ \ \{}
+\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ result[i]\ =\ A[i]\ *\ \mbox{\hyperlink{namespacemathVar_a162d62d3cdd05c849a2f116c4700bb21}{B}}[i];}
+\DoxyCodeLine{00159\ \ \ \ \ \}}
+\DoxyCodeLine{00160\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00161\ \}}
+\DoxyCodeLine{00162\ }
+\DoxyCodeLine{00163\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{namespaceFoam_ad37b81e04f62bcb189d6bf06799468ca}{cellGaussField<vector>}}\ \textcolor{keyword}{operator}/}
+\DoxyCodeLine{00164\ (}
+\DoxyCodeLine{00165\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_ad37b81e04f62bcb189d6bf06799468ca}{cellGaussField<vector>}}\&\ A,}
+\DoxyCodeLine{00166\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_ac5efbe63fe37045046c15ea47591e3db}{cellGaussField<scalar>}}\&\ \mbox{\hyperlink{namespacemathVar_a162d62d3cdd05c849a2f116c4700bb21}{B}}}
+\DoxyCodeLine{00167\ )}
+\DoxyCodeLine{00168\ \{}
+\DoxyCodeLine{00169\ \ \ \ \ \mbox{\hyperlink{namespaceFoam_ad37b81e04f62bcb189d6bf06799468ca}{cellGaussField<vector>}}\ result(A.cellID(),\ A.dgMesh());}
+\DoxyCodeLine{00170\ \ \ \ \ }
+\DoxyCodeLine{00171\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <\ A.size();\ ++i)}
+\DoxyCodeLine{00172\ \ \ \ \ \{}
+\DoxyCodeLine{00173\ \ \ \ \ \ \ \ \ result[i]\ =\ A[i]\ /\ \mbox{\hyperlink{namespacemathVar_a162d62d3cdd05c849a2f116c4700bb21}{B}}[i];}
+\DoxyCodeLine{00174\ \ \ \ \ \}}
+\DoxyCodeLine{00175\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00176\ \}}
+\DoxyCodeLine{00177\ }
+\DoxyCodeLine{00178\ \textcolor{comment}{//\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ Scalar\ -\/\ tensor\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ //}}
 \DoxyCodeLine{00179\ }
-\DoxyCodeLine{00180\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{namespaceFoam_acf5dd77db12499c0c5608dcec9267343}{cellGaussField<tensor>}}\ \textcolor{keyword}{operator}/}
+\DoxyCodeLine{00180\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{namespaceFoam_acf5dd77db12499c0c5608dcec9267343}{cellGaussField<tensor>}}\ \textcolor{keyword}{operator}*}
 \DoxyCodeLine{00181\ (}
-\DoxyCodeLine{00182\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_acf5dd77db12499c0c5608dcec9267343}{cellGaussField<tensor>}}\&\ A,}
-\DoxyCodeLine{00183\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_ac5efbe63fe37045046c15ea47591e3db}{cellGaussField<scalar>}}\&\ \mbox{\hyperlink{namespacemathVar_a162d62d3cdd05c849a2f116c4700bb21}{B}}}
+\DoxyCodeLine{00182\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_ac5efbe63fe37045046c15ea47591e3db}{cellGaussField<scalar>}}\&\ A,}
+\DoxyCodeLine{00183\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_acf5dd77db12499c0c5608dcec9267343}{cellGaussField<tensor>}}\&\ \mbox{\hyperlink{namespacemathVar_a162d62d3cdd05c849a2f116c4700bb21}{B}}}
 \DoxyCodeLine{00184\ )}
 \DoxyCodeLine{00185\ \{}
 \DoxyCodeLine{00186\ \ \ \ \ \mbox{\hyperlink{namespaceFoam_acf5dd77db12499c0c5608dcec9267343}{cellGaussField<tensor>}}\ result(A.cellID(),\ A.dgMesh());}
 \DoxyCodeLine{00187\ \ \ \ \ }
 \DoxyCodeLine{00188\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <\ A.size();\ ++i)}
 \DoxyCodeLine{00189\ \ \ \ \ \{}
-\DoxyCodeLine{00190\ \ \ \ \ \ \ \ \ result[i]\ =\ A[i]\ /\ \mbox{\hyperlink{namespacemathVar_a162d62d3cdd05c849a2f116c4700bb21}{B}}[i];}
+\DoxyCodeLine{00190\ \ \ \ \ \ \ \ \ result[i]\ =\ A[i]\ *\ \mbox{\hyperlink{namespacemathVar_a162d62d3cdd05c849a2f116c4700bb21}{B}}[i];}
 \DoxyCodeLine{00191\ \ \ \ \ \}}
 \DoxyCodeLine{00192\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
 \DoxyCodeLine{00193\ \}}
 \DoxyCodeLine{00194\ }
-\DoxyCodeLine{00195\ \textcolor{comment}{//\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ Scalar\ -\/\ symmTensor\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ //}}
-\DoxyCodeLine{00196\ }
-\DoxyCodeLine{00197\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{namespaceFoam_a570ed78e38adfdd16f77ef5d2529e750}{cellGaussField<symmTensor>}}\ \textcolor{keyword}{operator}*}
-\DoxyCodeLine{00198\ (}
-\DoxyCodeLine{00199\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_ac5efbe63fe37045046c15ea47591e3db}{cellGaussField<scalar>}}\&\ A,}
-\DoxyCodeLine{00200\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_a570ed78e38adfdd16f77ef5d2529e750}{cellGaussField<symmTensor>}}\&\ \mbox{\hyperlink{namespacemathVar_a162d62d3cdd05c849a2f116c4700bb21}{B}}}
-\DoxyCodeLine{00201\ )}
-\DoxyCodeLine{00202\ \{}
-\DoxyCodeLine{00203\ \ \ \ \ \mbox{\hyperlink{namespaceFoam_a570ed78e38adfdd16f77ef5d2529e750}{cellGaussField<symmTensor>}}\ result(A.cellID(),\ A.dgMesh());}
-\DoxyCodeLine{00204\ \ \ \ \ }
-\DoxyCodeLine{00205\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <\ A.size();\ ++i)}
-\DoxyCodeLine{00206\ \ \ \ \ \{}
-\DoxyCodeLine{00207\ \ \ \ \ \ \ \ \ result[i]\ =\ A[i]\ *\ \mbox{\hyperlink{namespacemathVar_a162d62d3cdd05c849a2f116c4700bb21}{B}}[i];}
-\DoxyCodeLine{00208\ \ \ \ \ \}}
-\DoxyCodeLine{00209\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
-\DoxyCodeLine{00210\ \}}
-\DoxyCodeLine{00211\ }
-\DoxyCodeLine{00212\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{namespaceFoam_a570ed78e38adfdd16f77ef5d2529e750}{cellGaussField<symmTensor>}}\ \textcolor{keyword}{operator}*}
-\DoxyCodeLine{00213\ (}
-\DoxyCodeLine{00214\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_a570ed78e38adfdd16f77ef5d2529e750}{cellGaussField<symmTensor>}}\&\ A,}
-\DoxyCodeLine{00215\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_ac5efbe63fe37045046c15ea47591e3db}{cellGaussField<scalar>}}\&\ \mbox{\hyperlink{namespacemathVar_a162d62d3cdd05c849a2f116c4700bb21}{B}}}
-\DoxyCodeLine{00216\ )}
-\DoxyCodeLine{00217\ \{}
-\DoxyCodeLine{00218\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{namespacemathVar_a162d62d3cdd05c849a2f116c4700bb21}{B}}\ *\ A;}
-\DoxyCodeLine{00219\ \}}
+\DoxyCodeLine{00195\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{namespaceFoam_acf5dd77db12499c0c5608dcec9267343}{cellGaussField<tensor>}}\ \textcolor{keyword}{operator}*}
+\DoxyCodeLine{00196\ (}
+\DoxyCodeLine{00197\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_acf5dd77db12499c0c5608dcec9267343}{cellGaussField<tensor>}}\&\ A,}
+\DoxyCodeLine{00198\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_ac5efbe63fe37045046c15ea47591e3db}{cellGaussField<scalar>}}\&\ \mbox{\hyperlink{namespacemathVar_a162d62d3cdd05c849a2f116c4700bb21}{B}}}
+\DoxyCodeLine{00199\ )}
+\DoxyCodeLine{00200\ \{}
+\DoxyCodeLine{00201\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{namespacemathVar_a162d62d3cdd05c849a2f116c4700bb21}{B}}\ *\ A;}
+\DoxyCodeLine{00202\ \}}
+\DoxyCodeLine{00203\ }
+\DoxyCodeLine{00204\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{namespaceFoam_acf5dd77db12499c0c5608dcec9267343}{cellGaussField<tensor>}}\ \textcolor{keyword}{operator}/}
+\DoxyCodeLine{00205\ (}
+\DoxyCodeLine{00206\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_acf5dd77db12499c0c5608dcec9267343}{cellGaussField<tensor>}}\&\ A,}
+\DoxyCodeLine{00207\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_ac5efbe63fe37045046c15ea47591e3db}{cellGaussField<scalar>}}\&\ \mbox{\hyperlink{namespacemathVar_a162d62d3cdd05c849a2f116c4700bb21}{B}}}
+\DoxyCodeLine{00208\ )}
+\DoxyCodeLine{00209\ \{}
+\DoxyCodeLine{00210\ \ \ \ \ \mbox{\hyperlink{namespaceFoam_acf5dd77db12499c0c5608dcec9267343}{cellGaussField<tensor>}}\ result(A.cellID(),\ A.dgMesh());}
+\DoxyCodeLine{00211\ \ \ \ \ }
+\DoxyCodeLine{00212\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <\ A.size();\ ++i)}
+\DoxyCodeLine{00213\ \ \ \ \ \{}
+\DoxyCodeLine{00214\ \ \ \ \ \ \ \ \ result[i]\ =\ A[i]\ /\ \mbox{\hyperlink{namespacemathVar_a162d62d3cdd05c849a2f116c4700bb21}{B}}[i];}
+\DoxyCodeLine{00215\ \ \ \ \ \}}
+\DoxyCodeLine{00216\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00217\ \}}
+\DoxyCodeLine{00218\ }
+\DoxyCodeLine{00219\ \textcolor{comment}{//\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ Scalar\ -\/\ symmTensor\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ //}}
 \DoxyCodeLine{00220\ }
-\DoxyCodeLine{00221\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{namespaceFoam_a570ed78e38adfdd16f77ef5d2529e750}{cellGaussField<symmTensor>}}\ \textcolor{keyword}{operator}/}
+\DoxyCodeLine{00221\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{namespaceFoam_a570ed78e38adfdd16f77ef5d2529e750}{cellGaussField<symmTensor>}}\ \textcolor{keyword}{operator}*}
 \DoxyCodeLine{00222\ (}
-\DoxyCodeLine{00223\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_a570ed78e38adfdd16f77ef5d2529e750}{cellGaussField<symmTensor>}}\&\ A,}
-\DoxyCodeLine{00224\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_ac5efbe63fe37045046c15ea47591e3db}{cellGaussField<scalar>}}\&\ \mbox{\hyperlink{namespacemathVar_a162d62d3cdd05c849a2f116c4700bb21}{B}}}
+\DoxyCodeLine{00223\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_ac5efbe63fe37045046c15ea47591e3db}{cellGaussField<scalar>}}\&\ A,}
+\DoxyCodeLine{00224\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_a570ed78e38adfdd16f77ef5d2529e750}{cellGaussField<symmTensor>}}\&\ \mbox{\hyperlink{namespacemathVar_a162d62d3cdd05c849a2f116c4700bb21}{B}}}
 \DoxyCodeLine{00225\ )}
 \DoxyCodeLine{00226\ \{}
 \DoxyCodeLine{00227\ \ \ \ \ \mbox{\hyperlink{namespaceFoam_a570ed78e38adfdd16f77ef5d2529e750}{cellGaussField<symmTensor>}}\ result(A.cellID(),\ A.dgMesh());}
 \DoxyCodeLine{00228\ \ \ \ \ }
 \DoxyCodeLine{00229\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <\ A.size();\ ++i)}
 \DoxyCodeLine{00230\ \ \ \ \ \{}
-\DoxyCodeLine{00231\ \ \ \ \ \ \ \ \ result[i]\ =\ A[i]\ /\ \mbox{\hyperlink{namespacemathVar_a162d62d3cdd05c849a2f116c4700bb21}{B}}[i];}
+\DoxyCodeLine{00231\ \ \ \ \ \ \ \ \ result[i]\ =\ A[i]\ *\ \mbox{\hyperlink{namespacemathVar_a162d62d3cdd05c849a2f116c4700bb21}{B}}[i];}
 \DoxyCodeLine{00232\ \ \ \ \ \}}
 \DoxyCodeLine{00233\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
 \DoxyCodeLine{00234\ \}}
 \DoxyCodeLine{00235\ }
-\DoxyCodeLine{00236\ \textcolor{comment}{//\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ Scalar\ -\/\ sphericalTensor\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ //}}
-\DoxyCodeLine{00237\ }
-\DoxyCodeLine{00238\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{namespaceFoam_a5ad19990373b56c1832e04b1a9f97f42}{cellGaussField<sphericalTensor>}}\ \textcolor{keyword}{operator}*}
-\DoxyCodeLine{00239\ (}
-\DoxyCodeLine{00240\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_ac5efbe63fe37045046c15ea47591e3db}{cellGaussField<scalar>}}\&\ A,}
-\DoxyCodeLine{00241\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_a5ad19990373b56c1832e04b1a9f97f42}{cellGaussField<sphericalTensor>}}\&\ \mbox{\hyperlink{namespacemathVar_a162d62d3cdd05c849a2f116c4700bb21}{B}}}
-\DoxyCodeLine{00242\ )}
-\DoxyCodeLine{00243\ \{}
-\DoxyCodeLine{00244\ \ \ \ \ \mbox{\hyperlink{namespaceFoam_a5ad19990373b56c1832e04b1a9f97f42}{cellGaussField<sphericalTensor>}}\ result(A.cellID(),\ A.dgMesh());}
-\DoxyCodeLine{00245\ \ \ \ \ }
-\DoxyCodeLine{00246\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <\ A.size();\ ++i)}
-\DoxyCodeLine{00247\ \ \ \ \ \{}
-\DoxyCodeLine{00248\ \ \ \ \ \ \ \ \ result[i]\ =\ A[i]\ *\ \mbox{\hyperlink{namespacemathVar_a162d62d3cdd05c849a2f116c4700bb21}{B}}[i];}
-\DoxyCodeLine{00249\ \ \ \ \ \}}
-\DoxyCodeLine{00250\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
-\DoxyCodeLine{00251\ \}}
-\DoxyCodeLine{00252\ }
-\DoxyCodeLine{00253\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{namespaceFoam_a5ad19990373b56c1832e04b1a9f97f42}{cellGaussField<sphericalTensor>}}\ \textcolor{keyword}{operator}*}
-\DoxyCodeLine{00254\ (}
-\DoxyCodeLine{00255\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_a5ad19990373b56c1832e04b1a9f97f42}{cellGaussField<sphericalTensor>}}\&\ A,}
-\DoxyCodeLine{00256\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_ac5efbe63fe37045046c15ea47591e3db}{cellGaussField<scalar>}}\&\ \mbox{\hyperlink{namespacemathVar_a162d62d3cdd05c849a2f116c4700bb21}{B}}}
-\DoxyCodeLine{00257\ )}
-\DoxyCodeLine{00258\ \{}
-\DoxyCodeLine{00259\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{namespacemathVar_a162d62d3cdd05c849a2f116c4700bb21}{B}}\ *\ A;}
-\DoxyCodeLine{00260\ \}}
+\DoxyCodeLine{00236\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{namespaceFoam_a570ed78e38adfdd16f77ef5d2529e750}{cellGaussField<symmTensor>}}\ \textcolor{keyword}{operator}*}
+\DoxyCodeLine{00237\ (}
+\DoxyCodeLine{00238\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_a570ed78e38adfdd16f77ef5d2529e750}{cellGaussField<symmTensor>}}\&\ A,}
+\DoxyCodeLine{00239\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_ac5efbe63fe37045046c15ea47591e3db}{cellGaussField<scalar>}}\&\ \mbox{\hyperlink{namespacemathVar_a162d62d3cdd05c849a2f116c4700bb21}{B}}}
+\DoxyCodeLine{00240\ )}
+\DoxyCodeLine{00241\ \{}
+\DoxyCodeLine{00242\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{namespacemathVar_a162d62d3cdd05c849a2f116c4700bb21}{B}}\ *\ A;}
+\DoxyCodeLine{00243\ \}}
+\DoxyCodeLine{00244\ }
+\DoxyCodeLine{00245\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{namespaceFoam_a570ed78e38adfdd16f77ef5d2529e750}{cellGaussField<symmTensor>}}\ \textcolor{keyword}{operator}/}
+\DoxyCodeLine{00246\ (}
+\DoxyCodeLine{00247\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_a570ed78e38adfdd16f77ef5d2529e750}{cellGaussField<symmTensor>}}\&\ A,}
+\DoxyCodeLine{00248\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_ac5efbe63fe37045046c15ea47591e3db}{cellGaussField<scalar>}}\&\ \mbox{\hyperlink{namespacemathVar_a162d62d3cdd05c849a2f116c4700bb21}{B}}}
+\DoxyCodeLine{00249\ )}
+\DoxyCodeLine{00250\ \{}
+\DoxyCodeLine{00251\ \ \ \ \ \mbox{\hyperlink{namespaceFoam_a570ed78e38adfdd16f77ef5d2529e750}{cellGaussField<symmTensor>}}\ result(A.cellID(),\ A.dgMesh());}
+\DoxyCodeLine{00252\ \ \ \ \ }
+\DoxyCodeLine{00253\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <\ A.size();\ ++i)}
+\DoxyCodeLine{00254\ \ \ \ \ \{}
+\DoxyCodeLine{00255\ \ \ \ \ \ \ \ \ result[i]\ =\ A[i]\ /\ \mbox{\hyperlink{namespacemathVar_a162d62d3cdd05c849a2f116c4700bb21}{B}}[i];}
+\DoxyCodeLine{00256\ \ \ \ \ \}}
+\DoxyCodeLine{00257\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00258\ \}}
+\DoxyCodeLine{00259\ }
+\DoxyCodeLine{00260\ \textcolor{comment}{//\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ Scalar\ -\/\ sphericalTensor\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ //}}
 \DoxyCodeLine{00261\ }
-\DoxyCodeLine{00262\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{namespaceFoam_a5ad19990373b56c1832e04b1a9f97f42}{cellGaussField<sphericalTensor>}}\ \textcolor{keyword}{operator}/}
+\DoxyCodeLine{00262\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{namespaceFoam_a5ad19990373b56c1832e04b1a9f97f42}{cellGaussField<sphericalTensor>}}\ \textcolor{keyword}{operator}*}
 \DoxyCodeLine{00263\ (}
-\DoxyCodeLine{00264\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_a5ad19990373b56c1832e04b1a9f97f42}{cellGaussField<sphericalTensor>}}\&\ A,}
-\DoxyCodeLine{00265\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_ac5efbe63fe37045046c15ea47591e3db}{cellGaussField<scalar>}}\&\ \mbox{\hyperlink{namespacemathVar_a162d62d3cdd05c849a2f116c4700bb21}{B}}}
+\DoxyCodeLine{00264\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_ac5efbe63fe37045046c15ea47591e3db}{cellGaussField<scalar>}}\&\ A,}
+\DoxyCodeLine{00265\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_a5ad19990373b56c1832e04b1a9f97f42}{cellGaussField<sphericalTensor>}}\&\ \mbox{\hyperlink{namespacemathVar_a162d62d3cdd05c849a2f116c4700bb21}{B}}}
 \DoxyCodeLine{00266\ )}
 \DoxyCodeLine{00267\ \{}
 \DoxyCodeLine{00268\ \ \ \ \ \mbox{\hyperlink{namespaceFoam_a5ad19990373b56c1832e04b1a9f97f42}{cellGaussField<sphericalTensor>}}\ result(A.cellID(),\ A.dgMesh());}
 \DoxyCodeLine{00269\ \ \ \ \ }
 \DoxyCodeLine{00270\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <\ A.size();\ ++i)}
 \DoxyCodeLine{00271\ \ \ \ \ \{}
-\DoxyCodeLine{00272\ \ \ \ \ \ \ \ \ result[i]\ =\ A[i]\ /\ \mbox{\hyperlink{namespacemathVar_a162d62d3cdd05c849a2f116c4700bb21}{B}}[i];}
+\DoxyCodeLine{00272\ \ \ \ \ \ \ \ \ result[i]\ =\ A[i]\ *\ \mbox{\hyperlink{namespacemathVar_a162d62d3cdd05c849a2f116c4700bb21}{B}}[i];}
 \DoxyCodeLine{00273\ \ \ \ \ \}}
 \DoxyCodeLine{00274\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
 \DoxyCodeLine{00275\ \}}
 \DoxyCodeLine{00276\ }
-\DoxyCodeLine{00277\ \textcolor{comment}{//\ Comparison\ operators\ between\ cellGaussField<scalar>}}
-\DoxyCodeLine{00278\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \textcolor{keyword}{operator}<}
-\DoxyCodeLine{00279\ (}
-\DoxyCodeLine{00280\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_ac5efbe63fe37045046c15ea47591e3db}{cellGaussField<scalar>}}\&\ A,}
-\DoxyCodeLine{00281\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_ac5efbe63fe37045046c15ea47591e3db}{cellGaussField<scalar>}}\&\ \mbox{\hyperlink{namespacemathVar_a162d62d3cdd05c849a2f116c4700bb21}{B}}}
-\DoxyCodeLine{00282\ )}
-\DoxyCodeLine{00283\ \{}
-\DoxyCodeLine{00284\ \ \ \ \ \textcolor{keywordflow}{if}\ (A.size()\ !=\ \mbox{\hyperlink{namespacemathVar_a162d62d3cdd05c849a2f116c4700bb21}{B}}.size())\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00277\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{namespaceFoam_a5ad19990373b56c1832e04b1a9f97f42}{cellGaussField<sphericalTensor>}}\ \textcolor{keyword}{operator}*}
+\DoxyCodeLine{00278\ (}
+\DoxyCodeLine{00279\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_a5ad19990373b56c1832e04b1a9f97f42}{cellGaussField<sphericalTensor>}}\&\ A,}
+\DoxyCodeLine{00280\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_ac5efbe63fe37045046c15ea47591e3db}{cellGaussField<scalar>}}\&\ \mbox{\hyperlink{namespacemathVar_a162d62d3cdd05c849a2f116c4700bb21}{B}}}
+\DoxyCodeLine{00281\ )}
+\DoxyCodeLine{00282\ \{}
+\DoxyCodeLine{00283\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{namespacemathVar_a162d62d3cdd05c849a2f116c4700bb21}{B}}\ *\ A;}
+\DoxyCodeLine{00284\ \}}
 \DoxyCodeLine{00285\ }
-\DoxyCodeLine{00286\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <\ A.size();\ ++i)}
-\DoxyCodeLine{00287\ \ \ \ \ \{}
-\DoxyCodeLine{00288\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!(A[i]\ <\ B[i]))\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
-\DoxyCodeLine{00289\ \ \ \ \ \}}
-\DoxyCodeLine{00290\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
-\DoxyCodeLine{00291\ \}}
-\DoxyCodeLine{00292\ }
-\DoxyCodeLine{00293\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \textcolor{keyword}{operator}<=}
-\DoxyCodeLine{00294\ (}
-\DoxyCodeLine{00295\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_ac5efbe63fe37045046c15ea47591e3db}{cellGaussField<scalar>}}\&\ A,}
-\DoxyCodeLine{00296\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_ac5efbe63fe37045046c15ea47591e3db}{cellGaussField<scalar>}}\&\ \mbox{\hyperlink{namespacemathVar_a162d62d3cdd05c849a2f116c4700bb21}{B}}}
-\DoxyCodeLine{00297\ )}
-\DoxyCodeLine{00298\ \{}
-\DoxyCodeLine{00299\ \ \ \ \ \textcolor{keywordflow}{if}\ (A.size()\ !=\ \mbox{\hyperlink{namespacemathVar_a162d62d3cdd05c849a2f116c4700bb21}{B}}.size())\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00286\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{namespaceFoam_a5ad19990373b56c1832e04b1a9f97f42}{cellGaussField<sphericalTensor>}}\ \textcolor{keyword}{operator}/}
+\DoxyCodeLine{00287\ (}
+\DoxyCodeLine{00288\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_a5ad19990373b56c1832e04b1a9f97f42}{cellGaussField<sphericalTensor>}}\&\ A,}
+\DoxyCodeLine{00289\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_ac5efbe63fe37045046c15ea47591e3db}{cellGaussField<scalar>}}\&\ \mbox{\hyperlink{namespacemathVar_a162d62d3cdd05c849a2f116c4700bb21}{B}}}
+\DoxyCodeLine{00290\ )}
+\DoxyCodeLine{00291\ \{}
+\DoxyCodeLine{00292\ \ \ \ \ \mbox{\hyperlink{namespaceFoam_a5ad19990373b56c1832e04b1a9f97f42}{cellGaussField<sphericalTensor>}}\ result(A.cellID(),\ A.dgMesh());}
+\DoxyCodeLine{00293\ \ \ \ \ }
+\DoxyCodeLine{00294\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <\ A.size();\ ++i)}
+\DoxyCodeLine{00295\ \ \ \ \ \{}
+\DoxyCodeLine{00296\ \ \ \ \ \ \ \ \ result[i]\ =\ A[i]\ /\ \mbox{\hyperlink{namespacemathVar_a162d62d3cdd05c849a2f116c4700bb21}{B}}[i];}
+\DoxyCodeLine{00297\ \ \ \ \ \}}
+\DoxyCodeLine{00298\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00299\ \}}
 \DoxyCodeLine{00300\ }
-\DoxyCodeLine{00301\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <\ A.size();\ ++i)}
-\DoxyCodeLine{00302\ \ \ \ \ \{}
-\DoxyCodeLine{00303\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!(A[i]\ <=\ B[i]))\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
-\DoxyCodeLine{00304\ \ \ \ \ \}}
-\DoxyCodeLine{00305\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
-\DoxyCodeLine{00306\ \}}
-\DoxyCodeLine{00307\ }
-\DoxyCodeLine{00308\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \textcolor{keyword}{operator}>}
-\DoxyCodeLine{00309\ (}
-\DoxyCodeLine{00310\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_ac5efbe63fe37045046c15ea47591e3db}{cellGaussField<scalar>}}\&\ A,}
-\DoxyCodeLine{00311\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_ac5efbe63fe37045046c15ea47591e3db}{cellGaussField<scalar>}}\&\ \mbox{\hyperlink{namespacemathVar_a162d62d3cdd05c849a2f116c4700bb21}{B}}}
-\DoxyCodeLine{00312\ )}
-\DoxyCodeLine{00313\ \{}
-\DoxyCodeLine{00314\ \ \ \ \ \textcolor{keywordflow}{if}\ (A.size()\ !=\ \mbox{\hyperlink{namespacemathVar_a162d62d3cdd05c849a2f116c4700bb21}{B}}.size())\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
-\DoxyCodeLine{00315\ }
-\DoxyCodeLine{00316\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <\ A.size();\ ++i)}
-\DoxyCodeLine{00317\ \ \ \ \ \{}
-\DoxyCodeLine{00318\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!(A[i]\ >\ B[i]))\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
-\DoxyCodeLine{00319\ \ \ \ \ \}}
-\DoxyCodeLine{00320\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
-\DoxyCodeLine{00321\ \}}
-\DoxyCodeLine{00322\ }
-\DoxyCodeLine{00323\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \textcolor{keyword}{operator}>=}
-\DoxyCodeLine{00324\ (}
-\DoxyCodeLine{00325\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_ac5efbe63fe37045046c15ea47591e3db}{cellGaussField<scalar>}}\&\ A,}
-\DoxyCodeLine{00326\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_ac5efbe63fe37045046c15ea47591e3db}{cellGaussField<scalar>}}\&\ \mbox{\hyperlink{namespacemathVar_a162d62d3cdd05c849a2f116c4700bb21}{B}}}
-\DoxyCodeLine{00327\ )}
-\DoxyCodeLine{00328\ \{}
-\DoxyCodeLine{00329\ \ \ \ \ \textcolor{keywordflow}{if}\ (A.size()\ !=\ \mbox{\hyperlink{namespacemathVar_a162d62d3cdd05c849a2f116c4700bb21}{B}}.size())\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
-\DoxyCodeLine{00330\ }
-\DoxyCodeLine{00331\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <\ A.size();\ ++i)}
-\DoxyCodeLine{00332\ \ \ \ \ \{}
-\DoxyCodeLine{00333\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!(A[i]\ >=\ B[i]))\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
-\DoxyCodeLine{00334\ \ \ \ \ \}}
-\DoxyCodeLine{00335\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
-\DoxyCodeLine{00336\ \}}
-\DoxyCodeLine{00337\ }
-\DoxyCodeLine{00338\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \textcolor{keyword}{operator}==}
-\DoxyCodeLine{00339\ (}
-\DoxyCodeLine{00340\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_ac5efbe63fe37045046c15ea47591e3db}{cellGaussField<scalar>}}\&\ A,}
-\DoxyCodeLine{00341\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_ac5efbe63fe37045046c15ea47591e3db}{cellGaussField<scalar>}}\&\ \mbox{\hyperlink{namespacemathVar_a162d62d3cdd05c849a2f116c4700bb21}{B}}}
-\DoxyCodeLine{00342\ )}
-\DoxyCodeLine{00343\ \{}
-\DoxyCodeLine{00344\ \ \ \ \ \textcolor{keywordflow}{if}\ (A.size()\ !=\ \mbox{\hyperlink{namespacemathVar_a162d62d3cdd05c849a2f116c4700bb21}{B}}.size())\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
-\DoxyCodeLine{00345\ }
-\DoxyCodeLine{00346\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <\ A.size();\ ++i)}
-\DoxyCodeLine{00347\ \ \ \ \ \{}
-\DoxyCodeLine{00348\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!(A[i]\ ==\ B[i]))\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
-\DoxyCodeLine{00349\ \ \ \ \ \}}
-\DoxyCodeLine{00350\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
-\DoxyCodeLine{00351\ \}}
-\DoxyCodeLine{00352\ }
-\DoxyCodeLine{00353\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \textcolor{keyword}{operator}!=}
-\DoxyCodeLine{00354\ (}
-\DoxyCodeLine{00355\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_ac5efbe63fe37045046c15ea47591e3db}{cellGaussField<scalar>}}\&\ A,}
-\DoxyCodeLine{00356\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_ac5efbe63fe37045046c15ea47591e3db}{cellGaussField<scalar>}}\&\ \mbox{\hyperlink{namespacemathVar_a162d62d3cdd05c849a2f116c4700bb21}{B}}}
-\DoxyCodeLine{00357\ )}
-\DoxyCodeLine{00358\ \{}
-\DoxyCodeLine{00359\ \ \ \ \ \textcolor{keywordflow}{return}\ !(A\ ==\ \mbox{\hyperlink{namespacemathVar_a162d62d3cdd05c849a2f116c4700bb21}{B}});}
+\DoxyCodeLine{00301\ \textcolor{comment}{//\ Comparison\ operators\ between\ cellGaussField<scalar>}}
+\DoxyCodeLine{00302\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \textcolor{keyword}{operator}<}
+\DoxyCodeLine{00303\ (}
+\DoxyCodeLine{00304\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_ac5efbe63fe37045046c15ea47591e3db}{cellGaussField<scalar>}}\&\ A,}
+\DoxyCodeLine{00305\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_ac5efbe63fe37045046c15ea47591e3db}{cellGaussField<scalar>}}\&\ \mbox{\hyperlink{namespacemathVar_a162d62d3cdd05c849a2f116c4700bb21}{B}}}
+\DoxyCodeLine{00306\ )}
+\DoxyCodeLine{00307\ \{}
+\DoxyCodeLine{00308\ \ \ \ \ \textcolor{keywordflow}{if}\ (A.size()\ !=\ \mbox{\hyperlink{namespacemathVar_a162d62d3cdd05c849a2f116c4700bb21}{B}}.size())\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00309\ }
+\DoxyCodeLine{00310\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <\ A.size();\ ++i)}
+\DoxyCodeLine{00311\ \ \ \ \ \{}
+\DoxyCodeLine{00312\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!(A[i]\ <\ B[i]))\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00313\ \ \ \ \ \}}
+\DoxyCodeLine{00314\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00315\ \}}
+\DoxyCodeLine{00316\ }
+\DoxyCodeLine{00317\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \textcolor{keyword}{operator}<=}
+\DoxyCodeLine{00318\ (}
+\DoxyCodeLine{00319\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_ac5efbe63fe37045046c15ea47591e3db}{cellGaussField<scalar>}}\&\ A,}
+\DoxyCodeLine{00320\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_ac5efbe63fe37045046c15ea47591e3db}{cellGaussField<scalar>}}\&\ \mbox{\hyperlink{namespacemathVar_a162d62d3cdd05c849a2f116c4700bb21}{B}}}
+\DoxyCodeLine{00321\ )}
+\DoxyCodeLine{00322\ \{}
+\DoxyCodeLine{00323\ \ \ \ \ \textcolor{keywordflow}{if}\ (A.size()\ !=\ \mbox{\hyperlink{namespacemathVar_a162d62d3cdd05c849a2f116c4700bb21}{B}}.size())\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00324\ }
+\DoxyCodeLine{00325\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <\ A.size();\ ++i)}
+\DoxyCodeLine{00326\ \ \ \ \ \{}
+\DoxyCodeLine{00327\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!(A[i]\ <=\ B[i]))\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00328\ \ \ \ \ \}}
+\DoxyCodeLine{00329\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00330\ \}}
+\DoxyCodeLine{00331\ }
+\DoxyCodeLine{00332\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \textcolor{keyword}{operator}>}
+\DoxyCodeLine{00333\ (}
+\DoxyCodeLine{00334\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_ac5efbe63fe37045046c15ea47591e3db}{cellGaussField<scalar>}}\&\ A,}
+\DoxyCodeLine{00335\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_ac5efbe63fe37045046c15ea47591e3db}{cellGaussField<scalar>}}\&\ \mbox{\hyperlink{namespacemathVar_a162d62d3cdd05c849a2f116c4700bb21}{B}}}
+\DoxyCodeLine{00336\ )}
+\DoxyCodeLine{00337\ \{}
+\DoxyCodeLine{00338\ \ \ \ \ \textcolor{keywordflow}{if}\ (A.size()\ !=\ \mbox{\hyperlink{namespacemathVar_a162d62d3cdd05c849a2f116c4700bb21}{B}}.size())\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00339\ }
+\DoxyCodeLine{00340\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <\ A.size();\ ++i)}
+\DoxyCodeLine{00341\ \ \ \ \ \{}
+\DoxyCodeLine{00342\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!(A[i]\ >\ B[i]))\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00343\ \ \ \ \ \}}
+\DoxyCodeLine{00344\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00345\ \}}
+\DoxyCodeLine{00346\ }
+\DoxyCodeLine{00347\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \textcolor{keyword}{operator}>=}
+\DoxyCodeLine{00348\ (}
+\DoxyCodeLine{00349\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_ac5efbe63fe37045046c15ea47591e3db}{cellGaussField<scalar>}}\&\ A,}
+\DoxyCodeLine{00350\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_ac5efbe63fe37045046c15ea47591e3db}{cellGaussField<scalar>}}\&\ \mbox{\hyperlink{namespacemathVar_a162d62d3cdd05c849a2f116c4700bb21}{B}}}
+\DoxyCodeLine{00351\ )}
+\DoxyCodeLine{00352\ \{}
+\DoxyCodeLine{00353\ \ \ \ \ \textcolor{keywordflow}{if}\ (A.size()\ !=\ \mbox{\hyperlink{namespacemathVar_a162d62d3cdd05c849a2f116c4700bb21}{B}}.size())\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00354\ }
+\DoxyCodeLine{00355\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <\ A.size();\ ++i)}
+\DoxyCodeLine{00356\ \ \ \ \ \{}
+\DoxyCodeLine{00357\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!(A[i]\ >=\ B[i]))\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00358\ \ \ \ \ \}}
+\DoxyCodeLine{00359\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
 \DoxyCodeLine{00360\ \}}
 \DoxyCodeLine{00361\ }
-\DoxyCodeLine{00362\ \}\ \textcolor{comment}{//\ End\ namespace\ Foam}}
-\DoxyCodeLine{00363\ }
-\DoxyCodeLine{00364\ \textcolor{preprocessor}{\#endif}}
-\DoxyCodeLine{00365\ }
-\DoxyCodeLine{00366\ \textcolor{comment}{//\ *************************************************************************\ //}}
+\DoxyCodeLine{00362\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \textcolor{keyword}{operator}==}
+\DoxyCodeLine{00363\ (}
+\DoxyCodeLine{00364\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_ac5efbe63fe37045046c15ea47591e3db}{cellGaussField<scalar>}}\&\ A,}
+\DoxyCodeLine{00365\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_ac5efbe63fe37045046c15ea47591e3db}{cellGaussField<scalar>}}\&\ \mbox{\hyperlink{namespacemathVar_a162d62d3cdd05c849a2f116c4700bb21}{B}}}
+\DoxyCodeLine{00366\ )}
+\DoxyCodeLine{00367\ \{}
+\DoxyCodeLine{00368\ \ \ \ \ \textcolor{keywordflow}{if}\ (A.size()\ !=\ \mbox{\hyperlink{namespacemathVar_a162d62d3cdd05c849a2f116c4700bb21}{B}}.size())\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00369\ }
+\DoxyCodeLine{00370\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <\ A.size();\ ++i)}
+\DoxyCodeLine{00371\ \ \ \ \ \{}
+\DoxyCodeLine{00372\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!(A[i]\ ==\ B[i]))\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00373\ \ \ \ \ \}}
+\DoxyCodeLine{00374\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00375\ \}}
+\DoxyCodeLine{00376\ }
+\DoxyCodeLine{00377\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \textcolor{keyword}{operator}!=}
+\DoxyCodeLine{00378\ (}
+\DoxyCodeLine{00379\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_ac5efbe63fe37045046c15ea47591e3db}{cellGaussField<scalar>}}\&\ A,}
+\DoxyCodeLine{00380\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_ac5efbe63fe37045046c15ea47591e3db}{cellGaussField<scalar>}}\&\ \mbox{\hyperlink{namespacemathVar_a162d62d3cdd05c849a2f116c4700bb21}{B}}}
+\DoxyCodeLine{00381\ )}
+\DoxyCodeLine{00382\ \{}
+\DoxyCodeLine{00383\ \ \ \ \ \textcolor{keywordflow}{return}\ !(A\ ==\ \mbox{\hyperlink{namespacemathVar_a162d62d3cdd05c849a2f116c4700bb21}{B}});}
+\DoxyCodeLine{00384\ \}}
+\DoxyCodeLine{00385\ }
+\DoxyCodeLine{00386\ \}\ \textcolor{comment}{//\ End\ namespace\ Foam}}
+\DoxyCodeLine{00387\ }
+\DoxyCodeLine{00388\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00389\ }
+\DoxyCodeLine{00390\ \textcolor{comment}{//\ *************************************************************************\ //}}
 
 \end{DoxyCode}

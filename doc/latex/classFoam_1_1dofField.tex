@@ -33,8 +33,8 @@ Collaboration diagram for Foam\+::dof\+Field\texorpdfstring{$<$}{<} Type \texorp
 \begin{DoxyCompactList}\small\item\em Return non-\/const access to Do\+Fs of a given cell. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1cellDof}{cell\+Dof}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \& \mbox{\hyperlink{classFoam_1_1dofField_a057acaa2e05ab581b9bb85afb0e42331}{operator\mbox{[}$\,$\mbox{]}}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1GaussField}{i}}) \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
 \begin{DoxyCompactList}\small\item\em Return const access to Do\+Fs of a given cell. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dofField_a59b38d83b62dece24d8a5f0c4b1e2641}{update\+Foam\+Fields}} ()
-\begin{DoxyCompactList}\small\item\em Update Open\+FOAM vol\+Fields from DG DoF values. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dofField_a896d8066a50aabe7b7e22a4481ee0327}{update\+Cell\+Dof}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} cell\+ID)
+\begin{DoxyCompactList}\small\item\em Update Open\+FOAM vol\+Fields from DG DoF values of one cell. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dofField_ab3e229f0c38495f1fad1721498f3c9b7}{write}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
 \begin{DoxyCompactList}\small\item\em Write Open\+FOAM vol\+Fields to disk. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1dofField_a81c74b45a86dd15c9368210f4d34aaf6}{dof\+Field}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{word}} \&name, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{file\+Name}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{instance}}, IOobject\+::read\+Option \mbox{\hyperlink{classFoam_1_1GaussField}{r\+Opt}}, IOobject\+::write\+Option \mbox{\hyperlink{classFoam_1_1GaussField}{w\+Opt}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \&mesh)
@@ -49,8 +49,8 @@ Collaboration diagram for Foam\+::dof\+Field\texorpdfstring{$<$}{<} Type \texorp
 \begin{DoxyCompactList}\small\item\em Return non-\/const access to Do\+Fs of a given cell. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1cellDof}{cell\+Dof}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \& \mbox{\hyperlink{classFoam_1_1dofField_a057acaa2e05ab581b9bb85afb0e42331}{operator\mbox{[}$\,$\mbox{]}}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1GaussField}{i}}) \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
 \begin{DoxyCompactList}\small\item\em Return const access to Do\+Fs of a given cell. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dofField_a59b38d83b62dece24d8a5f0c4b1e2641}{update\+Foam\+Fields}} ()
-\begin{DoxyCompactList}\small\item\em Update Open\+FOAM vol\+Fields from DG DoF values. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dofField_a896d8066a50aabe7b7e22a4481ee0327}{update\+Cell\+Dof}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} cell\+ID)
+\begin{DoxyCompactList}\small\item\em Update Open\+FOAM vol\+Fields from DG DoF values of one cell. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dofField_ab3e229f0c38495f1fad1721498f3c9b7}{write}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
 \begin{DoxyCompactList}\small\item\em Write Open\+FOAM vol\+Fields to disk. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsubsection*{Private Attributes}
@@ -184,18 +184,18 @@ Return non-\/const access to Do\+Fs of a given cell.
 
 Return const access to Do\+Fs of a given cell. 
 
-\Hypertarget{classFoam_1_1dofField_a59b38d83b62dece24d8a5f0c4b1e2641}\label{classFoam_1_1dofField_a59b38d83b62dece24d8a5f0c4b1e2641} 
-\index{Foam::dofField$<$ Type $>$@{Foam::dofField$<$ Type $>$}!updateFoamFields@{updateFoamFields}}
-\index{updateFoamFields@{updateFoamFields}!Foam::dofField$<$ Type $>$@{Foam::dofField$<$ Type $>$}}
-\doxysubsubsection{\texorpdfstring{updateFoamFields()}{updateFoamFields()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+\Hypertarget{classFoam_1_1dofField_a896d8066a50aabe7b7e22a4481ee0327}\label{classFoam_1_1dofField_a896d8066a50aabe7b7e22a4481ee0327} 
+\index{Foam::dofField$<$ Type $>$@{Foam::dofField$<$ Type $>$}!updateCellDof@{updateCellDof}}
+\index{updateCellDof@{updateCellDof}!Foam::dofField$<$ Type $>$@{Foam::dofField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{updateCellDof()}{updateCellDof()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
 {\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
-\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dofField}{Foam\+::dof\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::update\+Foam\+Fields (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dofField}{Foam\+::dof\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::update\+Cell\+Dof (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{cell\+ID }\end{DoxyParamCaption})}
 
 
 
-Update Open\+FOAM vol\+Fields from DG DoF values. 
+Update Open\+FOAM vol\+Fields from DG DoF values of one cell. 
 
-Copies cell-\/local DG DoF values into the corresponding Open\+FOAM vol\+Fields. \Hypertarget{classFoam_1_1dofField_ab3e229f0c38495f1fad1721498f3c9b7}\label{classFoam_1_1dofField_ab3e229f0c38495f1fad1721498f3c9b7} 
+Copies the Do\+Fs of a single DG cell into the corresponding Open\+FOAM vol\+Fields. This is the preferred hot-\/path synchronization helper during explicit stage updates. \Hypertarget{classFoam_1_1dofField_ab3e229f0c38495f1fad1721498f3c9b7}\label{classFoam_1_1dofField_ab3e229f0c38495f1fad1721498f3c9b7} 
 \index{Foam::dofField$<$ Type $>$@{Foam::dofField$<$ Type $>$}!write@{write}}
 \index{write@{write}!Foam::dofField$<$ Type $>$@{Foam::dofField$<$ Type $>$}}
 \doxysubsubsection{\texorpdfstring{write()}{write()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
@@ -250,18 +250,18 @@ Return non-\/const access to Do\+Fs of a given cell.
 
 Return const access to Do\+Fs of a given cell. 
 
-\Hypertarget{classFoam_1_1dofField_a59b38d83b62dece24d8a5f0c4b1e2641}\label{classFoam_1_1dofField_a59b38d83b62dece24d8a5f0c4b1e2641} 
-\index{Foam::dofField$<$ Type $>$@{Foam::dofField$<$ Type $>$}!updateFoamFields@{updateFoamFields}}
-\index{updateFoamFields@{updateFoamFields}!Foam::dofField$<$ Type $>$@{Foam::dofField$<$ Type $>$}}
-\doxysubsubsection{\texorpdfstring{updateFoamFields()}{updateFoamFields()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+\Hypertarget{classFoam_1_1dofField_a896d8066a50aabe7b7e22a4481ee0327}\label{classFoam_1_1dofField_a896d8066a50aabe7b7e22a4481ee0327} 
+\index{Foam::dofField$<$ Type $>$@{Foam::dofField$<$ Type $>$}!updateCellDof@{updateCellDof}}
+\index{updateCellDof@{updateCellDof}!Foam::dofField$<$ Type $>$@{Foam::dofField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{updateCellDof()}{updateCellDof()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
 {\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
-\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dofField}{Foam\+::dof\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::update\+Foam\+Fields (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dofField}{Foam\+::dof\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::update\+Cell\+Dof (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{cell\+ID }\end{DoxyParamCaption})}
 
 
 
-Update Open\+FOAM vol\+Fields from DG DoF values. 
+Update Open\+FOAM vol\+Fields from DG DoF values of one cell. 
 
-Copies cell-\/local DG DoF values into the corresponding Open\+FOAM vol\+Fields. \Hypertarget{classFoam_1_1dofField_ab3e229f0c38495f1fad1721498f3c9b7}\label{classFoam_1_1dofField_ab3e229f0c38495f1fad1721498f3c9b7} 
+Copies the Do\+Fs of a single DG cell into the corresponding Open\+FOAM vol\+Fields. This is the preferred hot-\/path synchronization helper during explicit stage updates. \Hypertarget{classFoam_1_1dofField_ab3e229f0c38495f1fad1721498f3c9b7}\label{classFoam_1_1dofField_ab3e229f0c38495f1fad1721498f3c9b7} 
 \index{Foam::dofField$<$ Type $>$@{Foam::dofField$<$ Type $>$}!write@{write}}
 \index{write@{write}!Foam::dofField$<$ Type $>$@{Foam::dofField$<$ Type $>$}}
 \doxysubsubsection{\texorpdfstring{write()}{write()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
