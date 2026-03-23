@@ -86,8 +86,7 @@ namespace Foam
  * - \f$\boldsymbol{n}\f$ is the outward unit normal
  *
  * The dissipation coefficient \f$C\f$ is evaluated locally from flow
- * velocity and acoustic speed. Optional Mach-based scaling can be enabled
- * via dictionary settings.
+ * velocity and acoustic speed. 
  *
  * This flux is robust but introduces stronger numerical dissipation than
  * approximate Riemann solvers such as HLLC or Roe.
@@ -103,9 +102,6 @@ private:
 
     /** Pointer to velocity field (read-only, non-owning) */
     const dgField<vector>& U_;
-
-    /** Enable Mach-number-based dissipation scaling */
-    bool scaleByMach_;
 
     /**
      * \brief Compute local dissipation coefficient
@@ -137,8 +133,7 @@ public:
     /**
      * \brief Construct from name, dictionary, and DG mesh
      *
-     * Initializes field references and reads solver options
-     * (e.g. Mach-based scaling).
+     * Initializes field references.
      *
      * \param name Solver name
      * \param dict Flux-solver dictionary
@@ -186,16 +181,8 @@ public:
         const faceGaussField<vector>& U
     ) override;
 
-    /** Reset internal state (no-op) */
     virtual void reset() override {}
 
-    /**
-     * \brief Read solver settings from dictionary
-     *
-     * Updates dissipation-scaling options.
-     *
-     * \param dict Flux-solver dictionary
-     */
     virtual void read(const dictionary& dict) override;
 };
 

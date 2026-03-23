@@ -1,6 +1,6 @@
 // Primitive fields are reconstructed from the conservative variables and
 // are used to evaluate fluxes and boundary conditions in a more natural form.
-Info<< "Creating primitive fields\n" << endl;
+Info<< "Create primitive fields\n" << endl;
 
 // The solver owns p, T, and U, but their values are refreshed by the thermo
 // model and by stage-update logic after rho/rhoU/E change. These are still

@@ -1,7 +1,7 @@
 // Conservative fields are the actual unknowns advanced in time.
 // They are read from disk because the solver expects an initial condition
 // in terms of rho, rhoU, and total energy E.
-Info<< "Creating conservative fields\n" << endl;
+Info<< "Create conservative fields\n" << endl;
 
 dgField<scalar> rho
 (

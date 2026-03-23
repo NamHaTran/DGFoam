@@ -25,7 +25,7 @@ fluxSchemes
 	{
 		default         		central;
 		
-		massConvTermFlux		LaxFriedrichs;
+		massConvTermFlux		HLLC;
 		momentumConvTermFlux		LaxFriedrichs;
 		energyConvTermFlux		LaxFriedrichs;
 		
@@ -45,16 +45,6 @@ fluxSchemes
 		HLLCCoeffs
 		{
 			speedEstimate roeEinfeldt;
-		}
-		
-		LaxFriedrichsCoeffs
-		{
-			scaleByMach true;
-		}
-		
-		centralCoeffs
-		{
-			// nothing
 		}
 	}
 }

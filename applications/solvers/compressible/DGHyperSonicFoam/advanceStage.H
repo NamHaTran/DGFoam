@@ -7,7 +7,15 @@ forAll(mesh.cells(), cellI)
     // dgTimeDiscretization hides all stage coefficients and old-field storage,
     // so the solver just says "advance this cell one stage".
     timeDiscretization.updateStage(cellI);
+}
 
+// Limit the updated conservative stage state before it is reused by the next
+// stage. Limiters act on the conservative DG fields directly, so refresh the
+// primitive and thermo fields afterwards.
+limiterManager.correct();
+
+forAll(mesh.cells(), cellI)
+{
     // U is not directly advanced by the time integrator, so recompute it from
     // the updated conservative variables.
     U.gaussFields()[cellI] = rhoU.gaussFields()[cellI] / rho.gaussFields()[cellI];

@@ -21,7 +21,7 @@ Tutorial note:
 // can ask for p, T, he-derived properties, a, gamma, etc. without duplicating thermodynamic
 // formulas in every include file. In practice, thermo becomes the bridge
 // between conservative unknowns and the primitive quantities used in fluxes.
-Info<< "Reading thermophysical properties\n" << endl;
+Info<< "Read thermophysical properties\n" << endl;
 
 IOdictionary thermoDict
 (

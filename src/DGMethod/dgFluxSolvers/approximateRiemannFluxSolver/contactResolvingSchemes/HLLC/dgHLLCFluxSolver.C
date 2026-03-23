@@ -131,7 +131,20 @@ void Foam::dgHLLCFluxSolver::calcGamma
 
 void Foam::dgHLLCFluxSolver::read(const dictionary& dict)
 {
-    word s = dict.lookupOrDefault<word>("speedEstimate", "davis");
+    const dictionary* readDict = &dict;
+
+    if (dict.found("fluxSolversCoeffs"))
+    {
+        const dictionary& coeffsDict = dict.subDict("fluxSolversCoeffs");
+        const word coeffKey("HLLCCoeffs");
+
+        if (coeffsDict.found(coeffKey))
+        {
+            readDict = &coeffsDict.subDict(coeffKey);
+        }
+    }
+
+    word s = readDict->lookupOrDefault<word>("speedEstimate", "davis");
 
     if (s == "davis")
     {

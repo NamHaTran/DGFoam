@@ -1,0 +1,241 @@
+/*---------------------------------------------------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     |
+    \\  /    A nd           | www.openfoam.com
+     \\/     M anipulation  |
+-------------------------------------------------------------------------------
+    Copyright (C) 2015-2024 OpenCFD Ltd.
+    Copyright (C) 2024-2026 Ha Nam Tran
+-------------------------------------------------------------------------------
+License
+    This file is part of DGFoam.
+
+    DGFoam is free software: you can redistribute it and/or modify it
+    under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    DGFoam is distributed in the hope that it will be useful, but WITHOUT
+    ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+    FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+    for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with OpenFOAM.  If not, see <http://www.gnu.org/licenses/>.
+
+\*---------------------------------------------------------------------------*/
+
+#include "dgLimiter.H"
+#include "addToRunTimeSelectionTable.H"
+#include "DynamicList.H"
+#include "error.H"
+
+namespace Foam
+{
+
+defineTypeNameAndDebug(dgLimiter, 0);
+defineRunTimeSelectionTable(dgLimiter, dictionary);
+
+
+void dgLimiter::initializeLimitedFields()
+{
+    const objectRegistry& obr = mesh_.getFvMesh();
+
+    if (!dict_.found("fields"))
+    {
+        FatalIOErrorInFunction(dict_)
+            << "Missing required entry 'fields' in dgLimiter dictionary." << nl
+            << "Please provide a non-empty list of DG field names to limit."
+            << exit(FatalIOError);
+    }
+
+    const wordList fieldNames = dict_.get<wordList>("fields");
+
+    if (fieldNames.empty())
+    {
+        FatalIOErrorInFunction(dict_)
+            << "Entry 'fields' is empty in dgLimiter dictionary." << nl
+            << "Please provide at least one DG field name to limit."
+            << exit(FatalIOError);
+    }
+
+    DynamicList<limitedField> fields(fieldNames.size());
+
+    forAll(fieldNames, fieldI)
+    {
+        const word& fieldName = fieldNames[fieldI];
+
+        limitedField fieldInfo;
+        fieldInfo.fieldName = fieldName;
+        fieldInfo.isVector = false;
+        fieldInfo.scalarFieldPtr = nullptr;
+        fieldInfo.vectorFieldPtr = nullptr;
+
+        if (obr.foundObject<dgField<scalar>>(fieldName))
+        {
+            fieldInfo.scalarFieldPtr =
+                &obr.lookupObjectRef<dgField<scalar>>(fieldName);
+        }
+        else if (obr.foundObject<dgField<vector>>(fieldName))
+        {
+            fieldInfo.isVector = true;
+            fieldInfo.vectorFieldPtr =
+                &obr.lookupObjectRef<dgField<vector>>(fieldName);
+        }
+        else
+        {
+            FatalIOErrorInFunction(dict_)
+                << "Field '" << fieldName
+                << "' does not exist in the mesh registry as either "
+                << "dgField<scalar> or dgField<vector>."
+                << exit(FatalIOError);
+        }
+
+        fields.append(fieldInfo);
+    }
+
+    limitedFields_.transfer(fields);
+}
+
+
+void dgLimiter::initializeDetector()
+{
+    if (!dict_.found("detector"))
+    {
+        FatalIOErrorInFunction(dict_)
+            << "Missing required entry 'detector' in dgLimiter dictionary."
+            << exit(FatalIOError);
+    }
+
+    const word detectorType = dict_.get<word>("detector");
+    const word detectorCoeffsName = detectorType + "Coeffs";
+
+    if (!dict_.found(detectorCoeffsName))
+    {
+        FatalIOErrorInFunction(dict_)
+            << "Missing required sub-dictionary '" << detectorCoeffsName
+            << "' for detector type '" << detectorType << "'."
+            << exit(FatalIOError);
+    }
+
+    detector_ =
+        troubleCellDetector::New
+        (
+            detectorType,
+            dict_.subDict(detectorCoeffsName),
+            mesh_
+        );
+}
+
+
+void dgLimiter::limitCell
+(
+    const limitedField& fieldInfo,
+    const label cellID
+)
+{
+    if (fieldInfo.isVector)
+    {
+        limitField(*fieldInfo.vectorFieldPtr, cellID);
+        return;
+    }
+
+    limitField(*fieldInfo.scalarFieldPtr, cellID);
+}
+
+
+void dgLimiter::preCorrect()
+{}
+
+
+void dgLimiter::postCorrect()
+{}
+
+
+dgLimiter::dgLimiter
+(
+    const dictionary& dict,
+    const dgGeomMesh& mesh
+)
+:
+    limitedFields_(),
+    detector_(nullptr),
+    dict_(dict),
+    mesh_(mesh),
+    nLimitedCells_(0)
+{
+    initializeLimitedFields();
+    initializeDetector();
+}
+
+
+autoPtr<dgLimiter> dgLimiter::New
+(
+    const dictionary& dict,
+    const dgGeomMesh& mesh
+)
+{
+    if (!dict.found("type"))
+    {
+        FatalIOErrorInFunction(dict)
+            << "Missing required entry 'type' in dgLimiter dictionary."
+            << exit(FatalIOError);
+    }
+
+    const word limiterType = dict.get<word>("type");
+    auto cstrIter = dictionaryConstructorTablePtr_->find(limiterType);
+
+    if (!cstrIter.found())
+    {
+        FatalIOErrorInFunction(dict)
+            << "Unknown dgLimiter type: " << limiterType << nl
+            << "Valid dgLimiter types are: "
+            << dictionaryConstructorTablePtr_->toc()
+            << exit(FatalIOError);
+    }
+
+    return cstrIter()(dict, mesh);
+}
+
+
+void dgLimiter::read(const dictionary& dict)
+{
+    dict_ = dict;
+    limitedFields_.clear();
+    detector_.clear();
+    nLimitedCells_ = 0;
+
+    initializeLimitedFields();
+    initializeDetector();
+}
+
+
+void dgLimiter::correct()
+{
+    preCorrect();
+
+    nLimitedCells_ = 0;
+    detector_->resetLimitingIndicator();
+
+    for (label cellID = 0; cellID < mesh_.nCells(); ++cellID)
+    {
+        if (!detector_->detect(cellID))
+        {
+            continue;
+        }
+
+        ++nLimitedCells_;
+
+        forAll(limitedFields_, fieldI)
+        {
+            limitCell(limitedFields_[fieldI], cellID);
+        }
+    }
+
+    postCorrect();
+}
+
+} // End namespace Foam
+
+// ************************************************************************* //

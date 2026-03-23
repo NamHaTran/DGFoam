@@ -64,6 +64,7 @@ Description
 #include "dgGeneralBoundaryManager.H"
 #include "dgProcessorBoundaryManager.H"
 #include "dgFluxSolverManager.H"
+#include "dgLimiterManager.H"
 #include "dgTimeDiscretization.H"
 #include "dgThermoConservative.H"
 #include "dgGeneralPDETerm.H"

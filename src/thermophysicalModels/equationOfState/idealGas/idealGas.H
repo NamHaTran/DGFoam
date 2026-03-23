@@ -106,7 +106,8 @@ public:
     /**
      * \brief Construct from dictionary
      *
-     * Reads the gas constant \f$R\f$ from the coefficient dictionary.
+     * Computes the specific gas constant \f$R\f$ from the universal gas
+     * constant and the species molecular weight.
      *
      * \param name Model name
      * \param dict Coefficient dictionary

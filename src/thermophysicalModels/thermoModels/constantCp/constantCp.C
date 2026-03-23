@@ -116,8 +116,8 @@ Foam::constantCp::constantCp
     const scalar W = readScalar(specieDict.lookup("molWeight")); // [kg/kmol] in OF convention
 
     // 3) Compute R = Ru / W
-    //    Note: OpenFOAM constant::physicoChemical::R is in [J/(kmol.K)]
-    const scalar Ru = constant::physicoChemical::R.value(); // ~8.314462618e3 J/(kmol.K)
+    //    Note: OpenFOAM constant::physicoChemical::RR is in [J/(kmol.K)]
+    const scalar Ru = constant::thermodynamic::RR; // ~8.314462618e3 J/(kmol.K) 
     if (W <= SMALL)
     {
         FatalIOErrorInFunction(specieDict)

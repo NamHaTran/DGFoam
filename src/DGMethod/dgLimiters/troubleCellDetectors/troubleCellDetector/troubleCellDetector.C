@@ -140,7 +140,7 @@ troubleCellDetector::troubleCellDetector
     {
         limitingIndicatorPtr_.reset
         (
-            new VolumeField<label>
+            new volScalarField
             (
                 IOobject
                 (
@@ -151,7 +151,7 @@ troubleCellDetector::troubleCellDetector
                     IOobject::AUTO_WRITE
                 ),
                 mesh_.getFvMesh(),
-                dimensioned<label>("zero", dimless, Zero)
+                dimensionedScalar("zero", dimless, Zero)
             )
         );
 
@@ -171,7 +171,8 @@ void troubleCellDetector::setLimitingIndicator
         return;
     }
 
-    limitingIndicatorPtr_().primitiveFieldRef()[cellID] = flagged ? 1 : 0;
+    limitingIndicatorPtr_().primitiveFieldRef()[cellID] =
+        flagged ? scalar(1) : scalar(0);
 }
 
 

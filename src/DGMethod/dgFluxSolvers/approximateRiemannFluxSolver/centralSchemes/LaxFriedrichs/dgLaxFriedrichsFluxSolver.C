@@ -51,19 +51,8 @@ dgLaxFriedrichsFluxSolver::dgLaxFriedrichsFluxSolver
     dgFluxSolver(name, dict, mesh),
 
     thermo_( mesh.getFvMesh().lookupObject<dgThermoConservative>("dgThermoConservative") ),
-    U_( mesh.getFvMesh().lookupObject<dgField<vector>>("U") ),
-    scaleByMach_(false)
-{
-    read(dict);
-}
-
-
-// * * * * * * * * * * Read dict * * * * * * * * * * //
-
-void dgLaxFriedrichsFluxSolver::read(const dictionary& dict)
-{
-    scaleByMach_ = dict.lookupOrDefault<bool>("scaleByMach", false);
-}
+    U_( mesh.getFvMesh().lookupObject<dgField<vector>>("U") )
+{}
 
 // * * * * * * * * * * Dissipation coefficient * * * * * * * * * * //
 
@@ -79,28 +68,15 @@ scalar dgLaxFriedrichsFluxSolver::calcDissipationCoeff
     const scalar UnL = (ULv & n);
     const scalar UnR = (URv & n);
 
-    if (!scaleByMach_)
-    {
-        // Standard Rusanov/LF
-        const scalar CL = mag(UnL) + aL;
-        const scalar CR = mag(UnR) + aR;
-        return max(CL, CR);
-    }
-    else
-    {
-        // Mach-scaled version
-        scalar ML = (aL > SMALL ? mag(UnL)/aL : 0.0);
-        scalar MR = (aR > SMALL ? mag(UnR)/aR : 0.0);
-
-        const scalar invML = (ML > SMALL ? 1.0/ML : 1.0/SMALL);
-        const scalar invMR = (MR > SMALL ? 1.0/MR : 1.0/SMALL);
-
-        const scalar CL = mag(UnL) + aL*invML;
-        const scalar CR = mag(UnR) + aR*invMR;
-
-        return max(CL, CR);
-    }
+    // Standard Rusanov/LF
+    const scalar CL = mag(UnL) + aL;
+    const scalar CR = mag(UnR) + aR;
+    return max(CL, CR);
 }
+
+
+void Foam::dgLaxFriedrichsFluxSolver::read(const dictionary&)
+{}
 
 
 // * * * * * * * * * * Scalar U, vector F * * * * * * * * * * //

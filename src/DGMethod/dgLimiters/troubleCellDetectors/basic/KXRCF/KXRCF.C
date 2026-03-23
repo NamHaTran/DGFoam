@@ -124,11 +124,11 @@ KXRCF::KXRCF
 )
 :
     troubleCellDetector(dict, mesh),
-    U_
+    directionField_
     (
         mesh.getFvMesh().lookupObject<dgField<vector>>
         (
-            lookupFieldName(dict, "U", "U")
+            lookupFieldName(dict, "directionField", "rhoU")
         )
     ),
     LPRMode_(dict.lookupOrDefault<bool>("LPRMode", false)),
@@ -143,8 +143,8 @@ KXRCF::KXRCF
 bool KXRCF::detect(const label cellID) const
 {
     const dgGeomCell& cell = *mesh_.cells()[cellID];
-    const GaussField<vector>& UGF = U_.gaussFields()[cellID];
-    const faceGaussField<vector>& UFace = UGF.faceField();
+    const GaussField<vector>& directionGF = directionField_.gaussFields()[cellID];
+    const faceGaussField<vector>& directionFace = directionGF.faceField();
 
     forAll(checkFields(), fieldI)
     {
@@ -175,8 +175,9 @@ bool KXRCF::detect(const label cellID) const
 
                 forAll(weights, gpI)
                 {
-                    const vector uVal = UFace.minusValueOnFace(localFaceI, gpI);
-                    const scalar beta = uVal & face.normal();
+                    const vector directionVal =
+                        directionFace.minusValueOnFace(localFaceI, gpI);
+                    const scalar beta = directionVal & face.normal();
 
                     const scalar qMinus = qFace.minusValueOnFace(localFaceI, gpI);
                     qNorm = max(qNorm, mag(qMinus));
@@ -250,8 +251,9 @@ bool KXRCF::detect(const label cellID) const
 
                 forAll(weights, gpI)
                 {
-                    const vector uVal = UFace.minusValueOnFace(localFaceI, gpI);
-                    const scalar beta = uVal & face.normal();
+                    const vector directionVal =
+                        directionFace.minusValueOnFace(localFaceI, gpI);
+                    const scalar beta = directionVal & face.normal();
 
                     const scalar qMinus =
                         qFace.minusValueOnFace(localFaceI, gpI).component(cmpt);

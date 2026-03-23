@@ -71,7 +71,7 @@ class Ostream;
  * The manager supports:
  * - Term-specific flux solver selection
  * - A global default solver fallback
- * - Solver-specific coefficient sub-dictionaries
+ * - Optional solver-specific coefficient sub-dictionaries
  *
  * \par Example dictionary
  * \verbatim
@@ -98,16 +98,6 @@ class Ostream;
  *         HLLCCoeffs
  *         {
  *             speedEstimate roeEinfeldt;
- *         }
- *
- *         LaxFriedrichsCoeffs
- *         {
- *             scaleByMach true;
- *         }
- *
- *         centralCoeffs
- *         {
- *             // no parameters
  *         }
  *     }
  * }

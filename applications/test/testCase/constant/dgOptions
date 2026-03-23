@@ -13,10 +13,24 @@ FoamFile
     object      dgOptions;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
-
-ppLimiter
+limiters
 {
-	type			positivityPreservingLimiter;
-	troubleCellDetector 	PerssonPeraire;
+	ppLimiter
+	{
+		type			positivityPreserving;
+		density			rho;
+		momentum		rhoU;
+		energy			E;
+		// fields		(rho rhoU E);
+		
+		// trouble cell detector
+		detector 		PerssonPeraire;
+		PerssonPeraireCoeffs
+		{
+			checkFields  (rho);
+			kappa        1.0;
+			report       false;
+		}
+	}
 }
 // ************************************************************************* //

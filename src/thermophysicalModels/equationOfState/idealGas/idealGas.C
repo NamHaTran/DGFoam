@@ -50,7 +50,7 @@ Foam::idealGas::idealGas
     eqnOfState(name, dict, mesh),
     R_
     (
-        constant::physicoChemical::R.value()
+        constant::thermodynamic::RR
       / readScalar(dict.subDict("specie").lookup("molWeight"))
     )
 {}

@@ -57,8 +57,8 @@ namespace Foam
  * \f]
  *
  * where \f$\partial \Omega_j^-\f$ is the inflow part of the cell boundary,
- * identified from the sign of the local normal velocity \f$\boldsymbol{u}\cdot
- * \boldsymbol{n}\f$.
+ * identified from the sign of the local normal direction indicator
+ * \f$\boldsymbol{d}\cdot \boldsymbol{n}\f$.
  *
  * The normalized sensor is evaluated as
  *
@@ -99,12 +99,26 @@ namespace Foam
  * The following optional dictionary entries are supported:
  * \verbatim
  * checkFields          (rho);
- * U                    U;
+ * directionField       rhoU;
  * LPRMode              false;
  * threshold            1.0;
  * includeBoundaryFaces true;
  * report               false;
  * \endverbatim
+ *
+ * Header note on \c directionField:
+ * - \c directionField is any DG vector field used only to decide whether a
+ *   face quadrature point is inflow or outflow through the sign of
+ *   \f$\boldsymbol{d}\cdot\boldsymbol{n}\f$.
+ * - The detector does not normalize the sensor with this field and does not
+ *   measure jumps of this field unless it is also listed separately in
+ *   \c checkFields.
+ * - In a compressible conservative solver, \c rhoU is often a good choice
+ *   because \f$(\rho\boldsymbol{U})\cdot\boldsymbol{n}\f$ has the same sign as
+ *   \f$\boldsymbol{U}\cdot\boldsymbol{n}\f$ when \f$\rho > 0\f$, while avoiding
+ *   an extra primitive-field refresh before limiting.
+ * - If a case already maintains a consistent primitive velocity field before
+ *   detection, \c U can also be used as the \c directionField.
  */
 class KXRCF
 :
@@ -112,8 +126,11 @@ class KXRCF
 {
     // Private data
 
-        /** Velocity field used to identify inflow portions of each face. */
-        const dgField<vector>& U_;
+        /**
+         * Vector field used only to determine the sign of the face-normal
+         * direction indicator when classifying inflow/outflow.
+         */
+        const dgField<vector>& directionField_;
 
         /** Switch between original KXRCF and the Li-et-al. LPR normalization. */
         bool LPRMode_;

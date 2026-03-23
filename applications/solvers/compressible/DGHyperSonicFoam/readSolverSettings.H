@@ -26,6 +26,13 @@ dgFluxSolverManager fluxSolverManager
     dgMesh
 );
 
+// limiterManager reads constant/dgOptions and constructs the ordered list of
+// DG limiters to be applied after every explicit time stage.
+dgLimiterManager limiterManager
+(
+    dgMesh
+);
+
 // timeDiscretization stores residual buffers and applies the chosen explicit
 // scheme (Euler, SSPRK, RK4, ...) to all registered conservative fields.
 // Conceptually it is the stage driver for the semi-discrete system M dU/dt=R.
@@ -44,3 +51,4 @@ timeDiscretization.registerField(rhoU);
 timeDiscretization.registerField(E);
 
 timeDiscretization.writeInfo(Info);
+limiterManager.listLimiters(Info);

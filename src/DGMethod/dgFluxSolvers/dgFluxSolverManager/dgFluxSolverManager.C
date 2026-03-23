@@ -46,10 +46,10 @@ dgFluxSolverManager::dgFluxSolverManager
     fluxSolverList_(),
     termList_(),
     defaultFluxSolver_(nullptr),
-    // Cache the whole block for optional later use
+    // Cache the whole block so each solver can read its own coeff sub-dict
     fluxSchemesDict_(dgSchemesDict.subDict("fluxSchemes"))
 {
-    // 0) Locate sub-dicts: fluxSolvers & fluxSolversCoeffs
+    // 0) Locate sub-dict: fluxSolvers
     if (!fluxSchemesDict_.found("fluxSolvers"))
     {
         FatalIOErrorInFunction(dgSchemesDict)
@@ -59,42 +59,14 @@ dgFluxSolverManager::dgFluxSolverManager
 
     const dictionary& solversDict = fluxSchemesDict_.subDict("fluxSolvers");
 
-    const dictionary* coeffsRootPtr = nullptr;
-    if (fluxSchemesDict_.found("fluxSolversCoeffs"))
-    {
-        coeffsRootPtr = &fluxSchemesDict_.subDict("fluxSolversCoeffs");
-    }
-    else
-    {
-        FatalIOErrorInFunction(dgSchemesDict)
-            << "Missing sub-dictionary 'fluxSchemes/fluxSolversCoeffs'." << nl
-            << exit(FatalIOError);
-    }
-
     // 1) Default solver (optional)
     if (solversDict.found("default"))
     {
         const word defaultScheme(solversDict.get<word>("default"));
 
-        dictionary defSolverDict; // empty by default
-        if (coeffsRootPtr)
-        {
-            const word coeffKey(defaultScheme + "Coeffs");
-            if (coeffsRootPtr->found(coeffKey))
-            {
-                defSolverDict = coeffsRootPtr->subDict(coeffKey); // copy
-            }
-            else
-            {
-                FatalIOErrorInFunction(dgSchemesDict)
-                    << "Missing sub-dictionary 'fluxSchemes/fluxSolversCoeffs/" << coeffKey << "'." << nl
-                    << exit(FatalIOError);
-            }
-        }
-
         defaultFluxSolver_.reset
         (
-            dgFluxSolver::New("default", defaultScheme, defSolverDict, mesh).ptr()
+            dgFluxSolver::New("default", defaultScheme, fluxSchemesDict_, mesh).ptr()
         );
     }
     // else: keep defaultFluxSolver_ = nullptr
@@ -123,25 +95,8 @@ dgFluxSolverManager::dgFluxSolverManager
         const word& term   = termList_[i];
         const word  scheme = solversDict.get<word>(term);
 
-        // dict cho solver = block <SchemeName>Coeffs (if any)
-        dictionary sDict; // empty by default
-        if (coeffsRootPtr)
-        {
-            const word coeffKey(scheme + "Coeffs");
-            if (coeffsRootPtr->found(coeffKey))
-            {
-                sDict = coeffsRootPtr->subDict(coeffKey); // copy
-            }
-            else
-            {
-                FatalIOErrorInFunction(dgSchemesDict)
-                    << "Missing sub-dictionary 'fluxSchemes/fluxSolversCoeffs/" << coeffKey << "'." << nl
-                    << exit(FatalIOError);
-            }
-        }
-
         autoPtr<dgFluxSolver> slv =
-            dgFluxSolver::New(term, scheme, sDict, mesh);
+            dgFluxSolver::New(term, scheme, fluxSchemesDict_, mesh);
 
         fluxSolverList_.set(i, slv.ptr());
     }
@@ -243,4 +198,3 @@ void dgFluxSolverManager::listTerms(Ostream& os) const
 } // End namespace Foam
 
 // ************************************************************************* //
-

@@ -99,8 +99,8 @@ protected:
         /** Resolved list of fields that this detector should check. */
         List<checkedField> checkFields_;
 
-        /** Optional cell-wise 0/1 field marking troubled cells. */
-        mutable autoPtr<VolumeField<label>> limitingIndicatorPtr_;
+        /** Optional cell-wise 0/1 scalar field marking troubled cells. */
+        mutable autoPtr<volScalarField> limitingIndicatorPtr_;
 
         /**
          * \brief Read an optional field-name override from the detector dictionary.

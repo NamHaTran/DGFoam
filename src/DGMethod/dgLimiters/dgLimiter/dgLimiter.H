@@ -1,0 +1,218 @@
+/*---------------------------------------------------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     |
+    \\  /    A nd           | www.openfoam.com
+     \\/     M anipulation  |
+-------------------------------------------------------------------------------
+    Copyright (C) 2015-2024 OpenCFD Ltd.
+    Copyright (C) 2024-2026 Ha Nam Tran
+-------------------------------------------------------------------------------
+License
+    This file is part of DGFoam.
+
+    DGFoam is free software: you can redistribute it and/or modify it
+    under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    DGFoam is distributed in the hope that it will be useful, but WITHOUT
+    ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+    FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+    for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with OpenFOAM.  If not, see <http://www.gnu.org/licenses/>.
+
+Class
+    Foam::dgLimiter
+
+Description
+    Runtime-selectable wrapper for DG limiters.
+
+SourceFiles
+    dgLimiter.C
+
+\*---------------------------------------------------------------------------*/
+
+#ifndef Foam_dgLimiter_H
+#define Foam_dgLimiter_H
+
+#include "autoPtr.H"
+#include "dictionary.H"
+#include "runTimeSelectionTables.H"
+#include "dgField.H"
+#include "dgGeomMesh.H"
+#include "troubleCellDetector.H"
+
+namespace Foam
+{
+
+/*---------------------------------------------------------------------------*\
+                           Class dgLimiter Declaration
+\*---------------------------------------------------------------------------*/
+
+class dgLimiter
+{
+public:
+
+        /** \brief Runtime wrapper for one field listed in \c fields. */
+        struct limitedField
+        {
+            /** Resolved DG field object name. */
+            word fieldName;
+
+            /** True when the resolved field is a vector DG field. */
+            bool isVector;
+
+            /** Pointer to scalar DG field when \c isVector is false. */
+            dgField<scalar>* scalarFieldPtr;
+
+            /** Pointer to vector DG field when \c isVector is true. */
+            dgField<vector>* vectorFieldPtr;
+        };
+
+protected:
+
+        /** Resolved list of DG fields that this limiter modifies. */
+        List<limitedField> limitedFields_;
+
+        /** Runtime-selected troubled-cell detector. */
+        autoPtr<troubleCellDetector> detector_;
+
+        /** Local limiter dictionary copied from the caller. */
+        dictionary dict_;
+
+        /** Shared DG geometric mesh used for topology and field registry access. */
+        const dgGeomMesh& mesh_;
+
+        /** Number of cells limited in the most recent correct() call. */
+        label nLimitedCells_;
+
+        /** \brief Build the resolved field list from the \c fields entry. */
+        void initializeLimitedFields();
+
+        /** \brief Construct the troubled-cell detector from the limiter dictionary. */
+        void initializeDetector();
+
+        /** \brief Dispatch limiting for one resolved field in one cell. */
+        void limitCell(const limitedField& fieldInfo, const label cellID);
+
+        /** \brief Hook executed once before looping over cells in correct(). */
+        virtual void preCorrect();
+
+        /** \brief Hook executed once after looping over cells in correct(). */
+        virtual void postCorrect();
+
+        /** \brief Limit one scalar DG field on one troubled cell. */
+        virtual void limitField
+        (
+            dgField<scalar>& field,
+            const label cellID
+        ) = 0;
+
+        /** \brief Limit one vector DG field on one troubled cell. */
+        virtual void limitField
+        (
+            dgField<vector>& field,
+            const label cellID
+        ) = 0;
+
+public:
+
+    /** \brief Runtime type information for the limiter base class. */
+    TypeName("dgLimiter");
+
+    /** \brief Runtime-selection table keyed by limiter type name. */
+    declareRunTimeSelectionTable
+    (
+        autoPtr,
+        dgLimiter,
+        dictionary,
+        (const dictionary& dict, const dgGeomMesh& mesh),
+        (dict, mesh)
+    );
+
+    /**
+     * \brief Construct the base limiter and initialize shared state.
+     *
+     * The following dictionary entries are required:
+     * \verbatim
+     * type     <limiterType>;
+     * fields   (<field1> <field2> ...);
+     * detector <detectorType>;
+     * \endverbatim
+     *
+     * The detector coefficients must be provided in a sub-dictionary named
+     * \c <detectorType>Coeffs, for example \c PerssonPeraireCoeffs.
+     *
+     * \param dict Limiter dictionary
+     * \param mesh DG mesh shared by the limiter hierarchy
+     */
+    dgLimiter
+    (
+        const dictionary& dict,
+        const dgGeomMesh& mesh
+    );
+
+    /** \brief Disallow default construction. */
+    dgLimiter() = delete;
+
+    /** \brief Default virtual destructor. */
+    virtual ~dgLimiter() = default;
+
+    /**
+     * \brief Runtime-select and construct a concrete limiter from \c dict.type.
+     *
+     * \param dict Limiter dictionary
+     * \param mesh DG mesh providing geometry and registry access
+     * \return Auto pointer to the concrete limiter
+     */
+    static autoPtr<dgLimiter> New
+    (
+        const dictionary& dict,
+        const dgGeomMesh& mesh
+    );
+
+    /** \brief Re-read the limiter dictionary and rebuild shared state. */
+    virtual void read(const dictionary& dict);
+
+    /** \brief Apply limiting to all configured fields on all troubled cells. */
+    virtual void correct();
+
+    /** \brief Return the limiter dictionary. */
+    inline const dictionary& dict() const
+    {
+        return dict_;
+    }
+
+    /** \brief Return the DG mesh shared by this limiter. */
+    inline const dgGeomMesh& mesh() const
+    {
+        return mesh_;
+    }
+
+    /** \brief Return the resolved list of DG fields to be limited. */
+    inline const List<limitedField>& limitedFields() const
+    {
+        return limitedFields_;
+    }
+
+    /** \brief Return the troubled-cell detector used by this limiter. */
+    inline const troubleCellDetector& detector() const
+    {
+        return detector_();
+    }
+
+    /** \brief Return the number of cells limited in the last correct() call. */
+    inline label nLimitedCells() const
+    {
+        return nLimitedCells_;
+    }
+};
+
+} // End namespace Foam
+
+#endif
+
+// ************************************************************************* //
