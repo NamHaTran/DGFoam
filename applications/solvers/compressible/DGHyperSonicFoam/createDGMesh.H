@@ -3,12 +3,9 @@
 // metrics shared by all DG fields and DG operators. A useful mental model is
 // that fvMesh gives the topological mesh, while dgGeomMesh adds the machinery
 // needed to evaluate/interpolate/integrate high-order DG fields on that mesh.
-Info<< "Create DG Geometric Mesh with polymonial order" << pOrder << "\n" << endl;
+dgGeomMesh dgMesh(mesh);
 
-dgGeomMesh dgMesh 
-(
-    mesh,
-    pOrder
-);
+Info<< "Create DG Geometric Mesh with polynomial order "
+    << dgMesh.pOrder() << "\n" << endl;
 
 // dgMesh.cells()[0]->printDebugInfo();

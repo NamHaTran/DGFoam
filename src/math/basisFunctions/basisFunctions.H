@@ -220,14 +220,14 @@ inline void computeHexBasisAndDerivatives
         const scalar Pi  = jacobi(static_cast<unsigned>(i), 0.0, 0.0, x);
         const scalar dPi = jacobi_prime(static_cast<unsigned>(i), 0.0, 0.0, x);
 
-        const scalar norm_i = 2.0*i + 1.0;
+        //const scalar norm_i = 2.0*i + 1.0;
 
         for (label j = 0; j <= pOrder - i; ++j)
         {
             const scalar Pj  = jacobi(static_cast<unsigned>(j), 0.0, 0.0, y);
             const scalar dPj = jacobi_prime(static_cast<unsigned>(j), 0.0, 0.0, y);
 
-            const scalar norm_ij = norm_i * (2.0*j + 1.0);
+            //const scalar norm_ij = norm_i * (2.0*j + 1.0);
 
             for (label k = 0; k <= pOrder - i - j; ++k)
             {
@@ -235,8 +235,8 @@ inline void computeHexBasisAndDerivatives
                 const scalar dPk = jacobi_prime(static_cast<unsigned>(k), 0.0, 0.0, z);
 
                 // L2 normalization factor on [-1,1]^3
-                const scalar scale =
-                    std::sqrt( norm_ij * (2.0*k + 1.0) / 8.0 );
+                const scalar scale = 1.0;
+                    //std::sqrt( norm_ij * (2.0*k + 1.0) / 8.0 );
 
                 // Basis value
                 basis[idx] = scale * Pi * Pj * Pk;
@@ -404,13 +404,15 @@ inline void computePrismBasisAndDerivatives
                 // -----------------------------
                 // Normalization coefficient
                 // -----------------------------
-                const scalar norm =
+                const scalar norm = 1.0;
+                /*
                     std::sqrt(
                         (2.0*i + 1.0) *
                         (2.0*j + 1.0) *
                         (2.0*k + 2.0*j + 2.0)
                         / 8.0
                     );
+                */
 
                 // =============================
                 // Basis
@@ -598,13 +600,15 @@ inline void computePyramidBasisAndDerivatives
                 // ----------------------------------
                 // Normalization factor
                 // ----------------------------------
-                const scalar norm =
+                const scalar norm = 1.0;
+                /*
                     std::sqrt(
                         (2.0*i + 1.0) *
                         (2.0*j + 1.0) *
                         (2.0*k + 2.0*ij + 3.0)
                         / 8.0
                     );
+                */
 
                 // ----------------------------------
                 // Basis
@@ -788,13 +792,15 @@ inline void computeTetBasisAndDerivatives
                 // -------------------------
                 // Normalization factor
                 // -------------------------
-                const scalar norm =
+                const scalar norm = 1.0;
+                /*
                     std::sqrt(
                         (2.0*i + 1.0) *
                         (2.0*j + 2.0*i + 2.0) *
                         (2.0*k + 2.0*i + 2.0*j + 3.0)
                         / 8.0
                     );
+                */
 
                 // -------------------------
                 // Basis

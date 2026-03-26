@@ -78,6 +78,9 @@ class positivityPreservingLimiter
         /** Total-energy field used in the rhoe positivity check. */
         dgField<scalar>* energyFieldPtr_;
 
+        /** Positivity tolerance read from dictionary keyword `tolerance`. */
+        scalar epsilon_;
+
         /** Cell-local theta1 cached during correct(). */
         scalar theta1_;
 
@@ -134,7 +137,7 @@ class positivityPreservingLimiter
             scalar& theta2
         ) const;
 
-        /** \brief Scale higher-order scalar modes and refresh Gauss/FOAM views. */
+        /** \brief Scale higher-order scalar modes and refresh the FOAM DoF view. */
         void scaleHighOrderModes
         (
             dgField<scalar>& field,
@@ -142,7 +145,7 @@ class positivityPreservingLimiter
             const scalar theta
         ) const;
 
-        /** \brief Scale higher-order vector modes and refresh Gauss/FOAM views. */
+        /** \brief Scale higher-order vector modes and refresh the FOAM DoF view. */
         void scaleHighOrderModes
         (
             dgField<vector>& field,
@@ -182,7 +185,12 @@ public:
      * density  rho;
      * momentum rhoU;
      * energy   E;
+     * tolerance 1e-8;
      * \endverbatim
+     *
+     * Unlike detector-based limiters, this limiter may omit the base-class
+     * \c detector entry because it evaluates positivity coefficients on every
+     * cell directly inside \c correct().
      *
      * The optional base-class \c fields list is interpreted as additional
      * fields that should also be limited with \c theta2. The conservative
@@ -199,7 +207,7 @@ public:
     /** \brief Re-read the limiter dictionary and refresh cached field pointers. */
     virtual void read(const dictionary& dict) override;
 
-    /** \brief Detect troubled cells, compute theta1/theta2, and apply the limiter. */
+    /** \brief Compute theta1/theta2 on every cell and limit only cells needing correction. */
     virtual void correct() override;
 };
 

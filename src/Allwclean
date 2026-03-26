@@ -1,17 +1,33 @@
 #!/bin/sh
-echo "==> Cleaning mesh/"
-cd mesh
-wclean
 
-echo "==> Cleaning DGFoam/"
-cd ../DGFoam
-wclean
+set -e
 
-echo "==> Cleaning DGMethod/"
-cd ../DGMethod
-wclean
+SRC_DIR="$(CDPATH= cd -- "$(dirname -- "$0")" && pwd -P)"
+cd "$SRC_DIR"
 
-echo "==> Cleaning thermophysicalModels/"
-cd ../thermophysicalModels
-wclean
+echo "==> Cleaning lnInclude directories"
+for dir in mesh math DGCoreFields thermophysicalModels DGMethod
+do
+    if [ -d "$dir/lnInclude" ]
+    then
+        rm -rf "$dir/lnInclude"
+    fi
+done
+
+echo "==> Cleaning libDGCoreFields"
+cd "$SRC_DIR/DGCoreFields"
+wclean libso
+
+echo "==> Cleaning libDGMesh"
+cd "$SRC_DIR/mesh"
+wclean libso
+
+echo "==> Cleaning libDGFluidThermophysicalModels"
+cd "$SRC_DIR/thermophysicalModels"
+wclean libso
+
+echo "==> Cleaning libDGMethod"
+cd "$SRC_DIR/DGMethod"
+wclean libso
+
 #------------------------------------------------------------------------------

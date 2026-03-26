@@ -41,24 +41,74 @@ License
 #include "DynamicList.H"
 
 #include "IOobject.H"
+#include "IOdictionary.H"
 #include "Pstream.H"
+#include "error.H"
+
+namespace
+{
+
+Foam::label readPOrder(const Foam::fvMesh& mesh)
+{
+    Foam::IOdictionary dgSchemesDict
+    (
+        Foam::IOobject
+        (
+            "dgSchemes",
+            mesh.time().system(),
+            mesh,
+            Foam::IOobject::MUST_READ,
+            Foam::IOobject::NO_WRITE
+        )
+    );
+
+    if (!dgSchemesDict.found("dgDiscretization"))
+    {
+        FatalIOErrorInFunction(dgSchemesDict)
+            << "Missing sub-dictionary 'dgDiscretization' in system/dgSchemes."
+            << Foam::nl << exit(Foam::FatalIOError);
+    }
+
+    const Foam::dictionary& dgDiscretizationDict =
+        dgSchemesDict.subDict("dgDiscretization");
+
+    if (!dgDiscretizationDict.found("pOrder"))
+    {
+        FatalIOErrorInFunction(dgDiscretizationDict)
+            << "Missing entry 'pOrder' in system/dgSchemes/dgDiscretization."
+            << Foam::nl << exit(Foam::FatalIOError);
+    }
+
+    const Foam::label pOrder = dgDiscretizationDict.get<Foam::label>("pOrder");
+
+    if (pOrder < 0)
+    {
+        FatalIOErrorInFunction(dgDiscretizationDict)
+            << "Entry 'pOrder' must be non-negative, but found "
+            << pOrder << '.'
+            << Foam::nl << exit(Foam::FatalIOError);
+    }
+
+    return pOrder;
+}
+
+}
 
 // * * * * * * * * * * * * * * * * Constructors  * * * * * * * * * * * * * * //
 
-// Construct from fvMesh and polynomial order
+// Construct from fvMesh and read polynomial order from system/dgSchemes
 Foam::dgGeomMesh::dgGeomMesh
 (
-    const fvMesh& mesh,
-    const label pOrder
+    const fvMesh& mesh
 )
 :
     mesh_(mesh),
-    pOrder_(pOrder),
-    refFace_(std::make_shared<dgRefFace>(pOrder)),
-    refCellTet_(std::make_shared<dgRefCell>(pOrder,dgCellType::TET)),
-    refCellHex_(std::make_shared<dgRefCell>(pOrder,dgCellType::HEX)),
-    refCellPrism_(std::make_shared<dgRefCell>(pOrder,dgCellType::PRISM)),
-    refCellPyramid_(std::make_shared<dgRefCell>(pOrder,dgCellType::PYRAMID))
+    pOrder_(readPOrder(mesh)),
+    refFace_(std::make_shared<dgRefFace>(pOrder_)),
+    refCellTet_(nullptr),
+    refCellHex_(nullptr),
+    refCellPrism_(nullptr),
+    refCellPyramid_(nullptr)
 {
     // Create all geometric faces
 
@@ -85,18 +135,34 @@ Foam::dgGeomMesh::dgGeomMesh
 
         if (nPoints == 4)
         {
+            if (!refCellTet_)
+            {
+                refCellTet_ = std::make_shared<dgRefCell>(pOrder_, dgCellType::TET);
+            }
             refCell = refCellTet_;
         }
         else if (nPoints == 8)
         {
+            if (!refCellHex_)
+            {
+                refCellHex_ = std::make_shared<dgRefCell>(pOrder_, dgCellType::HEX);
+            }
             refCell = refCellHex_;
         }
         else if (nPoints == 6)
         {
+            if (!refCellPrism_)
+            {
+                refCellPrism_ = std::make_shared<dgRefCell>(pOrder_, dgCellType::PRISM);
+            }
             refCell = refCellPrism_;
         }
         else if (nPoints == 5)
         {
+            if (!refCellPyramid_)
+            {
+                refCellPyramid_ = std::make_shared<dgRefCell>(pOrder_, dgCellType::PYRAMID);
+            }
             refCell = refCellPyramid_;
         }
         else

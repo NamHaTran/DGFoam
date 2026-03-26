@@ -1,8 +1,4 @@
-Info<< "Creating DG Geometric Mesh with polymonial order" << pOrder << "\n" << endl;
+dgGeomMesh dgMesh(mesh);
 
-dgGeomMesh dgMesh 
-(
-    mesh,
-    pOrder
-);
-
+Info<< "Creating DG Geometric Mesh with polynomial order "
+    << dgMesh.pOrder() << "\n" << endl;

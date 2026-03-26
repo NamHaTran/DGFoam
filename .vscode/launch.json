@@ -1,19 +1,52 @@
 {
-    // Use IntelliSense to learn about possible attributes.
-    // Hover to view descriptions of existing attributes.
-    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "OF-Debug",
+            "name": "DGHyperSonicFoam Debug",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${env:DG_APPBIN}/${fileBasenameNoExtension}",
-         // "program": "${env:FOAM_APPBIN}/${fileBasenameNoExtension}",  
+            "program": "${workspaceFolder}/platforms/linux64GccDPInt32Debug/bin/DGHyperSonicFoam",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}/applications/test/testCase",
-            "environment": [],
+            "environment": [
+                {
+                    "name": "WM_PROJECT_DIR",
+                    "value": "/home/nam-ha-tran/OpenFOAM/OpenFOAM-v2412"
+                },
+                {
+                    "name": "WM_COMPILE_OPTION",
+                    "value": "Debug"
+                },
+                {
+                    "name": "WM_OPTIONS",
+                    "value": "linux64GccDPInt32Debug"
+                },
+                {
+                    "name": "FOAM_LIBBIN",
+                    "value": "/home/nam-ha-tran/OpenFOAM/OpenFOAM-v2412/platforms/linux64GccDPInt32Debug/lib"
+                },
+                {
+                    "name": "DG_ROOT",
+                    "value": "${workspaceFolder}"
+                },
+                {
+                    "name": "DG_LIBBIN",
+                    "value": "${workspaceFolder}/platforms/linux64GccDPInt32Debug/lib"
+                },
+                {
+                    "name": "DG_APPBIN",
+                    "value": "${workspaceFolder}/platforms/linux64GccDPInt32Debug/bin"
+                },
+                {
+                    "name": "LD_LIBRARY_PATH",
+                    "value": "${workspaceFolder}/platforms/linux64GccDPInt32Debug/lib:/home/nam-ha-tran/OpenFOAM/OpenFOAM-v2412/platforms/linux64GccDPInt32Debug/lib:${env:LD_LIBRARY_PATH}"
+                },
+                {
+                    "name": "PATH",
+                    "value": "${workspaceFolder}/platforms/linux64GccDPInt32Debug/bin:${env:PATH}"
+                }
+            ],
             "externalConsole": false,
             "MIMode": "gdb",
             "setupCommands": [
@@ -23,7 +56,7 @@
                     "ignoreFailures": true
                 }
             ],
-            "preLaunchTask": "wmake-build",
+            "preLaunchTask": "dgfoam-build-debug",
             "miDebuggerPath": "/usr/bin/gdb"
         }
     ]

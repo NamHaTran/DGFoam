@@ -54,7 +54,7 @@ namespace Foam
  * used by the DG framework:
  *  - Interface patches (e.g. processor boundaries)
  *  - General physical boundary patches (walls, inlets, outlets, symmetry)
- *  - Constraint or special patches (e.g. overset)
+ *  - Constraint or special patches (e.g. overset, empty)
  *
  * The classification is based solely on the fvPatch type string
  * and is intentionally kept simple and extensible.
@@ -115,7 +115,8 @@ inline bool isGeneralPatch(const fvPatch& patch)
  * \brief Check if patch is a constraint or special patch
  *
  * Constraint patches impose additional topological or
- * numerical constraints, such as overset connectivity.
+ * numerical constraints, or mark directions that should not receive
+ * DG ghost-state updates (eg, overset and empty).
  */
 inline bool isConstraintPatch(const fvPatch& patch)
 {
@@ -124,6 +125,7 @@ inline bool isConstraintPatch(const fvPatch& patch)
     return
     (
         type == "overset"
+     || type == "empty"
     );
 }
 

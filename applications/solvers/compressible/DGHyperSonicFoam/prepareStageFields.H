@@ -5,9 +5,9 @@
 // - the solver makes all derived Gauss fields consistent with that state,
 // - only then can dgGeneralPDETerm assemble residuals safely.
 
-// Primitive fields are synchronized first because boundary reconstruction and
-// flux evaluation use p, T, and U at processor interfaces.
-#include "synchProcessors.H"
+// Boundary reconstruction uses primitive interface values, so start each
+// stage from a synchronized p/T/U processor state.
+#include "synchPrimary.H"
 
 forAll(mesh.cells(), cellI)
 {

@@ -41,9 +41,14 @@ DG_BASHRC_PATH="${BASH_SOURCE[0]:-${(%):-%x}}"
 export DG_ROOT="$(cd "$(dirname "$DG_BASHRC_PATH")/.." && pwd -P)"
 
 #-------------------------------------------------------------------------------
-# Overwrite WM_COMPILE_OPTION
+# Require an OpenFOAM environment so DGFoam inherits the active build mode
 #-------------------------------------------------------------------------------
-export WM_COMPILE_OPTION=Debug
+if [ -z "$WM_PROJECT_DIR" ] || [ -z "$WM_OPTIONS" ]
+then
+    echo "Error: OpenFOAM environment is not loaded." 1>&2
+    echo "Please source OpenFOAM first, then source $DG_ROOT/etc/bashrc." 1>&2
+    return 1 2>/dev/null || exit 1
+fi
 
 #-------------------------------------------------------------------------------
 # DGFS paths
@@ -53,16 +58,23 @@ export DG_APP=$DG_ROOT/applications
 export DG_THIRD_PARTY=$DG_ROOT/thirdPartySources
 
 #-------------------------------------------------------------------------------
-# Output directories (based on compile option)
+# Output directories follow WM_OPTIONS, which already encodes the compile mode
 #-------------------------------------------------------------------------------
-export DG_LIBBIN=$DG_ROOT/platforms/$WM_OPTIONS/$WM_COMPILE_OPTION/lib
-export DG_APPBIN=$DG_ROOT/platforms/$WM_OPTIONS/$WM_COMPILE_OPTION/bin
+export DG_LIBBIN=$DG_ROOT/platforms/$WM_OPTIONS/lib
+export DG_APPBIN=$DG_ROOT/platforms/$WM_OPTIONS/bin
 
 #-------------------------------------------------------------------------------
-# Append to library and executable paths
+# Append to library and executable paths without duplicating entries
 #-------------------------------------------------------------------------------
-export LD_LIBRARY_PATH=$DG_LIBBIN:$LD_LIBRARY_PATH
-export PATH=$DG_APPBIN:$PATH
+case ":${LD_LIBRARY_PATH:-}:" in
+    *":$DG_LIBBIN:"*) ;;
+    *) export LD_LIBRARY_PATH=$DG_LIBBIN${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH} ;;
+esac
+
+case ":$PATH:" in
+    *":$DG_APPBIN:"*) ;;
+    *) export PATH=$DG_APPBIN:$PATH ;;
+esac
 
 #-------------------------------------------------------------------------------
 # Display current environment

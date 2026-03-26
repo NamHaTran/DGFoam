@@ -50,9 +50,11 @@ dgField<vector> U
 );
 
 // Boundary managers read user-specified DG boundary data from constant/
-// and know how to inject those values into face Gauss points. The result is
-// a boundary state defined at quadrature points, which is exactly what the
-// numerical flux routines need.
+// and inject those values into boundary face Gauss points. Only general
+// physical patches need entries in TBC/pBC/UBC; inactive patches such as
+// empty or processor are skipped by the DG boundary layer.
+// The result is a boundary state defined at quadrature points, which is
+// exactly what the numerical flux routines need.
 IOobject TBCIO
 (
     "TBC",
@@ -99,16 +101,3 @@ autoPtr<dgGeneralBoundaryManager<vector>> UBC
 TBC->initializeField(T);
 pBC->initializeField(p);
 UBC->initializeField(U);
-
-// Processor boundary managers synchronize primitive fields across partition
-// interfaces before each residual assembly on parallel runs. They play the
-// same role as processor patches in OpenFOAM, but at the DG Gauss-point level.
-autoPtr<dgProcessorBoundaryManager<scalar>> scalarProcBC
-(
-    new dgProcessorBoundaryManager<scalar>(dgMesh)
-);
-
-autoPtr<dgProcessorBoundaryManager<vector>> vectorProcBC
-(
-    new dgProcessorBoundaryManager<vector>(dgMesh)
-);

@@ -15,9 +15,14 @@ FoamFile
     object      dgSchemes;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+dgDiscretization
+{
+    pOrder      1;
+}
+
 ddtSchemes
 {
-	scheme					Euler;
+	scheme					Euler; //SSPRK3;
 }
 fluxSchemes
 {
@@ -25,9 +30,9 @@ fluxSchemes
 	{
 		default         		central;
 		
-		massConvTermFlux		HLLC;
-		momentumConvTermFlux		LaxFriedrichs;
-		energyConvTermFlux		LaxFriedrichs;
+		massConvTermFlux		HLLE;
+		momentumConvTermFlux		HLLE;
+		energyConvTermFlux		HLLE;
 		
 		/* Các flux khác bao gồm:
 		- auxiliaryFlux

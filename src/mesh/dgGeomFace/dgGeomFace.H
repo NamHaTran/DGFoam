@@ -283,6 +283,9 @@ public:
         /** Return patch index of the face */
         inline label patchID() const { return patchID_; }
 
+        /** Return true if this face lies on a processor patch */
+        inline bool isProcessorPatch() const { return isProcessorPatch_; }
+
         /** Check if the given cell is the owner of this face */
         inline bool isOwner(const label cellID) const
         {

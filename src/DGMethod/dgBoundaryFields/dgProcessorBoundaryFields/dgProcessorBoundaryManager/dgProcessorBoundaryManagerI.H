@@ -29,6 +29,8 @@ License
 #ifndef Foam_dgProcessorBoundaryManagerI_H
 #define Foam_dgProcessorBoundaryManagerI_H
 
+#include "PstreamBuffers.H"
+
 // * * * * * * * * * * * * * Constructors  * * * * * * * * * * * * * * * //
 
 template<class Type>
@@ -66,23 +68,32 @@ void Foam::dgProcessorBoundaryManager<Type>::update
 {
     if (Pstream::parRun())
     {
-        // pack and send
+        const int oldTag = UPstream::incrMsgType();
+
+        PstreamBuffers pBufs
+        (
+            UPstream::commsTypes::nonBlocking,
+            UPstream::msgType()
+        );
+
+        // Pack all processor-patch payloads into neighbour-specific buffers
+        // under one message tag for this field update.
         forAll(bConditions_, patchI)
         {
-            bConditions_[patchI].sendAll(field);
+            bConditions_[patchI].sendAll(field, pBufs);
         }
 
-        // Wait for all sends to complete
-        UPstream::waitRequests(-1);
+        pBufs.finishedSends();
 
-        // recv and unpack
+        // Consume the received payloads in the same patch order used above.
         forAll(bConditions_, patchI)
         {
-            bConditions_[patchI].recvAll(field);
+            bConditions_[patchI].recvAll(field, pBufs);
         }
+
+        UPstream::msgType(oldTag);
     }
 }
 
 #endif
 // ************************************************************************* //
-

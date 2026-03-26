@@ -49,8 +49,16 @@ License
 Foam::dgGeomFace::dgGeomFace()
 :
     faceID_(-1),
+    type_(dgFaceType::INVALID),
     mesh_(*static_cast<fvMesh*>(nullptr)), // placeholder invalid ref
     refFace_(nullptr),
+    nGauss_(0),
+    ownerId_(-1),
+    neighborId_(-1),
+    ownerPos_(dgFacePosition::NONE),
+    neighborPos_(dgFacePosition::NONE),
+    ownerCellType_(dgCellType::NONE),
+    neighborCellType_(dgCellType::NONE),
     patchID_(-1),
     isBoundary_(false),
     isProcessorPatch_(false)
@@ -65,8 +73,16 @@ Foam::dgGeomFace::dgGeomFace
 )
 :
     faceID_(faceID),
+    type_(dgFaceType::INVALID),
     mesh_(mesh),
     refFace_(refFace),
+    nGauss_(0),
+    ownerId_(-1),
+    neighborId_(-1),
+    ownerPos_(dgFacePosition::NONE),
+    neighborPos_(dgFacePosition::NONE),
+    ownerCellType_(dgCellType::NONE),
+    neighborCellType_(dgCellType::NONE),
     patchID_(-1),
     isBoundary_(false),
     isProcessorPatch_(false)
@@ -406,7 +422,7 @@ void Foam::dgGeomFace::flattenFace
     // Build orthonormal basis (u, v) on the face
     // ---------------------------------------------------------------------
 
-    vector u;
+    vector u(Zero);
 
     // Choose a reference vector not parallel to n
     if (mag(n ^ vector(1, 0, 0)) > VSMALL)

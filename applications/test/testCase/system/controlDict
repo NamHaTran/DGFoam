@@ -14,9 +14,9 @@ FoamFile
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-application     icoFoam;
+application     DGHyperSonicFoam;
 
-startFrom       latestTime;
+startFrom       startTime;
 
 startTime       0;
 
@@ -28,7 +28,7 @@ deltaT          1e-11;
 
 writeControl    timeStep;
 
-writeInterval   20;
+writeInterval   1;
 
 purgeWrite      0;
 
@@ -46,7 +46,7 @@ runTimeModifiable true;
 
 adjustTimeStep true;
 
-maxCo 0.0001;
+maxCo 0.1;
 
 
 // ************************************************************************* //

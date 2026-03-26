@@ -130,10 +130,11 @@ public:
          * \brief Construct DG geometric mesh
          *
          * Builds all DG geometric faces and cells from the provided
-         * fvMesh and initializes reference-cell and reference-face data
-         * for the specified polynomial order.
+         * fvMesh and initializes reference-cell and reference-face data.
+         * The DG polynomial order is read from \c system/dgSchemes under
+         * \c dgDiscretization/pOrder.
          */
-        dgGeomMesh(const fvMesh& mesh, const label pOrder);
+        dgGeomMesh(const fvMesh& mesh);
 
     /** Destructor */
     ~dgGeomMesh();

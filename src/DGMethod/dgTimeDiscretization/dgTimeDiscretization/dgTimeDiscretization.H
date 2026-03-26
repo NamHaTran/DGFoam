@@ -143,6 +143,29 @@ private:
         /** True once the current physical time step has entered its first stage. */
         bool timeStepStarted_;
 
+        /**
+         * Reference scalar residual summaries built from the warmup time steps.
+         *
+         * Indexed as [field][stage][dof]. Empty stage entries mean that the
+         * corresponding reference has not been stored yet.
+         */
+        mutable List<List<List<scalar>>> scalarResidualReference_;
+
+        /**
+         * Scalar reference scales for vector residual summaries.
+         *
+         * Indexed as [field][stage][dof]. Each DoF stores the maximum over the
+         * three vector components and the warmup time steps, so later vector
+         * residuals are scaled by one shared scalar reference.
+         */
+        mutable List<List<List<scalar>>> vectorResidualReference_;
+
+        /** Number of physical time steps used to build the residual reference. */
+        label residualReferenceWarmupSteps_;
+
+        /** Number of physical time steps completed since startup. */
+        label completedTimeSteps_;
+
 public:
 
     // Constructors
@@ -423,6 +446,7 @@ public:
             setStage(0);
             clearResiduals();
             timeStepStarted_ = false;
+            ++completedTimeSteps_;
         }
 
     // Field/residual access
@@ -566,10 +590,11 @@ public:
         void writeInfo(Ostream& os) const;
 
         /**
-         * \brief Write the maximum absolute residual of every DOF over the whole mesh.
+         * \brief Write the normalized maximum absolute residual of every DOF.
          *
-         * Scalar fields print one value per DOF. Vector fields print the
-         * component-wise maxima for each DOF, using the current stage.
+         * The first \c residualReferenceWarmupSteps_ physical time steps are
+         * used to build a per-field, per-stage, per-DoF maximum reference.
+         * Later outputs are divided by that warmup reference.
          *
          * \param os Output stream
          */

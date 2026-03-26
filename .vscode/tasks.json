@@ -3,14 +3,37 @@
     "tasks": [
         {
             "type": "shell",
-            "label": "wmake-build",
-            "command": "wmake",
-            "args": [],
+            "label": "dgfoam-build-debug-libs",
+            "command": "bash",
+            "args": [
+                "-lc",
+                "source ${workspaceFolder}/etc/use-debug.sh && cd ${workspaceFolder}/src && ./Allwmake"
+            ],
+            "problemMatcher": [
+                "$gcc"
+            ]
+        },
+        {
+            "type": "shell",
+            "label": "dgfoam-build-debug-solver",
+            "command": "bash",
+            "args": [
+                "-lc",
+                "source ${workspaceFolder}/etc/use-debug.sh && cd ${workspaceFolder}/applications/solvers/compressible/DGHyperSonicFoam && wmake"
+            ],
             "options": {
-                "cwd": "${workspaceFolder}/applications/solvers/compressible/DGHyperSonicFoam"
+                "cwd": "${workspaceFolder}"
             },
             "problemMatcher": [
                 "$gcc"
+            ]
+        },
+        {
+            "label": "dgfoam-build-debug",
+            "dependsOrder": "sequence",
+            "dependsOn": [
+                "dgfoam-build-debug-libs",
+                "dgfoam-build-debug-solver"
             ],
             "group": {
                 "kind": "build",

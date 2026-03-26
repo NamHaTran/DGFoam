@@ -103,9 +103,8 @@ void dgLimiter::initializeDetector()
 {
     if (!dict_.found("detector"))
     {
-        FatalIOErrorInFunction(dict_)
-            << "Missing required entry 'detector' in dgLimiter dictionary."
-            << exit(FatalIOError);
+        detector_.clear();
+        return;
     }
 
     const word detectorType = dict_.get<word>("detector");
@@ -146,11 +145,95 @@ void dgLimiter::limitCell
 
 
 void dgLimiter::preCorrect()
-{}
+{
+    limitedCellIDs_.clear();
+}
 
 
 void dgLimiter::postCorrect()
-{}
+{
+    rebuildLimitedCellGaussFields();
+}
+
+
+void dgLimiter::cacheLimitedCell(const label cellID)
+{
+    limitedCellIDs_.append(cellID);
+}
+
+
+void dgLimiter::rebuildLimitedCellGaussFields()
+{
+    if (!limitedCellIDs_.size())
+    {
+        return;
+    }
+
+    List<bool> rebuildMask(mesh_.nCells(), false);
+    DynamicList<label> rebuildCellIDs(limitedCellIDs_.size()*2);
+
+    forAll(limitedCellIDs_, limitedCellI)
+    {
+        const label cellID = limitedCellIDs_[limitedCellI];
+
+        if (!rebuildMask[cellID])
+        {
+            rebuildMask[cellID] = true;
+            rebuildCellIDs.append(cellID);
+        }
+
+        const labelList& neighbours = mesh_.cells()[cellID]->neighborCells();
+
+        forAll(neighbours, neighI)
+        {
+            const label neighID = neighbours[neighI];
+
+            if (neighID < 0 || rebuildMask[neighID])
+            {
+                continue;
+            }
+
+            rebuildMask[neighID] = true;
+            rebuildCellIDs.append(neighID);
+        }
+    }
+
+    forAll(limitedFields_, fieldI)
+    {
+        const limitedField& fieldInfo = limitedFields_[fieldI];
+
+        if (fieldInfo.isVector)
+        {
+            dgField<vector>& field = *fieldInfo.vectorFieldPtr;
+
+            if (!field.hasDof())
+            {
+                continue;
+            }
+
+            forAll(rebuildCellIDs, rebuildCellI)
+            {
+                const label cellID = rebuildCellIDs[rebuildCellI];
+                field.gaussFields()[cellID].interpolateFromDof();
+            }
+        }
+        else
+        {
+            dgField<scalar>& field = *fieldInfo.scalarFieldPtr;
+
+            if (!field.hasDof())
+            {
+                continue;
+            }
+
+            forAll(rebuildCellIDs, rebuildCellI)
+            {
+                const label cellID = rebuildCellIDs[rebuildCellI];
+                field.gaussFields()[cellID].interpolateFromDof();
+            }
+        }
+    }
+}
 
 
 dgLimiter::dgLimiter
@@ -213,6 +296,15 @@ void dgLimiter::read(const dictionary& dict)
 
 void dgLimiter::correct()
 {
+    if (!detector_.valid())
+    {
+        FatalErrorInFunction
+            << "Limiter '" << type()
+            << "' requires a configured trouble-cell detector before "
+            << "calling correct()."
+            << abort(FatalError);
+    }
+
     preCorrect();
 
     nLimitedCells_ = 0;
@@ -226,6 +318,7 @@ void dgLimiter::correct()
         }
 
         ++nLimitedCells_;
+        cacheLimitedCell(cellID);
 
         forAll(limitedFields_, fieldI)
         {

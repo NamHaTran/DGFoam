@@ -273,6 +273,12 @@ public:
         /** Return cell volume (from fvMesh) */
         scalar volume() const;
 
+        /** Return DG cell type */
+        inline dgCellType type() const
+        {
+            return type_;
+        }
+
         /**
          * \brief Return characteristic cell size
          *

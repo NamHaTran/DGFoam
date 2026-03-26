@@ -46,6 +46,8 @@ SourceFiles
 namespace Foam
 {
 
+class PstreamBuffers;
+
 /*---------------------------------------------------------------------------*\
                 Class dgProcessorBoundaryField Declaration
 \*---------------------------------------------------------------------------*/
@@ -57,7 +59,14 @@ namespace Foam
  * \tparam Type Field value type (e.g. scalar, vector, tensor)
  *
  * \details
- * Exchanges DG face Gauss-point plus-side values across processor patches.
+ * Exchanges DG face Gauss-point interface states across processor patches.
+ *
+ * Each side sends its local minus-side trace on the processor patch and
+ * stores the received neighbour trace as the local plus-side value.
+ *
+ * When the DG field owns DoFs, the communication also transfers the owner-cell
+ * modal coefficients for each processor face so face-local neighbour DoF
+ * buffers can be populated for downstream algorithms such as DG limiters.
  *
  * The communication uses explicit send/receive buffers and point-to-point
  * transfers on processorFvPatch.
@@ -110,8 +119,8 @@ public:
     /**
      * \brief Exchange Gauss-point data across processor boundary
      *
-     * Performs a send/receive cycle to update plus-side Gauss values on
-     * processor faces.
+     * Performs a send/receive cycle to update neighbour-derived plus-side
+     * Gauss values on processor faces.
      *
      * \param field DG field whose Gauss data will be exchanged
      */
@@ -123,23 +132,25 @@ public:
     // Low-level communication helpers ------------------------------------
 
     /**
-     * \brief Send all plus-side Gauss values to neighbour processor
+     * \brief Send all local minus-side Gauss values to neighbour processor
      *
      * \param field DG field providing Gauss data
      */
     void sendAll
     (
-        dgField<Type>& field
+        dgField<Type>& field,
+        PstreamBuffers& pBufs
     ) const;
 
     /**
-     * \brief Receive all plus-side Gauss values from neighbour processor
+     * \brief Receive neighbour Gauss values and store them as local plus-side
      *
      * \param field DG field to be updated with received data
      */
     void recvAll
     (
-        dgField<Type>& field
+        dgField<Type>& field,
+        PstreamBuffers& pBufs
     ) const;
 
     // MPI tag generation --------------------------------------------------

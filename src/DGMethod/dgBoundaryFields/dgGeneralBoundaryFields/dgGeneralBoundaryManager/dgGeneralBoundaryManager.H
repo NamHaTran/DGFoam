@@ -59,13 +59,16 @@ template<class Type> class dgField;
  * \tparam Type Field value type (e.g. scalar, vector, tensor)
  *
  * \details
- * Constructs and stores one dgGeneralBoundaryField per fvPatch and applies
- * them to update ghost (plus-side) values and gradients at face Gauss points.
+ * Constructs and stores one dgGeneralBoundaryField for each general
+ * physical fvPatch and applies them to update ghost (plus-side) values and
+ * gradients at face Gauss points.
  *
  * The manager:
  * - Filters patches via dgBoundaryHelper::isGeneralPatch()
+ * - Skips inactive patches such as empty/processor/overset
  * - Builds boundary-condition objects via runtime selection
  * - Dispatches updateGhostStateValue()/updateGhostStateGrad() per Gauss point
+ *   using a stable patch-to-condition mapping
  */
 template<class Type>
 class dgGeneralBoundaryManager
@@ -76,11 +79,18 @@ private:
     const dgGeomMesh& mesh_;
 
     /**
-     * List of boundary-condition objects (one per fvPatch)
+     * List of boundary-condition objects for general physical patches
      *
-     * The ordering follows fvBoundaryMesh patch ordering.
+     * The storage is compact and excludes inactive patches.
      */
     DynamicList<autoPtr<dgGeneralBoundaryField<Type>>> bConditions_;
+
+    /**
+     * Mapping from fvBoundaryMesh patch index to compact BC storage index.
+     *
+     * Non-general patches (eg, processor/empty/overset) store `-1`.
+     */
+    labelList patchToCondition_;
 
     /** Internal field value used for initialization (uniform) */
     Type internalValue_;
@@ -160,6 +170,17 @@ public:
     {
         const fvBoundaryMesh& patches = mesh_.getFvMesh().boundary();
         return dgBoundaryHelper::isGeneralPatch(patches[patchID]);
+    }
+
+    /**
+     * \brief Return compact BC storage index for a mesh patch
+     *
+     * \param patchID fvBoundaryMesh patch index
+     * \return compact BC index, or -1 if the patch is inactive for DG BCs
+     */
+    inline label conditionIndex(const label patchID) const
+    {
+        return patchToCondition_[patchID];
     }
 
     // Core methods --------------------------------------------------------

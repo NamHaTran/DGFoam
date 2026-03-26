@@ -44,21 +44,18 @@ Description
 
 int main(int argc, char *argv[])
 {
-    // Polynomial order (temporary)
-    const label pOrder = 1;
-
     #include "setRootCase.H"
     #include "createTime.H"
     #include "createMesh.H"
-
-    Info<< "Creating DG Geometric Mesh with polynomial order "
-        << pOrder << nl << endl;
 
     // ---------------------------------------------------------------------
     // Create DG geometric mesh (global mesh)
     // ---------------------------------------------------------------------
 
-    dgGeomMesh dgMesh(mesh, pOrder);
+    dgGeomMesh dgMesh(mesh);
+
+    Info<< "Creating DG Geometric Mesh with polynomial order "
+        << dgMesh.pOrder() << nl << endl;
 
     // ---------------------------------------------------------------------
     // Detect processor directories

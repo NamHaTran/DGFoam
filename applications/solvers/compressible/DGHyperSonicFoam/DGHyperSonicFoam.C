@@ -62,7 +62,6 @@ Description
 #include "dgField.H"
 #include "dgMath.H"
 #include "dgGeneralBoundaryManager.H"
-#include "dgProcessorBoundaryManager.H"
 #include "dgFluxSolverManager.H"
 #include "dgLimiterManager.H"
 #include "dgTimeDiscretization.H"
@@ -78,10 +77,6 @@ Description
 
 int main(int argc, char *argv[])
 {
-    // The tutorial solver currently hard-codes the DG polynomial order.
-    // This value is passed to dgGeomMesh so every cell uses the same basis.
-    const label pOrder = 1;
-
     #include "setRootCase.H"
 
     // Build the standard OpenFOAM run-time database:

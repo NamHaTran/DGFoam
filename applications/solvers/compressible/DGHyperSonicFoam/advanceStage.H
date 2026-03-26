@@ -14,6 +14,10 @@ forAll(mesh.cells(), cellI)
 // primitive and thermo fields afterwards.
 limiterManager.correct();
 
+// The limiter modifies the authoritative conservative stage state, so
+// synchronize rho/rhoU/E before rebuilding any primitive variables from it.
+#include "synchConservative.H"
+
 forAll(mesh.cells(), cellI)
 {
     // U is not directly advanced by the time integrator, so recompute it from
@@ -25,3 +29,12 @@ forAll(mesh.cells(), cellI)
     // before the next stage begins.
     thermo->update(cellI);
 }
+
+// he and a are thermo-owned fields, so thermo handles their processor
+// synchronization internally after the cell-local reconstruction is complete.
+thermo->synch();
+
+// Once the primitive layer has been reconstructed from the synchronized
+// conservative state, exchange p/T/U so the next stage sees consistent
+// processor-face primitive values.
+// #include "synchPrimary.H"

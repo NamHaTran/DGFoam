@@ -237,7 +237,7 @@ void Foam::dgGeomCell::updateFaceInfo
         dgGeomFace* facePtr = faces[faceI];
 
         // Convert local face ID to reference position
-        dgFacePosition pos;
+        dgFacePosition pos = dgFacePosition::NONE;
 
         switch (type_)
         {

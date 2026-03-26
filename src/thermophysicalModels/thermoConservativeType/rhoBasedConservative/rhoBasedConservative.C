@@ -125,6 +125,10 @@ void Foam::rhoBasedConservative::initModels()
         {
             update(cellI);
         }
+
+        // Populate plus-side processor traces for thermo-owned scalar fields
+        // so the very first stage starts from a consistent parallel state.
+        synch();
     }
 
     // Report selected models
@@ -268,6 +272,15 @@ void Foam::rhoBasedConservative::updateBC(const label& cellI)
     boundaryGaussField<scalar> CpB(TB.size());
     boundaryGaussField<scalar> CvB(TB.size());
     boundaryGaussField<scalar> gammaB(TB.size());
+
+    for (label i=0; i<TB.size(); i++)
+    {
+        //Info << "TB = " << TB[i] << nl;
+        if (TB[i] < 0)
+        {
+            Info << cellI << nl;
+        }
+    }
 
     thermo_().calcCp(TB, CpB);
     thermo_().calcCv(TB, CvB);

@@ -530,7 +530,7 @@ inline Foam::scalar calcJacobianDetAtInteriorGaussPt
     const List<vector>& cellVertices   // Physical coordinates of tetrahedron vertices
 )
 {
-    Foam::tensor J;
+    Foam::tensor J(Zero);
     //Foam::scalar JDuffy; // Jacobian determinant from Duffy transformation
 
     switch (cellType)
@@ -581,7 +581,7 @@ inline Foam::scalar calcLameParam
 )
 {
     // Caclulate Jacobian tensor
-    Foam::tensor J;
+    Foam::tensor J(Zero);
 
     switch (cellType)
     {
@@ -657,4 +657,3 @@ inline Foam::scalar calcLameParam
 #endif
 
 // ************************************************************************* //
-

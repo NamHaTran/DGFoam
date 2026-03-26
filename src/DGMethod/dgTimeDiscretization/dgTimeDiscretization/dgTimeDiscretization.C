@@ -63,23 +63,10 @@ label maxDofCount(const List<List<vector>>& residual)
 }
 
 
-void writeScalarResidualSummary
-(
-    Ostream& os,
-    const word& fieldName,
-    const List<List<scalar>>& residual
-)
+List<scalar> scalarResidualSummary(const List<List<scalar>>& residual)
 {
     label maxDof = maxDofCount(residual);
     reduce(maxDof, maxOp<label>());
-
-    os  << "  scalar field " << fieldName << ':' << nl;
-
-    if (!maxDof)
-    {
-        os << "    no residual entries" << nl;
-        return;
-    }
 
     List<scalar> maxResidual(maxDof, Zero);
 
@@ -102,35 +89,16 @@ void writeScalarResidualSummary
         reduce(maxResidual[dofI], maxOp<scalar>());
     }
 
-    forAll(maxResidual, dofI)
-    {
-        os  << "    dof " << dofI
-            << " : max(|R|) = " << maxResidual[dofI] << nl;
-    }
+    return maxResidual;
 }
 
 
-void writeVectorResidualSummary
-(
-    Ostream& os,
-    const word& fieldName,
-    const List<List<vector>>& residual
-)
+List<vector> vectorResidualSummary(const List<List<vector>>& residual)
 {
     label maxDof = maxDofCount(residual);
     reduce(maxDof, maxOp<label>());
 
-    os  << "  vector field " << fieldName << ':' << nl;
-
-    if (!maxDof)
-    {
-        os << "    no residual entries" << nl;
-        return;
-    }
-
-    List<scalar> maxResidualX(maxDof, Zero);
-    List<scalar> maxResidualY(maxDof, Zero);
-    List<scalar> maxResidualZ(maxDof, Zero);
+    List<vector> maxResidual(maxDof, Zero);
 
     forAll(residual, cellI)
     {
@@ -138,28 +106,202 @@ void writeVectorResidualSummary
 
         forAll(cellResidual, dofI)
         {
+            vector& maxResidualDof = maxResidual[dofI];
             const vector& residualDof = cellResidual[dofI];
 
-            maxResidualX[dofI] = max(maxResidualX[dofI], mag(residualDof.x()));
-            maxResidualY[dofI] = max(maxResidualY[dofI], mag(residualDof.y()));
-            maxResidualZ[dofI] = max(maxResidualZ[dofI], mag(residualDof.z()));
+            maxResidualDof.x() = max(maxResidualDof.x(), mag(residualDof.x()));
+            maxResidualDof.y() = max(maxResidualDof.y(), mag(residualDof.y()));
+            maxResidualDof.z() = max(maxResidualDof.z(), mag(residualDof.z()));
         }
     }
 
-    forAll(maxResidualX, dofI)
+    forAll(maxResidual, dofI)
     {
-        reduce(maxResidualX[dofI], maxOp<scalar>());
-        reduce(maxResidualY[dofI], maxOp<scalar>());
-        reduce(maxResidualZ[dofI], maxOp<scalar>());
+        reduce(maxResidual[dofI].x(), maxOp<scalar>());
+        reduce(maxResidual[dofI].y(), maxOp<scalar>());
+        reduce(maxResidual[dofI].z(), maxOp<scalar>());
     }
 
-    forAll(maxResidualX, dofI)
+    return maxResidual;
+}
+
+
+void accumulateScalarResidualReference
+(
+    List<scalar>& reference,
+    const List<scalar>& summary
+)
+{
+    if (!reference.size())
     {
-        os  << "    dof " << dofI
-            << " : max(|Rx|) = " << maxResidualX[dofI]
-            << ", max(|Ry|) = " << maxResidualY[dofI]
-            << ", max(|Rz|) = " << maxResidualZ[dofI] << nl;
+        reference = summary;
+        return;
     }
+
+    if (reference.size() < summary.size())
+    {
+        const label oldSize = reference.size();
+        reference.setSize(summary.size());
+
+        for (label dofI = oldSize; dofI < summary.size(); ++dofI)
+        {
+            reference[dofI] = summary[dofI];
+        }
+    }
+
+    forAll(summary, dofI)
+    {
+        reference[dofI] = max(reference[dofI], summary[dofI]);
+    }
+}
+
+
+void accumulateVectorResidualReference
+(
+    List<scalar>& reference,
+    const List<vector>& summary
+)
+{
+    if (!reference.size())
+    {
+        reference.setSize(summary.size(), Zero);
+
+        forAll(summary, dofI)
+        {
+            const vector& summaryDof = summary[dofI];
+            reference[dofI] = max(summaryDof.x(), max(summaryDof.y(), summaryDof.z()));
+        }
+
+        return;
+    }
+
+    if (reference.size() < summary.size())
+    {
+        const label oldSize = reference.size();
+        reference.setSize(summary.size(), Zero);
+
+        for (label dofI = oldSize; dofI < summary.size(); ++dofI)
+        {
+            const vector& summaryDof = summary[dofI];
+            reference[dofI] = max(summaryDof.x(), max(summaryDof.y(), summaryDof.z()));
+        }
+    }
+
+    forAll(summary, dofI)
+    {
+        const vector& summaryDof = summary[dofI];
+        const scalar summaryScale =
+            max(summaryDof.x(), max(summaryDof.y(), summaryDof.z()));
+
+        reference[dofI] = max(reference[dofI], summaryScale);
+    }
+}
+
+
+scalar normalizeResidualValue(const scalar current, const scalar reference)
+{
+    return current/max(reference, VSMALL);
+}
+
+
+vector normalizeResidualValue(const vector& current, const scalar reference)
+{
+    return vector
+    (
+        normalizeResidualValue(current.x(), reference),
+        normalizeResidualValue(current.y(), reference),
+        normalizeResidualValue(current.z(), reference)
+    );
+}
+
+
+void writeScalarResidualSummary
+(
+    Ostream& os,
+    const word& fieldName,
+    const List<List<scalar>>& residual,
+    List<scalar>& reference,
+    const bool referenceReady
+)
+{
+    const List<scalar> maxResidual = scalarResidualSummary(residual);
+
+    os  << "  scalar field " << fieldName << ':' << nl;
+
+    if (!maxResidual.size())
+    {
+        os << "    no residual entries" << nl;
+        return;
+    }
+
+    if (!referenceReady)
+    {
+        accumulateScalarResidualReference(reference, maxResidual);
+    }
+
+    const label dofI = 0;
+
+    os << "    dof " << dofI << " : ";
+
+    if (referenceReady)
+    {
+        os  << "max(|R|)/ref = "
+            << normalizeResidualValue(maxResidual[dofI], reference[dofI]);
+    }
+    else
+    {
+        os << "max(|R|)/ref = 1";
+    }
+
+    os << nl;
+}
+
+
+void writeVectorResidualSummary
+(
+    Ostream& os,
+    const word& fieldName,
+    const List<List<vector>>& residual,
+    List<scalar>& reference,
+    const bool referenceReady
+)
+{
+    const List<vector> maxResidual = vectorResidualSummary(residual);
+
+    os  << "  vector field " << fieldName << ':' << nl;
+
+    if (!maxResidual.size())
+    {
+        os << "    no residual entries" << nl;
+        return;
+    }
+
+    if (!referenceReady)
+    {
+        accumulateVectorResidualReference(reference, maxResidual);
+    }
+
+    const label dofI = 0;
+
+    os << "    dof " << dofI << " : ";
+
+    if (referenceReady)
+    {
+        const vector scaledResidual =
+            normalizeResidualValue(maxResidual[dofI], reference[dofI]);
+
+        os  << "max(|Rx|)/ref = " << scaledResidual.x()
+            << ", max(|Ry|)/ref = " << scaledResidual.y()
+            << ", max(|Rz|)/ref = " << scaledResidual.z();
+    }
+    else
+    {
+        os  << "max(|Rx|)/ref = 1"
+            << ", max(|Ry|)/ref = 1"
+            << ", max(|Rz|)/ref = 1";
+    }
+
+    os << nl;
 }
 
 } // End anonymous namespace
@@ -180,7 +322,11 @@ dgTimeDiscretization::dgTimeDiscretization
     timeScheme_(nullptr),
     nStage_(0),
     stageI_(0),
-    timeStepStarted_(false)
+    timeStepStarted_(false),
+    scalarResidualReference_(),
+    vectorResidualReference_(),
+    residualReferenceWarmupSteps_(5),
+    completedTimeSteps_(0)
 {
     if (!ddtSchemeDict_.found("scheme"))
     {
@@ -222,7 +368,7 @@ void dgTimeDiscretization::writeInfo(Ostream& os) const
 {
     os  << "dgTimeDiscretization:" << nl
         << "  scheme : " << schemeType_ << nl
-        << "  stages : " << nStage_ << nl;
+        << "  stages : " << nStage_ << nl << nl;
 }
 
 
@@ -239,8 +385,37 @@ void dgTimeDiscretization::writeResiduals(Ostream& os) const
     os  << "dgTimeDiscretization residuals:" << nl
         << "  stage : " << stageI_ << nl;
 
+    const bool referenceReady =
+        completedTimeSteps_ >= residualReferenceWarmupSteps_;
+
     const List<word>& scalarNames = timeScheme_().scalarFieldNames();
     const List<word>& vectorNames = timeScheme_().vectorFieldNames();
+
+    if (scalarResidualReference_.size() != scalarNames.size())
+    {
+        scalarResidualReference_.setSize(scalarNames.size());
+    }
+
+    forAll(scalarResidualReference_, fieldI)
+    {
+        if (scalarResidualReference_[fieldI].size() != nStage_)
+        {
+            scalarResidualReference_[fieldI].setSize(nStage_);
+        }
+    }
+
+    if (vectorResidualReference_.size() != vectorNames.size())
+    {
+        vectorResidualReference_.setSize(vectorNames.size());
+    }
+
+    forAll(vectorResidualReference_, fieldI)
+    {
+        if (vectorResidualReference_[fieldI].size() != nStage_)
+        {
+            vectorResidualReference_[fieldI].setSize(nStage_);
+        }
+    }
 
     forAll(scalarNames, fieldI)
     {
@@ -248,7 +423,9 @@ void dgTimeDiscretization::writeResiduals(Ostream& os) const
         (
             os,
             scalarNames[fieldI],
-            timeScheme_().scalarResidual(scalarNames[fieldI], stageI_)
+            timeScheme_().scalarResidual(scalarNames[fieldI], stageI_),
+            scalarResidualReference_[fieldI][stageI_],
+            referenceReady
         );
     }
 
@@ -258,7 +435,9 @@ void dgTimeDiscretization::writeResiduals(Ostream& os) const
         (
             os,
             vectorNames[fieldI],
-            timeScheme_().vectorResidual(vectorNames[fieldI], stageI_)
+            timeScheme_().vectorResidual(vectorNames[fieldI], stageI_),
+            vectorResidualReference_[fieldI][stageI_],
+            referenceReady
         );
     }
 }

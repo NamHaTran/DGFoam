@@ -32,6 +32,7 @@ License
 #include "addToRunTimeSelectionTable.H"
 #include "DynamicList.H"
 #include "error.H"
+#include "dgMath.H"
 
 namespace Foam
 {
@@ -293,7 +294,7 @@ scalar positivityPreservingLimiter::calcRhoThermoEnergy
 ) const
 {
     const scalar rhoSafe =
-        (mag(rho) > SMALL ? rho : (rho >= 0 ? SMALL : -SMALL));
+        (mag(rho) > epsilon_ ? rho : (rho >= 0 ? epsilon_ : -epsilon_));
 
     return E - 0.5*magSqr(rhoU)/rhoSafe;
 }
@@ -308,7 +309,7 @@ scalar positivityPreservingLimiter::thetaCoeff
 {
     const scalar scale = max(scalar(1), mag(meanValue));
 
-    if (mag(meanValue - minValue) <= SMALL*scale)
+    if (mag(meanValue - minValue) <= epsilon_*scale)
     {
         return 1.0;
     }
@@ -385,7 +386,7 @@ void positivityPreservingLimiter::computeThetaCoeffs
         }
     }
 
-    theta1 = thetaCoeff(meanRho, minRho, min(SMALL, meanRho));
+    theta1 = thetaCoeff(meanRho, minRho, min(epsilon_, meanRho));
 
     scalar weightedRhoThermoEnergySum = Zero;
     scalar totalVolume = Zero;
@@ -418,7 +419,7 @@ void positivityPreservingLimiter::computeThetaCoeffs
         (
             meanRhoThermoEnergy,
             minRhoThermoEnergy,
-            min(min(SMALL, meanRho), meanRhoThermoEnergy)
+            min(min(epsilon_, meanRho), meanRhoThermoEnergy)
         );
 }
 
@@ -442,7 +443,6 @@ void positivityPreservingLimiter::scaleHighOrderModes
         cellModes[modeI] *= theta;
     }
 
-    field.gaussFields()[cellID].interpolateFromDof();
     field.dof().updateCellDof(cellID);
 }
 
@@ -466,13 +466,14 @@ void positivityPreservingLimiter::scaleHighOrderModes
         cellModes[modeI] *= theta;
     }
 
-    field.gaussFields()[cellID].interpolateFromDof();
     field.dof().updateCellDof(cellID);
 }
 
 
 void positivityPreservingLimiter::postCorrect()
 {
+    dgLimiter::postCorrect();
+
     label nLimitedCells = nLimitedCells_;
     reduce(nLimitedCells, sumOp<label>());
 
@@ -518,6 +519,7 @@ positivityPreservingLimiter::positivityPreservingLimiter
     densityFieldPtr_(nullptr),
     momentumFieldPtr_(nullptr),
     energyFieldPtr_(nullptr),
+    epsilon_(dict.lookupOrDefault<scalar>("tolerance", 1.0e-8)),
     theta1_(1.0),
     theta2_(1.0)
 {
@@ -528,6 +530,7 @@ positivityPreservingLimiter::positivityPreservingLimiter
 void positivityPreservingLimiter::read(const dictionary& dict)
 {
     dgLimiter::read(normalizePositivityLimiterDict(dict));
+    epsilon_ = dict.lookupOrDefault<scalar>("tolerance", 1.0e-8);
     theta1_ = 1.0;
     theta2_ = 1.0;
     initializeConservativeFields();
@@ -539,15 +542,14 @@ void positivityPreservingLimiter::correct()
     preCorrect();
 
     nLimitedCells_ = 0;
-    detector_->resetLimitingIndicator();
+
+    if (hasDetector())
+    {
+        detector().resetLimitingIndicator();
+    }
 
     for (label cellID = 0; cellID < mesh_.nCells(); ++cellID)
     {
-        if (!detector_->detect(cellID))
-        {
-            continue;
-        }
-
         computeThetaCoeffs(cellID, theta1_, theta2_);
 
         const scalar densityTheta = theta1_*theta2_;
@@ -559,6 +561,7 @@ void positivityPreservingLimiter::correct()
         }
 
         ++nLimitedCells_;
+        cacheLimitedCell(cellID);
 
         forAll(limitedFields_, fieldI)
         {

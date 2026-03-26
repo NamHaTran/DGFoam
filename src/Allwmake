@@ -9,8 +9,12 @@ echo "==> Linking includes in math/"
 cd ../math
 wmakeLnInclude -f .
 
-echo "==> Linking includes in DGFoam/"
-cd ../DGFoam
+echo "==> Linking includes in DGCoreFields/"
+cd ../DGCoreFields
+wmakeLnInclude -f .
+
+echo "==> Linking includes in thermophysicalModels/"
+cd ../thermophysicalModels
 wmakeLnInclude -f .
 
 echo "==> Linking includes in DGMethod/"
@@ -18,23 +22,23 @@ cd ../DGMethod
 wmakeLnInclude -f .
 #--------------------------------------------#
 
+# Build DGCoreFields library first; it exposes field symbols needed by DGMesh
+echo "==> Building libDGCoreFields from DGCoreFields/"
+cd ../DGCoreFields
+wmake libso
+
 # Build mesh library
 echo "==> Building libDGMesh from mesh/"
 cd ../mesh
 wmake libso
 
-# Build DGFoam library
-echo "==> Building libDGFoam from DGFoam/"
-cd ../DGFoam
+# Build thermophysicalModels library
+echo "==> Building libDGFluidThermophysicalModels from thermophysicalModels/"
+cd ../thermophysicalModels
 wmake libso
 
 # Build DGMethod library
 echo "==> Building libDGMethod from DGMethod/"
 cd ../DGMethod
-wmake libso
-
-# Build thermophysicalModels library
-echo "==> Building libDGFluidThermophysicalModels from thermophysicalModels/"
-cd ../thermophysicalModels
 wmake libso
 #------------------------------------------------------------------------------

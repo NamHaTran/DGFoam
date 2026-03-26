@@ -215,6 +215,8 @@ void dgLimiterManager::listLimiters(Ostream& os) const
         os  << "  - " << limiterNames_[limiterI]
             << " : " << limiterType << nl;
     }
+
+    os << nl;
 }
 
 } // End namespace Foam

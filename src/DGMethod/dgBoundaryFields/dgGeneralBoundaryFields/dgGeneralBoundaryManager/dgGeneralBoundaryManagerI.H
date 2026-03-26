@@ -40,7 +40,8 @@ Foam::dgGeneralBoundaryManager<Type>::dgGeneralBoundaryManager
     const dgGeomMesh& mesh
 )
 :
-    mesh_(mesh)
+    mesh_(mesh),
+    patchToCondition_(mesh.getFvMesh().boundary().size(), -1)
 {
     // --- Read internalField entry
     const entry* internalEntry =
@@ -67,7 +68,9 @@ Foam::dgGeneralBoundaryManager<Type>::dgGeneralBoundaryManager
 
     is >> internalValue_;
 
-    // --- Read boundaryField
+    // --- Read boundaryField.
+    // General patches must be provided. Inactive patches such as empty are
+    // still allowed in the mesh dictionary but are not instantiated here.
     const dictionary& bfDict = fieldDict.subDict("boundaryField");
 
     const fvBoundaryMesh& patches = mesh_.getFvMesh().boundary();
@@ -88,6 +91,7 @@ Foam::dgGeneralBoundaryManager<Type>::dgGeneralBoundaryManager
         if (dgBoundaryHelper::isGeneralPatch(patch))
         {
             const dictionary& patchDict = bfDict.subDict(patchName);
+            const label conditionI = bConditions_.size();
 
             bConditions_.append
             (
@@ -98,6 +102,7 @@ Foam::dgGeneralBoundaryManager<Type>::dgGeneralBoundaryManager
                     patchDict
                 )
             );
+            patchToCondition_[patchI] = conditionI;
 
             // Check validity of type
             bConditions_.last()->checkPatchType();
@@ -115,7 +120,8 @@ Foam::dgGeneralBoundaryManager<Type>::dgGeneralBoundaryManager
     const dgGeomMesh& mesh
 )
 :
-    mesh_(mesh)
+    mesh_(mesh),
+    patchToCondition_(mesh.getFvMesh().boundary().size(), -1)
 {
     IOdictionary fieldDict(io);
 
@@ -144,7 +150,9 @@ Foam::dgGeneralBoundaryManager<Type>::dgGeneralBoundaryManager
 
     is >> internalValue_;
 
-    // --- Read boundaryField
+    // --- Read boundaryField.
+    // General patches must be provided. Inactive patches such as empty are
+    // skipped and therefore do not need a DG boundary-condition object.
     const dictionary& bfDict = fieldDict.subDict("boundaryField");
 
     const fvBoundaryMesh& patches = mesh_.getFvMesh().boundary();
@@ -165,6 +173,7 @@ Foam::dgGeneralBoundaryManager<Type>::dgGeneralBoundaryManager
             }
 
             const dictionary& patchDict = bfDict.subDict(patchName);
+            const label conditionI = bConditions_.size();
 
             bConditions_.append
             (
@@ -175,6 +184,7 @@ Foam::dgGeneralBoundaryManager<Type>::dgGeneralBoundaryManager
                     patchDict
                 )
             );
+            patchToCondition_[patchI] = conditionI;
 
             // Check validity of type
             bConditions_.last()->checkPatchType();
@@ -215,9 +225,10 @@ void dgGeneralBoundaryManager<Type>::updateValue
         {
             //- Get owner patch ID from faceGaussField
             const label patchID = faceField.getOwnerPatchID(faceI);
+            const label conditionI = this->conditionIndex(patchID);
 
-            //- Skip non-general patches
-            if (!this->isGeneralPatch(patchID))
+            //- Skip inactive/non-general patches (eg, empty, processor)
+            if (conditionI < 0)
             {
                 continue;
             }
@@ -232,7 +243,7 @@ void dgGeneralBoundaryManager<Type>::updateValue
                 Type&       pVal = faceField.plusValueOnFace(faceI, g);
 
                 //- Call BC implementation
-                bConditions_[patchID]->updateGhostStateValue
+                bConditions_[conditionI]->updateGhostStateValue
                 (
                     cellID,
                     faceI,      // local face index
@@ -264,9 +275,10 @@ void dgGeneralBoundaryManager<Type>::updateGrad
         if (faceField.isBoundary(faceI))
         {
             const label patchID = faceField.getOwnerPatchID(faceI);
+            const label conditionI = this->conditionIndex(patchID);
 
-            //- Skip non-general patches
-            if (!this->isGeneralPatch(patchID))
+            //- Skip inactive/non-general patches (eg, empty, processor)
+            if (conditionI < 0)
             {
                 continue;
             }
@@ -280,7 +292,7 @@ void dgGeneralBoundaryManager<Type>::updateGrad
                 Type&       pVal = faceField.plusValueOnFace(faceI, g);
 
                 //- Call gradient BC implementation
-                bConditions_[patchID].updateGhostStateGrad
+                bConditions_[conditionI]->updateGhostStateGrad
                 (
                     cellID,
                     faceI,

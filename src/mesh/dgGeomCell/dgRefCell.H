@@ -114,8 +114,11 @@ private:
         /** Basis-function derivatives w.r.t. \f$\eta_3\f$ */
         List<List<scalar>> dBasis_dEta3_;
 
-        /** Mass matrix for the cell */
-        Foam::SquareMatrix<scalar> massMatrix_;
+        /** Mass matrix for the cell (built lazily on first request) */
+        mutable Foam::SquareMatrix<scalar> massMatrix_;
+
+        /** Track whether the full mass matrix cache is already available */
+        mutable bool massMatrixBuilt_;
 
         /** Diagonal of mass matrix */
         List<scalar> massMatrixDiag_;
@@ -193,12 +196,19 @@ public:
         );
         */
 
-        /** Construct reference-cell mass matrix */
-        void constructMassMatrix();
+        /** Construct reference-cell mass matrix diagonal */
+        void constructMassMatrixDiagonal();
+
+        /** Construct and cache the full reference-cell mass matrix */
+        void constructMassMatrix() const;
 
         /** Return reference-cell mass matrix */
         inline const Foam::SquareMatrix<scalar>& massMatrix() const
         {
+            if (!massMatrixBuilt_)
+            {
+                constructMassMatrix();
+            }
             return massMatrix_;
         }
 

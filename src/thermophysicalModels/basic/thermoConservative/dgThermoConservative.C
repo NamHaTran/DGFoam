@@ -150,6 +150,13 @@ bool Foam::dgThermoConservative::writeData(Ostream& os) const
 }
 
 
+void Foam::dgThermoConservative::synch()
+{
+    he_.synch();
+    a_.synch();
+}
+
+
 tmp<GaussField<scalar>> Foam::dgThermoConservative::calcH
 (
     const label cellID

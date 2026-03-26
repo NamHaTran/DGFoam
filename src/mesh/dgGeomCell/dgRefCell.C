@@ -41,11 +41,12 @@ using namespace Foam;
 dgRefCell::dgRefCell(const label pOrder, const dgCellType type)
 :
     pOrder_(pOrder),
-    type_(type)
+    type_(type),
+    massMatrixBuilt_(false)
 {
     generateCellGaussPointsAndWeights();
     computeBasisAndDerivatives();
-    constructMassMatrix();
+    constructMassMatrixDiagonal();
 }
 
 
@@ -227,13 +228,63 @@ void dgRefCell::computeBasisAndDerivatives()
     }
 }
 
-void Foam::dgRefCell::constructMassMatrix()
+void Foam::dgRefCell::constructMassMatrixDiagonal()
 {
+    massMatrixDiag_.setSize(nDof_);
+
+    for (label i = 0; i < nDof_; ++i)
+    {
+        scalar mii = 0.0;
+
+        for (label gp = 0; gp < nGauss_; ++gp)
+        {
+            scalar JDuffy = 0.0;
+
+            switch (type_)
+            {
+                case dgCellType::HEX:
+                    JDuffy = 1.0;
+                    break;
+
+                case dgCellType::PRISM:
+                    JDuffy = Foam::referenceJacobian::prismRefToHexRef(gaussP_[gp]);
+                    break;
+
+                case dgCellType::PYRAMID:
+                    JDuffy = Foam::referenceJacobian::pyramidRefToHexRef(gaussP_[gp]);
+                    break;
+
+                case dgCellType::TET:
+                    JDuffy = Foam::referenceJacobian::tetRefToHexRef(gaussP_[gp]);
+                    break;
+
+                default:
+                    FatalErrorInFunction
+                        << "Unsupported cell type for mass matrix diagonal calculation: "
+                        << type_ << nl
+                        << abort(FatalError);
+            }
+
+            mii +=
+                basis_[gp][i]
+              * basis_[gp][i]
+              * JDuffy
+              * wGauss_[gp];
+        }
+
+        massMatrixDiag_[i] = mii;
+    }
+}
+
+void Foam::dgRefCell::constructMassMatrix() const
+{
+    if (massMatrixBuilt_)
+    {
+        return;
+    }
+
     // Resize and initialize mass matrix
     massMatrix_.resize(nDof_);
-
-    // Resize mass matrix diagonal
-    massMatrixDiag_.setSize(nDof_);
 
     // Assemble mass matrix directly at Gauss points
     for (label i = 0; i < nDof_; ++i)
@@ -275,17 +326,13 @@ void Foam::dgRefCell::constructMassMatrix()
                   * basis_[gp][j]
                   * JDuffy
                   * wGauss_[gp];
-                
-                // Store diagonal entries separately for efficient mass matrix inversion
-                if (i == j)
-                {
-                    massMatrixDiag_[i] = mij;
-                }
             }
 
             massMatrix_[i][j] = mij;
         }
     }
+
+    massMatrixBuilt_ = true;
 }
 
 // ************************************************************************* //

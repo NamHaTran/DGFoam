@@ -44,6 +44,7 @@ SourceFiles
 #include "dgField.H"
 #include "dgGeomMesh.H"
 #include "troubleCellDetector.H"
+#include "DynamicList.H"
 
 namespace Foam
 {
@@ -77,7 +78,7 @@ protected:
         /** Resolved list of DG fields that this limiter modifies. */
         List<limitedField> limitedFields_;
 
-        /** Runtime-selected troubled-cell detector. */
+        /** Runtime-selected troubled-cell detector, optional for custom limiters. */
         autoPtr<troubleCellDetector> detector_;
 
         /** Local limiter dictionary copied from the caller. */
@@ -89,10 +90,13 @@ protected:
         /** Number of cells limited in the most recent correct() call. */
         label nLimitedCells_;
 
+        /** Cells limited in the current correct() pass, in visitation order. */
+        DynamicList<label> limitedCellIDs_;
+
         /** \brief Build the resolved field list from the \c fields entry. */
         void initializeLimitedFields();
 
-        /** \brief Construct the troubled-cell detector from the limiter dictionary. */
+        /** \brief Construct the troubled-cell detector from the limiter dictionary when configured. */
         void initializeDetector();
 
         /** \brief Dispatch limiting for one resolved field in one cell. */
@@ -104,14 +108,20 @@ protected:
         /** \brief Hook executed once after looping over cells in correct(). */
         virtual void postCorrect();
 
-        /** \brief Limit one scalar DG field on one troubled cell. */
+        /** \brief Cache one limited cell for deferred Gauss reconstruction. */
+        void cacheLimitedCell(const label cellID);
+
+        /** \brief Rebuild Gauss values on limited cells and their neighbours. */
+        void rebuildLimitedCellGaussFields();
+
+        /** \brief Limit one scalar DG field on one selected cell. */
         virtual void limitField
         (
             dgField<scalar>& field,
             const label cellID
         ) = 0;
 
-        /** \brief Limit one vector DG field on one troubled cell. */
+        /** \brief Limit one vector DG field on one selected cell. */
         virtual void limitField
         (
             dgField<vector>& field,
@@ -140,11 +150,16 @@ public:
      * \verbatim
      * type     <limiterType>;
      * fields   (<field1> <field2> ...);
-     * detector <detectorType>;
      * \endverbatim
      *
-     * The detector coefficients must be provided in a sub-dictionary named
+     * Most limiters also require
+     * \verbatim
+     * detector <detectorType>;
+     * \endverbatim
+     * plus a detector-coefficients sub-dictionary named
      * \c <detectorType>Coeffs, for example \c PerssonPeraireCoeffs.
+     * Specialized derived limiters may override \c correct() and operate
+     * without a detector.
      *
      * \param dict Limiter dictionary
      * \param mesh DG mesh shared by the limiter hierarchy
@@ -177,7 +192,7 @@ public:
     /** \brief Re-read the limiter dictionary and rebuild shared state. */
     virtual void read(const dictionary& dict);
 
-    /** \brief Apply limiting to all configured fields on all troubled cells. */
+    /** \brief Apply limiting using the configured trouble-cell detector. */
     virtual void correct();
 
     /** \brief Return the limiter dictionary. */
@@ -196,6 +211,12 @@ public:
     inline const List<limitedField>& limitedFields() const
     {
         return limitedFields_;
+    }
+
+    /** \brief Return true when this limiter has a configured detector. */
+    inline bool hasDetector() const
+    {
+        return detector_.valid();
     }
 
     /** \brief Return the troubled-cell detector used by this limiter. */

@@ -245,6 +245,11 @@ public:
         virtual void updateBC(const label& cellID) = 0;
 
         /**
+         * \brief Synchronize thermo-owned scalar fields across processor faces
+         */
+        void synch();
+
+        /**
          * \brief Write model data
          *
          * \param os Output stream
