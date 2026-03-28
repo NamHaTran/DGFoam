@@ -1,0 +1,153 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2412                                  |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    arch        "LSB;label=32;scalar=64";
+    class       volScalarField;
+    location    "6e-07";
+    object      T;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dimensions      [0 0 0 0 0 0 0];
+
+internalField   nonuniform List<scalar> 
+84
+(
+200.001
+199.999
+200.001
+200
+199.998
+199.999
+200
+199.997
+199.999
+200
+199.997
+199.999
+200
+199.997
+199.999
+200
+199.997
+199.999
+200
+199.997
+199.999
+200
+199.997
+199.999
+200
+199.997
+199.999
+200
+199.997
+199.999
+200
+199.997
+199.999
+200
+199.996
+199.998
+200.355
+200.357
+200.357
+200.001
+200
+200
+200.001
+200
+200
+200.001
+200
+200
+200.001
+200.001
+200
+200
+200
+200.071
+200.071
+200.072
+200.072
+200.319
+200.321
+200.325
+200.325
+200.552
+200.555
+200.563
+200.563
+201.44
+201.449
+201.469
+201.491
+199.989
+199.414
+199.41
+199.401
+199.393
+199.391
+199.861
+199.86
+199.858
+199.856
+199.857
+199.943
+199.942
+199.941
+199.941
+)
+;
+
+boundaryField
+{
+    inlet
+    {
+        type            calculated;
+        value           uniform 0;
+    }
+    outlet2
+    {
+        type            calculated;
+        value           uniform 0;
+    }
+    outlet1
+    {
+        type            calculated;
+        value           nonuniform List<scalar> 0();
+    }
+    wall
+    {
+        type            calculated;
+        value           uniform 0;
+    }
+    symmetryBottom
+    {
+        type            symmetry;
+    }
+    symmetryZ0
+    {
+        type            symmetry;
+    }
+    symmetryZ05
+    {
+        type            symmetry;
+    }
+    procBoundary1to0
+    {
+        type            processor;
+        value           uniform 0;
+    }
+}
+
+
+// ************************************************************************* //

@@ -32,7 +32,29 @@ forAll(mesh.cells(), cellI)
 
 // he and a are thermo-owned fields, so thermo handles their processor
 // synchronization internally after the cell-local reconstruction is complete.
+// debugProcessorFaceExchange::printFieldPlusValues
+// (
+//     "before thermo->synch() he",
+//     thermo->he()
+// );
+// debugProcessorFaceExchange::printFieldPlusValues
+// (
+//     "before thermo->synch() a",
+//     thermo->a()
+// );
+
 thermo->synch();
+
+// debugProcessorFaceExchange::printFieldPlusValues
+// (
+//     "after thermo->synch() he",
+//     thermo->he()
+// );
+// debugProcessorFaceExchange::printFieldPlusValues
+// (
+//     "after thermo->synch() a",
+//     thermo->a()
+// );
 
 // Once the primitive layer has been reconstructed from the synchronized
 // conservative state, exchange p/T/U so the next stage sees consistent

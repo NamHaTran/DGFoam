@@ -42,6 +42,7 @@ SourceFiles
 #include "processorFvPatch.H"
 #include "dgField.H"
 #include "Pstream.H"
+#include "CompactListList.H"
 
 namespace Foam
 {
@@ -68,10 +69,8 @@ class PstreamBuffers;
  * modal coefficients for each processor face so face-local neighbour DoF
  * buffers can be populated for downstream algorithms such as DG limiters.
  *
- * The communication uses explicit send/receive buffers and point-to-point
- * transfers on processorFvPatch.
- *
- * MPI tags are generated from processor ranks to avoid collisions.
+ * The communication uses explicit send/receive buffers and OpenFOAM
+ * non-blocking processor streams on processorFvPatch.
  */
 template<class Type>
 class dgProcessorBoundaryField
@@ -92,6 +91,12 @@ private:
 
     /** Receive buffer for Gauss-point values (mutable for const update) */
     mutable List<Type> recvBuf_;
+
+    /** Packed send buffer for per-face neighbour DoFs */
+    mutable CompactListList<Type> sendDofBuf_;
+
+    /** Packed receive buffer for per-face neighbour DoFs */
+    mutable CompactListList<Type> recvDofBuf_;
 
 public:
 
@@ -152,54 +157,6 @@ public:
         dgField<Type>& field,
         PstreamBuffers& pBufs
     ) const;
-
-    // MPI tag generation --------------------------------------------------
-
-    /**
-     * \brief Generate MPI send tag
-     *
-     * Tag scheme:
-     * - tag = myProc*1e6 + neighbProc
-     *
-     * \return MPI tag for send
-     */
-    int genSendTag() const
-    {
-        const label myProc = Pstream::myProcNo();
-
-        if (myProc >= 200000 || neighbProc_ >= 200000)
-        {
-            FatalErrorInFunction
-                << "Processor rank too large for tag scheme: "
-                << myProc << " " << neighbProc_
-                << exit(FatalError);
-        }
-
-        return myProc*1e6 + neighbProc_;
-    }
-
-    /**
-     * \brief Generate MPI receive tag
-     *
-     * Tag scheme:
-     * - tag = neighbProc*1e6 + myProc
-     *
-     * \return MPI tag for receive
-     */
-    int genRecvTag() const
-    {
-        const label myProc = Pstream::myProcNo();
-
-        if (myProc >= 200000 || neighbProc_ >= 200000)
-        {
-            FatalErrorInFunction
-                << "Processor rank too large for tag scheme: "
-                << myProc << " " << neighbProc_
-                << exit(FatalError);
-        }
-
-        return neighbProc_*1e6 + myProc;
-    }
 
     // Access functions ----------------------------------------------------
 

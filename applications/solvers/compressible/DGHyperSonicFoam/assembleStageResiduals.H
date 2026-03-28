@@ -82,12 +82,42 @@ forAll(mesh.cells(), cellI)
     // - dgGeneralPDETerm knows how to integrate a DG term,
     // - dgFluxSolverManager knows how to close it with a numerical flux.
     massConvTerm.updateFlux();
+    // debugProcessorFaceExchange::printFaceFlux
+    // (
+    //     "mass numerical flux",
+    //     massConvTerm.fluxField()
+    // );
+    // debugProcessorFaceExchange::printFaceIntegral
+    // (
+    //     "mass face integral",
+    //     massConvTerm.fluxField()
+    // );
     massConvTerm.calcResidual();
 
     momentumConvTerm.updateFlux();
+    // debugProcessorFaceExchange::printFaceFlux
+    // (
+    //     "momentum numerical flux",
+    //     momentumConvTerm.fluxField()
+    // );
+    // debugProcessorFaceExchange::printFaceIntegral
+    // (
+    //     "momentum face integral",
+    //     momentumConvTerm.fluxField()
+    // );
     momentumConvTerm.calcResidual();
 
     energyConvTerm.updateFlux();
+    // debugProcessorFaceExchange::printFaceFlux
+    // (
+    //     "energy numerical flux",
+    //     energyConvTerm.fluxField()
+    // );
+    // debugProcessorFaceExchange::printFaceIntegral
+    // (
+    //     "energy face integral",
+    //     energyConvTerm.fluxField()
+    // );
     energyConvTerm.calcResidual();
 
     // The time discretization object stores residuals per registered field

@@ -118,7 +118,7 @@ void dgProcessorBoundaryField<Type>::sendAll
 {
     // If the field owns modal DoFs, the message has two serialized sections:
     // 1. all face Gauss-point minus states on this processor patch,
-    // 2. for each face, the owner-cell DoF count followed by all DoF values.
+    // 2. one packed per-face DoF payload.
     //
     // recvAll() must deserialize in exactly the same order.
     const bool hasDof = field.hasDof();
@@ -126,8 +126,6 @@ void dgProcessorBoundaryField<Type>::sendAll
     // ----------------------------------
     // Pack
     // ----------------------------------
-    // sendBuf_ only stores the Gauss-point trace values. The DoF part is
-    // streamed directly afterward because its length can vary per face.
     label k = 0;
 
     for (label i = 0; i < procPatch_.size(); ++i)
@@ -154,6 +152,36 @@ void dgProcessorBoundaryField<Type>::sendAll
         }
     }
 
+    if (hasDof)
+    {
+        labelList faceDofSizes(procPatch_.size(), Zero);
+
+        for (label i = 0; i < procPatch_.size(); ++i)
+        {
+            const label faceID = procPatch_.start() + i;
+            const label ownerCellID =
+                this->dgMesh_.getFvMesh().faceOwner()[faceID];
+
+            faceDofSizes[i] = field.dof()[ownerCellID].nDof();
+        }
+
+        sendDofBuf_.resize(faceDofSizes);
+
+        for (label i = 0; i < procPatch_.size(); ++i)
+        {
+            const label faceID = procPatch_.start() + i;
+            const label ownerCellID =
+                this->dgMesh_.getFvMesh().faceOwner()[faceID];
+            const cellDof<Type>& ownerDof = field.dof()[ownerCellID];
+            SubList<Type> faceDofs = sendDofBuf_[i];
+
+            for (label dofI = 0; dofI < ownerDof.nDof(); ++dofI)
+            {
+                faceDofs[dofI] = ownerDof[dofI];
+            }
+        }
+    }
+
     // ----------------------------------
     // Send to neighbour
     // ----------------------------------
@@ -169,28 +197,7 @@ void dgProcessorBoundaryField<Type>::sendAll
 
         if (hasDof)
         {
-            for (label i = 0; i < procPatch_.size(); ++i)
-            {
-                const label faceID = procPatch_.start() + i;
-                const label ownerCellID =
-                    this->dgMesh_.getFvMesh().faceOwner()[faceID];
-
-                // We send the owner-cell modal coefficients that correspond to
-                // this face. Downstream DG algorithms on the neighbour side
-                // use them as a buffered neighbour-cell representation.
-                const cellDof<Type>& ownerDof = field.dof()[ownerCellID];
-                const label nDof = ownerDof.nDof();
-
-                // The explicit nDof prefix makes the stream self-delimiting
-                // even when different fields/polynomial orders produce
-                // different payload sizes.
-                toNbr << nDof;
-
-                for (label dofI = 0; dofI < nDof; ++dofI)
-                {
-                    toNbr << ownerDof[dofI];
-                }
-            }
+            toNbr << sendDofBuf_;
         }
     }
 }
@@ -205,7 +212,7 @@ void dgProcessorBoundaryField<Type>::recvAll
     // recvAll() must consume the stream in exactly the order produced by
     // sendAll():
     // 1. the packed Gauss-point values list,
-    // 2. optionally one DoF block per face.
+    // 2. optionally one packed DoF payload for all faces.
     const bool hasDof = field.hasDof();
 
     // ----------------------------------
@@ -219,10 +226,10 @@ void dgProcessorBoundaryField<Type>::recvAll
 
     fromNbr >> recvBuf_;
 
-    // Processor patches may require orientation transforms (eg vector/tensor
-    // components on differently oriented faces). Scalars are unaffected since
-    // transform(I, scalar) is a no-op.
-    const tensorField& forwardT = procPatch_.forwardT();
+    if (hasDof)
+    {
+        fromNbr >> recvDofBuf_;
+    }
 
     // ----------------------------------
     // Unpack
@@ -238,14 +245,6 @@ void dgProcessorBoundaryField<Type>::recvAll
             this->dgMesh_.getFvMesh().faceOwner()[faceID];
 
         const label nGauss = gFace->nGauss();
-        // Use the patch-provided transform for this face so the received data
-        // is expressed in the local patch orientation before storing it.
-        const tensor faceTransform =
-            (
-                forwardT.empty()
-              ? tensor::I
-              : (forwardT.size() == 1 ? forwardT[0] : forwardT[i])
-            );
         faceGaussField<Type>& faceField =
             field.gaussFields()[ownerCellID].faceField();
 
@@ -254,23 +253,23 @@ void dgProcessorBoundaryField<Type>::recvAll
             // The neighbour's exported minus state becomes this rank's local
             // plus state on the same global face.
             faceField.plusValueOnGlobalFace(faceID, g)
-                = transform(faceTransform, recvBuf_[k]);
+                = recvBuf_[k];
 
             ++k;
         }
 
         if (hasDof)
         {
-            // Read back the variable-length DoF block for this face.
-            label nDof = 0;
-            fromNbr >> nDof;
+            List<Type> recvDof
+            (
+                recvDofBuf_.localSize(i),
+                pTraits<Type>::zero
+            );
+            const SubList<Type> faceRecvDof = recvDofBuf_[i];
 
-            List<Type> recvDof(nDof, pTraits<Type>::zero);
-
-            for (label dofI = 0; dofI < nDof; ++dofI)
+            for (label dofI = 0; dofI < recvDof.size(); ++dofI)
             {
-                fromNbr >> recvDof[dofI];
-                recvDof[dofI] = transform(faceTransform, recvDof[dofI]);
+                recvDof[dofI] = faceRecvDof[dofI];
             }
 
             // Store a copy in face-local buffered storage so later limiter /
@@ -279,7 +278,7 @@ void dgProcessorBoundaryField<Type>::recvAll
             faceField.setBufferedNeighbourDof
             (
                 faceField.localFaceIndex(faceID),
-                cellDof<Type>(-1, nDof, recvDof)
+                cellDof<Type>(-1, recvDof.size(), recvDof)
             );
         }
     }

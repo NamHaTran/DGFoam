@@ -71,6 +71,7 @@ Description
 
 // Test libs
 #include "dgBasisField.H"
+#include "debugProcessorFaceExchange.H"
 
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //

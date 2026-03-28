@@ -39,6 +39,44 @@
                 "kind": "build",
                 "isDefault": true
             }
+        },
+        {
+            "type": "shell",
+            "label": "dgfoam-decompose-case-debug",
+            "command": "bash",
+            "args": [
+                "-lc",
+                "source ${workspaceFolder}/etc/use-debug.sh && cd ${input:dgCaseDir} && decomposePar -force"
+            ],
+            "problemMatcher": [
+                "$gcc"
+            ]
+        },
+        {
+            "type": "shell",
+            "label": "dgfoam-run-mpi-debug",
+            "command": "bash",
+            "args": [
+                "-lc",
+                "source ${workspaceFolder}/etc/use-debug.sh && cd ${input:dgCaseDir} && mpirun -np ${input:dgMpiRanks} ${workspaceFolder}/platforms/linux64GccDPInt32Debug/bin/DGHyperSonicFoam -parallel"
+            ],
+            "problemMatcher": [
+                "$gcc"
+            ]
+        }
+    ],
+    "inputs": [
+        {
+            "id": "dgCaseDir",
+            "type": "promptString",
+            "description": "Absolute path to the OpenFOAM case directory",
+            "default": "/home/nam-ha-tran/OpenFOAM/DGFoam/applications/test/testCase"
+        },
+        {
+            "id": "dgMpiRanks",
+            "type": "promptString",
+            "description": "Number of MPI ranks",
+            "default": "2"
         }
     ]
 }

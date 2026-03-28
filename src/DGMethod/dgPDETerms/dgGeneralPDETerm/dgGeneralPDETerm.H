@@ -191,6 +191,9 @@ public:
     /** Return residual values (mutable access) */
     inline List<UType>& R() { return R_; }
 
+    /** Return Gauss flux field, including face numerical flux values */
+    inline const GaussField<FType>& fluxField() const { return F_(); }
+
     // Core operations -----------------------------------------------------
 
     /**

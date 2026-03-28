@@ -392,6 +392,13 @@ void Foam::dgGeomMesh::assignFaceConnectivityToProcPatches()
                 faces_[faceID]->setPhysicGaussPoints(dgFacePhysicGauss[faceID]);
                 faces_[faceID]->setLameParams(dgFaceJacobian[faceID]);
                 faces_[faceID]->calcGaussPointsOnOwnerSide();
+
+                // Processor faces inherit a canonical physical Gauss-point
+                // ordering from prepareDGDecomposedMesh. Rebuild owner-side
+                // basis/derivative data on that updated ordering so flux
+                // reconstruction and communicated traces use the same face
+                // quadrature layout on every rank.
+                faces_[faceID]->computeBasisAndDerivatives();
             }
         }
     }

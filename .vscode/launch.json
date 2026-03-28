@@ -58,6 +58,22 @@
             ],
             "preLaunchTask": "dgfoam-build-debug",
             "miDebuggerPath": "/usr/bin/gdb"
+        },
+        {
+            "name": "DGHyperSonicFoam Attach MPI Rank",
+            "type": "cppdbg",
+            "request": "attach",
+            "program": "${workspaceFolder}/platforms/linux64GccDPInt32Debug/bin/DGHyperSonicFoam",
+            "processId": "${command:pickProcess}",
+            "MIMode": "gdb",
+            "miDebuggerPath": "/usr/bin/gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ]
         }
     ]
 }

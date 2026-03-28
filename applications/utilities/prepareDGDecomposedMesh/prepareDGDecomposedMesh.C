@@ -220,15 +220,10 @@ int main(int argc, char *argv[])
             for (label i = 0; i < nFaces; ++i)
             {
                 const label localProcFaceID = startFace + i;
-                label globalFaceID =
-                    faceProcAddressing[localProcFaceID];
-
-                if (globalFaceID < 0)
-                {
-                    // Negative ID means face is owned by neighbor processor
-                    // Must convert to positive ID before accessing global mesh
-                    globalFaceID = -globalFaceID;
-                }
+                // OpenFOAM stores faceProcAddressing with flip/turning
+                // addressing, ie +/- (globalFaceID + 1).
+                const label globalFaceID =
+                    mag(faceProcAddressing[localProcFaceID]) - 1;
 
                 // Owner cell on processor mesh
                 //const label localProcCellID = cellOwner[localProcFaceID];
