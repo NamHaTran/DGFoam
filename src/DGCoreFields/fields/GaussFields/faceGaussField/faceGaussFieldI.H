@@ -83,8 +83,13 @@ faceGaussField<Type>::faceGaussField
     // Collect pointers to faces
     for (label f = 0; f < nFaces_; ++f)
     {
-        faces_[f] = mesh_->faces()[(*facesID_)[f]];
-        n_[f] = faces_[f]->normal();
+        const label faceID = (*facesID_)[f];
+        faces_[f] = mesh_->faces()[faceID];
+
+        const vector faceNormal = faces_[f]->normal();
+        n_[f] =
+            (mesh_->faceOwner()[faceID] == cellID_ ? faceNormal : -faceNormal);
+
         faceAreas_[f] = faces_[f]->area();
     }
 
@@ -139,8 +144,12 @@ faceGaussField<Type>::faceGaussField
 {
     for (label f = 0; f < nFaces_; ++f)
     {
-        faces_[f] = mesh_->faces()[(*facesID_)[f]];
-        n_[f] = faces_[f]->normal();
+        const label faceID = (*facesID_)[f];
+        faces_[f] = mesh_->faces()[faceID];
+
+        const vector faceNormal = faces_[f]->normal();
+        n_[f] =
+            (mesh_->faceOwner()[faceID] == cellID_ ? faceNormal : -faceNormal);
     }
 
     nGaussPerFace_ = faces_[0]->gaussPointsOwner().size();
@@ -190,8 +199,12 @@ faceGaussField<Type>::faceGaussField
 {
     for (label f = 0; f < nFaces_; ++f)
     {
-        faces_[f] = mesh_->faces()[(*facesID_)[f]];
-        n_[f] = faces_[f]->normal();
+        const label faceID = (*facesID_)[f];
+        faces_[f] = mesh_->faces()[faceID];
+
+        const vector faceNormal = faces_[f]->normal();
+        n_[f] =
+            (mesh_->faceOwner()[faceID] == cellID_ ? faceNormal : -faceNormal);
     }
 
     nGaussPerFace_ = faces_[0]->gaussPointsOwner().size();

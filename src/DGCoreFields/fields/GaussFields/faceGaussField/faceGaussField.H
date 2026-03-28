@@ -31,7 +31,7 @@ Description
     Gauss-point field values on faces of a DG cell.
 
     Stores values at Gauss integration points on all faces of a cell,
-    including both minus (owner) and plus (neighbour) sides.
+    including both minus (cell-local interior) and plus (exterior) sides.
 
 SourceFiles
     faceGaussField.C
@@ -67,8 +67,8 @@ namespace Foam
  * points on all faces of a DG cell.
  *
  * For each Gauss point on a face, the class stores:
- * - Minus-side value (owner cell)
- * - Plus-side value (neighbour cell or boundary)
+ * - Minus-side value (the current cell / interior trace)
+ * - Plus-side value (the neighbour or boundary / exterior trace)
  *
  * The class is designed for cell-centric DG formulations and
  * supports flux computation across cell interfaces.
@@ -127,16 +127,16 @@ private:
         /** Owner patch IDs for each face */
         List<label> ownerPatchIDs_;
 
-        /** Face normal vectors at Gauss points */
+        /** Cell-local outward face normals */
         List<vector> n_;
 
         /** Face areas */
         List<scalar> faceAreas_;
 
-        /** Values on plus (neighbour) side */
+        /** Values on plus (exterior) side */
         List<Type> plusValues_;
 
-        /** Values on minus (owner) side */
+        /** Values on minus (cell-local interior) side */
         List<Type> minusValues_;
 
         /** Flux vectors at Gauss points */
