@@ -28,8 +28,11 @@ License
 
 #include "dgLimiter.H"
 #include "addToRunTimeSelectionTable.H"
+#include "IOobject.H"
+#include "dimensionedType.H"
 #include "DynamicList.H"
 #include "error.H"
+#include "volFields.H"
 
 namespace Foam
 {
@@ -147,6 +150,7 @@ void dgLimiter::limitCell
 void dgLimiter::preCorrect()
 {
     limitedCellIDs_.clear();
+    resetLimitedCellIndicator();
 }
 
 
@@ -159,6 +163,40 @@ void dgLimiter::postCorrect()
 void dgLimiter::cacheLimitedCell(const label cellID)
 {
     limitedCellIDs_.append(cellID);
+    setLimitedCellIndicator(cellID, true);
+}
+
+
+void dgLimiter::setLimitedCellIndicator
+(
+    const label cellID,
+    const bool limited
+) const
+{
+    if (!report_ || !limitedCellFieldPtr_.valid())
+    {
+        return;
+    }
+
+    limitedCellFieldPtr_().primitiveFieldRef()[cellID] =
+        limited ? scalar(1) : scalar(0);
+}
+
+
+void dgLimiter::resetLimitedCellIndicator() const
+{
+    if (!report_ || !limitedCellFieldPtr_.valid())
+    {
+        return;
+    }
+
+    auto& indicator = limitedCellFieldPtr_();
+    indicator.primitiveFieldRef() = Zero;
+
+    forAll(indicator.boundaryFieldRef(), patchI)
+    {
+        indicator.boundaryFieldRef()[patchI] = Zero;
+    }
 }
 
 
@@ -246,10 +284,34 @@ dgLimiter::dgLimiter
     detector_(nullptr),
     dict_(dict),
     mesh_(mesh),
-    nLimitedCells_(0)
+    nLimitedCells_(0),
+    report_(dict.lookupOrDefault<bool>("report", false)),
+    limitedCellFieldPtr_(nullptr)
 {
     initializeLimitedFields();
     initializeDetector();
+
+    if (report_)
+    {
+        limitedCellFieldPtr_.reset
+        (
+            new volScalarField
+            (
+                IOobject
+                (
+                    "limitedCell",
+                    mesh_.getFvMesh().time().timeName(),
+                    mesh_.getFvMesh(),
+                    IOobject::NO_READ,
+                    IOobject::AUTO_WRITE
+                ),
+                mesh_.getFvMesh(),
+                dimensionedScalar("zero", dimless, Zero)
+            )
+        );
+
+        resetLimitedCellIndicator();
+    }
 }
 
 
@@ -288,9 +350,33 @@ void dgLimiter::read(const dictionary& dict)
     limitedFields_.clear();
     detector_.clear();
     nLimitedCells_ = 0;
+    report_ = dict.lookupOrDefault<bool>("report", false);
+    limitedCellFieldPtr_.clear();
 
     initializeLimitedFields();
     initializeDetector();
+
+    if (report_)
+    {
+        limitedCellFieldPtr_.reset
+        (
+            new volScalarField
+            (
+                IOobject
+                (
+                    "limitedCell",
+                    mesh_.getFvMesh().time().timeName(),
+                    mesh_.getFvMesh(),
+                    IOobject::NO_READ,
+                    IOobject::AUTO_WRITE
+                ),
+                mesh_.getFvMesh(),
+                dimensionedScalar("zero", dimless, Zero)
+            )
+        );
+
+        resetLimitedCellIndicator();
+    }
 }
 
 

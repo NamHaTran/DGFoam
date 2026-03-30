@@ -126,7 +126,6 @@ public:
         Type& plusValue
     ) const override
     {
-        //plusValue = 2 * value_ - minusValue;
         plusValue = value_;
     }
 

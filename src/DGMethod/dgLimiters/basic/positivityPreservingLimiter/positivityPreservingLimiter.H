@@ -36,6 +36,7 @@ Description
 #define Foam_positivityPreservingLimiter_H
 
 #include "dgLimiter.H"
+#include "volFieldsFwd.H"
 
 namespace Foam
 {
@@ -86,6 +87,15 @@ class positivityPreservingLimiter
 
         /** Cell-local theta2 cached during correct(). */
         scalar theta2_;
+
+        /** Flag enabling runtime output of cell-wise theta coefficients. */
+        bool writeTheta_;
+
+        /** Optional runtime field storing the cell-wise theta1 coefficient. */
+        mutable autoPtr<volScalarField> theta1FieldPtr_;
+
+        /** Optional runtime field storing the cell-wise theta2 coefficient. */
+        mutable autoPtr<volScalarField> theta2FieldPtr_;
 
         /** \brief Resolve density, momentum, and energy fields from the limiter setup. */
         void initializeConservativeFields();
@@ -153,6 +163,17 @@ class positivityPreservingLimiter
             const scalar theta
         ) const;
 
+        /** \brief Reset theta output fields to 1 on all cells. */
+        void resetThetaFields() const;
+
+        /** \brief Store one cell-local theta pair into the runtime fields. */
+        void setThetaFields
+        (
+            const label cellID,
+            const scalar theta1,
+            const scalar theta2
+        ) const;
+
 protected:
 
         /** \brief Report limiter usage after one correct() pass. */
@@ -186,6 +207,7 @@ public:
      * momentum rhoU;
      * energy   E;
      * tolerance 1e-8;
+     * writeTheta false;
      * \endverbatim
      *
      * Unlike detector-based limiters, this limiter may omit the base-class

@@ -139,7 +139,7 @@ public:
 
         if (dotProd < 0) // Inlet: flow into domain
         {
-            plusValue = 2 * inletValue_ - minusValue;
+            plusValue = inletValue_;
         }
         else // Outlet: flow out of domain
         {

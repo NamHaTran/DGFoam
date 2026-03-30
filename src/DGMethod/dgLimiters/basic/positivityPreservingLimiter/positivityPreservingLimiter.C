@@ -27,12 +27,15 @@ License
 \*---------------------------------------------------------------------------*/
 
 #include "positivityPreservingLimiter.H"
+#include "IOobject.H"
 #include "IOstreams.H"
 #include "PstreamReduceOps.H"
 #include "addToRunTimeSelectionTable.H"
+#include "dimensionedType.H"
 #include "DynamicList.H"
 #include "error.H"
 #include "dgMath.H"
+#include "volFields.H"
 
 namespace Foam
 {
@@ -470,6 +473,61 @@ void positivityPreservingLimiter::scaleHighOrderModes
 }
 
 
+void positivityPreservingLimiter::resetThetaFields() const
+{
+    if (!writeTheta_)
+    {
+        return;
+    }
+
+    if (theta1FieldPtr_.valid())
+    {
+        auto& theta1Field = theta1FieldPtr_();
+        theta1Field.primitiveFieldRef() = scalar(1);
+
+        forAll(theta1Field.boundaryFieldRef(), patchI)
+        {
+            theta1Field.boundaryFieldRef()[patchI] = scalar(1);
+        }
+    }
+
+    if (theta2FieldPtr_.valid())
+    {
+        auto& theta2Field = theta2FieldPtr_();
+        theta2Field.primitiveFieldRef() = scalar(1);
+
+        forAll(theta2Field.boundaryFieldRef(), patchI)
+        {
+            theta2Field.boundaryFieldRef()[patchI] = scalar(1);
+        }
+    }
+}
+
+
+void positivityPreservingLimiter::setThetaFields
+(
+    const label cellID,
+    const scalar theta1,
+    const scalar theta2
+) const
+{
+    if (!writeTheta_)
+    {
+        return;
+    }
+
+    if (theta1FieldPtr_.valid())
+    {
+        theta1FieldPtr_().primitiveFieldRef()[cellID] = theta1;
+    }
+
+    if (theta2FieldPtr_.valid())
+    {
+        theta2FieldPtr_().primitiveFieldRef()[cellID] = theta2;
+    }
+}
+
+
 void positivityPreservingLimiter::postCorrect()
 {
     dgLimiter::postCorrect();
@@ -521,9 +579,51 @@ positivityPreservingLimiter::positivityPreservingLimiter
     energyFieldPtr_(nullptr),
     epsilon_(dict.lookupOrDefault<scalar>("tolerance", 1.0e-8)),
     theta1_(1.0),
-    theta2_(1.0)
+    theta2_(1.0),
+    writeTheta_(dict.lookupOrDefault<bool>("writeTheta", false)),
+    theta1FieldPtr_(nullptr),
+    theta2FieldPtr_(nullptr)
 {
     initializeConservativeFields();
+
+    if (writeTheta_)
+    {
+        theta1FieldPtr_.reset
+        (
+            new volScalarField
+            (
+                IOobject
+                (
+                    "theta1",
+                    mesh_.getFvMesh().time().timeName(),
+                    mesh_.getFvMesh(),
+                    IOobject::NO_READ,
+                    IOobject::AUTO_WRITE
+                ),
+                mesh_.getFvMesh(),
+                dimensionedScalar("one", dimless, scalar(1))
+            )
+        );
+
+        theta2FieldPtr_.reset
+        (
+            new volScalarField
+            (
+                IOobject
+                (
+                    "theta2",
+                    mesh_.getFvMesh().time().timeName(),
+                    mesh_.getFvMesh(),
+                    IOobject::NO_READ,
+                    IOobject::AUTO_WRITE
+                ),
+                mesh_.getFvMesh(),
+                dimensionedScalar("one", dimless, scalar(1))
+            )
+        );
+
+        resetThetaFields();
+    }
 }
 
 
@@ -533,13 +633,56 @@ void positivityPreservingLimiter::read(const dictionary& dict)
     epsilon_ = dict.lookupOrDefault<scalar>("tolerance", 1.0e-8);
     theta1_ = 1.0;
     theta2_ = 1.0;
+    writeTheta_ = dict.lookupOrDefault<bool>("writeTheta", false);
+    theta1FieldPtr_.clear();
+    theta2FieldPtr_.clear();
     initializeConservativeFields();
+
+    if (writeTheta_)
+    {
+        theta1FieldPtr_.reset
+        (
+            new volScalarField
+            (
+                IOobject
+                (
+                    "theta1",
+                    mesh_.getFvMesh().time().timeName(),
+                    mesh_.getFvMesh(),
+                    IOobject::NO_READ,
+                    IOobject::AUTO_WRITE
+                ),
+                mesh_.getFvMesh(),
+                dimensionedScalar("one", dimless, scalar(1))
+            )
+        );
+
+        theta2FieldPtr_.reset
+        (
+            new volScalarField
+            (
+                IOobject
+                (
+                    "theta2",
+                    mesh_.getFvMesh().time().timeName(),
+                    mesh_.getFvMesh(),
+                    IOobject::NO_READ,
+                    IOobject::AUTO_WRITE
+                ),
+                mesh_.getFvMesh(),
+                dimensionedScalar("one", dimless, scalar(1))
+            )
+        );
+
+        resetThetaFields();
+    }
 }
 
 
 void positivityPreservingLimiter::correct()
 {
     preCorrect();
+    resetThetaFields();
 
     nLimitedCells_ = 0;
 
@@ -551,6 +694,7 @@ void positivityPreservingLimiter::correct()
     for (label cellID = 0; cellID < mesh_.nCells(); ++cellID)
     {
         computeThetaCoeffs(cellID, theta1_, theta2_);
+        setThetaFields(cellID, theta1_, theta2_);
 
         const scalar densityTheta = theta1_*theta2_;
         const scalar otherTheta = theta2_;

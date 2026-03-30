@@ -45,6 +45,7 @@ SourceFiles
 #include "dgGeomMesh.H"
 #include "troubleCellDetector.H"
 #include "DynamicList.H"
+#include "volFieldsFwd.H"
 
 namespace Foam
 {
@@ -93,6 +94,12 @@ protected:
         /** Cells limited in the current correct() pass, in visitation order. */
         DynamicList<label> limitedCellIDs_;
 
+        /** Flag enabling limited-cell reporting to a volume indicator field. */
+        bool report_;
+
+        /** Optional cell-wise 0/1 scalar field marking cells limited by this limiter. */
+        mutable autoPtr<volScalarField> limitedCellFieldPtr_;
+
         /** \brief Build the resolved field list from the \c fields entry. */
         void initializeLimitedFields();
 
@@ -110,6 +117,12 @@ protected:
 
         /** \brief Cache one limited cell for deferred Gauss reconstruction. */
         void cacheLimitedCell(const label cellID);
+
+        /** \brief Set one cell entry in the limited-cell indicator field. */
+        void setLimitedCellIndicator(const label cellID, const bool limited) const;
+
+        /** \brief Reset the limited-cell indicator field to zero on all cells. */
+        void resetLimitedCellIndicator() const;
 
         /** \brief Rebuild Gauss values on limited cells and their neighbours. */
         void rebuildLimitedCellGaussFields();
@@ -150,6 +163,7 @@ public:
      * \verbatim
      * type     <limiterType>;
      * fields   (<field1> <field2> ...);
+     * report   false;
      * \endverbatim
      *
      * Most limiters also require
@@ -229,6 +243,12 @@ public:
     inline label nLimitedCells() const
     {
         return nLimitedCells_;
+    }
+
+    /** \brief Return true when limited-cell reporting is enabled. */
+    inline bool report() const
+    {
+        return report_;
     }
 };
 
