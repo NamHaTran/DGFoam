@@ -305,13 +305,108 @@ public:
         /** Return the mass matrix for the cell */
         inline Foam::SquareMatrix<scalar> massMatrix() const
         {
-            return refCell_->massMatrix()*J3D_[0]; // Scale by Jacobian at first Gauss point (constant for affine cells)
+            const label nDof = refCell_->nDof();
+            Foam::SquareMatrix<scalar> M(nDof, Zero);
+
+            const List<vector>& gaussPts = refCell_->gaussPoints();
+            const List<scalar>& w = refCell_->weights();
+            const List<List<scalar>>& b = refCell_->basis();
+
+            for (label gp = 0; gp < gaussPts.size(); ++gp)
+            {
+                scalar refJacobian = 1.0;
+
+                switch (type_)
+                {
+                    case dgCellType::HEX:
+                        break;
+
+                    case dgCellType::PRISM:
+                        refJacobian =
+                            referenceJacobian::prismRefToHexRef(gaussPts[gp]);
+                        break;
+
+                    case dgCellType::PYRAMID:
+                        refJacobian =
+                            referenceJacobian::pyramidRefToHexRef(gaussPts[gp]);
+                        break;
+
+                    case dgCellType::TET:
+                        refJacobian =
+                            referenceJacobian::tetRefToHexRef(gaussPts[gp]);
+                        break;
+
+                    default:
+                        FatalErrorInFunction
+                            << "Unsupported cell type for mass matrix calculation: "
+                            << type_ << nl
+                            << abort(FatalError);
+                }
+
+                const scalar quadWeight = w[gp]*J3D_[gp]*refJacobian;
+
+                for (label i = 0; i < nDof; ++i)
+                {
+                    for (label j = 0; j < nDof; ++j)
+                    {
+                        M(i, j) += b[gp][i]*b[gp][j]*quadWeight;
+                    }
+                }
+            }
+
+            return M;
         }
 
         /** Return the diagonal of the mass matrix for the cell */
         inline List<scalar> massMatrixDiag() const
         {
-            return refCell_->massMatrixDiag()*J3D_[0];
+            const label nDof = refCell_->nDof();
+            List<scalar> diag(nDof, Zero);
+
+            const List<vector>& gaussPts = refCell_->gaussPoints();
+            const List<scalar>& w = refCell_->weights();
+            const List<List<scalar>>& b = refCell_->basis();
+
+            for (label gp = 0; gp < gaussPts.size(); ++gp)
+            {
+                scalar refJacobian = 1.0;
+
+                switch (type_)
+                {
+                    case dgCellType::HEX:
+                        break;
+
+                    case dgCellType::PRISM:
+                        refJacobian =
+                            referenceJacobian::prismRefToHexRef(gaussPts[gp]);
+                        break;
+
+                    case dgCellType::PYRAMID:
+                        refJacobian =
+                            referenceJacobian::pyramidRefToHexRef(gaussPts[gp]);
+                        break;
+
+                    case dgCellType::TET:
+                        refJacobian =
+                            referenceJacobian::tetRefToHexRef(gaussPts[gp]);
+                        break;
+
+                    default:
+                        FatalErrorInFunction
+                            << "Unsupported cell type for mass matrix diagonal calculation: "
+                            << type_ << nl
+                            << abort(FatalError);
+                }
+
+                const scalar quadWeight = w[gp]*J3D_[gp]*refJacobian;
+
+                for (label i = 0; i < nDof; ++i)
+                {
+                    diag[i] += b[gp][i]*b[gp][i]*quadWeight;
+                }
+            }
+
+            return diag;
         }
 
     //====================================================================//

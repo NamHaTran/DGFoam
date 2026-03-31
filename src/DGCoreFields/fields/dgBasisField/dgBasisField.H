@@ -43,6 +43,7 @@ SourceFiles
 
 #include "GaussField.H"
 #include "dgGeomMesh.H"
+#include "Jacobian.H"
 
 namespace Foam
 {

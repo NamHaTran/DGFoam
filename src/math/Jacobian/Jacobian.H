@@ -517,6 +517,49 @@ inline Foam::tensor TetraJacobian
 }
 
 /**
+ * \brief Compute the Jacobian tensor at a given interior Gauss point
+ *
+ * \param cellType Cell type
+ * \param gaussPt Gauss point in reference space (eta)
+ * \param cellVertices Physical coordinates of cell vertices
+ */
+inline Foam::tensor calcJacobianTensorAtInteriorGaussPt
+(
+    dgCellType cellType,
+    const vector& gaussPt,
+    const List<vector>& cellVertices
+)
+{
+    Foam::tensor J(Zero);
+
+    switch (cellType)
+    {
+        case dgCellType::HEX:
+            J = HexJacobian(gaussPt, cellVertices);
+            break;
+
+        case dgCellType::PRISM:
+            J = PrismJacobian(gaussPt, cellVertices);
+            break;
+
+        case dgCellType::PYRAMID:
+            J = PyramidJacobian(gaussPt, cellVertices);
+            break;
+
+        case dgCellType::TET:
+            J = TetraJacobian(gaussPt, cellVertices);
+            break;
+
+        default:
+            FatalErrorInFunction
+                << "Unsupported cell type for 3D Jacobian calculation: "
+                << static_cast<int>(cellType) << abort(FatalError);
+    }
+
+    return J;
+}
+
+/**
  * \brief Compute the determinant of the Jacobian tensor at a given interior Gauss point
  *
  * \param cellType Cell type
@@ -530,37 +573,8 @@ inline Foam::scalar calcJacobianDetAtInteriorGaussPt
     const List<vector>& cellVertices   // Physical coordinates of tetrahedron vertices
 )
 {
-    Foam::tensor J(Zero);
-    //Foam::scalar JDuffy; // Jacobian determinant from Duffy transformation
-
-    switch (cellType)
-    {
-        case dgCellType::HEX:
-            J = HexJacobian(gaussPt, cellVertices);
-            //JDuffy = 1.0; // No Duffy transformation for hex
-            break;
-
-        case dgCellType::PRISM:
-            J = PrismJacobian(gaussPt, cellVertices);
-            //JDuffy = Foam::referenceJacobian::prismRefToHexRef(gaussPt);
-            break;
-
-        case dgCellType::PYRAMID:
-            J = PyramidJacobian(gaussPt, cellVertices);
-            //JDuffy = Foam::referenceJacobian::pyramidRefToHexRef(gaussPt);
-            break;
-
-        case dgCellType::TET:
-            J = TetraJacobian(gaussPt, cellVertices);
-            //JDuffy = Foam::referenceJacobian::tetRefToHexRef(gaussPt);
-            break;
-
-        default:
-            FatalErrorInFunction
-                << "Unsupported cell type for 3D Jacobian calculation: "
-                << static_cast<int>(cellType) << abort(FatalError);
-    }
-
+    const Foam::tensor J =
+        calcJacobianTensorAtInteriorGaussPt(cellType, gaussPt, cellVertices);
     return mag(det(J));
 }
 

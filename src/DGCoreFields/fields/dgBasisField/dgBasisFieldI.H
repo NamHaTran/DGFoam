@@ -110,6 +110,7 @@ inline void dgBasisField::computeBasisField()
 inline void dgBasisField::computeDBasisField()
 {
     const dgGeomCell& cell = *mesh_.cells()[cellID_];
+    const List<vector>& cellPoints = cell.points();
 
     const auto& dB1 = cell.dBasis_dEta1();
     const auto& dB2 = cell.dBasis_dEta2();
@@ -125,7 +126,16 @@ inline void dgBasisField::computeDBasisField()
         // ---- CELL GAUSS POINTS ---- //
         for (label g = 0; g < cell.nGauss(); ++g)
         {
-            dPhi.cellValueAt(g) = vector(dB1[g][dof], dB2[g][dof], dB3[g][dof]);
+            const vector gradEta(dB1[g][dof], dB2[g][dof], dB3[g][dof]);
+            const tensor J =
+                geometricJacobian::calcJacobianTensorAtInteriorGaussPt
+                (
+                    cell.type(),
+                    cell.gaussPoints()[g],
+                    cellPoints
+                );
+
+            dPhi.cellValueAt(g) = T(inv(J)) & gradEta;
         }
 
         // ---- FACE GAUSS POINTS ---- //
@@ -209,4 +219,3 @@ dgBasisField::getDBasis(const label dof) const
 #endif
 
 // ************************************************************************* //
-
