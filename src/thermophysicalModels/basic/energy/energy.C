@@ -85,6 +85,105 @@ autoPtr<energy> energy::New(const word& name, const dictionary& dict, const dgGe
     return cstrIter()(name, dict, mesh, thermo);
 }
 
+
+void energy::calcEnthalpy
+(
+    const label,
+    const GaussField<scalar>& T,
+    GaussField<scalar>& h
+) const
+{
+    for (label gpI = 0; gpI < T.cellField().size(); ++gpI)
+    {
+        h.cellField()[gpI] = calcEnthalpy(T.cellField()[gpI]);
+    }
+
+    for (label gpI = 0; gpI < T.faceField().nGauss(); ++gpI)
+    {
+        h.faceField().minusValueAt(gpI) = calcEnthalpy(T.faceField().minusValue(gpI));
+        h.faceField().plusValueAt(gpI) = calcEnthalpy(T.faceField().plusValue(gpI));
+    }
+}
+
+
+void energy::calcEnthalpy
+(
+    const boundaryGaussField<scalar>& T,
+    boundaryGaussField<scalar>& h
+) const
+{
+    for (label gpI = 0; gpI < T.size(); ++gpI)
+    {
+        h[gpI] = calcEnthalpy(T[gpI]);
+    }
+}
+
+
+void energy::calcHe
+(
+    const label,
+    const GaussField<scalar>& T,
+    GaussField<scalar>& he
+) const
+{
+    for (label gpI = 0; gpI < T.cellField().size(); ++gpI)
+    {
+        he.cellField()[gpI] = calcHe(T.cellField()[gpI]);
+    }
+
+    for (label gpI = 0; gpI < T.faceField().nGauss(); ++gpI)
+    {
+        he.faceField().minusValueAt(gpI) = calcHe(T.faceField().minusValue(gpI));
+        he.faceField().plusValueAt(gpI) = calcHe(T.faceField().plusValue(gpI));
+    }
+}
+
+
+void energy::calcHe
+(
+    const boundaryGaussField<scalar>& T,
+    boundaryGaussField<scalar>& he
+) const
+{
+    for (label gpI = 0; gpI < T.size(); ++gpI)
+    {
+        he[gpI] = calcHe(T[gpI]);
+    }
+}
+
+
+void energy::calcTfromHe
+(
+    const label,
+    const GaussField<scalar>& he,
+    GaussField<scalar>& T
+) const
+{
+    for (label gpI = 0; gpI < he.cellField().size(); ++gpI)
+    {
+        T.cellField()[gpI] = calcTfromHe(he.cellField()[gpI]);
+    }
+
+    for (label gpI = 0; gpI < he.faceField().nGauss(); ++gpI)
+    {
+        T.faceField().minusValueAt(gpI) = calcTfromHe(he.faceField().minusValue(gpI));
+        T.faceField().plusValueAt(gpI) = calcTfromHe(he.faceField().plusValue(gpI));
+    }
+}
+
+
+void energy::calcTfromHe
+(
+    const boundaryGaussField<scalar>& he,
+    boundaryGaussField<scalar>& T
+) const
+{
+    for (label gpI = 0; gpI < he.size(); ++gpI)
+    {
+        T[gpI] = calcTfromHe(he[gpI]);
+    }
+}
+
 } // namespace Foam
 
 // ************************************************************************* //

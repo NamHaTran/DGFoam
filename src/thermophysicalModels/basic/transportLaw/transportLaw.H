@@ -168,7 +168,17 @@ public:
         );
 
     //====================================================================//
-    //                         Transport evaluation
+    //                  Transport evaluation (pointwise)
+    //====================================================================//
+
+        virtual scalar calcMu(const scalar T) const = 0;
+
+        virtual scalar calcKappa(const scalar T) const = 0;
+
+        virtual scalar calcPr(const scalar T) const = 0;
+
+    //====================================================================//
+    //                   Transport evaluation (wrappers)
     //====================================================================//
 
         /**
@@ -183,13 +193,13 @@ public:
             const label cellI,
             const GaussField<scalar>& T,
             GaussField<scalar>& mu
-        ) const = 0;
+        ) const;
 
         virtual void calcMu
         (
             const boundaryGaussField<scalar>& T,
             boundaryGaussField<scalar>& mu
-        ) const = 0;
+        ) const;
 
         /**
          * \brief Compute thermal conductivity
@@ -203,13 +213,13 @@ public:
             const label cellI,
             const GaussField<scalar>& T,
             GaussField<scalar>& kappa
-        ) const = 0;
+        ) const;
 
         virtual void calcKappa
         (
             const boundaryGaussField<scalar>& T,
             boundaryGaussField<scalar>& kappa
-        ) const = 0;
+        ) const;
 
         /**
          * \brief Compute Prandtl number
@@ -223,13 +233,13 @@ public:
             const label cellI,
             const GaussField<scalar>& T,
             GaussField<scalar>& Pr
-        ) const = 0;
+        ) const;
 
         virtual void calcPr
         (
             const boundaryGaussField<scalar>& T,
             boundaryGaussField<scalar>& Pr
-        ) const = 0;
+        ) const;
 
     //====================================================================//
     //                               I/O

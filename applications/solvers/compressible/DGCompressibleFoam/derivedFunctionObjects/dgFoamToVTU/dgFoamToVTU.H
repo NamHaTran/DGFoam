@@ -28,7 +28,7 @@ Class
     Foam::dgFunctionObjects::dgFoamToVTU
 
 Description
-    Export DGHyperSonicFoam solution samples to VTU for ParaView.
+    Export DGCompressibleFoam solution samples to VTU for ParaView.
 
     The function object samples the conservative DG fields \c rho,
     \c rhoU, and \c E at a denser set of reference-space points inside
@@ -37,7 +37,7 @@ Description
 
     The current implementation is intentionally solver-specific:
     - it assumes the fields and thermo object created by
-      \c DGHyperSonicFoam are present in the region database,
+      \c DGCompressibleFoam are present in the region database,
     - it reads the interpolation density from dictionary entry \c n,
     - it currently supports the thermo chain
       \c idealGas + \c constantCp + \c sensibleInternalEnergy.
@@ -87,7 +87,7 @@ namespace dgFunctionObjects
 
 /**
  * \class Foam::dgFunctionObjects::dgFoamToVTU
- * \brief Sample DGHyperSonicFoam conservative fields and write VTU output
+ * \brief Sample DGCompressibleFoam conservative fields and write VTU output
  *
  * \details
  * dgFoamToVTU is a lightweight \c functionObject that piggybacks on the

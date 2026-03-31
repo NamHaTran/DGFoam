@@ -177,6 +177,12 @@ public:
 
     // * * * * * * * * * * * * Member Functions * * * * * * * * * * * * //
 
+    virtual scalar calcEnthalpy(const scalar T) const = 0;
+
+    virtual scalar calcHe(const scalar T) const = 0;
+
+    virtual scalar calcTfromHe(const scalar he) const = 0;
+
     /**
      * \brief Compute enthalpy from temperature
      *
@@ -192,7 +198,7 @@ public:
         const label cellI,
         const GaussField<scalar>& T,
         GaussField<scalar>& h
-    ) const = 0;
+    ) const;
 
     /**
      * \brief Compute enthalpy from boundary Gauss-point temperatures
@@ -204,7 +210,7 @@ public:
     (
         const boundaryGaussField<scalar>& T,
         boundaryGaussField<scalar>& h
-    ) const = 0;
+    ) const;
 
     /**
      * \brief Compute the stored thermodynamic energy variable he
@@ -218,7 +224,7 @@ public:
         const label cellI,
         const GaussField<scalar>& T,
         GaussField<scalar>& he
-    ) const = 0;
+    ) const;
 
     /**
      * \brief Compute the stored thermodynamic energy variable on boundary
@@ -231,7 +237,7 @@ public:
     (
         const boundaryGaussField<scalar>& T,
         boundaryGaussField<scalar>& he
-    ) const = 0;
+    ) const;
 
     /**
      * \brief Compute temperature from the stored energy variable he
@@ -245,7 +251,7 @@ public:
         const label cellI,
         const GaussField<scalar>& he,
         GaussField<scalar>& T
-    ) const = 0;
+    ) const;
 
     /**
      * \brief Compute temperature from boundary stored-energy values
@@ -257,7 +263,7 @@ public:
     (
         const boundaryGaussField<scalar>& he,
         boundaryGaussField<scalar>& T
-    ) const = 0;
+    ) const;
 
     // Generic he interface
 

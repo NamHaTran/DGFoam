@@ -62,12 +62,7 @@ Sutherland::Sutherland
 
 // * * * * * * * * * * * * Member Functions * * * * * * * * * * * * //
 
-void Sutherland::calcMu
-(
-    const label cellI,
-    const GaussField<scalar>& T,
-    GaussField<scalar>& mu
-) const
+Foam::scalar Sutherland::calcMu(const scalar T) const
 {
     // Guard: T must be positive
     if (T <= scalar(0))
@@ -77,98 +72,19 @@ void Sutherland::calcMu
             << nl << exit(FatalError);
     }
 
-    // denom = T + S
-    tmp<GaussField<scalar>> tDenom = T + S_;
-
-    // T^(3/2)
-    tmp<GaussField<scalar>> tT32 = pow(T, scalar(1.5));
-
-    // μ = As * T^(3/2) / (T + S)
-    mu = (As_ * tT32()) / tDenom();
-
-    tDenom.clear();
-    tT32.clear();
+    return As_ * std::pow(T, 1.5)/(T + S_);
 }
 
 
-void Sutherland::calcMu
-(
-    const boundaryGaussField<scalar>& T,
-    boundaryGaussField<scalar>& mu
-) const
+Foam::scalar Sutherland::calcKappa(const scalar T) const
 {
-    for (label i = 0; i < T.size(); ++i)
-    {
-        if (T[i] <= scalar(0))
-        {
-            FatalErrorInFunction
-                << "Non-positive temperature in Sutherland::calcMu()"
-                << nl << exit(FatalError);
-        }
-
-        mu[i] = As_ * std::pow(T[i], 1.5)/(T[i] + S_);
-    }
+    return calcMu(T)*thermo_.calcCp(T)/Pr0_;
 }
 
 
-void Sutherland::calcKappa
-(
-    const label cellI,
-    const GaussField<scalar>& T,
-    GaussField<scalar>& kappa
-) const
+Foam::scalar Sutherland::calcPr(const scalar) const
 {
-    // μ
-    tmp<GaussField<scalar>> tMu = GaussField<scalar>::New(cellI, &mesh_);
-    calcMu(cellI, T, tMu.ref());
-
-    // Cp
-    tmp<GaussField<scalar>> tCp = GaussField<scalar>::New(cellI, &mesh_);
-    thermo_.calcCp(cellI, T, tCp.ref());
-
-    // κ = μ Cp / Pr
-    const scalar Pr = Pr0_;
-    kappa = (tMu() * tCp()) / Pr;
-
-    tMu.clear();
-    tCp.clear();
-}
-
-
-void Sutherland::calcKappa
-(
-    const boundaryGaussField<scalar>& T,
-    boundaryGaussField<scalar>& kappa
-) const
-{
-    boundaryGaussField<scalar> mu(T.size());
-    boundaryGaussField<scalar> Cp(T.size());
-
-    calcMu(T, mu);
-    thermo_.calcCp(T, Cp);
-
-    kappa = (mu * Cp) / Pr0_;
-}
-
-
-void Sutherland::calcPr
-(
-    const label cellI,
-    const GaussField<scalar>& T,
-    GaussField<scalar>& Pr
-) const
-{
-    Pr = Pr0_;
-}
-
-
-void Sutherland::calcPr
-(
-    const boundaryGaussField<scalar>& T,
-    boundaryGaussField<scalar>& Pr
-) const
-{
-    Pr = Pr0_;
+    return Pr0_;
 }
 
 

@@ -61,7 +61,7 @@ Description
 // DG libs (must have)
 #include "dgField.H"
 #include "dgMath.H"
-#include "dgGeneralBoundaryManager.H"
+#include "dgCompressibleBoundaryManager.H"
 #include "dgFluxSolverManager.H"
 #include "dgLimiterManager.H"
 #include "dgTimeDiscretization.H"

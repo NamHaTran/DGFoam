@@ -91,6 +91,10 @@ public:
     //- Runtime type information
     TypeName("idealGas");
 
+    using eqnOfState::calcRhoFromPT;
+    using eqnOfState::calcPFromRhoT;
+    using eqnOfState::calcTFromPRho;
+
     //- Runtime selection table
     declareRunTimeSelectionTable
     (
@@ -137,27 +141,10 @@ public:
     //        Ideal-gas thermodynamic relations
     //==============================================================//
 
-    /**
-     * \brief Compute density from pressure and temperature
-     *
-     * Computes:
-     * \f[
-     *   \rho = \frac{p}{R T}
-     * \f]
-     */
-    virtual void calcRhoFromPT
+    virtual scalar calcRhoFromPT
     (
-        const label cellI,
-        const GaussField<scalar>& p,
-        const GaussField<scalar>& T,
-        GaussField<scalar>& rho
-    ) const override;
-
-    virtual void calcRhoFromPT
-    (
-        const boundaryGaussField<scalar>& p,
-        const boundaryGaussField<scalar>& T,
-        boundaryGaussField<scalar>& rho
+        const scalar p,
+        const scalar T
     ) const override;
 
     /**
@@ -168,19 +155,10 @@ public:
      *   p = \rho R T
      * \f]
      */
-    virtual void calcPFromRhoT
+    virtual scalar calcPFromRhoT
     (
-        const label cellI,
-        const GaussField<scalar>& rho,
-        const GaussField<scalar>& T,
-        GaussField<scalar>& p
-    ) const override;
-
-    virtual void calcPFromRhoT
-    (
-        const boundaryGaussField<scalar>& rho,
-        const boundaryGaussField<scalar>& T,
-        boundaryGaussField<scalar>& p
+        const scalar rho,
+        const scalar T
     ) const override;
 
     /**
@@ -191,19 +169,10 @@ public:
      *   T = \frac{p}{\rho R}
      * \f]
      */
-    virtual void calcTFromPRho
+    virtual scalar calcTFromPRho
     (
-        const label cellI,
-        const GaussField<scalar>& p,
-        const GaussField<scalar>& rho,
-        GaussField<scalar>& T
-    ) const override;
-
-    virtual void calcTFromPRho
-    (
-        const boundaryGaussField<scalar>& p,
-        const boundaryGaussField<scalar>& rho,
-        boundaryGaussField<scalar>& T
+        const scalar p,
+        const scalar rho
     ) const override;
 
     //==============================================================//

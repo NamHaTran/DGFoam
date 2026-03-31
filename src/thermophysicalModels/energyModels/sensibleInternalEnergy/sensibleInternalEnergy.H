@@ -94,6 +94,10 @@ public:
     //- Runtime type information
     TypeName("sensibleInternalEnergy");
 
+    using energy::calcEnthalpy;
+    using energy::calcHe;
+    using energy::calcTfromHe;
+
     /**
      * \brief Construct from dictionary
      *
@@ -124,18 +128,7 @@ public:
      * \param T     Temperature field at Gauss points
      * \param h     Enthalpy field to be written
      */
-    virtual void calcEnthalpy
-    (
-        const label cellI,
-        const GaussField<scalar>& T,
-        GaussField<scalar>& h
-    ) const override;
-
-    virtual void calcEnthalpy
-    (
-        const boundaryGaussField<scalar>& T,
-        boundaryGaussField<scalar>& h
-    ) const override;
+    virtual scalar calcEnthalpy(const scalar T) const override;
 
     /**
      * \brief Compute the stored energy variable he from temperature
@@ -149,18 +142,7 @@ public:
      * \param T     Temperature field at Gauss points
      * \param he    Stored energy field to be written
      */
-    virtual void calcHe
-    (
-        const label cellI,
-        const GaussField<scalar>& T,
-        GaussField<scalar>& he
-    ) const override;
-
-    virtual void calcHe
-    (
-        const boundaryGaussField<scalar>& T,
-        boundaryGaussField<scalar>& he
-    ) const override;
+    virtual scalar calcHe(const scalar T) const override;
 
     /**
      * \brief Compute temperature from the stored energy variable he
@@ -174,18 +156,7 @@ public:
      * \param he    Stored energy field at Gauss points
      * \param T     Temperature field to be written
      */
-    virtual void calcTfromHe
-    (
-        const label cellI,
-        const GaussField<scalar>& he,
-        GaussField<scalar>& T
-    ) const override;
-
-    virtual void calcTfromHe
-    (
-        const boundaryGaussField<scalar>& he,
-        boundaryGaussField<scalar>& T
-    ) const override;
+    virtual scalar calcTfromHe(const scalar he) const override;
 };
 
 } // End namespace Foam

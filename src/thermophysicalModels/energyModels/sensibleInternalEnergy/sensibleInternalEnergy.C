@@ -55,70 +55,21 @@ Foam::sensibleInternalEnergy::sensibleInternalEnergy
 
 // * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * * * //
 
-void Foam::sensibleInternalEnergy::calcEnthalpy
-(
-    const label cellI,
-    const GaussField<scalar>& T,
-    GaussField<scalar>& h
-) const
+Foam::scalar Foam::sensibleInternalEnergy::calcEnthalpy(const scalar T) const
 {
-    // Use thermoLaw to compute:
-    //     h = h(T)
-    thermo_.calcH(cellI, T, h);
+    return thermo_.calcH(T);
 }
 
 
-void Foam::sensibleInternalEnergy::calcEnthalpy
-(
-    const boundaryGaussField<scalar>& T,
-    boundaryGaussField<scalar>& h
-) const
+Foam::scalar Foam::sensibleInternalEnergy::calcHe(const scalar T) const
 {
-    thermo_.calcH(T, h);
+    return thermo_.calcInternalE(T);
 }
 
 
-void Foam::sensibleInternalEnergy::calcHe
-(
-    const label cellI,
-    const GaussField<scalar>& T,
-    GaussField<scalar>& he
-) const
+Foam::scalar Foam::sensibleInternalEnergy::calcTfromHe(const scalar he) const
 {
-    // Use thermoLaw to compute:
-    //     e = e(T)
-    thermo_.calcInternalE(cellI, T, he);
-}
-
-
-void Foam::sensibleInternalEnergy::calcHe
-(
-    const boundaryGaussField<scalar>& T,
-    boundaryGaussField<scalar>& he
-) const
-{
-    thermo_.calcInternalE(T, he);
-}
-
-
-void Foam::sensibleInternalEnergy::calcTfromHe
-(
-    const label cellI,
-    const GaussField<scalar>& he,
-    GaussField<scalar>& T
-) const
-{
-    thermo_.calcTFromInternalE(cellI, he, T);
-}
-
-
-void Foam::sensibleInternalEnergy::calcTfromHe
-(
-    const boundaryGaussField<scalar>& he,
-    boundaryGaussField<scalar>& T
-) const
-{
-    thermo_.calcTFromInternalE(he, T);
+    return thermo_.calcTFromInternalE(he);
 }
 
 

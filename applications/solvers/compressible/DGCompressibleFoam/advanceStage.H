@@ -20,8 +20,8 @@ limiterManager.correct();
 
 forAll(mesh.cells(), cellI)
 {
-    // U is not directly advanced by the time integrator, so recompute it from
-    // the updated conservative variables.
+    // Rebuild the kinematic primitive field outside thermo so the thermo layer
+    // remains focused on thermal variables.
     U.gaussFields()[cellI] = rhoU.gaussFields()[cellI] / rho.gaussFields()[cellI];
 
     // Reconstruct p, T, he, a, gamma, etc. from the stage-consistent

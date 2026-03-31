@@ -110,6 +110,105 @@ void Foam::transportLaw::read()
     // No-op in base.
 }
 
+
+void Foam::transportLaw::calcMu
+(
+    const label,
+    const GaussField<scalar>& T,
+    GaussField<scalar>& mu
+) const
+{
+    for (label gpI = 0; gpI < T.cellField().size(); ++gpI)
+    {
+        mu.cellField()[gpI] = calcMu(T.cellField()[gpI]);
+    }
+
+    for (label gpI = 0; gpI < T.faceField().nGauss(); ++gpI)
+    {
+        mu.faceField().minusValueAt(gpI) = calcMu(T.faceField().minusValue(gpI));
+        mu.faceField().plusValueAt(gpI) = calcMu(T.faceField().plusValue(gpI));
+    }
+}
+
+
+void Foam::transportLaw::calcMu
+(
+    const boundaryGaussField<scalar>& T,
+    boundaryGaussField<scalar>& mu
+) const
+{
+    for (label gpI = 0; gpI < T.size(); ++gpI)
+    {
+        mu[gpI] = calcMu(T[gpI]);
+    }
+}
+
+
+void Foam::transportLaw::calcKappa
+(
+    const label,
+    const GaussField<scalar>& T,
+    GaussField<scalar>& kappa
+) const
+{
+    for (label gpI = 0; gpI < T.cellField().size(); ++gpI)
+    {
+        kappa.cellField()[gpI] = calcKappa(T.cellField()[gpI]);
+    }
+
+    for (label gpI = 0; gpI < T.faceField().nGauss(); ++gpI)
+    {
+        kappa.faceField().minusValueAt(gpI) = calcKappa(T.faceField().minusValue(gpI));
+        kappa.faceField().plusValueAt(gpI) = calcKappa(T.faceField().plusValue(gpI));
+    }
+}
+
+
+void Foam::transportLaw::calcKappa
+(
+    const boundaryGaussField<scalar>& T,
+    boundaryGaussField<scalar>& kappa
+) const
+{
+    for (label gpI = 0; gpI < T.size(); ++gpI)
+    {
+        kappa[gpI] = calcKappa(T[gpI]);
+    }
+}
+
+
+void Foam::transportLaw::calcPr
+(
+    const label,
+    const GaussField<scalar>& T,
+    GaussField<scalar>& Pr
+) const
+{
+    for (label gpI = 0; gpI < T.cellField().size(); ++gpI)
+    {
+        Pr.cellField()[gpI] = calcPr(T.cellField()[gpI]);
+    }
+
+    for (label gpI = 0; gpI < T.faceField().nGauss(); ++gpI)
+    {
+        Pr.faceField().minusValueAt(gpI) = calcPr(T.faceField().minusValue(gpI));
+        Pr.faceField().plusValueAt(gpI) = calcPr(T.faceField().plusValue(gpI));
+    }
+}
+
+
+void Foam::transportLaw::calcPr
+(
+    const boundaryGaussField<scalar>& T,
+    boundaryGaussField<scalar>& Pr
+) const
+{
+    for (label gpI = 0; gpI < T.size(); ++gpI)
+    {
+        Pr[gpI] = calcPr(T[gpI]);
+    }
+}
+
 // ************************************************************************* //
 
 } // End namespace Foam

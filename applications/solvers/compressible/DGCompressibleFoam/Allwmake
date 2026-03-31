@@ -1,0 +1,13 @@
+#!/bin/sh
+
+set -e
+
+APP_ROOT="$(CDPATH= cd -- "$(dirname -- "$0")" && pwd -P)"
+
+echo "==> Building derivedFunctionObjects from $APP_ROOT/derivedFunctionObjects"
+cd "$APP_ROOT/derivedFunctionObjects"
+wmake libso
+
+echo "==> Building DGCompressibleFoam from $APP_ROOT"
+cd "$APP_ROOT"
+wmake

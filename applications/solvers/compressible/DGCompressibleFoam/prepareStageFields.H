@@ -5,8 +5,8 @@
 // - the solver makes all derived Gauss fields consistent with that state,
 // - only then can dgGeneralPDETerm assemble residuals safely.
 
-// Boundary reconstruction uses primitive interface values, so start each
-// stage from a synchronized p/T/U processor state.
+// Flux assembly uses primitive interface values, so start each stage from a
+// synchronized p/T/U processor state.
 #include "synchPrimary.H"
 
 forAll(mesh.cells(), cellI)
@@ -14,9 +14,10 @@ forAll(mesh.cells(), cellI)
     // Residuals are recomputed from scratch at every stage.
     timeDiscretization.clearResiduals(cellI);
 
-    // Apply primitive BCs and rebuild the corresponding ghost conservative
-    // states so each cell face has a complete left/right state for fluxes.
-    // In DG terms, this fills the face Gauss points seen by the owner cell.
+    // Apply conservative physical BCs and then rebuild the corresponding
+    // primitive boundary traces so each cell face has a complete left/right
+    // state for fluxes. In DG terms, this fills the ghost face Gauss points
+    // seen by the owner cell.
     #include "updateBC.H"
 }
 

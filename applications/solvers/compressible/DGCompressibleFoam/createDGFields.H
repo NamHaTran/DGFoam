@@ -42,3 +42,18 @@ word dgThermoTypeName(thermoType.lookup("type"));
 // The constructor immediately looks up the already-created DG fields and
 // initializes thermo-derived quantities on all cells.
 autoPtr<dgThermoConservative> thermo = dgThermoConservative::New(dgThermoTypeName, thermoDict, dgMesh);
+
+// Physical BCs now act directly on ghost conservative states.
+IOobject boundaryConditionsIO
+(
+    "boundaryConditions",
+    runTime.constant(),
+    mesh,
+    IOobject::MUST_READ,
+    IOobject::NO_WRITE
+);
+
+autoPtr<dgCompressibleBoundaryManager> compressibleBC
+(
+    new dgCompressibleBoundaryManager(boundaryConditionsIO, dgMesh)
+);

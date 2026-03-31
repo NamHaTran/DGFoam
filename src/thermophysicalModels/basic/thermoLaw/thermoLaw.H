@@ -174,7 +174,35 @@ public:
     );
 
     //====================================================================//
-    //                   General thermodynamic interface
+    //             General thermodynamic interface (pointwise)
+    //====================================================================//
+
+    virtual scalar calcTFromInternalE(const scalar e) const = 0;
+
+    virtual scalar calcTFromH(const scalar h) const = 0;
+
+    virtual scalar calcCp(const scalar T) const = 0;
+
+    virtual scalar calcCv(const scalar T) const = 0;
+
+    virtual scalar calcGamma
+    (
+        const scalar Cp,
+        const scalar Cv
+    ) const = 0;
+
+    virtual scalar calcInternalE(const scalar T) const = 0;
+
+    virtual scalar calcH(const scalar T) const = 0;
+
+    virtual scalar calcSpeedOfSound
+    (
+        const scalar T,
+        const scalar gamma
+    ) const = 0;
+
+    //====================================================================//
+    //               General thermodynamic interface (wrappers)
     //====================================================================//
 
     /**
@@ -191,13 +219,13 @@ public:
         const label cellI,
         const GaussField<scalar>& e,
         GaussField<scalar>& T
-    ) const = 0;
+    ) const;
 
     virtual void calcTFromInternalE
     (
         const boundaryGaussField<scalar>& e,
         boundaryGaussField<scalar>& T
-    ) const = 0;
+    ) const;
 
     /**
      * \brief Compute temperature from sensible enthalpy
@@ -213,13 +241,13 @@ public:
         const label cellI,
         const GaussField<scalar>& h,
         GaussField<scalar>& T
-    ) const = 0;
+    ) const;
 
     virtual void calcTFromH
     (
         const boundaryGaussField<scalar>& h,
         boundaryGaussField<scalar>& T
-    ) const = 0;
+    ) const;
 
     /**
      * \brief Compute heat capacity at constant pressure
@@ -233,13 +261,13 @@ public:
         const label cellI,
         const GaussField<scalar>& T,
         GaussField<scalar>& Cp
-    ) const = 0;
+    ) const;
 
     virtual void calcCp
     (
         const boundaryGaussField<scalar>& T,
         boundaryGaussField<scalar>& Cp
-    ) const = 0;
+    ) const;
 
     /**
      * \brief Compute heat capacity at constant volume
@@ -253,13 +281,13 @@ public:
         const label cellI,
         const GaussField<scalar>& T,
         GaussField<scalar>& Cv
-    ) const = 0;
+    ) const;
 
     virtual void calcCv
     (
         const boundaryGaussField<scalar>& T,
         boundaryGaussField<scalar>& Cv
-    ) const = 0;
+    ) const;
 
     /**
      * \brief Compute heat-capacity ratio
@@ -272,14 +300,14 @@ public:
         const GaussField<scalar>& Cp,
         const GaussField<scalar>& Cv,
         GaussField<scalar>& gamma
-    ) const = 0;
+    ) const;
 
     virtual void calcGamma
     (
         const boundaryGaussField<scalar>& Cp,
         const boundaryGaussField<scalar>& Cv,
         boundaryGaussField<scalar>& gamma
-    ) const = 0;
+    ) const;
 
     /**
      * \brief Compute internal energy
@@ -291,13 +319,13 @@ public:
         const label cellI,
         const GaussField<scalar>& T,
         GaussField<scalar>& e
-    ) const = 0;
+    ) const;
 
     virtual void calcInternalE
     (
         const boundaryGaussField<scalar>& T,
         boundaryGaussField<scalar>& e
-    ) const = 0;
+    ) const;
 
     /**
      * \brief Compute enthalpy
@@ -309,13 +337,13 @@ public:
         const label cellI,
         const GaussField<scalar>& T,
         GaussField<scalar>& h
-    ) const = 0;
+    ) const;
 
     virtual void calcH
     (
         const boundaryGaussField<scalar>& T,
         boundaryGaussField<scalar>& h
-    ) const = 0;
+    ) const;
 
     /**
      * \brief Compute speed of sound
@@ -329,14 +357,14 @@ public:
         const GaussField<scalar>& T,
         const GaussField<scalar>& gamma,
         GaussField<scalar>& a
-    ) const = 0;
+    ) const;
 
     virtual void calcSpeedOfSound
     (
         const boundaryGaussField<scalar>& T,
         const boundaryGaussField<scalar>& gamma,
         boundaryGaussField<scalar>& a
-    ) const = 0;
+    ) const;
 
     //====================================================================//
     //                   ThermoLaw classification flags

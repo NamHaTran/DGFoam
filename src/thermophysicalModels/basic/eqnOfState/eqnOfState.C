@@ -90,4 +90,147 @@ Foam::autoPtr<Foam::eqnOfState> Foam::eqnOfState::New
 
 // * * * * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * //
 
+void Foam::eqnOfState::calcRhoFromPT
+(
+    const label,
+    const GaussField<scalar>& p,
+    const GaussField<scalar>& T,
+    GaussField<scalar>& rho
+) const
+{
+    for (label gpI = 0; gpI < p.cellField().size(); ++gpI)
+    {
+        rho.cellField()[gpI] = calcRhoFromPT
+        (
+            p.cellField()[gpI],
+            T.cellField()[gpI]
+        );
+    }
+
+    for (label gpI = 0; gpI < p.faceField().nGauss(); ++gpI)
+    {
+        rho.faceField().minusValueAt(gpI) = calcRhoFromPT
+        (
+            p.faceField().minusValue(gpI),
+            T.faceField().minusValue(gpI)
+        );
+
+        rho.faceField().plusValueAt(gpI) = calcRhoFromPT
+        (
+            p.faceField().plusValue(gpI),
+            T.faceField().plusValue(gpI)
+        );
+    }
+}
+
+
+void Foam::eqnOfState::calcRhoFromPT
+(
+    const boundaryGaussField<scalar>& p,
+    const boundaryGaussField<scalar>& T,
+    boundaryGaussField<scalar>& rho
+) const
+{
+    for (label gpI = 0; gpI < p.size(); ++gpI)
+    {
+        rho[gpI] = calcRhoFromPT(p[gpI], T[gpI]);
+    }
+}
+
+
+void Foam::eqnOfState::calcPFromRhoT
+(
+    const label,
+    const GaussField<scalar>& rho,
+    const GaussField<scalar>& T,
+    GaussField<scalar>& p
+) const
+{
+    for (label gpI = 0; gpI < rho.cellField().size(); ++gpI)
+    {
+        p.cellField()[gpI] = calcPFromRhoT
+        (
+            rho.cellField()[gpI],
+            T.cellField()[gpI]
+        );
+    }
+
+    for (label gpI = 0; gpI < rho.faceField().nGauss(); ++gpI)
+    {
+        p.faceField().minusValueAt(gpI) = calcPFromRhoT
+        (
+            rho.faceField().minusValue(gpI),
+            T.faceField().minusValue(gpI)
+        );
+
+        p.faceField().plusValueAt(gpI) = calcPFromRhoT
+        (
+            rho.faceField().plusValue(gpI),
+            T.faceField().plusValue(gpI)
+        );
+    }
+}
+
+
+void Foam::eqnOfState::calcPFromRhoT
+(
+    const boundaryGaussField<scalar>& rho,
+    const boundaryGaussField<scalar>& T,
+    boundaryGaussField<scalar>& p
+) const
+{
+    for (label gpI = 0; gpI < rho.size(); ++gpI)
+    {
+        p[gpI] = calcPFromRhoT(rho[gpI], T[gpI]);
+    }
+}
+
+
+void Foam::eqnOfState::calcTFromPRho
+(
+    const label,
+    const GaussField<scalar>& p,
+    const GaussField<scalar>& rho,
+    GaussField<scalar>& T
+) const
+{
+    for (label gpI = 0; gpI < p.cellField().size(); ++gpI)
+    {
+        T.cellField()[gpI] = calcTFromPRho
+        (
+            p.cellField()[gpI],
+            rho.cellField()[gpI]
+        );
+    }
+
+    for (label gpI = 0; gpI < p.faceField().nGauss(); ++gpI)
+    {
+        T.faceField().minusValueAt(gpI) = calcTFromPRho
+        (
+            p.faceField().minusValue(gpI),
+            rho.faceField().minusValue(gpI)
+        );
+
+        T.faceField().plusValueAt(gpI) = calcTFromPRho
+        (
+            p.faceField().plusValue(gpI),
+            rho.faceField().plusValue(gpI)
+        );
+    }
+}
+
+
+void Foam::eqnOfState::calcTFromPRho
+(
+    const boundaryGaussField<scalar>& p,
+    const boundaryGaussField<scalar>& rho,
+    boundaryGaussField<scalar>& T
+) const
+{
+    for (label gpI = 0; gpI < p.size(); ++gpI)
+    {
+        T[gpI] = calcTFromPRho(p[gpI], rho[gpI]);
+    }
+}
+
 // ************************************************************************* //

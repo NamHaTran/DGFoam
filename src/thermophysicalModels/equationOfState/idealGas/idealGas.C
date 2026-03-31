@@ -59,74 +59,35 @@ Foam::idealGas::idealGas
 // * * * * * * * * * * * * Member Functions * * * * * * * * * * * * * //
 
 // rho = p / (R * T)
-void Foam::idealGas::calcRhoFromPT
+Foam::scalar Foam::idealGas::calcRhoFromPT
 (
-    const label cellI,
-    const GaussField<scalar>& p,
-    const GaussField<scalar>& T,
-    GaussField<scalar>& rho
+    const scalar p,
+    const scalar T
 ) const
 {
-    rho = p / (R_ * T);
-}
-
-
-void Foam::idealGas::calcRhoFromPT
-(
-    const boundaryGaussField<scalar>& p,
-    const boundaryGaussField<scalar>& T,
-    boundaryGaussField<scalar>& rho
-) const
-{
-    rho = p / (R_ * T);
+    return p / (R_ * T);
 }
 
 
 // p = rho * R * T
-void Foam::idealGas::calcPFromRhoT
+Foam::scalar Foam::idealGas::calcPFromRhoT
 (
-    const label cellI,
-    const GaussField<scalar>& rho,
-    const GaussField<scalar>& T,
-    GaussField<scalar>& p
+    const scalar rho,
+    const scalar T
 ) const
 {
-    p = rho * (R_ * T);
-}
-
-
-void Foam::idealGas::calcPFromRhoT
-(
-    const boundaryGaussField<scalar>& rho,
-    const boundaryGaussField<scalar>& T,
-    boundaryGaussField<scalar>& p
-) const
-{
-    p = rho * (R_ * T);
+    return rho * (R_ * T);
 }
 
 
 // T = p / (rho * R)
-void Foam::idealGas::calcTFromPRho
+Foam::scalar Foam::idealGas::calcTFromPRho
 (
-    const label cellI,
-    const GaussField<scalar>& p,
-    const GaussField<scalar>& rho,
-    GaussField<scalar>& T
+    const scalar p,
+    const scalar rho
 ) const
 {
-    T = p / (rho * R_);
-}
-
-
-void Foam::idealGas::calcTFromPRho
-(
-    const boundaryGaussField<scalar>& p,
-    const boundaryGaussField<scalar>& rho,
-    boundaryGaussField<scalar>& T
-) const
-{
-    T = p / (rho * R_);
+    return p / (rho * R_);
 }
 
 // ************************************************************************* //

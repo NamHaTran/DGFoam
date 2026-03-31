@@ -1,0 +1,62 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2412                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      boundaryConditions;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+internalField
+{
+	p		36213.17886254477;
+	T		200;
+	U		(1318.3061708079142 0 0);
+}
+
+boundaryField
+{
+    inlet
+    {
+        type            compressible::fixedValue;
+        compressibleFixedValueCoeff
+        {
+        	pValue	36213.17886254477;
+        	TValue	200;
+        	UValue	(1318.3061708079142 0 0);
+        }
+    }
+    outlet2
+    {
+        type            compressible::zeroGradient;
+    }
+    outlet1
+    {
+        type            compressible::zeroGradient;
+    }
+    wall
+    {
+        type            compressible::zeroGradient;
+    }
+    symmetryBottom
+    {
+        type            compressible::symmetry;
+    }
+    symmetryZ0
+    {
+        type            compressible::symmetry;
+    }
+    symmetryZ05
+    {
+        type            compressible::symmetry;
+    }
+}
+
+
+// ************************************************************************* //

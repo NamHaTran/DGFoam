@@ -108,6 +108,15 @@ public:
     //- Runtime type information
     TypeName("constantCp");
 
+    using thermoLaw::calcTFromInternalE;
+    using thermoLaw::calcTFromH;
+    using thermoLaw::calcCp;
+    using thermoLaw::calcCv;
+    using thermoLaw::calcGamma;
+    using thermoLaw::calcInternalE;
+    using thermoLaw::calcH;
+    using thermoLaw::calcSpeedOfSound;
+
     /**
      * \brief Construct from root dictionary
      *
@@ -140,36 +149,14 @@ public:
      *
      * Returns constant \f$C_p\f$.
      */
-    virtual void calcCp
-    (
-        const label cellI,
-        const GaussField<scalar>& T,
-        GaussField<scalar>& Cp
-    ) const override;
-
-    virtual void calcCp
-    (
-        const boundaryGaussField<scalar>& T,
-        boundaryGaussField<scalar>& Cp
-    ) const override;
+    virtual scalar calcCp(const scalar T) const override;
 
     /**
      * \brief Compute heat capacity at constant volume
      *
      * Returns constant \f$C_v\f$.
      */
-    virtual void calcCv
-    (
-        const label cellI,
-        const GaussField<scalar>& T,
-        GaussField<scalar>& Cv
-    ) const override;
-
-    virtual void calcCv
-    (
-        const boundaryGaussField<scalar>& T,
-        boundaryGaussField<scalar>& Cv
-    ) const override;
+    virtual scalar calcCv(const scalar T) const override;
 
     /**
      * \brief Compute heat-capacity ratio
@@ -179,19 +166,10 @@ public:
      *   \gamma = \frac{C_p}{C_v}
      * \f]
      */
-    virtual void calcGamma
+    virtual scalar calcGamma
     (
-        const label cellI,
-        const GaussField<scalar>& CpField,
-        const GaussField<scalar>& CvField,
-        GaussField<scalar>& gamma
-    ) const override;
-
-    virtual void calcGamma
-    (
-        const boundaryGaussField<scalar>& CpField,
-        const boundaryGaussField<scalar>& CvField,
-        boundaryGaussField<scalar>& gamma
+        const scalar Cp,
+        const scalar Cv
     ) const override;
 
     /**
@@ -202,18 +180,7 @@ public:
      *   e = C_v T
      * \f]
      */
-    virtual void calcTFromInternalE
-    (
-        const label cellI,
-        const GaussField<scalar>& e,
-        GaussField<scalar>& T
-    ) const override;
-
-    virtual void calcTFromInternalE
-    (
-        const boundaryGaussField<scalar>& e,
-        boundaryGaussField<scalar>& T
-    ) const override;
+    virtual scalar calcTFromInternalE(const scalar e) const override;
 
     /**
      * \brief Compute temperature from sensible enthalpy
@@ -223,18 +190,7 @@ public:
      *   h = C_p T
      * \f]
      */
-    virtual void calcTFromH
-    (
-        const label cellI,
-        const GaussField<scalar>& h,
-        GaussField<scalar>& T
-    ) const override;
-
-    virtual void calcTFromH
-    (
-        const boundaryGaussField<scalar>& h,
-        boundaryGaussField<scalar>& T
-    ) const override;
+    virtual scalar calcTFromH(const scalar h) const override;
 
     /**
      * \brief Compute internal energy
@@ -244,18 +200,7 @@ public:
      *   e(T) = C_v T
      * \f]
      */
-    virtual void calcInternalE
-    (
-        const label cellI,
-        const GaussField<scalar>& T,
-        GaussField<scalar>& e
-    ) const override;
-
-    virtual void calcInternalE
-    (
-        const boundaryGaussField<scalar>& T,
-        boundaryGaussField<scalar>& e
-    ) const override;
+    virtual scalar calcInternalE(const scalar T) const override;
 
     /**
      * \brief Compute enthalpy
@@ -265,18 +210,7 @@ public:
      *   h(T) = C_p T
      * \f]
      */
-    virtual void calcH
-    (
-        const label cellI,
-        const GaussField<scalar>& T,
-        GaussField<scalar>& h
-    ) const override;
-
-    virtual void calcH
-    (
-        const boundaryGaussField<scalar>& T,
-        boundaryGaussField<scalar>& h
-    ) const override;
+    virtual scalar calcH(const scalar T) const override;
 
     /**
      * \brief Compute speed of sound
@@ -286,19 +220,10 @@ public:
      *   a = \sqrt{\gamma R T}
      * \f]
      */
-    virtual void calcSpeedOfSound
+    virtual scalar calcSpeedOfSound
     (
-        const label cellI,
-        const GaussField<scalar>& T,
-        const GaussField<scalar>& gamma,
-        GaussField<scalar>& a
-    ) const override;
-
-    virtual void calcSpeedOfSound
-    (
-        const boundaryGaussField<scalar>& T,
-        const boundaryGaussField<scalar>& gamma,
-        boundaryGaussField<scalar>& a
+        const scalar T,
+        const scalar gamma
     ) const override;
 
     /**

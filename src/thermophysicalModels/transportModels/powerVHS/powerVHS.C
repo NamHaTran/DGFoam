@@ -69,12 +69,7 @@ Foam::powerVHS::powerVHS
 
 // * * * * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * //
 
-void Foam::powerVHS::calcMu
-(
-    const label cellI,
-    const GaussField<scalar>& T,
-    GaussField<scalar>& mu
-) const
+Foam::scalar Foam::powerVHS::calcMu(const scalar T) const
 {
     // Guard: T must be positive everywhere in the cell
     if (T <= scalar(0))
@@ -84,99 +79,19 @@ void Foam::powerVHS::calcMu
             << exit(FatalError);
     }
 
-    // theta = T/TRef
-    tmp<GaussField<scalar>> tTheta = T / TRef_;
-
-    // theta^omega
-    tmp<GaussField<scalar>> tThetaW = pow(tTheta(), omega_);
-
-    // μ = μRef * theta^omega
-    mu = muRef_ * tThetaW();
-
-    tTheta.clear();
-    tThetaW.clear();
+    return muRef_ * std::pow(T/TRef_, omega_);
 }
 
 
-void Foam::powerVHS::calcMu
-(
-    const boundaryGaussField<scalar>& T,
-    boundaryGaussField<scalar>& mu
-) const
+Foam::scalar Foam::powerVHS::calcKappa(const scalar T) const
 {
-    for (label i = 0; i < T.size(); ++i)
-    {
-        if (T[i] <= scalar(0))
-        {
-            FatalErrorInFunction
-                << "Temperature must be strictly positive in powerVHS::calcMu()."
-                << nl << exit(FatalError);
-        }
-
-        mu[i] = muRef_ * std::pow(T[i]/TRef_, omega_);
-    }
+    return calcMu(T)*thermo_.calcCp(T)/Pr0_;
 }
 
 
-void Foam::powerVHS::calcKappa
-(
-    const label cellI,
-    const GaussField<scalar>& T,
-    GaussField<scalar>& kappa
-) const
+Foam::scalar Foam::powerVHS::calcPr(const scalar) const
 {
-    // classical energy transport: κ = μ Cp / Pr
-  
-    // μ
-    tmp<GaussField<scalar>> tMu = GaussField<scalar>::New(cellI, &mesh_);
-    calcMu(cellI, T, tMu.ref());
-
-    // Cp
-    tmp<GaussField<scalar>> tCp = GaussField<scalar>::New(cellI, &mesh_);
-    thermo_.calcCp(cellI, T, tCp.ref());
-
-    // κ = μ Cp / Pr
-    kappa = (tMu() * tCp()) / Pr0_;
-
-    tMu.clear();
-    tCp.clear();
-}
-
-
-void Foam::powerVHS::calcKappa
-(
-    const boundaryGaussField<scalar>& T,
-    boundaryGaussField<scalar>& kappa
-) const
-{
-    boundaryGaussField<scalar> mu(T.size());
-    boundaryGaussField<scalar> Cp(T.size());
-
-    calcMu(T, mu);
-    thermo_.calcCp(T, Cp);
-
-    kappa = (mu * Cp) / Pr0_;
-}
-
-
-void Foam::powerVHS::calcPr
-(
-    const label cellI,
-    const GaussField<scalar>& T,
-    GaussField<scalar>& Pr
-) const
-{
-    Pr = Pr0_;   // broadcast to all Gauss points
-}
-
-
-void Foam::powerVHS::calcPr
-(
-    const boundaryGaussField<scalar>& T,
-    boundaryGaussField<scalar>& Pr
-) const
-{
-    Pr = Pr0_;
+    return Pr0_;
 }
 
 

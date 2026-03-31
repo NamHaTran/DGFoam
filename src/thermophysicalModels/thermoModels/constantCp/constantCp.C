@@ -143,183 +143,59 @@ Foam::constantCp::constantCp
 
 // * * * * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * //
 
-void Foam::constantCp::calcCp
-(
-    const label cellI,
-    const GaussField<scalar>& T,
-    GaussField<scalar>& Cp
-) const
+Foam::scalar Foam::constantCp::calcCp(const scalar) const
 {
-    Cp = Cp_;   // broadcast to all Gauss points for this cell
+    return Cp_;
 }
 
 
-void Foam::constantCp::calcCp
-(
-    const boundaryGaussField<scalar>& T,
-    boundaryGaussField<scalar>& Cp
-) const
+Foam::scalar Foam::constantCp::calcCv(const scalar) const
 {
-    Cp = Cp_;
+    return Cv_;
 }
 
 
-void Foam::constantCp::calcCv
+Foam::scalar Foam::constantCp::calcGamma
 (
-    const label cellI,
-    const GaussField<scalar>& T,
-    GaussField<scalar>& Cv
+    const scalar,
+    const scalar
 ) const
 {
-    Cv = Cv_;
+    return gamma_;
 }
 
 
-void Foam::constantCp::calcCv
-(
-    const boundaryGaussField<scalar>& T,
-    boundaryGaussField<scalar>& Cv
-) const
+Foam::scalar Foam::constantCp::calcTFromInternalE(const scalar e) const
 {
-    Cv = Cv_;
+    return e / Cv_;
 }
 
 
-void Foam::constantCp::calcGamma
-(
-    const label cellI,
-    const GaussField<scalar>& CpField,
-    const GaussField<scalar>& CvField,
-    GaussField<scalar>& gamma
-) const
+Foam::scalar Foam::constantCp::calcTFromH(const scalar h) const
 {
-    gamma = gamma_;
+    return h / Cp_;
 }
 
 
-void Foam::constantCp::calcGamma
-(
-    const boundaryGaussField<scalar>& CpField,
-    const boundaryGaussField<scalar>& CvField,
-    boundaryGaussField<scalar>& gamma
-) const
+Foam::scalar Foam::constantCp::calcInternalE(const scalar T) const
 {
-    gamma = gamma_;
+    return T * Cv_;
 }
 
 
-void Foam::constantCp::calcTFromInternalE
-(
-    const label cellI,
-    const GaussField<scalar>& e,
-    GaussField<scalar>& T
-) const
+Foam::scalar Foam::constantCp::calcH(const scalar T) const
 {
-    T = e / Cv_;
+    return T * Cp_;
 }
 
 
-void Foam::constantCp::calcTFromInternalE
+Foam::scalar Foam::constantCp::calcSpeedOfSound
 (
-    const boundaryGaussField<scalar>& e,
-    boundaryGaussField<scalar>& T
+    const scalar T,
+    const scalar gamma
 ) const
 {
-    T = e / Cv_;
-}
-
-
-void Foam::constantCp::calcTFromH
-(
-    const label cellI,
-    const GaussField<scalar>& h,
-    GaussField<scalar>& T
-) const
-{
-    T = h / Cp_;
-}
-
-
-void Foam::constantCp::calcTFromH
-(
-    const boundaryGaussField<scalar>& h,
-    boundaryGaussField<scalar>& T
-) const
-{
-    T = h / Cp_;
-}
-
-
-void Foam::constantCp::calcInternalE
-(
-    const label cellI,
-    const GaussField<scalar>& T,
-    GaussField<scalar>& e
-) const
-{
-    e = T * Cv_;
-}
-
-
-void Foam::constantCp::calcInternalE
-(
-    const boundaryGaussField<scalar>& T,
-    boundaryGaussField<scalar>& e
-) const
-{
-    e = T * Cv_;
-}
-
-
-void Foam::constantCp::calcH
-(
-    const label cellI,
-    const GaussField<scalar>& T,
-    GaussField<scalar>& h
-) const
-{
-    h = T * Cp_;
-}
-
-
-void Foam::constantCp::calcH
-(
-    const boundaryGaussField<scalar>& T,
-    boundaryGaussField<scalar>& h
-) const
-{
-    h = T * Cp_;
-}
-
-
-void Foam::constantCp::calcSpeedOfSound
-(
-    const label cellI,
-    const GaussField<scalar>& T,
-    const GaussField<scalar>& gamma,
-    GaussField<scalar>& a
-) const
-{
-    a = gamma * T;
-    a = a * eos_.R();
-    a = sqrt(a);
-}
-
-
-void Foam::constantCp::calcSpeedOfSound
-(
-    const boundaryGaussField<scalar>& T,
-    const boundaryGaussField<scalar>& gamma,
-    boundaryGaussField<scalar>& a
-) const
-{
-    a = gamma * T;
-    a = a * eos_.R();
-
-    for (label i = 0; i < a.size(); ++i)
-    {
-        a[i] = std::sqrt(a[i]);
-    }
+    return std::sqrt(gamma * eos_.R() * T);
 }
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  * * * //

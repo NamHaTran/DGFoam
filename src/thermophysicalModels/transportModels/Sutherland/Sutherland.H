@@ -98,6 +98,10 @@ public:
     //- Runtime type information
     TypeName("Sutherland");
 
+    using transportLaw::calcMu;
+    using transportLaw::calcKappa;
+    using transportLaw::calcPr;
+
     /**
      * \brief Construct from dictionary
      *
@@ -127,18 +131,7 @@ public:
      *   \mu(T) = A_s \frac{T^{3/2}}{T + S}
      * \f]
      */
-    virtual void calcMu
-    (
-        const label cellI,
-        const GaussField<scalar>& T,
-        GaussField<scalar>& mu
-    ) const override;
-
-    virtual void calcMu
-    (
-        const boundaryGaussField<scalar>& T,
-        boundaryGaussField<scalar>& mu
-    ) const override;
+    virtual scalar calcMu(const scalar T) const override;
 
     /**
      * \brief Compute thermal conductivity
@@ -148,18 +141,7 @@ public:
      *   \kappa(T) = \frac{\mu(T)\,C_p(T)}{\mathrm{Pr}_0}
      * \f]
      */
-    virtual void calcKappa
-    (
-        const label cellI,
-        const GaussField<scalar>& T,
-        GaussField<scalar>& kappa
-    ) const override;
-
-    virtual void calcKappa
-    (
-        const boundaryGaussField<scalar>& T,
-        boundaryGaussField<scalar>& kappa
-    ) const override;
+    virtual scalar calcKappa(const scalar T) const override;
 
     /**
      * \brief Return Prandtl number
@@ -169,18 +151,7 @@ public:
      *   \mathrm{Pr}(T) = \mathrm{Pr}_0
      * \f]
      */
-    virtual void calcPr
-    (
-        const label cellI,
-        const GaussField<scalar>& T,
-        GaussField<scalar>& Pr
-    ) const override;
-
-    virtual void calcPr
-    (
-        const boundaryGaussField<scalar>& T,
-        boundaryGaussField<scalar>& Pr
-    ) const override;
+    virtual scalar calcPr(const scalar T) const override;
 
     /**
      * \brief Read coefficients from dictionary
