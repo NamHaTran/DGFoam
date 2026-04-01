@@ -47,15 +47,15 @@
 \DoxyCodeLine{00043\ \mbox{\hyperlink{classFoam_1_1dgGeneralInletOutletBoundaryField_ae28f319bd39f465533efbe52fe8b8082}{dgGeneralInletOutletBoundaryField<Type>::dgGeneralInletOutletBoundaryField}}}
 \DoxyCodeLine{00044\ (}
 \DoxyCodeLine{00045\ \ \ \ \ \textcolor{keyword}{const}\ fvPatch\&\ patch,}
-\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keyword}{const}\ dgGeomMesh\&\ dgMesh,}
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keyword}{const}\ dgGeomMesh\&\ \mbox{\hyperlink{solvers_2compressible_2DGCompressibleFoam_2createDGMesh_8H_ac2f70ae412900de0f8c13e91bd870b5c}{dgMesh}},}
 \DoxyCodeLine{00047\ \ \ \ \ \textcolor{keyword}{const}\ dictionary\&\ dict}
 \DoxyCodeLine{00048\ )}
 \DoxyCodeLine{00049\ :}
-\DoxyCodeLine{00050\ \ \ \ \ dgGeneralBoundaryField<Type>(patch,\ dgMesh,\ dict),}
+\DoxyCodeLine{00050\ \ \ \ \ dgGeneralBoundaryField<Type>(patch,\ \mbox{\hyperlink{solvers_2compressible_2DGCompressibleFoam_2createDGMesh_8H_ac2f70ae412900de0f8c13e91bd870b5c}{dgMesh}},\ dict),}
 \DoxyCodeLine{00051\ \ \ \ \ UName\_(dict.lookupOrDefault(\textcolor{stringliteral}{"{}U"{}},\ word(\textcolor{stringliteral}{"{}U"{}}))),}
 \DoxyCodeLine{00052\ \ \ \ \ U\_}
 \DoxyCodeLine{00053\ \ \ \ \ (}
-\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ dgMesh.getFvMesh().lookupObject<dgField<vector>>(UName\_)}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{solvers_2compressible_2DGCompressibleFoam_2createDGMesh_8H_ac2f70ae412900de0f8c13e91bd870b5c}{dgMesh}}.getFvMesh().lookupObject<dgField<vector>>(UName\_)}
 \DoxyCodeLine{00055\ \ \ \ \ )}
 \DoxyCodeLine{00056\ \{}
 \DoxyCodeLine{00057\ \ \ \ \ dict.readEntry(\textcolor{stringliteral}{"{}inletValue"{}},\ inletValue\_);}

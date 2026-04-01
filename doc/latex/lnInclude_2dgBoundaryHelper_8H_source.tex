@@ -55,70 +55,71 @@
 \DoxyCodeLine{00066\ \textcolor{comment}{//\ \ Interface\ boundary\ patches}}
 \DoxyCodeLine{00067\ \textcolor{comment}{//======================================================================//}}
 \DoxyCodeLine{00068\ }
-\DoxyCodeLine{00075\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{namespaceFoam_1_1dgBoundaryHelper_aacf61fd17830f31a3bf10506dd6b0c4e}{isInterfacePatch}}(\textcolor{keyword}{const}\ fvPatch\&\ patch)}
-\DoxyCodeLine{00076\ \{}
-\DoxyCodeLine{00077\ \ \ \ \ \textcolor{keyword}{const}\ word\&\ type\ =\ patch.type();}
-\DoxyCodeLine{00078\ }
-\DoxyCodeLine{00079\ \ \ \ \ \textcolor{keywordflow}{return}}
-\DoxyCodeLine{00080\ \ \ \ \ (}
-\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ type\ ==\ \textcolor{stringliteral}{"{}processor"{}}}
-\DoxyCodeLine{00082\ \ \ \ \ );}
-\DoxyCodeLine{00083\ \}}
-\DoxyCodeLine{00084\ }
-\DoxyCodeLine{00085\ }
-\DoxyCodeLine{00086\ \textcolor{comment}{//======================================================================//}}
-\DoxyCodeLine{00087\ \textcolor{comment}{//\ \ General\ (physical)\ boundary\ patches}}
-\DoxyCodeLine{00088\ \textcolor{comment}{//======================================================================//}}
-\DoxyCodeLine{00089\ }
-\DoxyCodeLine{00096\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{namespaceFoam_1_1dgBoundaryHelper_ad336b0d03003430f2a70769a5a4ccaa3}{isGeneralPatch}}(\textcolor{keyword}{const}\ fvPatch\&\ patch)}
-\DoxyCodeLine{00097\ \{}
-\DoxyCodeLine{00098\ \ \ \ \ \textcolor{keyword}{const}\ word\&\ type\ =\ patch.type();}
-\DoxyCodeLine{00099\ }
-\DoxyCodeLine{00100\ \ \ \ \ \textcolor{keywordflow}{return}}
-\DoxyCodeLine{00101\ \ \ \ \ (}
-\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ type\ ==\ \textcolor{stringliteral}{"{}wall"{}}}
-\DoxyCodeLine{00103\ \ \ \ \ \ ||\ type\ ==\ \textcolor{stringliteral}{"{}patch"{}}\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ generic\ patch\ (inlet,\ outlet,\ etc.)}}
-\DoxyCodeLine{00104\ \ \ \ \ \ ||\ type\ ==\ \textcolor{stringliteral}{"{}symmetry"{}}}
-\DoxyCodeLine{00105\ \ \ \ \ \ ||\ type\ ==\ \textcolor{stringliteral}{"{}symmetryPlane"{}}}
-\DoxyCodeLine{00106\ \ \ \ \ );}
-\DoxyCodeLine{00107\ \}}
-\DoxyCodeLine{00108\ }
-\DoxyCodeLine{00109\ }
-\DoxyCodeLine{00110\ \textcolor{comment}{//======================================================================//}}
-\DoxyCodeLine{00111\ \textcolor{comment}{//\ \ Constraint\ /\ special\ boundary\ patches}}
-\DoxyCodeLine{00112\ \textcolor{comment}{//======================================================================//}}
-\DoxyCodeLine{00113\ }
-\DoxyCodeLine{00120\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{namespaceFoam_1_1dgBoundaryHelper_a8ddaff7874f784ca13006803262410ea}{isConstraintPatch}}(\textcolor{keyword}{const}\ fvPatch\&\ patch)}
-\DoxyCodeLine{00121\ \{}
-\DoxyCodeLine{00122\ \ \ \ \ \textcolor{keyword}{const}\ word\&\ type\ =\ patch.type();}
-\DoxyCodeLine{00123\ }
-\DoxyCodeLine{00124\ \ \ \ \ \textcolor{keywordflow}{return}}
-\DoxyCodeLine{00125\ \ \ \ \ (}
-\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ type\ ==\ \textcolor{stringliteral}{"{}overset"{}}}
-\DoxyCodeLine{00127\ \ \ \ \ );}
-\DoxyCodeLine{00128\ \}}
-\DoxyCodeLine{00129\ }
-\DoxyCodeLine{00130\ }
-\DoxyCodeLine{00131\ \textcolor{comment}{//======================================================================//}}
-\DoxyCodeLine{00132\ \textcolor{comment}{//\ \ Sanity\ check\ helpers}}
-\DoxyCodeLine{00133\ \textcolor{comment}{//======================================================================//}}
-\DoxyCodeLine{00134\ }
-\DoxyCodeLine{00140\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{namespaceFoam_1_1dgBoundaryHelper_a982582dbd797b33bf35012ac0763c555}{isKnownPatchType}}(\textcolor{keyword}{const}\ fvPatch\&\ patch)}
-\DoxyCodeLine{00141\ \{}
-\DoxyCodeLine{00142\ \ \ \ \ \textcolor{keywordflow}{return}}
-\DoxyCodeLine{00143\ \ \ \ \ (}
-\DoxyCodeLine{00144\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespaceFoam_1_1dgBoundaryHelper_ad336b0d03003430f2a70769a5a4ccaa3}{isGeneralPatch}}(patch)}
-\DoxyCodeLine{00145\ \ \ \ \ \ ||\ \mbox{\hyperlink{namespaceFoam_1_1dgBoundaryHelper_aacf61fd17830f31a3bf10506dd6b0c4e}{isInterfacePatch}}(patch)}
-\DoxyCodeLine{00146\ \ \ \ \ \ ||\ \mbox{\hyperlink{namespaceFoam_1_1dgBoundaryHelper_a8ddaff7874f784ca13006803262410ea}{isConstraintPatch}}(patch)}
-\DoxyCodeLine{00147\ \ \ \ \ );}
-\DoxyCodeLine{00148\ \}}
-\DoxyCodeLine{00149\ }
-\DoxyCodeLine{00150\ \}\ \textcolor{comment}{//\ End\ namespace\ dgBoundaryHelper}}
-\DoxyCodeLine{00151\ }
-\DoxyCodeLine{00152\ \}\ \textcolor{comment}{//\ End\ namespace\ Foam}}
-\DoxyCodeLine{00153\ }
-\DoxyCodeLine{00154\ \textcolor{preprocessor}{\#endif}}
-\DoxyCodeLine{00155\ }
-\DoxyCodeLine{00156\ \textcolor{comment}{//\ *************************************************************************\ //}}
+\DoxyCodeLine{00078\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{namespaceFoam_1_1dgBoundaryHelper_aacf61fd17830f31a3bf10506dd6b0c4e}{isInterfacePatch}}(\textcolor{keyword}{const}\ fvPatch\&\ patch)}
+\DoxyCodeLine{00079\ \{}
+\DoxyCodeLine{00080\ \ \ \ \ \textcolor{keyword}{const}\ word\&\ type\ =\ patch.type();}
+\DoxyCodeLine{00081\ }
+\DoxyCodeLine{00082\ \ \ \ \ \textcolor{keywordflow}{return}}
+\DoxyCodeLine{00083\ \ \ \ \ (}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ type\ ==\ \textcolor{stringliteral}{"{}processor"{}}}
+\DoxyCodeLine{00085\ \ \ \ \ );}
+\DoxyCodeLine{00086\ \}}
+\DoxyCodeLine{00087\ }
+\DoxyCodeLine{00088\ }
+\DoxyCodeLine{00089\ \textcolor{comment}{//======================================================================//}}
+\DoxyCodeLine{00090\ \textcolor{comment}{//\ \ General\ (physical)\ boundary\ patches}}
+\DoxyCodeLine{00091\ \textcolor{comment}{//======================================================================//}}
+\DoxyCodeLine{00092\ }
+\DoxyCodeLine{00102\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{namespaceFoam_1_1dgBoundaryHelper_ad336b0d03003430f2a70769a5a4ccaa3}{isGeneralPatch}}(\textcolor{keyword}{const}\ fvPatch\&\ patch)}
+\DoxyCodeLine{00103\ \{}
+\DoxyCodeLine{00104\ \ \ \ \ \textcolor{keyword}{const}\ word\&\ type\ =\ patch.type();}
+\DoxyCodeLine{00105\ }
+\DoxyCodeLine{00106\ \ \ \ \ \textcolor{keywordflow}{return}}
+\DoxyCodeLine{00107\ \ \ \ \ (}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ type\ ==\ \textcolor{stringliteral}{"{}wall"{}}}
+\DoxyCodeLine{00109\ \ \ \ \ \ ||\ type\ ==\ \textcolor{stringliteral}{"{}patch"{}}\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ generic\ patch\ (inlet,\ outlet,\ etc.)}}
+\DoxyCodeLine{00110\ \ \ \ \ \ ||\ type\ ==\ \textcolor{stringliteral}{"{}symmetry"{}}}
+\DoxyCodeLine{00111\ \ \ \ \ \ ||\ type\ ==\ \textcolor{stringliteral}{"{}symmetryPlane"{}}}
+\DoxyCodeLine{00112\ \ \ \ \ );}
+\DoxyCodeLine{00113\ \}}
+\DoxyCodeLine{00114\ }
+\DoxyCodeLine{00115\ }
+\DoxyCodeLine{00116\ \textcolor{comment}{//======================================================================//}}
+\DoxyCodeLine{00117\ \textcolor{comment}{//\ \ Constraint\ /\ special\ boundary\ patches}}
+\DoxyCodeLine{00118\ \textcolor{comment}{//======================================================================//}}
+\DoxyCodeLine{00119\ }
+\DoxyCodeLine{00130\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{namespaceFoam_1_1dgBoundaryHelper_a8ddaff7874f784ca13006803262410ea}{isConstraintPatch}}(\textcolor{keyword}{const}\ fvPatch\&\ patch)}
+\DoxyCodeLine{00131\ \{}
+\DoxyCodeLine{00132\ \ \ \ \ \textcolor{keyword}{const}\ word\&\ type\ =\ patch.type();}
+\DoxyCodeLine{00133\ }
+\DoxyCodeLine{00134\ \ \ \ \ \textcolor{keywordflow}{return}}
+\DoxyCodeLine{00135\ \ \ \ \ (}
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ type\ ==\ \textcolor{stringliteral}{"{}overset"{}}}
+\DoxyCodeLine{00137\ \ \ \ \ \ ||\ type\ ==\ \textcolor{stringliteral}{"{}empty"{}}}
+\DoxyCodeLine{00138\ \ \ \ \ );}
+\DoxyCodeLine{00139\ \}}
+\DoxyCodeLine{00140\ }
+\DoxyCodeLine{00141\ }
+\DoxyCodeLine{00142\ \textcolor{comment}{//======================================================================//}}
+\DoxyCodeLine{00143\ \textcolor{comment}{//\ \ Sanity\ check\ helpers}}
+\DoxyCodeLine{00144\ \textcolor{comment}{//======================================================================//}}
+\DoxyCodeLine{00145\ }
+\DoxyCodeLine{00154\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{namespaceFoam_1_1dgBoundaryHelper_a982582dbd797b33bf35012ac0763c555}{isKnownPatchType}}(\textcolor{keyword}{const}\ fvPatch\&\ patch)}
+\DoxyCodeLine{00155\ \{}
+\DoxyCodeLine{00156\ \ \ \ \ \textcolor{keywordflow}{return}}
+\DoxyCodeLine{00157\ \ \ \ \ (}
+\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespaceFoam_1_1dgBoundaryHelper_ad336b0d03003430f2a70769a5a4ccaa3}{isGeneralPatch}}(patch)}
+\DoxyCodeLine{00159\ \ \ \ \ \ ||\ \mbox{\hyperlink{namespaceFoam_1_1dgBoundaryHelper_aacf61fd17830f31a3bf10506dd6b0c4e}{isInterfacePatch}}(patch)}
+\DoxyCodeLine{00160\ \ \ \ \ \ ||\ \mbox{\hyperlink{namespaceFoam_1_1dgBoundaryHelper_a8ddaff7874f784ca13006803262410ea}{isConstraintPatch}}(patch)}
+\DoxyCodeLine{00161\ \ \ \ \ );}
+\DoxyCodeLine{00162\ \}}
+\DoxyCodeLine{00163\ }
+\DoxyCodeLine{00164\ \}\ \textcolor{comment}{//\ End\ namespace\ dgBoundaryHelper}}
+\DoxyCodeLine{00165\ }
+\DoxyCodeLine{00166\ \}\ \textcolor{comment}{//\ End\ namespace\ Foam}}
+\DoxyCodeLine{00167\ }
+\DoxyCodeLine{00168\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00169\ }
+\DoxyCodeLine{00170\ \textcolor{comment}{//\ *************************************************************************\ //}}
 
 \end{DoxyCode}

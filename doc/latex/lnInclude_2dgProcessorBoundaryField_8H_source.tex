@@ -46,111 +46,88 @@
 \DoxyCodeLine{00042\ \textcolor{preprocessor}{\#include\ "{}processorFvPatch.H"{}}}
 \DoxyCodeLine{00043\ \textcolor{preprocessor}{\#include\ "{}dgField.H"{}}}
 \DoxyCodeLine{00044\ \textcolor{preprocessor}{\#include\ "{}Pstream.H"{}}}
-\DoxyCodeLine{00045\ }
-\DoxyCodeLine{00046\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespaceFoam}{Foam}}}
-\DoxyCodeLine{00047\ \{}
-\DoxyCodeLine{00048\ }
-\DoxyCodeLine{00049\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*\(\backslash\)}}
-\DoxyCodeLine{00050\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Class\ dgProcessorBoundaryField\ Declaration}}
-\DoxyCodeLine{00051\ \textcolor{comment}{\(\backslash\)*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
-\DoxyCodeLine{00052\ }
-\DoxyCodeLine{00067\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Type>}
-\DoxyCodeLine{00068\ \textcolor{keyword}{class\ }dgProcessorBoundaryField}
-\DoxyCodeLine{00069\ \{}
-\DoxyCodeLine{00070\ \textcolor{keyword}{private}:}
-\DoxyCodeLine{00071\ }
-\DoxyCodeLine{00073\ \ \ \ \ \textcolor{keyword}{const}\ processorFvPatch\&\ \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField_a728842151ae1bd8604d21527ef471fd6}{procPatch\_}};}
-\DoxyCodeLine{00074\ }
-\DoxyCodeLine{00076\ \ \ \ \ \textcolor{keyword}{const}\ dgGeomMesh\&\ \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField_aef2fae50069c54c9c94453abb18000f5}{dgMesh\_}};}
-\DoxyCodeLine{00077\ }
-\DoxyCodeLine{00079\ \ \ \ \ \textcolor{keyword}{const}\ label\ \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField_a20fae8edfee33edc4e761acc11aff751}{neighbProc\_}};}
-\DoxyCodeLine{00080\ }
-\DoxyCodeLine{00082\ \ \ \ \ \textcolor{keyword}{mutable}\ List<Type>\ \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField_a8a48c87af06db1a7c43686f234832962}{sendBuf\_}};}
-\DoxyCodeLine{00083\ }
-\DoxyCodeLine{00085\ \ \ \ \ \textcolor{keyword}{mutable}\ List<Type>\ \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField_a2f8bd21638770e97d46b895b12404f05}{recvBuf\_}};}
-\DoxyCodeLine{00086\ }
-\DoxyCodeLine{00087\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00045\ \textcolor{preprocessor}{\#include\ "{}CompactListList.H"{}}}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespaceFoam}{Foam}}}
+\DoxyCodeLine{00048\ \{}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00050\ \textcolor{keyword}{class\ }PstreamBuffers;}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00052\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*\(\backslash\)}}
+\DoxyCodeLine{00053\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Class\ dgProcessorBoundaryField\ Declaration}}
+\DoxyCodeLine{00054\ \textcolor{comment}{\(\backslash\)*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00075\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Type>}
+\DoxyCodeLine{00076\ \textcolor{keyword}{class\ }dgProcessorBoundaryField}
+\DoxyCodeLine{00077\ \{}
+\DoxyCodeLine{00078\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00079\ }
+\DoxyCodeLine{00081\ \ \ \ \ \textcolor{keyword}{const}\ processorFvPatch\&\ \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField_a728842151ae1bd8604d21527ef471fd6}{procPatch\_}};}
+\DoxyCodeLine{00082\ }
+\DoxyCodeLine{00084\ \ \ \ \ \textcolor{keyword}{const}\ dgGeomMesh\&\ \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField_aef2fae50069c54c9c94453abb18000f5}{dgMesh\_}};}
+\DoxyCodeLine{00085\ }
+\DoxyCodeLine{00087\ \ \ \ \ \textcolor{keyword}{const}\ label\ \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField_a20fae8edfee33edc4e761acc11aff751}{neighbProc\_}};}
 \DoxyCodeLine{00088\ }
-\DoxyCodeLine{00089\ \ \ \ \ \textcolor{comment}{//\ Constructors\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00090\ }
-\DoxyCodeLine{00099\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField_a7e67388024a3c92eb8e7959700d3e9ab}{dgProcessorBoundaryField}}}
-\DoxyCodeLine{00100\ \ \ \ \ (}
-\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{fvPatch}}\&\ \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField_ad53d2439521fc37920925e7f32d52a7d}{patch}},}
-\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dgGeomMesh}}\&\ \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField_ad767b7ae38e0c9557e351951448b81fa}{dgMesh}}}
-\DoxyCodeLine{00103\ \ \ \ \ );}
+\DoxyCodeLine{00090\ \ \ \ \ \textcolor{keyword}{mutable}\ List<Type>\ \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField_a8a48c87af06db1a7c43686f234832962}{sendBuf\_}};}
+\DoxyCodeLine{00091\ }
+\DoxyCodeLine{00093\ \ \ \ \ \textcolor{keyword}{mutable}\ List<Type>\ \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField_a2f8bd21638770e97d46b895b12404f05}{recvBuf\_}};}
+\DoxyCodeLine{00094\ }
+\DoxyCodeLine{00096\ \ \ \ \ \textcolor{keyword}{mutable}\ CompactListList<Type>\ \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField_a168531f2c3f8ae1f883b6e86d80962d6}{sendDofBuf\_}};}
+\DoxyCodeLine{00097\ }
+\DoxyCodeLine{00099\ \ \ \ \ \textcolor{keyword}{mutable}\ CompactListList<Type>\ \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField_aedc22b6c93d6e4b8b08ba46a22489914}{recvDofBuf\_}};}
+\DoxyCodeLine{00100\ }
+\DoxyCodeLine{00101\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00102\ }
+\DoxyCodeLine{00103\ \ \ \ \ \textcolor{comment}{//\ Constructors\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
 \DoxyCodeLine{00104\ }
-\DoxyCodeLine{00105\ \ \ \ \ \textcolor{comment}{//-\/\ Destructor}}
-\DoxyCodeLine{00106\ \ \ \ \ \textcolor{keyword}{virtual}\ \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField_a703c2728de95e6deaca9ff422989491b}{\string~dgProcessorBoundaryField}}()\ =\ \textcolor{keywordflow}{default};}
-\DoxyCodeLine{00107\ }
-\DoxyCodeLine{00108\ \ \ \ \ \textcolor{comment}{//\ Core\ communication\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00109\ }
-\DoxyCodeLine{00118\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField_a28fe949f350b6388a2ad558c83eb2c25}{update}}}
-\DoxyCodeLine{00119\ \ \ \ \ (}
-\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{dgField<Type>}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{field}}}
-\DoxyCodeLine{00121\ \ \ \ \ )\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00122\ }
-\DoxyCodeLine{00123\ \ \ \ \ \textcolor{comment}{//\ Low-\/level\ communication\ helpers\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00124\ }
-\DoxyCodeLine{00130\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField_a4aa4338e8be3aa9f4c2490d3e3efd17e}{sendAll}}}
-\DoxyCodeLine{00131\ \ \ \ \ (}
-\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{dgField<Type>}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{field}}}
-\DoxyCodeLine{00133\ \ \ \ \ )\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00134\ }
-\DoxyCodeLine{00140\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField_af9c231c18d1ecaf4b0c2bb209c767511}{recvAll}}}
-\DoxyCodeLine{00141\ \ \ \ \ (}
-\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{dgField<Type>}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{field}}}
-\DoxyCodeLine{00143\ \ \ \ \ )\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00144\ }
-\DoxyCodeLine{00145\ \ \ \ \ \textcolor{comment}{//\ MPI\ tag\ generation\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00146\ }
-\DoxyCodeLine{00155\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField_afe8411a305c3b44f259d9f005cdd682e}{genSendTag}}()\textcolor{keyword}{\ const}}
-\DoxyCodeLine{00156\ \textcolor{keyword}{\ \ \ \ }\{}
-\DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{myProc}}\ =\ Pstream::myProcNo();}
-\DoxyCodeLine{00158\ }
-\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classFoam_1_1GaussField}{myProc}}\ >=\ 200000\ ||\ \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField_a20fae8edfee33edc4e761acc11aff751}{neighbProc\_}}\ >=\ 200000)}
-\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{FatalErrorInFunction}}}
-\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{}Processor\ rank\ too\ large\ for\ tag\ scheme:\ "{}}}
-\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \mbox{\hyperlink{classFoam_1_1GaussField}{myProc}}\ <<\ \textcolor{stringliteral}{"{}\ "{}}\ <<\ \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField_a20fae8edfee33edc4e761acc11aff751}{neighbProc\_}}}
-\DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \mbox{\hyperlink{classFoam_1_1GaussField}{exit}}(\mbox{\hyperlink{classFoam_1_1GaussField}{FatalError}});}
-\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00166\ }
-\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classFoam_1_1GaussField}{myProc}}*1\mbox{\hyperlink{classFoam_1_1GaussField}{e6}}\ +\ \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField_a20fae8edfee33edc4e761acc11aff751}{neighbProc\_}};}
-\DoxyCodeLine{00168\ \ \ \ \ \}}
-\DoxyCodeLine{00169\ }
-\DoxyCodeLine{00178\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField_af8cce9ea0db0eab33d19730a6b2ef7ec}{genRecvTag}}()\textcolor{keyword}{\ const}}
-\DoxyCodeLine{00179\ \textcolor{keyword}{\ \ \ \ }\{}
-\DoxyCodeLine{00180\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{myProc}}\ =\ Pstream::myProcNo();}
-\DoxyCodeLine{00181\ }
-\DoxyCodeLine{00182\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classFoam_1_1GaussField}{myProc}}\ >=\ 200000\ ||\ \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField_a20fae8edfee33edc4e761acc11aff751}{neighbProc\_}}\ >=\ 200000)}
-\DoxyCodeLine{00183\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00184\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{FatalErrorInFunction}}}
-\DoxyCodeLine{00185\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{}Processor\ rank\ too\ large\ for\ tag\ scheme:\ "{}}}
-\DoxyCodeLine{00186\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \mbox{\hyperlink{classFoam_1_1GaussField}{myProc}}\ <<\ \textcolor{stringliteral}{"{}\ "{}}\ <<\ \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField_a20fae8edfee33edc4e761acc11aff751}{neighbProc\_}}}
-\DoxyCodeLine{00187\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \mbox{\hyperlink{classFoam_1_1GaussField}{exit}}(\mbox{\hyperlink{classFoam_1_1GaussField}{FatalError}});}
-\DoxyCodeLine{00188\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00189\ }
-\DoxyCodeLine{00190\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField_a20fae8edfee33edc4e761acc11aff751}{neighbProc\_}}*1\mbox{\hyperlink{classFoam_1_1GaussField}{e6}}\ +\ \mbox{\hyperlink{classFoam_1_1GaussField}{myProc}};}
-\DoxyCodeLine{00191\ \ \ \ \ \}}
-\DoxyCodeLine{00192\ }
-\DoxyCodeLine{00193\ \ \ \ \ \textcolor{comment}{//\ Access\ functions\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00194\ }
-\DoxyCodeLine{00196\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{processorFvPatch}}\&\ \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField_ad53d2439521fc37920925e7f32d52a7d}{patch}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField_a728842151ae1bd8604d21527ef471fd6}{procPatch\_}};\ \}}
-\DoxyCodeLine{00197\ }
-\DoxyCodeLine{00199\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dgGeomMesh}}\&\ \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField_ad767b7ae38e0c9557e351951448b81fa}{dgMesh}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField_aef2fae50069c54c9c94453abb18000f5}{dgMesh\_}};\ \}}
-\DoxyCodeLine{00200\ }
-\DoxyCodeLine{00202\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{word}}\&\ \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField_af521106b7fd8ac10e1274c740a915b74}{name}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField_a728842151ae1bd8604d21527ef471fd6}{procPatch\_}}.name();\ \}}
-\DoxyCodeLine{00203\ \};}
-\DoxyCodeLine{00204\ }
-\DoxyCodeLine{00205\ \}\ \textcolor{comment}{//\ End\ namespace\ Foam}}
-\DoxyCodeLine{00206\ }
-\DoxyCodeLine{00207\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*\(\backslash\)}}
-\DoxyCodeLine{00208\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Include\ template\ implementation}}
-\DoxyCodeLine{00209\ \textcolor{comment}{\(\backslash\)*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
-\DoxyCodeLine{00210\ }
-\DoxyCodeLine{00211\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{lnInclude_2dgProcessorBoundaryFieldI_8H}{dgProcessorBoundaryFieldI.H}}"{}}}
-\DoxyCodeLine{00212\ }
-\DoxyCodeLine{00213\ \textcolor{preprocessor}{\#endif}}
-\DoxyCodeLine{00214\ \textcolor{comment}{//\ *************************************************************************\ //}}
+\DoxyCodeLine{00113\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField_a7e67388024a3c92eb8e7959700d3e9ab}{dgProcessorBoundaryField}}}
+\DoxyCodeLine{00114\ \ \ \ \ (}
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{fvPatch}}\&\ \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField_ad53d2439521fc37920925e7f32d52a7d}{patch}},}
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dgGeomMesh}}\&\ \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField_ad767b7ae38e0c9557e351951448b81fa}{dgMesh}}}
+\DoxyCodeLine{00117\ \ \ \ \ );}
+\DoxyCodeLine{00118\ }
+\DoxyCodeLine{00119\ \ \ \ \ \textcolor{comment}{//-\/\ Destructor}}
+\DoxyCodeLine{00120\ \ \ \ \ \textcolor{keyword}{virtual}\ \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField_a703c2728de95e6deaca9ff422989491b}{\string~dgProcessorBoundaryField}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00121\ }
+\DoxyCodeLine{00122\ \ \ \ \ \textcolor{comment}{//\ Core\ communication\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00123\ }
+\DoxyCodeLine{00132\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField_a28fe949f350b6388a2ad558c83eb2c25}{update}}}
+\DoxyCodeLine{00133\ \ \ \ \ (}
+\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{dgField<Type>}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{field}}}
+\DoxyCodeLine{00135\ \ \ \ \ )\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00136\ }
+\DoxyCodeLine{00137\ \ \ \ \ \textcolor{comment}{//\ Low-\/level\ communication\ helpers\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00138\ }
+\DoxyCodeLine{00144\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField_aae15ffd4aef645f930831cbb2ddf2800}{sendAll}}}
+\DoxyCodeLine{00145\ \ \ \ \ (}
+\DoxyCodeLine{00146\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{dgField<Type>}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{field}},}
+\DoxyCodeLine{00147\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{PstreamBuffers}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{pBufs}}}
+\DoxyCodeLine{00148\ \ \ \ \ )\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00149\ }
+\DoxyCodeLine{00155\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField_a94c2f814cca7e2e25624e8cb9302bdfa}{recvAll}}}
+\DoxyCodeLine{00156\ \ \ \ \ (}
+\DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{dgField<Type>}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{field}},}
+\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{PstreamBuffers}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{pBufs}}}
+\DoxyCodeLine{00159\ \ \ \ \ )\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00160\ }
+\DoxyCodeLine{00161\ \ \ \ \ \textcolor{comment}{//\ Access\ functions\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00162\ }
+\DoxyCodeLine{00164\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{processorFvPatch}}\&\ \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField_ad53d2439521fc37920925e7f32d52a7d}{patch}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField_a728842151ae1bd8604d21527ef471fd6}{procPatch\_}};\ \}}
+\DoxyCodeLine{00165\ }
+\DoxyCodeLine{00167\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dgGeomMesh}}\&\ \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField_ad767b7ae38e0c9557e351951448b81fa}{dgMesh}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField_aef2fae50069c54c9c94453abb18000f5}{dgMesh\_}};\ \}}
+\DoxyCodeLine{00168\ }
+\DoxyCodeLine{00170\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{word}}\&\ \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField_af521106b7fd8ac10e1274c740a915b74}{name}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField_a728842151ae1bd8604d21527ef471fd6}{procPatch\_}}.name();\ \}}
+\DoxyCodeLine{00171\ \};}
+\DoxyCodeLine{00172\ }
+\DoxyCodeLine{00173\ \}\ \textcolor{comment}{//\ End\ namespace\ Foam}}
+\DoxyCodeLine{00174\ }
+\DoxyCodeLine{00175\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*\(\backslash\)}}
+\DoxyCodeLine{00176\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Include\ template\ implementation}}
+\DoxyCodeLine{00177\ \textcolor{comment}{\(\backslash\)*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{00178\ }
+\DoxyCodeLine{00179\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{lnInclude_2dgProcessorBoundaryFieldI_8H}{dgProcessorBoundaryFieldI.H}}"{}}}
+\DoxyCodeLine{00180\ }
+\DoxyCodeLine{00181\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00182\ \textcolor{comment}{//\ *************************************************************************\ //}}
 
 \end{DoxyCode}

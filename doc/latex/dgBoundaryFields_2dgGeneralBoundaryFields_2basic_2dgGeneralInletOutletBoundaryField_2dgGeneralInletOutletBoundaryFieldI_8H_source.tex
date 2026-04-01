@@ -47,15 +47,15 @@
 \DoxyCodeLine{00043\ \mbox{\hyperlink{classFoam_1_1dgGeneralInletOutletBoundaryField_ae28f319bd39f465533efbe52fe8b8082}{dgGeneralInletOutletBoundaryField<Type>::dgGeneralInletOutletBoundaryField}}}
 \DoxyCodeLine{00044\ (}
 \DoxyCodeLine{00045\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{fvPatch}}\&\ patch,}
-\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dgGeomMesh}}\&\ dgMesh,}
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dgGeomMesh}}\&\ \mbox{\hyperlink{solvers_2compressible_2DGCompressibleFoam_2createDGMesh_8H_ac2f70ae412900de0f8c13e91bd870b5c}{dgMesh}},}
 \DoxyCodeLine{00047\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}}\&\ dict}
 \DoxyCodeLine{00048\ )}
 \DoxyCodeLine{00049\ :}
-\DoxyCodeLine{00050\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField}{dgGeneralBoundaryField}}<\mbox{\hyperlink{classFoam_1_1GaussField}{Type}}>(patch,\ dgMesh,\ dict),}
+\DoxyCodeLine{00050\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField}{dgGeneralBoundaryField}}<\mbox{\hyperlink{classFoam_1_1GaussField}{Type}}>(patch,\ \mbox{\hyperlink{solvers_2compressible_2DGCompressibleFoam_2createDGMesh_8H_ac2f70ae412900de0f8c13e91bd870b5c}{dgMesh}},\ dict),}
 \DoxyCodeLine{00051\ \ \ \ \ UName\_(dict.\mbox{\hyperlink{classFoam_1_1GaussField}{lookupOrDefault}}(\textcolor{stringliteral}{"{}U"{}},\ \mbox{\hyperlink{classFoam_1_1GaussField}{word}}(\textcolor{stringliteral}{"{}U"{}}))),}
 \DoxyCodeLine{00052\ \ \ \ \ U\_}
 \DoxyCodeLine{00053\ \ \ \ \ (}
-\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ dgMesh.getFvMesh().\mbox{\hyperlink{classFoam_1_1GaussField}{lookupObject}}<\mbox{\hyperlink{classFoam_1_1dgField}{dgField}}<\mbox{\hyperlink{classFoam_1_1GaussField}{vector}}>>(UName\_)}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{solvers_2compressible_2DGCompressibleFoam_2createDGMesh_8H_ac2f70ae412900de0f8c13e91bd870b5c}{dgMesh}}.getFvMesh().\mbox{\hyperlink{classFoam_1_1GaussField}{lookupObject}}<\mbox{\hyperlink{classFoam_1_1dgField}{dgField}}<\mbox{\hyperlink{classFoam_1_1GaussField}{vector}}>>(UName\_)}
 \DoxyCodeLine{00055\ \ \ \ \ )}
 \DoxyCodeLine{00056\ \{}
 \DoxyCodeLine{00057\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField_acf8a9ee14cd01bde7a78896f1bfde325}{dict}}.readEntry(\textcolor{stringliteral}{"{}inletValue"{}},\ \mbox{\hyperlink{classFoam_1_1dgGeneralInletOutletBoundaryField_ab607c257434c76af5ce7f4257c5bf71a}{inletValue\_}});}

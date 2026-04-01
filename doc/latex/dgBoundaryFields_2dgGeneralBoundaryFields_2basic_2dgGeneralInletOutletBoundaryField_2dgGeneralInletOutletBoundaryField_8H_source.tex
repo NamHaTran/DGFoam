@@ -82,7 +82,7 @@
 \DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ cellID,}
 \DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{faceLocalID}},}
 \DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{localGauss}},}
-\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{n}},}
+\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}}\&\ n,}
 \DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}}\&\ minusValue,}
 \DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}}\&\ plusValue}
 \DoxyCodeLine{00133\ \ \ \ \ )\textcolor{keyword}{\ const\ override}}
@@ -90,11 +90,11 @@
 \DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{Un}}\ =}
 \DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1dgGeneralInletOutletBoundaryField_a577c6f3deff7a4743d4b33167614ea1b}{U\_}}.gaussFields()[cellID].\mbox{\hyperlink{classFoam_1_1GaussField_a396ecdd4262ce1f979ca4e93a91b55ee}{facePlusValueAt}}(\mbox{\hyperlink{classFoam_1_1GaussField}{faceLocalID}},\ \mbox{\hyperlink{classFoam_1_1GaussField}{localGauss}});}
 \DoxyCodeLine{00137\ }
-\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{dotProd}}\ =\ \mbox{\hyperlink{classFoam_1_1GaussField}{Un}}\ \&\ \mbox{\hyperlink{classFoam_1_1GaussField}{n}};}
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{dotProd}}\ =\ \mbox{\hyperlink{classFoam_1_1GaussField}{Un}}\ \&\ n;}
 \DoxyCodeLine{00139\ }
 \DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classFoam_1_1GaussField}{dotProd}}\ <\ 0)\ \textcolor{comment}{//\ Inlet:\ flow\ into\ domain}}
 \DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ \ \ \ \ plusValue\ =\ 2\ *\ \mbox{\hyperlink{classFoam_1_1dgGeneralInletOutletBoundaryField_ab607c257434c76af5ce7f4257c5bf71a}{inletValue\_}}\ -\/\ minusValue;}
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ \ \ \ \ plusValue\ =\ \mbox{\hyperlink{classFoam_1_1dgGeneralInletOutletBoundaryField_ab607c257434c76af5ce7f4257c5bf71a}{inletValue\_}};}
 \DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{00144\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{comment}{//\ Outlet:\ flow\ out\ of\ domain}}
 \DoxyCodeLine{00145\ \ \ \ \ \ \ \ \ \{}

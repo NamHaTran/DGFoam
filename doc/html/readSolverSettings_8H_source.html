@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>DGFoam: /home/nam-ha-tran/OpenFOAM/DGFoam/applications/solvers/compressible/DGHyperSonicFoam/readSolverSettings.H Source File</title>
+<title>DGFoam: /home/nam-ha-tran/OpenFOAM/DGFoam/applications/solvers/compressible/DGCompressibleFoam/readSolverSettings.H Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -82,7 +82,7 @@ $(document).ready(function() { init_codefold(0); });
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_a6e4fee11f07c3b70486e88fe92cbbdc.html">applications</a></li><li class="navelem"><a class="el" href="dir_fdd174abb8ada244b49e98779c87ac3c.html">solvers</a></li><li class="navelem"><a class="el" href="dir_ec6fbd2e4e71296a5c4843bd2aa1db19.html">compressible</a></li><li class="navelem"><a class="el" href="dir_f3377d5d57686a5a9a30c0937b840568.html">DGHyperSonicFoam</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_a6e4fee11f07c3b70486e88fe92cbbdc.html">applications</a></li><li class="navelem"><a class="el" href="dir_fdd174abb8ada244b49e98779c87ac3c.html">solvers</a></li><li class="navelem"><a class="el" href="dir_ec6fbd2e4e71296a5c4843bd2aa1db19.html">compressible</a></li><li class="navelem"><a class="el" href="dir_4ea6b196376de23f876dd8b61bb5a56f.html">DGCompressibleFoam</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -114,34 +114,44 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno"><a class="line" href="readSolverSettings_8H.html#abc8b9b91a9193e1e23bcd871dcdff481">   23</a></span>dgFluxSolverManager <a class="code hl_function" href="readSolverSettings_8H.html#abc8b9b91a9193e1e23bcd871dcdff481">fluxSolverManager</a></div>
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>(</div>
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>    <a class="code hl_function" href="readSolverSettings_8H.html#a5fe45979d786d7fef7e805a5a2736c48">dgSchemesDict</a>,</div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    dgMesh</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    <a class="code hl_function" href="solvers_2compressible_2DGCompressibleFoam_2createDGMesh_8H.html#ac2f70ae412900de0f8c13e91bd870b5c">dgMesh</a></div>
 <div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>);</div>
 <div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span> </div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span><span class="comment">// timeDiscretization stores residual buffers and applies the chosen explicit</span></div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="comment">// scheme (Euler, SSPRK, RK4, ...) to all registered conservative fields.</span></div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span><span class="comment">// Conceptually it is the stage driver for the semi-discrete system M dU/dt=R.</span></div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno"><a class="line" href="readSolverSettings_8H.html#a731ad9087afece7da5cbd3261100a133">   32</a></span>dgTimeDiscretization <a class="code hl_function" href="readSolverSettings_8H.html#a731ad9087afece7da5cbd3261100a133">timeDiscretization</a></div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>(</div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    <a class="code hl_function" href="readSolverSettings_8H.html#a5fe45979d786d7fef7e805a5a2736c48">dgSchemesDict</a>,</div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    <a class="code hl_variable" href="VarDeclaration_8h.html#a122df5dd52660cdfcef00ba179bd53a7">runTime</a>,</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>    dgMesh</div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>);</div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span><span class="comment">// Only conservative fields are registered because those are the unknowns</span></div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span><span class="comment">// advanced by the explicit update formula. Primitive fields are derived data</span></div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span><span class="comment">// and are reconstructed again after each stage update.</span></div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno"><a class="line" href="readSolverSettings_8H.html#ad2797295764c0d7e098cb8682b701e00">   42</a></span><a class="code hl_function" href="readSolverSettings_8H.html#a731ad9087afece7da5cbd3261100a133">timeDiscretization</a>.registerField(<a class="code hl_variable" href="dynamicVarDeclaration_8cpp.html#ae7a21fded6f5e50f59fb05c0735f2479">rho</a>);</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno"><a class="line" href="readSolverSettings_8H.html#a86db4ebc52b540c9af356a11309c5c73">   43</a></span><a class="code hl_function" href="readSolverSettings_8H.html#a731ad9087afece7da5cbd3261100a133">timeDiscretization</a>.registerField(<a class="code hl_function" href="createConservativeFields_8H.html#a4f450f5e1994b9626ccd4ea0964b1918">rhoU</a>);</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno"><a class="line" href="readSolverSettings_8H.html#adf655be49f40514baaaee247cf057ce2">   44</a></span><a class="code hl_function" href="readSolverSettings_8H.html#a731ad9087afece7da5cbd3261100a133">timeDiscretization</a>.registerField(<a class="code hl_function" href="createConservativeFields_8H.html#a3f370753d9872dffe05120a7a166ba5b">E</a>);</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span><span class="comment">// limiterManager reads constant/dgOptions and constructs the ordered list of</span></div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="comment">// DG limiters to be applied after every explicit time stage.</span></div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno"><a class="line" href="readSolverSettings_8H.html#ab2c4c8bf35a5262a3a696fb728a9335c">   31</a></span>dgLimiterManager <a class="code hl_function" href="readSolverSettings_8H.html#ab2c4c8bf35a5262a3a696fb728a9335c">limiterManager</a></div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>(</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>    <a class="code hl_function" href="solvers_2compressible_2DGCompressibleFoam_2createDGMesh_8H.html#ac2f70ae412900de0f8c13e91bd870b5c">dgMesh</a></div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>);</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span> </div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="comment">// timeDiscretization stores residual buffers and applies the chosen explicit</span></div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span><span class="comment">// scheme (Euler, SSPRK, RK4, ...) to all registered conservative fields.</span></div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span><span class="comment">// Conceptually it is the stage driver for the semi-discrete system M dU/dt=R.</span></div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno"><a class="line" href="readSolverSettings_8H.html#a731ad9087afece7da5cbd3261100a133">   39</a></span>dgTimeDiscretization <a class="code hl_function" href="readSolverSettings_8H.html#a731ad9087afece7da5cbd3261100a133">timeDiscretization</a></div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>(</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>    <a class="code hl_function" href="readSolverSettings_8H.html#a5fe45979d786d7fef7e805a5a2736c48">dgSchemesDict</a>,</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>    <a class="code hl_variable" href="VarDeclaration_8h.html#a122df5dd52660cdfcef00ba179bd53a7">runTime</a>,</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    <a class="code hl_function" href="solvers_2compressible_2DGCompressibleFoam_2createDGMesh_8H.html#ac2f70ae412900de0f8c13e91bd870b5c">dgMesh</a></div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>);</div>
 <div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span> </div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno"><a class="line" href="readSolverSettings_8H.html#a7be859dd105ac8931fcfcdfe30b6b975">   46</a></span><a class="code hl_function" href="readSolverSettings_8H.html#a731ad9087afece7da5cbd3261100a133">timeDiscretization</a>.writeInfo(Info);</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span><span class="comment">// Only conservative fields are registered because those are the unknowns</span></div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span><span class="comment">// advanced by the explicit update formula. Primitive fields are derived data</span></div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span><span class="comment">// and are reconstructed again after each stage update.</span></div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno"><a class="line" href="readSolverSettings_8H.html#ad2797295764c0d7e098cb8682b701e00">   49</a></span><a class="code hl_function" href="readSolverSettings_8H.html#a731ad9087afece7da5cbd3261100a133">timeDiscretization</a>.registerField(<a class="code hl_variable" href="dynamicVarDeclaration_8cpp.html#ae7a21fded6f5e50f59fb05c0735f2479">rho</a>);</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno"><a class="line" href="readSolverSettings_8H.html#a86db4ebc52b540c9af356a11309c5c73">   50</a></span><a class="code hl_function" href="readSolverSettings_8H.html#a731ad9087afece7da5cbd3261100a133">timeDiscretization</a>.registerField(<a class="code hl_function" href="createConservativeFields_8H.html#a4f450f5e1994b9626ccd4ea0964b1918">rhoU</a>);</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno"><a class="line" href="readSolverSettings_8H.html#adf655be49f40514baaaee247cf057ce2">   51</a></span><a class="code hl_function" href="readSolverSettings_8H.html#a731ad9087afece7da5cbd3261100a133">timeDiscretization</a>.registerField(<a class="code hl_function" href="createConservativeFields_8H.html#a3f370753d9872dffe05120a7a166ba5b">E</a>);</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span> </div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno"><a class="line" href="readSolverSettings_8H.html#a7be859dd105ac8931fcfcdfe30b6b975">   53</a></span><a class="code hl_function" href="readSolverSettings_8H.html#a731ad9087afece7da5cbd3261100a133">timeDiscretization</a>.writeInfo(Info);</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno"><a class="line" href="readSolverSettings_8H.html#a582d4e2f1c768fd64fe0a2d4bba8e07a">   54</a></span><a class="code hl_function" href="readSolverSettings_8H.html#ab2c4c8bf35a5262a3a696fb728a9335c">limiterManager</a>.listLimiters(Info);</div>
 <div class="ttc" id="aVarDeclaration_8h_html_a122df5dd52660cdfcef00ba179bd53a7"><div class="ttname"><a href="VarDeclaration_8h.html#a122df5dd52660cdfcef00ba179bd53a7">runTime</a></div><div class="ttdeci">double runTime</div></div>
 <div class="ttc" id="acreateConservativeFields_8H_html_a3f370753d9872dffe05120a7a166ba5b"><div class="ttname"><a href="createConservativeFields_8H.html#a3f370753d9872dffe05120a7a166ba5b">E</a></div><div class="ttdeci">dgField&lt; scalar &gt; E(IOobject(&quot;E&quot;, runTime.timeName(), mesh, IOobject::MUST_READ, IOobject::AUTO_WRITE), dgMesh, true)</div></div>
 <div class="ttc" id="acreateConservativeFields_8H_html_a4f450f5e1994b9626ccd4ea0964b1918"><div class="ttname"><a href="createConservativeFields_8H.html#a4f450f5e1994b9626ccd4ea0964b1918">rhoU</a></div><div class="ttdeci">dgField&lt; vector &gt; rhoU(IOobject(&quot;rhoU&quot;, runTime.timeName(), mesh, IOobject::MUST_READ, IOobject::AUTO_WRITE), dgMesh, true)</div></div>
 <div class="ttc" id="adynamicVarDeclaration_8cpp_html_ae7a21fded6f5e50f59fb05c0735f2479"><div class="ttname"><a href="dynamicVarDeclaration_8cpp.html#ae7a21fded6f5e50f59fb05c0735f2479">rho</a></div><div class="ttdeci">double ** rho</div><div class="ttdef"><b>Definition</b> dynamicVarDeclaration.cpp:111</div></div>
 <div class="ttc" id="areadSolverSettings_8H_html_a5fe45979d786d7fef7e805a5a2736c48"><div class="ttname"><a href="readSolverSettings_8H.html#a5fe45979d786d7fef7e805a5a2736c48">dgSchemesDict</a></div><div class="ttdeci">IOdictionary dgSchemesDict(IOobject(&quot;dgSchemes&quot;, runTime.system(), mesh, IOobject::MUST_READ, IOobject::NO_WRITE))</div></div>
 <div class="ttc" id="areadSolverSettings_8H_html_a731ad9087afece7da5cbd3261100a133"><div class="ttname"><a href="readSolverSettings_8H.html#a731ad9087afece7da5cbd3261100a133">timeDiscretization</a></div><div class="ttdeci">dgTimeDiscretization timeDiscretization(dgSchemesDict, runTime, dgMesh)</div></div>
+<div class="ttc" id="areadSolverSettings_8H_html_ab2c4c8bf35a5262a3a696fb728a9335c"><div class="ttname"><a href="readSolverSettings_8H.html#ab2c4c8bf35a5262a3a696fb728a9335c">limiterManager</a></div><div class="ttdeci">dgLimiterManager limiterManager(dgMesh)</div></div>
 <div class="ttc" id="areadSolverSettings_8H_html_abc8b9b91a9193e1e23bcd871dcdff481"><div class="ttname"><a href="readSolverSettings_8H.html#abc8b9b91a9193e1e23bcd871dcdff481">fluxSolverManager</a></div><div class="ttdeci">dgFluxSolverManager fluxSolverManager(dgSchemesDict, dgMesh)</div></div>
+<div class="ttc" id="asolvers_2compressible_2DGCompressibleFoam_2createDGMesh_8H_html_ac2f70ae412900de0f8c13e91bd870b5c"><div class="ttname"><a href="solvers_2compressible_2DGCompressibleFoam_2createDGMesh_8H.html#ac2f70ae412900de0f8c13e91bd870b5c">dgMesh</a></div><div class="ttdeci">dgGeomMesh dgMesh(mesh)</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

@@ -33,62 +33,73 @@
 \DoxyCodeLine{00029\ \textcolor{preprocessor}{\#ifndef\ Foam\_dgProcessorBoundaryManagerI\_H}}
 \DoxyCodeLine{00030\ \textcolor{preprocessor}{\#define\ Foam\_dgProcessorBoundaryManagerI\_H}}
 \DoxyCodeLine{00031\ }
-\DoxyCodeLine{00032\ \textcolor{comment}{//\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ Constructors\ \ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ //}}
+\DoxyCodeLine{00032\ \textcolor{preprocessor}{\#include\ "{}PstreamBuffers.H"{}}}
 \DoxyCodeLine{00033\ }
-\DoxyCodeLine{00034\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Type>}
-\DoxyCodeLine{00035\ \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryManager_a51bd597f184defdb336482e8cae1299b}{Foam::dgProcessorBoundaryManager<Type>::dgProcessorBoundaryManager}}}
-\DoxyCodeLine{00036\ (}
-\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keyword}{const}\ dgGeomMesh\&\ mesh}
-\DoxyCodeLine{00038\ )}
-\DoxyCodeLine{00039\ :}
-\DoxyCodeLine{00040\ \ \ \ \ mesh\_(mesh)}
-\DoxyCodeLine{00041\ \{}
-\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keyword}{const}\ fvBoundaryMesh\&\ patches\ =\ mesh\_.getFvMesh().boundary();}
-\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keyword}{const}\ label\ nPatches\ =\ patches.size();}
-\DoxyCodeLine{00044\ }
-\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ patchI\ =\ 0;\ patchI\ <\ nPatches;\ ++patchI)}
-\DoxyCodeLine{00046\ \ \ \ \ \{}
-\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ fvPatch\&\ patch\ =\ patches[patchI];}
-\DoxyCodeLine{00048\ }
-\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (dgBoundaryHelper::isInterfacePatch(patch))}
-\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \ \ \ \ bConditions\_.append}
-\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \ \ \ \ (}
-\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{new}\ dgProcessorBoundaryField<Type>(patch,\ mesh\_)}
-\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \ \ \ \ );}
-\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00056\ \ \ \ \ \}}
-\DoxyCodeLine{00057\ \}}
-\DoxyCodeLine{00058\ }
-\DoxyCodeLine{00059\ \textcolor{comment}{//\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ Member\ Functions\ \ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ //}}
+\DoxyCodeLine{00034\ \textcolor{comment}{//\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ Constructors\ \ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ //}}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Type>}
+\DoxyCodeLine{00037\ \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryManager_a51bd597f184defdb336482e8cae1299b}{Foam::dgProcessorBoundaryManager<Type>::dgProcessorBoundaryManager}}}
+\DoxyCodeLine{00038\ (}
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keyword}{const}\ dgGeomMesh\&\ mesh}
+\DoxyCodeLine{00040\ )}
+\DoxyCodeLine{00041\ :}
+\DoxyCodeLine{00042\ \ \ \ \ mesh\_(mesh)}
+\DoxyCodeLine{00043\ \{}
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keyword}{const}\ fvBoundaryMesh\&\ patches\ =\ mesh\_.getFvMesh().boundary();}
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keyword}{const}\ label\ nPatches\ =\ patches.size();}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ patchI\ =\ 0;\ patchI\ <\ nPatches;\ ++patchI)}
+\DoxyCodeLine{00048\ \ \ \ \ \{}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ fvPatch\&\ patch\ =\ patches[patchI];}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (dgBoundaryHelper::isInterfacePatch(patch))}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \ \ \ \ bConditions\_.append}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \ \ \ \ (}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{new}\ dgProcessorBoundaryField<Type>(patch,\ mesh\_)}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \ \ \ \ );}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00058\ \ \ \ \ \}}
+\DoxyCodeLine{00059\ \}}
 \DoxyCodeLine{00060\ }
-\DoxyCodeLine{00061\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Type>}
-\DoxyCodeLine{00062\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryManager_af65e4c96211ef479d837786c38d0305e}{Foam::dgProcessorBoundaryManager<Type>::update}}}
-\DoxyCodeLine{00063\ (}
-\DoxyCodeLine{00064\ \ \ \ \ dgField<Type>\&\ field}
-\DoxyCodeLine{00065\ )}
-\DoxyCodeLine{00066\ \{}
-\DoxyCodeLine{00067\ \ \ \ \ \textcolor{keywordflow}{if}\ (Pstream::parRun())}
-\DoxyCodeLine{00068\ \ \ \ \ \{}
-\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ pack\ and\ send}}
-\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{advanceStage_8H_a64a669ced2293965f99538a37d2c80d8}{forAll}}(bConditions\_,\ \mbox{\hyperlink{classFoam_1_1GaussField_a962e524110de8fe842a07f16521c7086}{patchI}})}
-\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \ \ \ \ bConditions\_[\mbox{\hyperlink{classFoam_1_1GaussField_a962e524110de8fe842a07f16521c7086}{patchI}}].sendAll(\mbox{\hyperlink{classFoam_1_1GaussField_a962e524110de8fe842a07f16521c7086}{field}});}
-\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00074\ }
-\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Wait\ for\ all\ sends\ to\ complete}}
-\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ UPstream::waitRequests(-\/1);}
-\DoxyCodeLine{00077\ }
-\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ recv\ and\ unpack}}
-\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{advanceStage_8H_a64a669ced2293965f99538a37d2c80d8}{forAll}}(bConditions\_,\ \mbox{\hyperlink{classFoam_1_1GaussField_a962e524110de8fe842a07f16521c7086}{patchI}})}
-\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \ \ \ \ bConditions\_[\mbox{\hyperlink{classFoam_1_1GaussField_a962e524110de8fe842a07f16521c7086}{patchI}}].recvAll(\mbox{\hyperlink{classFoam_1_1GaussField_a962e524110de8fe842a07f16521c7086}{field}});}
-\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00083\ \ \ \ \ \}}
-\DoxyCodeLine{00084\ \}}
+\DoxyCodeLine{00061\ \textcolor{comment}{//\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ Member\ Functions\ \ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ //}}
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00063\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Type>}
+\DoxyCodeLine{00064\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryManager_af65e4c96211ef479d837786c38d0305e}{Foam::dgProcessorBoundaryManager<Type>::update}}}
+\DoxyCodeLine{00065\ (}
+\DoxyCodeLine{00066\ \ \ \ \ dgField<Type>\&\ field}
+\DoxyCodeLine{00067\ )}
+\DoxyCodeLine{00068\ \{}
+\DoxyCodeLine{00069\ \ \ \ \ \textcolor{keywordflow}{if}\ (Pstream::parRun())}
+\DoxyCodeLine{00070\ \ \ \ \ \{}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classFoam_1_1GaussField_a962e524110de8fe842a07f16521c7086}{oldTag}}\ =\ UPstream::incrMsgType();}
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField_a962e524110de8fe842a07f16521c7086}{PstreamBuffers}}\ \mbox{\hyperlink{classFoam_1_1GaussField_a962e524110de8fe842a07f16521c7086}{pBufs}}}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ (}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \ \ \ \ UPstream::commsTypes::nonBlocking,}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \ \ \ \ UPstream::msgType()}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ );}
+\DoxyCodeLine{00078\ }
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Pack\ all\ processor-\/patch\ payloads\ into\ neighbour-\/specific\ buffers}}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ under\ one\ message\ tag\ for\ this\ field\ update.}}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{advanceStage_8H_a64a669ced2293965f99538a37d2c80d8}{forAll}}(bConditions\_,\ \mbox{\hyperlink{classFoam_1_1GaussField_a962e524110de8fe842a07f16521c7086}{patchI}})}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \ \ \ \ bConditions\_[\mbox{\hyperlink{classFoam_1_1GaussField_a962e524110de8fe842a07f16521c7086}{patchI}}].sendAll(\mbox{\hyperlink{classFoam_1_1GaussField_a962e524110de8fe842a07f16521c7086}{field}},\ \mbox{\hyperlink{classFoam_1_1GaussField_a962e524110de8fe842a07f16521c7086}{pBufs}});}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{00085\ }
-\DoxyCodeLine{00086\ \textcolor{preprocessor}{\#endif}}
-\DoxyCodeLine{00087\ \textcolor{comment}{//\ *************************************************************************\ //}}
-\DoxyCodeLine{00088\ }
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField_a962e524110de8fe842a07f16521c7086}{pBufs}}.finishedSends();}
+\DoxyCodeLine{00087\ }
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Consume\ the\ received\ payloads\ in\ the\ same\ patch\ order\ used\ above.}}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{advanceStage_8H_a64a669ced2293965f99538a37d2c80d8}{forAll}}(bConditions\_,\ \mbox{\hyperlink{classFoam_1_1GaussField_a962e524110de8fe842a07f16521c7086}{patchI}})}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \ \ \ \ bConditions\_[\mbox{\hyperlink{classFoam_1_1GaussField_a962e524110de8fe842a07f16521c7086}{patchI}}].recvAll(\mbox{\hyperlink{classFoam_1_1GaussField_a962e524110de8fe842a07f16521c7086}{field}},\ \mbox{\hyperlink{classFoam_1_1GaussField_a962e524110de8fe842a07f16521c7086}{pBufs}});}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00093\ }
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ UPstream::msgType(\mbox{\hyperlink{classFoam_1_1GaussField_a962e524110de8fe842a07f16521c7086}{oldTag}});}
+\DoxyCodeLine{00095\ \ \ \ \ \}}
+\DoxyCodeLine{00096\ \}}
+\DoxyCodeLine{00097\ }
+\DoxyCodeLine{00098\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00099\ \textcolor{comment}{//\ *************************************************************************\ //}}
 
 \end{DoxyCode}

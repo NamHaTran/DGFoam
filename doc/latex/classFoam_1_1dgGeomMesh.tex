@@ -12,7 +12,7 @@ DG geometric mesh wrapper around fv\+Mesh.
 \doxysubsubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\hyperlink{classFoam_1_1dgGeomMesh_aeee79bd56e352ab1136f56b69974d037}{dg\+Geom\+Mesh}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{fv\+Mesh}} \&mesh, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh_aa92b9cea58e66bfd21ead4a41e14a7b0}{p\+Order}})
+\mbox{\hyperlink{classFoam_1_1dgGeomMesh_ade3ba7e25f58b1f97693fb7177dbdd40}{dg\+Geom\+Mesh}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{fv\+Mesh}} \&mesh)
 \begin{DoxyCompactList}\small\item\em Construct DG geometric mesh. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1dgGeomMesh_af9daf23120decf533e1f38eb93b36bd2}{\texorpdfstring{$\sim$}{\string~}dg\+Geom\+Mesh}} ()
 \begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
@@ -44,7 +44,7 @@ DG geometric mesh wrapper around fv\+Mesh.
 \begin{DoxyCompactList}\small\item\em Return reference to the underlying fv\+Mesh. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh_ad238e60b8cb48da46a327fd37ce4fffe}{assign\+Face\+Connectivity\+To\+Proc\+Patches}} ()
 \begin{DoxyCompactList}\small\item\em Assign Gauss-\/point connectivity for processor-\/patch faces. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{classFoam_1_1dgGeomMesh_aeee79bd56e352ab1136f56b69974d037}{dg\+Geom\+Mesh}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{fv\+Mesh}} \&mesh, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh_aa92b9cea58e66bfd21ead4a41e14a7b0}{p\+Order}})
+\mbox{\hyperlink{classFoam_1_1dgGeomMesh_ade3ba7e25f58b1f97693fb7177dbdd40}{dg\+Geom\+Mesh}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{fv\+Mesh}} \&mesh)
 \begin{DoxyCompactList}\small\item\em Construct DG geometric mesh. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1dgGeomMesh_af9daf23120decf533e1f38eb93b36bd2}{\texorpdfstring{$\sim$}{\string~}dg\+Geom\+Mesh}} ()
 \begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
@@ -119,17 +119,17 @@ Responsibilities include\+:
 The class acts as the central geometric data container for DG discretization. 
 
 \doxysubsection{Constructor \& Destructor Documentation}
-\Hypertarget{classFoam_1_1dgGeomMesh_aeee79bd56e352ab1136f56b69974d037}\label{classFoam_1_1dgGeomMesh_aeee79bd56e352ab1136f56b69974d037} 
+\Hypertarget{classFoam_1_1dgGeomMesh_ade3ba7e25f58b1f97693fb7177dbdd40}\label{classFoam_1_1dgGeomMesh_ade3ba7e25f58b1f97693fb7177dbdd40} 
 \index{Foam::dgGeomMesh@{Foam::dgGeomMesh}!dgGeomMesh@{dgGeomMesh}}
 \index{dgGeomMesh@{dgGeomMesh}!Foam::dgGeomMesh@{Foam::dgGeomMesh}}
 \doxysubsubsection{\texorpdfstring{dgGeomMesh()}{dgGeomMesh()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
-{\footnotesize\ttfamily Foam\+::dg\+Geom\+Mesh\+::dg\+Geom\+Mesh (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{fv\+Mesh}} \&}]{mesh,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{p\+Order }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily Foam\+::dg\+Geom\+Mesh\+::dg\+Geom\+Mesh (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{fv\+Mesh}} \&}]{mesh }\end{DoxyParamCaption})}
 
 
 
 Construct DG geometric mesh. 
 
-Builds all DG geometric faces and cells from the provided fv\+Mesh and initializes reference-\/cell and reference-\/face data for the specified polynomial order. \Hypertarget{classFoam_1_1dgGeomMesh_af9daf23120decf533e1f38eb93b36bd2}\label{classFoam_1_1dgGeomMesh_af9daf23120decf533e1f38eb93b36bd2} 
+Builds all DG geometric faces and cells from the provided fv\+Mesh and initializes reference-\/cell and reference-\/face data. The DG polynomial order is read from {\ttfamily system/dg\+Schemes} under {\ttfamily dg\+Discretization/p\+Order}. \Hypertarget{classFoam_1_1dgGeomMesh_af9daf23120decf533e1f38eb93b36bd2}\label{classFoam_1_1dgGeomMesh_af9daf23120decf533e1f38eb93b36bd2} 
 \index{Foam::dgGeomMesh@{Foam::dgGeomMesh}!````~dgGeomMesh@{\texorpdfstring{$\sim$}{\string~}dgGeomMesh}}
 \index{````~dgGeomMesh@{\texorpdfstring{$\sim$}{\string~}dgGeomMesh}!Foam::dgGeomMesh@{Foam::dgGeomMesh}}
 \doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}dgGeomMesh()}{\string~dgGeomMesh()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
@@ -139,17 +139,17 @@ Builds all DG geometric faces and cells from the provided fv\+Mesh and initializ
 
 Destructor. 
 
-\Hypertarget{classFoam_1_1dgGeomMesh_aeee79bd56e352ab1136f56b69974d037}\label{classFoam_1_1dgGeomMesh_aeee79bd56e352ab1136f56b69974d037} 
+\Hypertarget{classFoam_1_1dgGeomMesh_ade3ba7e25f58b1f97693fb7177dbdd40}\label{classFoam_1_1dgGeomMesh_ade3ba7e25f58b1f97693fb7177dbdd40} 
 \index{Foam::dgGeomMesh@{Foam::dgGeomMesh}!dgGeomMesh@{dgGeomMesh}}
 \index{dgGeomMesh@{dgGeomMesh}!Foam::dgGeomMesh@{Foam::dgGeomMesh}}
 \doxysubsubsection{\texorpdfstring{dgGeomMesh()}{dgGeomMesh()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
-{\footnotesize\ttfamily Foam\+::dg\+Geom\+Mesh\+::dg\+Geom\+Mesh (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{fv\+Mesh}} \&}]{mesh,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{p\+Order }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily Foam\+::dg\+Geom\+Mesh\+::dg\+Geom\+Mesh (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{fv\+Mesh}} \&}]{mesh }\end{DoxyParamCaption})}
 
 
 
 Construct DG geometric mesh. 
 
-Builds all DG geometric faces and cells from the provided fv\+Mesh and initializes reference-\/cell and reference-\/face data for the specified polynomial order. \Hypertarget{classFoam_1_1dgGeomMesh_af9daf23120decf533e1f38eb93b36bd2}\label{classFoam_1_1dgGeomMesh_af9daf23120decf533e1f38eb93b36bd2} 
+Builds all DG geometric faces and cells from the provided fv\+Mesh and initializes reference-\/cell and reference-\/face data. The DG polynomial order is read from {\ttfamily system/dg\+Schemes} under {\ttfamily dg\+Discretization/p\+Order}. \Hypertarget{classFoam_1_1dgGeomMesh_af9daf23120decf533e1f38eb93b36bd2}\label{classFoam_1_1dgGeomMesh_af9daf23120decf533e1f38eb93b36bd2} 
 \index{Foam::dgGeomMesh@{Foam::dgGeomMesh}!````~dgGeomMesh@{\texorpdfstring{$\sim$}{\string~}dgGeomMesh}}
 \index{````~dgGeomMesh@{\texorpdfstring{$\sim$}{\string~}dgGeomMesh}!Foam::dgGeomMesh@{Foam::dgGeomMesh}}
 \doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}dgGeomMesh()}{\string~dgGeomMesh()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}

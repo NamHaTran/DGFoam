@@ -110,113 +110,129 @@
 \DoxyCodeLine{00182\ }
 \DoxyCodeLine{00183\ }
 \DoxyCodeLine{00184\ \ \ \ \ \textcolor{comment}{//====================================================================//}}
-\DoxyCodeLine{00185\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ Fundamental\ thermodynamic\ relations\ (Gauss\ fields)}}
+\DoxyCodeLine{00185\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ Fundamental\ thermodynamic\ relations\ (pointwise)}}
 \DoxyCodeLine{00186\ \ \ \ \ \textcolor{comment}{//}}
-\DoxyCodeLine{00187\ \ \ \ \ \textcolor{comment}{//\ These\ functions\ operate\ on\ GaussField\ quantities\ for\ a\ given\ cell.}}
-\DoxyCodeLine{00188\ \ \ \ \ \textcolor{comment}{//\ Models\ that\ do\ not\ support\ a\ particular\ relation\ must\ leave\ the}}
-\DoxyCodeLine{00189\ \ \ \ \ \textcolor{comment}{//\ default\ implementation,\ which\ triggers\ a\ fatal\ error.}}
+\DoxyCodeLine{00187\ \ \ \ \ \textcolor{comment}{//\ Derived\ EOS\ models\ implement\ scalar\ pointwise\ relations\ only.}}
+\DoxyCodeLine{00188\ \ \ \ \ \textcolor{comment}{//\ Field-\/level\ overloads\ below\ remain\ as\ compatibility\ wrappers\ that}}
+\DoxyCodeLine{00189\ \ \ \ \ \textcolor{comment}{//\ loop\ over\ Gauss\ points\ and\ dispatch\ to\ these\ scalar\ functions.}}
 \DoxyCodeLine{00190\ \ \ \ \ \textcolor{comment}{//====================================================================//}}
 \DoxyCodeLine{00191\ }
-\DoxyCodeLine{00202\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classFoam_1_1eqnOfState_a522e27c192b854c825fdf6680ec42ef6}{calcRhoFromPT}}}
-\DoxyCodeLine{00203\ \ \ \ \ (}
-\DoxyCodeLine{00204\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{cellI}},}
-\DoxyCodeLine{00205\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{GaussField<scalar>}}\&\ \mbox{\hyperlink{createPrimaryFields_8H_ad37d69387e92d6f1424be40cbca2fbec}{p}},}
-\DoxyCodeLine{00206\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{GaussField<scalar>}}\&\ \mbox{\hyperlink{namespaceFoam_a5faf7f302ed6c6307e3668365456af74}{T}},}
-\DoxyCodeLine{00207\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{GaussField<scalar>}}\&\ \mbox{\hyperlink{dynamicVarDeclaration_8cpp_ae7a21fded6f5e50f59fb05c0735f2479}{rho}}}
-\DoxyCodeLine{00208\ \ \ \ \ )\textcolor{keyword}{\ const}}
-\DoxyCodeLine{00209\ \textcolor{keyword}{\ \ \ \ }\{}
-\DoxyCodeLine{00210\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{FatalErrorInFunction}}}
-\DoxyCodeLine{00211\ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{}calcRhoFromPT()\ not\ supported\ by\ this\ EOS\ model"{}}}
-\DoxyCodeLine{00212\ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \mbox{\hyperlink{classFoam_1_1GaussField}{exit}}(\mbox{\hyperlink{classFoam_1_1GaussField}{FatalError}});}
-\DoxyCodeLine{00213\ \ \ \ \ \}}
-\DoxyCodeLine{00214\ }
-\DoxyCodeLine{00215\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classFoam_1_1eqnOfState_a4571c8f66975412a041234909c999cf3}{calcRhoFromPT}}}
-\DoxyCodeLine{00216\ \ \ \ \ (}
-\DoxyCodeLine{00217\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{boundaryGaussField<scalar>}}\&\ \mbox{\hyperlink{createPrimaryFields_8H_ad37d69387e92d6f1424be40cbca2fbec}{p}},}
-\DoxyCodeLine{00218\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{boundaryGaussField<scalar>}}\&\ \mbox{\hyperlink{namespaceFoam_a5faf7f302ed6c6307e3668365456af74}{T}},}
-\DoxyCodeLine{00219\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{boundaryGaussField<scalar>}}\&\ \mbox{\hyperlink{dynamicVarDeclaration_8cpp_ae7a21fded6f5e50f59fb05c0735f2479}{rho}}}
-\DoxyCodeLine{00220\ \ \ \ \ )\textcolor{keyword}{\ const}}
-\DoxyCodeLine{00221\ \textcolor{keyword}{\ \ \ \ }\{}
-\DoxyCodeLine{00222\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{FatalErrorInFunction}}}
-\DoxyCodeLine{00223\ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{}calcRhoFromPT()\ not\ supported\ by\ this\ EOS\ model"{}}}
-\DoxyCodeLine{00224\ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \mbox{\hyperlink{classFoam_1_1GaussField}{exit}}(\mbox{\hyperlink{classFoam_1_1GaussField}{FatalError}});}
-\DoxyCodeLine{00225\ \ \ \ \ \}}
-\DoxyCodeLine{00226\ }
-\DoxyCodeLine{00232\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classFoam_1_1eqnOfState_a65f54ba85805d32858e1397f16c71c67}{calcPFromRhoT}}}
-\DoxyCodeLine{00233\ \ \ \ \ (}
-\DoxyCodeLine{00234\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{cellI}},}
-\DoxyCodeLine{00235\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{GaussField<scalar>}}\&\ \mbox{\hyperlink{dynamicVarDeclaration_8cpp_ae7a21fded6f5e50f59fb05c0735f2479}{rho}},}
-\DoxyCodeLine{00236\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{GaussField<scalar>}}\&\ \mbox{\hyperlink{namespaceFoam_a5faf7f302ed6c6307e3668365456af74}{T}},}
-\DoxyCodeLine{00237\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{GaussField<scalar>}}\&\ \mbox{\hyperlink{createPrimaryFields_8H_ad37d69387e92d6f1424be40cbca2fbec}{p}}}
-\DoxyCodeLine{00238\ \ \ \ \ )\textcolor{keyword}{\ const}}
-\DoxyCodeLine{00239\ \textcolor{keyword}{\ \ \ \ }\{}
-\DoxyCodeLine{00240\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{FatalErrorInFunction}}}
-\DoxyCodeLine{00241\ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{}calcPFromRhoT()\ not\ supported\ by\ this\ EOS\ model"{}}}
-\DoxyCodeLine{00242\ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \mbox{\hyperlink{classFoam_1_1GaussField}{exit}}(\mbox{\hyperlink{classFoam_1_1GaussField}{FatalError}});}
-\DoxyCodeLine{00243\ \ \ \ \ \}}
-\DoxyCodeLine{00244\ }
-\DoxyCodeLine{00245\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classFoam_1_1eqnOfState_aefe28373f9e4c45be5228ed43e2fd7ed}{calcPFromRhoT}}}
-\DoxyCodeLine{00246\ \ \ \ \ (}
-\DoxyCodeLine{00247\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{boundaryGaussField<scalar>}}\&\ \mbox{\hyperlink{dynamicVarDeclaration_8cpp_ae7a21fded6f5e50f59fb05c0735f2479}{rho}},}
-\DoxyCodeLine{00248\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{boundaryGaussField<scalar>}}\&\ \mbox{\hyperlink{namespaceFoam_a5faf7f302ed6c6307e3668365456af74}{T}},}
-\DoxyCodeLine{00249\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{boundaryGaussField<scalar>}}\&\ \mbox{\hyperlink{createPrimaryFields_8H_ad37d69387e92d6f1424be40cbca2fbec}{p}}}
-\DoxyCodeLine{00250\ \ \ \ \ )\textcolor{keyword}{\ const}}
-\DoxyCodeLine{00251\ \textcolor{keyword}{\ \ \ \ }\{}
-\DoxyCodeLine{00252\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{FatalErrorInFunction}}}
-\DoxyCodeLine{00253\ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{}calcPFromRhoT()\ not\ supported\ by\ this\ EOS\ model"{}}}
-\DoxyCodeLine{00254\ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \mbox{\hyperlink{classFoam_1_1GaussField}{exit}}(\mbox{\hyperlink{classFoam_1_1GaussField}{FatalError}});}
-\DoxyCodeLine{00255\ \ \ \ \ \}}
-\DoxyCodeLine{00256\ }
-\DoxyCodeLine{00262\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classFoam_1_1eqnOfState_ab66dce55045f7d82adcc73a81004888a}{calcTFromPRho}}}
-\DoxyCodeLine{00263\ \ \ \ \ (}
-\DoxyCodeLine{00264\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{cellI}},}
-\DoxyCodeLine{00265\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{GaussField<scalar>}}\&\ \mbox{\hyperlink{createPrimaryFields_8H_ad37d69387e92d6f1424be40cbca2fbec}{p}},}
-\DoxyCodeLine{00266\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{GaussField<scalar>}}\&\ \mbox{\hyperlink{dynamicVarDeclaration_8cpp_ae7a21fded6f5e50f59fb05c0735f2479}{rho}},}
-\DoxyCodeLine{00267\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{GaussField<scalar>}}\&\ \mbox{\hyperlink{namespaceFoam_a5faf7f302ed6c6307e3668365456af74}{T}}}
-\DoxyCodeLine{00268\ \ \ \ \ )\textcolor{keyword}{\ const}}
-\DoxyCodeLine{00269\ \textcolor{keyword}{\ \ \ \ }\{}
-\DoxyCodeLine{00270\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{FatalErrorInFunction}}}
-\DoxyCodeLine{00271\ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{}calcTFromPRho()\ not\ supported\ by\ this\ EOS\ model"{}}}
-\DoxyCodeLine{00272\ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \mbox{\hyperlink{classFoam_1_1GaussField}{exit}}(\mbox{\hyperlink{classFoam_1_1GaussField}{FatalError}});}
-\DoxyCodeLine{00273\ \ \ \ \ \}}
-\DoxyCodeLine{00274\ }
-\DoxyCodeLine{00275\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classFoam_1_1eqnOfState_a6dad5294eef016cf745966645c1371db}{calcTFromPRho}}}
-\DoxyCodeLine{00276\ \ \ \ \ (}
-\DoxyCodeLine{00277\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{boundaryGaussField<scalar>}}\&\ \mbox{\hyperlink{createPrimaryFields_8H_ad37d69387e92d6f1424be40cbca2fbec}{p}},}
-\DoxyCodeLine{00278\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{boundaryGaussField<scalar>}}\&\ \mbox{\hyperlink{dynamicVarDeclaration_8cpp_ae7a21fded6f5e50f59fb05c0735f2479}{rho}},}
-\DoxyCodeLine{00279\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{boundaryGaussField<scalar>}}\&\ \mbox{\hyperlink{namespaceFoam_a5faf7f302ed6c6307e3668365456af74}{T}}}
-\DoxyCodeLine{00280\ \ \ \ \ )\textcolor{keyword}{\ const}}
-\DoxyCodeLine{00281\ \textcolor{keyword}{\ \ \ \ }\{}
-\DoxyCodeLine{00282\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{FatalErrorInFunction}}}
-\DoxyCodeLine{00283\ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{}calcTFromPRho()\ not\ supported\ by\ this\ EOS\ model"{}}}
-\DoxyCodeLine{00284\ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \mbox{\hyperlink{classFoam_1_1GaussField}{exit}}(\mbox{\hyperlink{classFoam_1_1GaussField}{FatalError}});}
-\DoxyCodeLine{00285\ \ \ \ \ \}}
-\DoxyCodeLine{00286\ }
-\DoxyCodeLine{00287\ \ \ \ \ \textcolor{comment}{//====================================================================//}}
-\DoxyCodeLine{00288\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ EOS\ capability\ flags}}
-\DoxyCodeLine{00289\ \ \ \ \ \textcolor{comment}{//====================================================================//}}
-\DoxyCodeLine{00290\ }
-\DoxyCodeLine{00292\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classFoam_1_1eqnOfState_a3291a187ff233d34e8fc78fd9a1fbca6}{canCalcRhoFromPT}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};\ \}}
-\DoxyCodeLine{00293\ }
-\DoxyCodeLine{00295\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classFoam_1_1eqnOfState_a8cd5ba40878162951db68ce90e4a46ae}{canCalcPFromRhoT}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};\ \}}
-\DoxyCodeLine{00296\ }
-\DoxyCodeLine{00298\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classFoam_1_1eqnOfState_ac78add49a308131d2843c620930fce74}{canCalcTFromPRho}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};\ \}}
-\DoxyCodeLine{00299\ }
-\DoxyCodeLine{00300\ \ \ \ \ \textcolor{comment}{//\ EOS\ classification\ flags}}
-\DoxyCodeLine{00301\ }
-\DoxyCodeLine{00303\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classFoam_1_1eqnOfState_a0d4f0890fe5145ecaa8bdb16897773e4}{isIdealGas}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};\ \}}
+\DoxyCodeLine{00195\ \ \ \ \ \textcolor{keyword}{virtual}\ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}}\ \mbox{\hyperlink{classFoam_1_1eqnOfState_a5e886123a06f2ac0d79cc151e43c593d}{calcRhoFromPT}}}
+\DoxyCodeLine{00196\ \ \ \ \ (}
+\DoxyCodeLine{00197\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}}\ \mbox{\hyperlink{createPrimaryFields_8H_ac26fa601ec3cea0a11ac0fd4f2a6bb63}{p}},}
+\DoxyCodeLine{00198\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}}\ \mbox{\hyperlink{namespaceFoam_a5faf7f302ed6c6307e3668365456af74}{T}}}
+\DoxyCodeLine{00199\ \ \ \ \ )\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00200\ \textcolor{keyword}{\ \ \ \ }\{}
+\DoxyCodeLine{00201\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{FatalErrorInFunction}}}
+\DoxyCodeLine{00202\ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{}Pointwise\ calcRhoFromPT()\ not\ supported\ by\ this\ EOS\ model"{}}}
+\DoxyCodeLine{00203\ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \mbox{\hyperlink{classFoam_1_1GaussField}{exit}}(\mbox{\hyperlink{classFoam_1_1GaussField}{FatalError}});}
+\DoxyCodeLine{00204\ }
+\DoxyCodeLine{00205\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classFoam_1_1GaussField}{Zero}};}
+\DoxyCodeLine{00206\ \ \ \ \ \}}
+\DoxyCodeLine{00207\ }
+\DoxyCodeLine{00211\ \ \ \ \ \textcolor{keyword}{virtual}\ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}}\ \mbox{\hyperlink{classFoam_1_1eqnOfState_a5163e9f442480de5110481f90790b2b8}{calcPFromRhoT}}}
+\DoxyCodeLine{00212\ \ \ \ \ (}
+\DoxyCodeLine{00213\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}}\ \mbox{\hyperlink{dynamicVarDeclaration_8cpp_ae7a21fded6f5e50f59fb05c0735f2479}{rho}},}
+\DoxyCodeLine{00214\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}}\ \mbox{\hyperlink{namespaceFoam_a5faf7f302ed6c6307e3668365456af74}{T}}}
+\DoxyCodeLine{00215\ \ \ \ \ )\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00216\ \textcolor{keyword}{\ \ \ \ }\{}
+\DoxyCodeLine{00217\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{FatalErrorInFunction}}}
+\DoxyCodeLine{00218\ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{}Pointwise\ calcPFromRhoT()\ not\ supported\ by\ this\ EOS\ model"{}}}
+\DoxyCodeLine{00219\ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \mbox{\hyperlink{classFoam_1_1GaussField}{exit}}(\mbox{\hyperlink{classFoam_1_1GaussField}{FatalError}});}
+\DoxyCodeLine{00220\ }
+\DoxyCodeLine{00221\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classFoam_1_1GaussField}{Zero}};}
+\DoxyCodeLine{00222\ \ \ \ \ \}}
+\DoxyCodeLine{00223\ }
+\DoxyCodeLine{00227\ \ \ \ \ \textcolor{keyword}{virtual}\ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}}\ \mbox{\hyperlink{classFoam_1_1eqnOfState_a06233e4f2305937651fd1a059e0e8352}{calcTFromPRho}}}
+\DoxyCodeLine{00228\ \ \ \ \ (}
+\DoxyCodeLine{00229\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}}\ \mbox{\hyperlink{createPrimaryFields_8H_ac26fa601ec3cea0a11ac0fd4f2a6bb63}{p}},}
+\DoxyCodeLine{00230\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}}\ \mbox{\hyperlink{dynamicVarDeclaration_8cpp_ae7a21fded6f5e50f59fb05c0735f2479}{rho}}}
+\DoxyCodeLine{00231\ \ \ \ \ )\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00232\ \textcolor{keyword}{\ \ \ \ }\{}
+\DoxyCodeLine{00233\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{FatalErrorInFunction}}}
+\DoxyCodeLine{00234\ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{}Pointwise\ calcTFromPRho()\ not\ supported\ by\ this\ EOS\ model"{}}}
+\DoxyCodeLine{00235\ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \mbox{\hyperlink{classFoam_1_1GaussField}{exit}}(\mbox{\hyperlink{classFoam_1_1GaussField}{FatalError}});}
+\DoxyCodeLine{00236\ }
+\DoxyCodeLine{00237\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classFoam_1_1GaussField}{Zero}};}
+\DoxyCodeLine{00238\ \ \ \ \ \}}
+\DoxyCodeLine{00239\ }
+\DoxyCodeLine{00240\ \ \ \ \ \textcolor{comment}{//====================================================================//}}
+\DoxyCodeLine{00241\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ Fundamental\ thermodynamic\ relations\ (Gauss\ fields)}}
+\DoxyCodeLine{00242\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00243\ \ \ \ \ \textcolor{comment}{//\ These\ wrappers\ preserve\ the\ existing\ field-\/based\ API\ while\ the}}
+\DoxyCodeLine{00244\ \ \ \ \ \textcolor{comment}{//\ concrete\ model\ implementations\ stay\ fully\ pointwise.}}
+\DoxyCodeLine{00245\ \ \ \ \ \textcolor{comment}{//====================================================================//}}
+\DoxyCodeLine{00246\ }
+\DoxyCodeLine{00257\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classFoam_1_1eqnOfState_a522e27c192b854c825fdf6680ec42ef6}{calcRhoFromPT}}}
+\DoxyCodeLine{00258\ \ \ \ \ (}
+\DoxyCodeLine{00259\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{cellI}},}
+\DoxyCodeLine{00260\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{GaussField<scalar>}}\&\ \mbox{\hyperlink{createPrimaryFields_8H_ac26fa601ec3cea0a11ac0fd4f2a6bb63}{p}},}
+\DoxyCodeLine{00261\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{GaussField<scalar>}}\&\ \mbox{\hyperlink{namespaceFoam_a5faf7f302ed6c6307e3668365456af74}{T}},}
+\DoxyCodeLine{00262\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{GaussField<scalar>}}\&\ \mbox{\hyperlink{dynamicVarDeclaration_8cpp_ae7a21fded6f5e50f59fb05c0735f2479}{rho}}}
+\DoxyCodeLine{00263\ \ \ \ \ )\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00264\ }
+\DoxyCodeLine{00265\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classFoam_1_1eqnOfState_a4571c8f66975412a041234909c999cf3}{calcRhoFromPT}}}
+\DoxyCodeLine{00266\ \ \ \ \ (}
+\DoxyCodeLine{00267\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{boundaryGaussField<scalar>}}\&\ \mbox{\hyperlink{createPrimaryFields_8H_ac26fa601ec3cea0a11ac0fd4f2a6bb63}{p}},}
+\DoxyCodeLine{00268\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{boundaryGaussField<scalar>}}\&\ \mbox{\hyperlink{namespaceFoam_a5faf7f302ed6c6307e3668365456af74}{T}},}
+\DoxyCodeLine{00269\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{boundaryGaussField<scalar>}}\&\ \mbox{\hyperlink{dynamicVarDeclaration_8cpp_ae7a21fded6f5e50f59fb05c0735f2479}{rho}}}
+\DoxyCodeLine{00270\ \ \ \ \ )\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00271\ }
+\DoxyCodeLine{00277\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classFoam_1_1eqnOfState_a65f54ba85805d32858e1397f16c71c67}{calcPFromRhoT}}}
+\DoxyCodeLine{00278\ \ \ \ \ (}
+\DoxyCodeLine{00279\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{cellI}},}
+\DoxyCodeLine{00280\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{GaussField<scalar>}}\&\ \mbox{\hyperlink{dynamicVarDeclaration_8cpp_ae7a21fded6f5e50f59fb05c0735f2479}{rho}},}
+\DoxyCodeLine{00281\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{GaussField<scalar>}}\&\ \mbox{\hyperlink{namespaceFoam_a5faf7f302ed6c6307e3668365456af74}{T}},}
+\DoxyCodeLine{00282\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{GaussField<scalar>}}\&\ \mbox{\hyperlink{createPrimaryFields_8H_ac26fa601ec3cea0a11ac0fd4f2a6bb63}{p}}}
+\DoxyCodeLine{00283\ \ \ \ \ )\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00284\ }
+\DoxyCodeLine{00285\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classFoam_1_1eqnOfState_aefe28373f9e4c45be5228ed43e2fd7ed}{calcPFromRhoT}}}
+\DoxyCodeLine{00286\ \ \ \ \ (}
+\DoxyCodeLine{00287\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{boundaryGaussField<scalar>}}\&\ \mbox{\hyperlink{dynamicVarDeclaration_8cpp_ae7a21fded6f5e50f59fb05c0735f2479}{rho}},}
+\DoxyCodeLine{00288\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{boundaryGaussField<scalar>}}\&\ \mbox{\hyperlink{namespaceFoam_a5faf7f302ed6c6307e3668365456af74}{T}},}
+\DoxyCodeLine{00289\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{boundaryGaussField<scalar>}}\&\ \mbox{\hyperlink{createPrimaryFields_8H_ac26fa601ec3cea0a11ac0fd4f2a6bb63}{p}}}
+\DoxyCodeLine{00290\ \ \ \ \ )\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00291\ }
+\DoxyCodeLine{00297\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classFoam_1_1eqnOfState_ab66dce55045f7d82adcc73a81004888a}{calcTFromPRho}}}
+\DoxyCodeLine{00298\ \ \ \ \ (}
+\DoxyCodeLine{00299\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{cellI}},}
+\DoxyCodeLine{00300\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{GaussField<scalar>}}\&\ \mbox{\hyperlink{createPrimaryFields_8H_ac26fa601ec3cea0a11ac0fd4f2a6bb63}{p}},}
+\DoxyCodeLine{00301\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{GaussField<scalar>}}\&\ \mbox{\hyperlink{dynamicVarDeclaration_8cpp_ae7a21fded6f5e50f59fb05c0735f2479}{rho}},}
+\DoxyCodeLine{00302\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{GaussField<scalar>}}\&\ \mbox{\hyperlink{namespaceFoam_a5faf7f302ed6c6307e3668365456af74}{T}}}
+\DoxyCodeLine{00303\ \ \ \ \ )\ \textcolor{keyword}{const};}
 \DoxyCodeLine{00304\ }
-\DoxyCodeLine{00306\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classFoam_1_1eqnOfState_ae9c9acc43e32e77440222dc2b2d3ec8a}{isIncompressible}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};\ \}}
-\DoxyCodeLine{00307\ }
-\DoxyCodeLine{00309\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classFoam_1_1eqnOfState_a4e8808415e2f46a0e000e9d5337565f2}{isRealGas}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};\ \}}
-\DoxyCodeLine{00310\ }
-\DoxyCodeLine{00312\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classFoam_1_1eqnOfState_a5cdac2918c31d6362f277a19dba79d08}{isThermalPerfectGas}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};\ \}}
-\DoxyCodeLine{00313\ \};}
-\DoxyCodeLine{00314\ }
-\DoxyCodeLine{00315\ \}\ \textcolor{comment}{//\ End\ namespace\ Foam}}
-\DoxyCodeLine{00316\ }
-\DoxyCodeLine{00317\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00305\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classFoam_1_1eqnOfState_a6dad5294eef016cf745966645c1371db}{calcTFromPRho}}}
+\DoxyCodeLine{00306\ \ \ \ \ (}
+\DoxyCodeLine{00307\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{boundaryGaussField<scalar>}}\&\ \mbox{\hyperlink{createPrimaryFields_8H_ac26fa601ec3cea0a11ac0fd4f2a6bb63}{p}},}
+\DoxyCodeLine{00308\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{boundaryGaussField<scalar>}}\&\ \mbox{\hyperlink{dynamicVarDeclaration_8cpp_ae7a21fded6f5e50f59fb05c0735f2479}{rho}},}
+\DoxyCodeLine{00309\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{boundaryGaussField<scalar>}}\&\ \mbox{\hyperlink{namespaceFoam_a5faf7f302ed6c6307e3668365456af74}{T}}}
+\DoxyCodeLine{00310\ \ \ \ \ )\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00311\ }
+\DoxyCodeLine{00312\ \ \ \ \ \textcolor{comment}{//====================================================================//}}
+\DoxyCodeLine{00313\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ EOS\ capability\ flags}}
+\DoxyCodeLine{00314\ \ \ \ \ \textcolor{comment}{//====================================================================//}}
+\DoxyCodeLine{00315\ }
+\DoxyCodeLine{00317\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classFoam_1_1eqnOfState_a3291a187ff233d34e8fc78fd9a1fbca6}{canCalcRhoFromPT}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};\ \}}
 \DoxyCodeLine{00318\ }
-\DoxyCodeLine{00319\ \textcolor{comment}{//\ *************************************************************************\ //}}
+\DoxyCodeLine{00320\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classFoam_1_1eqnOfState_a8cd5ba40878162951db68ce90e4a46ae}{canCalcPFromRhoT}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};\ \}}
+\DoxyCodeLine{00321\ }
+\DoxyCodeLine{00323\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classFoam_1_1eqnOfState_ac78add49a308131d2843c620930fce74}{canCalcTFromPRho}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};\ \}}
+\DoxyCodeLine{00324\ }
+\DoxyCodeLine{00325\ \ \ \ \ \textcolor{comment}{//\ EOS\ classification\ flags}}
+\DoxyCodeLine{00326\ }
+\DoxyCodeLine{00328\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classFoam_1_1eqnOfState_a0d4f0890fe5145ecaa8bdb16897773e4}{isIdealGas}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};\ \}}
+\DoxyCodeLine{00329\ }
+\DoxyCodeLine{00331\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classFoam_1_1eqnOfState_ae9c9acc43e32e77440222dc2b2d3ec8a}{isIncompressible}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};\ \}}
+\DoxyCodeLine{00332\ }
+\DoxyCodeLine{00334\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classFoam_1_1eqnOfState_a4e8808415e2f46a0e000e9d5337565f2}{isRealGas}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};\ \}}
+\DoxyCodeLine{00335\ }
+\DoxyCodeLine{00337\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classFoam_1_1eqnOfState_a5cdac2918c31d6362f277a19dba79d08}{isThermalPerfectGas}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};\ \}}
+\DoxyCodeLine{00338\ \};}
+\DoxyCodeLine{00339\ }
+\DoxyCodeLine{00340\ \}\ \textcolor{comment}{//\ End\ namespace\ Foam}}
+\DoxyCodeLine{00341\ }
+\DoxyCodeLine{00342\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00343\ }
+\DoxyCodeLine{00344\ \textcolor{comment}{//\ *************************************************************************\ //}}
 
 \end{DoxyCode}

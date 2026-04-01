@@ -9,13 +9,13 @@ Utility functions for DG boundary patch classification.
 \begin{DoxyCompactItemize}
 \item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{bool}} \mbox{\hyperlink{namespaceFoam_1_1dgBoundaryHelper_aacf61fd17830f31a3bf10506dd6b0c4e}{is\+Interface\+Patch}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{fv\+Patch}} \&patch)
-\begin{DoxyCompactList}\small\item\em Check if patch is an interface patch. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Return true if the patch is treated as an interface patch. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{bool}} \mbox{\hyperlink{namespaceFoam_1_1dgBoundaryHelper_ad336b0d03003430f2a70769a5a4ccaa3}{is\+General\+Patch}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{fv\+Patch}} \&patch)
-\begin{DoxyCompactList}\small\item\em Check if patch is a general physical boundary. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Return true if the patch is treated as a general physical boundary. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{bool}} \mbox{\hyperlink{namespaceFoam_1_1dgBoundaryHelper_a8ddaff7874f784ca13006803262410ea}{is\+Constraint\+Patch}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{fv\+Patch}} \&patch)
-\begin{DoxyCompactList}\small\item\em Check if patch is a constraint or special patch. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Return true if the patch is treated as a constraint or special patch. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{bool}} \mbox{\hyperlink{namespaceFoam_1_1dgBoundaryHelper_a982582dbd797b33bf35012ac0763c555}{is\+Known\+Patch\+Type}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{fv\+Patch}} \&patch)
-\begin{DoxyCompactList}\small\item\em Check if patch type is recognised by DG framework. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Return true if the patch type is recognised by the DG framework. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \doxysubsection{Detailed Description}
@@ -25,7 +25,7 @@ This namespace provides a lightweight set of helper functions to classify Open\+
 \begin{DoxyItemize}
 \item Interface patches (e.\+g. processor boundaries)
 \item General physical boundary patches (walls, inlets, outlets, symmetry)
-\item Constraint or special patches (e.\+g. overset)
+\item Constraint or special patches (e.\+g. overset, empty)
 \end{DoxyItemize}
 
 The classification is based solely on the fv\+Patch type string and is intentionally kept simple and extensible. 
@@ -39,9 +39,19 @@ The classification is based solely on the fv\+Patch type string and is intention
 
 
 
-Check if patch is an interface patch. 
+Return true if the patch is treated as an interface patch. 
 
-Interface patches are used to connect DG cells across processor boundaries or other internal interfaces. \Hypertarget{namespaceFoam_1_1dgBoundaryHelper_ad336b0d03003430f2a70769a5a4ccaa3}\label{namespaceFoam_1_1dgBoundaryHelper_ad336b0d03003430f2a70769a5a4ccaa3} 
+Interface patches are used to connect DG cells across processor boundaries or other internal interfaces.
+
+
+\begin{DoxyParams}{Parameters}
+{\em patch} & Boundary patch to classify. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True for DG interface patches. 
+\end{DoxyReturn}
+\Hypertarget{namespaceFoam_1_1dgBoundaryHelper_ad336b0d03003430f2a70769a5a4ccaa3}\label{namespaceFoam_1_1dgBoundaryHelper_ad336b0d03003430f2a70769a5a4ccaa3} 
 \index{Foam::dgBoundaryHelper@{Foam::dgBoundaryHelper}!isGeneralPatch@{isGeneralPatch}}
 \index{isGeneralPatch@{isGeneralPatch}!Foam::dgBoundaryHelper@{Foam::dgBoundaryHelper}}
 \doxysubsubsection{\texorpdfstring{isGeneralPatch()}{isGeneralPatch()}}
@@ -49,9 +59,19 @@ Interface patches are used to connect DG cells across processor boundaries or ot
 
 
 
-Check if patch is a general physical boundary. 
+Return true if the patch is treated as a general physical boundary. 
 
-General patches represent physical boundaries such as walls, inlets, outlets, and symmetry planes. \Hypertarget{namespaceFoam_1_1dgBoundaryHelper_a8ddaff7874f784ca13006803262410ea}\label{namespaceFoam_1_1dgBoundaryHelper_a8ddaff7874f784ca13006803262410ea} 
+General patches represent physical boundaries such as walls, inlets, outlets, and symmetry planes.
+
+
+\begin{DoxyParams}{Parameters}
+{\em patch} & Boundary patch to classify. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True for general physical boundary patches. 
+\end{DoxyReturn}
+\Hypertarget{namespaceFoam_1_1dgBoundaryHelper_a8ddaff7874f784ca13006803262410ea}\label{namespaceFoam_1_1dgBoundaryHelper_a8ddaff7874f784ca13006803262410ea} 
 \index{Foam::dgBoundaryHelper@{Foam::dgBoundaryHelper}!isConstraintPatch@{isConstraintPatch}}
 \index{isConstraintPatch@{isConstraintPatch}!Foam::dgBoundaryHelper@{Foam::dgBoundaryHelper}}
 \doxysubsubsection{\texorpdfstring{isConstraintPatch()}{isConstraintPatch()}}
@@ -59,9 +79,19 @@ General patches represent physical boundaries such as walls, inlets, outlets, an
 
 
 
-Check if patch is a constraint or special patch. 
+Return true if the patch is treated as a constraint or special patch. 
 
-Constraint patches impose additional topological or numerical constraints, such as overset connectivity. \Hypertarget{namespaceFoam_1_1dgBoundaryHelper_a982582dbd797b33bf35012ac0763c555}\label{namespaceFoam_1_1dgBoundaryHelper_a982582dbd797b33bf35012ac0763c555} 
+Constraint patches impose additional topological or numerical constraints, or mark directions that should not receive DG ghost-\/state updates (for example, overset and empty).
+
+
+\begin{DoxyParams}{Parameters}
+{\em patch} & Boundary patch to classify. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True for constraint or special patches. 
+\end{DoxyReturn}
+\Hypertarget{namespaceFoam_1_1dgBoundaryHelper_a982582dbd797b33bf35012ac0763c555}\label{namespaceFoam_1_1dgBoundaryHelper_a982582dbd797b33bf35012ac0763c555} 
 \index{Foam::dgBoundaryHelper@{Foam::dgBoundaryHelper}!isKnownPatchType@{isKnownPatchType}}
 \index{isKnownPatchType@{isKnownPatchType}!Foam::dgBoundaryHelper@{Foam::dgBoundaryHelper}}
 \doxysubsubsection{\texorpdfstring{isKnownPatchType()}{isKnownPatchType()}}
@@ -69,6 +99,15 @@ Constraint patches impose additional topological or numerical constraints, such 
 
 
 
-Check if patch type is recognised by DG framework. 
+Return true if the patch type is recognised by the DG framework. 
 
-Returns true if the patch belongs to any known DG category. 
+Returns true if the patch belongs to any known DG category.
+
+
+\begin{DoxyParams}{Parameters}
+{\em patch} & Boundary patch to classify. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if the patch belongs to a supported DG category. 
+\end{DoxyReturn}

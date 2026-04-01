@@ -38,144 +38,259 @@
 \DoxyCodeLine{00034\ }
 \DoxyCodeLine{00035\ \textcolor{preprocessor}{\#include\ "{}PstreamBuffers.H"{}}}
 \DoxyCodeLine{00036\ \textcolor{preprocessor}{\#include\ "{}Pstream.H"{}}}
-\DoxyCodeLine{00037\ }
-\DoxyCodeLine{00038\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespaceFoam}{Foam}}}
-\DoxyCodeLine{00039\ \{}
+\DoxyCodeLine{00037\ \textcolor{preprocessor}{\#include\ "{}UOPstream.H"{}}}
+\DoxyCodeLine{00038\ \textcolor{preprocessor}{\#include\ "{}UIPstream.H"{}}}
+\DoxyCodeLine{00039\ \textcolor{preprocessor}{\#include\ "{}transform.H"{}}}
 \DoxyCodeLine{00040\ }
-\DoxyCodeLine{00041\ \textcolor{comment}{//\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ Constructor\ \ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ //}}
-\DoxyCodeLine{00042\ }
-\DoxyCodeLine{00043\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Type>}
-\DoxyCodeLine{00044\ \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField_a7e67388024a3c92eb8e7959700d3e9ab}{dgProcessorBoundaryField<Type>::dgProcessorBoundaryField}}}
-\DoxyCodeLine{00045\ (}
-\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keyword}{const}\ fvPatch\&\ patch,}
-\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keyword}{const}\ dgGeomMesh\&\ dgMesh}
-\DoxyCodeLine{00048\ )}
-\DoxyCodeLine{00049\ :}
-\DoxyCodeLine{00050\ \ \ \ \ procPatch\_(refCast<const\ processorFvPatch>(patch)),}
-\DoxyCodeLine{00051\ \ \ \ \ dgMesh\_(dgMesh),}
-\DoxyCodeLine{00052\ \ \ \ \ neighbProc\_(procPatch\_.neighbProcNo())}
-\DoxyCodeLine{00053\ \{}
-\DoxyCodeLine{00054\ \ \ \ \ \textcolor{comment}{//\ Compute\ total\ Gauss\ points\ on\ this\ patch}}
-\DoxyCodeLine{00055\ \ \ \ \ label\ totalGauss\ =\ 0;}
-\DoxyCodeLine{00056\ }
-\DoxyCodeLine{00057\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <\ procPatch\_.size();\ ++i)}
-\DoxyCodeLine{00058\ \ \ \ \ \{}
-\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ label\ faceID\ =\ procPatch\_.start()\ +\ i;}
-\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ dgGeomFace*\ gFace\ =\ this-\/>dgMesh\_.faces()[faceID];}
-\DoxyCodeLine{00061\ }
-\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ totalGauss\ +=\ gFace-\/>nGauss();}
-\DoxyCodeLine{00063\ \ \ \ \ \}}
+\DoxyCodeLine{00041\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespaceFoam}{Foam}}}
+\DoxyCodeLine{00042\ \{}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ \textcolor{comment}{//\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ Constructor\ \ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ //}}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Type>}
+\DoxyCodeLine{00047\ \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryField_a7e67388024a3c92eb8e7959700d3e9ab}{dgProcessorBoundaryField<Type>::dgProcessorBoundaryField}}}
+\DoxyCodeLine{00048\ (}
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keyword}{const}\ fvPatch\&\ patch,}
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keyword}{const}\ dgGeomMesh\&\ \mbox{\hyperlink{solvers_2compressible_2DGCompressibleFoam_2createDGMesh_8H_ac2f70ae412900de0f8c13e91bd870b5c}{dgMesh}}}
+\DoxyCodeLine{00051\ )}
+\DoxyCodeLine{00052\ :}
+\DoxyCodeLine{00053\ \ \ \ \ procPatch\_(refCast<const\ processorFvPatch>(patch)),}
+\DoxyCodeLine{00054\ \ \ \ \ dgMesh\_(\mbox{\hyperlink{solvers_2compressible_2DGCompressibleFoam_2createDGMesh_8H_ac2f70ae412900de0f8c13e91bd870b5c}{dgMesh}}),}
+\DoxyCodeLine{00055\ \ \ \ \ neighbProc\_(procPatch\_.neighbProcNo())}
+\DoxyCodeLine{00056\ \{}
+\DoxyCodeLine{00057\ \ \ \ \ \textcolor{comment}{//\ Compute\ total\ Gauss\ points\ on\ this\ patch}}
+\DoxyCodeLine{00058\ \ \ \ \ label\ totalGauss\ =\ 0;}
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00060\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <\ procPatch\_.size();\ ++i)}
+\DoxyCodeLine{00061\ \ \ \ \ \{}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ label\ faceID\ =\ procPatch\_.start()\ +\ i;}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ dgGeomFace*\ gFace\ =\ this-\/>dgMesh\_.faces()[faceID];}
 \DoxyCodeLine{00064\ }
-\DoxyCodeLine{00065\ \ \ \ \ \textcolor{comment}{//\ Allocate\ send\ and\ receive\ buffers}}
-\DoxyCodeLine{00066\ \ \ \ \ sendBuf\_.setSize(totalGauss);}
-\DoxyCodeLine{00067\ \ \ \ \ recvBuf\_.setSize(totalGauss);}
-\DoxyCodeLine{00068\ \}}
-\DoxyCodeLine{00069\ }
-\DoxyCodeLine{00070\ \textcolor{comment}{//\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ Member\ Functions\ \ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ //}}
-\DoxyCodeLine{00071\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Type>}
-\DoxyCodeLine{00072\ \textcolor{keywordtype}{void}\ dgProcessorBoundaryField<Type>::sendAll}
-\DoxyCodeLine{00073\ (}
-\DoxyCodeLine{00074\ \ \ \ \ dgField<Type>\&\ field}
-\DoxyCodeLine{00075\ )\textcolor{keyword}{\ const}}
-\DoxyCodeLine{00076\ \textcolor{keyword}{}\{}
-\DoxyCodeLine{00077\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ tag\ =\ genSendTag();}
-\DoxyCodeLine{00078\ }
-\DoxyCodeLine{00079\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00080\ \ \ \ \ \textcolor{comment}{//\ Pack}}
-\DoxyCodeLine{00081\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00082\ \ \ \ \ label\ k\ =\ 0;}
-\DoxyCodeLine{00083\ }
-\DoxyCodeLine{00084\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <\ procPatch\_.size();\ ++i)}
-\DoxyCodeLine{00085\ \ \ \ \ \{}
-\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ label\ faceID\ =\ procPatch\_.start()\ +\ i;}
-\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ dgGeomFace*\ gFace\ =\ this-\/>dgMesh\_.faces()[faceID];}
-\DoxyCodeLine{00088\ }
-\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ label\ ownerCellID\ =}
-\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>dgMesh\_.getFvMesh().faceOwner()[faceID];}
-\DoxyCodeLine{00091\ }
-\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ label\ nGauss\ =\ gFace-\/>nGauss();}
-\DoxyCodeLine{00093\ }
-\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ g\ =\ 0;\ g\ <\ nGauss;\ ++g)}
-\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \ \ \ \ sendBuf\_[k]\ =}
-\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ field.gaussFields()[ownerCellID]}
-\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ .faceField()}
-\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ .minusValueOnGlobalFace(faceID,\ g);}
-\DoxyCodeLine{00100\ }
-\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \ \ \ \ ++k;}
-\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00103\ \ \ \ \ \}}
-\DoxyCodeLine{00104\ \ \ \ \ }
-\DoxyCodeLine{00105\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00106\ \ \ \ \ \textcolor{comment}{//\ Send\ to\ neighbour}}
-\DoxyCodeLine{00107\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00108\ }
-\DoxyCodeLine{00109\ \ \ \ \ \{}
-\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ OPstream\ toNbr}
-\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ (}
-\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \ \ \ \ Pstream::commsTypes::scheduled,}
-\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \ \ \ \ neighbProc\_,}
-\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ \ \ \ \ 0,}
-\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ \ \ \ \ tag}
-\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ );}
-\DoxyCodeLine{00117\ }
-\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ toNbr\ <<\ sendBuf\_;}
-\DoxyCodeLine{00119\ \ \ \ \ \}}
-\DoxyCodeLine{00120\ \}}
-\DoxyCodeLine{00121\ }
-\DoxyCodeLine{00122\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Type>}
-\DoxyCodeLine{00123\ \textcolor{keywordtype}{void}\ dgProcessorBoundaryField<Type>::recvAll}
-\DoxyCodeLine{00124\ (}
-\DoxyCodeLine{00125\ \ \ \ \ dgField<Type>\&\ field}
-\DoxyCodeLine{00126\ )\textcolor{keyword}{\ const}}
-\DoxyCodeLine{00127\ \textcolor{keyword}{}\{}
-\DoxyCodeLine{00128\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ tag\ =\ genRecvTag();}
-\DoxyCodeLine{00129\ }
-\DoxyCodeLine{00130\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00131\ \ \ \ \ \textcolor{comment}{//\ Receive\ from\ neighbour}}
-\DoxyCodeLine{00132\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00133\ }
-\DoxyCodeLine{00134\ \ \ \ \ \{}
-\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ IPstream\ fromNbr}
-\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ (}
-\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ \ \ \ \ Pstream::commsTypes::scheduled,}
-\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ \ \ \ \ neighbProc\_,}
-\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ \ \ \ \ 0,}
-\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ \ \ \ \ tag}
-\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ );}
-\DoxyCodeLine{00142\ }
-\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ fromNbr\ >>\ recvBuf\_;}
-\DoxyCodeLine{00144\ \ \ \ \ \}}
-\DoxyCodeLine{00145\ }
-\DoxyCodeLine{00146\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00147\ \ \ \ \ \textcolor{comment}{//\ Unpack}}
-\DoxyCodeLine{00148\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00149\ \ \ \ \ label\ k\ =\ 0;}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ totalGauss\ +=\ gFace-\/>nGauss();}
+\DoxyCodeLine{00066\ \ \ \ \ \}}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00068\ \ \ \ \ \textcolor{comment}{//\ Allocate\ send\ and\ receive\ buffers}}
+\DoxyCodeLine{00069\ \ \ \ \ sendBuf\_.setSize(totalGauss);}
+\DoxyCodeLine{00070\ \ \ \ \ recvBuf\_.setSize(totalGauss);}
+\DoxyCodeLine{00071\ \}}
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00073\ \textcolor{comment}{//\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ Member\ Functions\ \ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ //}}
+\DoxyCodeLine{00074\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Type>}
+\DoxyCodeLine{00075\ \textcolor{keywordtype}{void}\ dgProcessorBoundaryField<Type>::update}
+\DoxyCodeLine{00076\ (}
+\DoxyCodeLine{00077\ \ \ \ \ dgField<Type>\&\ field}
+\DoxyCodeLine{00078\ )\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00079\ \textcolor{keyword}{}\{}
+\DoxyCodeLine{00080\ \ \ \ \ \textcolor{keywordflow}{if}\ (!Pstream::parRun())}
+\DoxyCodeLine{00081\ \ \ \ \ \{}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00083\ \ \ \ \ \}}
+\DoxyCodeLine{00084\ }
+\DoxyCodeLine{00085\ \ \ \ \ \textcolor{comment}{//\ Reserve\ one\ temporary\ message\ tag\ for\ this\ entire\ processor\ exchange.}}
+\DoxyCodeLine{00086\ \ \ \ \ \textcolor{comment}{//\ This\ isolates\ the\ DG\ communication\ from\ any\ other\ MPI\ traffic\ that\ may}}
+\DoxyCodeLine{00087\ \ \ \ \ \textcolor{comment}{//\ happen\ in\ the\ solver\ during\ the\ same\ stage.}}
+\DoxyCodeLine{00088\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ oldTag\ =\ UPstream::incrMsgType();}
+\DoxyCodeLine{00089\ }
+\DoxyCodeLine{00090\ \ \ \ \ \textcolor{comment}{//\ PstreamBuffers\ with\ nonBlocking\ comms\ implements\ the\ common\ OpenFOAM}}
+\DoxyCodeLine{00091\ \ \ \ \ \textcolor{comment}{//\ two-\/phase\ pattern:}}
+\DoxyCodeLine{00092\ \ \ \ \ \textcolor{comment}{//\ 1.\ stream\ all\ outgoing\ data\ into\ per-\/neighbour\ buffers,}}
+\DoxyCodeLine{00093\ \ \ \ \ \textcolor{comment}{//\ 2.\ call\ finishedSends()\ to\ exchange\ the\ buffered\ messages,}}
+\DoxyCodeLine{00094\ \ \ \ \ \textcolor{comment}{//\ 3.\ read\ the\ incoming\ buffers\ back\ in\ the\ same\ serialization\ order.}}
+\DoxyCodeLine{00095\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00096\ \ \ \ \ \textcolor{comment}{//\ This\ avoids\ the\ deadlock-\/prone\ "{}both\ ranks\ do\ blocking\ send\ first,}}
+\DoxyCodeLine{00097\ \ \ \ \ \textcolor{comment}{//\ then\ blocking\ receive"{}\ pattern.}}
+\DoxyCodeLine{00098\ \ \ \ \ PstreamBuffers\ pBufs}
+\DoxyCodeLine{00099\ \ \ \ \ (}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ UPstream::commsTypes::nonBlocking,}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ UPstream::msgType()}
+\DoxyCodeLine{00102\ \ \ \ \ );}
+\DoxyCodeLine{00103\ }
+\DoxyCodeLine{00104\ \ \ \ \ sendAll(field,\ pBufs);}
+\DoxyCodeLine{00105\ \ \ \ \ pBufs.finishedSends();}
+\DoxyCodeLine{00106\ \ \ \ \ recvAll(field,\ pBufs);}
+\DoxyCodeLine{00107\ }
+\DoxyCodeLine{00108\ \ \ \ \ UPstream::msgType(oldTag);}
+\DoxyCodeLine{00109\ \}}
+\DoxyCodeLine{00110\ }
+\DoxyCodeLine{00111\ }
+\DoxyCodeLine{00112\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Type>}
+\DoxyCodeLine{00113\ \textcolor{keywordtype}{void}\ dgProcessorBoundaryField<Type>::sendAll}
+\DoxyCodeLine{00114\ (}
+\DoxyCodeLine{00115\ \ \ \ \ dgField<Type>\&\ field,}
+\DoxyCodeLine{00116\ \ \ \ \ PstreamBuffers\&\ pBufs}
+\DoxyCodeLine{00117\ )\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00118\ \textcolor{keyword}{}\{}
+\DoxyCodeLine{00119\ \ \ \ \ \textcolor{comment}{//\ If\ the\ field\ owns\ modal\ DoFs,\ the\ message\ has\ two\ serialized\ sections:}}
+\DoxyCodeLine{00120\ \ \ \ \ \textcolor{comment}{//\ 1.\ all\ face\ Gauss-\/point\ minus\ states\ on\ this\ processor\ patch,}}
+\DoxyCodeLine{00121\ \ \ \ \ \textcolor{comment}{//\ 2.\ one\ packed\ per-\/face\ DoF\ payload.}}
+\DoxyCodeLine{00122\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00123\ \ \ \ \ \textcolor{comment}{//\ recvAll()\ must\ deserialize\ in\ exactly\ the\ same\ order.}}
+\DoxyCodeLine{00124\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ hasDof\ =\ field.hasDof();}
+\DoxyCodeLine{00125\ }
+\DoxyCodeLine{00126\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00127\ \ \ \ \ \textcolor{comment}{//\ Pack}}
+\DoxyCodeLine{00128\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00129\ \ \ \ \ label\ k\ =\ 0;}
+\DoxyCodeLine{00130\ }
+\DoxyCodeLine{00131\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <\ procPatch\_.size();\ ++i)}
+\DoxyCodeLine{00132\ \ \ \ \ \{}
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ label\ faceID\ =\ procPatch\_.start()\ +\ i;}
+\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ dgGeomFace*\ gFace\ =\ this-\/>dgMesh\_.faces()[faceID];}
+\DoxyCodeLine{00135\ }
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ label\ ownerCellID\ =}
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>dgMesh\_.getFvMesh().faceOwner()[faceID];}
+\DoxyCodeLine{00138\ }
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ label\ nGauss\ =\ gFace-\/>nGauss();}
+\DoxyCodeLine{00140\ }
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ g\ =\ 0;\ g\ <\ nGauss;\ ++g)}
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ For\ a\ processor\ face\ we\ export\ the\ local\ owner-\/side\ trace}}
+\DoxyCodeLine{00144\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ ("{}minus"{}\ state\ from\ this\ rank's\ point\ of\ view).\ The\ neighbour}}
+\DoxyCodeLine{00145\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ will\ reconstruct\ its\ local\ plus-\/side\ data\ from\ this\ payload.}}
+\DoxyCodeLine{00146\ \ \ \ \ \ \ \ \ \ \ \ \ sendBuf\_[k]\ =}
+\DoxyCodeLine{00147\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ field.gaussFields()[ownerCellID]}
+\DoxyCodeLine{00148\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ .faceField()}
+\DoxyCodeLine{00149\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ .minusValueOnGlobalFace(faceID,\ g);}
 \DoxyCodeLine{00150\ }
-\DoxyCodeLine{00151\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <\ procPatch\_.size();\ ++i)}
-\DoxyCodeLine{00152\ \ \ \ \ \{}
-\DoxyCodeLine{00153\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ label\ faceID\ =\ procPatch\_.start()\ +\ i;}
-\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ dgGeomFace*\ gFace\ =\ this-\/>dgMesh\_.faces()[faceID];}
-\DoxyCodeLine{00155\ }
-\DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ label\ ownerCellID\ =}
-\DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>dgMesh\_.getFvMesh().faceOwner()[faceID];}
+\DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ \ \ \ \ ++k;}
+\DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00153\ \ \ \ \ \}}
+\DoxyCodeLine{00154\ }
+\DoxyCodeLine{00155\ \ \ \ \ \textcolor{keywordflow}{if}\ (hasDof)}
+\DoxyCodeLine{00156\ \ \ \ \ \{}
+\DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ labelList\ faceDofSizes(procPatch\_.size(),\ Zero);}
 \DoxyCodeLine{00158\ }
-\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ label\ nGauss\ =\ gFace-\/>nGauss();}
-\DoxyCodeLine{00160\ }
-\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ g\ =\ 0;\ g\ <\ nGauss;\ ++g)}
-\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ \ \ \ \ field.gaussFields()[ownerCellID]}
-\DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ .faceField()}
-\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ .plusValueOnGlobalFace(faceID,\ g)\ =\ recvBuf\_[k];}
-\DoxyCodeLine{00166\ }
-\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ \ \ \ \ ++k;}
-\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00169\ \ \ \ \ \}}
-\DoxyCodeLine{00170\ \}}
-\DoxyCodeLine{00171\ }
-\DoxyCodeLine{00172\ \}\ \textcolor{comment}{//\ End\ namespace\ Foam}}
-\DoxyCodeLine{00173\ }
-\DoxyCodeLine{00174\ \textcolor{preprocessor}{\#endif}}
-\DoxyCodeLine{00175\ \textcolor{comment}{//\ *************************************************************************\ //}}
+\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <\ procPatch\_.size();\ ++i)}
+\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ label\ faceID\ =\ procPatch\_.start()\ +\ i;}
+\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ label\ ownerCellID\ =}
+\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>dgMesh\_.getFvMesh().faceOwner()[faceID];}
+\DoxyCodeLine{00164\ }
+\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ \ \ \ \ faceDofSizes[i]\ =\ field.dof()[ownerCellID].nDof();}
+\DoxyCodeLine{00166\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00167\ }
+\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ sendDofBuf\_.resize(faceDofSizes);}
+\DoxyCodeLine{00169\ }
+\DoxyCodeLine{00170\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <\ procPatch\_.size();\ ++i)}
+\DoxyCodeLine{00171\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00172\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ label\ faceID\ =\ procPatch\_.start()\ +\ i;}
+\DoxyCodeLine{00173\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ label\ ownerCellID\ =}
+\DoxyCodeLine{00174\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>dgMesh\_.getFvMesh().faceOwner()[faceID];}
+\DoxyCodeLine{00175\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ cellDof<Type>\&\ ownerDof\ =\ field.dof()[ownerCellID];}
+\DoxyCodeLine{00176\ \ \ \ \ \ \ \ \ \ \ \ \ SubList<Type>\ faceDofs\ =\ sendDofBuf\_[i];}
+\DoxyCodeLine{00177\ }
+\DoxyCodeLine{00178\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ dofI\ =\ 0;\ dofI\ <\ ownerDof.nDof();\ ++dofI)}
+\DoxyCodeLine{00179\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00180\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ faceDofs[dofI]\ =\ ownerDof[dofI];}
+\DoxyCodeLine{00181\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00182\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00183\ \ \ \ \ \}}
+\DoxyCodeLine{00184\ }
+\DoxyCodeLine{00185\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00186\ \ \ \ \ \textcolor{comment}{//\ Send\ to\ neighbour}}
+\DoxyCodeLine{00187\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00188\ }
+\DoxyCodeLine{00189\ \ \ \ \ \{}
+\DoxyCodeLine{00190\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ UOPstream(neighbProc\_,\ pBufs)\ does\ not\ send\ immediately\ with\ a}}
+\DoxyCodeLine{00191\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ blocking\ MPI\_Send.\ It\ serializes\ into\ the\ neighbour-\/specific\ buffer}}
+\DoxyCodeLine{00192\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ held\ by\ pBufs.\ The\ actual\ exchange\ is\ triggered\ later\ by}}
+\DoxyCodeLine{00193\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ pBufs.finishedSends()\ in\ update()/manager::update().}}
+\DoxyCodeLine{00194\ \ \ \ \ \ \ \ \ UOPstream\ toNbr(neighbProc\_,\ pBufs);}
+\DoxyCodeLine{00195\ }
+\DoxyCodeLine{00196\ \ \ \ \ \ \ \ \ toNbr\ <<\ sendBuf\_;}
+\DoxyCodeLine{00197\ }
+\DoxyCodeLine{00198\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (hasDof)}
+\DoxyCodeLine{00199\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00200\ \ \ \ \ \ \ \ \ \ \ \ \ toNbr\ <<\ sendDofBuf\_;}
+\DoxyCodeLine{00201\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00202\ \ \ \ \ \}}
+\DoxyCodeLine{00203\ \}}
+\DoxyCodeLine{00204\ }
+\DoxyCodeLine{00205\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Type>}
+\DoxyCodeLine{00206\ \textcolor{keywordtype}{void}\ dgProcessorBoundaryField<Type>::recvAll}
+\DoxyCodeLine{00207\ (}
+\DoxyCodeLine{00208\ \ \ \ \ dgField<Type>\&\ field,}
+\DoxyCodeLine{00209\ \ \ \ \ PstreamBuffers\&\ pBufs}
+\DoxyCodeLine{00210\ )\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00211\ \textcolor{keyword}{}\{}
+\DoxyCodeLine{00212\ \ \ \ \ \textcolor{comment}{//\ recvAll()\ must\ consume\ the\ stream\ in\ exactly\ the\ order\ produced\ by}}
+\DoxyCodeLine{00213\ \ \ \ \ \textcolor{comment}{//\ sendAll():}}
+\DoxyCodeLine{00214\ \ \ \ \ \textcolor{comment}{//\ 1.\ the\ packed\ Gauss-\/point\ values\ list,}}
+\DoxyCodeLine{00215\ \ \ \ \ \textcolor{comment}{//\ 2.\ optionally\ one\ packed\ DoF\ payload\ for\ all\ faces.}}
+\DoxyCodeLine{00216\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ hasDof\ =\ field.hasDof();}
+\DoxyCodeLine{00217\ }
+\DoxyCodeLine{00218\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00219\ \ \ \ \ \textcolor{comment}{//\ Receive\ from\ neighbour}}
+\DoxyCodeLine{00220\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00221\ }
+\DoxyCodeLine{00222\ \ \ \ \ \textcolor{comment}{//\ UIPstream\ reads\ from\ the\ neighbour-\/specific\ receive\ buffer\ that\ was}}
+\DoxyCodeLine{00223\ \ \ \ \ \textcolor{comment}{//\ populated\ by\ pBufs.finishedSends().\ No\ extra\ point-\/to-\/point\ MPI\ call}}
+\DoxyCodeLine{00224\ \ \ \ \ \textcolor{comment}{//\ happens\ here.}}
+\DoxyCodeLine{00225\ \ \ \ \ UIPstream\ fromNbr(neighbProc\_,\ pBufs);}
+\DoxyCodeLine{00226\ }
+\DoxyCodeLine{00227\ \ \ \ \ fromNbr\ >>\ recvBuf\_;}
+\DoxyCodeLine{00228\ }
+\DoxyCodeLine{00229\ \ \ \ \ \textcolor{keywordflow}{if}\ (hasDof)}
+\DoxyCodeLine{00230\ \ \ \ \ \{}
+\DoxyCodeLine{00231\ \ \ \ \ \ \ \ \ fromNbr\ >>\ recvDofBuf\_;}
+\DoxyCodeLine{00232\ \ \ \ \ \}}
+\DoxyCodeLine{00233\ }
+\DoxyCodeLine{00234\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00235\ \ \ \ \ \textcolor{comment}{//\ Unpack}}
+\DoxyCodeLine{00236\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00237\ \ \ \ \ label\ k\ =\ 0;}
+\DoxyCodeLine{00238\ }
+\DoxyCodeLine{00239\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ i\ =\ 0;\ i\ <\ procPatch\_.size();\ ++i)}
+\DoxyCodeLine{00240\ \ \ \ \ \{}
+\DoxyCodeLine{00241\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ label\ faceID\ =\ procPatch\_.start()\ +\ i;}
+\DoxyCodeLine{00242\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ dgGeomFace*\ gFace\ =\ this-\/>dgMesh\_.faces()[faceID];}
+\DoxyCodeLine{00243\ }
+\DoxyCodeLine{00244\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ label\ ownerCellID\ =}
+\DoxyCodeLine{00245\ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>dgMesh\_.getFvMesh().faceOwner()[faceID];}
+\DoxyCodeLine{00246\ }
+\DoxyCodeLine{00247\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ label\ nGauss\ =\ gFace-\/>nGauss();}
+\DoxyCodeLine{00248\ \ \ \ \ \ \ \ \ faceGaussField<Type>\&\ \mbox{\hyperlink{updateBC_8H_a236e8dce9665bd0a1c4e4992fcaa139d}{faceField}}\ =}
+\DoxyCodeLine{00249\ \ \ \ \ \ \ \ \ \ \ \ \ field.gaussFields()[ownerCellID].faceField();}
+\DoxyCodeLine{00250\ }
+\DoxyCodeLine{00251\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ g\ =\ 0;\ g\ <\ nGauss;\ ++g)}
+\DoxyCodeLine{00252\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00253\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ The\ neighbour's\ exported\ minus\ state\ becomes\ this\ rank's\ local}}
+\DoxyCodeLine{00254\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ plus\ state\ on\ the\ same\ global\ face.}}
+\DoxyCodeLine{00255\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{updateBC_8H_a236e8dce9665bd0a1c4e4992fcaa139d}{faceField}}.plusValueOnGlobalFace(faceID,\ g)}
+\DoxyCodeLine{00256\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ recvBuf\_[k];}
+\DoxyCodeLine{00257\ }
+\DoxyCodeLine{00258\ \ \ \ \ \ \ \ \ \ \ \ \ ++k;}
+\DoxyCodeLine{00259\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00260\ }
+\DoxyCodeLine{00261\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (hasDof)}
+\DoxyCodeLine{00262\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00263\ \ \ \ \ \ \ \ \ \ \ \ \ List<Type>\ recvDof}
+\DoxyCodeLine{00264\ \ \ \ \ \ \ \ \ \ \ \ \ (}
+\DoxyCodeLine{00265\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ recvDofBuf\_.localSize(i),}
+\DoxyCodeLine{00266\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pTraits<Type>::zero}
+\DoxyCodeLine{00267\ \ \ \ \ \ \ \ \ \ \ \ \ );}
+\DoxyCodeLine{00268\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ SubList<Type>\ faceRecvDof\ =\ recvDofBuf\_[i];}
+\DoxyCodeLine{00269\ }
+\DoxyCodeLine{00270\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ dofI\ =\ 0;\ dofI\ <\ recvDof.size();\ ++dofI)}
+\DoxyCodeLine{00271\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00272\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ recvDof[dofI]\ =\ faceRecvDof[dofI];}
+\DoxyCodeLine{00273\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00274\ }
+\DoxyCodeLine{00275\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Store\ a\ copy\ in\ face-\/local\ buffered\ storage\ so\ later\ limiter\ /}}
+\DoxyCodeLine{00276\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ reconstruction\ code\ can\ query\ neighbourCellDof()\ safely\ without}}
+\DoxyCodeLine{00277\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ depending\ on\ the\ communication\ stream\ lifetime.}}
+\DoxyCodeLine{00278\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{updateBC_8H_a236e8dce9665bd0a1c4e4992fcaa139d}{faceField}}.setBufferedNeighbourDof}
+\DoxyCodeLine{00279\ \ \ \ \ \ \ \ \ \ \ \ \ (}
+\DoxyCodeLine{00280\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{updateBC_8H_a236e8dce9665bd0a1c4e4992fcaa139d}{faceField}}.localFaceIndex(faceID),}
+\DoxyCodeLine{00281\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cellDof<Type>(-\/1,\ recvDof.size(),\ recvDof)}
+\DoxyCodeLine{00282\ \ \ \ \ \ \ \ \ \ \ \ \ );}
+\DoxyCodeLine{00283\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00284\ \ \ \ \ \}}
+\DoxyCodeLine{00285\ \}}
+\DoxyCodeLine{00286\ }
+\DoxyCodeLine{00287\ \}\ \textcolor{comment}{//\ End\ namespace\ Foam}}
+\DoxyCodeLine{00288\ }
+\DoxyCodeLine{00289\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00290\ \textcolor{comment}{//\ *************************************************************************\ //}}
 
 \end{DoxyCode}

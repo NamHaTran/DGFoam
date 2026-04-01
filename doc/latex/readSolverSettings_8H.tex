@@ -1,10 +1,10 @@
-\doxysection{/home/nam-\/ha-\/tran/\+Open\+FOAM/\+DGFoam/applications/solvers/compressible/\+DGHyper\+Sonic\+Foam/read\+Solver\+Settings.H File Reference}
-\hypertarget{readSolverSettings_8H}{}\label{readSolverSettings_8H}\index{/home/nam-\/ha-\/tran/OpenFOAM/DGFoam/applications/solvers/compressible/DGHyperSonicFoam/readSolverSettings.H@{/home/nam-\/ha-\/tran/OpenFOAM/DGFoam/applications/solvers/compressible/DGHyperSonicFoam/readSolverSettings.H}}
+\doxysection{/home/nam-\/ha-\/tran/\+Open\+FOAM/\+DGFoam/applications/solvers/compressible/\+DGCompressible\+Foam/read\+Solver\+Settings.H File Reference}
+\hypertarget{readSolverSettings_8H}{}\label{readSolverSettings_8H}\index{/home/nam-\/ha-\/tran/OpenFOAM/DGFoam/applications/solvers/compressible/DGCompressibleFoam/readSolverSettings.H@{/home/nam-\/ha-\/tran/OpenFOAM/DGFoam/applications/solvers/compressible/DGCompressibleFoam/readSolverSettings.H}}
 This graph shows which files directly or indirectly include this file\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=265pt]{readSolverSettings_8H__dep__incl}
+\includegraphics[width=277pt]{readSolverSettings_8H__dep__incl}
 \end{center}
 \end{figure}
 \doxysubsubsection*{Functions}
@@ -12,9 +12,11 @@ This graph shows which files directly or indirectly include this file\+:\nopageb
 \item 
 IOdictionary \mbox{\hyperlink{readSolverSettings_8H_a5fe45979d786d7fef7e805a5a2736c48}{dg\+Schemes\+Dict}} (IOobject("{}dg\+Schemes"{}, run\+Time.\+system(), mesh, IOobject\+::\+MUST\+\_\+\+READ, IOobject\+::\+NO\+\_\+\+WRITE))
 \item 
-dg\+Flux\+Solver\+Manager \mbox{\hyperlink{readSolverSettings_8H_abc8b9b91a9193e1e23bcd871dcdff481}{flux\+Solver\+Manager}} (\mbox{\hyperlink{readSolverSettings_8H_a5fe45979d786d7fef7e805a5a2736c48}{dg\+Schemes\+Dict}}, dg\+Mesh)
+dg\+Flux\+Solver\+Manager \mbox{\hyperlink{readSolverSettings_8H_abc8b9b91a9193e1e23bcd871dcdff481}{flux\+Solver\+Manager}} (\mbox{\hyperlink{readSolverSettings_8H_a5fe45979d786d7fef7e805a5a2736c48}{dg\+Schemes\+Dict}}, \mbox{\hyperlink{solvers_2compressible_2DGCompressibleFoam_2createDGMesh_8H_ac2f70ae412900de0f8c13e91bd870b5c}{dg\+Mesh}})
 \item 
-dg\+Time\+Discretization \mbox{\hyperlink{readSolverSettings_8H_a731ad9087afece7da5cbd3261100a133}{time\+Discretization}} (\mbox{\hyperlink{readSolverSettings_8H_a5fe45979d786d7fef7e805a5a2736c48}{dg\+Schemes\+Dict}}, \mbox{\hyperlink{VarDeclaration_8h_a122df5dd52660cdfcef00ba179bd53a7}{run\+Time}}, dg\+Mesh)
+dg\+Limiter\+Manager \mbox{\hyperlink{readSolverSettings_8H_ab2c4c8bf35a5262a3a696fb728a9335c}{limiter\+Manager}} (\mbox{\hyperlink{solvers_2compressible_2DGCompressibleFoam_2createDGMesh_8H_ac2f70ae412900de0f8c13e91bd870b5c}{dg\+Mesh}})
+\item 
+dg\+Time\+Discretization \mbox{\hyperlink{readSolverSettings_8H_a731ad9087afece7da5cbd3261100a133}{time\+Discretization}} (\mbox{\hyperlink{readSolverSettings_8H_a5fe45979d786d7fef7e805a5a2736c48}{dg\+Schemes\+Dict}}, \mbox{\hyperlink{VarDeclaration_8h_a122df5dd52660cdfcef00ba179bd53a7}{run\+Time}}, \mbox{\hyperlink{solvers_2compressible_2DGCompressibleFoam_2createDGMesh_8H_ac2f70ae412900de0f8c13e91bd870b5c}{dg\+Mesh}})
 \item 
 \mbox{\hyperlink{readSolverSettings_8H_a731ad9087afece7da5cbd3261100a133}{time\+Discretization}} \mbox{\hyperlink{readSolverSettings_8H_ad2797295764c0d7e098cb8682b701e00}{register\+Field}} (\mbox{\hyperlink{dynamicVarDeclaration_8cpp_ae7a21fded6f5e50f59fb05c0735f2479}{rho}})
 \item 
@@ -23,6 +25,8 @@ dg\+Time\+Discretization \mbox{\hyperlink{readSolverSettings_8H_a731ad9087afece7
 \mbox{\hyperlink{readSolverSettings_8H_a731ad9087afece7da5cbd3261100a133}{time\+Discretization}} \mbox{\hyperlink{readSolverSettings_8H_adf655be49f40514baaaee247cf057ce2}{register\+Field}} (\mbox{\hyperlink{createConservativeFields_8H_a3f370753d9872dffe05120a7a166ba5b}{E}})
 \item 
 \mbox{\hyperlink{readSolverSettings_8H_a731ad9087afece7da5cbd3261100a133}{time\+Discretization}} \mbox{\hyperlink{readSolverSettings_8H_a7be859dd105ac8931fcfcdfe30b6b975}{write\+Info}} (Info)
+\item 
+\mbox{\hyperlink{readSolverSettings_8H_ab2c4c8bf35a5262a3a696fb728a9335c}{limiter\+Manager}} \mbox{\hyperlink{readSolverSettings_8H_a582d4e2f1c768fd64fe0a2d4bba8e07a}{list\+Limiters}} (Info)
 \end{DoxyCompactItemize}
 
 
@@ -37,13 +41,19 @@ dg\+Time\+Discretization \mbox{\hyperlink{readSolverSettings_8H_a731ad9087afece7
 \index{readSolverSettings.H@{readSolverSettings.H}!fluxSolverManager@{fluxSolverManager}}
 \index{fluxSolverManager@{fluxSolverManager}!readSolverSettings.H@{readSolverSettings.H}}
 \doxysubsubsection{\texorpdfstring{fluxSolverManager()}{fluxSolverManager()}}
-{\footnotesize\ttfamily dg\+Flux\+Solver\+Manager flux\+Solver\+Manager (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{readSolverSettings_8H_a5fe45979d786d7fef7e805a5a2736c48}{dg\+Schemes\+Dict}}}]{,  }\item[{dg\+Mesh}]{ }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily dg\+Flux\+Solver\+Manager flux\+Solver\+Manager (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{readSolverSettings_8H_a5fe45979d786d7fef7e805a5a2736c48}{dg\+Schemes\+Dict}}}]{,  }\item[{\mbox{\hyperlink{solvers_2compressible_2DGCompressibleFoam_2createDGMesh_8H_ac2f70ae412900de0f8c13e91bd870b5c}{dg\+Mesh}}}]{ }\end{DoxyParamCaption})}
+
+\Hypertarget{readSolverSettings_8H_ab2c4c8bf35a5262a3a696fb728a9335c}\label{readSolverSettings_8H_ab2c4c8bf35a5262a3a696fb728a9335c} 
+\index{readSolverSettings.H@{readSolverSettings.H}!limiterManager@{limiterManager}}
+\index{limiterManager@{limiterManager}!readSolverSettings.H@{readSolverSettings.H}}
+\doxysubsubsection{\texorpdfstring{limiterManager()}{limiterManager()}}
+{\footnotesize\ttfamily dg\+Limiter\+Manager limiter\+Manager (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{solvers_2compressible_2DGCompressibleFoam_2createDGMesh_8H_ac2f70ae412900de0f8c13e91bd870b5c}{dg\+Mesh}}}]{ }\end{DoxyParamCaption})}
 
 \Hypertarget{readSolverSettings_8H_a731ad9087afece7da5cbd3261100a133}\label{readSolverSettings_8H_a731ad9087afece7da5cbd3261100a133} 
 \index{readSolverSettings.H@{readSolverSettings.H}!timeDiscretization@{timeDiscretization}}
 \index{timeDiscretization@{timeDiscretization}!readSolverSettings.H@{readSolverSettings.H}}
 \doxysubsubsection{\texorpdfstring{timeDiscretization()}{timeDiscretization()}}
-{\footnotesize\ttfamily dg\+Time\+Discretization time\+Discretization (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{readSolverSettings_8H_a5fe45979d786d7fef7e805a5a2736c48}{dg\+Schemes\+Dict}}}]{,  }\item[{\mbox{\hyperlink{VarDeclaration_8h_a122df5dd52660cdfcef00ba179bd53a7}{run\+Time}}}]{,  }\item[{dg\+Mesh}]{ }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily dg\+Time\+Discretization time\+Discretization (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{readSolverSettings_8H_a5fe45979d786d7fef7e805a5a2736c48}{dg\+Schemes\+Dict}}}]{,  }\item[{\mbox{\hyperlink{VarDeclaration_8h_a122df5dd52660cdfcef00ba179bd53a7}{run\+Time}}}]{,  }\item[{\mbox{\hyperlink{solvers_2compressible_2DGCompressibleFoam_2createDGMesh_8H_ac2f70ae412900de0f8c13e91bd870b5c}{dg\+Mesh}}}]{ }\end{DoxyParamCaption})}
 
 \Hypertarget{readSolverSettings_8H_ad2797295764c0d7e098cb8682b701e00}\label{readSolverSettings_8H_ad2797295764c0d7e098cb8682b701e00} 
 \index{readSolverSettings.H@{readSolverSettings.H}!registerField@{registerField}}
@@ -68,4 +78,10 @@ dg\+Time\+Discretization \mbox{\hyperlink{readSolverSettings_8H_a731ad9087afece7
 \index{writeInfo@{writeInfo}!readSolverSettings.H@{readSolverSettings.H}}
 \doxysubsubsection{\texorpdfstring{writeInfo()}{writeInfo()}}
 {\footnotesize\ttfamily \mbox{\hyperlink{readSolverSettings_8H_a731ad9087afece7da5cbd3261100a133}{time\+Discretization}} write\+Info (\begin{DoxyParamCaption}\item[{Info}]{ }\end{DoxyParamCaption})}
+
+\Hypertarget{readSolverSettings_8H_a582d4e2f1c768fd64fe0a2d4bba8e07a}\label{readSolverSettings_8H_a582d4e2f1c768fd64fe0a2d4bba8e07a} 
+\index{readSolverSettings.H@{readSolverSettings.H}!listLimiters@{listLimiters}}
+\index{listLimiters@{listLimiters}!readSolverSettings.H@{readSolverSettings.H}}
+\doxysubsubsection{\texorpdfstring{listLimiters()}{listLimiters()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{readSolverSettings_8H_ab2c4c8bf35a5262a3a696fb728a9335c}{limiter\+Manager}} list\+Limiters (\begin{DoxyParamCaption}\item[{Info}]{ }\end{DoxyParamCaption})}
 

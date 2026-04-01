@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>DGFoam: /home/nam-ha-tran/OpenFOAM/DGFoam/src/DGFoam/fields/dgField/dgField.H Source File</title>
+<title>DGFoam: /home/nam-ha-tran/OpenFOAM/DGFoam/src/DGCoreFields/fields/dgField/dgField.H Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -82,7 +82,7 @@ $(document).ready(function() { init_codefold(0); });
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_7512a5ae1f68a4db86d248d9eb955842.html">DGFoam</a></li><li class="navelem"><a class="el" href="dir_d1047b68ad02244be8569a9394a51bff.html">fields</a></li><li class="navelem"><a class="el" href="dir_708535fc0f0ffbf33c0cff974ec9d30a.html">dgField</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_e498cce160ba63a59f2a5ec09f48bb7e.html">DGCoreFields</a></li><li class="navelem"><a class="el" href="dir_87721c1cd4db233efd47af35bbb8c164.html">fields</a></li><li class="navelem"><a class="el" href="dir_4be90c2a220f27b061443aada24f48cd.html">dgField</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -126,169 +126,211 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="comment"></span> </div>
 <div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="comment">SourceFiles</span></div>
 <div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span><span class="comment">    dgField.C</span></div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span><span class="comment"></span> </div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span><span class="comment">\*---------------------------------------------------------------------------*/</span></div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span><span class="preprocessor">#ifndef Foam_dgField_H</span></div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span><span class="preprocessor">#define Foam_dgField_H</span></div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span> </div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span><span class="preprocessor">#include &quot;regIOobject.H&quot;</span></div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span><span class="preprocessor">#include &quot;dofField.H&quot;</span></div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span><span class="preprocessor">#include &quot;GaussField.H&quot;</span></div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span><span class="preprocessor">#include &quot;dgGeomMesh.H&quot;</span></div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span><span class="preprocessor">#include &quot;dgGeneralBoundaryManager.H&quot;</span></div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span><span class="preprocessor">#include &quot;tensor.H&quot;</span></div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span> </div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceFoam.html">Foam</a></div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>{</div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span> </div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span><span class="comment">/*---------------------------------------------------------------------------*\</span></div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span><span class="comment">                          Class dgField Declaration</span></div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span><span class="comment">\*---------------------------------------------------------------------------*/</span></div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span> </div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span><span class="keyword">template</span>&lt;<span class="keyword">class</span> Type&gt;</div>
-<div class="foldopen" id="foldopen00079" data-start="{" data-end="};">
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno"><a class="line" href="classFoam_1_1dgField.html">   79</a></span><span class="keyword">class </span><a class="code hl_class" href="classFoam_1_1dgField.html">dgField</a></div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>:</div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>    <span class="keyword">public</span> regIOobject</div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>{</div>
-<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span><span class="keyword">private</span>:</div>
-<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span> </div>
-<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>    <span class="comment">//====================================================================//</span></div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>    <span class="comment">//                           Data members</span></div>
-<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>    <span class="comment">//====================================================================//</span></div>
-<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span> </div>
-<div class="line"><a id="l00090" name="l00090"></a><span class="lineno"><a class="line" href="classFoam_1_1dgField.html#ac4f6191698b4025cbde41b854ef0c8f0">   90</a></span>        <span class="keyword">const</span> <a class="code hl_class" href="classFoam_1_1dgGeomMesh.html">dgGeomMesh</a>&amp; <a class="code hl_variable" href="classFoam_1_1dgField.html#ac4f6191698b4025cbde41b854ef0c8f0">mesh_</a>;</div>
-<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span> </div>
-<div class="line"><a id="l00093" name="l00093"></a><span class="lineno"><a class="line" href="classFoam_1_1dgField.html#abfcbb698f99feb25b38a5b839d453e22">   93</a></span>        <span class="keywordtype">bool</span> <a class="code hl_variable" href="classFoam_1_1dgField.html#abfcbb698f99feb25b38a5b839d453e22">hasDof_</a>;</div>
-<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span> </div>
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno"><a class="line" href="classFoam_1_1dgField.html#a3d29986a1270bc6a49550e47eb7d19f7">   96</a></span>        <a class="code hl_class" href="classFoam_1_1GaussField.html">autoPtr&lt;dofField&lt;Type&gt;</a>&gt; <a class="code hl_variable" href="classFoam_1_1dgField.html#a3d29986a1270bc6a49550e47eb7d19f7">dofPtr_</a>;</div>
-<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span> </div>
-<div class="line"><a id="l00099" name="l00099"></a><span class="lineno"><a class="line" href="classFoam_1_1dgField.html#ae0ec2ac3d571c7ff2188c199482e234a">   99</a></span>        <a class="code hl_class" href="classFoam_1_1GaussField.html">List&lt;GaussField&lt;Type&gt;</a>&gt; <a class="code hl_variable" href="classFoam_1_1dgField.html#ae0ec2ac3d571c7ff2188c199482e234a">gaussFields_</a>;</div>
-<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span> </div>
-<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span><span class="comment">    dgFieldI.H</span></div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span><span class="comment"></span> </div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span><span class="comment">\*---------------------------------------------------------------------------*/</span></div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span> </div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span><span class="preprocessor">#ifndef Foam_dgField_H</span></div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span><span class="preprocessor">#define Foam_dgField_H</span></div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> </div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span><span class="preprocessor">#include &quot;regIOobject.H&quot;</span></div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span><span class="preprocessor">#include &quot;cellDof.H&quot;</span></div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span><span class="preprocessor">#include &quot;dofField.H&quot;</span></div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span><span class="preprocessor">#include &quot;GaussField.H&quot;</span></div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span><span class="preprocessor">#include &quot;dgGeomMesh.H&quot;</span></div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span><span class="preprocessor">#include &quot;dgGeneralBoundaryManager.H&quot;</span></div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span><span class="preprocessor">#include &quot;tensor.H&quot;</span></div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span> </div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceFoam.html">Foam</a></div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>{</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span> </div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span><span class="keyword">template</span>&lt;<span class="keyword">class</span> Type&gt;</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span><span class="keyword">class </span>dgProcessorBoundaryManager;</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span> </div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span><span class="comment">/*---------------------------------------------------------------------------*\</span></div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span><span class="comment">                          Class dgField Declaration</span></div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span><span class="comment">\*---------------------------------------------------------------------------*/</span></div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span> </div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span><span class="keyword">template</span>&lt;<span class="keyword">class</span> Type&gt;</div>
+<div class="foldopen" id="foldopen00084" data-start="{" data-end="};">
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno"><a class="line" href="classFoam_1_1dgField.html">   84</a></span><span class="keyword">class </span><a class="code hl_class" href="classFoam_1_1dgField.html">dgField</a></div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>:</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>    <span class="keyword">public</span> regIOobject</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>{</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>    <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span> </div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>    <span class="comment">//====================================================================//</span></div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>    <span class="comment">//                           Data members</span></div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>    <span class="comment">//====================================================================//</span></div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span> </div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno"><a class="line" href="classFoam_1_1dgField.html#ac4f6191698b4025cbde41b854ef0c8f0">   95</a></span>        <span class="keyword">const</span> <a class="code hl_class" href="classFoam_1_1dgGeomMesh.html">dgGeomMesh</a>&amp; <a class="code hl_variable" href="classFoam_1_1dgField.html#ac4f6191698b4025cbde41b854ef0c8f0">mesh_</a>;</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span> </div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno"><a class="line" href="classFoam_1_1dgField.html#abfcbb698f99feb25b38a5b839d453e22">   98</a></span>        <span class="keywordtype">bool</span> <a class="code hl_variable" href="classFoam_1_1dgField.html#abfcbb698f99feb25b38a5b839d453e22">hasDof_</a>;</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span> </div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno"><a class="line" href="classFoam_1_1dgField.html#a3d29986a1270bc6a49550e47eb7d19f7">  101</a></span>        <a class="code hl_class" href="classFoam_1_1GaussField.html">autoPtr&lt;dofField&lt;Type&gt;</a>&gt; <a class="code hl_variable" href="classFoam_1_1dgField.html#a3d29986a1270bc6a49550e47eb7d19f7">dofPtr_</a>;</div>
 <div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span> </div>
-<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>    <span class="comment">//- Runtime type information</span></div>
-<div class="line"><a id="l00104" name="l00104"></a><span class="lineno"><a class="line" href="classFoam_1_1dgField.html#a57d390eac87e6550a25ccb1cb8c3513c">  104</a></span>    <a class="code hl_function" href="classFoam_1_1dgField.html#a57d390eac87e6550a25ccb1cb8c3513c">TypeName</a>(<span class="stringliteral">&quot;dgField&quot;</span>);</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno"><a class="line" href="classFoam_1_1dgField.html#ae0ec2ac3d571c7ff2188c199482e234a">  104</a></span>        <a class="code hl_class" href="classFoam_1_1GaussField.html">List&lt;GaussField&lt;Type&gt;</a>&gt; <a class="code hl_variable" href="classFoam_1_1dgField.html#ae0ec2ac3d571c7ff2188c199482e234a">gaussFields_</a>;</div>
 <div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span> </div>
-<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>    <span class="comment">//====================================================================//</span></div>
-<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>    <span class="comment">//                           Constructors</span></div>
-<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>    <span class="comment">//====================================================================//</span></div>
-<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span> </div>
-<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>        <a class="code hl_class" href="classFoam_1_1dgField.html">dgField</a></div>
-<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>        (</div>
-<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>            <span class="keyword">const</span> <a class="code hl_class" href="classFoam_1_1GaussField.html">IOobject</a>&amp; <a class="code hl_class" href="classFoam_1_1GaussField.html">io</a>,</div>
-<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>            <span class="keyword">const</span> <a class="code hl_class" href="classFoam_1_1dgGeomMesh.html">dgGeomMesh</a>&amp; mesh,</div>
-<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>            <span class="keywordtype">bool</span> <a class="code hl_function" href="classFoam_1_1dgField.html#afc454ae18f85b23dfe80c0ebde8bbd8f">hasDof</a> = <span class="keyword">true</span></div>
-<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>        );</div>
-<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span> </div>
-<div class="line"><a id="l00124" name="l00124"></a><span class="lineno"><a class="line" href="classFoam_1_1dgField.html#a0235ed325c733f7eaa0909be694c09a2">  124</a></span>        <a class="code hl_function" href="classFoam_1_1dgField.html#a0235ed325c733f7eaa0909be694c09a2">dgField</a>(<span class="keyword">const</span> <a class="code hl_class" href="classFoam_1_1dgField.html">dgField</a>&amp;) = <span class="keyword">delete</span>;</div>
-<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span> </div>
-<div class="line"><a id="l00127" name="l00127"></a><span class="lineno"><a class="line" href="classFoam_1_1dgField.html#a86f50c333397fe01120a5abeca5fa14a">  127</a></span>        <a class="code hl_class" href="classFoam_1_1dgField.html">dgField</a>&amp; <a class="code hl_function" href="classFoam_1_1dgField.html#a86f50c333397fe01120a5abeca5fa14a">operator=</a>(<span class="keyword">const</span> <a class="code hl_class" href="classFoam_1_1dgField.html">dgField</a>&amp;) = <span class="keyword">delete</span>;</div>
-<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span> </div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno"><a class="line" href="classFoam_1_1dgField.html#adab60ca7f4c19a485ac56b6c1604627d">  112</a></span>        <a class="code hl_class" href="classFoam_1_1GaussField.html">autoPtr&lt;dgProcessorBoundaryManager&lt;Type&gt;</a>&gt; <a class="code hl_variable" href="classFoam_1_1dgField.html#adab60ca7f4c19a485ac56b6c1604627d">procSyncPtr_</a>;</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span> </div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>        <a class="code hl_class" href="classFoam_1_1GaussField.html">tmp&lt;GeometricField&lt;Type, fvPatchField, volMesh&gt;</a>&gt; <a class="code hl_function" href="classFoam_1_1dgField.html#ab9d6fa555b42ec19b1646dc2f3919135">cellAverageVolField</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span> </div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span> </div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>    <span class="comment">//- Runtime type information</span></div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno"><a class="line" href="classFoam_1_1dgField.html#a57d390eac87e6550a25ccb1cb8c3513c">  125</a></span>    <a class="code hl_function" href="classFoam_1_1dgField.html#a57d390eac87e6550a25ccb1cb8c3513c">TypeName</a>(<span class="stringliteral">&quot;dgField&quot;</span>);</div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span> </div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>    <span class="comment">//====================================================================//</span></div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>    <span class="comment">//                           Constructors</span></div>
 <div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>    <span class="comment">//====================================================================//</span></div>
-<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>    <span class="comment">//                           Access</span></div>
-<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>    <span class="comment">//====================================================================//</span></div>
-<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span> </div>
-<div class="foldopen" id="foldopen00134" data-start="{" data-end="}">
-<div class="line"><a id="l00134" name="l00134"></a><span class="lineno"><a class="line" href="classFoam_1_1dgField.html#afc454ae18f85b23dfe80c0ebde8bbd8f">  134</a></span>        <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code hl_function" href="classFoam_1_1dgField.html#afc454ae18f85b23dfe80c0ebde8bbd8f">hasDof</a>()<span class="keyword"> const</span></div>
-<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span><span class="keyword">        </span>{</div>
-<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>            <span class="keywordflow">return</span> <a class="code hl_variable" href="classFoam_1_1dgField.html#a3d29986a1270bc6a49550e47eb7d19f7">dofPtr_</a> != <span class="keyword">nullptr</span>;</div>
-<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>        }</div>
-</div>
-<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span> </div>
-<div class="foldopen" id="foldopen00144" data-start="{" data-end="}">
-<div class="line"><a id="l00144" name="l00144"></a><span class="lineno"><a class="line" href="classFoam_1_1dgField.html#aa0110eef71fb23791a5064bbb2c66c7a">  144</a></span>        <span class="keyword">inline</span> <a class="code hl_class" href="classFoam_1_1GaussField.html">dofField&lt;Type&gt;</a>&amp; <a class="code hl_function" href="classFoam_1_1dgField.html#aa0110eef71fb23791a5064bbb2c66c7a">dof</a>()</div>
-<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>        {</div>
-<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>            <span class="keywordflow">if</span> (!<a class="code hl_variable" href="classFoam_1_1dgField.html#a3d29986a1270bc6a49550e47eb7d19f7">dofPtr_</a>)</div>
-<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>            {</div>
-<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>                <a class="code hl_class" href="classFoam_1_1GaussField.html">FatalErrorInFunction</a></div>
-<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>                    &lt;&lt; <span class="stringliteral">&quot;Attempt to access non-existing DOF field&quot;</span></div>
-<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>                    &lt;&lt; <a class="code hl_class" href="classFoam_1_1GaussField.html">abort</a>(<a class="code hl_class" href="classFoam_1_1GaussField.html">FatalError</a>);</div>
-<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>            }</div>
-<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>            <span class="keywordflow">return</span> *<a class="code hl_variable" href="classFoam_1_1dgField.html#a3d29986a1270bc6a49550e47eb7d19f7">dofPtr_</a>;</div>
-<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>        }</div>
-</div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span> </div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>        <a class="code hl_class" href="classFoam_1_1dgField.html">dgField</a></div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>        (</div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>            <span class="keyword">const</span> <a class="code hl_class" href="classFoam_1_1GaussField.html">IOobject</a>&amp; <a class="code hl_class" href="classFoam_1_1GaussField.html">io</a>,</div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>            <span class="keyword">const</span> <a class="code hl_class" href="classFoam_1_1dgGeomMesh.html">dgGeomMesh</a>&amp; mesh,</div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>            <span class="keywordtype">bool</span> <a class="code hl_function" href="classFoam_1_1dgField.html#afc454ae18f85b23dfe80c0ebde8bbd8f">hasDof</a> = <span class="keyword">true</span></div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>        );</div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span> </div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno"><a class="line" href="classFoam_1_1dgField.html#a0235ed325c733f7eaa0909be694c09a2">  150</a></span>        <a class="code hl_function" href="classFoam_1_1dgField.html#a0235ed325c733f7eaa0909be694c09a2">dgField</a>(<span class="keyword">const</span> <a class="code hl_class" href="classFoam_1_1dgField.html">dgField</a>&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span> </div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno"><a class="line" href="classFoam_1_1dgField.html#a86f50c333397fe01120a5abeca5fa14a">  153</a></span>        <a class="code hl_class" href="classFoam_1_1dgField.html">dgField</a>&amp; <a class="code hl_function" href="classFoam_1_1dgField.html#a86f50c333397fe01120a5abeca5fa14a">operator=</a>(<span class="keyword">const</span> <a class="code hl_class" href="classFoam_1_1dgField.html">dgField</a>&amp;) = <span class="keyword">delete</span>;</div>
 <div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span> </div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>    <span class="comment">//====================================================================//</span></div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>    <span class="comment">//                           Access</span></div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>    <span class="comment">//====================================================================//</span></div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span> </div>
 <div class="foldopen" id="foldopen00160" data-start="{" data-end="}">
-<div class="line"><a id="l00160" name="l00160"></a><span class="lineno"><a class="line" href="classFoam_1_1dgField.html#a7a9b716a6fa33f92703116920dad278d">  160</a></span>        <span class="keyword">inline</span> <span class="keyword">const</span> <a class="code hl_class" href="classFoam_1_1GaussField.html">dofField&lt;Type&gt;</a>&amp; <a class="code hl_function" href="classFoam_1_1dgField.html#a7a9b716a6fa33f92703116920dad278d">dof</a>()<span class="keyword"> const</span></div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno"><a class="line" href="classFoam_1_1dgField.html#afc454ae18f85b23dfe80c0ebde8bbd8f">  160</a></span>        <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code hl_function" href="classFoam_1_1dgField.html#afc454ae18f85b23dfe80c0ebde8bbd8f">hasDof</a>()<span class="keyword"> const</span></div>
 <div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span><span class="keyword">        </span>{</div>
-<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>            <span class="keywordflow">if</span> (!<a class="code hl_variable" href="classFoam_1_1dgField.html#a3d29986a1270bc6a49550e47eb7d19f7">dofPtr_</a>)</div>
-<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>            {</div>
-<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>                <a class="code hl_class" href="classFoam_1_1GaussField.html">FatalErrorInFunction</a></div>
-<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>                    &lt;&lt; <span class="stringliteral">&quot;Attempt to access non-existing DOF field&quot;</span></div>
-<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>                    &lt;&lt; <a class="code hl_class" href="classFoam_1_1GaussField.html">abort</a>(<a class="code hl_class" href="classFoam_1_1GaussField.html">FatalError</a>);</div>
-<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>            }</div>
-<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>            <span class="keywordflow">return</span> *<a class="code hl_variable" href="classFoam_1_1dgField.html#a3d29986a1270bc6a49550e47eb7d19f7">dofPtr_</a>;</div>
-<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>        }</div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>            <span class="keywordflow">return</span> <a class="code hl_variable" href="classFoam_1_1dgField.html#a3d29986a1270bc6a49550e47eb7d19f7">dofPtr_</a> != <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>        }</div>
 </div>
-<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span> </div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span> </div>
 <div class="foldopen" id="foldopen00172" data-start="{" data-end="}">
-<div class="line"><a id="l00172" name="l00172"></a><span class="lineno"><a class="line" href="classFoam_1_1dgField.html#ac98f80b7843c6fd1e04aefff2547521b">  172</a></span>        <span class="keyword">inline</span> <a class="code hl_class" href="classFoam_1_1GaussField.html">List&lt;GaussField&lt;Type&gt;</a>&gt;&amp; <a class="code hl_function" href="classFoam_1_1dgField.html#ac98f80b7843c6fd1e04aefff2547521b">gaussFields</a>()</div>
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno"><a class="line" href="classFoam_1_1dgField.html#aa0110eef71fb23791a5064bbb2c66c7a">  172</a></span>        <span class="keyword">inline</span> <a class="code hl_class" href="classFoam_1_1GaussField.html">dofField&lt;Type&gt;</a>&amp; <a class="code hl_function" href="classFoam_1_1dgField.html#aa0110eef71fb23791a5064bbb2c66c7a">dof</a>()</div>
 <div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>        {</div>
-<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span>            <span class="keywordflow">return</span> <a class="code hl_variable" href="classFoam_1_1dgField.html#ae0ec2ac3d571c7ff2188c199482e234a">gaussFields_</a>;</div>
-<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>        }</div>
-</div>
-<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span> </div>
-<div class="foldopen" id="foldopen00178" data-start="{" data-end="}">
-<div class="line"><a id="l00178" name="l00178"></a><span class="lineno"><a class="line" href="classFoam_1_1dgField.html#a6ab619289ac4bee4d6e017bcef80b382">  178</a></span>        <span class="keyword">inline</span> <span class="keyword">const</span> <a class="code hl_class" href="classFoam_1_1GaussField.html">List&lt;GaussField&lt;Type&gt;</a>&gt;&amp; <a class="code hl_function" href="classFoam_1_1dgField.html#a6ab619289ac4bee4d6e017bcef80b382">gaussFields</a>()<span class="keyword"> const</span></div>
-<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span><span class="keyword">        </span>{</div>
-<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span>            <span class="keywordflow">return</span> <a class="code hl_variable" href="classFoam_1_1dgField.html#ae0ec2ac3d571c7ff2188c199482e234a">gaussFields_</a>;</div>
+<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span>            <span class="keywordflow">if</span> (!<a class="code hl_variable" href="classFoam_1_1dgField.html#a3d29986a1270bc6a49550e47eb7d19f7">dofPtr_</a>)</div>
+<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>            {</div>
+<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>                <a class="code hl_class" href="classFoam_1_1GaussField.html">FatalErrorInFunction</a></div>
+<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>                    &lt;&lt; <span class="stringliteral">&quot;Attempt to access non-existing DOF field&quot;</span></div>
+<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span>                    &lt;&lt; <a class="code hl_class" href="classFoam_1_1GaussField.html">abort</a>(<a class="code hl_class" href="classFoam_1_1GaussField.html">FatalError</a>);</div>
+<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>            }</div>
+<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span>            <span class="keywordflow">return</span> *<a class="code hl_variable" href="classFoam_1_1dgField.html#a3d29986a1270bc6a49550e47eb7d19f7">dofPtr_</a>;</div>
 <div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>        }</div>
 </div>
 <div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span> </div>
-<div class="foldopen" id="foldopen00184" data-start="{" data-end="}">
-<div class="line"><a id="l00184" name="l00184"></a><span class="lineno"><a class="line" href="classFoam_1_1dgField.html#a42152669f8dca7997dc30e8c5f82aef3">  184</a></span>        <span class="keyword">inline</span> <a class="code hl_class" href="classFoam_1_1GaussField.html">label</a> <a class="code hl_function" href="classFoam_1_1dgField.html#a42152669f8dca7997dc30e8c5f82aef3">nCells</a>()<span class="keyword"> const</span></div>
-<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span><span class="keyword">        </span>{</div>
-<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>            <span class="keywordflow">return</span> <a class="code hl_variable" href="classFoam_1_1dgField.html#ae0ec2ac3d571c7ff2188c199482e234a">gaussFields_</a>.size();</div>
-<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>        }</div>
-</div>
-<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span> </div>
 <div class="foldopen" id="foldopen00190" data-start="{" data-end="}">
-<div class="line"><a id="l00190" name="l00190"></a><span class="lineno"><a class="line" href="classFoam_1_1dgField.html#a490be4ec11d7936a578c34414f0f7498">  190</a></span>        <span class="keyword">inline</span> <span class="keyword">const</span> <a class="code hl_class" href="classFoam_1_1GaussField.html">word</a>&amp; <a class="code hl_function" href="classFoam_1_1dgField.html#a490be4ec11d7936a578c34414f0f7498">name</a>()<span class="keyword"> const</span></div>
+<div class="line"><a id="l00190" name="l00190"></a><span class="lineno"><a class="line" href="classFoam_1_1dgField.html#a7a9b716a6fa33f92703116920dad278d">  190</a></span>        <span class="keyword">inline</span> <span class="keyword">const</span> <a class="code hl_class" href="classFoam_1_1GaussField.html">dofField&lt;Type&gt;</a>&amp; <a class="code hl_function" href="classFoam_1_1dgField.html#a7a9b716a6fa33f92703116920dad278d">dof</a>()<span class="keyword"> const</span></div>
 <div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span><span class="keyword">        </span>{</div>
-<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span>            <span class="keywordflow">return</span> regIOobject::name();</div>
-<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>        }</div>
+<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span>            <span class="keywordflow">if</span> (!<a class="code hl_variable" href="classFoam_1_1dgField.html#a3d29986a1270bc6a49550e47eb7d19f7">dofPtr_</a>)</div>
+<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>            {</div>
+<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span>                <a class="code hl_class" href="classFoam_1_1GaussField.html">FatalErrorInFunction</a></div>
+<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>                    &lt;&lt; <span class="stringliteral">&quot;Attempt to access non-existing DOF field&quot;</span></div>
+<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>                    &lt;&lt; <a class="code hl_class" href="classFoam_1_1GaussField.html">abort</a>(<a class="code hl_class" href="classFoam_1_1GaussField.html">FatalError</a>);</div>
+<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>            }</div>
+<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>            <span class="keywordflow">return</span> *<a class="code hl_variable" href="classFoam_1_1dgField.html#a3d29986a1270bc6a49550e47eb7d19f7">dofPtr_</a>;</div>
+<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>        }</div>
 </div>
-<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span> </div>
-<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>    <span class="comment">//====================================================================//</span></div>
-<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>    <span class="comment">//                              I/O</span></div>
-<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>    <span class="comment">//====================================================================//</span></div>
-<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span> </div>
-<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span>        <span class="keywordtype">bool</span> <a class="code hl_function" href="classFoam_1_1dgField.html#a649c939d68ed53736811140f7b743bfa">writeData</a>(<a class="code hl_class" href="classFoam_1_1GaussField.html">Ostream</a>&amp; <a class="code hl_class" href="classFoam_1_1GaussField.html">os</a>) <span class="keyword">const</span>;</div>
-<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span> </div>
-<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>    <span class="comment">//====================================================================//</span></div>
-<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>    <span class="comment">//                           Assignment</span></div>
-<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>    <span class="comment">//====================================================================//</span></div>
-<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span> </div>
-<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span>        <a class="code hl_class" href="classFoam_1_1GaussField.html">dgField&lt;Type&gt;</a>&amp; <a class="code hl_function" href="classFoam_1_1dgField.html#a86f50c333397fe01120a5abeca5fa14a">operator=</a>(<span class="keyword">const</span> <a class="code hl_class" href="classFoam_1_1GaussField.html">Type</a>&amp; <a class="code hl_class" href="classFoam_1_1GaussField.html">value</a>);</div>
-<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span>};</div>
+<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span> </div>
+<div class="foldopen" id="foldopen00202" data-start="{" data-end="}">
+<div class="line"><a id="l00202" name="l00202"></a><span class="lineno"><a class="line" href="classFoam_1_1dgField.html#ac98f80b7843c6fd1e04aefff2547521b">  202</a></span>        <span class="keyword">inline</span> <a class="code hl_class" href="classFoam_1_1GaussField.html">List&lt;GaussField&lt;Type&gt;</a>&gt;&amp; <a class="code hl_function" href="classFoam_1_1dgField.html#ac98f80b7843c6fd1e04aefff2547521b">gaussFields</a>()</div>
+<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span>        {</div>
+<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span>            <span class="keywordflow">return</span> <a class="code hl_variable" href="classFoam_1_1dgField.html#ae0ec2ac3d571c7ff2188c199482e234a">gaussFields_</a>;</div>
+<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span>        }</div>
 </div>
-<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span> </div>
-<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span>} <span class="comment">// End namespace Foam</span></div>
-<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span> </div>
-<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span><span class="preprocessor">#include &quot;<a class="code" href="lnInclude_2dgFieldI_8H.html">dgFieldI.H</a>&quot;</span></div>
-<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span> </div>
-<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span> </div>
-<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span><span class="comment">// ************************************************************************* //</span></div>
-<div class="ttc" id="aclassFoam_1_1GaussField_html"><div class="ttname"><a href="classFoam_1_1GaussField.html">Foam::GaussField</a></div><div class="ttdoc">Combined Gauss-point field for a DG cell.</div><div class="ttdef"><b>Definition</b> GaussField.H:82</div></div>
-<div class="ttc" id="aclassFoam_1_1dgField_html"><div class="ttname"><a href="classFoam_1_1dgField.html">Foam::dgField</a></div><div class="ttdoc">DG field storing DoFs and Gauss-point values.</div><div class="ttdef"><b>Definition</b> dgField.H:82</div></div>
+<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span> </div>
+<div class="foldopen" id="foldopen00208" data-start="{" data-end="}">
+<div class="line"><a id="l00208" name="l00208"></a><span class="lineno"><a class="line" href="classFoam_1_1dgField.html#a6ab619289ac4bee4d6e017bcef80b382">  208</a></span>        <span class="keyword">inline</span> <span class="keyword">const</span> <a class="code hl_class" href="classFoam_1_1GaussField.html">List&lt;GaussField&lt;Type&gt;</a>&gt;&amp; <a class="code hl_function" href="classFoam_1_1dgField.html#a6ab619289ac4bee4d6e017bcef80b382">gaussFields</a>()<span class="keyword"> const</span></div>
+<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span><span class="keyword">        </span>{</div>
+<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span>            <span class="keywordflow">return</span> <a class="code hl_variable" href="classFoam_1_1dgField.html#ae0ec2ac3d571c7ff2188c199482e234a">gaussFields_</a>;</div>
+<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span>        }</div>
+</div>
+<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span> </div>
+<div class="foldopen" id="foldopen00214" data-start="{" data-end="}">
+<div class="line"><a id="l00214" name="l00214"></a><span class="lineno"><a class="line" href="classFoam_1_1dgField.html#a42152669f8dca7997dc30e8c5f82aef3">  214</a></span>        <span class="keyword">inline</span> <a class="code hl_class" href="classFoam_1_1GaussField.html">label</a> <a class="code hl_function" href="classFoam_1_1dgField.html#a42152669f8dca7997dc30e8c5f82aef3">nCells</a>()<span class="keyword"> const</span></div>
+<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span><span class="keyword">        </span>{</div>
+<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span>            <span class="keywordflow">return</span> <a class="code hl_variable" href="classFoam_1_1dgField.html#ae0ec2ac3d571c7ff2188c199482e234a">gaussFields_</a>.size();</div>
+<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span>        }</div>
+</div>
+<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span> </div>
+<div class="foldopen" id="foldopen00220" data-start="{" data-end="}">
+<div class="line"><a id="l00220" name="l00220"></a><span class="lineno"><a class="line" href="classFoam_1_1dgField.html#a490be4ec11d7936a578c34414f0f7498">  220</a></span>        <span class="keyword">inline</span> <span class="keyword">const</span> <a class="code hl_class" href="classFoam_1_1GaussField.html">word</a>&amp; <a class="code hl_function" href="classFoam_1_1dgField.html#a490be4ec11d7936a578c34414f0f7498">name</a>()<span class="keyword"> const</span></div>
+<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span><span class="keyword">        </span>{</div>
+<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span>            <span class="keywordflow">return</span> regIOobject::name();</div>
+<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span>        }</div>
+</div>
+<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span> </div>
+<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span>        <span class="keywordtype">void</span> <a class="code hl_function" href="classFoam_1_1dgField.html#af5e4a3c4d50751fc364e3307adb603f7">synch</a>();</div>
+<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span> </div>
+<div class="foldopen" id="foldopen00244" data-start="{" data-end="}">
+<div class="line"><a id="l00244" name="l00244"></a><span class="lineno"><a class="line" href="classFoam_1_1dgField.html#ae090ead69a0f079aee52a42773d015ea">  244</a></span>        <span class="keyword">inline</span> <span class="keyword">const</span> <a class="code hl_class" href="classFoam_1_1GaussField.html">cellDof&lt;Type&gt;</a>&amp; <a class="code hl_function" href="classFoam_1_1dgField.html#ae090ead69a0f079aee52a42773d015ea">neighbourCellDof</a></div>
+<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span>        (</div>
+<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span>            <span class="keyword">const</span> <a class="code hl_class" href="classFoam_1_1GaussField.html">label</a> cellID,</div>
+<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span>            <span class="keyword">const</span> <a class="code hl_class" href="classFoam_1_1GaussField.html">label</a> <a class="code hl_class" href="classFoam_1_1GaussField.html">localFaceI</a></div>
+<div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span>        )<span class="keyword"> const</span></div>
+<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span><span class="keyword">        </span>{</div>
+<div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span>            <span class="keywordflow">if</span> (<a class="code hl_class" href="classFoam_1_1GaussField.html">cellID &lt; 0 || cellID &gt;</a>= <a class="code hl_variable" href="classFoam_1_1dgField.html#ae0ec2ac3d571c7ff2188c199482e234a">gaussFields_</a>.size())</div>
+<div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span>            {</div>
+<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span>                <a class="code hl_class" href="classFoam_1_1GaussField.html">FatalErrorInFunction</a></div>
+<div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span>                    &lt;&lt; <span class="stringliteral">&quot;Cell index &quot;</span> &lt;&lt; cellID &lt;&lt; <span class="stringliteral">&quot; is out of range [0, &quot;</span></div>
+<div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span>                    &lt;&lt; <a class="code hl_variable" href="classFoam_1_1dgField.html#ae0ec2ac3d571c7ff2188c199482e234a">gaussFields_</a>.size() - 1 &lt;&lt; <span class="charliteral">&#39;]&#39;</span></div>
+<div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span>                    &lt;&lt; <a class="code hl_class" href="classFoam_1_1GaussField.html">abort</a>(<a class="code hl_class" href="classFoam_1_1GaussField.html">FatalError</a>);</div>
+<div class="line"><a id="l00256" name="l00256"></a><span class="lineno">  256</span>            }</div>
+<div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span> </div>
+<div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span>            <span class="keywordflow">return</span> <a class="code hl_variable" href="classFoam_1_1dgField.html#ae0ec2ac3d571c7ff2188c199482e234a">gaussFields_</a>[cellID].<a class="code hl_function" href="classFoam_1_1GaussField.html#a0f370774a5198a729feaf03364c14c48">neighbourCellDof</a>(<a class="code hl_class" href="classFoam_1_1GaussField.html">localFaceI</a>);</div>
+<div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span>        }</div>
+</div>
+<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span> </div>
+<div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span>    <span class="comment">//====================================================================//</span></div>
+<div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span>    <span class="comment">//                              I/O</span></div>
+<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>    <span class="comment">//====================================================================//</span></div>
+<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span> </div>
+<div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span>        <span class="keywordtype">bool</span> <a class="code hl_function" href="classFoam_1_1dgField.html#a649c939d68ed53736811140f7b743bfa">writeData</a>(<a class="code hl_class" href="classFoam_1_1GaussField.html">Ostream</a>&amp; <a class="code hl_class" href="classFoam_1_1GaussField.html">os</a>) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span> </div>
+<div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span>        <span class="keywordtype">bool</span> <a class="code hl_function" href="classFoam_1_1dgField.html#a0992de5416c0ebecdef61cf7401f13fe">writeObject</a></div>
+<div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span>        (</div>
+<div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span>            <a class="code hl_class" href="classFoam_1_1GaussField.html">IOstreamOption</a> <a class="code hl_class" href="classFoam_1_1GaussField.html">streamOpt</a>,</div>
+<div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span>            <span class="keyword">const</span> <span class="keywordtype">bool</span> <a class="code hl_class" href="classFoam_1_1GaussField.html">writeOnProc</a></div>
+<div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span>        ) <span class="keyword">const override</span>;</div>
+<div class="line"><a id="l00284" name="l00284"></a><span class="lineno">  284</span> </div>
+<div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span>    <span class="comment">//====================================================================//</span></div>
+<div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span>    <span class="comment">//                           Assignment</span></div>
+<div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span>    <span class="comment">//====================================================================//</span></div>
+<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span> </div>
+<div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span>        <a class="code hl_class" href="classFoam_1_1GaussField.html">dgField&lt;Type&gt;</a>&amp; <a class="code hl_function" href="classFoam_1_1dgField.html#a86f50c333397fe01120a5abeca5fa14a">operator=</a>(<span class="keyword">const</span> <a class="code hl_class" href="classFoam_1_1GaussField.html">Type</a>&amp; <a class="code hl_class" href="classFoam_1_1GaussField.html">value</a>);</div>
+<div class="line"><a id="l00296" name="l00296"></a><span class="lineno">  296</span>};</div>
+</div>
+<div class="line"><a id="l00297" name="l00297"></a><span class="lineno">  297</span> </div>
+<div class="line"><a id="l00298" name="l00298"></a><span class="lineno">  298</span>} <span class="comment">// End namespace Foam</span></div>
+<div class="line"><a id="l00299" name="l00299"></a><span class="lineno">  299</span> </div>
+<div class="line"><a id="l00300" name="l00300"></a><span class="lineno">  300</span><span class="preprocessor">#include &quot;<a class="code" href="lnInclude_2dgFieldI_8H.html">dgFieldI.H</a>&quot;</span></div>
+<div class="line"><a id="l00301" name="l00301"></a><span class="lineno">  301</span> </div>
+<div class="line"><a id="l00302" name="l00302"></a><span class="lineno">  302</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00303" name="l00303"></a><span class="lineno">  303</span> </div>
+<div class="line"><a id="l00304" name="l00304"></a><span class="lineno">  304</span><span class="comment">// ************************************************************************* //</span></div>
+<div class="ttc" id="aclassFoam_1_1GaussField_html"><div class="ttname"><a href="classFoam_1_1GaussField.html">Foam::GaussField</a></div><div class="ttdoc">Combined Gauss-point field for a DG cell.</div><div class="ttdef"><b>Definition</b> GaussField.H:85</div></div>
+<div class="ttc" id="aclassFoam_1_1GaussField_html_a0f370774a5198a729feaf03364c14c48"><div class="ttname"><a href="classFoam_1_1GaussField.html#a0f370774a5198a729feaf03364c14c48">Foam::GaussField::neighbourCellDof</a></div><div class="ttdeci">const cellDof&lt; Type &gt; &amp; neighbourCellDof(const label localFaceI) const</div><div class="ttdoc">Access neighbour DoFs for one local face of this cell.</div><div class="ttdef"><b>Definition</b> GaussField.H:283</div></div>
+<div class="ttc" id="aclassFoam_1_1dgField_html"><div class="ttname"><a href="classFoam_1_1dgField.html">Foam::dgField</a></div><div class="ttdoc">DG field storing DoFs and Gauss-point values.</div><div class="ttdef"><b>Definition</b> dgField.H:87</div></div>
 <div class="ttc" id="aclassFoam_1_1dgField_html_a0235ed325c733f7eaa0909be694c09a2"><div class="ttname"><a href="classFoam_1_1dgField.html#a0235ed325c733f7eaa0909be694c09a2">Foam::dgField::dgField</a></div><div class="ttdeci">dgField(const dgField &amp;)=delete</div><div class="ttdoc">Copy construction is disabled.</div></div>
-<div class="ttc" id="aclassFoam_1_1dgField_html_a3d29986a1270bc6a49550e47eb7d19f7"><div class="ttname"><a href="classFoam_1_1dgField.html#a3d29986a1270bc6a49550e47eb7d19f7">Foam::dgField::dofPtr_</a></div><div class="ttdeci">autoPtr&lt; dofField&lt; Type &gt; &gt; dofPtr_</div><div class="ttdoc">Pointer to DoF field (null for DoF-less fields)</div><div class="ttdef"><b>Definition</b> dgField.H:96</div></div>
-<div class="ttc" id="aclassFoam_1_1dgField_html_a42152669f8dca7997dc30e8c5f82aef3"><div class="ttname"><a href="classFoam_1_1dgField.html#a42152669f8dca7997dc30e8c5f82aef3">Foam::dgField::nCells</a></div><div class="ttdeci">label nCells() const</div><div class="ttdoc">Return number of cells.</div><div class="ttdef"><b>Definition</b> dgField.H:184</div></div>
-<div class="ttc" id="aclassFoam_1_1dgField_html_a490be4ec11d7936a578c34414f0f7498"><div class="ttname"><a href="classFoam_1_1dgField.html#a490be4ec11d7936a578c34414f0f7498">Foam::dgField::name</a></div><div class="ttdeci">const word &amp; name() const</div><div class="ttdoc">Return field object name.</div><div class="ttdef"><b>Definition</b> dgField.H:190</div></div>
+<div class="ttc" id="aclassFoam_1_1dgField_html_a0992de5416c0ebecdef61cf7401f13fe"><div class="ttname"><a href="classFoam_1_1dgField.html#a0992de5416c0ebecdef61cf7401f13fe">Foam::dgField::writeObject</a></div><div class="ttdeci">bool writeObject(IOstreamOption streamOpt, const bool writeOnProc) const override</div><div class="ttdoc">Write this DG field as a standard OpenFOAM volField.</div><div class="ttdef"><b>Definition</b> dgFieldI.H:212</div></div>
+<div class="ttc" id="aclassFoam_1_1dgField_html_a3d29986a1270bc6a49550e47eb7d19f7"><div class="ttname"><a href="classFoam_1_1dgField.html#a3d29986a1270bc6a49550e47eb7d19f7">Foam::dgField::dofPtr_</a></div><div class="ttdeci">autoPtr&lt; dofField&lt; Type &gt; &gt; dofPtr_</div><div class="ttdoc">Optional DoF storage, null when the field is Gauss-value only.</div><div class="ttdef"><b>Definition</b> dgField.H:101</div></div>
+<div class="ttc" id="aclassFoam_1_1dgField_html_a42152669f8dca7997dc30e8c5f82aef3"><div class="ttname"><a href="classFoam_1_1dgField.html#a42152669f8dca7997dc30e8c5f82aef3">Foam::dgField::nCells</a></div><div class="ttdeci">label nCells() const</div><div class="ttdoc">Return the number of cells covered by the DG field.</div><div class="ttdef"><b>Definition</b> dgField.H:214</div></div>
+<div class="ttc" id="aclassFoam_1_1dgField_html_a490be4ec11d7936a578c34414f0f7498"><div class="ttname"><a href="classFoam_1_1dgField.html#a490be4ec11d7936a578c34414f0f7498">Foam::dgField::name</a></div><div class="ttdeci">const word &amp; name() const</div><div class="ttdoc">Return the registered object name of the field.</div><div class="ttdef"><b>Definition</b> dgField.H:220</div></div>
 <div class="ttc" id="aclassFoam_1_1dgField_html_a57d390eac87e6550a25ccb1cb8c3513c"><div class="ttname"><a href="classFoam_1_1dgField.html#a57d390eac87e6550a25ccb1cb8c3513c">Foam::dgField::TypeName</a></div><div class="ttdeci">TypeName(&quot;dgField&quot;)</div></div>
-<div class="ttc" id="aclassFoam_1_1dgField_html_a649c939d68ed53736811140f7b743bfa"><div class="ttname"><a href="classFoam_1_1dgField.html#a649c939d68ed53736811140f7b743bfa">Foam::dgField::writeData</a></div><div class="ttdeci">bool writeData(Ostream &amp;os) const</div><div class="ttdoc">Write field data.</div><div class="ttdef"><b>Definition</b> dgFieldI.H:108</div></div>
-<div class="ttc" id="aclassFoam_1_1dgField_html_a6ab619289ac4bee4d6e017bcef80b382"><div class="ttname"><a href="classFoam_1_1dgField.html#a6ab619289ac4bee4d6e017bcef80b382">Foam::dgField::gaussFields</a></div><div class="ttdeci">const List&lt; GaussField&lt; Type &gt; &gt; &amp; gaussFields() const</div><div class="ttdoc">Return const access to Gauss fields.</div><div class="ttdef"><b>Definition</b> dgField.H:178</div></div>
-<div class="ttc" id="aclassFoam_1_1dgField_html_a7a9b716a6fa33f92703116920dad278d"><div class="ttname"><a href="classFoam_1_1dgField.html#a7a9b716a6fa33f92703116920dad278d">Foam::dgField::dof</a></div><div class="ttdeci">const dofField&lt; Type &gt; &amp; dof() const</div><div class="ttdoc">Return const access to DoF field.</div><div class="ttdef"><b>Definition</b> dgField.H:160</div></div>
+<div class="ttc" id="aclassFoam_1_1dgField_html_a649c939d68ed53736811140f7b743bfa"><div class="ttname"><a href="classFoam_1_1dgField.html#a649c939d68ed53736811140f7b743bfa">Foam::dgField::writeData</a></div><div class="ttdeci">bool writeData(Ostream &amp;os) const</div><div class="ttdoc">Write the field data payload to a stream.</div><div class="ttdef"><b>Definition</b> dgFieldI.H:205</div></div>
+<div class="ttc" id="aclassFoam_1_1dgField_html_a6ab619289ac4bee4d6e017bcef80b382"><div class="ttname"><a href="classFoam_1_1dgField.html#a6ab619289ac4bee4d6e017bcef80b382">Foam::dgField::gaussFields</a></div><div class="ttdeci">const List&lt; GaussField&lt; Type &gt; &gt; &amp; gaussFields() const</div><div class="ttdoc">Return read-only access to all per-cell Gauss fields.</div><div class="ttdef"><b>Definition</b> dgField.H:208</div></div>
+<div class="ttc" id="aclassFoam_1_1dgField_html_a7a9b716a6fa33f92703116920dad278d"><div class="ttname"><a href="classFoam_1_1dgField.html#a7a9b716a6fa33f92703116920dad278d">Foam::dgField::dof</a></div><div class="ttdeci">const dofField&lt; Type &gt; &amp; dof() const</div><div class="ttdoc">Return read-only access to the DoF field.</div><div class="ttdef"><b>Definition</b> dgField.H:190</div></div>
 <div class="ttc" id="aclassFoam_1_1dgField_html_a86f50c333397fe01120a5abeca5fa14a"><div class="ttname"><a href="classFoam_1_1dgField.html#a86f50c333397fe01120a5abeca5fa14a">Foam::dgField::operator=</a></div><div class="ttdeci">dgField &amp; operator=(const dgField &amp;)=delete</div><div class="ttdoc">Copy assignment is disabled.</div></div>
-<div class="ttc" id="aclassFoam_1_1dgField_html_aa0110eef71fb23791a5064bbb2c66c7a"><div class="ttname"><a href="classFoam_1_1dgField.html#aa0110eef71fb23791a5064bbb2c66c7a">Foam::dgField::dof</a></div><div class="ttdeci">dofField&lt; Type &gt; &amp; dof()</div><div class="ttdoc">Return non-const access to DoF field.</div><div class="ttdef"><b>Definition</b> dgField.H:144</div></div>
-<div class="ttc" id="aclassFoam_1_1dgField_html_abfcbb698f99feb25b38a5b839d453e22"><div class="ttname"><a href="classFoam_1_1dgField.html#abfcbb698f99feb25b38a5b839d453e22">Foam::dgField::hasDof_</a></div><div class="ttdeci">bool hasDof_</div><div class="ttdoc">Flag indicating whether this field owns DoF data.</div><div class="ttdef"><b>Definition</b> dgField.H:93</div></div>
-<div class="ttc" id="aclassFoam_1_1dgField_html_ac4f6191698b4025cbde41b854ef0c8f0"><div class="ttname"><a href="classFoam_1_1dgField.html#ac4f6191698b4025cbde41b854ef0c8f0">Foam::dgField::mesh_</a></div><div class="ttdeci">const dgGeomMesh &amp; mesh_</div><div class="ttdoc">Reference to the DG geometric mesh.</div><div class="ttdef"><b>Definition</b> dgField.H:90</div></div>
-<div class="ttc" id="aclassFoam_1_1dgField_html_ac98f80b7843c6fd1e04aefff2547521b"><div class="ttname"><a href="classFoam_1_1dgField.html#ac98f80b7843c6fd1e04aefff2547521b">Foam::dgField::gaussFields</a></div><div class="ttdeci">List&lt; GaussField&lt; Type &gt; &gt; &amp; gaussFields()</div><div class="ttdoc">Return non-const access to Gauss fields.</div><div class="ttdef"><b>Definition</b> dgField.H:172</div></div>
-<div class="ttc" id="aclassFoam_1_1dgField_html_ae0ec2ac3d571c7ff2188c199482e234a"><div class="ttname"><a href="classFoam_1_1dgField.html#ae0ec2ac3d571c7ff2188c199482e234a">Foam::dgField::gaussFields_</a></div><div class="ttdeci">List&lt; GaussField&lt; Type &gt; &gt; gaussFields_</div><div class="ttdoc">GaussField values for each cell in the mesh.</div><div class="ttdef"><b>Definition</b> dgField.H:99</div></div>
-<div class="ttc" id="aclassFoam_1_1dgField_html_afc454ae18f85b23dfe80c0ebde8bbd8f"><div class="ttname"><a href="classFoam_1_1dgField.html#afc454ae18f85b23dfe80c0ebde8bbd8f">Foam::dgField::hasDof</a></div><div class="ttdeci">bool hasDof() const</div><div class="ttdoc">Return true if this field owns DoF data.</div><div class="ttdef"><b>Definition</b> dgField.H:134</div></div>
+<div class="ttc" id="aclassFoam_1_1dgField_html_aa0110eef71fb23791a5064bbb2c66c7a"><div class="ttname"><a href="classFoam_1_1dgField.html#aa0110eef71fb23791a5064bbb2c66c7a">Foam::dgField::dof</a></div><div class="ttdeci">dofField&lt; Type &gt; &amp; dof()</div><div class="ttdoc">Return writable access to the DoF field.</div><div class="ttdef"><b>Definition</b> dgField.H:172</div></div>
+<div class="ttc" id="aclassFoam_1_1dgField_html_ab9d6fa555b42ec19b1646dc2f3919135"><div class="ttname"><a href="classFoam_1_1dgField.html#ab9d6fa555b42ec19b1646dc2f3919135">Foam::dgField::cellAverageVolField</a></div><div class="ttdeci">tmp&lt; GeometricField&lt; Type, fvPatchField, volMesh &gt; &gt; cellAverageVolField() const</div><div class="ttdoc">Build a temporary volField containing cell-average values.</div><div class="ttdef"><b>Definition</b> dgFieldI.H:123</div></div>
+<div class="ttc" id="aclassFoam_1_1dgField_html_abfcbb698f99feb25b38a5b839d453e22"><div class="ttname"><a href="classFoam_1_1dgField.html#abfcbb698f99feb25b38a5b839d453e22">Foam::dgField::hasDof_</a></div><div class="ttdeci">bool hasDof_</div><div class="ttdoc">Flag indicating whether the field is constructed with DoF storage.</div><div class="ttdef"><b>Definition</b> dgField.H:98</div></div>
+<div class="ttc" id="aclassFoam_1_1dgField_html_ac4f6191698b4025cbde41b854ef0c8f0"><div class="ttname"><a href="classFoam_1_1dgField.html#ac4f6191698b4025cbde41b854ef0c8f0">Foam::dgField::mesh_</a></div><div class="ttdeci">const dgGeomMesh &amp; mesh_</div><div class="ttdoc">DG geometric mesh on which the field is defined.</div><div class="ttdef"><b>Definition</b> dgField.H:95</div></div>
+<div class="ttc" id="aclassFoam_1_1dgField_html_ac98f80b7843c6fd1e04aefff2547521b"><div class="ttname"><a href="classFoam_1_1dgField.html#ac98f80b7843c6fd1e04aefff2547521b">Foam::dgField::gaussFields</a></div><div class="ttdeci">List&lt; GaussField&lt; Type &gt; &gt; &amp; gaussFields()</div><div class="ttdoc">Return writable access to all per-cell Gauss fields.</div><div class="ttdef"><b>Definition</b> dgField.H:202</div></div>
+<div class="ttc" id="aclassFoam_1_1dgField_html_adab60ca7f4c19a485ac56b6c1604627d"><div class="ttname"><a href="classFoam_1_1dgField.html#adab60ca7f4c19a485ac56b6c1604627d">Foam::dgField::procSyncPtr_</a></div><div class="ttdeci">autoPtr&lt; dgProcessorBoundaryManager&lt; Type &gt; &gt; procSyncPtr_</div><div class="ttdoc">Lazy processor-boundary synchronizer for this field.</div><div class="ttdef"><b>Definition</b> dgField.H:112</div></div>
+<div class="ttc" id="aclassFoam_1_1dgField_html_ae090ead69a0f079aee52a42773d015ea"><div class="ttname"><a href="classFoam_1_1dgField.html#ae090ead69a0f079aee52a42773d015ea">Foam::dgField::neighbourCellDof</a></div><div class="ttdeci">const cellDof&lt; Type &gt; &amp; neighbourCellDof(const label cellID, const label localFaceI) const</div><div class="ttdoc">Access neighbour DoFs for one face of one cell.</div><div class="ttdef"><b>Definition</b> dgField.H:245</div></div>
+<div class="ttc" id="aclassFoam_1_1dgField_html_ae0ec2ac3d571c7ff2188c199482e234a"><div class="ttname"><a href="classFoam_1_1dgField.html#ae0ec2ac3d571c7ff2188c199482e234a">Foam::dgField::gaussFields_</a></div><div class="ttdeci">List&lt; GaussField&lt; Type &gt; &gt; gaussFields_</div><div class="ttdoc">Per-cell Gauss-point representation of the DG field.</div><div class="ttdef"><b>Definition</b> dgField.H:104</div></div>
+<div class="ttc" id="aclassFoam_1_1dgField_html_af5e4a3c4d50751fc364e3307adb603f7"><div class="ttname"><a href="classFoam_1_1dgField.html#af5e4a3c4d50751fc364e3307adb603f7">Foam::dgField::synch</a></div><div class="ttdeci">void synch()</div><div class="ttdoc">Synchronize processor-boundary data for this DG field.</div><div class="ttdef"><b>Definition</b> dgFieldI.H:111</div></div>
+<div class="ttc" id="aclassFoam_1_1dgField_html_afc454ae18f85b23dfe80c0ebde8bbd8f"><div class="ttname"><a href="classFoam_1_1dgField.html#afc454ae18f85b23dfe80c0ebde8bbd8f">Foam::dgField::hasDof</a></div><div class="ttdeci">bool hasDof() const</div><div class="ttdoc">Return true if this field currently owns DoF storage.</div><div class="ttdef"><b>Definition</b> dgField.H:160</div></div>
 <div class="ttc" id="aclassFoam_1_1dgGeomMesh_html"><div class="ttname"><a href="classFoam_1_1dgGeomMesh.html">Foam::dgGeomMesh</a></div><div class="ttdoc">DG geometric mesh wrapper around fvMesh.</div><div class="ttdef"><b>Definition</b> dgGeomMesh.H:83</div></div>
 <div class="ttc" id="alnInclude_2dgFieldI_8H_html"><div class="ttname"><a href="lnInclude_2dgFieldI_8H.html">dgFieldI.H</a></div></div>
 <div class="ttc" id="anamespaceFoam_html"><div class="ttname"><a href="namespaceFoam.html">Foam</a></div><div class="ttdef"><b>Definition</b> cellDof.H:55</div></div>

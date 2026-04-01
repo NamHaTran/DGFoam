@@ -37,6 +37,8 @@ Collaboration diagram for Foam\+::dg\+General\+Boundary\+Manager\texorpdfstring{
 \begin{DoxyCompactList}\small\item\em Return internal field value. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{bool}} \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryManager_af63c22719ba1a4e2f95ea2fb32362170}{is\+General\+Patch}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} patch\+ID) \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
 \begin{DoxyCompactList}\small\item\em Return true if patch is a general (physical) boundary. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryManager_a31501a9cc2897644fcd72afe14a0f99f}{condition\+Index}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} patch\+ID) \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\begin{DoxyCompactList}\small\item\em Return compact BC storage index for a mesh patch. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryManager_a4b1674a91d5b7ae4fde6f5033f2758b7}{initialize\+Field}} (\mbox{\hyperlink{classFoam_1_1dgField}{dg\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{GField}})
 \begin{DoxyCompactList}\small\item\em Initialize a \doxylink{classFoam_1_1GaussField}{Gauss\+Field} with the uniform internal value. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryManager_a49ca4d69931cac3a1fc1e9d9827a4551}{update\+Value}} (\mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{GField}})
@@ -59,6 +61,8 @@ Collaboration diagram for Foam\+::dg\+General\+Boundary\+Manager\texorpdfstring{
 \begin{DoxyCompactList}\small\item\em Return internal field value. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{bool}} \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryManager_af63c22719ba1a4e2f95ea2fb32362170}{is\+General\+Patch}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} patch\+ID) \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
 \begin{DoxyCompactList}\small\item\em Return true if patch is a general (physical) boundary. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryManager_a31501a9cc2897644fcd72afe14a0f99f}{condition\+Index}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} patch\+ID) \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\begin{DoxyCompactList}\small\item\em Return compact BC storage index for a mesh patch. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryManager_aebc072972e70ac1d3fc3b2de626b1485}{initialize\+Field}} (\mbox{\hyperlink{classFoam_1_1dgField}{dg\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{GField}})
 \begin{DoxyCompactList}\small\item\em Initialize a \doxylink{classFoam_1_1GaussField}{Gauss\+Field} with the uniform internal value. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryManager_ade7936a952e3eaf65d4103f21d54a4ed}{update\+Value}} (\mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{GField}})
@@ -71,7 +75,9 @@ Collaboration diagram for Foam\+::dg\+General\+Boundary\+Manager\texorpdfstring{
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \& \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryManager_a1fa3a0e06e93a1d3404e70f566baf335}{mesh\+\_\+}}
 \begin{DoxyCompactList}\small\item\em Reference to DG geometric mesh. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{Dynamic\+List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{auto\+Ptr}}$<$ \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryField}{dg\+General\+Boundary\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ $>$ $>$ \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryManager_afd6dccbb0880b0ce0df9c42c21c43769}{b\+Conditions\+\_\+}}
-\begin{DoxyCompactList}\small\item\em List of boundary-\/condition objects (one per fv\+Patch) \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em List of boundary-\/condition objects for general physical patches. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{label\+List}} \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryManager_a5db6d76030c272291f30f8eae78946be}{patch\+To\+Condition\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Mapping from fv\+Boundary\+Mesh patch index to compact BC storage index. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryManager_af41c200ef0992e3bf950359e6380bf9e}{internal\+Value\+\_\+}}
 \begin{DoxyCompactList}\small\item\em Internal field value used for initialization (uniform) \end{DoxyCompactList}\end{DoxyCompactItemize}
 
@@ -86,13 +92,14 @@ Manager for DG general boundary conditions.
 {\em Type} & Field value type (e.\+g. scalar, vector, tensor)\\
 \hline
 \end{DoxyTemplParams}
-Constructs and stores one \doxylink{classFoam_1_1dgGeneralBoundaryField}{dg\+General\+Boundary\+Field} per fv\+Patch and applies them to update ghost (plus-\/side) values and gradients at face Gauss points.
+Constructs and stores one \doxylink{classFoam_1_1dgGeneralBoundaryField}{dg\+General\+Boundary\+Field} for each general physical fv\+Patch and applies them to update ghost (plus-\/side) values and gradients at face Gauss points.
 
 The manager\+:
 \begin{DoxyItemize}
 \item Filters patches via \doxylink{namespaceFoam_1_1dgBoundaryHelper_ad336b0d03003430f2a70769a5a4ccaa3}{dg\+Boundary\+Helper\+::is\+General\+Patch()}
+\item Skips inactive patches such as empty/processor/overset
 \item Builds boundary-\/condition objects via runtime selection
-\item Dispatches update\+Ghost\+State\+Value()/update\+Ghost\+State\+Grad() per Gauss point 
+\item Dispatches update\+Ghost\+State\+Value()/update\+Ghost\+State\+Grad() per Gauss point using a stable patch-\/to-\/condition mapping 
 \end{DoxyItemize}
 
 \doxysubsection{Constructor \& Destructor Documentation}
@@ -270,6 +277,25 @@ Interface and constraint patches are excluded.
 \begin{DoxyReturn}{Returns}
 true if patch is a general boundary 
 \end{DoxyReturn}
+\Hypertarget{classFoam_1_1dgGeneralBoundaryManager_a31501a9cc2897644fcd72afe14a0f99f}\label{classFoam_1_1dgGeneralBoundaryManager_a31501a9cc2897644fcd72afe14a0f99f} 
+\index{Foam::dgGeneralBoundaryManager$<$ Type $>$@{Foam::dgGeneralBoundaryManager$<$ Type $>$}!conditionIndex@{conditionIndex}}
+\index{conditionIndex@{conditionIndex}!Foam::dgGeneralBoundaryManager$<$ Type $>$@{Foam::dgGeneralBoundaryManager$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{conditionIndex()}{conditionIndex()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
+\mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryManager}{Foam\+::dg\+General\+Boundary\+Manager}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::condition\+Index (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{patch\+ID }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Return compact BC storage index for a mesh patch. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em patch\+ID} & fv\+Boundary\+Mesh patch index \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+compact BC index, or -\/1 if the patch is inactive for DG BCs 
+\end{DoxyReturn}
 \Hypertarget{classFoam_1_1dgGeneralBoundaryManager_a4b1674a91d5b7ae4fde6f5033f2758b7}\label{classFoam_1_1dgGeneralBoundaryManager_a4b1674a91d5b7ae4fde6f5033f2758b7} 
 \index{Foam::dgGeneralBoundaryManager$<$ Type $>$@{Foam::dgGeneralBoundaryManager$<$ Type $>$}!initializeField@{initializeField}}
 \index{initializeField@{initializeField}!Foam::dgGeneralBoundaryManager$<$ Type $>$@{Foam::dgGeneralBoundaryManager$<$ Type $>$}}
@@ -403,6 +429,25 @@ Interface and constraint patches are excluded.
 \begin{DoxyReturn}{Returns}
 true if patch is a general boundary 
 \end{DoxyReturn}
+\Hypertarget{classFoam_1_1dgGeneralBoundaryManager_a31501a9cc2897644fcd72afe14a0f99f}\label{classFoam_1_1dgGeneralBoundaryManager_a31501a9cc2897644fcd72afe14a0f99f} 
+\index{Foam::dgGeneralBoundaryManager$<$ Type $>$@{Foam::dgGeneralBoundaryManager$<$ Type $>$}!conditionIndex@{conditionIndex}}
+\index{conditionIndex@{conditionIndex}!Foam::dgGeneralBoundaryManager$<$ Type $>$@{Foam::dgGeneralBoundaryManager$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{conditionIndex()}{conditionIndex()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
+\mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryManager}{Foam\+::dg\+General\+Boundary\+Manager}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::condition\+Index (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{patch\+ID }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Return compact BC storage index for a mesh patch. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em patch\+ID} & fv\+Boundary\+Mesh patch index \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+compact BC index, or -\/1 if the patch is inactive for DG BCs 
+\end{DoxyReturn}
 \Hypertarget{classFoam_1_1dgGeneralBoundaryManager_aebc072972e70ac1d3fc3b2de626b1485}\label{classFoam_1_1dgGeneralBoundaryManager_aebc072972e70ac1d3fc3b2de626b1485} 
 \index{Foam::dgGeneralBoundaryManager$<$ Type $>$@{Foam::dgGeneralBoundaryManager$<$ Type $>$}!initializeField@{initializeField}}
 \index{initializeField@{initializeField}!Foam::dgGeneralBoundaryManager$<$ Type $>$@{Foam::dgGeneralBoundaryManager$<$ Type $>$}}
@@ -478,9 +523,20 @@ Reference to DG geometric mesh.
 
 
 
-List of boundary-\/condition objects (one per fv\+Patch) 
+List of boundary-\/condition objects for general physical patches. 
 
-The ordering follows fv\+Boundary\+Mesh patch ordering. \Hypertarget{classFoam_1_1dgGeneralBoundaryManager_af41c200ef0992e3bf950359e6380bf9e}\label{classFoam_1_1dgGeneralBoundaryManager_af41c200ef0992e3bf950359e6380bf9e} 
+The storage is compact and excludes inactive patches. \Hypertarget{classFoam_1_1dgGeneralBoundaryManager_a5db6d76030c272291f30f8eae78946be}\label{classFoam_1_1dgGeneralBoundaryManager_a5db6d76030c272291f30f8eae78946be} 
+\index{Foam::dgGeneralBoundaryManager$<$ Type $>$@{Foam::dgGeneralBoundaryManager$<$ Type $>$}!patchToCondition\_@{patchToCondition\_}}
+\index{patchToCondition\_@{patchToCondition\_}!Foam::dgGeneralBoundaryManager$<$ Type $>$@{Foam::dgGeneralBoundaryManager$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{patchToCondition\_}{patchToCondition\_}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
+\mbox{\hyperlink{classFoam_1_1GaussField}{label\+List}} \mbox{\hyperlink{classFoam_1_1dgGeneralBoundaryManager}{Foam\+::dg\+General\+Boundary\+Manager}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::patch\+To\+Condition\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Mapping from fv\+Boundary\+Mesh patch index to compact BC storage index. 
+
+Non-\/general patches (eg, processor/empty/overset) store {\ttfamily -\/1}. \Hypertarget{classFoam_1_1dgGeneralBoundaryManager_af41c200ef0992e3bf950359e6380bf9e}\label{classFoam_1_1dgGeneralBoundaryManager_af41c200ef0992e3bf950359e6380bf9e} 
 \index{Foam::dgGeneralBoundaryManager$<$ Type $>$@{Foam::dgGeneralBoundaryManager$<$ Type $>$}!internalValue\_@{internalValue\_}}
 \index{internalValue\_@{internalValue\_}!Foam::dgGeneralBoundaryManager$<$ Type $>$@{Foam::dgGeneralBoundaryManager$<$ Type $>$}}
 \doxysubsubsection{\texorpdfstring{internalValue\_}{internalValue\_}}

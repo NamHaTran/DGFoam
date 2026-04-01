@@ -17,6 +17,6 @@ var searchData=
   ['constdeclaration_2eh_14',['ConstDeclaration.h',['../ConstDeclaration_8h.html',1,'']]],
   ['createconservativefields_2eh_15',['createConservativeFields.H',['../createConservativeFields_8H.html',1,'']]],
   ['createdgfields_2eh_16',['createDGFields.H',['../createDGFields_8H.html',1,'']]],
-  ['createdgmesh_2eh_17',['createdgmesh.h',['../utilities_2prepareDGDecomposedMesh_2createDGMesh_8H.html',1,'(Global Namespace)'],['../solvers_2compressible_2DGHyperSonicFoam_2createDGMesh_8H.html',1,'(Global Namespace)']]],
+  ['createdgmesh_2eh_17',['createdgmesh.h',['../utilities_2prepareDGDecomposedMesh_2createDGMesh_8H.html',1,'(Global Namespace)'],['../solvers_2compressible_2DGCompressibleFoam_2createDGMesh_8H.html',1,'(Global Namespace)']]],
   ['createprimaryfields_2eh_18',['createPrimaryFields.H',['../createPrimaryFields_8H.html',1,'']]]
 ];

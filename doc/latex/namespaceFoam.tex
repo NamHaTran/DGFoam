@@ -11,6 +11,8 @@ namespace \mbox{\hyperlink{namespaceFoam_1_1dgCellTmp}{dg\+Cell\+Tmp}}
 \item 
 namespace \mbox{\hyperlink{namespaceFoam_1_1dgFaceTmp}{dg\+Face\+Tmp}}
 \item 
+namespace \mbox{\hyperlink{namespaceFoam_1_1dgFunctionObjects}{dg\+Function\+Objects}}
+\item 
 namespace \mbox{\hyperlink{namespaceFoam_1_1geometricJacobian}{geometric\+Jacobian}}
 \item 
 namespace \mbox{\hyperlink{namespaceFoam_1_1referenceJacobian}{reference\+Jacobian}}
@@ -21,7 +23,7 @@ namespace \mbox{\hyperlink{namespaceFoam_1_1referenceJacobian}{reference\+Jacobi
 struct \mbox{\hyperlink{structFoam_1_1basisData}{basis\+Data}}
 \begin{DoxyCompactList}\small\item\em Basis-\/function data on a reference face. \end{DoxyCompactList}\item 
 class \mbox{\hyperlink{classFoam_1_1boundaryGaussField}{boundary\+Gauss\+Field}}
-\item 
+\begin{DoxyCompactList}\small\item\em Flat container of Gauss-\/point values on boundary faces. \end{DoxyCompactList}\item 
 class \mbox{\hyperlink{classFoam_1_1cellDof}{cell\+Dof}}
 \begin{DoxyCompactList}\small\item\em Degree-\/of-\/freedom container for a DG cell. \end{DoxyCompactList}\item 
 class \mbox{\hyperlink{classFoam_1_1cellGaussField}{cell\+Gauss\+Field}}
@@ -286,6 +288,22 @@ struct \mbox{\hyperlink{structFoam_1_1DgCellVecMutSubB}{Dg\+Cell\+Vec\+Mut\+SubB
 \begin{DoxyCompactList}\small\item\em In-\/place mutate right operand for vector subtraction. \end{DoxyCompactList}\item 
 class \mbox{\hyperlink{classFoam_1_1dgCentralFluxSolver}{dg\+Central\+Flux\+Solver}}
 \begin{DoxyCompactList}\small\item\em Central (non-\/dissipative) numerical flux. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classFoam_1_1dgCompressibleBoundaryField}{dg\+Compressible\+Boundary\+Field}}
+\begin{DoxyCompactList}\small\item\em Base class for runtime-\/selectable compressible DG boundary conditions. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classFoam_1_1dgCompressibleBoundaryManager}{dg\+Compressible\+Boundary\+Manager}}
+\begin{DoxyCompactList}\small\item\em Manager for patch-\/wise compressible DG boundary conditions. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classFoam_1_1dgCompressibleFixedValueBoundaryField}{dg\+Compressible\+Fixed\+Value\+Boundary\+Field}}
+\begin{DoxyCompactList}\small\item\em Compressible DG boundary condition with a prescribed constant state. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classFoam_1_1dgCompressibleIsothermoWallBoundaryField}{dg\+Compressible\+Isothermo\+Wall\+Boundary\+Field}}
+\begin{DoxyCompactList}\small\item\em Isothermal no-\/slip wall condition for compressible DG fields. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classFoam_1_1dgCompressiblePressureMachTemperatureBoundaryField}{dg\+Compressible\+Pressure\+Mach\+Temperature\+Boundary\+Field}}
+\begin{DoxyCompactList}\small\item\em Compressible DG boundary condition prescribed by pressure, temperature, and Mach. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classFoam_1_1dgCompressibleRiemannInvariantBoundaryField}{dg\+Compressible\+Riemann\+Invariant\+Boundary\+Field}}
+\begin{DoxyCompactList}\small\item\em Far-\/field compressible DG boundary condition based on Riemann invariants. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classFoam_1_1dgCompressibleSymmetryBoundaryField}{dg\+Compressible\+Symmetry\+Boundary\+Field}}
+\begin{DoxyCompactList}\small\item\em Symmetry boundary condition for compressible DG states. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classFoam_1_1dgCompressibleZeroGradientBoundaryField}{dg\+Compressible\+Zero\+Gradient\+Boundary\+Field}}
+\begin{DoxyCompactList}\small\item\em Zero-\/gradient compressible DG boundary condition. \end{DoxyCompactList}\item 
 struct \mbox{\hyperlink{structFoam_1_1DgDivFieldScalarEval}{Dg\+Div\+Field\+Scalar\+Eval}}
 \begin{DoxyCompactList}\small\item\em Evaluate {\ttfamily field / scalar} at one Gauss point. \end{DoxyCompactList}\item 
 struct \mbox{\hyperlink{structFoam_1_1DgDivFieldScalarInPlace}{Dg\+Div\+Field\+Scalar\+In\+Place}}
@@ -296,6 +314,8 @@ struct \mbox{\hyperlink{structFoam_1_1DgDivScalarFieldScalarInPlace}{Dg\+Div\+Sc
 \begin{DoxyCompactList}\small\item\em In-\/place mutator for {\ttfamily scalar / scalar\+Field}. \end{DoxyCompactList}\item 
 struct \mbox{\hyperlink{structFoam_1_1DgEqPred}{Dg\+Eq\+Pred}}
 \begin{DoxyCompactList}\small\item\em Predicate functor for {\ttfamily ==} against scalar literal. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classFoam_1_1dgEquiSpacedTessellation}{dg\+Equi\+Spaced\+Tessellation}}
+\item 
 class \mbox{\hyperlink{classFoam_1_1dgEulerTimeScheme}{dg\+Euler\+Time\+Scheme}}
 \begin{DoxyCompactList}\small\item\em Explicit one-\/stage Euler time integration for DG fields. \end{DoxyCompactList}\item 
 struct \mbox{\hyperlink{structFoam_1_1DgEvalAdd}{Dg\+Eval\+Add}}
@@ -658,6 +678,10 @@ struct \mbox{\hyperlink{structFoam_1_1DgLessEqPred}{Dg\+Less\+Eq\+Pred}}
 \begin{DoxyCompactList}\small\item\em Predicate functor for {\ttfamily \texorpdfstring{$<$}{<}=} against scalar literal. \end{DoxyCompactList}\item 
 struct \mbox{\hyperlink{structFoam_1_1DgLessPred}{Dg\+Less\+Pred}}
 \begin{DoxyCompactList}\small\item\em Predicate functor for {\ttfamily \texorpdfstring{$<$}{<}} against scalar literal. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classFoam_1_1dgLimiter}{dg\+Limiter}}
+\item 
+class \mbox{\hyperlink{classFoam_1_1dgLimiterManager}{dg\+Limiter\+Manager}}
+\item 
 struct \mbox{\hyperlink{structFoam_1_1DgMulFieldScalarEval}{Dg\+Mul\+Field\+Scalar\+Eval}}
 \begin{DoxyCompactList}\small\item\em Evaluate {\ttfamily field \texorpdfstring{$\ast$}{*} scalar} at one Gauss point. \end{DoxyCompactList}\item 
 struct \mbox{\hyperlink{structFoam_1_1DgMulInPlace}{Dg\+Mul\+In\+Place}}
@@ -756,6 +780,8 @@ class \mbox{\hyperlink{classFoam_1_1KXRCF}{KXRCF}}
 \begin{DoxyCompactList}\small\item\em Inflow-\/face jump detector following the \doxylink{classFoam_1_1KXRCF}{KXRCF} smoothness sensor. \end{DoxyCompactList}\item 
 class \mbox{\hyperlink{classFoam_1_1PerssonPeraire}{Persson\+Peraire}}
 \begin{DoxyCompactList}\small\item\em Modal-\/decay detector following Persson and Peraire. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classFoam_1_1positivityPreservingLimiter}{positivity\+Preserving\+Limiter}}
+\item 
 class \mbox{\hyperlink{classFoam_1_1powerVHS}{power\+VHS}}
 \begin{DoxyCompactList}\small\item\em Variable-\/\+Hard-\/\+Sphere (VHS) power-\/law viscosity model. \end{DoxyCompactList}\item 
 class \mbox{\hyperlink{classFoam_1_1rhoBasedConservative}{rho\+Based\+Conservative}}
@@ -924,6 +950,34 @@ enum class \mbox{\hyperlink{namespaceFoam_a49389e037db4de91988ad16f0f8f1b54}{dg\
 \doxysubsubsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
+\mbox{\hyperlink{namespaceFoam_a374cf3ffb0ef03639776968f44ef75f7}{define\+Type\+Name\+And\+Debug}} (\mbox{\hyperlink{classFoam_1_1dgCompressibleFixedValueBoundaryField}{dg\+Compressible\+Fixed\+Value\+Boundary\+Field}}, 0)
+\item 
+\mbox{\hyperlink{namespaceFoam_afb13ecf3372509d60b0ad3316a03a38c}{add\+To\+Run\+Time\+Selection\+Table}} (\mbox{\hyperlink{classFoam_1_1dgCompressibleBoundaryField}{dg\+Compressible\+Boundary\+Field}}, \mbox{\hyperlink{classFoam_1_1dgCompressibleFixedValueBoundaryField}{dg\+Compressible\+Fixed\+Value\+Boundary\+Field}}, \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}})
+\item 
+\mbox{\hyperlink{namespaceFoam_a55bac64b1b9987533dd8700578aa0211}{define\+Type\+Name\+And\+Debug}} (\mbox{\hyperlink{classFoam_1_1dgCompressibleIsothermoWallBoundaryField}{dg\+Compressible\+Isothermo\+Wall\+Boundary\+Field}}, 0)
+\item 
+\mbox{\hyperlink{namespaceFoam_a29293cd25dbc7f6e848ed8d5a6ea1735}{add\+To\+Run\+Time\+Selection\+Table}} (\mbox{\hyperlink{classFoam_1_1dgCompressibleBoundaryField}{dg\+Compressible\+Boundary\+Field}}, \mbox{\hyperlink{classFoam_1_1dgCompressibleIsothermoWallBoundaryField}{dg\+Compressible\+Isothermo\+Wall\+Boundary\+Field}}, \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}})
+\item 
+\mbox{\hyperlink{namespaceFoam_a9b268b06c80a47dbd317276e6056f575}{define\+Type\+Name\+And\+Debug}} (\mbox{\hyperlink{classFoam_1_1dgCompressiblePressureMachTemperatureBoundaryField}{dg\+Compressible\+Pressure\+Mach\+Temperature\+Boundary\+Field}}, 0)
+\item 
+\mbox{\hyperlink{namespaceFoam_ae7c433ae36eec4999b55c6d1bbef688c}{add\+To\+Run\+Time\+Selection\+Table}} (\mbox{\hyperlink{classFoam_1_1dgCompressibleBoundaryField}{dg\+Compressible\+Boundary\+Field}}, \mbox{\hyperlink{classFoam_1_1dgCompressiblePressureMachTemperatureBoundaryField}{dg\+Compressible\+Pressure\+Mach\+Temperature\+Boundary\+Field}}, \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}})
+\item 
+\mbox{\hyperlink{namespaceFoam_a57bf485de43c8eaca51e931024d47b87}{define\+Type\+Name\+And\+Debug}} (\mbox{\hyperlink{classFoam_1_1dgCompressibleRiemannInvariantBoundaryField}{dg\+Compressible\+Riemann\+Invariant\+Boundary\+Field}}, 0)
+\item 
+\mbox{\hyperlink{namespaceFoam_a6844fe8198042fc2a9f6ae86c301fe23}{add\+To\+Run\+Time\+Selection\+Table}} (\mbox{\hyperlink{classFoam_1_1dgCompressibleBoundaryField}{dg\+Compressible\+Boundary\+Field}}, \mbox{\hyperlink{classFoam_1_1dgCompressibleRiemannInvariantBoundaryField}{dg\+Compressible\+Riemann\+Invariant\+Boundary\+Field}}, \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}})
+\item 
+\mbox{\hyperlink{namespaceFoam_abe73192c17778d21279bc4ec4bf8baeb}{define\+Type\+Name\+And\+Debug}} (\mbox{\hyperlink{classFoam_1_1dgCompressibleSymmetryBoundaryField}{dg\+Compressible\+Symmetry\+Boundary\+Field}}, 0)
+\item 
+\mbox{\hyperlink{namespaceFoam_a2451cf0fd7b9b5e2acab842fc6ec37af}{add\+To\+Run\+Time\+Selection\+Table}} (\mbox{\hyperlink{classFoam_1_1dgCompressibleBoundaryField}{dg\+Compressible\+Boundary\+Field}}, \mbox{\hyperlink{classFoam_1_1dgCompressibleSymmetryBoundaryField}{dg\+Compressible\+Symmetry\+Boundary\+Field}}, \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}})
+\item 
+\mbox{\hyperlink{namespaceFoam_a96720dbf55304ed091a1a2016f90b93d}{define\+Type\+Name\+And\+Debug}} (\mbox{\hyperlink{classFoam_1_1dgCompressibleZeroGradientBoundaryField}{dg\+Compressible\+Zero\+Gradient\+Boundary\+Field}}, 0)
+\item 
+\mbox{\hyperlink{namespaceFoam_af4d24c9d93d3e2d1bee188fddc9c9f68}{add\+To\+Run\+Time\+Selection\+Table}} (\mbox{\hyperlink{classFoam_1_1dgCompressibleBoundaryField}{dg\+Compressible\+Boundary\+Field}}, \mbox{\hyperlink{classFoam_1_1dgCompressibleZeroGradientBoundaryField}{dg\+Compressible\+Zero\+Gradient\+Boundary\+Field}}, \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}})
+\item 
+\mbox{\hyperlink{namespaceFoam_a2adff3eabd2151a34d66ec2fa636f8e8}{define\+Type\+Name\+And\+Debug}} (\mbox{\hyperlink{classFoam_1_1dgCompressibleBoundaryField}{dg\+Compressible\+Boundary\+Field}}, 0)
+\item 
+\mbox{\hyperlink{namespaceFoam_a34321cd39d22360cac26a960fd105f1e}{define\+Run\+Time\+Selection\+Table}} (\mbox{\hyperlink{classFoam_1_1dgCompressibleBoundaryField}{dg\+Compressible\+Boundary\+Field}}, \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}})
+\item 
 \mbox{\hyperlink{namespaceFoam_a5619122491e52385ce1436c8d8b1ff82}{make\+Dg\+General\+Boundary\+Field}} (\mbox{\hyperlink{classFoam_1_1dgGeneralFixedValueBoundaryField}{dg\+General\+Fixed\+Value\+Boundary\+Field}})
 \item 
 \mbox{\hyperlink{namespaceFoam_a440f42f338a27385d473ff0d119193b2}{make\+Dg\+General\+Boundary\+Field}} (\mbox{\hyperlink{classFoam_1_1dgGeneralInletOutletBoundaryField}{dg\+General\+Inlet\+Outlet\+Boundary\+Field}})
@@ -966,6 +1020,14 @@ enum class \mbox{\hyperlink{namespaceFoam_a49389e037db4de91988ad16f0f8f1b54}{dg\
 \item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{Ostream}} \& \mbox{\hyperlink{namespaceFoam_af7d5c12d26c2b0bed7f073a787a598fe}{operator$<$$<$}} (\mbox{\hyperlink{classFoam_1_1GaussField}{Ostream}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{os}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgFluxSolver_ac861a0350cf2f298fecfc97544af0572}{dg\+Flux\+Solver\+::equation\+Type}} \&type)
 \begin{DoxyCompactList}\small\item\em Stream output for \doxylink{classFoam_1_1dgFluxSolver_ac861a0350cf2f298fecfc97544af0572}{dg\+Flux\+Solver\+::equation\+Type}. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{namespaceFoam_ae2c640d66259d00e7a6625264dff526c}{define\+Type\+Name\+And\+Debug}} (\mbox{\hyperlink{classFoam_1_1positivityPreservingLimiter}{positivity\+Preserving\+Limiter}}, 0)
+\item 
+\mbox{\hyperlink{namespaceFoam_afbaf19ed45bf772f95d148a6ca294b71}{add\+To\+Run\+Time\+Selection\+Table}} (\mbox{\hyperlink{classFoam_1_1dgLimiter}{dg\+Limiter}}, \mbox{\hyperlink{classFoam_1_1positivityPreservingLimiter}{positivity\+Preserving\+Limiter}}, \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}})
+\item 
+\mbox{\hyperlink{namespaceFoam_a5905b2131c9fc908af2565e45f5d6aba}{define\+Type\+Name\+And\+Debug}} (\mbox{\hyperlink{classFoam_1_1dgLimiter}{dg\+Limiter}}, 0)
+\item 
+\mbox{\hyperlink{namespaceFoam_a96c79a16247fa081ca3318d77fd5b34d}{define\+Run\+Time\+Selection\+Table}} (\mbox{\hyperlink{classFoam_1_1dgLimiter}{dg\+Limiter}}, \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}})
+\item 
 \mbox{\hyperlink{namespaceFoam_a16a2d4f3af908859f338aff8bad60bd1}{define\+Type\+Name\+And\+Debug}} (\mbox{\hyperlink{classFoam_1_1KXRCF}{KXRCF}}, 0)
 \item 
 \mbox{\hyperlink{namespaceFoam_a86990119dffea5503760ebe8c5732b98}{add\+To\+Run\+Time\+Selection\+Table}} (\mbox{\hyperlink{classFoam_1_1troubleCellDetector}{trouble\+Cell\+Detector}}, \mbox{\hyperlink{classFoam_1_1KXRCF}{KXRCF}}, \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}})
@@ -988,9 +1050,9 @@ enum class \mbox{\hyperlink{namespaceFoam_a49389e037db4de91988ad16f0f8f1b54}{dg\
 \begin{DoxyCompactList}\small\item\em Return the modal cell-\/average of a scalar DG field. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{static}} \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} \mbox{\hyperlink{namespaceFoam_aa56248ece1526281871adf2d37b8d8b5}{cell\+Mean}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgField}{dg\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{field}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} cell\+ID, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{direction}} \mbox{\hyperlink{classFoam_1_1GaussField}{cmpt}})
 \begin{DoxyCompactList}\small\item\em Return the modal cell-\/average of one vector component. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{classFoam_1_1GaussField}{static}} \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} \mbox{\hyperlink{namespaceFoam_af2d6f96253e4b28f6b7463c638cff444}{weighted\+Face\+Mean}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1faceGaussField}{face\+Gauss\+Field}}$<$ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} $>$ \&\mbox{\hyperlink{updateBC_8H_a2b150f8b087228e2022aab1a5cf6ff58}{face\+Field}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1GaussField}{local\+FaceI}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{bool}} \mbox{\hyperlink{classFoam_1_1GaussField}{use\+Plus}})
+\mbox{\hyperlink{classFoam_1_1GaussField}{static}} \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} \mbox{\hyperlink{namespaceFoam_af2d6f96253e4b28f6b7463c638cff444}{weighted\+Face\+Mean}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1faceGaussField}{face\+Gauss\+Field}}$<$ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} $>$ \&\mbox{\hyperlink{updateBC_8H_a236e8dce9665bd0a1c4e4992fcaa139d}{face\+Field}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1GaussField}{local\+FaceI}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{bool}} \mbox{\hyperlink{classFoam_1_1GaussField}{use\+Plus}})
 \begin{DoxyCompactList}\small\item\em Compute a quadrature-\/weighted mean on one scalar face trace. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{classFoam_1_1GaussField}{static}} \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} \mbox{\hyperlink{namespaceFoam_a5bdb916827f919e4f70f680230b101f4}{weighted\+Face\+Mean}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1faceGaussField}{face\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$ \&\mbox{\hyperlink{updateBC_8H_a2b150f8b087228e2022aab1a5cf6ff58}{face\+Field}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1GaussField}{local\+FaceI}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{direction}} \mbox{\hyperlink{classFoam_1_1GaussField}{cmpt}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{bool}} \mbox{\hyperlink{classFoam_1_1GaussField}{use\+Plus}})
+\mbox{\hyperlink{classFoam_1_1GaussField}{static}} \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} \mbox{\hyperlink{namespaceFoam_a5bdb916827f919e4f70f680230b101f4}{weighted\+Face\+Mean}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1faceGaussField}{face\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$ \&\mbox{\hyperlink{updateBC_8H_a236e8dce9665bd0a1c4e4992fcaa139d}{face\+Field}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1GaussField}{local\+FaceI}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{direction}} \mbox{\hyperlink{classFoam_1_1GaussField}{cmpt}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{bool}} \mbox{\hyperlink{classFoam_1_1GaussField}{use\+Plus}})
 \begin{DoxyCompactList}\small\item\em Compute a quadrature-\/weighted mean on one vector face trace. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{static}} \mbox{\hyperlink{classFoam_1_1GaussField}{bool}} \mbox{\hyperlink{namespaceFoam_aebae05e139c805db5d8403dde8a09704}{detect\+Scalar\+Field}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomCell}{dg\+Geom\+Cell}} \&cell, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} cell\+ID, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} \mbox{\hyperlink{classFoam_1_1GaussField}{M}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{bool}} \mbox{\hyperlink{classFoam_1_1GaussField}{include\+Boundary\+Faces}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgField}{dg\+Field}}$<$ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{field}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{gauss\+Field}})
 \begin{DoxyCompactList}\small\item\em Apply the face-\/by-\/face TVB-\/minmod check to one scalar DG field. \end{DoxyCompactList}\item 
@@ -1086,9 +1148,9 @@ enum class \mbox{\hyperlink{namespaceFoam_a49389e037db4de91988ad16f0f8f1b54}{dg\
 \begin{DoxyCompactList}\small\item\em Return the modal cell-\/average of a scalar DG field. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{static}} \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} \mbox{\hyperlink{namespaceFoam_aa56248ece1526281871adf2d37b8d8b5}{cell\+Mean}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgField}{dg\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{field}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} cell\+ID, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{direction}} \mbox{\hyperlink{classFoam_1_1GaussField}{cmpt}})
 \begin{DoxyCompactList}\small\item\em Return the modal cell-\/average of one vector component. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{classFoam_1_1GaussField}{static}} \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} \mbox{\hyperlink{namespaceFoam_af2d6f96253e4b28f6b7463c638cff444}{weighted\+Face\+Mean}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1faceGaussField}{face\+Gauss\+Field}}$<$ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} $>$ \&\mbox{\hyperlink{updateBC_8H_a2b150f8b087228e2022aab1a5cf6ff58}{face\+Field}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1GaussField}{local\+FaceI}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{bool}} \mbox{\hyperlink{classFoam_1_1GaussField}{use\+Plus}})
+\mbox{\hyperlink{classFoam_1_1GaussField}{static}} \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} \mbox{\hyperlink{namespaceFoam_af2d6f96253e4b28f6b7463c638cff444}{weighted\+Face\+Mean}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1faceGaussField}{face\+Gauss\+Field}}$<$ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} $>$ \&\mbox{\hyperlink{updateBC_8H_a236e8dce9665bd0a1c4e4992fcaa139d}{face\+Field}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1GaussField}{local\+FaceI}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{bool}} \mbox{\hyperlink{classFoam_1_1GaussField}{use\+Plus}})
 \begin{DoxyCompactList}\small\item\em Compute a quadrature-\/weighted mean on one scalar face trace. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{classFoam_1_1GaussField}{static}} \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} \mbox{\hyperlink{namespaceFoam_a5bdb916827f919e4f70f680230b101f4}{weighted\+Face\+Mean}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1faceGaussField}{face\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$ \&\mbox{\hyperlink{updateBC_8H_a2b150f8b087228e2022aab1a5cf6ff58}{face\+Field}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1GaussField}{local\+FaceI}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{direction}} \mbox{\hyperlink{classFoam_1_1GaussField}{cmpt}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{bool}} \mbox{\hyperlink{classFoam_1_1GaussField}{use\+Plus}})
+\mbox{\hyperlink{classFoam_1_1GaussField}{static}} \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} \mbox{\hyperlink{namespaceFoam_a5bdb916827f919e4f70f680230b101f4}{weighted\+Face\+Mean}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1faceGaussField}{face\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$ \&\mbox{\hyperlink{updateBC_8H_a236e8dce9665bd0a1c4e4992fcaa139d}{face\+Field}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1GaussField}{local\+FaceI}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{direction}} \mbox{\hyperlink{classFoam_1_1GaussField}{cmpt}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{bool}} \mbox{\hyperlink{classFoam_1_1GaussField}{use\+Plus}})
 \begin{DoxyCompactList}\small\item\em Compute a quadrature-\/weighted mean on one vector face trace. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{static}} \mbox{\hyperlink{classFoam_1_1GaussField}{bool}} \mbox{\hyperlink{namespaceFoam_aebae05e139c805db5d8403dde8a09704}{detect\+Scalar\+Field}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomCell}{dg\+Geom\+Cell}} \&cell, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} cell\+ID, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} \mbox{\hyperlink{classFoam_1_1GaussField}{M}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{bool}} \mbox{\hyperlink{classFoam_1_1GaussField}{include\+Boundary\+Faces}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgField}{dg\+Field}}$<$ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{field}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{gauss\+Field}})
 \begin{DoxyCompactList}\small\item\em Apply the face-\/by-\/face TVB-\/minmod check to one scalar DG field. \end{DoxyCompactList}\item 
@@ -2318,11 +2380,11 @@ DG\+\_\+\+FACE\+\_\+\+TMP\+\_\+\+DEFINE\+\_\+\+SCALAR\+\_\+\+FIELD\+\_\+\+OPERAT
 \begin{DoxyCompactList}\small\item\em Surface integral for vector flux. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \mbox{\hyperlink{namespaceFoam_a974550ef6efa478324c22ad982b4ac71}{surface\+Integral}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1faceGaussField}{face\+Gauss\+Field}}$<$ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{phi}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1faceGaussField}{face\+Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{tensor}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{F}})
 \begin{DoxyCompactList}\small\item\em Surface integral for tensor flux. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{namespaceFoam_ac436ecc2d5be71cbb068598bbb591e69}{get\+Gauss\+Legendre1D}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} p\+Order, \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{eta}}, \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{w}})
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{namespaceFoam_ac436ecc2d5be71cbb068598bbb591e69}{get\+Gauss\+Legendre1D}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} p\+Order, \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} $>$ \&eta, \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{w}})
 \begin{DoxyCompactList}\small\item\em Generate 1D Gauss-\/\+Legendre quadrature points and weights for a given polynomial order. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{namespaceFoam_ab98844426875f74de6362419a0a4a7ac}{get\+Gauss\+Lobatto1D}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} p\+Order, \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{eta}}, \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{w}})
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{namespaceFoam_ab98844426875f74de6362419a0a4a7ac}{get\+Gauss\+Lobatto1D}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} p\+Order, \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} $>$ \&eta, \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{w}})
 \begin{DoxyCompactList}\small\item\em Generate 1D Gauss-\/\+Lobatto quadrature points and weights for a given polynomial order. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{namespaceFoam_a6a6371807986a4c222fa08d36f17b853}{get\+Gauss\+Radau1D}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} p\+Order, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{bool}} \mbox{\hyperlink{classFoam_1_1GaussField}{include\+Left}}, \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{eta}}, \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{w}})
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{namespaceFoam_a6a6371807986a4c222fa08d36f17b853}{get\+Gauss\+Radau1D}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} p\+Order, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{bool}} \mbox{\hyperlink{classFoam_1_1GaussField}{include\+Left}}, \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} $>$ \&eta, \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{w}})
 \begin{DoxyCompactList}\small\item\em Generate 1D Gauss-\/\+Radau quadrature points and weights for a given polynomial order. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::vector}} \mbox{\hyperlink{namespaceFoam_a760fdb1804a505a9fc5501d36eb94570}{eta\+To\+Xi\+Hex}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::vector}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{eta\+Pt}})
 \begin{DoxyCompactList}\small\item\em Transform reference coordinates from eta-\/space to xi-\/space for hexahedral elements. \end{DoxyCompactList}\item 
@@ -2364,25 +2426,25 @@ DG\+\_\+\+FACE\+\_\+\+TMP\+\_\+\+DEFINE\+\_\+\+SCALAR\+\_\+\+FIELD\+\_\+\+OPERAT
 \item 
 \mbox{\hyperlink{namespaceFoam_aa8f35761c87b12a7a59a176d2d6c6682}{dg\+Face\+Position}} \mbox{\hyperlink{namespaceFoam_a0675bb1e4defbeaada14dbbef4a33a1b}{convert\+Id\+To\+Position\+On\+Hex}} (\mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1GaussField}{i}})
 \item 
-\mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \mbox{\hyperlink{namespaceFoam_a22ff8a8e44e0018d89b779f3b5a0ecfd}{map\+Eta\+To\+XHex}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{eta}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{cell\+Vertices}})
+\mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \mbox{\hyperlink{namespaceFoam_a22ff8a8e44e0018d89b779f3b5a0ecfd}{map\+Eta\+To\+XHex}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&eta, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{cell\+Vertices}})
 \begin{DoxyCompactList}\small\item\em Mapping a point from reference space to physical space for an hexahedral element. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \mbox{\hyperlink{namespaceFoam_a33b9110ca0e38b013f6b84faf93cd4a3}{map\+XTo\+Eta\+Hex}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&x, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{cell\+Vertices}})
+\mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \mbox{\hyperlink{namespaceFoam_a33b9110ca0e38b013f6b84faf93cd4a3}{map\+XTo\+Eta\+Hex}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&\mbox{\hyperlink{dgFoamToVTU_2dgFoamToVTU_8C_a29b970032c4c5d7f381cc9f064cce7c1}{x}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{cell\+Vertices}})
 \begin{DoxyCompactList}\small\item\em Map a physical point to reference coordinates of a trilinear hex. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \mbox{\hyperlink{namespaceFoam_a600cf5128ac29f0df657122255d4a33c}{map\+Eta\+To\+XPrism}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{eta}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{cell\+Vertices}})
+\mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \mbox{\hyperlink{namespaceFoam_a600cf5128ac29f0df657122255d4a33c}{map\+Eta\+To\+XPrism}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&eta, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{cell\+Vertices}})
 \begin{DoxyCompactList}\small\item\em Mapping a point from reference space (eta) to physical space (x) for a prismatic element. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \mbox{\hyperlink{namespaceFoam_a5fc798d3d1fc48b1a2954625e5bf39ab}{map\+XTo\+Eta\+Prism}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&x, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{cell\+Vertices}})
+\mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \mbox{\hyperlink{namespaceFoam_a5fc798d3d1fc48b1a2954625e5bf39ab}{map\+XTo\+Eta\+Prism}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&\mbox{\hyperlink{dgFoamToVTU_2dgFoamToVTU_8C_a29b970032c4c5d7f381cc9f064cce7c1}{x}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{cell\+Vertices}})
 \begin{DoxyCompactList}\small\item\em Map a physical point to reference coordinates of a 6-\/node prism. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \mbox{\hyperlink{namespaceFoam_ab33e5ff6f7ffbbc546d412623b5dcc88}{map\+Eta\+To\+XTet}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{eta}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{cell\+Vertices}})
+\mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \mbox{\hyperlink{namespaceFoam_ab33e5ff6f7ffbbc546d412623b5dcc88}{map\+Eta\+To\+XTet}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&eta, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{cell\+Vertices}})
 \begin{DoxyCompactList}\small\item\em Mapping a point from reference space (eta) to physical space (x) for a tetrahedral element. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \mbox{\hyperlink{namespaceFoam_adb1a87027f715a032834ac94470883c1}{map\+XTo\+Eta\+Tet}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&x, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{cell\+Vertices}})
+\mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \mbox{\hyperlink{namespaceFoam_adb1a87027f715a032834ac94470883c1}{map\+XTo\+Eta\+Tet}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&\mbox{\hyperlink{dgFoamToVTU_2dgFoamToVTU_8C_a29b970032c4c5d7f381cc9f064cce7c1}{x}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{cell\+Vertices}})
 \begin{DoxyCompactList}\small\item\em Map a physical point to collapsed reference coordinates of a tetrahedron. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \mbox{\hyperlink{namespaceFoam_a90cff712c8f2409d11994753b40760ce}{map\+Eta\+To\+XPyramid}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{eta}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{cell\+Vertices}})
+\mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \mbox{\hyperlink{namespaceFoam_a90cff712c8f2409d11994753b40760ce}{map\+Eta\+To\+XPyramid}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&eta, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{cell\+Vertices}})
 \begin{DoxyCompactList}\small\item\em Mapping a point from reference space (eta) to physical space (x) for a pyramid element. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \mbox{\hyperlink{namespaceFoam_ae0d33e23e6dc24a77061bf1ead91cd7e}{map\+XTo\+Eta\+Pyramid}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&x, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{cell\+Vertices}})
+\mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \mbox{\hyperlink{namespaceFoam_ae0d33e23e6dc24a77061bf1ead91cd7e}{map\+XTo\+Eta\+Pyramid}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&\mbox{\hyperlink{dgFoamToVTU_2dgFoamToVTU_8C_a29b970032c4c5d7f381cc9f064cce7c1}{x}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{cell\+Vertices}})
 \begin{DoxyCompactList}\small\item\em Map a physical point to reference coordinates of a 5-\/node pyramid. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \mbox{\hyperlink{namespaceFoam_aff2ce88a468a0343916823a1d6e0cad9}{map\+Eta\+ToX}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{eta}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{cell\+Vertices}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{dgGeomCell_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5}{dg\+Cell\+Type}} \mbox{\hyperlink{classFoam_1_1GaussField}{cell\+Type}})
+\mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \mbox{\hyperlink{namespaceFoam_aff2ce88a468a0343916823a1d6e0cad9}{map\+Eta\+ToX}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&eta, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{cell\+Vertices}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{dgGeomCell_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5}{dg\+Cell\+Type}} cell\+Type)
 \begin{DoxyCompactList}\small\item\em General mapping function that dispatches to the appropriate mapping based on cell type. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \mbox{\hyperlink{namespaceFoam_a495e62166a68f0597d70d994b305adee}{map\+XTo\+Eta}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&x, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{cell\+Vertices}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{dgGeomCell_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5}{dg\+Cell\+Type}} \mbox{\hyperlink{classFoam_1_1GaussField}{cell\+Type}})
+\mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \mbox{\hyperlink{namespaceFoam_a495e62166a68f0597d70d994b305adee}{map\+XTo\+Eta}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&\mbox{\hyperlink{dgFoamToVTU_2dgFoamToVTU_8C_a29b970032c4c5d7f381cc9f064cce7c1}{x}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{cell\+Vertices}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{dgGeomCell_2dgCellType_8H_afaeb14dfc0cfab52916039ab825f34d5}{dg\+Cell\+Type}} cell\+Type)
 \begin{DoxyCompactList}\small\item\em General mapping function that dispatches to the appropriate mapping based on cell type. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \mbox{\hyperlink{namespaceFoam_a1d619aeb45badd20b83c30e12bcb1b76}{map\+Xi\+To\+Eta\+Prism}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{xi}})
 \begin{DoxyCompactList}\small\item\em Mapping a point from reference space (xi) to reference space (eta, ref hexahedral) for a prismatic element. \end{DoxyCompactList}\item 
@@ -2390,15 +2452,15 @@ DG\+\_\+\+FACE\+\_\+\+TMP\+\_\+\+DEFINE\+\_\+\+SCALAR\+\_\+\+FIELD\+\_\+\+OPERAT
 \begin{DoxyCompactList}\small\item\em Mapping a point from reference space (xi) to reference space (eta, ref hexahedral) for a pyramid element. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \mbox{\hyperlink{namespaceFoam_a6c3e4862f229e9899f0cb57910eb16cc}{map\+Xi\+To\+Eta\+Tetra}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{xi}})
 \begin{DoxyCompactList}\small\item\em Mapping a point from reference space (xi) to reference space (eta, ref hexahedral) for a tetrahedral element. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \mbox{\hyperlink{namespaceFoam_ae85329b813e4f404dce7199c05492cb7}{map\+Eta\+To\+Xi\+Tetra}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{eta}})
+\mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \mbox{\hyperlink{namespaceFoam_ae85329b813e4f404dce7199c05492cb7}{map\+Eta\+To\+Xi\+Tetra}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&eta)
 \begin{DoxyCompactList}\small\item\em Mapping a point from reference space (eta, ref hexahedral) to reference space (xi) for a tetrahedral element. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \mbox{\hyperlink{namespaceFoam_a26e6d07d79415a378f4d1d74cf4a2797}{map\+Eta\+To\+Xi\+Prism}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{eta}})
+\mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \mbox{\hyperlink{namespaceFoam_a26e6d07d79415a378f4d1d74cf4a2797}{map\+Eta\+To\+Xi\+Prism}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&eta)
 \begin{DoxyCompactList}\small\item\em Mapping a point from reference space (eta, ref hexahedral) to reference space (xi) for a prismatic element. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \mbox{\hyperlink{namespaceFoam_af65c784a3106778ed795932348999aad}{map\+Eta\+To\+Xi\+Pyramid}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{eta}})
+\mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \mbox{\hyperlink{namespaceFoam_af65c784a3106778ed795932348999aad}{map\+Eta\+To\+Xi\+Pyramid}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} \&eta)
 \begin{DoxyCompactList}\small\item\em Mapping a point from reference space (eta, ref hexahedral) to reference space (xi) for a pyramid element. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::vector}} \mbox{\hyperlink{namespaceFoam_af1328974ce5de4b3cb54cfc98ba0bfe0}{map\+To\+Physical\+Triangle}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector2D}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{rs}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{vertices}})
+\mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::vector}} \mbox{\hyperlink{namespaceFoam_af1328974ce5de4b3cb54cfc98ba0bfe0}{map\+To\+Physical\+Triangle}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector2D}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{rs}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$ \&vertices)
 \begin{DoxyCompactList}\small\item\em Map reference triangle coordinates to physical space. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::vector}} \mbox{\hyperlink{namespaceFoam_af41881a2118356f00883566a3856b515}{map\+To\+Physical\+Quad}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector2D}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{eta}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$ \&\mbox{\hyperlink{classFoam_1_1GaussField}{vertices}})
+\mbox{\hyperlink{classFoam_1_1GaussField}{Foam\+::vector}} \mbox{\hyperlink{namespaceFoam_af41881a2118356f00883566a3856b515}{map\+To\+Physical\+Quad}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{vector2D}} \&eta, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}} $>$ \&vertices)
 \begin{DoxyCompactList}\small\item\em Map reference square coordinates to physical quadrilateral. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{namespaceFoam_adf05a0f9c883e21dbefb5c82e779998b}{find\+Owner\+Patch}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{fv\+Mesh}} \&mesh, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1GaussField}{face\+ID}})
 \item 
@@ -2989,6 +3051,90 @@ NONE&\\
 
 
 \doxysubsection{Function Documentation}
+\Hypertarget{namespaceFoam_a374cf3ffb0ef03639776968f44ef75f7}\label{namespaceFoam_a374cf3ffb0ef03639776968f44ef75f7} 
+\index{Foam@{Foam}!defineTypeNameAndDebug@{defineTypeNameAndDebug}}
+\index{defineTypeNameAndDebug@{defineTypeNameAndDebug}!Foam@{Foam}}
+\doxysubsubsection{\texorpdfstring{defineTypeNameAndDebug()}{defineTypeNameAndDebug()}\hspace{0.1cm}{\footnotesize\ttfamily [1/35]}}
+{\footnotesize\ttfamily Foam\+::define\+Type\+Name\+And\+Debug (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1dgCompressibleFixedValueBoundaryField}{dg\+Compressible\+Fixed\+Value\+Boundary\+Field}}}]{,  }\item[{0}]{ }\end{DoxyParamCaption})}
+
+\Hypertarget{namespaceFoam_afb13ecf3372509d60b0ad3316a03a38c}\label{namespaceFoam_afb13ecf3372509d60b0ad3316a03a38c} 
+\index{Foam@{Foam}!addToRunTimeSelectionTable@{addToRunTimeSelectionTable}}
+\index{addToRunTimeSelectionTable@{addToRunTimeSelectionTable}!Foam@{Foam}}
+\doxysubsubsection{\texorpdfstring{addToRunTimeSelectionTable()}{addToRunTimeSelectionTable()}\hspace{0.1cm}{\footnotesize\ttfamily [1/25]}}
+{\footnotesize\ttfamily Foam\+::add\+To\+Run\+Time\+Selection\+Table (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1dgCompressibleBoundaryField}{dg\+Compressible\+Boundary\+Field}}}]{,  }\item[{\mbox{\hyperlink{classFoam_1_1dgCompressibleFixedValueBoundaryField}{dg\+Compressible\+Fixed\+Value\+Boundary\+Field}}}]{,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}}}]{ }\end{DoxyParamCaption})}
+
+\Hypertarget{namespaceFoam_a55bac64b1b9987533dd8700578aa0211}\label{namespaceFoam_a55bac64b1b9987533dd8700578aa0211} 
+\index{Foam@{Foam}!defineTypeNameAndDebug@{defineTypeNameAndDebug}}
+\index{defineTypeNameAndDebug@{defineTypeNameAndDebug}!Foam@{Foam}}
+\doxysubsubsection{\texorpdfstring{defineTypeNameAndDebug()}{defineTypeNameAndDebug()}\hspace{0.1cm}{\footnotesize\ttfamily [2/35]}}
+{\footnotesize\ttfamily Foam\+::define\+Type\+Name\+And\+Debug (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1dgCompressibleIsothermoWallBoundaryField}{dg\+Compressible\+Isothermo\+Wall\+Boundary\+Field}}}]{,  }\item[{0}]{ }\end{DoxyParamCaption})}
+
+\Hypertarget{namespaceFoam_a29293cd25dbc7f6e848ed8d5a6ea1735}\label{namespaceFoam_a29293cd25dbc7f6e848ed8d5a6ea1735} 
+\index{Foam@{Foam}!addToRunTimeSelectionTable@{addToRunTimeSelectionTable}}
+\index{addToRunTimeSelectionTable@{addToRunTimeSelectionTable}!Foam@{Foam}}
+\doxysubsubsection{\texorpdfstring{addToRunTimeSelectionTable()}{addToRunTimeSelectionTable()}\hspace{0.1cm}{\footnotesize\ttfamily [2/25]}}
+{\footnotesize\ttfamily Foam\+::add\+To\+Run\+Time\+Selection\+Table (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1dgCompressibleBoundaryField}{dg\+Compressible\+Boundary\+Field}}}]{,  }\item[{\mbox{\hyperlink{classFoam_1_1dgCompressibleIsothermoWallBoundaryField}{dg\+Compressible\+Isothermo\+Wall\+Boundary\+Field}}}]{,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}}}]{ }\end{DoxyParamCaption})}
+
+\Hypertarget{namespaceFoam_a9b268b06c80a47dbd317276e6056f575}\label{namespaceFoam_a9b268b06c80a47dbd317276e6056f575} 
+\index{Foam@{Foam}!defineTypeNameAndDebug@{defineTypeNameAndDebug}}
+\index{defineTypeNameAndDebug@{defineTypeNameAndDebug}!Foam@{Foam}}
+\doxysubsubsection{\texorpdfstring{defineTypeNameAndDebug()}{defineTypeNameAndDebug()}\hspace{0.1cm}{\footnotesize\ttfamily [3/35]}}
+{\footnotesize\ttfamily Foam\+::define\+Type\+Name\+And\+Debug (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1dgCompressiblePressureMachTemperatureBoundaryField}{dg\+Compressible\+Pressure\+Mach\+Temperature\+Boundary\+Field}}}]{,  }\item[{0}]{ }\end{DoxyParamCaption})}
+
+\Hypertarget{namespaceFoam_ae7c433ae36eec4999b55c6d1bbef688c}\label{namespaceFoam_ae7c433ae36eec4999b55c6d1bbef688c} 
+\index{Foam@{Foam}!addToRunTimeSelectionTable@{addToRunTimeSelectionTable}}
+\index{addToRunTimeSelectionTable@{addToRunTimeSelectionTable}!Foam@{Foam}}
+\doxysubsubsection{\texorpdfstring{addToRunTimeSelectionTable()}{addToRunTimeSelectionTable()}\hspace{0.1cm}{\footnotesize\ttfamily [3/25]}}
+{\footnotesize\ttfamily Foam\+::add\+To\+Run\+Time\+Selection\+Table (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1dgCompressibleBoundaryField}{dg\+Compressible\+Boundary\+Field}}}]{,  }\item[{\mbox{\hyperlink{classFoam_1_1dgCompressiblePressureMachTemperatureBoundaryField}{dg\+Compressible\+Pressure\+Mach\+Temperature\+Boundary\+Field}}}]{,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}}}]{ }\end{DoxyParamCaption})}
+
+\Hypertarget{namespaceFoam_a57bf485de43c8eaca51e931024d47b87}\label{namespaceFoam_a57bf485de43c8eaca51e931024d47b87} 
+\index{Foam@{Foam}!defineTypeNameAndDebug@{defineTypeNameAndDebug}}
+\index{defineTypeNameAndDebug@{defineTypeNameAndDebug}!Foam@{Foam}}
+\doxysubsubsection{\texorpdfstring{defineTypeNameAndDebug()}{defineTypeNameAndDebug()}\hspace{0.1cm}{\footnotesize\ttfamily [4/35]}}
+{\footnotesize\ttfamily Foam\+::define\+Type\+Name\+And\+Debug (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1dgCompressibleRiemannInvariantBoundaryField}{dg\+Compressible\+Riemann\+Invariant\+Boundary\+Field}}}]{,  }\item[{0}]{ }\end{DoxyParamCaption})}
+
+\Hypertarget{namespaceFoam_a6844fe8198042fc2a9f6ae86c301fe23}\label{namespaceFoam_a6844fe8198042fc2a9f6ae86c301fe23} 
+\index{Foam@{Foam}!addToRunTimeSelectionTable@{addToRunTimeSelectionTable}}
+\index{addToRunTimeSelectionTable@{addToRunTimeSelectionTable}!Foam@{Foam}}
+\doxysubsubsection{\texorpdfstring{addToRunTimeSelectionTable()}{addToRunTimeSelectionTable()}\hspace{0.1cm}{\footnotesize\ttfamily [4/25]}}
+{\footnotesize\ttfamily Foam\+::add\+To\+Run\+Time\+Selection\+Table (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1dgCompressibleBoundaryField}{dg\+Compressible\+Boundary\+Field}}}]{,  }\item[{\mbox{\hyperlink{classFoam_1_1dgCompressibleRiemannInvariantBoundaryField}{dg\+Compressible\+Riemann\+Invariant\+Boundary\+Field}}}]{,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}}}]{ }\end{DoxyParamCaption})}
+
+\Hypertarget{namespaceFoam_abe73192c17778d21279bc4ec4bf8baeb}\label{namespaceFoam_abe73192c17778d21279bc4ec4bf8baeb} 
+\index{Foam@{Foam}!defineTypeNameAndDebug@{defineTypeNameAndDebug}}
+\index{defineTypeNameAndDebug@{defineTypeNameAndDebug}!Foam@{Foam}}
+\doxysubsubsection{\texorpdfstring{defineTypeNameAndDebug()}{defineTypeNameAndDebug()}\hspace{0.1cm}{\footnotesize\ttfamily [5/35]}}
+{\footnotesize\ttfamily Foam\+::define\+Type\+Name\+And\+Debug (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1dgCompressibleSymmetryBoundaryField}{dg\+Compressible\+Symmetry\+Boundary\+Field}}}]{,  }\item[{0}]{ }\end{DoxyParamCaption})}
+
+\Hypertarget{namespaceFoam_a2451cf0fd7b9b5e2acab842fc6ec37af}\label{namespaceFoam_a2451cf0fd7b9b5e2acab842fc6ec37af} 
+\index{Foam@{Foam}!addToRunTimeSelectionTable@{addToRunTimeSelectionTable}}
+\index{addToRunTimeSelectionTable@{addToRunTimeSelectionTable}!Foam@{Foam}}
+\doxysubsubsection{\texorpdfstring{addToRunTimeSelectionTable()}{addToRunTimeSelectionTable()}\hspace{0.1cm}{\footnotesize\ttfamily [5/25]}}
+{\footnotesize\ttfamily Foam\+::add\+To\+Run\+Time\+Selection\+Table (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1dgCompressibleBoundaryField}{dg\+Compressible\+Boundary\+Field}}}]{,  }\item[{\mbox{\hyperlink{classFoam_1_1dgCompressibleSymmetryBoundaryField}{dg\+Compressible\+Symmetry\+Boundary\+Field}}}]{,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}}}]{ }\end{DoxyParamCaption})}
+
+\Hypertarget{namespaceFoam_a96720dbf55304ed091a1a2016f90b93d}\label{namespaceFoam_a96720dbf55304ed091a1a2016f90b93d} 
+\index{Foam@{Foam}!defineTypeNameAndDebug@{defineTypeNameAndDebug}}
+\index{defineTypeNameAndDebug@{defineTypeNameAndDebug}!Foam@{Foam}}
+\doxysubsubsection{\texorpdfstring{defineTypeNameAndDebug()}{defineTypeNameAndDebug()}\hspace{0.1cm}{\footnotesize\ttfamily [6/35]}}
+{\footnotesize\ttfamily Foam\+::define\+Type\+Name\+And\+Debug (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1dgCompressibleZeroGradientBoundaryField}{dg\+Compressible\+Zero\+Gradient\+Boundary\+Field}}}]{,  }\item[{0}]{ }\end{DoxyParamCaption})}
+
+\Hypertarget{namespaceFoam_af4d24c9d93d3e2d1bee188fddc9c9f68}\label{namespaceFoam_af4d24c9d93d3e2d1bee188fddc9c9f68} 
+\index{Foam@{Foam}!addToRunTimeSelectionTable@{addToRunTimeSelectionTable}}
+\index{addToRunTimeSelectionTable@{addToRunTimeSelectionTable}!Foam@{Foam}}
+\doxysubsubsection{\texorpdfstring{addToRunTimeSelectionTable()}{addToRunTimeSelectionTable()}\hspace{0.1cm}{\footnotesize\ttfamily [6/25]}}
+{\footnotesize\ttfamily Foam\+::add\+To\+Run\+Time\+Selection\+Table (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1dgCompressibleBoundaryField}{dg\+Compressible\+Boundary\+Field}}}]{,  }\item[{\mbox{\hyperlink{classFoam_1_1dgCompressibleZeroGradientBoundaryField}{dg\+Compressible\+Zero\+Gradient\+Boundary\+Field}}}]{,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}}}]{ }\end{DoxyParamCaption})}
+
+\Hypertarget{namespaceFoam_a2adff3eabd2151a34d66ec2fa636f8e8}\label{namespaceFoam_a2adff3eabd2151a34d66ec2fa636f8e8} 
+\index{Foam@{Foam}!defineTypeNameAndDebug@{defineTypeNameAndDebug}}
+\index{defineTypeNameAndDebug@{defineTypeNameAndDebug}!Foam@{Foam}}
+\doxysubsubsection{\texorpdfstring{defineTypeNameAndDebug()}{defineTypeNameAndDebug()}\hspace{0.1cm}{\footnotesize\ttfamily [7/35]}}
+{\footnotesize\ttfamily Foam\+::define\+Type\+Name\+And\+Debug (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1dgCompressibleBoundaryField}{dg\+Compressible\+Boundary\+Field}}}]{,  }\item[{0}]{ }\end{DoxyParamCaption})}
+
+\Hypertarget{namespaceFoam_a34321cd39d22360cac26a960fd105f1e}\label{namespaceFoam_a34321cd39d22360cac26a960fd105f1e} 
+\index{Foam@{Foam}!defineRunTimeSelectionTable@{defineRunTimeSelectionTable}}
+\index{defineRunTimeSelectionTable@{defineRunTimeSelectionTable}!Foam@{Foam}}
+\doxysubsubsection{\texorpdfstring{defineRunTimeSelectionTable()}{defineRunTimeSelectionTable()}\hspace{0.1cm}{\footnotesize\ttfamily [1/10]}}
+{\footnotesize\ttfamily Foam\+::define\+Run\+Time\+Selection\+Table (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1dgCompressibleBoundaryField}{dg\+Compressible\+Boundary\+Field}}}]{,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}}}]{ }\end{DoxyParamCaption})}
+
 \Hypertarget{namespaceFoam_a5619122491e52385ce1436c8d8b1ff82}\label{namespaceFoam_a5619122491e52385ce1436c8d8b1ff82} 
 \index{Foam@{Foam}!makeDgGeneralBoundaryField@{makeDgGeneralBoundaryField}}
 \index{makeDgGeneralBoundaryField@{makeDgGeneralBoundaryField}!Foam@{Foam}}
@@ -3052,61 +3198,61 @@ NONE&\\
 \Hypertarget{namespaceFoam_a5d4fcb7fa72d56309fd35a0b0c881ef8}\label{namespaceFoam_a5d4fcb7fa72d56309fd35a0b0c881ef8} 
 \index{Foam@{Foam}!defineTypeNameAndDebug@{defineTypeNameAndDebug}}
 \index{defineTypeNameAndDebug@{defineTypeNameAndDebug}!Foam@{Foam}}
-\doxysubsubsection{\texorpdfstring{defineTypeNameAndDebug()}{defineTypeNameAndDebug()}\hspace{0.1cm}{\footnotesize\ttfamily [1/26]}}
+\doxysubsubsection{\texorpdfstring{defineTypeNameAndDebug()}{defineTypeNameAndDebug()}\hspace{0.1cm}{\footnotesize\ttfamily [8/35]}}
 {\footnotesize\ttfamily Foam\+::define\+Type\+Name\+And\+Debug (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1dgCentralFluxSolver}{dg\+Central\+Flux\+Solver}}}]{,  }\item[{0}]{ }\end{DoxyParamCaption})}
 
 \Hypertarget{namespaceFoam_a04e3791aa8b379df37fb420362061450}\label{namespaceFoam_a04e3791aa8b379df37fb420362061450} 
 \index{Foam@{Foam}!addToRunTimeSelectionTable@{addToRunTimeSelectionTable}}
 \index{addToRunTimeSelectionTable@{addToRunTimeSelectionTable}!Foam@{Foam}}
-\doxysubsubsection{\texorpdfstring{addToRunTimeSelectionTable()}{addToRunTimeSelectionTable()}\hspace{0.1cm}{\footnotesize\ttfamily [1/18]}}
+\doxysubsubsection{\texorpdfstring{addToRunTimeSelectionTable()}{addToRunTimeSelectionTable()}\hspace{0.1cm}{\footnotesize\ttfamily [7/25]}}
 {\footnotesize\ttfamily Foam\+::add\+To\+Run\+Time\+Selection\+Table (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1dgFluxSolver}{dg\+Flux\+Solver}}}]{,  }\item[{\mbox{\hyperlink{classFoam_1_1dgCentralFluxSolver}{dg\+Central\+Flux\+Solver}}}]{,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}}}]{ }\end{DoxyParamCaption})}
 
 \Hypertarget{namespaceFoam_aa255ddc894e1d349b9691f1f8084099c}\label{namespaceFoam_aa255ddc894e1d349b9691f1f8084099c} 
 \index{Foam@{Foam}!defineTypeNameAndDebug@{defineTypeNameAndDebug}}
 \index{defineTypeNameAndDebug@{defineTypeNameAndDebug}!Foam@{Foam}}
-\doxysubsubsection{\texorpdfstring{defineTypeNameAndDebug()}{defineTypeNameAndDebug()}\hspace{0.1cm}{\footnotesize\ttfamily [2/26]}}
+\doxysubsubsection{\texorpdfstring{defineTypeNameAndDebug()}{defineTypeNameAndDebug()}\hspace{0.1cm}{\footnotesize\ttfamily [9/35]}}
 {\footnotesize\ttfamily Foam\+::define\+Type\+Name\+And\+Debug (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1dgLaxFriedrichsFluxSolver}{dg\+Lax\+Friedrichs\+Flux\+Solver}}}]{,  }\item[{0}]{ }\end{DoxyParamCaption})}
 
 \Hypertarget{namespaceFoam_a8f53a44168ff9b7cbdc81d3766225ae4}\label{namespaceFoam_a8f53a44168ff9b7cbdc81d3766225ae4} 
 \index{Foam@{Foam}!addToRunTimeSelectionTable@{addToRunTimeSelectionTable}}
 \index{addToRunTimeSelectionTable@{addToRunTimeSelectionTable}!Foam@{Foam}}
-\doxysubsubsection{\texorpdfstring{addToRunTimeSelectionTable()}{addToRunTimeSelectionTable()}\hspace{0.1cm}{\footnotesize\ttfamily [2/18]}}
+\doxysubsubsection{\texorpdfstring{addToRunTimeSelectionTable()}{addToRunTimeSelectionTable()}\hspace{0.1cm}{\footnotesize\ttfamily [8/25]}}
 {\footnotesize\ttfamily Foam\+::add\+To\+Run\+Time\+Selection\+Table (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1dgFluxSolver}{dg\+Flux\+Solver}}}]{,  }\item[{\mbox{\hyperlink{classFoam_1_1dgLaxFriedrichsFluxSolver}{dg\+Lax\+Friedrichs\+Flux\+Solver}}}]{,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}}}]{ }\end{DoxyParamCaption})}
 
 \Hypertarget{namespaceFoam_aebcd8ec9a61cf67c4be6d049337bfde0}\label{namespaceFoam_aebcd8ec9a61cf67c4be6d049337bfde0} 
 \index{Foam@{Foam}!defineTypeNameAndDebug@{defineTypeNameAndDebug}}
 \index{defineTypeNameAndDebug@{defineTypeNameAndDebug}!Foam@{Foam}}
-\doxysubsubsection{\texorpdfstring{defineTypeNameAndDebug()}{defineTypeNameAndDebug()}\hspace{0.1cm}{\footnotesize\ttfamily [3/26]}}
+\doxysubsubsection{\texorpdfstring{defineTypeNameAndDebug()}{defineTypeNameAndDebug()}\hspace{0.1cm}{\footnotesize\ttfamily [10/35]}}
 {\footnotesize\ttfamily Foam\+::define\+Type\+Name\+And\+Debug (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1dgHLLCFluxSolver}{dg\+HLLCFlux\+Solver}}}]{,  }\item[{0}]{ }\end{DoxyParamCaption})}
 
 \Hypertarget{namespaceFoam_a4e210e3f634d6297e7748d68c73bbb40}\label{namespaceFoam_a4e210e3f634d6297e7748d68c73bbb40} 
 \index{Foam@{Foam}!addToRunTimeSelectionTable@{addToRunTimeSelectionTable}}
 \index{addToRunTimeSelectionTable@{addToRunTimeSelectionTable}!Foam@{Foam}}
-\doxysubsubsection{\texorpdfstring{addToRunTimeSelectionTable()}{addToRunTimeSelectionTable()}\hspace{0.1cm}{\footnotesize\ttfamily [3/18]}}
+\doxysubsubsection{\texorpdfstring{addToRunTimeSelectionTable()}{addToRunTimeSelectionTable()}\hspace{0.1cm}{\footnotesize\ttfamily [9/25]}}
 {\footnotesize\ttfamily Foam\+::add\+To\+Run\+Time\+Selection\+Table (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1dgFluxSolver}{dg\+Flux\+Solver}}}]{,  }\item[{\mbox{\hyperlink{classFoam_1_1dgHLLCFluxSolver}{dg\+HLLCFlux\+Solver}}}]{,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}}}]{ }\end{DoxyParamCaption})}
 
 \Hypertarget{namespaceFoam_a85792b2ae15733745ee7206fc0e1e882}\label{namespaceFoam_a85792b2ae15733745ee7206fc0e1e882} 
 \index{Foam@{Foam}!defineTypeNameAndDebug@{defineTypeNameAndDebug}}
 \index{defineTypeNameAndDebug@{defineTypeNameAndDebug}!Foam@{Foam}}
-\doxysubsubsection{\texorpdfstring{defineTypeNameAndDebug()}{defineTypeNameAndDebug()}\hspace{0.1cm}{\footnotesize\ttfamily [4/26]}}
+\doxysubsubsection{\texorpdfstring{defineTypeNameAndDebug()}{defineTypeNameAndDebug()}\hspace{0.1cm}{\footnotesize\ttfamily [11/35]}}
 {\footnotesize\ttfamily Foam\+::define\+Type\+Name\+And\+Debug (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1dgHLLEFluxSolver}{dg\+HLLEFlux\+Solver}}}]{,  }\item[{0}]{ }\end{DoxyParamCaption})}
 
 \Hypertarget{namespaceFoam_aa25f4dfab65dc900cbf17199633cd61e}\label{namespaceFoam_aa25f4dfab65dc900cbf17199633cd61e} 
 \index{Foam@{Foam}!addToRunTimeSelectionTable@{addToRunTimeSelectionTable}}
 \index{addToRunTimeSelectionTable@{addToRunTimeSelectionTable}!Foam@{Foam}}
-\doxysubsubsection{\texorpdfstring{addToRunTimeSelectionTable()}{addToRunTimeSelectionTable()}\hspace{0.1cm}{\footnotesize\ttfamily [4/18]}}
+\doxysubsubsection{\texorpdfstring{addToRunTimeSelectionTable()}{addToRunTimeSelectionTable()}\hspace{0.1cm}{\footnotesize\ttfamily [10/25]}}
 {\footnotesize\ttfamily Foam\+::add\+To\+Run\+Time\+Selection\+Table (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1dgFluxSolver}{dg\+Flux\+Solver}}}]{,  }\item[{\mbox{\hyperlink{classFoam_1_1dgHLLEFluxSolver}{dg\+HLLEFlux\+Solver}}}]{,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}}}]{ }\end{DoxyParamCaption})}
 
 \Hypertarget{namespaceFoam_a03dd8a15b1d27792d8cb4b836b558862}\label{namespaceFoam_a03dd8a15b1d27792d8cb4b836b558862} 
 \index{Foam@{Foam}!defineTypeNameAndDebug@{defineTypeNameAndDebug}}
 \index{defineTypeNameAndDebug@{defineTypeNameAndDebug}!Foam@{Foam}}
-\doxysubsubsection{\texorpdfstring{defineTypeNameAndDebug()}{defineTypeNameAndDebug()}\hspace{0.1cm}{\footnotesize\ttfamily [5/26]}}
+\doxysubsubsection{\texorpdfstring{defineTypeNameAndDebug()}{defineTypeNameAndDebug()}\hspace{0.1cm}{\footnotesize\ttfamily [12/35]}}
 {\footnotesize\ttfamily Foam\+::define\+Type\+Name\+And\+Debug (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1dgFluxSolver}{dg\+Flux\+Solver}}}]{,  }\item[{0}]{ }\end{DoxyParamCaption})}
 
 \Hypertarget{namespaceFoam_a0803ab15ecfd7a30e74fe5071c40ba13}\label{namespaceFoam_a0803ab15ecfd7a30e74fe5071c40ba13} 
 \index{Foam@{Foam}!defineRunTimeSelectionTable@{defineRunTimeSelectionTable}}
 \index{defineRunTimeSelectionTable@{defineRunTimeSelectionTable}!Foam@{Foam}}
-\doxysubsubsection{\texorpdfstring{defineRunTimeSelectionTable()}{defineRunTimeSelectionTable()}\hspace{0.1cm}{\footnotesize\ttfamily [1/8]}}
+\doxysubsubsection{\texorpdfstring{defineRunTimeSelectionTable()}{defineRunTimeSelectionTable()}\hspace{0.1cm}{\footnotesize\ttfamily [2/10]}}
 {\footnotesize\ttfamily Foam\+::define\+Run\+Time\+Selection\+Table (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1dgFluxSolver}{dg\+Flux\+Solver}}}]{,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}}}]{ }\end{DoxyParamCaption})}
 
 \Hypertarget{namespaceFoam_af7d5c12d26c2b0bed7f073a787a598fe}\label{namespaceFoam_af7d5c12d26c2b0bed7f073a787a598fe} 
@@ -3129,40 +3275,64 @@ Stream output for \doxylink{classFoam_1_1dgFluxSolver_ac861a0350cf2f298fecfc9754
 \begin{DoxyReturn}{Returns}
 Output stream 
 \end{DoxyReturn}
+\Hypertarget{namespaceFoam_ae2c640d66259d00e7a6625264dff526c}\label{namespaceFoam_ae2c640d66259d00e7a6625264dff526c} 
+\index{Foam@{Foam}!defineTypeNameAndDebug@{defineTypeNameAndDebug}}
+\index{defineTypeNameAndDebug@{defineTypeNameAndDebug}!Foam@{Foam}}
+\doxysubsubsection{\texorpdfstring{defineTypeNameAndDebug()}{defineTypeNameAndDebug()}\hspace{0.1cm}{\footnotesize\ttfamily [13/35]}}
+{\footnotesize\ttfamily Foam\+::define\+Type\+Name\+And\+Debug (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1positivityPreservingLimiter}{positivity\+Preserving\+Limiter}}}]{,  }\item[{0}]{ }\end{DoxyParamCaption})}
+
+\Hypertarget{namespaceFoam_afbaf19ed45bf772f95d148a6ca294b71}\label{namespaceFoam_afbaf19ed45bf772f95d148a6ca294b71} 
+\index{Foam@{Foam}!addToRunTimeSelectionTable@{addToRunTimeSelectionTable}}
+\index{addToRunTimeSelectionTable@{addToRunTimeSelectionTable}!Foam@{Foam}}
+\doxysubsubsection{\texorpdfstring{addToRunTimeSelectionTable()}{addToRunTimeSelectionTable()}\hspace{0.1cm}{\footnotesize\ttfamily [11/25]}}
+{\footnotesize\ttfamily Foam\+::add\+To\+Run\+Time\+Selection\+Table (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1dgLimiter}{dg\+Limiter}}}]{,  }\item[{\mbox{\hyperlink{classFoam_1_1positivityPreservingLimiter}{positivity\+Preserving\+Limiter}}}]{,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}}}]{ }\end{DoxyParamCaption})}
+
+\Hypertarget{namespaceFoam_a5905b2131c9fc908af2565e45f5d6aba}\label{namespaceFoam_a5905b2131c9fc908af2565e45f5d6aba} 
+\index{Foam@{Foam}!defineTypeNameAndDebug@{defineTypeNameAndDebug}}
+\index{defineTypeNameAndDebug@{defineTypeNameAndDebug}!Foam@{Foam}}
+\doxysubsubsection{\texorpdfstring{defineTypeNameAndDebug()}{defineTypeNameAndDebug()}\hspace{0.1cm}{\footnotesize\ttfamily [14/35]}}
+{\footnotesize\ttfamily Foam\+::define\+Type\+Name\+And\+Debug (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1dgLimiter}{dg\+Limiter}}}]{,  }\item[{0}]{ }\end{DoxyParamCaption})}
+
+\Hypertarget{namespaceFoam_a96c79a16247fa081ca3318d77fd5b34d}\label{namespaceFoam_a96c79a16247fa081ca3318d77fd5b34d} 
+\index{Foam@{Foam}!defineRunTimeSelectionTable@{defineRunTimeSelectionTable}}
+\index{defineRunTimeSelectionTable@{defineRunTimeSelectionTable}!Foam@{Foam}}
+\doxysubsubsection{\texorpdfstring{defineRunTimeSelectionTable()}{defineRunTimeSelectionTable()}\hspace{0.1cm}{\footnotesize\ttfamily [3/10]}}
+{\footnotesize\ttfamily Foam\+::define\+Run\+Time\+Selection\+Table (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1dgLimiter}{dg\+Limiter}}}]{,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}}}]{ }\end{DoxyParamCaption})}
+
 \Hypertarget{namespaceFoam_a16a2d4f3af908859f338aff8bad60bd1}\label{namespaceFoam_a16a2d4f3af908859f338aff8bad60bd1} 
 \index{Foam@{Foam}!defineTypeNameAndDebug@{defineTypeNameAndDebug}}
 \index{defineTypeNameAndDebug@{defineTypeNameAndDebug}!Foam@{Foam}}
-\doxysubsubsection{\texorpdfstring{defineTypeNameAndDebug()}{defineTypeNameAndDebug()}\hspace{0.1cm}{\footnotesize\ttfamily [6/26]}}
+\doxysubsubsection{\texorpdfstring{defineTypeNameAndDebug()}{defineTypeNameAndDebug()}\hspace{0.1cm}{\footnotesize\ttfamily [15/35]}}
 {\footnotesize\ttfamily Foam\+::define\+Type\+Name\+And\+Debug (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1KXRCF}{KXRCF}}}]{,  }\item[{0}]{ }\end{DoxyParamCaption})}
 
 \Hypertarget{namespaceFoam_a86990119dffea5503760ebe8c5732b98}\label{namespaceFoam_a86990119dffea5503760ebe8c5732b98} 
 \index{Foam@{Foam}!addToRunTimeSelectionTable@{addToRunTimeSelectionTable}}
 \index{addToRunTimeSelectionTable@{addToRunTimeSelectionTable}!Foam@{Foam}}
-\doxysubsubsection{\texorpdfstring{addToRunTimeSelectionTable()}{addToRunTimeSelectionTable()}\hspace{0.1cm}{\footnotesize\ttfamily [5/18]}}
+\doxysubsubsection{\texorpdfstring{addToRunTimeSelectionTable()}{addToRunTimeSelectionTable()}\hspace{0.1cm}{\footnotesize\ttfamily [12/25]}}
 {\footnotesize\ttfamily Foam\+::add\+To\+Run\+Time\+Selection\+Table (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1troubleCellDetector}{trouble\+Cell\+Detector}}}]{,  }\item[{\mbox{\hyperlink{classFoam_1_1KXRCF}{KXRCF}}}]{,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}}}]{ }\end{DoxyParamCaption})}
 
 \Hypertarget{namespaceFoam_a0a674dd127f034c11f534f01379d2e43}\label{namespaceFoam_a0a674dd127f034c11f534f01379d2e43} 
 \index{Foam@{Foam}!defineTypeNameAndDebug@{defineTypeNameAndDebug}}
 \index{defineTypeNameAndDebug@{defineTypeNameAndDebug}!Foam@{Foam}}
-\doxysubsubsection{\texorpdfstring{defineTypeNameAndDebug()}{defineTypeNameAndDebug()}\hspace{0.1cm}{\footnotesize\ttfamily [7/26]}}
+\doxysubsubsection{\texorpdfstring{defineTypeNameAndDebug()}{defineTypeNameAndDebug()}\hspace{0.1cm}{\footnotesize\ttfamily [16/35]}}
 {\footnotesize\ttfamily Foam\+::define\+Type\+Name\+And\+Debug (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1PerssonPeraire}{Persson\+Peraire}}}]{,  }\item[{0}]{ }\end{DoxyParamCaption})}
 
 \Hypertarget{namespaceFoam_a2d0ca18a5bcfcfd4300dd11cc8041646}\label{namespaceFoam_a2d0ca18a5bcfcfd4300dd11cc8041646} 
 \index{Foam@{Foam}!addToRunTimeSelectionTable@{addToRunTimeSelectionTable}}
 \index{addToRunTimeSelectionTable@{addToRunTimeSelectionTable}!Foam@{Foam}}
-\doxysubsubsection{\texorpdfstring{addToRunTimeSelectionTable()}{addToRunTimeSelectionTable()}\hspace{0.1cm}{\footnotesize\ttfamily [6/18]}}
+\doxysubsubsection{\texorpdfstring{addToRunTimeSelectionTable()}{addToRunTimeSelectionTable()}\hspace{0.1cm}{\footnotesize\ttfamily [13/25]}}
 {\footnotesize\ttfamily Foam\+::add\+To\+Run\+Time\+Selection\+Table (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1troubleCellDetector}{trouble\+Cell\+Detector}}}]{,  }\item[{\mbox{\hyperlink{classFoam_1_1PerssonPeraire}{Persson\+Peraire}}}]{,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}}}]{ }\end{DoxyParamCaption})}
 
 \Hypertarget{namespaceFoam_ae4b6d6368eca7f384fc609b3f2daba9f}\label{namespaceFoam_ae4b6d6368eca7f384fc609b3f2daba9f} 
 \index{Foam@{Foam}!defineTypeNameAndDebug@{defineTypeNameAndDebug}}
 \index{defineTypeNameAndDebug@{defineTypeNameAndDebug}!Foam@{Foam}}
-\doxysubsubsection{\texorpdfstring{defineTypeNameAndDebug()}{defineTypeNameAndDebug()}\hspace{0.1cm}{\footnotesize\ttfamily [8/26]}}
+\doxysubsubsection{\texorpdfstring{defineTypeNameAndDebug()}{defineTypeNameAndDebug()}\hspace{0.1cm}{\footnotesize\ttfamily [17/35]}}
 {\footnotesize\ttfamily Foam\+::define\+Type\+Name\+And\+Debug (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1TVBMinmod}{TVBMinmod}}}]{,  }\item[{0}]{ }\end{DoxyParamCaption})}
 
 \Hypertarget{namespaceFoam_a67bddeb6548a750b886343b7f11f9052}\label{namespaceFoam_a67bddeb6548a750b886343b7f11f9052} 
 \index{Foam@{Foam}!addToRunTimeSelectionTable@{addToRunTimeSelectionTable}}
 \index{addToRunTimeSelectionTable@{addToRunTimeSelectionTable}!Foam@{Foam}}
-\doxysubsubsection{\texorpdfstring{addToRunTimeSelectionTable()}{addToRunTimeSelectionTable()}\hspace{0.1cm}{\footnotesize\ttfamily [7/18]}}
+\doxysubsubsection{\texorpdfstring{addToRunTimeSelectionTable()}{addToRunTimeSelectionTable()}\hspace{0.1cm}{\footnotesize\ttfamily [14/25]}}
 {\footnotesize\ttfamily Foam\+::add\+To\+Run\+Time\+Selection\+Table (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1troubleCellDetector}{trouble\+Cell\+Detector}}}]{,  }\item[{\mbox{\hyperlink{classFoam_1_1TVBMinmod}{TVBMinmod}}}]{,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}}}]{ }\end{DoxyParamCaption})}
 
 \Hypertarget{namespaceFoam_aac324bdfe6e20c40e68c9067d5ecd9e5}\label{namespaceFoam_aac324bdfe6e20c40e68c9067d5ecd9e5} 
@@ -3372,37 +3542,37 @@ True if at least one face violates the TVB-\/minmod check
 \Hypertarget{namespaceFoam_a6c67d66479a9c9c0371fa84648c55faf}\label{namespaceFoam_a6c67d66479a9c9c0371fa84648c55faf} 
 \index{Foam@{Foam}!defineTypeNameAndDebug@{defineTypeNameAndDebug}}
 \index{defineTypeNameAndDebug@{defineTypeNameAndDebug}!Foam@{Foam}}
-\doxysubsubsection{\texorpdfstring{defineTypeNameAndDebug()}{defineTypeNameAndDebug()}\hspace{0.1cm}{\footnotesize\ttfamily [9/26]}}
+\doxysubsubsection{\texorpdfstring{defineTypeNameAndDebug()}{defineTypeNameAndDebug()}\hspace{0.1cm}{\footnotesize\ttfamily [18/35]}}
 {\footnotesize\ttfamily Foam\+::define\+Type\+Name\+And\+Debug (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1troubleCellDetector}{trouble\+Cell\+Detector}}}]{,  }\item[{0}]{ }\end{DoxyParamCaption})}
 
 \Hypertarget{namespaceFoam_a234e10d40c8a2c1f874317bac3496839}\label{namespaceFoam_a234e10d40c8a2c1f874317bac3496839} 
 \index{Foam@{Foam}!defineRunTimeSelectionTable@{defineRunTimeSelectionTable}}
 \index{defineRunTimeSelectionTable@{defineRunTimeSelectionTable}!Foam@{Foam}}
-\doxysubsubsection{\texorpdfstring{defineRunTimeSelectionTable()}{defineRunTimeSelectionTable()}\hspace{0.1cm}{\footnotesize\ttfamily [2/8]}}
+\doxysubsubsection{\texorpdfstring{defineRunTimeSelectionTable()}{defineRunTimeSelectionTable()}\hspace{0.1cm}{\footnotesize\ttfamily [4/10]}}
 {\footnotesize\ttfamily Foam\+::define\+Run\+Time\+Selection\+Table (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1troubleCellDetector}{trouble\+Cell\+Detector}}}]{,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}}}]{ }\end{DoxyParamCaption})}
 
 \Hypertarget{namespaceFoam_ac6d12653278865af4c82f7a7ce059923}\label{namespaceFoam_ac6d12653278865af4c82f7a7ce059923} 
 \index{Foam@{Foam}!defineTypeNameAndDebug@{defineTypeNameAndDebug}}
 \index{defineTypeNameAndDebug@{defineTypeNameAndDebug}!Foam@{Foam}}
-\doxysubsubsection{\texorpdfstring{defineTypeNameAndDebug()}{defineTypeNameAndDebug()}\hspace{0.1cm}{\footnotesize\ttfamily [10/26]}}
+\doxysubsubsection{\texorpdfstring{defineTypeNameAndDebug()}{defineTypeNameAndDebug()}\hspace{0.1cm}{\footnotesize\ttfamily [19/35]}}
 {\footnotesize\ttfamily Foam\+::define\+Type\+Name\+And\+Debug (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1dgTimeScheme}{dg\+Time\+Scheme}}}]{,  }\item[{0}]{ }\end{DoxyParamCaption})}
 
 \Hypertarget{namespaceFoam_aef01c784caef451be42f83134393acf4}\label{namespaceFoam_aef01c784caef451be42f83134393acf4} 
 \index{Foam@{Foam}!defineRunTimeSelectionTable@{defineRunTimeSelectionTable}}
 \index{defineRunTimeSelectionTable@{defineRunTimeSelectionTable}!Foam@{Foam}}
-\doxysubsubsection{\texorpdfstring{defineRunTimeSelectionTable()}{defineRunTimeSelectionTable()}\hspace{0.1cm}{\footnotesize\ttfamily [3/8]}}
+\doxysubsubsection{\texorpdfstring{defineRunTimeSelectionTable()}{defineRunTimeSelectionTable()}\hspace{0.1cm}{\footnotesize\ttfamily [5/10]}}
 {\footnotesize\ttfamily Foam\+::define\+Run\+Time\+Selection\+Table (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1dgTimeScheme}{dg\+Time\+Scheme}}}]{,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}}}]{ }\end{DoxyParamCaption})}
 
 \Hypertarget{namespaceFoam_a8f5bee9b89ab5af6f7a8a38f3b8a6207}\label{namespaceFoam_a8f5bee9b89ab5af6f7a8a38f3b8a6207} 
 \index{Foam@{Foam}!defineTypeNameAndDebug@{defineTypeNameAndDebug}}
 \index{defineTypeNameAndDebug@{defineTypeNameAndDebug}!Foam@{Foam}}
-\doxysubsubsection{\texorpdfstring{defineTypeNameAndDebug()}{defineTypeNameAndDebug()}\hspace{0.1cm}{\footnotesize\ttfamily [11/26]}}
+\doxysubsubsection{\texorpdfstring{defineTypeNameAndDebug()}{defineTypeNameAndDebug()}\hspace{0.1cm}{\footnotesize\ttfamily [20/35]}}
 {\footnotesize\ttfamily Foam\+::define\+Type\+Name\+And\+Debug (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1dgEulerTimeScheme}{dg\+Euler\+Time\+Scheme}}}]{,  }\item[{0}]{ }\end{DoxyParamCaption})}
 
 \Hypertarget{namespaceFoam_a0b7c8a19ed551115127d6de372cceabc}\label{namespaceFoam_a0b7c8a19ed551115127d6de372cceabc} 
 \index{Foam@{Foam}!addToRunTimeSelectionTable@{addToRunTimeSelectionTable}}
 \index{addToRunTimeSelectionTable@{addToRunTimeSelectionTable}!Foam@{Foam}}
-\doxysubsubsection{\texorpdfstring{addToRunTimeSelectionTable()}{addToRunTimeSelectionTable()}\hspace{0.1cm}{\footnotesize\ttfamily [8/18]}}
+\doxysubsubsection{\texorpdfstring{addToRunTimeSelectionTable()}{addToRunTimeSelectionTable()}\hspace{0.1cm}{\footnotesize\ttfamily [15/25]}}
 {\footnotesize\ttfamily Foam\+::add\+To\+Run\+Time\+Selection\+Table (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1dgTimeScheme}{dg\+Time\+Scheme}}}]{,  }\item[{\mbox{\hyperlink{classFoam_1_1dgEulerTimeScheme}{dg\+Euler\+Time\+Scheme}}}]{,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}}}]{ }\end{DoxyParamCaption})}
 
 \Hypertarget{namespaceFoam_a9aedc403ec16672659acc390c48782a8}\label{namespaceFoam_a9aedc403ec16672659acc390c48782a8} 
@@ -3436,13 +3606,13 @@ True if at least one face violates the TVB-\/minmod check
 \Hypertarget{namespaceFoam_a7f06dc01e3a839434d2fdcd7cbbe1af2}\label{namespaceFoam_a7f06dc01e3a839434d2fdcd7cbbe1af2} 
 \index{Foam@{Foam}!defineTypeNameAndDebug@{defineTypeNameAndDebug}}
 \index{defineTypeNameAndDebug@{defineTypeNameAndDebug}!Foam@{Foam}}
-\doxysubsubsection{\texorpdfstring{defineTypeNameAndDebug()}{defineTypeNameAndDebug()}\hspace{0.1cm}{\footnotesize\ttfamily [12/26]}}
+\doxysubsubsection{\texorpdfstring{defineTypeNameAndDebug()}{defineTypeNameAndDebug()}\hspace{0.1cm}{\footnotesize\ttfamily [21/35]}}
 {\footnotesize\ttfamily Foam\+::define\+Type\+Name\+And\+Debug (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1dgRK4TimeScheme}{dg\+RK4\+Time\+Scheme}}}]{,  }\item[{0}]{ }\end{DoxyParamCaption})}
 
 \Hypertarget{namespaceFoam_a24651fe5028ab16cc9dcb0b0d0f977d7}\label{namespaceFoam_a24651fe5028ab16cc9dcb0b0d0f977d7} 
 \index{Foam@{Foam}!addToRunTimeSelectionTable@{addToRunTimeSelectionTable}}
 \index{addToRunTimeSelectionTable@{addToRunTimeSelectionTable}!Foam@{Foam}}
-\doxysubsubsection{\texorpdfstring{addToRunTimeSelectionTable()}{addToRunTimeSelectionTable()}\hspace{0.1cm}{\footnotesize\ttfamily [9/18]}}
+\doxysubsubsection{\texorpdfstring{addToRunTimeSelectionTable()}{addToRunTimeSelectionTable()}\hspace{0.1cm}{\footnotesize\ttfamily [16/25]}}
 {\footnotesize\ttfamily Foam\+::add\+To\+Run\+Time\+Selection\+Table (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1dgTimeScheme}{dg\+Time\+Scheme}}}]{,  }\item[{\mbox{\hyperlink{classFoam_1_1dgRK4TimeScheme}{dg\+RK4\+Time\+Scheme}}}]{,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}}}]{ }\end{DoxyParamCaption})}
 
 \Hypertarget{namespaceFoam_af41aeaadb756da06455ef4bba1ed4fd8}\label{namespaceFoam_af41aeaadb756da06455ef4bba1ed4fd8} 
@@ -3476,13 +3646,13 @@ True if at least one face violates the TVB-\/minmod check
 \Hypertarget{namespaceFoam_a1adf1ea49e394125fc369a27018984df}\label{namespaceFoam_a1adf1ea49e394125fc369a27018984df} 
 \index{Foam@{Foam}!defineTypeNameAndDebug@{defineTypeNameAndDebug}}
 \index{defineTypeNameAndDebug@{defineTypeNameAndDebug}!Foam@{Foam}}
-\doxysubsubsection{\texorpdfstring{defineTypeNameAndDebug()}{defineTypeNameAndDebug()}\hspace{0.1cm}{\footnotesize\ttfamily [13/26]}}
+\doxysubsubsection{\texorpdfstring{defineTypeNameAndDebug()}{defineTypeNameAndDebug()}\hspace{0.1cm}{\footnotesize\ttfamily [22/35]}}
 {\footnotesize\ttfamily Foam\+::define\+Type\+Name\+And\+Debug (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1dgSSPRK2TimeScheme}{dg\+SSPRK2\+Time\+Scheme}}}]{,  }\item[{0}]{ }\end{DoxyParamCaption})}
 
 \Hypertarget{namespaceFoam_a4ba6316525814590d626781705ed6ce9}\label{namespaceFoam_a4ba6316525814590d626781705ed6ce9} 
 \index{Foam@{Foam}!addToRunTimeSelectionTable@{addToRunTimeSelectionTable}}
 \index{addToRunTimeSelectionTable@{addToRunTimeSelectionTable}!Foam@{Foam}}
-\doxysubsubsection{\texorpdfstring{addToRunTimeSelectionTable()}{addToRunTimeSelectionTable()}\hspace{0.1cm}{\footnotesize\ttfamily [10/18]}}
+\doxysubsubsection{\texorpdfstring{addToRunTimeSelectionTable()}{addToRunTimeSelectionTable()}\hspace{0.1cm}{\footnotesize\ttfamily [17/25]}}
 {\footnotesize\ttfamily Foam\+::add\+To\+Run\+Time\+Selection\+Table (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1dgTimeScheme}{dg\+Time\+Scheme}}}]{,  }\item[{\mbox{\hyperlink{classFoam_1_1dgSSPRK2TimeScheme}{dg\+SSPRK2\+Time\+Scheme}}}]{,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}}}]{ }\end{DoxyParamCaption})}
 
 \Hypertarget{namespaceFoam_a73959cedc579d6f2afafcd8ff555bf7c}\label{namespaceFoam_a73959cedc579d6f2afafcd8ff555bf7c} 
@@ -3544,13 +3714,13 @@ True if at least one face violates the TVB-\/minmod check
 \Hypertarget{namespaceFoam_aa0ee75ae2dbf842ed635a2d1890c9d4c}\label{namespaceFoam_aa0ee75ae2dbf842ed635a2d1890c9d4c} 
 \index{Foam@{Foam}!defineTypeNameAndDebug@{defineTypeNameAndDebug}}
 \index{defineTypeNameAndDebug@{defineTypeNameAndDebug}!Foam@{Foam}}
-\doxysubsubsection{\texorpdfstring{defineTypeNameAndDebug()}{defineTypeNameAndDebug()}\hspace{0.1cm}{\footnotesize\ttfamily [14/26]}}
+\doxysubsubsection{\texorpdfstring{defineTypeNameAndDebug()}{defineTypeNameAndDebug()}\hspace{0.1cm}{\footnotesize\ttfamily [23/35]}}
 {\footnotesize\ttfamily Foam\+::define\+Type\+Name\+And\+Debug (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1dgSSPRK3TimeScheme}{dg\+SSPRK3\+Time\+Scheme}}}]{,  }\item[{0}]{ }\end{DoxyParamCaption})}
 
 \Hypertarget{namespaceFoam_ac9223fbbc1aa9f9bfdf0f258e66d9295}\label{namespaceFoam_ac9223fbbc1aa9f9bfdf0f258e66d9295} 
 \index{Foam@{Foam}!addToRunTimeSelectionTable@{addToRunTimeSelectionTable}}
 \index{addToRunTimeSelectionTable@{addToRunTimeSelectionTable}!Foam@{Foam}}
-\doxysubsubsection{\texorpdfstring{addToRunTimeSelectionTable()}{addToRunTimeSelectionTable()}\hspace{0.1cm}{\footnotesize\ttfamily [11/18]}}
+\doxysubsubsection{\texorpdfstring{addToRunTimeSelectionTable()}{addToRunTimeSelectionTable()}\hspace{0.1cm}{\footnotesize\ttfamily [18/25]}}
 {\footnotesize\ttfamily Foam\+::add\+To\+Run\+Time\+Selection\+Table (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1dgTimeScheme}{dg\+Time\+Scheme}}}]{,  }\item[{\mbox{\hyperlink{classFoam_1_1dgSSPRK3TimeScheme}{dg\+SSPRK3\+Time\+Scheme}}}]{,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}}}]{ }\end{DoxyParamCaption})}
 
 \Hypertarget{namespaceFoam_adc5691a218aef755f95cfceab3332275}\label{namespaceFoam_adc5691a218aef755f95cfceab3332275} 
@@ -3584,13 +3754,13 @@ True if at least one face violates the TVB-\/minmod check
 \Hypertarget{namespaceFoam_a6d0187842598ec6140177d053400454e}\label{namespaceFoam_a6d0187842598ec6140177d053400454e} 
 \index{Foam@{Foam}!defineTypeNameAndDebug@{defineTypeNameAndDebug}}
 \index{defineTypeNameAndDebug@{defineTypeNameAndDebug}!Foam@{Foam}}
-\doxysubsubsection{\texorpdfstring{defineTypeNameAndDebug()}{defineTypeNameAndDebug()}\hspace{0.1cm}{\footnotesize\ttfamily [15/26]}}
+\doxysubsubsection{\texorpdfstring{defineTypeNameAndDebug()}{defineTypeNameAndDebug()}\hspace{0.1cm}{\footnotesize\ttfamily [24/35]}}
 {\footnotesize\ttfamily Foam\+::define\+Type\+Name\+And\+Debug (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1dgSSPRK4TimeScheme}{dg\+SSPRK4\+Time\+Scheme}}}]{,  }\item[{0}]{ }\end{DoxyParamCaption})}
 
 \Hypertarget{namespaceFoam_a12ab4f0c82767236e833499a5e7a10bb}\label{namespaceFoam_a12ab4f0c82767236e833499a5e7a10bb} 
 \index{Foam@{Foam}!addToRunTimeSelectionTable@{addToRunTimeSelectionTable}}
 \index{addToRunTimeSelectionTable@{addToRunTimeSelectionTable}!Foam@{Foam}}
-\doxysubsubsection{\texorpdfstring{addToRunTimeSelectionTable()}{addToRunTimeSelectionTable()}\hspace{0.1cm}{\footnotesize\ttfamily [12/18]}}
+\doxysubsubsection{\texorpdfstring{addToRunTimeSelectionTable()}{addToRunTimeSelectionTable()}\hspace{0.1cm}{\footnotesize\ttfamily [19/25]}}
 {\footnotesize\ttfamily Foam\+::add\+To\+Run\+Time\+Selection\+Table (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1dgTimeScheme}{dg\+Time\+Scheme}}}]{,  }\item[{\mbox{\hyperlink{classFoam_1_1dgSSPRK4TimeScheme}{dg\+SSPRK4\+Time\+Scheme}}}]{,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}}}]{ }\end{DoxyParamCaption})}
 
 \Hypertarget{namespaceFoam_ac8e4a70c9d328a28f99a5677c61c3944}\label{namespaceFoam_ac8e4a70c9d328a28f99a5677c61c3944} 
@@ -8960,133 +9130,133 @@ Physical 3D coordinate
 \Hypertarget{namespaceFoam_a6d89f7a905005d1949938652663f5aa6}\label{namespaceFoam_a6d89f7a905005d1949938652663f5aa6} 
 \index{Foam@{Foam}!defineTypeNameAndDebug@{defineTypeNameAndDebug}}
 \index{defineTypeNameAndDebug@{defineTypeNameAndDebug}!Foam@{Foam}}
-\doxysubsubsection{\texorpdfstring{defineTypeNameAndDebug()}{defineTypeNameAndDebug()}\hspace{0.1cm}{\footnotesize\ttfamily [16/26]}}
+\doxysubsubsection{\texorpdfstring{defineTypeNameAndDebug()}{defineTypeNameAndDebug()}\hspace{0.1cm}{\footnotesize\ttfamily [25/35]}}
 {\footnotesize\ttfamily Foam\+::define\+Type\+Name\+And\+Debug (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1energy}{energy}}}]{,  }\item[{0}]{ }\end{DoxyParamCaption})}
 
 \Hypertarget{namespaceFoam_ab17d3fb5b405acf9a0804712fb228063}\label{namespaceFoam_ab17d3fb5b405acf9a0804712fb228063} 
 \index{Foam@{Foam}!defineRunTimeSelectionTable@{defineRunTimeSelectionTable}}
 \index{defineRunTimeSelectionTable@{defineRunTimeSelectionTable}!Foam@{Foam}}
-\doxysubsubsection{\texorpdfstring{defineRunTimeSelectionTable()}{defineRunTimeSelectionTable()}\hspace{0.1cm}{\footnotesize\ttfamily [4/8]}}
+\doxysubsubsection{\texorpdfstring{defineRunTimeSelectionTable()}{defineRunTimeSelectionTable()}\hspace{0.1cm}{\footnotesize\ttfamily [6/10]}}
 {\footnotesize\ttfamily Foam\+::define\+Run\+Time\+Selection\+Table (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1energy}{energy}}}]{,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}}}]{ }\end{DoxyParamCaption})}
 
 \Hypertarget{namespaceFoam_a05281077c1f73c4a40803e791b9d2334}\label{namespaceFoam_a05281077c1f73c4a40803e791b9d2334} 
 \index{Foam@{Foam}!defineTypeNameAndDebug@{defineTypeNameAndDebug}}
 \index{defineTypeNameAndDebug@{defineTypeNameAndDebug}!Foam@{Foam}}
-\doxysubsubsection{\texorpdfstring{defineTypeNameAndDebug()}{defineTypeNameAndDebug()}\hspace{0.1cm}{\footnotesize\ttfamily [17/26]}}
+\doxysubsubsection{\texorpdfstring{defineTypeNameAndDebug()}{defineTypeNameAndDebug()}\hspace{0.1cm}{\footnotesize\ttfamily [26/35]}}
 {\footnotesize\ttfamily Foam\+::define\+Type\+Name\+And\+Debug (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1eqnOfState}{eqn\+Of\+State}}}]{,  }\item[{0}]{ }\end{DoxyParamCaption})}
 
 \Hypertarget{namespaceFoam_a076085f04d947fe1fe2725d067ceeca7}\label{namespaceFoam_a076085f04d947fe1fe2725d067ceeca7} 
 \index{Foam@{Foam}!defineRunTimeSelectionTable@{defineRunTimeSelectionTable}}
 \index{defineRunTimeSelectionTable@{defineRunTimeSelectionTable}!Foam@{Foam}}
-\doxysubsubsection{\texorpdfstring{defineRunTimeSelectionTable()}{defineRunTimeSelectionTable()}\hspace{0.1cm}{\footnotesize\ttfamily [5/8]}}
+\doxysubsubsection{\texorpdfstring{defineRunTimeSelectionTable()}{defineRunTimeSelectionTable()}\hspace{0.1cm}{\footnotesize\ttfamily [7/10]}}
 {\footnotesize\ttfamily Foam\+::define\+Run\+Time\+Selection\+Table (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1eqnOfState}{eqn\+Of\+State}}}]{,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}}}]{ }\end{DoxyParamCaption})}
 
 \Hypertarget{namespaceFoam_a005dcfe86b76da47db237fce05612e4f}\label{namespaceFoam_a005dcfe86b76da47db237fce05612e4f} 
 \index{Foam@{Foam}!defineTypeNameAndDebug@{defineTypeNameAndDebug}}
 \index{defineTypeNameAndDebug@{defineTypeNameAndDebug}!Foam@{Foam}}
-\doxysubsubsection{\texorpdfstring{defineTypeNameAndDebug()}{defineTypeNameAndDebug()}\hspace{0.1cm}{\footnotesize\ttfamily [18/26]}}
+\doxysubsubsection{\texorpdfstring{defineTypeNameAndDebug()}{defineTypeNameAndDebug()}\hspace{0.1cm}{\footnotesize\ttfamily [27/35]}}
 {\footnotesize\ttfamily Foam\+::define\+Type\+Name\+And\+Debug (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1dgThermoConservative}{dg\+Thermo\+Conservative}}}]{,  }\item[{0}]{ }\end{DoxyParamCaption})}
 
 \Hypertarget{namespaceFoam_a3e0b1c58fdb7618fac27b6929d6687e9}\label{namespaceFoam_a3e0b1c58fdb7618fac27b6929d6687e9} 
 \index{Foam@{Foam}!defineRunTimeSelectionTable@{defineRunTimeSelectionTable}}
 \index{defineRunTimeSelectionTable@{defineRunTimeSelectionTable}!Foam@{Foam}}
-\doxysubsubsection{\texorpdfstring{defineRunTimeSelectionTable()}{defineRunTimeSelectionTable()}\hspace{0.1cm}{\footnotesize\ttfamily [6/8]}}
+\doxysubsubsection{\texorpdfstring{defineRunTimeSelectionTable()}{defineRunTimeSelectionTable()}\hspace{0.1cm}{\footnotesize\ttfamily [8/10]}}
 {\footnotesize\ttfamily Foam\+::define\+Run\+Time\+Selection\+Table (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1dgThermoConservative}{dg\+Thermo\+Conservative}}}]{,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}}}]{ }\end{DoxyParamCaption})}
 
 \Hypertarget{namespaceFoam_a8e621bf6650a87ef7fe0feea953666ab}\label{namespaceFoam_a8e621bf6650a87ef7fe0feea953666ab} 
 \index{Foam@{Foam}!defineTypeNameAndDebug@{defineTypeNameAndDebug}}
 \index{defineTypeNameAndDebug@{defineTypeNameAndDebug}!Foam@{Foam}}
-\doxysubsubsection{\texorpdfstring{defineTypeNameAndDebug()}{defineTypeNameAndDebug()}\hspace{0.1cm}{\footnotesize\ttfamily [19/26]}}
+\doxysubsubsection{\texorpdfstring{defineTypeNameAndDebug()}{defineTypeNameAndDebug()}\hspace{0.1cm}{\footnotesize\ttfamily [28/35]}}
 {\footnotesize\ttfamily Foam\+::define\+Type\+Name\+And\+Debug (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1thermoLaw}{thermo\+Law}}}]{,  }\item[{0}]{ }\end{DoxyParamCaption})}
 
 \Hypertarget{namespaceFoam_a90906e1e67a3cdbab868538ad55f0e25}\label{namespaceFoam_a90906e1e67a3cdbab868538ad55f0e25} 
 \index{Foam@{Foam}!defineRunTimeSelectionTable@{defineRunTimeSelectionTable}}
 \index{defineRunTimeSelectionTable@{defineRunTimeSelectionTable}!Foam@{Foam}}
-\doxysubsubsection{\texorpdfstring{defineRunTimeSelectionTable()}{defineRunTimeSelectionTable()}\hspace{0.1cm}{\footnotesize\ttfamily [7/8]}}
+\doxysubsubsection{\texorpdfstring{defineRunTimeSelectionTable()}{defineRunTimeSelectionTable()}\hspace{0.1cm}{\footnotesize\ttfamily [9/10]}}
 {\footnotesize\ttfamily Foam\+::define\+Run\+Time\+Selection\+Table (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1thermoLaw}{thermo\+Law}}}]{,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}}}]{ }\end{DoxyParamCaption})}
 
 \Hypertarget{namespaceFoam_a6f031bb2447bc398d09bba59f73d59c5}\label{namespaceFoam_a6f031bb2447bc398d09bba59f73d59c5} 
 \index{Foam@{Foam}!defineTypeNameAndDebug@{defineTypeNameAndDebug}}
 \index{defineTypeNameAndDebug@{defineTypeNameAndDebug}!Foam@{Foam}}
-\doxysubsubsection{\texorpdfstring{defineTypeNameAndDebug()}{defineTypeNameAndDebug()}\hspace{0.1cm}{\footnotesize\ttfamily [20/26]}}
+\doxysubsubsection{\texorpdfstring{defineTypeNameAndDebug()}{defineTypeNameAndDebug()}\hspace{0.1cm}{\footnotesize\ttfamily [29/35]}}
 {\footnotesize\ttfamily Foam\+::define\+Type\+Name\+And\+Debug (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1transportLaw}{transport\+Law}}}]{,  }\item[{0}]{ }\end{DoxyParamCaption})}
 
 \Hypertarget{namespaceFoam_abf792dead3ebdec54d1dba49f4073e2f}\label{namespaceFoam_abf792dead3ebdec54d1dba49f4073e2f} 
 \index{Foam@{Foam}!defineRunTimeSelectionTable@{defineRunTimeSelectionTable}}
 \index{defineRunTimeSelectionTable@{defineRunTimeSelectionTable}!Foam@{Foam}}
-\doxysubsubsection{\texorpdfstring{defineRunTimeSelectionTable()}{defineRunTimeSelectionTable()}\hspace{0.1cm}{\footnotesize\ttfamily [8/8]}}
+\doxysubsubsection{\texorpdfstring{defineRunTimeSelectionTable()}{defineRunTimeSelectionTable()}\hspace{0.1cm}{\footnotesize\ttfamily [10/10]}}
 {\footnotesize\ttfamily Foam\+::define\+Run\+Time\+Selection\+Table (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1transportLaw}{transport\+Law}}}]{,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}}}]{ }\end{DoxyParamCaption})}
 
 \Hypertarget{namespaceFoam_ac28b562d191190d3c4c42f30ccbe480a}\label{namespaceFoam_ac28b562d191190d3c4c42f30ccbe480a} 
 \index{Foam@{Foam}!defineTypeNameAndDebug@{defineTypeNameAndDebug}}
 \index{defineTypeNameAndDebug@{defineTypeNameAndDebug}!Foam@{Foam}}
-\doxysubsubsection{\texorpdfstring{defineTypeNameAndDebug()}{defineTypeNameAndDebug()}\hspace{0.1cm}{\footnotesize\ttfamily [21/26]}}
+\doxysubsubsection{\texorpdfstring{defineTypeNameAndDebug()}{defineTypeNameAndDebug()}\hspace{0.1cm}{\footnotesize\ttfamily [30/35]}}
 {\footnotesize\ttfamily Foam\+::define\+Type\+Name\+And\+Debug (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1sensibleInternalEnergy}{sensible\+Internal\+Energy}}}]{,  }\item[{0}]{ }\end{DoxyParamCaption})}
 
 \Hypertarget{namespaceFoam_a382feb03a6ff1af964ff18148797f2b0}\label{namespaceFoam_a382feb03a6ff1af964ff18148797f2b0} 
 \index{Foam@{Foam}!addToRunTimeSelectionTable@{addToRunTimeSelectionTable}}
 \index{addToRunTimeSelectionTable@{addToRunTimeSelectionTable}!Foam@{Foam}}
-\doxysubsubsection{\texorpdfstring{addToRunTimeSelectionTable()}{addToRunTimeSelectionTable()}\hspace{0.1cm}{\footnotesize\ttfamily [13/18]}}
+\doxysubsubsection{\texorpdfstring{addToRunTimeSelectionTable()}{addToRunTimeSelectionTable()}\hspace{0.1cm}{\footnotesize\ttfamily [20/25]}}
 {\footnotesize\ttfamily Foam\+::add\+To\+Run\+Time\+Selection\+Table (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1energy}{energy}}}]{,  }\item[{\mbox{\hyperlink{classFoam_1_1sensibleInternalEnergy}{sensible\+Internal\+Energy}}}]{,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}}}]{ }\end{DoxyParamCaption})}
 
 \Hypertarget{namespaceFoam_a9ab7e00ba7844fc04e6a8d48f3023a9a}\label{namespaceFoam_a9ab7e00ba7844fc04e6a8d48f3023a9a} 
 \index{Foam@{Foam}!defineTypeNameAndDebug@{defineTypeNameAndDebug}}
 \index{defineTypeNameAndDebug@{defineTypeNameAndDebug}!Foam@{Foam}}
-\doxysubsubsection{\texorpdfstring{defineTypeNameAndDebug()}{defineTypeNameAndDebug()}\hspace{0.1cm}{\footnotesize\ttfamily [22/26]}}
+\doxysubsubsection{\texorpdfstring{defineTypeNameAndDebug()}{defineTypeNameAndDebug()}\hspace{0.1cm}{\footnotesize\ttfamily [31/35]}}
 {\footnotesize\ttfamily Foam\+::define\+Type\+Name\+And\+Debug (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1idealGas}{ideal\+Gas}}}]{,  }\item[{0}]{ }\end{DoxyParamCaption})}
 
 \Hypertarget{namespaceFoam_a195c8c9f882364d6092eb4e32cccc882}\label{namespaceFoam_a195c8c9f882364d6092eb4e32cccc882} 
 \index{Foam@{Foam}!addToRunTimeSelectionTable@{addToRunTimeSelectionTable}}
 \index{addToRunTimeSelectionTable@{addToRunTimeSelectionTable}!Foam@{Foam}}
-\doxysubsubsection{\texorpdfstring{addToRunTimeSelectionTable()}{addToRunTimeSelectionTable()}\hspace{0.1cm}{\footnotesize\ttfamily [14/18]}}
+\doxysubsubsection{\texorpdfstring{addToRunTimeSelectionTable()}{addToRunTimeSelectionTable()}\hspace{0.1cm}{\footnotesize\ttfamily [21/25]}}
 {\footnotesize\ttfamily Foam\+::add\+To\+Run\+Time\+Selection\+Table (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1eqnOfState}{eqn\+Of\+State}}}]{,  }\item[{\mbox{\hyperlink{classFoam_1_1idealGas}{ideal\+Gas}}}]{,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}}}]{ }\end{DoxyParamCaption})}
 
 \Hypertarget{namespaceFoam_a15baac2b369f4830c81cc49aed231705}\label{namespaceFoam_a15baac2b369f4830c81cc49aed231705} 
 \index{Foam@{Foam}!defineTypeNameAndDebug@{defineTypeNameAndDebug}}
 \index{defineTypeNameAndDebug@{defineTypeNameAndDebug}!Foam@{Foam}}
-\doxysubsubsection{\texorpdfstring{defineTypeNameAndDebug()}{defineTypeNameAndDebug()}\hspace{0.1cm}{\footnotesize\ttfamily [23/26]}}
+\doxysubsubsection{\texorpdfstring{defineTypeNameAndDebug()}{defineTypeNameAndDebug()}\hspace{0.1cm}{\footnotesize\ttfamily [32/35]}}
 {\footnotesize\ttfamily Foam\+::define\+Type\+Name\+And\+Debug (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1constantCp}{constant\+Cp}}}]{,  }\item[{0}]{ }\end{DoxyParamCaption})}
 
 \Hypertarget{namespaceFoam_a76bfbd56ca139a129d7a9169019451a5}\label{namespaceFoam_a76bfbd56ca139a129d7a9169019451a5} 
 \index{Foam@{Foam}!addToRunTimeSelectionTable@{addToRunTimeSelectionTable}}
 \index{addToRunTimeSelectionTable@{addToRunTimeSelectionTable}!Foam@{Foam}}
-\doxysubsubsection{\texorpdfstring{addToRunTimeSelectionTable()}{addToRunTimeSelectionTable()}\hspace{0.1cm}{\footnotesize\ttfamily [15/18]}}
+\doxysubsubsection{\texorpdfstring{addToRunTimeSelectionTable()}{addToRunTimeSelectionTable()}\hspace{0.1cm}{\footnotesize\ttfamily [22/25]}}
 {\footnotesize\ttfamily Foam\+::add\+To\+Run\+Time\+Selection\+Table (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1thermoLaw}{thermo\+Law}}}]{,  }\item[{\mbox{\hyperlink{classFoam_1_1constantCp}{constant\+Cp}}}]{,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}}}]{ }\end{DoxyParamCaption})}
 
 \Hypertarget{namespaceFoam_a54c36b0606e78ee7634beda000e5298b}\label{namespaceFoam_a54c36b0606e78ee7634beda000e5298b} 
 \index{Foam@{Foam}!defineTypeNameAndDebug@{defineTypeNameAndDebug}}
 \index{defineTypeNameAndDebug@{defineTypeNameAndDebug}!Foam@{Foam}}
-\doxysubsubsection{\texorpdfstring{defineTypeNameAndDebug()}{defineTypeNameAndDebug()}\hspace{0.1cm}{\footnotesize\ttfamily [24/26]}}
+\doxysubsubsection{\texorpdfstring{defineTypeNameAndDebug()}{defineTypeNameAndDebug()}\hspace{0.1cm}{\footnotesize\ttfamily [33/35]}}
 {\footnotesize\ttfamily Foam\+::define\+Type\+Name\+And\+Debug (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1powerVHS}{power\+VHS}}}]{,  }\item[{0}]{ }\end{DoxyParamCaption})}
 
 \Hypertarget{namespaceFoam_ad83c2f859f9a87e0bd370e71972e08d1}\label{namespaceFoam_ad83c2f859f9a87e0bd370e71972e08d1} 
 \index{Foam@{Foam}!addToRunTimeSelectionTable@{addToRunTimeSelectionTable}}
 \index{addToRunTimeSelectionTable@{addToRunTimeSelectionTable}!Foam@{Foam}}
-\doxysubsubsection{\texorpdfstring{addToRunTimeSelectionTable()}{addToRunTimeSelectionTable()}\hspace{0.1cm}{\footnotesize\ttfamily [16/18]}}
+\doxysubsubsection{\texorpdfstring{addToRunTimeSelectionTable()}{addToRunTimeSelectionTable()}\hspace{0.1cm}{\footnotesize\ttfamily [23/25]}}
 {\footnotesize\ttfamily Foam\+::add\+To\+Run\+Time\+Selection\+Table (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1transportLaw}{transport\+Law}}}]{,  }\item[{\mbox{\hyperlink{classFoam_1_1powerVHS}{power\+VHS}}}]{,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}}}]{ }\end{DoxyParamCaption})}
 
 \Hypertarget{namespaceFoam_ab9322db61142180b3bdddfa372e5fb57}\label{namespaceFoam_ab9322db61142180b3bdddfa372e5fb57} 
 \index{Foam@{Foam}!defineTypeNameAndDebug@{defineTypeNameAndDebug}}
 \index{defineTypeNameAndDebug@{defineTypeNameAndDebug}!Foam@{Foam}}
-\doxysubsubsection{\texorpdfstring{defineTypeNameAndDebug()}{defineTypeNameAndDebug()}\hspace{0.1cm}{\footnotesize\ttfamily [25/26]}}
+\doxysubsubsection{\texorpdfstring{defineTypeNameAndDebug()}{defineTypeNameAndDebug()}\hspace{0.1cm}{\footnotesize\ttfamily [34/35]}}
 {\footnotesize\ttfamily Foam\+::define\+Type\+Name\+And\+Debug (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1rhoBasedConservative}{rho\+Based\+Conservative}}}]{,  }\item[{0}]{ }\end{DoxyParamCaption})}
 
 \Hypertarget{namespaceFoam_aa2b09099f219fff207a9c385aabbffde}\label{namespaceFoam_aa2b09099f219fff207a9c385aabbffde} 
 \index{Foam@{Foam}!addToRunTimeSelectionTable@{addToRunTimeSelectionTable}}
 \index{addToRunTimeSelectionTable@{addToRunTimeSelectionTable}!Foam@{Foam}}
-\doxysubsubsection{\texorpdfstring{addToRunTimeSelectionTable()}{addToRunTimeSelectionTable()}\hspace{0.1cm}{\footnotesize\ttfamily [17/18]}}
+\doxysubsubsection{\texorpdfstring{addToRunTimeSelectionTable()}{addToRunTimeSelectionTable()}\hspace{0.1cm}{\footnotesize\ttfamily [24/25]}}
 {\footnotesize\ttfamily Foam\+::add\+To\+Run\+Time\+Selection\+Table (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1dgThermoConservative}{dg\+Thermo\+Conservative}}}]{,  }\item[{\mbox{\hyperlink{classFoam_1_1rhoBasedConservative}{rho\+Based\+Conservative}}}]{,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}}}]{ }\end{DoxyParamCaption})}
 
 \Hypertarget{namespaceFoam_aa49971aa1b83663475f3519f6744a322}\label{namespaceFoam_aa49971aa1b83663475f3519f6744a322} 
 \index{Foam@{Foam}!defineTypeNameAndDebug@{defineTypeNameAndDebug}}
 \index{defineTypeNameAndDebug@{defineTypeNameAndDebug}!Foam@{Foam}}
-\doxysubsubsection{\texorpdfstring{defineTypeNameAndDebug()}{defineTypeNameAndDebug()}\hspace{0.1cm}{\footnotesize\ttfamily [26/26]}}
+\doxysubsubsection{\texorpdfstring{defineTypeNameAndDebug()}{defineTypeNameAndDebug()}\hspace{0.1cm}{\footnotesize\ttfamily [35/35]}}
 {\footnotesize\ttfamily Foam\+::define\+Type\+Name\+And\+Debug (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1Sutherland}{Sutherland}}}]{,  }\item[{0}]{ }\end{DoxyParamCaption})}
 
 \Hypertarget{namespaceFoam_a8f8547a99c48aab836e79960ba1ed8f0}\label{namespaceFoam_a8f8547a99c48aab836e79960ba1ed8f0} 
 \index{Foam@{Foam}!addToRunTimeSelectionTable@{addToRunTimeSelectionTable}}
 \index{addToRunTimeSelectionTable@{addToRunTimeSelectionTable}!Foam@{Foam}}
-\doxysubsubsection{\texorpdfstring{addToRunTimeSelectionTable()}{addToRunTimeSelectionTable()}\hspace{0.1cm}{\footnotesize\ttfamily [18/18]}}
+\doxysubsubsection{\texorpdfstring{addToRunTimeSelectionTable()}{addToRunTimeSelectionTable()}\hspace{0.1cm}{\footnotesize\ttfamily [25/25]}}
 {\footnotesize\ttfamily Foam\+::add\+To\+Run\+Time\+Selection\+Table (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1transportLaw}{transport\+Law}}}]{,  }\item[{\mbox{\hyperlink{classFoam_1_1Sutherland}{Sutherland}}}]{,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}}}]{ }\end{DoxyParamCaption})}
 
 

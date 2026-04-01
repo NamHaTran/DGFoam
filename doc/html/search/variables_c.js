@@ -1,15 +1,20 @@
 var searchData=
 [
-  ['limitername_0',['limiterName',['../namespacelimitVal.html#af1b14cb88b79486b32007a3748fc0c9f',1,'limitVal']]],
-  ['limitflagglobal_1',['limitflagglobal',['../namespacelimitVal.html#aa7035c348d0f9973491e6975fefb846b',1,'limitVal::limitFlagGlobal'],['../namespacelimitVal_1_1pAdaptive.html#a27c2735342b8c45fb4c27d4e62b95c3c',1,'limitVal::pAdaptive::limitFlagGlobal']]],
-  ['limitflaglocal_2',['limitflaglocal',['../namespacelimitVal.html#acc5e8375839c33f0744fcc25911bb75e',1,'limitVal::limitFlagLocal'],['../namespacelimitVal_1_1pAdaptive.html#a794d017ff6cbbd8f168d273905d1c0bb',1,'limitVal::pAdaptive::limitFlagLocal']]],
-  ['limitingindicatorptr_5f_3',['limitingIndicatorPtr_',['../classFoam_1_1troubleCellDetector.html#a7f9ed8c1f2ae8e094cc5250e900ceac7',1,'Foam::troubleCellDetector']]],
-  ['limittornot_4',['limitTOrNot',['../namespacelimitVal.html#a85a0290017a4637032f42f8bd4569adc',1,'limitVal']]],
-  ['loadconstcount_5',['loadConstCount',['../namespacesystemVar.html#a039a78a3b703c635b02256a4904250c7',1,'systemVar']]],
-  ['loadsavedcase_6',['loadSavedCase',['../namespacesystemVar.html#a2860ccbfe84d660ade5194cf2169febb',1,'systemVar']]],
-  ['localcellsize_7',['localCellSize',['../namespacemeshVar.html#a9bf59432d5e267cccee1510d1e737b1d',1,'meshVar']]],
-  ['localglobalbcedgesmatching_8',['localGlobalBCEdgesMatching',['../namespaceSurfaceBCFields.html#a4ea16f9cc658e18f97906e31aa4f5910',1,'SurfaceBCFields']]],
-  ['lprmode_5f_9',['LPRMode_',['../classFoam_1_1KXRCF.html#a6149bb8de09e67b517a9a04f06b2ff6b',1,'Foam::KXRCF']]],
-  ['lxf_10',['LxF',['../namespaceDGSchemes_1_1fluxControl.html#a146b4d0bc77bb50d2326f9e93d6a5067',1,'DGSchemes::fluxControl']]],
-  ['lxfconst_11',['lxfconst',['../dynamicVarDeclaration_8cpp.html#a03577e324b0de2726e64641e4546fbdf',1,'LxFConst:&#160;dynamicVarDeclaration.cpp'],['../dynamicVarDeclaration_8h.html#a03577e324b0de2726e64641e4546fbdf',1,'LxFConst:&#160;dynamicVarDeclaration.cpp']]]
+  ['limitedcellfieldptr_5f_0',['limitedCellFieldPtr_',['../classFoam_1_1dgLimiter.html#ac4ec37c1e5c1d6298ac71f97f0141c65',1,'Foam::dgLimiter']]],
+  ['limitedcellids_5f_1',['limitedCellIDs_',['../classFoam_1_1dgLimiter.html#a75d9565fb69bc4f184d4ed33726eff2a',1,'Foam::dgLimiter']]],
+  ['limitedfields_5f_2',['limitedFields_',['../classFoam_1_1dgLimiter.html#ae7920373f531b2e2fe0eb8dd68fa17f1',1,'Foam::dgLimiter']]],
+  ['limitername_3',['limiterName',['../namespacelimitVal.html#af1b14cb88b79486b32007a3748fc0c9f',1,'limitVal']]],
+  ['limiternames_5f_4',['limiterNames_',['../classFoam_1_1dgLimiterManager.html#a92cce946b4bf65f747c9353eeeefaca4',1,'Foam::dgLimiterManager']]],
+  ['limiters_5f_5',['limiters_',['../classFoam_1_1dgLimiterManager.html#afcb4e504f1cb3720adfe664b8a64b99c',1,'Foam::dgLimiterManager']]],
+  ['limitflagglobal_6',['limitflagglobal',['../namespacelimitVal.html#aa7035c348d0f9973491e6975fefb846b',1,'limitVal::limitFlagGlobal'],['../namespacelimitVal_1_1pAdaptive.html#a27c2735342b8c45fb4c27d4e62b95c3c',1,'limitVal::pAdaptive::limitFlagGlobal']]],
+  ['limitflaglocal_7',['limitflaglocal',['../namespacelimitVal.html#acc5e8375839c33f0744fcc25911bb75e',1,'limitVal::limitFlagLocal'],['../namespacelimitVal_1_1pAdaptive.html#a794d017ff6cbbd8f168d273905d1c0bb',1,'limitVal::pAdaptive::limitFlagLocal']]],
+  ['limitingindicatorptr_5f_8',['limitingIndicatorPtr_',['../classFoam_1_1troubleCellDetector.html#a6a52c1073a4d296a6d1f63f859f819d3',1,'Foam::troubleCellDetector']]],
+  ['limittornot_9',['limitTOrNot',['../namespacelimitVal.html#a85a0290017a4637032f42f8bd4569adc',1,'limitVal']]],
+  ['loadconstcount_10',['loadConstCount',['../namespacesystemVar.html#a039a78a3b703c635b02256a4904250c7',1,'systemVar']]],
+  ['loadsavedcase_11',['loadSavedCase',['../namespacesystemVar.html#a2860ccbfe84d660ade5194cf2169febb',1,'systemVar']]],
+  ['localcellsize_12',['localCellSize',['../namespacemeshVar.html#a9bf59432d5e267cccee1510d1e737b1d',1,'meshVar']]],
+  ['localglobalbcedgesmatching_13',['localGlobalBCEdgesMatching',['../namespaceSurfaceBCFields.html#a4ea16f9cc658e18f97906e31aa4f5910',1,'SurfaceBCFields']]],
+  ['lprmode_5f_14',['LPRMode_',['../classFoam_1_1KXRCF.html#a6149bb8de09e67b517a9a04f06b2ff6b',1,'Foam::KXRCF']]],
+  ['lxf_15',['LxF',['../namespaceDGSchemes_1_1fluxControl.html#a146b4d0bc77bb50d2326f9e93d6a5067',1,'DGSchemes::fluxControl']]],
+  ['lxfconst_16',['lxfconst',['../dynamicVarDeclaration_8cpp.html#a03577e324b0de2726e64641e4546fbdf',1,'LxFConst:&#160;dynamicVarDeclaration.cpp'],['../dynamicVarDeclaration_8h.html#a03577e324b0de2726e64641e4546fbdf',1,'LxFConst:&#160;dynamicVarDeclaration.cpp']]]
 ];

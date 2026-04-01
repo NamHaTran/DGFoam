@@ -120,7 +120,7 @@ namespace Foam
  *     s_b =
  *     \begin{cases}
  *         s_{\infty}, & V_n^- \le 0, \\
- *         \dfrac{p^-}{(\rho^-)^{\gamma}}, & V_n^- > 0.
+ *         \frac{p^-}{(\rho^-)^{\gamma}}, & V_n^- > 0.
  *     \end{cases}
  * \f]
  *

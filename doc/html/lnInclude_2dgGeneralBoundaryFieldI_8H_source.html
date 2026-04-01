@@ -126,12 +126,12 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><a class="code hl_function" href="classFoam_1_1dgGeneralBoundaryField.html#aac61b93d59d4760dc44789446b2c0323">Foam::dgGeneralBoundaryField&lt;Type&gt;::dgGeneralBoundaryField</a></div>
 <div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>(</div>
 <div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>    <span class="keyword">const</span> fvPatch&amp; patch,</div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>    <span class="keyword">const</span> dgGeomMesh&amp; dgMesh,</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>    <span class="keyword">const</span> dgGeomMesh&amp; <a class="code hl_function" href="solvers_2compressible_2DGCompressibleFoam_2createDGMesh_8H.html#ac2f70ae412900de0f8c13e91bd870b5c">dgMesh</a>,</div>
 <div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    <span class="keyword">const</span> dictionary&amp; dict</div>
 <div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>)</div>
 <div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>:</div>
 <div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>    patch_(patch),</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    dgMesh_(dgMesh),</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    dgMesh_(<a class="code hl_function" href="solvers_2compressible_2DGCompressibleFoam_2createDGMesh_8H.html#ac2f70ae412900de0f8c13e91bd870b5c">dgMesh</a>),</div>
 <div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>    dict_(dict)</div>
 <div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>{}</div>
 <div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
@@ -143,7 +143,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span><a class="code hl_function" href="classFoam_1_1dgGeneralBoundaryField.html#a6b2c19d09e9413ef455e28fada50a3d6">Foam::dgGeneralBoundaryField&lt;Type&gt;::New</a></div>
 <div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>(</div>
 <div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>    <span class="keyword">const</span> fvPatch&amp; patch,</div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    <span class="keyword">const</span> dgGeomMesh&amp; dgMesh,</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    <span class="keyword">const</span> dgGeomMesh&amp; <a class="code hl_function" href="solvers_2compressible_2DGCompressibleFoam_2createDGMesh_8H.html#ac2f70ae412900de0f8c13e91bd870b5c">dgMesh</a>,</div>
 <div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>    <span class="keyword">const</span> dictionary&amp; dict</div>
 <div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>)</div>
 <div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>{</div>
@@ -172,11 +172,12 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span> </div>
 <div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span><span class="preprocessor">#endif</span></div>
 <div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span><span class="comment">// ************************************************************************* //</span></div>
-<div class="ttc" id="aclassFoam_1_1GaussField_html"><div class="ttname"><a href="classFoam_1_1GaussField.html">Foam::GaussField</a></div><div class="ttdoc">Combined Gauss-point field for a DG cell.</div><div class="ttdef"><b>Definition</b> GaussField.H:82</div></div>
-<div class="ttc" id="aclassFoam_1_1GaussField_html_a962e524110de8fe842a07f16521c7086"><div class="ttname"><a href="classFoam_1_1GaussField.html#a962e524110de8fe842a07f16521c7086">Foam::GaussField::GaussField</a></div><div class="ttdeci">GaussField()</div><div class="ttdoc">Default constructor.</div><div class="ttdef"><b>Definition</b> GaussFieldI.H:41</div></div>
-<div class="ttc" id="aclassFoam_1_1GaussField_html_ae7e0ea5ffec3700d696b7236780389ef"><div class="ttname"><a href="classFoam_1_1GaussField.html#ae7e0ea5ffec3700d696b7236780389ef">Foam::GaussField::dgMesh</a></div><div class="ttdeci">const dgGeomMesh * dgMesh() const</div><div class="ttdoc">Return DG geometric mesh.</div><div class="ttdef"><b>Definition</b> GaussFieldI.H:281</div></div>
+<div class="ttc" id="aclassFoam_1_1GaussField_html"><div class="ttname"><a href="classFoam_1_1GaussField.html">Foam::GaussField</a></div><div class="ttdoc">Combined Gauss-point field for a DG cell.</div><div class="ttdef"><b>Definition</b> GaussField.H:85</div></div>
+<div class="ttc" id="aclassFoam_1_1GaussField_html_a962e524110de8fe842a07f16521c7086"><div class="ttname"><a href="classFoam_1_1GaussField.html#a962e524110de8fe842a07f16521c7086">Foam::GaussField::GaussField</a></div><div class="ttdeci">GaussField()</div><div class="ttdoc">Construct an empty GaussField.</div><div class="ttdef"><b>Definition</b> GaussFieldI.H:50</div></div>
+<div class="ttc" id="aclassFoam_1_1GaussField_html_ae7e0ea5ffec3700d696b7236780389ef"><div class="ttname"><a href="classFoam_1_1GaussField.html#ae7e0ea5ffec3700d696b7236780389ef">Foam::GaussField::dgMesh</a></div><div class="ttdeci">const dgGeomMesh * dgMesh() const</div><div class="ttdoc">Return DG geometric mesh.</div><div class="ttdef"><b>Definition</b> GaussFieldI.H:280</div></div>
 <div class="ttc" id="aclassFoam_1_1dgGeneralBoundaryField_html_a6b2c19d09e9413ef455e28fada50a3d6"><div class="ttname"><a href="classFoam_1_1dgGeneralBoundaryField.html#a6b2c19d09e9413ef455e28fada50a3d6">Foam::dgGeneralBoundaryField::New</a></div><div class="ttdeci">static autoPtr&lt; dgGeneralBoundaryField&lt; Type &gt; &gt; New(const fvPatch &amp;patch, const dgGeomMesh &amp;dgMesh, const dictionary &amp;dict)</div><div class="ttdoc">Create boundary condition from dictionary.</div><div class="ttdef"><b>Definition</b> dgGeneralBoundaryFieldI.H:53</div></div>
 <div class="ttc" id="aclassFoam_1_1dgGeneralBoundaryField_html_aac61b93d59d4760dc44789446b2c0323"><div class="ttname"><a href="classFoam_1_1dgGeneralBoundaryField.html#aac61b93d59d4760dc44789446b2c0323">Foam::dgGeneralBoundaryField::dgGeneralBoundaryField</a></div><div class="ttdeci">dgGeneralBoundaryField(const fvPatch &amp;patch, const dgGeomMesh &amp;dgMesh, const dictionary &amp;dict)</div><div class="ttdoc">Construct from patch, DG mesh, and dictionary.</div><div class="ttdef"><b>Definition</b> dgGeneralBoundaryFieldI.H:36</div></div>
+<div class="ttc" id="asolvers_2compressible_2DGCompressibleFoam_2createDGMesh_8H_html_ac2f70ae412900de0f8c13e91bd870b5c"><div class="ttname"><a href="solvers_2compressible_2DGCompressibleFoam_2createDGMesh_8H.html#ac2f70ae412900de0f8c13e91bd870b5c">dgMesh</a></div><div class="ttdeci">dgGeomMesh dgMesh(mesh)</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

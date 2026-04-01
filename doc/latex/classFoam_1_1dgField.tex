@@ -33,66 +33,87 @@ Collaboration diagram for Foam\+::dg\+Field\texorpdfstring{$<$}{<} Type \texorpd
 \mbox{\hyperlink{classFoam_1_1dgField_a57d390eac87e6550a25ccb1cb8c3513c}{Type\+Name}} ("{}dg\+Field"{})
 \item 
 \mbox{\hyperlink{classFoam_1_1dgField_a4ab808b85951c8d69f738ab54552ef0c}{dg\+Field}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{IOobject}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{io}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \&mesh, \mbox{\hyperlink{classFoam_1_1GaussField}{bool}} \mbox{\hyperlink{classFoam_1_1dgField_afc454ae18f85b23dfe80c0ebde8bbd8f}{has\+Dof}}=\mbox{\hyperlink{classFoam_1_1GaussField}{true}})
-\begin{DoxyCompactList}\small\item\em Construct DG field. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Construct a DG field on a DG geometric mesh. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1dgField_a0235ed325c733f7eaa0909be694c09a2}{dg\+Field}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgField}{dg\+Field}} \&)=\mbox{\hyperlink{classFoam_1_1GaussField}{delete}}
 \begin{DoxyCompactList}\small\item\em Copy construction is disabled. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1dgField}{dg\+Field}} \& \mbox{\hyperlink{classFoam_1_1dgField_a86f50c333397fe01120a5abeca5fa14a}{operator=}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgField}{dg\+Field}} \&)=\mbox{\hyperlink{classFoam_1_1GaussField}{delete}}
 \begin{DoxyCompactList}\small\item\em Copy assignment is disabled. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{bool}} \mbox{\hyperlink{classFoam_1_1dgField_afc454ae18f85b23dfe80c0ebde8bbd8f}{has\+Dof}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
-\begin{DoxyCompactList}\small\item\em Return true if this field owns DoF data. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Return true if this field currently owns DoF storage. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1dofField}{dof\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \& \mbox{\hyperlink{classFoam_1_1dgField_aa0110eef71fb23791a5064bbb2c66c7a}{dof}} ()
-\begin{DoxyCompactList}\small\item\em Return non-\/const access to DoF field. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Return writable access to the DoF field. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dofField}{dof\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \& \mbox{\hyperlink{classFoam_1_1dgField_a7a9b716a6fa33f92703116920dad278d}{dof}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
-\begin{DoxyCompactList}\small\item\em Return const access to DoF field. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Return read-\/only access to the DoF field. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ $>$ \& \mbox{\hyperlink{classFoam_1_1dgField_ac98f80b7843c6fd1e04aefff2547521b}{gauss\+Fields}} ()
-\begin{DoxyCompactList}\small\item\em Return non-\/const access to Gauss fields. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Return writable access to all per-\/cell Gauss fields. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ $>$ \& \mbox{\hyperlink{classFoam_1_1dgField_a6ab619289ac4bee4d6e017bcef80b382}{gauss\+Fields}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
-\begin{DoxyCompactList}\small\item\em Return const access to Gauss fields. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Return read-\/only access to all per-\/cell Gauss fields. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1dgField_a42152669f8dca7997dc30e8c5f82aef3}{n\+Cells}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
-\begin{DoxyCompactList}\small\item\em Return number of cells. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Return the number of cells covered by the DG field. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{word}} \& \mbox{\hyperlink{classFoam_1_1dgField_a490be4ec11d7936a578c34414f0f7498}{name}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
-\begin{DoxyCompactList}\small\item\em Return field object name. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Return the registered object name of the field. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgField_af5e4a3c4d50751fc364e3307adb603f7}{synch}} ()
+\begin{DoxyCompactList}\small\item\em Synchronize processor-\/boundary data for this DG field. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1cellDof}{cell\+Dof}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \& \mbox{\hyperlink{classFoam_1_1dgField_ae090ead69a0f079aee52a42773d015ea}{neighbour\+Cell\+Dof}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} cell\+ID, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1GaussField}{local\+FaceI}}) \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\begin{DoxyCompactList}\small\item\em Access neighbour Do\+Fs for one face of one cell. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{bool}} \mbox{\hyperlink{classFoam_1_1dgField_a649c939d68ed53736811140f7b743bfa}{write\+Data}} (\mbox{\hyperlink{classFoam_1_1GaussField}{Ostream}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{os}}) \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
-\begin{DoxyCompactList}\small\item\em Write field data. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Write the field data payload to a stream. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{bool}} \mbox{\hyperlink{classFoam_1_1dgField_a0992de5416c0ebecdef61cf7401f13fe}{write\+Object}} (\mbox{\hyperlink{classFoam_1_1GaussField}{IOstream\+Option}} \mbox{\hyperlink{classFoam_1_1GaussField}{stream\+Opt}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{bool}} \mbox{\hyperlink{classFoam_1_1GaussField}{write\+On\+Proc}}) \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{override}}
+\begin{DoxyCompactList}\small\item\em Write this DG field as a standard Open\+FOAM vol\+Field. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1dgField}{dg\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \& \mbox{\hyperlink{classFoam_1_1dgField_a796b484209f89085c6408fa3571120c3}{operator=}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{value}})
-\begin{DoxyCompactList}\small\item\em Assign uniform value to all Gauss fields. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Assign a uniform value to all Gauss fields. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1dgField_a57d390eac87e6550a25ccb1cb8c3513c}{Type\+Name}} ("{}dg\+Field"{})
 \item 
 \mbox{\hyperlink{classFoam_1_1dgField_a4ab808b85951c8d69f738ab54552ef0c}{dg\+Field}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{IOobject}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{io}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \&mesh, \mbox{\hyperlink{classFoam_1_1GaussField}{bool}} \mbox{\hyperlink{classFoam_1_1dgField_afc454ae18f85b23dfe80c0ebde8bbd8f}{has\+Dof}}=\mbox{\hyperlink{classFoam_1_1GaussField}{true}})
-\begin{DoxyCompactList}\small\item\em Construct DG field. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Construct a DG field on a DG geometric mesh. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1dgField_a0235ed325c733f7eaa0909be694c09a2}{dg\+Field}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgField}{dg\+Field}} \&)=\mbox{\hyperlink{classFoam_1_1GaussField}{delete}}
 \begin{DoxyCompactList}\small\item\em Copy construction is disabled. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1dgField}{dg\+Field}} \& \mbox{\hyperlink{classFoam_1_1dgField_a86f50c333397fe01120a5abeca5fa14a}{operator=}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgField}{dg\+Field}} \&)=\mbox{\hyperlink{classFoam_1_1GaussField}{delete}}
 \begin{DoxyCompactList}\small\item\em Copy assignment is disabled. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{bool}} \mbox{\hyperlink{classFoam_1_1dgField_afc454ae18f85b23dfe80c0ebde8bbd8f}{has\+Dof}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
-\begin{DoxyCompactList}\small\item\em Return true if this field owns DoF data. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Return true if this field currently owns DoF storage. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1dofField}{dof\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \& \mbox{\hyperlink{classFoam_1_1dgField_aa0110eef71fb23791a5064bbb2c66c7a}{dof}} ()
-\begin{DoxyCompactList}\small\item\em Return non-\/const access to DoF field. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Return writable access to the DoF field. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dofField}{dof\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \& \mbox{\hyperlink{classFoam_1_1dgField_a7a9b716a6fa33f92703116920dad278d}{dof}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
-\begin{DoxyCompactList}\small\item\em Return const access to DoF field. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Return read-\/only access to the DoF field. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ $>$ \& \mbox{\hyperlink{classFoam_1_1dgField_ac98f80b7843c6fd1e04aefff2547521b}{gauss\+Fields}} ()
-\begin{DoxyCompactList}\small\item\em Return non-\/const access to Gauss fields. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Return writable access to all per-\/cell Gauss fields. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ $>$ \& \mbox{\hyperlink{classFoam_1_1dgField_a6ab619289ac4bee4d6e017bcef80b382}{gauss\+Fields}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
-\begin{DoxyCompactList}\small\item\em Return const access to Gauss fields. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Return read-\/only access to all per-\/cell Gauss fields. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1dgField_a42152669f8dca7997dc30e8c5f82aef3}{n\+Cells}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
-\begin{DoxyCompactList}\small\item\em Return number of cells. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Return the number of cells covered by the DG field. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{word}} \& \mbox{\hyperlink{classFoam_1_1dgField_a490be4ec11d7936a578c34414f0f7498}{name}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
-\begin{DoxyCompactList}\small\item\em Return field object name. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Return the registered object name of the field. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgField_af5e4a3c4d50751fc364e3307adb603f7}{synch}} ()
+\begin{DoxyCompactList}\small\item\em Synchronize processor-\/boundary data for this DG field. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1cellDof}{cell\+Dof}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \& \mbox{\hyperlink{classFoam_1_1dgField_ae090ead69a0f079aee52a42773d015ea}{neighbour\+Cell\+Dof}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} cell\+ID, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1GaussField}{local\+FaceI}}) \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\begin{DoxyCompactList}\small\item\em Access neighbour Do\+Fs for one face of one cell. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{bool}} \mbox{\hyperlink{classFoam_1_1dgField_a649c939d68ed53736811140f7b743bfa}{write\+Data}} (\mbox{\hyperlink{classFoam_1_1GaussField}{Ostream}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{os}}) \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
-\begin{DoxyCompactList}\small\item\em Write field data. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Write the field data payload to a stream. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{bool}} \mbox{\hyperlink{classFoam_1_1dgField_a0992de5416c0ebecdef61cf7401f13fe}{write\+Object}} (\mbox{\hyperlink{classFoam_1_1GaussField}{IOstream\+Option}} \mbox{\hyperlink{classFoam_1_1GaussField}{stream\+Opt}}, \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{bool}} \mbox{\hyperlink{classFoam_1_1GaussField}{write\+On\+Proc}}) \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{override}}
+\begin{DoxyCompactList}\small\item\em Write this DG field as a standard Open\+FOAM vol\+Field. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1dgField}{dg\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \& \mbox{\hyperlink{classFoam_1_1dgField_a796b484209f89085c6408fa3571120c3}{operator=}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} \&\mbox{\hyperlink{classFoam_1_1GaussField}{value}})
-\begin{DoxyCompactList}\small\item\em Assign uniform value to all Gauss fields. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Assign a uniform value to all Gauss fields. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{tmp}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Geometric\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}}, \mbox{\hyperlink{classFoam_1_1GaussField}{fv\+Patch\+Field}}, \mbox{\hyperlink{classFoam_1_1GaussField}{vol\+Mesh}} $>$ $>$ \mbox{\hyperlink{classFoam_1_1dgField_ab9d6fa555b42ec19b1646dc2f3919135}{cell\+Average\+Vol\+Field}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\begin{DoxyCompactList}\small\item\em Build a temporary vol\+Field containing cell-\/average values. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{tmp}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Geometric\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}}, \mbox{\hyperlink{classFoam_1_1GaussField}{fv\+Patch\+Field}}, \mbox{\hyperlink{classFoam_1_1GaussField}{vol\+Mesh}} $>$ $>$ \mbox{\hyperlink{classFoam_1_1dgField_ab9d6fa555b42ec19b1646dc2f3919135}{cell\+Average\+Vol\+Field}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
+\begin{DoxyCompactList}\small\item\em Build a temporary vol\+Field containing cell-\/average values. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsubsection*{Private Attributes}
 \begin{DoxyCompactItemize}
 \item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dg\+Geom\+Mesh}} \& \mbox{\hyperlink{classFoam_1_1dgField_ac4f6191698b4025cbde41b854ef0c8f0}{mesh\+\_\+}}
-\begin{DoxyCompactList}\small\item\em Reference to the DG geometric mesh. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em DG geometric mesh on which the field is defined. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{bool}} \mbox{\hyperlink{classFoam_1_1dgField_abfcbb698f99feb25b38a5b839d453e22}{has\+Dof\+\_\+}}
-\begin{DoxyCompactList}\small\item\em Flag indicating whether this field owns DoF data. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Flag indicating whether the field is constructed with DoF storage. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{auto\+Ptr}}$<$ \mbox{\hyperlink{classFoam_1_1dofField}{dof\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ $>$ \mbox{\hyperlink{classFoam_1_1dgField_a3d29986a1270bc6a49550e47eb7d19f7}{dof\+Ptr\+\_\+}}
-\begin{DoxyCompactList}\small\item\em Pointer to DoF field (null for Do\+F-\/less fields) \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Optional DoF storage, null when the field is Gauss-\/value only. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{List}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Gauss\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ $>$ \mbox{\hyperlink{classFoam_1_1dgField_ae0ec2ac3d571c7ff2188c199482e234a}{gauss\+Fields\+\_\+}}
-\begin{DoxyCompactList}\small\item\em \doxylink{classFoam_1_1GaussField}{Gauss\+Field} values for each cell in the mesh. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Per-\/cell Gauss-\/point representation of the DG field. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{auto\+Ptr}}$<$ \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryManager}{dg\+Processor\+Boundary\+Manager}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ $>$ \mbox{\hyperlink{classFoam_1_1dgField_adab60ca7f4c19a485ac56b6c1604627d}{proc\+Sync\+Ptr\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Lazy processor-\/boundary synchronizer for this field. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \doxysubsection{Detailed Description}
@@ -127,9 +148,20 @@ The class derives from reg\+IOobject to integrate with Open\+FOAM I/O and object
 
 
 
-Construct DG field. 
+Construct a DG field on a DG geometric mesh. 
 
-Creates a DG field associated with a DG geometric mesh. Optionally allocates DoF storage. \Hypertarget{classFoam_1_1dgField_a0235ed325c733f7eaa0909be694c09a2}\label{classFoam_1_1dgField_a0235ed325c733f7eaa0909be694c09a2} 
+Optionally allocates DoF storage and initializes the corresponding Gauss-\/field representation for every cell in the mesh.
+
+
+\begin{DoxyParams}{Parameters}
+{\em io} & Open\+FOAM I/O descriptor for the field object. \\
+\hline
+{\em mesh} & DG geometric mesh on which the field lives. \\
+\hline
+{\em has\+Dof} & Set to {\ttfamily true} to allocate a DoF field, or {\ttfamily false} for Gauss-\/value-\/only fields. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classFoam_1_1dgField_a0235ed325c733f7eaa0909be694c09a2}\label{classFoam_1_1dgField_a0235ed325c733f7eaa0909be694c09a2} 
 \index{Foam::dgField$<$ Type $>$@{Foam::dgField$<$ Type $>$}!dgField@{dgField}}
 \index{dgField@{dgField}!Foam::dgField$<$ Type $>$@{Foam::dgField$<$ Type $>$}}
 \doxysubsubsection{\texorpdfstring{dgField()}{dgField()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
@@ -149,9 +181,20 @@ Copy construction is disabled.
 
 
 
-Construct DG field. 
+Construct a DG field on a DG geometric mesh. 
 
-Creates a DG field associated with a DG geometric mesh. Optionally allocates DoF storage. \Hypertarget{classFoam_1_1dgField_a0235ed325c733f7eaa0909be694c09a2}\label{classFoam_1_1dgField_a0235ed325c733f7eaa0909be694c09a2} 
+Optionally allocates DoF storage and initializes the corresponding Gauss-\/field representation for every cell in the mesh.
+
+
+\begin{DoxyParams}{Parameters}
+{\em io} & Open\+FOAM I/O descriptor for the field object. \\
+\hline
+{\em mesh} & DG geometric mesh on which the field lives. \\
+\hline
+{\em has\+Dof} & Set to {\ttfamily true} to allocate a DoF field, or {\ttfamily false} for Gauss-\/value-\/only fields. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classFoam_1_1dgField_a0235ed325c733f7eaa0909be694c09a2}\label{classFoam_1_1dgField_a0235ed325c733f7eaa0909be694c09a2} 
 \index{Foam::dgField$<$ Type $>$@{Foam::dgField$<$ Type $>$}!dgField@{dgField}}
 \index{dgField@{dgField}!Foam::dgField$<$ Type $>$@{Foam::dgField$<$ Type $>$}}
 \doxysubsubsection{\texorpdfstring{dgField()}{dgField()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
@@ -165,7 +208,18 @@ Copy construction is disabled.
 
 
 \doxysubsection{Member Function Documentation}
-\Hypertarget{classFoam_1_1dgField_a57d390eac87e6550a25ccb1cb8c3513c}\label{classFoam_1_1dgField_a57d390eac87e6550a25ccb1cb8c3513c} 
+\Hypertarget{classFoam_1_1dgField_ab9d6fa555b42ec19b1646dc2f3919135}\label{classFoam_1_1dgField_ab9d6fa555b42ec19b1646dc2f3919135} 
+\index{Foam::dgField$<$ Type $>$@{Foam::dgField$<$ Type $>$}!cellAverageVolField@{cellAverageVolField}}
+\index{cellAverageVolField@{cellAverageVolField}!Foam::dgField$<$ Type $>$@{Foam::dgField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{cellAverageVolField()}{cellAverageVolField()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
+\mbox{\hyperlink{classFoam_1_1GaussField}{tmp}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Geometric\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}}, \mbox{\hyperlink{classFoam_1_1GaussField}{fv\+Patch\+Field}}, \mbox{\hyperlink{classFoam_1_1GaussField}{vol\+Mesh}} $>$ $>$ \mbox{\hyperlink{classFoam_1_1dgField}{Foam\+::dg\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::cell\+Average\+Vol\+Field (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Build a temporary vol\+Field containing cell-\/average values. 
+
+The returned field is used purely as an I/O adapter so DG fields can be written in a Para\+View-\/readable Open\+FOAM volume-\/field format. \Hypertarget{classFoam_1_1dgField_a57d390eac87e6550a25ccb1cb8c3513c}\label{classFoam_1_1dgField_a57d390eac87e6550a25ccb1cb8c3513c} 
 \index{Foam::dgField$<$ Type $>$@{Foam::dgField$<$ Type $>$}!TypeName@{TypeName}}
 \index{TypeName@{TypeName}!Foam::dgField$<$ Type $>$@{Foam::dgField$<$ Type $>$}}
 \doxysubsubsection{\texorpdfstring{TypeName()}{TypeName()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
@@ -192,7 +246,7 @@ Copy assignment is disabled.
 
 
 
-Return true if this field owns DoF data. 
+Return true if this field currently owns DoF storage. 
 
 \Hypertarget{classFoam_1_1dgField_aa0110eef71fb23791a5064bbb2c66c7a}\label{classFoam_1_1dgField_aa0110eef71fb23791a5064bbb2c66c7a} 
 \index{Foam::dgField$<$ Type $>$@{Foam::dgField$<$ Type $>$}!dof@{dof}}
@@ -203,9 +257,14 @@ Return true if this field owns DoF data.
 
 
 
-Return non-\/const access to DoF field. 
+Return writable access to the DoF field. 
 
-Fatal error if this field does not own DoF data. \Hypertarget{classFoam_1_1dgField_a7a9b716a6fa33f92703116920dad278d}\label{classFoam_1_1dgField_a7a9b716a6fa33f92703116920dad278d} 
+Fatal error if this field does not own DoF data.
+
+\begin{DoxyReturn}{Returns}
+Reference to the owned DoF field. 
+\end{DoxyReturn}
+\Hypertarget{classFoam_1_1dgField_a7a9b716a6fa33f92703116920dad278d}\label{classFoam_1_1dgField_a7a9b716a6fa33f92703116920dad278d} 
 \index{Foam::dgField$<$ Type $>$@{Foam::dgField$<$ Type $>$}!dof@{dof}}
 \index{dof@{dof}!Foam::dgField$<$ Type $>$@{Foam::dgField$<$ Type $>$}}
 \doxysubsubsection{\texorpdfstring{dof()}{dof()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
@@ -214,9 +273,14 @@ Fatal error if this field does not own DoF data. \Hypertarget{classFoam_1_1dgFie
 
 
 
-Return const access to DoF field. 
+Return read-\/only access to the DoF field. 
 
-Fatal error if this field does not own DoF data. \Hypertarget{classFoam_1_1dgField_ac98f80b7843c6fd1e04aefff2547521b}\label{classFoam_1_1dgField_ac98f80b7843c6fd1e04aefff2547521b} 
+Fatal error if this field does not own DoF data.
+
+\begin{DoxyReturn}{Returns}
+Const reference to the owned DoF field. 
+\end{DoxyReturn}
+\Hypertarget{classFoam_1_1dgField_ac98f80b7843c6fd1e04aefff2547521b}\label{classFoam_1_1dgField_ac98f80b7843c6fd1e04aefff2547521b} 
 \index{Foam::dgField$<$ Type $>$@{Foam::dgField$<$ Type $>$}!gaussFields@{gaussFields}}
 \index{gaussFields@{gaussFields}!Foam::dgField$<$ Type $>$@{Foam::dgField$<$ Type $>$}}
 \doxysubsubsection{\texorpdfstring{gaussFields()}{gaussFields()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
@@ -225,7 +289,7 @@ Fatal error if this field does not own DoF data. \Hypertarget{classFoam_1_1dgFie
 
 
 
-Return non-\/const access to Gauss fields. 
+Return writable access to all per-\/cell Gauss fields. 
 
 \Hypertarget{classFoam_1_1dgField_a6ab619289ac4bee4d6e017bcef80b382}\label{classFoam_1_1dgField_a6ab619289ac4bee4d6e017bcef80b382} 
 \index{Foam::dgField$<$ Type $>$@{Foam::dgField$<$ Type $>$}!gaussFields@{gaussFields}}
@@ -236,7 +300,7 @@ Return non-\/const access to Gauss fields.
 
 
 
-Return const access to Gauss fields. 
+Return read-\/only access to all per-\/cell Gauss fields. 
 
 \Hypertarget{classFoam_1_1dgField_a42152669f8dca7997dc30e8c5f82aef3}\label{classFoam_1_1dgField_a42152669f8dca7997dc30e8c5f82aef3} 
 \index{Foam::dgField$<$ Type $>$@{Foam::dgField$<$ Type $>$}!nCells@{nCells}}
@@ -247,7 +311,7 @@ Return const access to Gauss fields.
 
 
 
-Return number of cells. 
+Return the number of cells covered by the DG field. 
 
 \Hypertarget{classFoam_1_1dgField_a490be4ec11d7936a578c34414f0f7498}\label{classFoam_1_1dgField_a490be4ec11d7936a578c34414f0f7498} 
 \index{Foam::dgField$<$ Type $>$@{Foam::dgField$<$ Type $>$}!name@{name}}
@@ -258,8 +322,42 @@ Return number of cells.
 
 
 
-Return field object name. 
+Return the registered object name of the field. 
 
+\Hypertarget{classFoam_1_1dgField_af5e4a3c4d50751fc364e3307adb603f7}\label{classFoam_1_1dgField_af5e4a3c4d50751fc364e3307adb603f7} 
+\index{Foam::dgField$<$ Type $>$@{Foam::dgField$<$ Type $>$}!synch@{synch}}
+\index{synch@{synch}!Foam::dgField$<$ Type $>$@{Foam::dgField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{synch()}{synch()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgField}{Foam\+::dg\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::synch (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Synchronize processor-\/boundary data for this DG field. 
+
+On parallel runs this updates processor-\/face plus states and buffered neighbour Do\+Fs so downstream DG operators can consume a consistent interface state via a simple field-\/local API. \Hypertarget{classFoam_1_1dgField_ae090ead69a0f079aee52a42773d015ea}\label{classFoam_1_1dgField_ae090ead69a0f079aee52a42773d015ea} 
+\index{Foam::dgField$<$ Type $>$@{Foam::dgField$<$ Type $>$}!neighbourCellDof@{neighbourCellDof}}
+\index{neighbourCellDof@{neighbourCellDof}!Foam::dgField$<$ Type $>$@{Foam::dgField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{neighbourCellDof()}{neighbourCellDof()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
+\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1cellDof}{cell\+Dof}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \& \mbox{\hyperlink{classFoam_1_1dgField}{Foam\+::dg\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::neighbour\+Cell\+Dof (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{cell\+ID,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{local\+FaceI }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Access neighbour Do\+Fs for one face of one cell. 
+
+This helper hides whether the neighbour is local (internal face) or comes from a processor-\/face synchronization buffer.
+
+
+\begin{DoxyParams}{Parameters}
+{\em cell\+ID} & Owner cell index. \\
+\hline
+{\em local\+FaceI} & Local face index inside the owner cell. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Read-\/only neighbour cell DoF data for that face. 
+\end{DoxyReturn}
 \Hypertarget{classFoam_1_1dgField_a649c939d68ed53736811140f7b743bfa}\label{classFoam_1_1dgField_a649c939d68ed53736811140f7b743bfa} 
 \index{Foam::dgField$<$ Type $>$@{Foam::dgField$<$ Type $>$}!writeData@{writeData}}
 \index{writeData@{writeData}!Foam::dgField$<$ Type $>$@{Foam::dgField$<$ Type $>$}}
@@ -269,9 +367,28 @@ Return field object name.
 
 
 
-Write field data. 
+Write the field data payload to a stream. 
 
-Writes field information via reg\+IOobject. \Hypertarget{classFoam_1_1dgField_a796b484209f89085c6408fa3571120c3}\label{classFoam_1_1dgField_a796b484209f89085c6408fa3571120c3} 
+
+\begin{DoxyParams}{Parameters}
+{\em os} & Output stream receiving the serialized data. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if the write succeeds. 
+\end{DoxyReturn}
+\Hypertarget{classFoam_1_1dgField_a0992de5416c0ebecdef61cf7401f13fe}\label{classFoam_1_1dgField_a0992de5416c0ebecdef61cf7401f13fe} 
+\index{Foam::dgField$<$ Type $>$@{Foam::dgField$<$ Type $>$}!writeObject@{writeObject}}
+\index{writeObject@{writeObject}!Foam::dgField$<$ Type $>$@{Foam::dgField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{writeObject()}{writeObject()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
+\mbox{\hyperlink{classFoam_1_1GaussField}{bool}} \mbox{\hyperlink{classFoam_1_1dgField}{Foam\+::dg\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::write\+Object (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{IOstream\+Option}}}]{stream\+Opt,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{bool}}}]{write\+On\+Proc }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}}
+
+
+
+Write this DG field as a standard Open\+FOAM vol\+Field. 
+
+This overrides reg\+IOobject writing so the on-\/disk file header matches {\ttfamily vol\+Scalar\+Field}/{\ttfamily vol\+Vector\+Field} etc, which Para\+View can read. \Hypertarget{classFoam_1_1dgField_a796b484209f89085c6408fa3571120c3}\label{classFoam_1_1dgField_a796b484209f89085c6408fa3571120c3} 
 \index{Foam::dgField$<$ Type $>$@{Foam::dgField$<$ Type $>$}!operator=@{operator=}}
 \index{operator=@{operator=}!Foam::dgField$<$ Type $>$@{Foam::dgField$<$ Type $>$}}
 \doxysubsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
@@ -280,9 +397,28 @@ Writes field information via reg\+IOobject. \Hypertarget{classFoam_1_1dgField_a7
 
 
 
-Assign uniform value to all Gauss fields. 
+Assign a uniform value to all Gauss fields. 
 
-\Hypertarget{classFoam_1_1dgField_a57d390eac87e6550a25ccb1cb8c3513c}\label{classFoam_1_1dgField_a57d390eac87e6550a25ccb1cb8c3513c} 
+
+\begin{DoxyParams}{Parameters}
+{\em value} & Uniform value assigned at every stored Gauss location. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Reference to this field. 
+\end{DoxyReturn}
+\Hypertarget{classFoam_1_1dgField_ab9d6fa555b42ec19b1646dc2f3919135}\label{classFoam_1_1dgField_ab9d6fa555b42ec19b1646dc2f3919135} 
+\index{Foam::dgField$<$ Type $>$@{Foam::dgField$<$ Type $>$}!cellAverageVolField@{cellAverageVolField}}
+\index{cellAverageVolField@{cellAverageVolField}!Foam::dgField$<$ Type $>$@{Foam::dgField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{cellAverageVolField()}{cellAverageVolField()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
+\mbox{\hyperlink{classFoam_1_1GaussField}{tmp}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Geometric\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}}, \mbox{\hyperlink{classFoam_1_1GaussField}{fv\+Patch\+Field}}, \mbox{\hyperlink{classFoam_1_1GaussField}{vol\+Mesh}} $>$ $>$ \mbox{\hyperlink{classFoam_1_1dgField}{Foam\+::dg\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::cell\+Average\+Vol\+Field (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Build a temporary vol\+Field containing cell-\/average values. 
+
+The returned field is used purely as an I/O adapter so DG fields can be written in a Para\+View-\/readable Open\+FOAM volume-\/field format. \Hypertarget{classFoam_1_1dgField_a57d390eac87e6550a25ccb1cb8c3513c}\label{classFoam_1_1dgField_a57d390eac87e6550a25ccb1cb8c3513c} 
 \index{Foam::dgField$<$ Type $>$@{Foam::dgField$<$ Type $>$}!TypeName@{TypeName}}
 \index{TypeName@{TypeName}!Foam::dgField$<$ Type $>$@{Foam::dgField$<$ Type $>$}}
 \doxysubsubsection{\texorpdfstring{TypeName()}{TypeName()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
@@ -309,7 +445,7 @@ Copy assignment is disabled.
 
 
 
-Return true if this field owns DoF data. 
+Return true if this field currently owns DoF storage. 
 
 \Hypertarget{classFoam_1_1dgField_aa0110eef71fb23791a5064bbb2c66c7a}\label{classFoam_1_1dgField_aa0110eef71fb23791a5064bbb2c66c7a} 
 \index{Foam::dgField$<$ Type $>$@{Foam::dgField$<$ Type $>$}!dof@{dof}}
@@ -320,9 +456,14 @@ Return true if this field owns DoF data.
 
 
 
-Return non-\/const access to DoF field. 
+Return writable access to the DoF field. 
 
-Fatal error if this field does not own DoF data. \Hypertarget{classFoam_1_1dgField_a7a9b716a6fa33f92703116920dad278d}\label{classFoam_1_1dgField_a7a9b716a6fa33f92703116920dad278d} 
+Fatal error if this field does not own DoF data.
+
+\begin{DoxyReturn}{Returns}
+Reference to the owned DoF field. 
+\end{DoxyReturn}
+\Hypertarget{classFoam_1_1dgField_a7a9b716a6fa33f92703116920dad278d}\label{classFoam_1_1dgField_a7a9b716a6fa33f92703116920dad278d} 
 \index{Foam::dgField$<$ Type $>$@{Foam::dgField$<$ Type $>$}!dof@{dof}}
 \index{dof@{dof}!Foam::dgField$<$ Type $>$@{Foam::dgField$<$ Type $>$}}
 \doxysubsubsection{\texorpdfstring{dof()}{dof()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
@@ -331,9 +472,14 @@ Fatal error if this field does not own DoF data. \Hypertarget{classFoam_1_1dgFie
 
 
 
-Return const access to DoF field. 
+Return read-\/only access to the DoF field. 
 
-Fatal error if this field does not own DoF data. \Hypertarget{classFoam_1_1dgField_ac98f80b7843c6fd1e04aefff2547521b}\label{classFoam_1_1dgField_ac98f80b7843c6fd1e04aefff2547521b} 
+Fatal error if this field does not own DoF data.
+
+\begin{DoxyReturn}{Returns}
+Const reference to the owned DoF field. 
+\end{DoxyReturn}
+\Hypertarget{classFoam_1_1dgField_ac98f80b7843c6fd1e04aefff2547521b}\label{classFoam_1_1dgField_ac98f80b7843c6fd1e04aefff2547521b} 
 \index{Foam::dgField$<$ Type $>$@{Foam::dgField$<$ Type $>$}!gaussFields@{gaussFields}}
 \index{gaussFields@{gaussFields}!Foam::dgField$<$ Type $>$@{Foam::dgField$<$ Type $>$}}
 \doxysubsubsection{\texorpdfstring{gaussFields()}{gaussFields()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
@@ -342,7 +488,7 @@ Fatal error if this field does not own DoF data. \Hypertarget{classFoam_1_1dgFie
 
 
 
-Return non-\/const access to Gauss fields. 
+Return writable access to all per-\/cell Gauss fields. 
 
 \Hypertarget{classFoam_1_1dgField_a6ab619289ac4bee4d6e017bcef80b382}\label{classFoam_1_1dgField_a6ab619289ac4bee4d6e017bcef80b382} 
 \index{Foam::dgField$<$ Type $>$@{Foam::dgField$<$ Type $>$}!gaussFields@{gaussFields}}
@@ -353,7 +499,7 @@ Return non-\/const access to Gauss fields.
 
 
 
-Return const access to Gauss fields. 
+Return read-\/only access to all per-\/cell Gauss fields. 
 
 \Hypertarget{classFoam_1_1dgField_a42152669f8dca7997dc30e8c5f82aef3}\label{classFoam_1_1dgField_a42152669f8dca7997dc30e8c5f82aef3} 
 \index{Foam::dgField$<$ Type $>$@{Foam::dgField$<$ Type $>$}!nCells@{nCells}}
@@ -364,7 +510,7 @@ Return const access to Gauss fields.
 
 
 
-Return number of cells. 
+Return the number of cells covered by the DG field. 
 
 \Hypertarget{classFoam_1_1dgField_a490be4ec11d7936a578c34414f0f7498}\label{classFoam_1_1dgField_a490be4ec11d7936a578c34414f0f7498} 
 \index{Foam::dgField$<$ Type $>$@{Foam::dgField$<$ Type $>$}!name@{name}}
@@ -375,8 +521,42 @@ Return number of cells.
 
 
 
-Return field object name. 
+Return the registered object name of the field. 
 
+\Hypertarget{classFoam_1_1dgField_af5e4a3c4d50751fc364e3307adb603f7}\label{classFoam_1_1dgField_af5e4a3c4d50751fc364e3307adb603f7} 
+\index{Foam::dgField$<$ Type $>$@{Foam::dgField$<$ Type $>$}!synch@{synch}}
+\index{synch@{synch}!Foam::dgField$<$ Type $>$@{Foam::dgField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{synch()}{synch()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dgField}{Foam\+::dg\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::synch (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Synchronize processor-\/boundary data for this DG field. 
+
+On parallel runs this updates processor-\/face plus states and buffered neighbour Do\+Fs so downstream DG operators can consume a consistent interface state via a simple field-\/local API. \Hypertarget{classFoam_1_1dgField_ae090ead69a0f079aee52a42773d015ea}\label{classFoam_1_1dgField_ae090ead69a0f079aee52a42773d015ea} 
+\index{Foam::dgField$<$ Type $>$@{Foam::dgField$<$ Type $>$}!neighbourCellDof@{neighbourCellDof}}
+\index{neighbourCellDof@{neighbourCellDof}!Foam::dgField$<$ Type $>$@{Foam::dgField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{neighbourCellDof()}{neighbourCellDof()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
+\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1cellDof}{cell\+Dof}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \& \mbox{\hyperlink{classFoam_1_1dgField}{Foam\+::dg\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::neighbour\+Cell\+Dof (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{cell\+ID,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{local\+FaceI }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Access neighbour Do\+Fs for one face of one cell. 
+
+This helper hides whether the neighbour is local (internal face) or comes from a processor-\/face synchronization buffer.
+
+
+\begin{DoxyParams}{Parameters}
+{\em cell\+ID} & Owner cell index. \\
+\hline
+{\em local\+FaceI} & Local face index inside the owner cell. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Read-\/only neighbour cell DoF data for that face. 
+\end{DoxyReturn}
 \Hypertarget{classFoam_1_1dgField_a649c939d68ed53736811140f7b743bfa}\label{classFoam_1_1dgField_a649c939d68ed53736811140f7b743bfa} 
 \index{Foam::dgField$<$ Type $>$@{Foam::dgField$<$ Type $>$}!writeData@{writeData}}
 \index{writeData@{writeData}!Foam::dgField$<$ Type $>$@{Foam::dgField$<$ Type $>$}}
@@ -386,9 +566,28 @@ Return field object name.
 
 
 
-Write field data. 
+Write the field data payload to a stream. 
 
-Writes field information via reg\+IOobject. \Hypertarget{classFoam_1_1dgField_a796b484209f89085c6408fa3571120c3}\label{classFoam_1_1dgField_a796b484209f89085c6408fa3571120c3} 
+
+\begin{DoxyParams}{Parameters}
+{\em os} & Output stream receiving the serialized data. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if the write succeeds. 
+\end{DoxyReturn}
+\Hypertarget{classFoam_1_1dgField_a0992de5416c0ebecdef61cf7401f13fe}\label{classFoam_1_1dgField_a0992de5416c0ebecdef61cf7401f13fe} 
+\index{Foam::dgField$<$ Type $>$@{Foam::dgField$<$ Type $>$}!writeObject@{writeObject}}
+\index{writeObject@{writeObject}!Foam::dgField$<$ Type $>$@{Foam::dgField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{writeObject()}{writeObject()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
+\mbox{\hyperlink{classFoam_1_1GaussField}{bool}} \mbox{\hyperlink{classFoam_1_1dgField}{Foam\+::dg\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::write\+Object (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{IOstream\+Option}}}]{stream\+Opt,  }\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{bool}}}]{write\+On\+Proc }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}}
+
+
+
+Write this DG field as a standard Open\+FOAM vol\+Field. 
+
+This overrides reg\+IOobject writing so the on-\/disk file header matches {\ttfamily vol\+Scalar\+Field}/{\ttfamily vol\+Vector\+Field} etc, which Para\+View can read. \Hypertarget{classFoam_1_1dgField_a796b484209f89085c6408fa3571120c3}\label{classFoam_1_1dgField_a796b484209f89085c6408fa3571120c3} 
 \index{Foam::dgField$<$ Type $>$@{Foam::dgField$<$ Type $>$}!operator=@{operator=}}
 \index{operator=@{operator=}!Foam::dgField$<$ Type $>$@{Foam::dgField$<$ Type $>$}}
 \doxysubsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
@@ -397,8 +596,16 @@ Writes field information via reg\+IOobject. \Hypertarget{classFoam_1_1dgField_a7
 
 
 
-Assign uniform value to all Gauss fields. 
+Assign a uniform value to all Gauss fields. 
 
+
+\begin{DoxyParams}{Parameters}
+{\em value} & Uniform value assigned at every stored Gauss location. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Reference to this field. 
+\end{DoxyReturn}
 
 
 \doxysubsection{Member Data Documentation}
@@ -411,7 +618,7 @@ Assign uniform value to all Gauss fields.
 
 
 
-Reference to the DG geometric mesh. 
+DG geometric mesh on which the field is defined. 
 
 \Hypertarget{classFoam_1_1dgField_abfcbb698f99feb25b38a5b839d453e22}\label{classFoam_1_1dgField_abfcbb698f99feb25b38a5b839d453e22} 
 \index{Foam::dgField$<$ Type $>$@{Foam::dgField$<$ Type $>$}!hasDof\_@{hasDof\_}}
@@ -422,7 +629,7 @@ Reference to the DG geometric mesh.
 
 
 
-Flag indicating whether this field owns DoF data. 
+Flag indicating whether the field is constructed with DoF storage. 
 
 \Hypertarget{classFoam_1_1dgField_a3d29986a1270bc6a49550e47eb7d19f7}\label{classFoam_1_1dgField_a3d29986a1270bc6a49550e47eb7d19f7} 
 \index{Foam::dgField$<$ Type $>$@{Foam::dgField$<$ Type $>$}!dofPtr\_@{dofPtr\_}}
@@ -433,7 +640,7 @@ Flag indicating whether this field owns DoF data.
 
 
 
-Pointer to DoF field (null for Do\+F-\/less fields) 
+Optional DoF storage, null when the field is Gauss-\/value only. 
 
 \Hypertarget{classFoam_1_1dgField_ae0ec2ac3d571c7ff2188c199482e234a}\label{classFoam_1_1dgField_ae0ec2ac3d571c7ff2188c199482e234a} 
 \index{Foam::dgField$<$ Type $>$@{Foam::dgField$<$ Type $>$}!gaussFields\_@{gaussFields\_}}
@@ -444,13 +651,24 @@ Pointer to DoF field (null for Do\+F-\/less fields)
 
 
 
-\doxylink{classFoam_1_1GaussField}{Gauss\+Field} values for each cell in the mesh. 
+Per-\/cell Gauss-\/point representation of the DG field. 
+
+\Hypertarget{classFoam_1_1dgField_adab60ca7f4c19a485ac56b6c1604627d}\label{classFoam_1_1dgField_adab60ca7f4c19a485ac56b6c1604627d} 
+\index{Foam::dgField$<$ Type $>$@{Foam::dgField$<$ Type $>$}!procSyncPtr\_@{procSyncPtr\_}}
+\index{procSyncPtr\_@{procSyncPtr\_}!Foam::dgField$<$ Type $>$@{Foam::dgField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{procSyncPtr\_}{procSyncPtr\_}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
+\mbox{\hyperlink{classFoam_1_1GaussField}{auto\+Ptr}}$<$ \mbox{\hyperlink{classFoam_1_1dgProcessorBoundaryManager}{dg\+Processor\+Boundary\+Manager}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ $>$ \mbox{\hyperlink{classFoam_1_1dgField}{Foam\+::dg\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::proc\+Sync\+Ptr\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
 
 
+
+Lazy processor-\/boundary synchronizer for this field. 
+
+Allocated on first \doxylink{classFoam_1_1dgField_af5e4a3c4d50751fc364e3307adb603f7}{synch()} call so call sites can simply use field.\+synch() without wiring an external manager everywhere. 
 
 The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
 \item 
-/home/nam-\/ha-\/tran/\+Open\+FOAM/\+DGFoam/src/\+DGFoam/fields/dg\+Field/\mbox{\hyperlink{fields_2dgField_2dgField_8H}{dg\+Field.\+H}}\item 
-/home/nam-\/ha-\/tran/\+Open\+FOAM/\+DGFoam/src/\+DGFoam/ln\+Include/\mbox{\hyperlink{lnInclude_2dgField_8H}{dg\+Field.\+H}}\item 
-/home/nam-\/ha-\/tran/\+Open\+FOAM/\+DGFoam/src/\+DGFoam/fields/dg\+Field/\mbox{\hyperlink{fields_2dgField_2dgFieldI_8H}{dg\+Field\+I.\+H}}\item 
-/home/nam-\/ha-\/tran/\+Open\+FOAM/\+DGFoam/src/\+DGFoam/ln\+Include/\mbox{\hyperlink{lnInclude_2dgFieldI_8H}{dg\+Field\+I.\+H}}\end{DoxyCompactItemize}
+/home/nam-\/ha-\/tran/\+Open\+FOAM/\+DGFoam/src/\+DGCore\+Fields/fields/dg\+Field/\mbox{\hyperlink{fields_2dgField_2dgField_8H}{dg\+Field.\+H}}\item 
+/home/nam-\/ha-\/tran/\+Open\+FOAM/\+DGFoam/src/\+DGCore\+Fields/ln\+Include/\mbox{\hyperlink{lnInclude_2dgField_8H}{dg\+Field.\+H}}\item 
+/home/nam-\/ha-\/tran/\+Open\+FOAM/\+DGFoam/src/\+DGCore\+Fields/fields/dg\+Field/\mbox{\hyperlink{fields_2dgField_2dgFieldI_8H}{dg\+Field\+I.\+H}}\item 
+/home/nam-\/ha-\/tran/\+Open\+FOAM/\+DGFoam/src/\+DGCore\+Fields/ln\+Include/\mbox{\hyperlink{lnInclude_2dgFieldI_8H}{dg\+Field\+I.\+H}}\end{DoxyCompactItemize}

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>DGFoam: /home/nam-ha-tran/OpenFOAM/DGFoam/applications/solvers/compressible/DGHyperSonicFoam/createDGFields.H Source File</title>
+<title>DGFoam: /home/nam-ha-tran/OpenFOAM/DGFoam/applications/solvers/compressible/DGCompressibleFoam/createDGFields.H Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -82,7 +82,7 @@ $(document).ready(function() { init_codefold(0); });
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_a6e4fee11f07c3b70486e88fe92cbbdc.html">applications</a></li><li class="navelem"><a class="el" href="dir_fdd174abb8ada244b49e98779c87ac3c.html">solvers</a></li><li class="navelem"><a class="el" href="dir_ec6fbd2e4e71296a5c4843bd2aa1db19.html">compressible</a></li><li class="navelem"><a class="el" href="dir_f3377d5d57686a5a9a30c0937b840568.html">DGHyperSonicFoam</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_a6e4fee11f07c3b70486e88fe92cbbdc.html">applications</a></li><li class="navelem"><a class="el" href="dir_fdd174abb8ada244b49e98779c87ac3c.html">solvers</a></li><li class="navelem"><a class="el" href="dir_ec6fbd2e4e71296a5c4843bd2aa1db19.html">compressible</a></li><li class="navelem"><a class="el" href="dir_4ea6b196376de23f876dd8b61bb5a56f.html">DGCompressibleFoam</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -112,7 +112,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="comment">// can ask for p, T, he-derived properties, a, gamma, etc. without duplicating thermodynamic</span></div>
 <div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="comment">// formulas in every include file. In practice, thermo becomes the bridge</span></div>
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="comment">// between conservative unknowns and the primitive quantities used in fluxes.</span></div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>Info&lt;&lt; <span class="stringliteral">&quot;Reading thermophysical properties\n&quot;</span> &lt;&lt; endl;</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>Info&lt;&lt; <span class="stringliteral">&quot;Read thermophysical properties\n&quot;</span> &lt;&lt; endl;</div>
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>IOdictionary thermoDict</div>
 <div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>(</div>
@@ -132,11 +132,29 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span> </div>
 <div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span><span class="comment">// The constructor immediately looks up the already-created DG fields and</span></div>
 <div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span><span class="comment">// initializes thermo-derived quantities on all cells.</span></div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno"><a class="line" href="createDGFields_8H.html#a9925ad70d4a9bc708442f7d79d009002">   44</a></span>autoPtr&lt;dgThermoConservative&gt; <a class="code hl_variable" href="createDGFields_8H.html#a9925ad70d4a9bc708442f7d79d009002">thermo</a> = dgThermoConservative::New(dgThermoTypeName, thermoDict, dgMesh);</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno"><a class="line" href="createDGFields_8H.html#a4a957c752605933cf3bb7896a1f8c53e">   44</a></span>autoPtr&lt;dgThermoConservative&gt; <a class="code hl_variable" href="createDGFields_8H.html#a4a957c752605933cf3bb7896a1f8c53e">thermo</a> = dgThermoConservative::New(dgThermoTypeName, thermoDict, <a class="code hl_function" href="solvers_2compressible_2DGCompressibleFoam_2createDGMesh_8H.html#ac2f70ae412900de0f8c13e91bd870b5c">dgMesh</a>);</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span> </div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span><span class="comment">// Physical BCs now act directly on ghost conservative states.</span></div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno"><a class="line" href="createDGFields_8H.html#a6e04afa82f3666883f9986bac29d2090">   47</a></span>IOobject <a class="code hl_function" href="createDGFields_8H.html#a6e04afa82f3666883f9986bac29d2090">boundaryConditionsIO</a></div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>(</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    <span class="stringliteral">&quot;boundaryConditions&quot;</span>,</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>    <a class="code hl_variable" href="VarDeclaration_8h.html#a122df5dd52660cdfcef00ba179bd53a7">runTime</a>.constant(),</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    mesh,</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    IOobject::MUST_READ,</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>    IOobject::NO_WRITE</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>);</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span> </div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno"><a class="line" href="createDGFields_8H.html#af6d9d5156cdc30673436563ccce29a31">   56</a></span>autoPtr&lt;dgCompressibleBoundaryManager&gt; <a class="code hl_function" href="createDGFields_8H.html#af6d9d5156cdc30673436563ccce29a31">compressibleBC</a></div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>(</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>    <span class="keyword">new</span> dgCompressibleBoundaryManager(<a class="code hl_function" href="createDGFields_8H.html#a6e04afa82f3666883f9986bac29d2090">boundaryConditionsIO</a>, <a class="code hl_function" href="solvers_2compressible_2DGCompressibleFoam_2createDGMesh_8H.html#ac2f70ae412900de0f8c13e91bd870b5c">dgMesh</a>)</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>);</div>
 <div class="ttc" id="aVarDeclaration_8h_html_a122df5dd52660cdfcef00ba179bd53a7"><div class="ttname"><a href="VarDeclaration_8h.html#a122df5dd52660cdfcef00ba179bd53a7">runTime</a></div><div class="ttdeci">double runTime</div></div>
 <div class="ttc" id="acreateConservativeFields_8H_html"><div class="ttname"><a href="createConservativeFields_8H.html">createConservativeFields.H</a></div></div>
-<div class="ttc" id="acreateDGFields_8H_html_a9925ad70d4a9bc708442f7d79d009002"><div class="ttname"><a href="createDGFields_8H.html#a9925ad70d4a9bc708442f7d79d009002">thermo</a></div><div class="ttdeci">Info&lt;&lt; &quot;Reading thermophysical properties\n&quot;&lt;&lt; endl;IOdictionary thermoDict(IOobject(&quot;thermophysicalProperties&quot;, runTime.constant(), mesh, IOobject::MUST_READ, IOobject::NO_WRITE));dictionary thermoType(thermoDict.subDict(&quot;dgThermo&quot;));word dgThermoTypeName(thermoType.lookup(&quot;type&quot;));autoPtr&lt; dgThermoConservative &gt; thermo</div><div class="ttdef"><b>Definition</b> createDGFields.H:44</div></div>
+<div class="ttc" id="acreateDGFields_8H_html_a4a957c752605933cf3bb7896a1f8c53e"><div class="ttname"><a href="createDGFields_8H.html#a4a957c752605933cf3bb7896a1f8c53e">thermo</a></div><div class="ttdeci">Info&lt;&lt; &quot;Read thermophysical properties\n&quot;&lt;&lt; endl;IOdictionary thermoDict(IOobject(&quot;thermophysicalProperties&quot;, runTime.constant(), mesh, IOobject::MUST_READ, IOobject::NO_WRITE));dictionary thermoType(thermoDict.subDict(&quot;dgThermo&quot;));word dgThermoTypeName(thermoType.lookup(&quot;type&quot;));autoPtr&lt; dgThermoConservative &gt; thermo</div><div class="ttdef"><b>Definition</b> createDGFields.H:44</div></div>
+<div class="ttc" id="acreateDGFields_8H_html_a6e04afa82f3666883f9986bac29d2090"><div class="ttname"><a href="createDGFields_8H.html#a6e04afa82f3666883f9986bac29d2090">boundaryConditionsIO</a></div><div class="ttdeci">IOobject boundaryConditionsIO(&quot;boundaryConditions&quot;, runTime.constant(), mesh, IOobject::MUST_READ, IOobject::NO_WRITE)</div></div>
+<div class="ttc" id="acreateDGFields_8H_html_af6d9d5156cdc30673436563ccce29a31"><div class="ttname"><a href="createDGFields_8H.html#af6d9d5156cdc30673436563ccce29a31">compressibleBC</a></div><div class="ttdeci">autoPtr&lt; dgCompressibleBoundaryManager &gt; compressibleBC(new dgCompressibleBoundaryManager(boundaryConditionsIO, dgMesh))</div></div>
 <div class="ttc" id="acreatePrimaryFields_8H_html"><div class="ttname"><a href="createPrimaryFields_8H.html">createPrimaryFields.H</a></div></div>
+<div class="ttc" id="asolvers_2compressible_2DGCompressibleFoam_2createDGMesh_8H_html_ac2f70ae412900de0f8c13e91bd870b5c"><div class="ttname"><a href="solvers_2compressible_2DGCompressibleFoam_2createDGMesh_8H.html#ac2f70ae412900de0f8c13e91bd870b5c">dgMesh</a></div><div class="ttdeci">dgGeomMesh dgMesh(mesh)</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

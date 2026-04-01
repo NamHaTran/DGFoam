@@ -1,17 +1,17 @@
 \doxysection{create\+Primary\+Fields.\+H}
-\hypertarget{createPrimaryFields_8H_source}{}\label{createPrimaryFields_8H_source}\index{/home/nam-\/ha-\/tran/OpenFOAM/DGFoam/applications/solvers/compressible/DGHyperSonicFoam/createPrimaryFields.H@{/home/nam-\/ha-\/tran/OpenFOAM/DGFoam/applications/solvers/compressible/DGHyperSonicFoam/createPrimaryFields.H}}
+\hypertarget{createPrimaryFields_8H_source}{}\label{createPrimaryFields_8H_source}\index{/home/nam-\/ha-\/tran/OpenFOAM/DGFoam/applications/solvers/compressible/DGCompressibleFoam/createPrimaryFields.H@{/home/nam-\/ha-\/tran/OpenFOAM/DGFoam/applications/solvers/compressible/DGCompressibleFoam/createPrimaryFields.H}}
 \mbox{\hyperlink{createPrimaryFields_8H}{Go to the documentation of this file.}}
 \begin{DoxyCode}{0}
 \DoxyCodeLine{00001\ \textcolor{comment}{//\ Primitive\ fields\ are\ reconstructed\ from\ the\ conservative\ variables\ and}}
 \DoxyCodeLine{00002\ \textcolor{comment}{//\ are\ used\ to\ evaluate\ fluxes\ and\ boundary\ conditions\ in\ a\ more\ natural\ form.}}
-\DoxyCodeLine{00003\ Info<<\ \textcolor{stringliteral}{"{}Creating\ primitive\ fields\(\backslash\)n"{}}\ <<\ endl;}
+\DoxyCodeLine{00003\ Info<<\ \textcolor{stringliteral}{"{}Create\ primitive\ fields\(\backslash\)n"{}}\ <<\ endl;}
 \DoxyCodeLine{00004\ }
 \DoxyCodeLine{00005\ \textcolor{comment}{//\ The\ solver\ owns\ p,\ T,\ and\ U,\ but\ their\ values\ are\ refreshed\ by\ the\ thermo}}
 \DoxyCodeLine{00006\ \textcolor{comment}{//\ model\ and\ by\ stage-\/update\ logic\ after\ rho/rhoU/E\ change.\ These\ are\ still}}
 \DoxyCodeLine{00007\ \textcolor{comment}{//\ dgField\ objects,\ so\ they\ carry\ high-\/order\ Gauss-\/point\ data,\ not\ only\ one}}
 \DoxyCodeLine{00008\ \textcolor{comment}{//\ cell-\/average\ value\ per\ control\ volume.}}
 \DoxyCodeLine{00009\ }
-\DoxyCodeLine{00010\ dgField<scalar>\ \mbox{\hyperlink{createPrimaryFields_8H_ad37d69387e92d6f1424be40cbca2fbec}{p}}}
+\DoxyCodeLine{00010\ dgField<scalar>\ \mbox{\hyperlink{createPrimaryFields_8H_ac26fa601ec3cea0a11ac0fd4f2a6bb63}{p}}}
 \DoxyCodeLine{00011\ (}
 \DoxyCodeLine{00012\ \ \ \ \ IOobject}
 \DoxyCodeLine{00013\ \ \ \ \ (}
@@ -21,7 +21,7 @@
 \DoxyCodeLine{00017\ \ \ \ \ \ \ \ \ IOobject::NO\_READ,}
 \DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ IOobject::AUTO\_WRITE}
 \DoxyCodeLine{00019\ \ \ \ \ ),}
-\DoxyCodeLine{00020\ \ \ \ \ dgMesh,}
+\DoxyCodeLine{00020\ \ \ \ \ \mbox{\hyperlink{solvers_2compressible_2DGCompressibleFoam_2createDGMesh_8H_ac2f70ae412900de0f8c13e91bd870b5c}{dgMesh}},}
 \DoxyCodeLine{00021\ \ \ \ \ \textcolor{keyword}{false}}
 \DoxyCodeLine{00022\ );}
 \DoxyCodeLine{00023\ }
@@ -35,7 +35,7 @@
 \DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ IOobject::NO\_READ,}
 \DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ IOobject::AUTO\_WRITE}
 \DoxyCodeLine{00033\ \ \ \ \ ),}
-\DoxyCodeLine{00034\ \ \ \ \ dgMesh,}
+\DoxyCodeLine{00034\ \ \ \ \ \mbox{\hyperlink{solvers_2compressible_2DGCompressibleFoam_2createDGMesh_8H_ac2f70ae412900de0f8c13e91bd870b5c}{dgMesh}},}
 \DoxyCodeLine{00035\ \ \ \ \ \textcolor{keyword}{false}}
 \DoxyCodeLine{00036\ );}
 \DoxyCodeLine{00037\ }
@@ -49,72 +49,13 @@
 \DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ IOobject::NO\_READ,}
 \DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ IOobject::AUTO\_WRITE}
 \DoxyCodeLine{00047\ \ \ \ \ ),}
-\DoxyCodeLine{00048\ \ \ \ \ dgMesh,}
+\DoxyCodeLine{00048\ \ \ \ \ \mbox{\hyperlink{solvers_2compressible_2DGCompressibleFoam_2createDGMesh_8H_ac2f70ae412900de0f8c13e91bd870b5c}{dgMesh}},}
 \DoxyCodeLine{00049\ \ \ \ \ \textcolor{keyword}{false}}
 \DoxyCodeLine{00050\ );}
 \DoxyCodeLine{00051\ }
-\DoxyCodeLine{00052\ \textcolor{comment}{//\ Boundary\ managers\ read\ user-\/specified\ DG\ boundary\ data\ from\ constant/}}
-\DoxyCodeLine{00053\ \textcolor{comment}{//\ and\ know\ how\ to\ inject\ those\ values\ into\ face\ Gauss\ points.\ The\ result\ is}}
-\DoxyCodeLine{00054\ \textcolor{comment}{//\ a\ boundary\ state\ defined\ at\ quadrature\ points,\ which\ is\ exactly\ what\ the}}
-\DoxyCodeLine{00055\ \textcolor{comment}{//\ numerical\ flux\ routines\ need.}}
-\DoxyCodeLine{00056\ IOobject\ \mbox{\hyperlink{createPrimaryFields_8H_a2a440df9a9cef70adadbff5112cce14b}{TBCIO}}}
-\DoxyCodeLine{00057\ (}
-\DoxyCodeLine{00058\ \ \ \ \ \textcolor{stringliteral}{"{}TBC"{}},}
-\DoxyCodeLine{00059\ \ \ \ \ \mbox{\hyperlink{VarDeclaration_8h_a122df5dd52660cdfcef00ba179bd53a7}{runTime}}.constant(),}
-\DoxyCodeLine{00060\ \ \ \ \ mesh,}
-\DoxyCodeLine{00061\ \ \ \ \ IOobject::MUST\_READ,}
-\DoxyCodeLine{00062\ \ \ \ \ IOobject::NO\_WRITE}
-\DoxyCodeLine{00063\ );}
-\DoxyCodeLine{00064\ }
-\DoxyCodeLine{00065\ autoPtr<dgGeneralBoundaryManager<scalar>>\ \mbox{\hyperlink{createPrimaryFields_8H_a34c06b68460d8bb341a2d2c0983ebe42}{TBC}}}
-\DoxyCodeLine{00066\ (}
-\DoxyCodeLine{00067\ \ \ \ \ \textcolor{keyword}{new}\ dgGeneralBoundaryManager<scalar>(\mbox{\hyperlink{createPrimaryFields_8H_a2a440df9a9cef70adadbff5112cce14b}{TBCIO}},\ dgMesh)}
-\DoxyCodeLine{00068\ );}
-\DoxyCodeLine{00069\ }
-\DoxyCodeLine{00070\ IOobject\ \mbox{\hyperlink{createPrimaryFields_8H_aa840cbe83a3a0ff8e8669c570be12e36}{pBCIO}}}
-\DoxyCodeLine{00071\ (}
-\DoxyCodeLine{00072\ \ \ \ \ \textcolor{stringliteral}{"{}pBC"{}},}
-\DoxyCodeLine{00073\ \ \ \ \ \mbox{\hyperlink{VarDeclaration_8h_a122df5dd52660cdfcef00ba179bd53a7}{runTime}}.constant(),}
-\DoxyCodeLine{00074\ \ \ \ \ mesh,}
-\DoxyCodeLine{00075\ \ \ \ \ IOobject::MUST\_READ,}
-\DoxyCodeLine{00076\ \ \ \ \ IOobject::NO\_WRITE}
-\DoxyCodeLine{00077\ );}
-\DoxyCodeLine{00078\ }
-\DoxyCodeLine{00079\ autoPtr<dgGeneralBoundaryManager<scalar>>\ \mbox{\hyperlink{createPrimaryFields_8H_ab66733eba70deaf15cd9dba4994bb0a9}{pBC}}}
-\DoxyCodeLine{00080\ (}
-\DoxyCodeLine{00081\ \ \ \ \ \textcolor{keyword}{new}\ dgGeneralBoundaryManager<scalar>(\mbox{\hyperlink{createPrimaryFields_8H_aa840cbe83a3a0ff8e8669c570be12e36}{pBCIO}},\ dgMesh)}
-\DoxyCodeLine{00082\ );}
-\DoxyCodeLine{00083\ }
-\DoxyCodeLine{00084\ IOobject\ \mbox{\hyperlink{createPrimaryFields_8H_a0f9213c0d101cee4235e3ff7b8c36b12}{UBCIO}}}
-\DoxyCodeLine{00085\ (}
-\DoxyCodeLine{00086\ \ \ \ \ \textcolor{stringliteral}{"{}UBC"{}},}
-\DoxyCodeLine{00087\ \ \ \ \ \mbox{\hyperlink{VarDeclaration_8h_a122df5dd52660cdfcef00ba179bd53a7}{runTime}}.constant(),}
-\DoxyCodeLine{00088\ \ \ \ \ mesh,}
-\DoxyCodeLine{00089\ \ \ \ \ IOobject::MUST\_READ,}
-\DoxyCodeLine{00090\ \ \ \ \ IOobject::NO\_WRITE}
-\DoxyCodeLine{00091\ );}
-\DoxyCodeLine{00092\ }
-\DoxyCodeLine{00093\ autoPtr<dgGeneralBoundaryManager<vector>>\ \mbox{\hyperlink{createPrimaryFields_8H_a11796c3cd008ccbf3a31743822f757d2}{UBC}}}
-\DoxyCodeLine{00094\ (}
-\DoxyCodeLine{00095\ \ \ \ \ \textcolor{keyword}{new}\ dgGeneralBoundaryManager<vector>(\mbox{\hyperlink{createPrimaryFields_8H_a0f9213c0d101cee4235e3ff7b8c36b12}{UBCIO}},\ dgMesh)}
-\DoxyCodeLine{00096\ );}
-\DoxyCodeLine{00097\ }
-\DoxyCodeLine{00098\ \textcolor{comment}{//\ Initialize\ primary\ fields\ by\ initial\ values\ read\ from\ BC\ settings\ in\ constant}}
-\DoxyCodeLine{00099\ \mbox{\hyperlink{createPrimaryFields_8H_a34c06b68460d8bb341a2d2c0983ebe42}{TBC}}-\/>initializeField(\mbox{\hyperlink{createPrimaryFields_8H_a5b11ecf656fc672596a085cbdca53fae}{T}});}
-\DoxyCodeLine{00100\ \mbox{\hyperlink{createPrimaryFields_8H_ab66733eba70deaf15cd9dba4994bb0a9}{pBC}}-\/>initializeField(\mbox{\hyperlink{createPrimaryFields_8H_ad37d69387e92d6f1424be40cbca2fbec}{p}});}
-\DoxyCodeLine{00101\ \mbox{\hyperlink{createPrimaryFields_8H_a11796c3cd008ccbf3a31743822f757d2}{UBC}}-\/>initializeField(\mbox{\hyperlink{createPrimaryFields_8H_acaa7fe8168a3a866f1958b3663d384c6}{U}});}
-\DoxyCodeLine{00102\ }
-\DoxyCodeLine{00103\ \textcolor{comment}{//\ Processor\ boundary\ managers\ synchronize\ primitive\ fields\ across\ partition}}
-\DoxyCodeLine{00104\ \textcolor{comment}{//\ interfaces\ before\ each\ residual\ assembly\ on\ parallel\ runs.\ They\ play\ the}}
-\DoxyCodeLine{00105\ \textcolor{comment}{//\ same\ role\ as\ processor\ patches\ in\ OpenFOAM,\ but\ at\ the\ DG\ Gauss-\/point\ level.}}
-\DoxyCodeLine{00106\ autoPtr<dgProcessorBoundaryManager<scalar>>\ \mbox{\hyperlink{createPrimaryFields_8H_a5df60594314379cce4a947f867c8ebd4}{scalarProcBC}}}
-\DoxyCodeLine{00107\ (}
-\DoxyCodeLine{00108\ \ \ \ \ \textcolor{keyword}{new}\ dgProcessorBoundaryManager<scalar>(dgMesh)}
-\DoxyCodeLine{00109\ );}
-\DoxyCodeLine{00110\ }
-\DoxyCodeLine{00111\ autoPtr<dgProcessorBoundaryManager<vector>>\ \mbox{\hyperlink{createPrimaryFields_8H_a6a8583f33a8c105e79c049c64e7de1da}{vectorProcBC}}}
-\DoxyCodeLine{00112\ (}
-\DoxyCodeLine{00113\ \ \ \ \ \textcolor{keyword}{new}\ dgProcessorBoundaryManager<vector>(dgMesh)}
-\DoxyCodeLine{00114\ );}
+\DoxyCodeLine{00052\ \textcolor{comment}{//\ Primitive\ values\ are\ filled\ by\ the\ thermo\ reconstruction\ from\ rho/rhoU/E.}}
+\DoxyCodeLine{00053\ \textcolor{comment}{//\ Physical\ boundary\ ghost\ states\ are\ handled\ separately\ by\ the\ compressible}}
+\DoxyCodeLine{00054\ \textcolor{comment}{//\ boundary\ manager,\ which\ writes\ conservative\ traces\ and\ then\ asks\ thermo\ to}}
+\DoxyCodeLine{00055\ \textcolor{comment}{//\ rebuild\ the\ matching\ primitive\ boundary\ values.}}
 
 \end{DoxyCode}

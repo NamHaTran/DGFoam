@@ -134,15 +134,15 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span><a class="code hl_function" href="classFoam_1_1dgGeneralInletOutletBoundaryField.html#ae28f319bd39f465533efbe52fe8b8082">dgGeneralInletOutletBoundaryField&lt;Type&gt;::dgGeneralInletOutletBoundaryField</a></div>
 <div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>(</div>
 <div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    <span class="keyword">const</span> fvPatch&amp; patch,</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>    <span class="keyword">const</span> dgGeomMesh&amp; dgMesh,</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>    <span class="keyword">const</span> dgGeomMesh&amp; <a class="code hl_function" href="solvers_2compressible_2DGCompressibleFoam_2createDGMesh_8H.html#ac2f70ae412900de0f8c13e91bd870b5c">dgMesh</a>,</div>
 <div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    <span class="keyword">const</span> dictionary&amp; dict</div>
 <div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>)</div>
 <div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>:</div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>    dgGeneralBoundaryField&lt;Type&gt;(patch, dgMesh, dict),</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>    dgGeneralBoundaryField&lt;Type&gt;(patch, <a class="code hl_function" href="solvers_2compressible_2DGCompressibleFoam_2createDGMesh_8H.html#ac2f70ae412900de0f8c13e91bd870b5c">dgMesh</a>, dict),</div>
 <div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    UName_(dict.lookupOrDefault(<span class="stringliteral">&quot;U&quot;</span>, word(<span class="stringliteral">&quot;U&quot;</span>))),</div>
 <div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    U_</div>
 <div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>    (</div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>        dgMesh.getFvMesh().lookupObject&lt;dgField&lt;vector&gt;&gt;(UName_)</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>        <a class="code hl_function" href="solvers_2compressible_2DGCompressibleFoam_2createDGMesh_8H.html#ac2f70ae412900de0f8c13e91bd870b5c">dgMesh</a>.getFvMesh().lookupObject&lt;dgField&lt;vector&gt;&gt;(UName_)</div>
 <div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    )</div>
 <div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>{</div>
 <div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    dict.readEntry(<span class="stringliteral">&quot;inletValue&quot;</span>, inletValue_);</div>
@@ -154,6 +154,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span><span class="comment">// ************************************************************************* //</span></div>
 <div class="ttc" id="aclassFoam_1_1dgGeneralInletOutletBoundaryField_html_ae28f319bd39f465533efbe52fe8b8082"><div class="ttname"><a href="classFoam_1_1dgGeneralInletOutletBoundaryField.html#ae28f319bd39f465533efbe52fe8b8082">Foam::dgGeneralInletOutletBoundaryField::dgGeneralInletOutletBoundaryField</a></div><div class="ttdeci">dgGeneralInletOutletBoundaryField(const fvPatch &amp;patch, const dgGeomMesh &amp;dgMesh, const dictionary &amp;dict)</div><div class="ttdoc">Construct from patch, DG mesh, and dictionary.</div><div class="ttdef"><b>Definition</b> dgGeneralInletOutletBoundaryFieldI.H:44</div></div>
 <div class="ttc" id="anamespaceFoam_html"><div class="ttname"><a href="namespaceFoam.html">Foam</a></div><div class="ttdef"><b>Definition</b> cellDof.H:55</div></div>
+<div class="ttc" id="asolvers_2compressible_2DGCompressibleFoam_2createDGMesh_8H_html_ac2f70ae412900de0f8c13e91bd870b5c"><div class="ttname"><a href="solvers_2compressible_2DGCompressibleFoam_2createDGMesh_8H.html#ac2f70ae412900de0f8c13e91bd870b5c">dgMesh</a></div><div class="ttdeci">dgGeomMesh dgMesh(mesh)</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

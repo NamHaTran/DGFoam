@@ -568,147 +568,154 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00516" name="l00516"></a><span class="lineno">  516</span>    );</div>
 <div class="line"><a id="l00517" name="l00517"></a><span class="lineno">  517</span>}</div>
 <div class="line"><a id="l00518" name="l00518"></a><span class="lineno">  518</span> </div>
-<div class="line"><a id="l00526" name="l00526"></a><span class="lineno">  526</span><span class="keyword">inline</span> <a class="code hl_variable" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">Foam::scalar</a> <a class="code hl_function" href="namespaceFoam_1_1geometricJacobian.html#aae5ca0d8eaf6088f5378dc73102a1f04">calcJacobianDetAtInteriorGaussPt</a></div>
+<div class="line"><a id="l00526" name="l00526"></a><span class="lineno">  526</span><span class="keyword">inline</span> <a class="code hl_class" href="classFoam_1_1GaussField.html">Foam::tensor</a> <a class="code hl_function" href="namespaceFoam_1_1geometricJacobian.html#a2498cba10b4ae2344f02a764f9a8caa5">calcJacobianTensorAtInteriorGaussPt</a></div>
 <div class="line"><a id="l00527" name="l00527"></a><span class="lineno">  527</span>(</div>
 <div class="line"><a id="l00528" name="l00528"></a><span class="lineno">  528</span>    <a class="code hl_enumeration" href="dgGeomCell_2dgCellType_8H.html#afaeb14dfc0cfab52916039ab825f34d5">dgCellType</a> cellType,</div>
-<div class="line"><a id="l00529" name="l00529"></a><span class="lineno">  529</span>    <span class="keyword">const</span> vector&amp; gaussPt,             <span class="comment">// Gauss point in reference space (eta)</span></div>
-<div class="line"><a id="l00530" name="l00530"></a><span class="lineno">  530</span>    <span class="keyword">const</span> List&lt;vector&gt;&amp; cellVertices   <span class="comment">// Physical coordinates of tetrahedron vertices</span></div>
+<div class="line"><a id="l00529" name="l00529"></a><span class="lineno">  529</span>    <span class="keyword">const</span> vector&amp; gaussPt,</div>
+<div class="line"><a id="l00530" name="l00530"></a><span class="lineno">  530</span>    <span class="keyword">const</span> List&lt;vector&gt;&amp; cellVertices</div>
 <div class="line"><a id="l00531" name="l00531"></a><span class="lineno">  531</span>)</div>
 <div class="line"><a id="l00532" name="l00532"></a><span class="lineno">  532</span>{</div>
-<div class="line"><a id="l00533" name="l00533"></a><span class="lineno">  533</span>    <a class="code hl_class" href="classFoam_1_1GaussField.html">Foam::tensor</a> J;</div>
-<div class="line"><a id="l00534" name="l00534"></a><span class="lineno">  534</span>    <span class="comment">//Foam::scalar JDuffy; // Jacobian determinant from Duffy transformation</span></div>
-<div class="line"><a id="l00535" name="l00535"></a><span class="lineno">  535</span> </div>
-<div class="line"><a id="l00536" name="l00536"></a><span class="lineno">  536</span>    <span class="keywordflow">switch</span> (cellType)</div>
-<div class="line"><a id="l00537" name="l00537"></a><span class="lineno">  537</span>    {</div>
-<div class="line"><a id="l00538" name="l00538"></a><span class="lineno">  538</span>        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="dgGeomCell_2dgCellType_8H.html#afaeb14dfc0cfab52916039ab825f34d5a58c9566f3c750ce7147b045fdd14202b">dgCellType::HEX</a>:</div>
-<div class="line"><a id="l00539" name="l00539"></a><span class="lineno">  539</span>            J = <a class="code hl_function" href="namespaceFoam_1_1geometricJacobian.html#aaaea28dc5042c3e5886ee75df7b49035">HexJacobian</a>(gaussPt, cellVertices);</div>
-<div class="line"><a id="l00540" name="l00540"></a><span class="lineno">  540</span>            <span class="comment">//JDuffy = 1.0; // No Duffy transformation for hex</span></div>
-<div class="line"><a id="l00541" name="l00541"></a><span class="lineno">  541</span>            <span class="keywordflow">break</span>;</div>
-<div class="line"><a id="l00542" name="l00542"></a><span class="lineno">  542</span> </div>
-<div class="line"><a id="l00543" name="l00543"></a><span class="lineno">  543</span>        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="dgGeomCell_2dgCellType_8H.html#afaeb14dfc0cfab52916039ab825f34d5a25608df56c02f9fc6854a3de6a51822a">dgCellType::PRISM</a>:</div>
-<div class="line"><a id="l00544" name="l00544"></a><span class="lineno">  544</span>            J = <a class="code hl_function" href="namespaceFoam_1_1geometricJacobian.html#ad79123ae7c8f9933c0b1db4f434e83fe">PrismJacobian</a>(gaussPt, cellVertices);</div>
-<div class="line"><a id="l00545" name="l00545"></a><span class="lineno">  545</span>            <span class="comment">//JDuffy = Foam::referenceJacobian::prismRefToHexRef(gaussPt);</span></div>
-<div class="line"><a id="l00546" name="l00546"></a><span class="lineno">  546</span>            <span class="keywordflow">break</span>;</div>
-<div class="line"><a id="l00547" name="l00547"></a><span class="lineno">  547</span> </div>
-<div class="line"><a id="l00548" name="l00548"></a><span class="lineno">  548</span>        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="dgGeomCell_2dgCellType_8H.html#afaeb14dfc0cfab52916039ab825f34d5acd996d3184761601a0e44e587a012d4f">dgCellType::PYRAMID</a>:</div>
-<div class="line"><a id="l00549" name="l00549"></a><span class="lineno">  549</span>            J = <a class="code hl_function" href="namespaceFoam_1_1geometricJacobian.html#a2ce71b3859857a6ba42cf882e7a2dd58">PyramidJacobian</a>(gaussPt, cellVertices);</div>
-<div class="line"><a id="l00550" name="l00550"></a><span class="lineno">  550</span>            <span class="comment">//JDuffy = Foam::referenceJacobian::pyramidRefToHexRef(gaussPt);</span></div>
+<div class="line"><a id="l00533" name="l00533"></a><span class="lineno">  533</span>    <a class="code hl_class" href="classFoam_1_1GaussField.html">Foam::tensor</a> J(Zero);</div>
+<div class="line"><a id="l00534" name="l00534"></a><span class="lineno">  534</span> </div>
+<div class="line"><a id="l00535" name="l00535"></a><span class="lineno">  535</span>    <span class="keywordflow">switch</span> (cellType)</div>
+<div class="line"><a id="l00536" name="l00536"></a><span class="lineno">  536</span>    {</div>
+<div class="line"><a id="l00537" name="l00537"></a><span class="lineno">  537</span>        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="dgGeomCell_2dgCellType_8H.html#afaeb14dfc0cfab52916039ab825f34d5a58c9566f3c750ce7147b045fdd14202b">dgCellType::HEX</a>:</div>
+<div class="line"><a id="l00538" name="l00538"></a><span class="lineno">  538</span>            J = <a class="code hl_function" href="namespaceFoam_1_1geometricJacobian.html#aaaea28dc5042c3e5886ee75df7b49035">HexJacobian</a>(gaussPt, cellVertices);</div>
+<div class="line"><a id="l00539" name="l00539"></a><span class="lineno">  539</span>            <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l00540" name="l00540"></a><span class="lineno">  540</span> </div>
+<div class="line"><a id="l00541" name="l00541"></a><span class="lineno">  541</span>        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="dgGeomCell_2dgCellType_8H.html#afaeb14dfc0cfab52916039ab825f34d5a25608df56c02f9fc6854a3de6a51822a">dgCellType::PRISM</a>:</div>
+<div class="line"><a id="l00542" name="l00542"></a><span class="lineno">  542</span>            J = <a class="code hl_function" href="namespaceFoam_1_1geometricJacobian.html#ad79123ae7c8f9933c0b1db4f434e83fe">PrismJacobian</a>(gaussPt, cellVertices);</div>
+<div class="line"><a id="l00543" name="l00543"></a><span class="lineno">  543</span>            <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l00544" name="l00544"></a><span class="lineno">  544</span> </div>
+<div class="line"><a id="l00545" name="l00545"></a><span class="lineno">  545</span>        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="dgGeomCell_2dgCellType_8H.html#afaeb14dfc0cfab52916039ab825f34d5acd996d3184761601a0e44e587a012d4f">dgCellType::PYRAMID</a>:</div>
+<div class="line"><a id="l00546" name="l00546"></a><span class="lineno">  546</span>            J = <a class="code hl_function" href="namespaceFoam_1_1geometricJacobian.html#a2ce71b3859857a6ba42cf882e7a2dd58">PyramidJacobian</a>(gaussPt, cellVertices);</div>
+<div class="line"><a id="l00547" name="l00547"></a><span class="lineno">  547</span>            <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l00548" name="l00548"></a><span class="lineno">  548</span> </div>
+<div class="line"><a id="l00549" name="l00549"></a><span class="lineno">  549</span>        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="dgGeomCell_2dgCellType_8H.html#afaeb14dfc0cfab52916039ab825f34d5a268c4b76ec894ec6ad3c119ad7cc2170">dgCellType::TET</a>:</div>
+<div class="line"><a id="l00550" name="l00550"></a><span class="lineno">  550</span>            J = <a class="code hl_function" href="namespaceFoam_1_1geometricJacobian.html#a698f451fa554ccb1995a39956ffe48e8">TetraJacobian</a>(gaussPt, cellVertices);</div>
 <div class="line"><a id="l00551" name="l00551"></a><span class="lineno">  551</span>            <span class="keywordflow">break</span>;</div>
 <div class="line"><a id="l00552" name="l00552"></a><span class="lineno">  552</span> </div>
-<div class="line"><a id="l00553" name="l00553"></a><span class="lineno">  553</span>        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="dgGeomCell_2dgCellType_8H.html#afaeb14dfc0cfab52916039ab825f34d5a268c4b76ec894ec6ad3c119ad7cc2170">dgCellType::TET</a>:</div>
-<div class="line"><a id="l00554" name="l00554"></a><span class="lineno">  554</span>            J = <a class="code hl_function" href="namespaceFoam_1_1geometricJacobian.html#a698f451fa554ccb1995a39956ffe48e8">TetraJacobian</a>(gaussPt, cellVertices);</div>
-<div class="line"><a id="l00555" name="l00555"></a><span class="lineno">  555</span>            <span class="comment">//JDuffy = Foam::referenceJacobian::tetRefToHexRef(gaussPt);</span></div>
-<div class="line"><a id="l00556" name="l00556"></a><span class="lineno">  556</span>            <span class="keywordflow">break</span>;</div>
-<div class="line"><a id="l00557" name="l00557"></a><span class="lineno">  557</span> </div>
-<div class="line"><a id="l00558" name="l00558"></a><span class="lineno">  558</span>        <span class="keywordflow">default</span>:</div>
-<div class="line"><a id="l00559" name="l00559"></a><span class="lineno">  559</span>            FatalErrorInFunction</div>
-<div class="line"><a id="l00560" name="l00560"></a><span class="lineno">  560</span>                &lt;&lt; <span class="stringliteral">&quot;Unsupported cell type for 3D Jacobian calculation: &quot;</span></div>
-<div class="line"><a id="l00561" name="l00561"></a><span class="lineno">  561</span>                &lt;&lt; <span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(cellType) &lt;&lt; abort(FatalError);</div>
-<div class="line"><a id="l00562" name="l00562"></a><span class="lineno">  562</span>    }</div>
-<div class="line"><a id="l00563" name="l00563"></a><span class="lineno">  563</span> </div>
-<div class="line"><a id="l00564" name="l00564"></a><span class="lineno">  564</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="namespaceFoam.html#a5915c981c21128d92bdcfba4bc64c4d3">mag</a>(<a class="code hl_function" href="namespaceFoam.html#aa35494e071b585795c1dec87417fee8d">det</a>(J));</div>
-<div class="line"><a id="l00565" name="l00565"></a><span class="lineno">  565</span>}</div>
-<div class="line"><a id="l00566" name="l00566"></a><span class="lineno">  566</span> </div>
-<div class="line"><a id="l00575" name="l00575"></a><span class="lineno">  575</span><span class="keyword">inline</span> <a class="code hl_variable" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">Foam::scalar</a> <a class="code hl_function" href="namespaceFoam_1_1geometricJacobian.html#a25c24dfc8c51656b041a0ff815ab2c50">calcLameParam</a></div>
-<div class="line"><a id="l00576" name="l00576"></a><span class="lineno">  576</span>(</div>
-<div class="line"><a id="l00577" name="l00577"></a><span class="lineno">  577</span>    <a class="code hl_enumeration" href="dgGeomCell_2dgCellType_8H.html#afaeb14dfc0cfab52916039ab825f34d5">dgCellType</a> cellType,</div>
-<div class="line"><a id="l00578" name="l00578"></a><span class="lineno">  578</span>    <a class="code hl_enumeration" href="namespaceFoam.html#aa8f35761c87b12a7a59a176d2d6c6682">dgFacePosition</a> facePos,</div>
-<div class="line"><a id="l00579" name="l00579"></a><span class="lineno">  579</span>    <span class="keyword">const</span> vector&amp; gaussPt,             <span class="comment">// Gauss point in reference space (eta)</span></div>
-<div class="line"><a id="l00580" name="l00580"></a><span class="lineno">  580</span>    <span class="keyword">const</span> List&lt;vector&gt;&amp; cellVertices   <span class="comment">// Physical coordinates of vertices</span></div>
-<div class="line"><a id="l00581" name="l00581"></a><span class="lineno">  581</span>)</div>
-<div class="line"><a id="l00582" name="l00582"></a><span class="lineno">  582</span>{</div>
-<div class="line"><a id="l00583" name="l00583"></a><span class="lineno">  583</span>    <span class="comment">// Caclulate Jacobian tensor</span></div>
-<div class="line"><a id="l00584" name="l00584"></a><span class="lineno">  584</span>    <a class="code hl_class" href="classFoam_1_1GaussField.html">Foam::tensor</a> J;</div>
-<div class="line"><a id="l00585" name="l00585"></a><span class="lineno">  585</span> </div>
-<div class="line"><a id="l00586" name="l00586"></a><span class="lineno">  586</span>    <span class="keywordflow">switch</span> (cellType)</div>
-<div class="line"><a id="l00587" name="l00587"></a><span class="lineno">  587</span>    {</div>
-<div class="line"><a id="l00588" name="l00588"></a><span class="lineno">  588</span>        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="dgGeomCell_2dgCellType_8H.html#afaeb14dfc0cfab52916039ab825f34d5a58c9566f3c750ce7147b045fdd14202b">dgCellType::HEX</a>:</div>
-<div class="line"><a id="l00589" name="l00589"></a><span class="lineno">  589</span>            J = <a class="code hl_function" href="namespaceFoam_1_1geometricJacobian.html#aaaea28dc5042c3e5886ee75df7b49035">HexJacobian</a>(gaussPt, cellVertices);</div>
-<div class="line"><a id="l00590" name="l00590"></a><span class="lineno">  590</span>            <span class="keywordflow">break</span>;</div>
-<div class="line"><a id="l00591" name="l00591"></a><span class="lineno">  591</span> </div>
-<div class="line"><a id="l00592" name="l00592"></a><span class="lineno">  592</span>        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="dgGeomCell_2dgCellType_8H.html#afaeb14dfc0cfab52916039ab825f34d5a25608df56c02f9fc6854a3de6a51822a">dgCellType::PRISM</a>:</div>
-<div class="line"><a id="l00593" name="l00593"></a><span class="lineno">  593</span>            J = <a class="code hl_function" href="namespaceFoam_1_1geometricJacobian.html#ad79123ae7c8f9933c0b1db4f434e83fe">PrismJacobian</a>(gaussPt, cellVertices);</div>
-<div class="line"><a id="l00594" name="l00594"></a><span class="lineno">  594</span>            <span class="keywordflow">break</span>;</div>
-<div class="line"><a id="l00595" name="l00595"></a><span class="lineno">  595</span> </div>
-<div class="line"><a id="l00596" name="l00596"></a><span class="lineno">  596</span>        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="dgGeomCell_2dgCellType_8H.html#afaeb14dfc0cfab52916039ab825f34d5acd996d3184761601a0e44e587a012d4f">dgCellType::PYRAMID</a>:</div>
-<div class="line"><a id="l00597" name="l00597"></a><span class="lineno">  597</span>            J = <a class="code hl_function" href="namespaceFoam_1_1geometricJacobian.html#a2ce71b3859857a6ba42cf882e7a2dd58">PyramidJacobian</a>(gaussPt, cellVertices);</div>
-<div class="line"><a id="l00598" name="l00598"></a><span class="lineno">  598</span>            <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l00553" name="l00553"></a><span class="lineno">  553</span>        <span class="keywordflow">default</span>:</div>
+<div class="line"><a id="l00554" name="l00554"></a><span class="lineno">  554</span>            FatalErrorInFunction</div>
+<div class="line"><a id="l00555" name="l00555"></a><span class="lineno">  555</span>                &lt;&lt; <span class="stringliteral">&quot;Unsupported cell type for 3D Jacobian calculation: &quot;</span></div>
+<div class="line"><a id="l00556" name="l00556"></a><span class="lineno">  556</span>                &lt;&lt; <span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(cellType) &lt;&lt; abort(FatalError);</div>
+<div class="line"><a id="l00557" name="l00557"></a><span class="lineno">  557</span>    }</div>
+<div class="line"><a id="l00558" name="l00558"></a><span class="lineno">  558</span> </div>
+<div class="line"><a id="l00559" name="l00559"></a><span class="lineno">  559</span>    <span class="keywordflow">return</span> J;</div>
+<div class="line"><a id="l00560" name="l00560"></a><span class="lineno">  560</span>}</div>
+<div class="line"><a id="l00561" name="l00561"></a><span class="lineno">  561</span> </div>
+<div class="line"><a id="l00569" name="l00569"></a><span class="lineno">  569</span><span class="keyword">inline</span> <a class="code hl_variable" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">Foam::scalar</a> <a class="code hl_function" href="namespaceFoam_1_1geometricJacobian.html#aae5ca0d8eaf6088f5378dc73102a1f04">calcJacobianDetAtInteriorGaussPt</a></div>
+<div class="line"><a id="l00570" name="l00570"></a><span class="lineno">  570</span>(</div>
+<div class="line"><a id="l00571" name="l00571"></a><span class="lineno">  571</span>    <a class="code hl_enumeration" href="dgGeomCell_2dgCellType_8H.html#afaeb14dfc0cfab52916039ab825f34d5">dgCellType</a> cellType,</div>
+<div class="line"><a id="l00572" name="l00572"></a><span class="lineno">  572</span>    <span class="keyword">const</span> vector&amp; gaussPt,             <span class="comment">// Gauss point in reference space (eta)</span></div>
+<div class="line"><a id="l00573" name="l00573"></a><span class="lineno">  573</span>    <span class="keyword">const</span> List&lt;vector&gt;&amp; cellVertices   <span class="comment">// Physical coordinates of tetrahedron vertices</span></div>
+<div class="line"><a id="l00574" name="l00574"></a><span class="lineno">  574</span>)</div>
+<div class="line"><a id="l00575" name="l00575"></a><span class="lineno">  575</span>{</div>
+<div class="line"><a id="l00576" name="l00576"></a><span class="lineno">  576</span>    <span class="keyword">const</span> <a class="code hl_class" href="classFoam_1_1GaussField.html">Foam::tensor</a> J =</div>
+<div class="line"><a id="l00577" name="l00577"></a><span class="lineno">  577</span>        <a class="code hl_function" href="namespaceFoam_1_1geometricJacobian.html#a2498cba10b4ae2344f02a764f9a8caa5">calcJacobianTensorAtInteriorGaussPt</a>(cellType, gaussPt, cellVertices);</div>
+<div class="line"><a id="l00578" name="l00578"></a><span class="lineno">  578</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="namespaceFoam.html#a5915c981c21128d92bdcfba4bc64c4d3">mag</a>(<a class="code hl_function" href="namespaceFoam.html#aa35494e071b585795c1dec87417fee8d">det</a>(J));</div>
+<div class="line"><a id="l00579" name="l00579"></a><span class="lineno">  579</span>}</div>
+<div class="line"><a id="l00580" name="l00580"></a><span class="lineno">  580</span> </div>
+<div class="line"><a id="l00589" name="l00589"></a><span class="lineno">  589</span><span class="keyword">inline</span> <a class="code hl_variable" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">Foam::scalar</a> <a class="code hl_function" href="namespaceFoam_1_1geometricJacobian.html#a25c24dfc8c51656b041a0ff815ab2c50">calcLameParam</a></div>
+<div class="line"><a id="l00590" name="l00590"></a><span class="lineno">  590</span>(</div>
+<div class="line"><a id="l00591" name="l00591"></a><span class="lineno">  591</span>    <a class="code hl_enumeration" href="dgGeomCell_2dgCellType_8H.html#afaeb14dfc0cfab52916039ab825f34d5">dgCellType</a> cellType,</div>
+<div class="line"><a id="l00592" name="l00592"></a><span class="lineno">  592</span>    <a class="code hl_enumeration" href="namespaceFoam.html#aa8f35761c87b12a7a59a176d2d6c6682">dgFacePosition</a> facePos,</div>
+<div class="line"><a id="l00593" name="l00593"></a><span class="lineno">  593</span>    <span class="keyword">const</span> vector&amp; gaussPt,             <span class="comment">// Gauss point in reference space (eta)</span></div>
+<div class="line"><a id="l00594" name="l00594"></a><span class="lineno">  594</span>    <span class="keyword">const</span> List&lt;vector&gt;&amp; cellVertices   <span class="comment">// Physical coordinates of vertices</span></div>
+<div class="line"><a id="l00595" name="l00595"></a><span class="lineno">  595</span>)</div>
+<div class="line"><a id="l00596" name="l00596"></a><span class="lineno">  596</span>{</div>
+<div class="line"><a id="l00597" name="l00597"></a><span class="lineno">  597</span>    <span class="comment">// Caclulate Jacobian tensor</span></div>
+<div class="line"><a id="l00598" name="l00598"></a><span class="lineno">  598</span>    <a class="code hl_class" href="classFoam_1_1GaussField.html">Foam::tensor</a> J(Zero);</div>
 <div class="line"><a id="l00599" name="l00599"></a><span class="lineno">  599</span> </div>
-<div class="line"><a id="l00600" name="l00600"></a><span class="lineno">  600</span>        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="dgGeomCell_2dgCellType_8H.html#afaeb14dfc0cfab52916039ab825f34d5a268c4b76ec894ec6ad3c119ad7cc2170">dgCellType::TET</a>:</div>
-<div class="line"><a id="l00601" name="l00601"></a><span class="lineno">  601</span>            J = <a class="code hl_function" href="namespaceFoam_1_1geometricJacobian.html#a698f451fa554ccb1995a39956ffe48e8">TetraJacobian</a>(gaussPt, cellVertices);</div>
-<div class="line"><a id="l00602" name="l00602"></a><span class="lineno">  602</span>            <span class="keywordflow">break</span>;</div>
-<div class="line"><a id="l00603" name="l00603"></a><span class="lineno">  603</span> </div>
-<div class="line"><a id="l00604" name="l00604"></a><span class="lineno">  604</span>        <span class="keywordflow">default</span>:</div>
-<div class="line"><a id="l00605" name="l00605"></a><span class="lineno">  605</span>            FatalErrorInFunction</div>
-<div class="line"><a id="l00606" name="l00606"></a><span class="lineno">  606</span>                &lt;&lt; <span class="stringliteral">&quot;Unsupported cell type for 3D Jacobian calculation: &quot;</span></div>
-<div class="line"><a id="l00607" name="l00607"></a><span class="lineno">  607</span>                &lt;&lt; <span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(cellType) &lt;&lt; abort(FatalError);</div>
-<div class="line"><a id="l00608" name="l00608"></a><span class="lineno">  608</span>    }</div>
+<div class="line"><a id="l00600" name="l00600"></a><span class="lineno">  600</span>    <span class="keywordflow">switch</span> (cellType)</div>
+<div class="line"><a id="l00601" name="l00601"></a><span class="lineno">  601</span>    {</div>
+<div class="line"><a id="l00602" name="l00602"></a><span class="lineno">  602</span>        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="dgGeomCell_2dgCellType_8H.html#afaeb14dfc0cfab52916039ab825f34d5a58c9566f3c750ce7147b045fdd14202b">dgCellType::HEX</a>:</div>
+<div class="line"><a id="l00603" name="l00603"></a><span class="lineno">  603</span>            J = <a class="code hl_function" href="namespaceFoam_1_1geometricJacobian.html#aaaea28dc5042c3e5886ee75df7b49035">HexJacobian</a>(gaussPt, cellVertices);</div>
+<div class="line"><a id="l00604" name="l00604"></a><span class="lineno">  604</span>            <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l00605" name="l00605"></a><span class="lineno">  605</span> </div>
+<div class="line"><a id="l00606" name="l00606"></a><span class="lineno">  606</span>        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="dgGeomCell_2dgCellType_8H.html#afaeb14dfc0cfab52916039ab825f34d5a25608df56c02f9fc6854a3de6a51822a">dgCellType::PRISM</a>:</div>
+<div class="line"><a id="l00607" name="l00607"></a><span class="lineno">  607</span>            J = <a class="code hl_function" href="namespaceFoam_1_1geometricJacobian.html#ad79123ae7c8f9933c0b1db4f434e83fe">PrismJacobian</a>(gaussPt, cellVertices);</div>
+<div class="line"><a id="l00608" name="l00608"></a><span class="lineno">  608</span>            <span class="keywordflow">break</span>;</div>
 <div class="line"><a id="l00609" name="l00609"></a><span class="lineno">  609</span> </div>
-<div class="line"><a id="l00610" name="l00610"></a><span class="lineno">  610</span>    <span class="comment">// Compute Lame parameter based on face position</span></div>
-<div class="line"><a id="l00611" name="l00611"></a><span class="lineno">  611</span>    <a class="code hl_variable" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> lameParam = 0.0;</div>
-<div class="line"><a id="l00612" name="l00612"></a><span class="lineno">  612</span>    <span class="keywordflow">switch</span> (facePos)</div>
-<div class="line"><a id="l00613" name="l00613"></a><span class="lineno">  613</span>    {</div>
-<div class="line"><a id="l00614" name="l00614"></a><span class="lineno">  614</span>        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="namespaceFoam.html#aa8f35761c87b12a7a59a176d2d6c6682acb08ca4a7bb5f9683c19133a84872ca7">dgFacePosition::ABCD</a>:</div>
-<div class="line"><a id="l00615" name="l00615"></a><span class="lineno">  615</span>        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="namespaceFoam.html#aa8f35761c87b12a7a59a176d2d6c6682a17dd6919f5930ea8bd58fecbafd7eb7b">dgFacePosition::EFGH</a>:</div>
-<div class="line"><a id="l00616" name="l00616"></a><span class="lineno">  616</span>        {</div>
-<div class="line"><a id="l00617" name="l00617"></a><span class="lineno">  617</span>            <span class="comment">// eta3 direction, eta3 = +/-1</span></div>
-<div class="line"><a id="l00618" name="l00618"></a><span class="lineno">  618</span>            vector gradX_eta1 (J.xx(), J.yx(), J.zx());</div>
-<div class="line"><a id="l00619" name="l00619"></a><span class="lineno">  619</span>            vector gradX_eta2 (J.xy(), J.yy(), J.zy());</div>
-<div class="line"><a id="l00620" name="l00620"></a><span class="lineno">  620</span>            lameParam = <a class="code hl_function" href="namespaceFoam.html#a5915c981c21128d92bdcfba4bc64c4d3">mag</a>(gradX_eta1 ^ gradX_eta2);</div>
-<div class="line"><a id="l00621" name="l00621"></a><span class="lineno">  621</span>            <span class="keywordflow">break</span>;</div>
-<div class="line"><a id="l00622" name="l00622"></a><span class="lineno">  622</span>        }</div>
-<div class="line"><a id="l00623" name="l00623"></a><span class="lineno">  623</span>        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="namespaceFoam.html#aa8f35761c87b12a7a59a176d2d6c6682a41d9ff5c880ee22566a8480c85ffa831">dgFacePosition::ABEF</a>:</div>
-<div class="line"><a id="l00624" name="l00624"></a><span class="lineno">  624</span>        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="namespaceFoam.html#aa8f35761c87b12a7a59a176d2d6c6682abfff11d5fc9f1c1e357e7854d6393723">dgFacePosition::CDGH</a>:</div>
-<div class="line"><a id="l00625" name="l00625"></a><span class="lineno">  625</span>        {</div>
-<div class="line"><a id="l00626" name="l00626"></a><span class="lineno">  626</span>            <span class="comment">// eta2 direction, eta2 = +/-1</span></div>
-<div class="line"><a id="l00627" name="l00627"></a><span class="lineno">  627</span>            vector gradX_eta1 (J.xx(), J.yx(), J.zx());</div>
-<div class="line"><a id="l00628" name="l00628"></a><span class="lineno">  628</span>            vector gradX_eta3 (J.xz(), J.yz(), J.zz());</div>
-<div class="line"><a id="l00629" name="l00629"></a><span class="lineno">  629</span>            lameParam = <a class="code hl_function" href="namespaceFoam.html#a5915c981c21128d92bdcfba4bc64c4d3">mag</a>(gradX_eta3 ^ gradX_eta1);</div>
-<div class="line"><a id="l00630" name="l00630"></a><span class="lineno">  630</span>            <span class="keywordflow">break</span>;</div>
-<div class="line"><a id="l00631" name="l00631"></a><span class="lineno">  631</span>        }</div>
-<div class="line"><a id="l00632" name="l00632"></a><span class="lineno">  632</span>        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="namespaceFoam.html#aa8f35761c87b12a7a59a176d2d6c6682a3657d9ae4bdf500bb16fb581fdf43c64">dgFacePosition::ACEG</a>:</div>
-<div class="line"><a id="l00633" name="l00633"></a><span class="lineno">  633</span>        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="namespaceFoam.html#aa8f35761c87b12a7a59a176d2d6c6682a2c1327bd400a4bde2b37ccb26b635800">dgFacePosition::BDFH</a>:</div>
-<div class="line"><a id="l00634" name="l00634"></a><span class="lineno">  634</span>        {</div>
-<div class="line"><a id="l00635" name="l00635"></a><span class="lineno">  635</span>            <span class="comment">// eta1 direction, eta1 = +/-1</span></div>
-<div class="line"><a id="l00636" name="l00636"></a><span class="lineno">  636</span>            vector gradX_eta2 (J.xy(), J.yy(), J.zy());</div>
-<div class="line"><a id="l00637" name="l00637"></a><span class="lineno">  637</span>            vector gradX_eta3 (J.xz(), J.yz(), J.zz());</div>
-<div class="line"><a id="l00638" name="l00638"></a><span class="lineno">  638</span>            lameParam = <a class="code hl_function" href="namespaceFoam.html#a5915c981c21128d92bdcfba4bc64c4d3">mag</a>(gradX_eta2 ^ gradX_eta3);</div>
-<div class="line"><a id="l00639" name="l00639"></a><span class="lineno">  639</span>            <span class="keywordflow">break</span>; </div>
-<div class="line"><a id="l00640" name="l00640"></a><span class="lineno">  640</span>        }</div>
-<div class="line"><a id="l00641" name="l00641"></a><span class="lineno">  641</span>        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="namespaceFoam.html#aa8f35761c87b12a7a59a176d2d6c6682ab50339a10e1de285ac99d4c3990b8693">dgFacePosition::NONE</a>:</div>
-<div class="line"><a id="l00642" name="l00642"></a><span class="lineno">  642</span>        {</div>
-<div class="line"><a id="l00643" name="l00643"></a><span class="lineno">  643</span>            FatalErrorInFunction</div>
-<div class="line"><a id="l00644" name="l00644"></a><span class="lineno">  644</span>                &lt;&lt; <span class="stringliteral">&quot;Cannot compute Lame parameter for face with NONE position.&quot;</span></div>
-<div class="line"><a id="l00645" name="l00645"></a><span class="lineno">  645</span>                &lt;&lt; abort(FatalError);</div>
-<div class="line"><a id="l00646" name="l00646"></a><span class="lineno">  646</span>            <span class="keywordflow">break</span>;</div>
-<div class="line"><a id="l00647" name="l00647"></a><span class="lineno">  647</span>        }</div>
-<div class="line"><a id="l00648" name="l00648"></a><span class="lineno">  648</span>    }</div>
-<div class="line"><a id="l00649" name="l00649"></a><span class="lineno">  649</span> </div>
-<div class="line"><a id="l00650" name="l00650"></a><span class="lineno">  650</span>    <span class="keywordflow">return</span> lameParam;</div>
-<div class="line"><a id="l00651" name="l00651"></a><span class="lineno">  651</span>}</div>
-<div class="line"><a id="l00652" name="l00652"></a><span class="lineno">  652</span> </div>
-<div class="line"><a id="l00653" name="l00653"></a><span class="lineno">  653</span>} <span class="comment">// namespace geometricJacobian</span></div>
-<div class="line"><a id="l00654" name="l00654"></a><span class="lineno">  654</span> </div>
-<div class="line"><a id="l00655" name="l00655"></a><span class="lineno">  655</span>} <span class="comment">// namespace Foam</span></div>
-<div class="line"><a id="l00656" name="l00656"></a><span class="lineno">  656</span> </div>
-<div class="line"><a id="l00657" name="l00657"></a><span class="lineno">  657</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00658" name="l00658"></a><span class="lineno">  658</span> </div>
-<div class="line"><a id="l00659" name="l00659"></a><span class="lineno">  659</span><span class="comment">// ************************************************************************* //</span></div>
-<div class="line"><a id="l00660" name="l00660"></a><span class="lineno">  660</span> </div>
-<div class="ttc" id="aclassFoam_1_1GaussField_html"><div class="ttname"><a href="classFoam_1_1GaussField.html">Foam::GaussField</a></div><div class="ttdoc">Combined Gauss-point field for a DG cell.</div><div class="ttdef"><b>Definition</b> GaussField.H:82</div></div>
-<div class="ttc" id="aclassFoam_1_1GaussField_html_ac893a0f59b8435e95c03d2a35c6a2cc3"><div class="ttname"><a href="classFoam_1_1GaussField.html#ac893a0f59b8435e95c03d2a35c6a2cc3">Foam::GaussField::z</a></div><div class="ttdeci">GaussField&lt; scalar &gt; z() const</div><div class="ttdoc">Return z-component.</div></div>
-<div class="ttc" id="aclassFoam_1_1GaussField_html_af48b2954902727aadb60e75a5baf4cf3"><div class="ttname"><a href="classFoam_1_1GaussField.html#af48b2954902727aadb60e75a5baf4cf3">Foam::GaussField::y</a></div><div class="ttdeci">GaussField&lt; scalar &gt; y() const</div><div class="ttdoc">Return y-component.</div></div>
+<div class="line"><a id="l00610" name="l00610"></a><span class="lineno">  610</span>        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="dgGeomCell_2dgCellType_8H.html#afaeb14dfc0cfab52916039ab825f34d5acd996d3184761601a0e44e587a012d4f">dgCellType::PYRAMID</a>:</div>
+<div class="line"><a id="l00611" name="l00611"></a><span class="lineno">  611</span>            J = <a class="code hl_function" href="namespaceFoam_1_1geometricJacobian.html#a2ce71b3859857a6ba42cf882e7a2dd58">PyramidJacobian</a>(gaussPt, cellVertices);</div>
+<div class="line"><a id="l00612" name="l00612"></a><span class="lineno">  612</span>            <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l00613" name="l00613"></a><span class="lineno">  613</span> </div>
+<div class="line"><a id="l00614" name="l00614"></a><span class="lineno">  614</span>        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="dgGeomCell_2dgCellType_8H.html#afaeb14dfc0cfab52916039ab825f34d5a268c4b76ec894ec6ad3c119ad7cc2170">dgCellType::TET</a>:</div>
+<div class="line"><a id="l00615" name="l00615"></a><span class="lineno">  615</span>            J = <a class="code hl_function" href="namespaceFoam_1_1geometricJacobian.html#a698f451fa554ccb1995a39956ffe48e8">TetraJacobian</a>(gaussPt, cellVertices);</div>
+<div class="line"><a id="l00616" name="l00616"></a><span class="lineno">  616</span>            <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l00617" name="l00617"></a><span class="lineno">  617</span> </div>
+<div class="line"><a id="l00618" name="l00618"></a><span class="lineno">  618</span>        <span class="keywordflow">default</span>:</div>
+<div class="line"><a id="l00619" name="l00619"></a><span class="lineno">  619</span>            FatalErrorInFunction</div>
+<div class="line"><a id="l00620" name="l00620"></a><span class="lineno">  620</span>                &lt;&lt; <span class="stringliteral">&quot;Unsupported cell type for 3D Jacobian calculation: &quot;</span></div>
+<div class="line"><a id="l00621" name="l00621"></a><span class="lineno">  621</span>                &lt;&lt; <span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(cellType) &lt;&lt; abort(FatalError);</div>
+<div class="line"><a id="l00622" name="l00622"></a><span class="lineno">  622</span>    }</div>
+<div class="line"><a id="l00623" name="l00623"></a><span class="lineno">  623</span> </div>
+<div class="line"><a id="l00624" name="l00624"></a><span class="lineno">  624</span>    <span class="comment">// Compute Lame parameter based on face position</span></div>
+<div class="line"><a id="l00625" name="l00625"></a><span class="lineno">  625</span>    <a class="code hl_variable" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> lameParam = 0.0;</div>
+<div class="line"><a id="l00626" name="l00626"></a><span class="lineno">  626</span>    <span class="keywordflow">switch</span> (facePos)</div>
+<div class="line"><a id="l00627" name="l00627"></a><span class="lineno">  627</span>    {</div>
+<div class="line"><a id="l00628" name="l00628"></a><span class="lineno">  628</span>        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="namespaceFoam.html#aa8f35761c87b12a7a59a176d2d6c6682acb08ca4a7bb5f9683c19133a84872ca7">dgFacePosition::ABCD</a>:</div>
+<div class="line"><a id="l00629" name="l00629"></a><span class="lineno">  629</span>        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="namespaceFoam.html#aa8f35761c87b12a7a59a176d2d6c6682a17dd6919f5930ea8bd58fecbafd7eb7b">dgFacePosition::EFGH</a>:</div>
+<div class="line"><a id="l00630" name="l00630"></a><span class="lineno">  630</span>        {</div>
+<div class="line"><a id="l00631" name="l00631"></a><span class="lineno">  631</span>            <span class="comment">// eta3 direction, eta3 = +/-1</span></div>
+<div class="line"><a id="l00632" name="l00632"></a><span class="lineno">  632</span>            vector gradX_eta1 (J.xx(), J.yx(), J.zx());</div>
+<div class="line"><a id="l00633" name="l00633"></a><span class="lineno">  633</span>            vector gradX_eta2 (J.xy(), J.yy(), J.zy());</div>
+<div class="line"><a id="l00634" name="l00634"></a><span class="lineno">  634</span>            lameParam = <a class="code hl_function" href="namespaceFoam.html#a5915c981c21128d92bdcfba4bc64c4d3">mag</a>(gradX_eta1 ^ gradX_eta2);</div>
+<div class="line"><a id="l00635" name="l00635"></a><span class="lineno">  635</span>            <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l00636" name="l00636"></a><span class="lineno">  636</span>        }</div>
+<div class="line"><a id="l00637" name="l00637"></a><span class="lineno">  637</span>        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="namespaceFoam.html#aa8f35761c87b12a7a59a176d2d6c6682a41d9ff5c880ee22566a8480c85ffa831">dgFacePosition::ABEF</a>:</div>
+<div class="line"><a id="l00638" name="l00638"></a><span class="lineno">  638</span>        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="namespaceFoam.html#aa8f35761c87b12a7a59a176d2d6c6682abfff11d5fc9f1c1e357e7854d6393723">dgFacePosition::CDGH</a>:</div>
+<div class="line"><a id="l00639" name="l00639"></a><span class="lineno">  639</span>        {</div>
+<div class="line"><a id="l00640" name="l00640"></a><span class="lineno">  640</span>            <span class="comment">// eta2 direction, eta2 = +/-1</span></div>
+<div class="line"><a id="l00641" name="l00641"></a><span class="lineno">  641</span>            vector gradX_eta1 (J.xx(), J.yx(), J.zx());</div>
+<div class="line"><a id="l00642" name="l00642"></a><span class="lineno">  642</span>            vector gradX_eta3 (J.xz(), J.yz(), J.zz());</div>
+<div class="line"><a id="l00643" name="l00643"></a><span class="lineno">  643</span>            lameParam = <a class="code hl_function" href="namespaceFoam.html#a5915c981c21128d92bdcfba4bc64c4d3">mag</a>(gradX_eta3 ^ gradX_eta1);</div>
+<div class="line"><a id="l00644" name="l00644"></a><span class="lineno">  644</span>            <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l00645" name="l00645"></a><span class="lineno">  645</span>        }</div>
+<div class="line"><a id="l00646" name="l00646"></a><span class="lineno">  646</span>        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="namespaceFoam.html#aa8f35761c87b12a7a59a176d2d6c6682a3657d9ae4bdf500bb16fb581fdf43c64">dgFacePosition::ACEG</a>:</div>
+<div class="line"><a id="l00647" name="l00647"></a><span class="lineno">  647</span>        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="namespaceFoam.html#aa8f35761c87b12a7a59a176d2d6c6682a2c1327bd400a4bde2b37ccb26b635800">dgFacePosition::BDFH</a>:</div>
+<div class="line"><a id="l00648" name="l00648"></a><span class="lineno">  648</span>        {</div>
+<div class="line"><a id="l00649" name="l00649"></a><span class="lineno">  649</span>            <span class="comment">// eta1 direction, eta1 = +/-1</span></div>
+<div class="line"><a id="l00650" name="l00650"></a><span class="lineno">  650</span>            vector gradX_eta2 (J.xy(), J.yy(), J.zy());</div>
+<div class="line"><a id="l00651" name="l00651"></a><span class="lineno">  651</span>            vector gradX_eta3 (J.xz(), J.yz(), J.zz());</div>
+<div class="line"><a id="l00652" name="l00652"></a><span class="lineno">  652</span>            lameParam = <a class="code hl_function" href="namespaceFoam.html#a5915c981c21128d92bdcfba4bc64c4d3">mag</a>(gradX_eta2 ^ gradX_eta3);</div>
+<div class="line"><a id="l00653" name="l00653"></a><span class="lineno">  653</span>            <span class="keywordflow">break</span>; </div>
+<div class="line"><a id="l00654" name="l00654"></a><span class="lineno">  654</span>        }</div>
+<div class="line"><a id="l00655" name="l00655"></a><span class="lineno">  655</span>        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="namespaceFoam.html#aa8f35761c87b12a7a59a176d2d6c6682ab50339a10e1de285ac99d4c3990b8693">dgFacePosition::NONE</a>:</div>
+<div class="line"><a id="l00656" name="l00656"></a><span class="lineno">  656</span>        {</div>
+<div class="line"><a id="l00657" name="l00657"></a><span class="lineno">  657</span>            FatalErrorInFunction</div>
+<div class="line"><a id="l00658" name="l00658"></a><span class="lineno">  658</span>                &lt;&lt; <span class="stringliteral">&quot;Cannot compute Lame parameter for face with NONE position.&quot;</span></div>
+<div class="line"><a id="l00659" name="l00659"></a><span class="lineno">  659</span>                &lt;&lt; abort(FatalError);</div>
+<div class="line"><a id="l00660" name="l00660"></a><span class="lineno">  660</span>            <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l00661" name="l00661"></a><span class="lineno">  661</span>        }</div>
+<div class="line"><a id="l00662" name="l00662"></a><span class="lineno">  662</span>    }</div>
+<div class="line"><a id="l00663" name="l00663"></a><span class="lineno">  663</span> </div>
+<div class="line"><a id="l00664" name="l00664"></a><span class="lineno">  664</span>    <span class="keywordflow">return</span> lameParam;</div>
+<div class="line"><a id="l00665" name="l00665"></a><span class="lineno">  665</span>}</div>
+<div class="line"><a id="l00666" name="l00666"></a><span class="lineno">  666</span> </div>
+<div class="line"><a id="l00667" name="l00667"></a><span class="lineno">  667</span>} <span class="comment">// namespace geometricJacobian</span></div>
+<div class="line"><a id="l00668" name="l00668"></a><span class="lineno">  668</span> </div>
+<div class="line"><a id="l00669" name="l00669"></a><span class="lineno">  669</span>} <span class="comment">// namespace Foam</span></div>
+<div class="line"><a id="l00670" name="l00670"></a><span class="lineno">  670</span> </div>
+<div class="line"><a id="l00671" name="l00671"></a><span class="lineno">  671</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00672" name="l00672"></a><span class="lineno">  672</span> </div>
+<div class="line"><a id="l00673" name="l00673"></a><span class="lineno">  673</span><span class="comment">// ************************************************************************* //</span></div>
+<div class="ttc" id="aclassFoam_1_1GaussField_html"><div class="ttname"><a href="classFoam_1_1GaussField.html">Foam::GaussField</a></div><div class="ttdoc">Combined Gauss-point field for a DG cell.</div><div class="ttdef"><b>Definition</b> GaussField.H:85</div></div>
+<div class="ttc" id="aclassFoam_1_1GaussField_html_ac893a0f59b8435e95c03d2a35c6a2cc3"><div class="ttname"><a href="classFoam_1_1GaussField.html#ac893a0f59b8435e95c03d2a35c6a2cc3">Foam::GaussField::z</a></div><div class="ttdeci">GaussField&lt; scalar &gt; z() const</div><div class="ttdoc">Return the z-component as a scalar GaussField.</div></div>
+<div class="ttc" id="aclassFoam_1_1GaussField_html_af48b2954902727aadb60e75a5baf4cf3"><div class="ttname"><a href="classFoam_1_1GaussField.html#af48b2954902727aadb60e75a5baf4cf3">Foam::GaussField::y</a></div><div class="ttdeci">GaussField&lt; scalar &gt; y() const</div><div class="ttdoc">Return the y-component as a scalar GaussField.</div></div>
 <div class="ttc" id="adgGeomCell_2dgCellType_8H_html_afaeb14dfc0cfab52916039ab825f34d5"><div class="ttname"><a href="dgGeomCell_2dgCellType_8H.html#afaeb14dfc0cfab52916039ab825f34d5">dgCellType</a></div><div class="ttdeci">dgCellType</div><div class="ttdef"><b>Definition</b> dgCellType.H:45</div></div>
 <div class="ttc" id="adgGeomCell_2dgCellType_8H_html_afaeb14dfc0cfab52916039ab825f34d5a25608df56c02f9fc6854a3de6a51822a"><div class="ttname"><a href="dgGeomCell_2dgCellType_8H.html#afaeb14dfc0cfab52916039ab825f34d5a25608df56c02f9fc6854a3de6a51822a">dgCellType::PRISM</a></div><div class="ttdeci">@ PRISM</div></div>
 <div class="ttc" id="adgGeomCell_2dgCellType_8H_html_afaeb14dfc0cfab52916039ab825f34d5a268c4b76ec894ec6ad3c119ad7cc2170"><div class="ttname"><a href="dgGeomCell_2dgCellType_8H.html#afaeb14dfc0cfab52916039ab825f34d5a268c4b76ec894ec6ad3c119ad7cc2170">dgCellType::TET</a></div><div class="ttdeci">@ TET</div></div>
 <div class="ttc" id="adgGeomCell_2dgCellType_8H_html_afaeb14dfc0cfab52916039ab825f34d5a58c9566f3c750ce7147b045fdd14202b"><div class="ttname"><a href="dgGeomCell_2dgCellType_8H.html#afaeb14dfc0cfab52916039ab825f34d5a58c9566f3c750ce7147b045fdd14202b">dgCellType::HEX</a></div><div class="ttdeci">@ HEX</div></div>
 <div class="ttc" id="adgGeomCell_2dgCellType_8H_html_afaeb14dfc0cfab52916039ab825f34d5acd996d3184761601a0e44e587a012d4f"><div class="ttname"><a href="dgGeomCell_2dgCellType_8H.html#afaeb14dfc0cfab52916039ab825f34d5acd996d3184761601a0e44e587a012d4f">dgCellType::PYRAMID</a></div><div class="ttdeci">@ PYRAMID</div></div>
 <div class="ttc" id="alnInclude_2basisFunctions_8H_html"><div class="ttname"><a href="lnInclude_2basisFunctions_8H.html">basisFunctions.H</a></div></div>
-<div class="ttc" id="anamespaceFoam_1_1geometricJacobian_html_a25c24dfc8c51656b041a0ff815ab2c50"><div class="ttname"><a href="namespaceFoam_1_1geometricJacobian.html#a25c24dfc8c51656b041a0ff815ab2c50">Foam::geometricJacobian::calcLameParam</a></div><div class="ttdeci">Foam::scalar calcLameParam(dgCellType cellType, dgFacePosition facePos, const vector &amp;gaussPt, const List&lt; vector &gt; &amp;cellVertices)</div><div class="ttdoc">Compute the Lame parameter at a given Gauss point on a face.</div><div class="ttdef"><b>Definition</b> Jacobian.H:576</div></div>
+<div class="ttc" id="anamespaceFoam_1_1geometricJacobian_html_a2498cba10b4ae2344f02a764f9a8caa5"><div class="ttname"><a href="namespaceFoam_1_1geometricJacobian.html#a2498cba10b4ae2344f02a764f9a8caa5">Foam::geometricJacobian::calcJacobianTensorAtInteriorGaussPt</a></div><div class="ttdeci">Foam::tensor calcJacobianTensorAtInteriorGaussPt(dgCellType cellType, const vector &amp;gaussPt, const List&lt; vector &gt; &amp;cellVertices)</div><div class="ttdoc">Compute the Jacobian tensor at a given interior Gauss point.</div><div class="ttdef"><b>Definition</b> Jacobian.H:527</div></div>
+<div class="ttc" id="anamespaceFoam_1_1geometricJacobian_html_a25c24dfc8c51656b041a0ff815ab2c50"><div class="ttname"><a href="namespaceFoam_1_1geometricJacobian.html#a25c24dfc8c51656b041a0ff815ab2c50">Foam::geometricJacobian::calcLameParam</a></div><div class="ttdeci">Foam::scalar calcLameParam(dgCellType cellType, dgFacePosition facePos, const vector &amp;gaussPt, const List&lt; vector &gt; &amp;cellVertices)</div><div class="ttdoc">Compute the Lame parameter at a given Gauss point on a face.</div><div class="ttdef"><b>Definition</b> Jacobian.H:590</div></div>
 <div class="ttc" id="anamespaceFoam_1_1geometricJacobian_html_a2ce71b3859857a6ba42cf882e7a2dd58"><div class="ttname"><a href="namespaceFoam_1_1geometricJacobian.html#a2ce71b3859857a6ba42cf882e7a2dd58">Foam::geometricJacobian::PyramidJacobian</a></div><div class="ttdeci">Foam::tensor PyramidJacobian(const vector &amp;gaussPt, const List&lt; vector &gt; &amp;cellVertices)</div><div class="ttdoc">Compute the Jacobian tensor for a pyramid element at a given Gauss point.</div><div class="ttdef"><b>Definition</b> Jacobian.H:317</div></div>
 <div class="ttc" id="anamespaceFoam_1_1geometricJacobian_html_a698f451fa554ccb1995a39956ffe48e8"><div class="ttname"><a href="namespaceFoam_1_1geometricJacobian.html#a698f451fa554ccb1995a39956ffe48e8">Foam::geometricJacobian::TetraJacobian</a></div><div class="ttdeci">Foam::tensor TetraJacobian(const vector &amp;gaussPt, const List&lt; vector &gt; &amp;cellVertices)</div><div class="ttdoc">Compute the Jacobian tensor for a tetrahedral element at a given Gauss point.</div><div class="ttdef"><b>Definition</b> Jacobian.H:422</div></div>
 <div class="ttc" id="anamespaceFoam_1_1geometricJacobian_html_aaaea28dc5042c3e5886ee75df7b49035"><div class="ttname"><a href="namespaceFoam_1_1geometricJacobian.html#aaaea28dc5042c3e5886ee75df7b49035">Foam::geometricJacobian::HexJacobian</a></div><div class="ttdeci">Foam::tensor HexJacobian(const vector &amp;gaussPt, const List&lt; vector &gt; &amp;cellVertices)</div><div class="ttdoc">Compute the Jacobian tensor for a hexahedral element at a given Gauss point.</div><div class="ttdef"><b>Definition</b> Jacobian.H:103</div></div>
-<div class="ttc" id="anamespaceFoam_1_1geometricJacobian_html_aae5ca0d8eaf6088f5378dc73102a1f04"><div class="ttname"><a href="namespaceFoam_1_1geometricJacobian.html#aae5ca0d8eaf6088f5378dc73102a1f04">Foam::geometricJacobian::calcJacobianDetAtInteriorGaussPt</a></div><div class="ttdeci">Foam::scalar calcJacobianDetAtInteriorGaussPt(dgCellType cellType, const vector &amp;gaussPt, const List&lt; vector &gt; &amp;cellVertices)</div><div class="ttdoc">Compute the determinant of the Jacobian tensor at a given interior Gauss point.</div><div class="ttdef"><b>Definition</b> Jacobian.H:527</div></div>
+<div class="ttc" id="anamespaceFoam_1_1geometricJacobian_html_aae5ca0d8eaf6088f5378dc73102a1f04"><div class="ttname"><a href="namespaceFoam_1_1geometricJacobian.html#aae5ca0d8eaf6088f5378dc73102a1f04">Foam::geometricJacobian::calcJacobianDetAtInteriorGaussPt</a></div><div class="ttdeci">Foam::scalar calcJacobianDetAtInteriorGaussPt(dgCellType cellType, const vector &amp;gaussPt, const List&lt; vector &gt; &amp;cellVertices)</div><div class="ttdoc">Compute the determinant of the Jacobian tensor at a given interior Gauss point.</div><div class="ttdef"><b>Definition</b> Jacobian.H:570</div></div>
 <div class="ttc" id="anamespaceFoam_1_1geometricJacobian_html_ad79123ae7c8f9933c0b1db4f434e83fe"><div class="ttname"><a href="namespaceFoam_1_1geometricJacobian.html#ad79123ae7c8f9933c0b1db4f434e83fe">Foam::geometricJacobian::PrismJacobian</a></div><div class="ttdeci">Foam::tensor PrismJacobian(const vector &amp;gaussPt, const List&lt; vector &gt; &amp;cellVertices)</div><div class="ttdoc">Compute the Jacobian tensor for a prism element at a given Gauss point.</div><div class="ttdef"><b>Definition</b> Jacobian.H:204</div></div>
 <div class="ttc" id="anamespaceFoam_1_1referenceJacobian_html_a5310019cb178ee71956b74dc728ad13b"><div class="ttname"><a href="namespaceFoam_1_1referenceJacobian.html#a5310019cb178ee71956b74dc728ad13b">Foam::referenceJacobian::pyramidRefToHexRef</a></div><div class="ttdeci">Foam::scalar pyramidRefToHexRef(const Foam::vector &amp;etaPt)</div><div class="ttdoc">Determinant of Jacobian tensor from DG pyramid element to DG reference hexahedral element.</div><div class="ttdef"><b>Definition</b> Jacobian.H:77</div></div>
 <div class="ttc" id="anamespaceFoam_1_1referenceJacobian_html_ab2095d71f6f37306131e1e305fb4fd06"><div class="ttname"><a href="namespaceFoam_1_1referenceJacobian.html#ab2095d71f6f37306131e1e305fb4fd06">Foam::referenceJacobian::prismRefToHexRef</a></div><div class="ttdeci">Foam::scalar prismRefToHexRef(const Foam::vector &amp;etaPt)</div><div class="ttdoc">Determinant of Jacobian tensor from DG prismatic element to DG reference hexahedral element.</div><div class="ttdef"><b>Definition</b> Jacobian.H:67</div></div>

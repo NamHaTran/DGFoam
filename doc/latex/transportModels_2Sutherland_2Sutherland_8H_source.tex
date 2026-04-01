@@ -72,69 +72,40 @@
 \DoxyCodeLine{00098\ \ \ \ \ \textcolor{comment}{//-\/\ Runtime\ type\ information}}
 \DoxyCodeLine{00099\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1Sutherland_a18c058c5f4af32893447924b7605c925}{TypeName}}(\textcolor{stringliteral}{"{}Sutherland"{}});}
 \DoxyCodeLine{00100\ }
-\DoxyCodeLine{00106\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1Sutherland_ab1dcfa78e51e017cdcb347d03613a07e}{Sutherland}}}
-\DoxyCodeLine{00107\ \ \ \ \ (}
-\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{word}}\&\ name,}
-\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}}\&\ dict,}
-\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dgGeomMesh}}\&\ mesh,}
-\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1thermoLaw}{thermoLaw}}\&\ \mbox{\hyperlink{createDGFields_8H_a9925ad70d4a9bc708442f7d79d009002}{thermo}}}
-\DoxyCodeLine{00112\ \ \ \ \ );}
-\DoxyCodeLine{00113\ }
-\DoxyCodeLine{00115\ \ \ \ \ \textcolor{keyword}{virtual}\ \mbox{\hyperlink{classFoam_1_1Sutherland_a77001f5d902ba484d9d114e98613d14e}{\string~Sutherland}}()\ =\ \textcolor{keywordflow}{default};}
-\DoxyCodeLine{00116\ }
+\DoxyCodeLine{00101\ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{classFoam_1_1transportLaw_a67346aa620c099a2d3db1cd5255326cc}{transportLaw::calcMu}};}
+\DoxyCodeLine{00102\ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{classFoam_1_1transportLaw_af2ea3bb0453edfe00da6c59d03b8cb2c}{transportLaw::calcKappa}};}
+\DoxyCodeLine{00103\ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{classFoam_1_1transportLaw_a897d87224422a74383fcaa428fb0d44b}{transportLaw::calcPr}};}
+\DoxyCodeLine{00104\ }
+\DoxyCodeLine{00110\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1Sutherland_ab1dcfa78e51e017cdcb347d03613a07e}{Sutherland}}}
+\DoxyCodeLine{00111\ \ \ \ \ (}
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{word}}\&\ name,}
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}}\&\ dict,}
+\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dgGeomMesh}}\&\ mesh,}
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1thermoLaw}{thermoLaw}}\&\ \mbox{\hyperlink{createDGFields_8H_a4a957c752605933cf3bb7896a1f8c53e}{thermo}}}
+\DoxyCodeLine{00116\ \ \ \ \ );}
 \DoxyCodeLine{00117\ }
-\DoxyCodeLine{00118\ \ \ \ \ \textcolor{comment}{//====================================================================//}}
-\DoxyCodeLine{00119\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Transport-\/law\ interface}}
-\DoxyCodeLine{00120\ \ \ \ \ \textcolor{comment}{//====================================================================//}}
+\DoxyCodeLine{00119\ \ \ \ \ \textcolor{keyword}{virtual}\ \mbox{\hyperlink{classFoam_1_1Sutherland_a77001f5d902ba484d9d114e98613d14e}{\string~Sutherland}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00120\ }
 \DoxyCodeLine{00121\ }
-\DoxyCodeLine{00130\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classFoam_1_1Sutherland_a0462107f07f27c66a9944aca86f76b1d}{calcMu}}}
-\DoxyCodeLine{00131\ \ \ \ \ (}
-\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{cellI}},}
-\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{GaussField<scalar>}}\&\ \mbox{\hyperlink{namespaceFoam_a5faf7f302ed6c6307e3668365456af74}{T}},}
-\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{GaussField<scalar>}}\&\ mu}
-\DoxyCodeLine{00135\ \ \ \ \ )\ \textcolor{keyword}{const\ override};}
-\DoxyCodeLine{00136\ }
-\DoxyCodeLine{00137\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classFoam_1_1Sutherland_a15fe1bf47e49e64ee2f6062cae1f5dc0}{calcMu}}}
-\DoxyCodeLine{00138\ \ \ \ \ (}
-\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{boundaryGaussField<scalar>}}\&\ \mbox{\hyperlink{namespaceFoam_a5faf7f302ed6c6307e3668365456af74}{T}},}
-\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{boundaryGaussField<scalar>}}\&\ mu}
-\DoxyCodeLine{00141\ \ \ \ \ )\ \textcolor{keyword}{const\ override};}
-\DoxyCodeLine{00142\ }
-\DoxyCodeLine{00151\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classFoam_1_1Sutherland_a5da61ed6fea8ca99a806e4872c7855eb}{calcKappa}}}
-\DoxyCodeLine{00152\ \ \ \ \ (}
-\DoxyCodeLine{00153\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{cellI}},}
-\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{GaussField<scalar>}}\&\ \mbox{\hyperlink{namespaceFoam_a5faf7f302ed6c6307e3668365456af74}{T}},}
-\DoxyCodeLine{00155\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{GaussField<scalar>}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{kappa}}}
-\DoxyCodeLine{00156\ \ \ \ \ )\ \textcolor{keyword}{const\ override};}
-\DoxyCodeLine{00157\ }
-\DoxyCodeLine{00158\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classFoam_1_1Sutherland_a7ee7080e27cc710aea86d363d457469f}{calcKappa}}}
-\DoxyCodeLine{00159\ \ \ \ \ (}
-\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{boundaryGaussField<scalar>}}\&\ \mbox{\hyperlink{namespaceFoam_a5faf7f302ed6c6307e3668365456af74}{T}},}
-\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{boundaryGaussField<scalar>}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{kappa}}}
-\DoxyCodeLine{00162\ \ \ \ \ )\ \textcolor{keyword}{const\ override};}
-\DoxyCodeLine{00163\ }
-\DoxyCodeLine{00172\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classFoam_1_1Sutherland_ac6aa4f331bafa94c7e8ba3971b8ea138}{calcPr}}}
-\DoxyCodeLine{00173\ \ \ \ \ (}
-\DoxyCodeLine{00174\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{cellI}},}
-\DoxyCodeLine{00175\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{GaussField<scalar>}}\&\ \mbox{\hyperlink{namespaceFoam_a5faf7f302ed6c6307e3668365456af74}{T}},}
-\DoxyCodeLine{00176\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{GaussField<scalar>}}\&\ Pr}
-\DoxyCodeLine{00177\ \ \ \ \ )\ \textcolor{keyword}{const\ override};}
-\DoxyCodeLine{00178\ }
-\DoxyCodeLine{00179\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classFoam_1_1Sutherland_ad009ed4d5a679266a6e36328a5310014}{calcPr}}}
-\DoxyCodeLine{00180\ \ \ \ \ (}
-\DoxyCodeLine{00181\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{boundaryGaussField<scalar>}}\&\ \mbox{\hyperlink{namespaceFoam_a5faf7f302ed6c6307e3668365456af74}{T}},}
-\DoxyCodeLine{00182\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{boundaryGaussField<scalar>}}\&\ Pr}
-\DoxyCodeLine{00183\ \ \ \ \ )\ \textcolor{keyword}{const\ override};}
-\DoxyCodeLine{00184\ }
-\DoxyCodeLine{00188\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classFoam_1_1Sutherland_a8ab1bebb568aff0b7a3b736127fb2ce7}{read}}()\ \textcolor{keyword}{override};}
-\DoxyCodeLine{00189\ }
-\DoxyCodeLine{00193\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classFoam_1_1Sutherland_a9aa183b222d6148508781ac6dc0a45bf}{isSutherlandTransportLaw}}()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};\ \}}
-\DoxyCodeLine{00194\ \};}
-\DoxyCodeLine{00195\ }
-\DoxyCodeLine{00196\ \}\ \textcolor{comment}{//\ End\ namespace\ Foam}}
-\DoxyCodeLine{00197\ }
-\DoxyCodeLine{00198\ \textcolor{preprocessor}{\#endif}}
-\DoxyCodeLine{00199\ }
-\DoxyCodeLine{00200\ \textcolor{comment}{//\ *************************************************************************\ //}}
+\DoxyCodeLine{00122\ \ \ \ \ \textcolor{comment}{//====================================================================//}}
+\DoxyCodeLine{00123\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Transport-\/law\ interface}}
+\DoxyCodeLine{00124\ \ \ \ \ \textcolor{comment}{//====================================================================//}}
+\DoxyCodeLine{00125\ }
+\DoxyCodeLine{00134\ \ \ \ \ \textcolor{keyword}{virtual}\ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}}\ \mbox{\hyperlink{classFoam_1_1Sutherland_ad1efc24b72a94575295abae29b61cd80}{calcMu}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}}\ \mbox{\hyperlink{namespaceFoam_a5faf7f302ed6c6307e3668365456af74}{T}})\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00135\ }
+\DoxyCodeLine{00144\ \ \ \ \ \textcolor{keyword}{virtual}\ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}}\ \mbox{\hyperlink{classFoam_1_1Sutherland_addd97a0cc803790dfc5f28b11c6d291c}{calcKappa}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}}\ \mbox{\hyperlink{namespaceFoam_a5faf7f302ed6c6307e3668365456af74}{T}})\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00145\ }
+\DoxyCodeLine{00154\ \ \ \ \ \textcolor{keyword}{virtual}\ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}}\ \mbox{\hyperlink{classFoam_1_1Sutherland_aa5a5bd9617102f6fcb2427fd06fa3c42}{calcPr}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}}\ \mbox{\hyperlink{namespaceFoam_a5faf7f302ed6c6307e3668365456af74}{T}})\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00155\ }
+\DoxyCodeLine{00159\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classFoam_1_1Sutherland_a8ab1bebb568aff0b7a3b736127fb2ce7}{read}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00160\ }
+\DoxyCodeLine{00164\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classFoam_1_1Sutherland_a9aa183b222d6148508781ac6dc0a45bf}{isSutherlandTransportLaw}}()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};\ \}}
+\DoxyCodeLine{00165\ \};}
+\DoxyCodeLine{00166\ }
+\DoxyCodeLine{00167\ \}\ \textcolor{comment}{//\ End\ namespace\ Foam}}
+\DoxyCodeLine{00168\ }
+\DoxyCodeLine{00169\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00170\ }
+\DoxyCodeLine{00171\ \textcolor{comment}{//\ *************************************************************************\ //}}
 
 \end{DoxyCode}
