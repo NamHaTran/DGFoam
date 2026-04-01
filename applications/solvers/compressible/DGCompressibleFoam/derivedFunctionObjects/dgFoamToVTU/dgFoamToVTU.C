@@ -40,11 +40,174 @@ License
 #include "dgField.H"
 #include "dgThermoConservative.H"
 #include "dgAffineMapping.H"
+#include "boundBox.H"
+
+#include <cmath>
+#include <unordered_map>
 
 namespace Foam
 {
 namespace dgFunctionObjects
 {
+
+namespace
+{
+
+struct PointMergeKey
+{
+    long long x;
+    long long y;
+    long long z;
+
+    bool operator==(const PointMergeKey& other) const
+    {
+        return x == other.x && y == other.y && z == other.z;
+    }
+};
+
+
+struct PointMergeKeyHash
+{
+    std::size_t operator()(const PointMergeKey& key) const
+    {
+        std::size_t seed = std::hash<long long>{}(key.x);
+        seed ^= std::hash<long long>{}(key.y) + 0x9e3779b97f4a7c15ULL
+             + (seed << 6) + (seed >> 2);
+        seed ^= std::hash<long long>{}(key.z) + 0x9e3779b97f4a7c15ULL
+             + (seed << 6) + (seed >> 2);
+        return seed;
+    }
+};
+
+
+inline PointMergeKey makePointMergeKey(const point& pt, const scalar tol)
+{
+    return
+    {
+        std::llround(pt.x()/tol),
+        std::llround(pt.y()/tol),
+        std::llround(pt.z()/tol)
+    };
+}
+
+
+inline label parseAxisName(const word& axisName)
+{
+    if (axisName == "x")
+    {
+        return 0;
+    }
+    if (axisName == "y")
+    {
+        return 1;
+    }
+    if (axisName == "z")
+    {
+        return 2;
+    }
+
+    return -1;
+}
+
+
+inline scalar axisAlignment(const vector& dir, const label cartAxis)
+{
+    return mag(dir[cartAxis])/max(VSMALL, mag(dir));
+}
+
+
+inline vector hexReferenceDirection
+(
+    const pointField& cellVertices,
+    const label refDir
+)
+{
+    switch (refDir)
+    {
+        case 0:
+            return 0.25
+               * (
+                    (cellVertices[1] - cellVertices[0])
+                  + (cellVertices[2] - cellVertices[3])
+                  + (cellVertices[5] - cellVertices[4])
+                  + (cellVertices[6] - cellVertices[7])
+                );
+
+        case 1:
+            return 0.25
+               * (
+                    (cellVertices[3] - cellVertices[0])
+                  + (cellVertices[2] - cellVertices[1])
+                  + (cellVertices[7] - cellVertices[4])
+                  + (cellVertices[6] - cellVertices[5])
+                );
+
+        case 2:
+            return 0.25
+               * (
+                    (cellVertices[4] - cellVertices[0])
+                  + (cellVertices[5] - cellVertices[1])
+                  + (cellVertices[7] - cellVertices[3])
+                  + (cellVertices[6] - cellVertices[2])
+                );
+
+        default:
+            FatalErrorInFunction
+                << "Expected HEX reference direction in [0,2], got "
+                << refDir << exit(FatalError);
+    }
+
+    return vector::zero;
+}
+
+
+inline label collapsedReferenceDirection
+(
+    const dgCellType type,
+    const pointField& cellVertices,
+    const label cartAxis
+)
+{
+    switch (type)
+    {
+        case dgCellType::HEX:
+        {
+            scalar bestScore = -GREAT;
+            label bestDir = -1;
+
+            for (label refDir = 0; refDir < 3; ++refDir)
+            {
+                const scalar score =
+                    axisAlignment
+                    (
+                        hexReferenceDirection(cellVertices, refDir),
+                        cartAxis
+                    );
+
+                if (score > bestScore)
+                {
+                    bestScore = score;
+                    bestDir = refDir;
+                }
+            }
+
+            return bestDir;
+        }
+
+        case dgCellType::PRISM:
+            return 1;
+
+        default:
+            FatalErrorInFunction
+                << "Collapsed through-thickness sampling is only implemented "
+                << "for HEX and PRISM cells, got " << type
+                << exit(FatalError);
+    }
+
+    return -1;
+}
+
+} // End anonymous namespace
 
 defineTypeNameAndDebug(dgFoamToVTU, 0);
 addToRunTimeSelectionTable(functionObject, dgFoamToVTU, dictionary);
@@ -64,8 +227,12 @@ dgFoamToVTU::dgFoamToVTU
     rhoUName_("rhoU"),
     EName_("E"),
     thermoName_("dgThermoConservative"),
-    n_(1),
+    n_(0),
     pOrder_(-1),
+    twoDMode_(false),
+    twoDNormalAxis_(-1),
+    mergeSharedPoints_(false),
+    pointMergeTol_(-1),
     Cp_(Zero),
     Cv_(Zero),
     R_(Zero),
@@ -92,13 +259,75 @@ bool dgFoamToVTU::read(const dictionary& dict)
     EName_ = dict.getOrDefault<word>("E", "E");
     thermoName_ = dict.getOrDefault<word>("thermo", "dgThermoConservative");
 
-    n_ = readLabel(dict.lookup("n"));
+    const word twoDNormalAxisName =
+        dict.getOrDefault<word>("twoDNormalAxis", word::null);
+    twoDMode_ = !twoDNormalAxisName.empty();
+    twoDNormalAxis_ = -1;
 
-    if (n_ < 1)
+    if (twoDMode_)
+    {
+        twoDNormalAxis_ = parseAxisName(twoDNormalAxisName);
+
+        if (twoDNormalAxis_ < 0)
+        {
+            FatalIOErrorInFunction(dict)
+                << "Expected 'twoDNormalAxis' to be one of x, y, z for "
+                << type() << ", got '" << twoDNormalAxisName << "'."
+                << exit(FatalIOError);
+        }
+    }
+
+    mergeSharedPoints_ =
+        dict.getOrDefault<Switch>("mergeSharedPoints", false);
+    pointMergeTol_ = dict.getOrDefault<scalar>("pointMergeTol", -1);
+
+    if (pointMergeTol_ == 0)
     {
         FatalIOErrorInFunction(dict)
-            << "Expected 'n >= 1' for dgFoamToVTU, got " << n_
+            << "Expected 'pointMergeTol' to be non-zero for dgFoamToVTU."
             << exit(FatalIOError);
+    }
+
+    const bool hasOutputPoints = dict.found("outputPoints");
+    const bool hasLegacyN = dict.found("n");
+
+    if (hasOutputPoints)
+    {
+        const label outputPoints = readLabel(dict.lookup("outputPoints"));
+
+        if (outputPoints < 2)
+        {
+            FatalIOErrorInFunction(dict)
+                << "Expected 'outputPoints >= 2' for dgFoamToVTU, got "
+                << outputPoints << exit(FatalIOError);
+        }
+
+        n_ = outputPoints - 1;
+
+        if (hasLegacyN)
+        {
+            WarningInFunction
+                << "Both 'outputPoints' and legacy alias 'n' were provided for "
+                << type() << ". Using 'outputPoints=" << outputPoints
+                << "' and ignoring 'n'." << endl;
+        }
+    }
+    else if (hasLegacyN)
+    {
+        n_ = readLabel(dict.lookup("n"));
+
+        if (n_ < 1)
+        {
+            FatalIOErrorInFunction(dict)
+                << "Expected legacy 'n >= 1' for dgFoamToVTU, got " << n_
+                << exit(FatalIOError);
+        }
+    }
+    else
+    {
+        // Match Nektar's VTU exporter more closely by defaulting to the
+        // polynomial's native equi-spaced resolution during initialization.
+        n_ = 0;
     }
 
     pOrder_ = -1;
@@ -243,6 +472,19 @@ void dgFoamToVTU::initialize()
             << exit(FatalIOError);
     }
 
+    if (n_ == 0)
+    {
+        const label outputPoints = max(2, pOrder_ + 1);
+        n_ = outputPoints - 1;
+
+        if (log)
+        {
+            Info<< type()
+                << " defaulted outputPoints to " << outputPoints
+                << " from pOrder=" << pOrder_ << endl;
+        }
+    }
+
     tessellationPtr_.reset(new dgEquiSpacedTessellation(n_, pOrder_));
     initialized_ = true;
 }
@@ -366,18 +608,39 @@ void dgFoamToVTU::writePiece(const fileName& filePath) const
     const dgField<scalar>& E = EField();
 
     DynamicList<vector> points;
-    DynamicList<scalar> pValues;
-    DynamicList<scalar> TValues;
-    DynamicList<vector> UValues;
+    DynamicList<scalar> rhoValues;
+    DynamicList<vector> rhoUValues;
+    DynamicList<scalar> EValues;
+    DynamicList<label> sampleCounts;
     DynamicList<label> connectivity;
     DynamicList<label> offsets;
     DynamicList<unsigned char> cellTypes;
     const dgEquiSpacedTessellation& tessellationRef = tessellation();
 
     points.reserve(meshRef.nCells()*(n_ + 1));
-    pValues.reserve(meshRef.nCells()*(n_ + 1));
-    TValues.reserve(meshRef.nCells()*(n_ + 1));
-    UValues.reserve(meshRef.nCells()*(n_ + 1));
+    rhoValues.reserve(meshRef.nCells()*(n_ + 1));
+    rhoUValues.reserve(meshRef.nCells()*(n_ + 1));
+    EValues.reserve(meshRef.nCells()*(n_ + 1));
+    sampleCounts.reserve(meshRef.nCells()*(n_ + 1));
+
+    scalar mergeTol = -1;
+    std::unordered_map<PointMergeKey, label, PointMergeKeyHash> mergedPointMap;
+
+    if (mergeSharedPoints_)
+    {
+        const scalar defaultTol =
+            max(SMALL, 1e-12*boundBox(meshRef.points(), false).mag());
+
+        mergeTol = (pointMergeTol_ > 0) ? pointMergeTol_ : defaultTol;
+        mergedPointMap.reserve(meshRef.nCells()*(n_ + 1));
+
+        if (log)
+        {
+            Info<< type()
+                << " merging coincident tessellation points with tolerance "
+                << mergeTol << endl;
+        }
+    }
 
     forAll(meshRef.cells(), cellI)
     {
@@ -386,10 +649,17 @@ void dgFoamToVTU::writePiece(const fileName& filePath) const
             tessellationRef.cellInfo(shape, meshRef.points());
         const pointField& cellVertices = cellInfo.vertices;
         const dgCellType type = cellInfo.type;
+        const label collapsedRefDir =
+            twoDMode_
+          ? collapsedReferenceDirection(type, cellVertices, twoDNormalAxis_)
+          : -1;
         const List<dgEquiSpacedTessellation::SamplePoint>& samples =
-            tessellationRef.samplePoints(type);
+            twoDMode_
+          ? tessellationRef.collapsedSamplePoints(type, collapsedRefDir)
+          : tessellationRef.samplePoints(type);
         const label pointOffset = points.size();
         pointField localPoints(samples.size());
+        labelList localToGlobal(samples.size(), -1);
 
         forAll(samples, sampleI)
         {
@@ -401,36 +671,130 @@ void dgFoamToVTU::writePiece(const fileName& filePath) const
             const vector rhoUValue = evaluateField(rhoU, cellI, sample.basis);
             const scalar EValue = evaluateField(E, cellI, sample.basis);
 
-            const scalar rhoSafe =
-                (mag(rhoValue) > VSMALL)
-              ? rhoValue
-              : (rhoValue >= 0.0 ? VSMALL : -VSMALL);
-
-            const vector UValue = rhoUValue/rhoSafe;
-            const scalar eValue = EValue/rhoSafe - 0.5*magSqr(UValue);
-            const scalar TValue = eValue/Cv_;
-            const scalar pValue = rhoValue*R_*TValue;
-
-            // Store the physical-space point and the derived primitive data
-            // as point data in the VTU file.
             const point physicalPoint = mapEtaToX(sample.eta, cellVertices, type);
-
             localPoints[sampleI] = physicalPoint;
-            points.append(physicalPoint);
-            pValues.append(pValue);
-            TValues.append(TValue);
-            UValues.append(UValue);
+
+            if (mergeSharedPoints_)
+            {
+                const PointMergeKey key = makePointMergeKey(physicalPoint, mergeTol);
+                const auto iter = mergedPointMap.find(key);
+
+                if (iter == mergedPointMap.end())
+                {
+                    const label pointI = points.size();
+                    mergedPointMap.emplace(key, pointI);
+
+                    points.append(physicalPoint);
+                    rhoValues.append(rhoValue);
+                    rhoUValues.append(rhoUValue);
+                    EValues.append(EValue);
+                    sampleCounts.append(1);
+
+                    localToGlobal[sampleI] = pointI;
+                }
+                else
+                {
+                    const label pointI = iter->second;
+                    rhoValues[pointI] += rhoValue;
+                    rhoUValues[pointI] += rhoUValue;
+                    EValues[pointI] += EValue;
+                    sampleCounts[pointI] += 1;
+
+                    localToGlobal[sampleI] = pointI;
+                }
+            }
+            else
+            {
+                points.append(physicalPoint);
+                rhoValues.append(rhoValue);
+                rhoUValues.append(rhoUValue);
+                EValues.append(EValue);
+                sampleCounts.append(1);
+            }
         }
 
-        tessellationRef.appendVtkCells
-        (
-            type,
-            localPoints,
-            pointOffset,
-            connectivity,
-            offsets,
-            cellTypes
-        );
+        if (twoDMode_)
+        {
+            if (mergeSharedPoints_)
+            {
+                tessellationRef.appendCollapsedVtkCells
+                (
+                    type,
+                    collapsedRefDir,
+                    localPoints,
+                    localToGlobal,
+                    connectivity,
+                    offsets,
+                    cellTypes
+                );
+            }
+            else
+            {
+                tessellationRef.appendCollapsedVtkCells
+                (
+                    type,
+                    collapsedRefDir,
+                    localPoints,
+                    pointOffset,
+                    connectivity,
+                    offsets,
+                    cellTypes
+                );
+            }
+        }
+        else
+        {
+            if (mergeSharedPoints_)
+            {
+                tessellationRef.appendVtkCells
+                (
+                    type,
+                    localPoints,
+                    localToGlobal,
+                    connectivity,
+                    offsets,
+                    cellTypes
+                );
+            }
+            else
+            {
+                tessellationRef.appendVtkCells
+                (
+                    type,
+                    localPoints,
+                    pointOffset,
+                    connectivity,
+                    offsets,
+                    cellTypes
+                );
+            }
+        }
+    }
+
+    List<scalar> pValues(points.size(), Zero);
+    List<scalar> TValues(points.size(), Zero);
+    List<vector> UValues(points.size(), vector::zero);
+
+    forAll(points, pointI)
+    {
+        const scalar invCount = 1.0/scalar(sampleCounts[pointI]);
+        const scalar rhoValue = rhoValues[pointI]*invCount;
+        const vector rhoUValue = rhoUValues[pointI]*invCount;
+        const scalar EValue = EValues[pointI]*invCount;
+
+        const scalar rhoSafe =
+            (mag(rhoValue) > VSMALL)
+          ? rhoValue
+          : (rhoValue >= 0.0 ? VSMALL : -VSMALL);
+
+        const vector UValue = rhoUValue/rhoSafe;
+        const scalar eValue = EValue/rhoSafe - 0.5*magSqr(UValue);
+        const scalar TValue = eValue/Cv_;
+        const scalar pValue = rhoValue*R_*TValue;
+
+        pValues[pointI] = pValue;
+        TValues[pointI] = TValue;
+        UValues[pointI] = UValue;
     }
 
     mkDir(filePath.path());

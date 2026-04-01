@@ -50,6 +50,23 @@ template<class Type> class dgField;
 template<class Type> class GaussField;
 class dgThermoConservative;
 
+/*---------------------------------------------------------------------------*\
+                Class dgCompressibleBoundaryManager Declaration
+\*---------------------------------------------------------------------------*/
+
+/**
+ * \class Foam::dgCompressibleBoundaryManager
+ * \brief Manager for patch-wise compressible DG boundary conditions
+ *
+ * \details
+ * Reads the compressible boundary-condition dictionary, constructs one
+ * runtime-selected dgCompressibleBoundaryField for each supported physical
+ * patch, and maintains the patch-to-condition lookup used during updates.
+ *
+ * The manager also stores the uniform internal primitive reference state and
+ * uses it to initialize conservative DG fields before patch ghost states are
+ * populated on boundary-face Gauss points.
+ */
 class dgCompressibleBoundaryManager
 {
 private:

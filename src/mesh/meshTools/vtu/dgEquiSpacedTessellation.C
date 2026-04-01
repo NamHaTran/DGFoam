@@ -45,6 +45,8 @@ constexpr unsigned char vtkTetType = 10u;
 constexpr unsigned char vtkHexType = 12u;
 constexpr unsigned char vtkWedgeType = 13u;
 constexpr unsigned char vtkPyramidType = 14u;
+constexpr unsigned char vtkTriType = 5u;
+constexpr unsigned char vtkQuadType = 9u;
 
 inline label trianglePointCount(const label m)
 {
@@ -363,6 +365,58 @@ dgEquiSpacedTessellation::samplePoints
 }
 
 
+const List<dgEquiSpacedTessellation::SamplePoint>&
+dgEquiSpacedTessellation::collapsedSamplePoints
+(
+    const dgCellType type,
+    const label collapseDir
+) const
+{
+    switch (type)
+    {
+        case dgCellType::HEX:
+            if (collapseDir < 0 || collapseDir > 2)
+            {
+                FatalErrorInFunction
+                    << "Expected hexahedron collapseDir in [0,2], got "
+                    << collapseDir << exit(FatalError);
+            }
+
+            if (!hexCollapsedSamples_[collapseDir].size())
+            {
+                buildHexCollapsedSamples
+                (
+                    hexCollapsedSamples_[collapseDir],
+                    collapseDir
+                );
+            }
+            return hexCollapsedSamples_[collapseDir];
+
+        case dgCellType::PRISM:
+            if (collapseDir != 1)
+            {
+                FatalErrorInFunction
+                    << "Prism collapseDir must be 1 (eta2), got "
+                    << collapseDir << exit(FatalError);
+            }
+
+            if (!prismCollapsedSamples_.size())
+            {
+                buildPrismCollapsedSamples(prismCollapsedSamples_);
+            }
+            return prismCollapsedSamples_;
+
+        default:
+            FatalErrorInFunction
+                << "Collapsed VTU sampling is only implemented for HEX and "
+                << "PRISM cells, "
+                << "got cell type " << type << exit(FatalError);
+    }
+
+    return hexCollapsedSamples_[0];
+}
+
+
 const List<dgEquiSpacedTessellation::VtkSubCell>&
 dgEquiSpacedTessellation::subCells
 (
@@ -406,6 +460,58 @@ dgEquiSpacedTessellation::subCells
     }
 
     return hexSubCells_;
+}
+
+
+const List<dgEquiSpacedTessellation::VtkSubCell>&
+dgEquiSpacedTessellation::collapsedSubCells
+(
+    const dgCellType type,
+    const label collapseDir
+) const
+{
+    switch (type)
+    {
+        case dgCellType::HEX:
+            if (collapseDir < 0 || collapseDir > 2)
+            {
+                FatalErrorInFunction
+                    << "Expected hexahedron collapseDir in [0,2], got "
+                    << collapseDir << exit(FatalError);
+            }
+
+            if (!hexCollapsedSubCells_[collapseDir].size())
+            {
+                buildHexCollapsedSubCells
+                (
+                    hexCollapsedSubCells_[collapseDir],
+                    collapseDir
+                );
+            }
+            return hexCollapsedSubCells_[collapseDir];
+
+        case dgCellType::PRISM:
+            if (collapseDir != 1)
+            {
+                FatalErrorInFunction
+                    << "Prism collapseDir must be 1 (eta2), got "
+                    << collapseDir << exit(FatalError);
+            }
+
+            if (!prismCollapsedSubCells_.size())
+            {
+                buildPrismCollapsedSubCells(prismCollapsedSubCells_);
+            }
+            return prismCollapsedSubCells_;
+
+        default:
+            FatalErrorInFunction
+                << "Collapsed VTU sampling is only implemented for HEX and "
+                << "PRISM cells, "
+                << "got cell type " << type << exit(FatalError);
+    }
+
+    return hexCollapsedSubCells_[0];
 }
 
 
@@ -529,6 +635,84 @@ void dgEquiSpacedTessellation::buildTetSamples(List<SamplePoint>& samples) const
                     )
                 );
             }
+        }
+    }
+
+    samples.transfer(dynSamples);
+}
+
+
+void dgEquiSpacedTessellation::buildHexCollapsedSamples
+(
+    List<SamplePoint>& samples,
+    const label collapseDir
+) const
+{
+    DynamicList<SamplePoint> dynSamples((n_ + 1)*(n_ + 1));
+
+    for (label j = 0; j <= n_; ++j)
+    {
+        const scalar coordJ = -1.0 + 2.0*scalar(j)/scalar(n_);
+
+        for (label i = 0; i <= n_; ++i)
+        {
+            const scalar coordI = -1.0 + 2.0*scalar(i)/scalar(n_);
+            vector eta(vector::zero);
+
+            switch (collapseDir)
+            {
+                case 0:
+                    eta = vector(0.0, coordI, coordJ);
+                    break;
+
+                case 1:
+                    eta = vector(coordI, 0.0, coordJ);
+                    break;
+
+                case 2:
+                    eta = vector(coordI, coordJ, 0.0);
+                    break;
+
+                default:
+                    FatalErrorInFunction
+                        << "Expected hexahedron collapseDir in [0,2], got "
+                        << collapseDir << exit(FatalError);
+            }
+
+            dynSamples.append(makeSample(eta, dgCellType::HEX));
+        }
+    }
+
+    samples.transfer(dynSamples);
+}
+
+
+void dgEquiSpacedTessellation::buildPrismCollapsedSamples
+(
+    List<SamplePoint>& samples
+) const
+{
+    const label nSamples = trianglePointCount(n_);
+    DynamicList<SamplePoint> dynSamples(nSamples);
+    const scalar xi2 = 0.0;
+
+    for (label i = 0; i <= n_; ++i)
+    {
+        const scalar xi3 = -1.0 + 2.0*scalar(i)/scalar(n_);
+
+        for (label j = 0; j <= n_ - i; ++j)
+        {
+            const scalar xi1 = -1.0 + 2.0*scalar(j)/scalar(n_);
+            const vector xi(xi1, xi2, xi3);
+
+            dynSamples.append
+            (
+                makeSample
+                (
+                    canonicalEtaFromXi(xi, dgCellType::PRISM),
+                    dgCellType::PRISM
+                )
+            );
         }
     }
 
@@ -711,6 +895,73 @@ void dgEquiSpacedTessellation::buildTetSubCells(List<VtkSubCell>& cells) const
 }
 
 
+void dgEquiSpacedTessellation::buildHexCollapsedSubCells
+(
+    List<VtkSubCell>& cells,
+    const label collapseDir
+) const
+{
+    DynamicList<VtkSubCell> dynCells(n_*n_);
+
+    auto quadPoint =
+    [&](const label i, const label j)
+    {
+        return i + (n_ + 1)*j;
+    };
+
+    for (label j = 0; j < n_; ++j)
+    {
+        for (label i = 0; i < n_; ++i)
+        {
+            const label q00 = quadPoint(i, j);
+            const label q10 = quadPoint(i + 1, j);
+            const label q11 = quadPoint(i + 1, j + 1);
+            const label q01 = quadPoint(i, j + 1);
+
+            if (collapseDir < 0 || collapseDir > 2)
+            {
+                FatalErrorInFunction
+                    << "Expected hexahedron collapseDir in [0,2], got "
+                    << collapseDir << exit(FatalError);
+            }
+
+            appendSubCell(dynCells, {q00, q10, q11, q01}, vtkQuadType);
+        }
+    }
+
+    cells.transfer(dynCells);
+}
+
+
+void dgEquiSpacedTessellation::buildPrismCollapsedSubCells
+(
+    List<VtkSubCell>& cells
+) const
+{
+    DynamicList<VtkSubCell> dynCells(n_*n_);
+
+    for (label row = 0; row < n_; ++row)
+    {
+        for (label i = 0; i < n_ - row; ++i)
+        {
+            const label A = triangleRowOffset(n_, row) + i;
+            const label B = triangleRowOffset(n_, row) + i + 1;
+            const label C = triangleRowOffset(n_, row + 1) + i;
+
+            appendSubCell(dynCells, {A, B, C}, vtkTriType);
+
+            if (i + row < n_ - 1)
+            {
+                const label D = triangleRowOffset(n_, row + 1) + i + 1;
+                appendSubCell(dynCells, {B, D, C}, vtkTriType);
+            }
+        }
+    }
+
+    cells.transfer(dynCells);
+}
+
+
 pointField dgEquiSpacedTessellation::orientPrismVertices
 (
     const pointField& rawVertices
@@ -845,6 +1096,96 @@ void dgEquiSpacedTessellation::appendVtkCells
         for (label pointI = 0; pointI < cells[cellI].nPoints; ++pointI)
         {
             connectivity.append(pointOffset + pointLabels[pointI]);
+        }
+
+        connectivityOffset += cells[cellI].nPoints;
+        offsets.append(connectivityOffset);
+        cellTypes.append(cells[cellI].vtkType);
+    }
+}
+
+
+void dgEquiSpacedTessellation::appendCollapsedVtkCells
+(
+    const dgCellType type,
+    const label collapseDir,
+    const UList<point>& localPoints,
+    const label pointOffset,
+    DynamicList<label>& connectivity,
+    DynamicList<label>& offsets,
+    DynamicList<unsigned char>& cellTypes
+) const
+{
+    const List<VtkSubCell>& cells = collapsedSubCells(type, collapseDir);
+    label connectivityOffset = offsets.size() ? offsets[offsets.size() - 1] : 0;
+
+    forAll(cells, cellI)
+    {
+        for (label pointI = 0; pointI < cells[cellI].nPoints; ++pointI)
+        {
+            connectivity.append(pointOffset + cells[cellI].pointLabels[pointI]);
+        }
+
+        connectivityOffset += cells[cellI].nPoints;
+        offsets.append(connectivityOffset);
+        cellTypes.append(cells[cellI].vtkType);
+    }
+}
+
+
+void dgEquiSpacedTessellation::appendVtkCells
+(
+    const dgCellType type,
+    const UList<point>& localPoints,
+    const UList<label>& pointMap,
+    DynamicList<label>& connectivity,
+    DynamicList<label>& offsets,
+    DynamicList<unsigned char>& cellTypes
+) const
+{
+    const List<VtkSubCell>& cells = subCells(type);
+    label connectivityOffset = offsets.size() ? offsets[offsets.size() - 1] : 0;
+
+    forAll(cells, cellI)
+    {
+        FixedList<label, 8> pointLabels = cells[cellI].pointLabels;
+
+        if (type == dgCellType::PRISM)
+        {
+            orientPrismSubCell(localPoints, pointLabels, cells[cellI].nPoints);
+        }
+
+        for (label pointI = 0; pointI < cells[cellI].nPoints; ++pointI)
+        {
+            connectivity.append(pointMap[pointLabels[pointI]]);
+        }
+
+        connectivityOffset += cells[cellI].nPoints;
+        offsets.append(connectivityOffset);
+        cellTypes.append(cells[cellI].vtkType);
+    }
+}
+
+
+void dgEquiSpacedTessellation::appendCollapsedVtkCells
+(
+    const dgCellType type,
+    const label collapseDir,
+    const UList<point>& localPoints,
+    const UList<label>& pointMap,
+    DynamicList<label>& connectivity,
+    DynamicList<label>& offsets,
+    DynamicList<unsigned char>& cellTypes
+) const
+{
+    const List<VtkSubCell>& cells = collapsedSubCells(type, collapseDir);
+    label connectivityOffset = offsets.size() ? offsets[offsets.size() - 1] : 0;
+
+    forAll(cells, cellI)
+    {
+        for (label pointI = 0; pointI < cells[cellI].nPoints; ++pointI)
+        {
+            connectivity.append(pointMap[cells[cellI].pointLabels[pointI]]);
         }
 
         connectivityOffset += cells[cellI].nPoints;

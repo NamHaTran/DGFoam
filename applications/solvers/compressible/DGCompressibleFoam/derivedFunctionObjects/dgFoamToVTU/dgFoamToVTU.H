@@ -38,7 +38,8 @@ Description
     The current implementation is intentionally solver-specific:
     - it assumes the fields and thermo object created by
       \c DGCompressibleFoam are present in the region database,
-    - it reads the interpolation density from dictionary entry \c n,
+    - it reads the equi-spaced output density from dictionary entry
+      \c outputPoints (or legacy alias \c n),
     - it currently supports the thermo chain
       \c idealGas + \c constantCp + \c sensibleInternalEnergy.
 
@@ -50,6 +51,18 @@ Description
     The sampled points are also connected into a linear sub-cell
     tessellation so ParaView can render a volumetric representation of the
     reconstructed DG solution instead of only a point cloud.
+
+    Optional smoothing for visualization can be enabled with
+    \c mergeSharedPoints, which merges coincident sampled points across
+    neighboring cells and averages their conservative state before
+    reconstructing primitive variables. This produces more continuous-looking
+    contours, at the cost of no longer showing the exact DG jump at element
+    interfaces.
+
+    For extruded 2D cases, \c twoDNormalAxis can be set to \c x, \c y, or
+    \c z. In that mode the exporter collapses the sampling lattice to a
+    single layer through the specified out-of-plane direction and writes
+    in-plane surface cells while keeping their 3D coordinates.
 
 \*---------------------------------------------------------------------------*/
 
@@ -133,11 +146,26 @@ class dgFoamToVTU
     /** Registry name of the solver thermo object */
     word thermoName_;
 
-    /** User-requested sampling density per reference direction */
+    /**
+     * Internal number of equi-spaced sub-intervals per reference direction.
+     * The user-facing output point count is therefore \c n_ + 1.
+     */
     label n_;
 
     /** DG polynomial order read from \c system/dgSchemes */
     label pOrder_;
+
+    /** Activate collapsed through-thickness sampling for extruded 2D cases */
+    bool twoDMode_;
+
+    /** Cartesian component normal to the 2D plane: 0=x, 1=y, 2=z */
+    label twoDNormalAxis_;
+
+    /** Merge coincident tessellation points to obtain smoother contours */
+    bool mergeSharedPoints_;
+
+    /** Absolute tolerance used when merging coincident sample points */
+    scalar pointMergeTol_;
 
     /** Constant-pressure heat capacity read from thermo dictionaries */
     scalar Cp_;

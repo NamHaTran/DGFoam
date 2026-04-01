@@ -49,6 +49,23 @@ namespace Foam
 
 class dgThermoConservative;
 
+/*---------------------------------------------------------------------------*\
+                 Class dgCompressibleBoundaryField Declaration
+\*---------------------------------------------------------------------------*/
+
+/**
+ * \class Foam::dgCompressibleBoundaryField
+ * \brief Base class for runtime-selectable compressible DG boundary conditions
+ *
+ * \details
+ * Defines the common interface used to compute conservative ghost states
+ * \f$(\rho, \rho \mathbf{U}, E)^+\f$ from interior states at boundary-face
+ * Gauss points.
+ *
+ * The class stores patch, DG mesh, and thermodynamic references and provides
+ * helper conversions from primitive or pressure-Mach-temperature data to the
+ * conservative variables required by the DG solver.
+ */
 class dgCompressibleBoundaryField
 {
 protected:

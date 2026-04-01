@@ -46,7 +46,7 @@ namespace Foam
 
 /**
  * \namespace Foam::dgBoundaryHelper
- * \brief Utility functions for DG boundary patch classification
+ * \brief Utility functions for DG boundary patch classification.
  *
  * \details
  * This namespace provides a lightweight set of helper functions
@@ -56,8 +56,8 @@ namespace Foam
  *  - General physical boundary patches (walls, inlets, outlets, symmetry)
  *  - Constraint or special patches (e.g. overset, empty)
  *
- * The classification is based solely on the fvPatch type string
- * and is intentionally kept simple and extensible.
+ * The classification is based solely on the fvPatch type string and is
+ * intentionally kept simple and extensible.
  */
 namespace dgBoundaryHelper
 {
@@ -67,10 +67,13 @@ namespace dgBoundaryHelper
 //======================================================================//
 
 /**
- * \brief Check if patch is an interface patch
+ * \brief Return true if the patch is treated as an interface patch.
  *
  * Interface patches are used to connect DG cells across
  * processor boundaries or other internal interfaces.
+ *
+ * \param patch Boundary patch to classify.
+ * \return True for DG interface patches.
  */
 inline bool isInterfacePatch(const fvPatch& patch)
 {
@@ -88,10 +91,13 @@ inline bool isInterfacePatch(const fvPatch& patch)
 //======================================================================//
 
 /**
- * \brief Check if patch is a general physical boundary
+ * \brief Return true if the patch is treated as a general physical boundary.
  *
  * General patches represent physical boundaries such as
  * walls, inlets, outlets, and symmetry planes.
+ *
+ * \param patch Boundary patch to classify.
+ * \return True for general physical boundary patches.
  */
 inline bool isGeneralPatch(const fvPatch& patch)
 {
@@ -112,11 +118,14 @@ inline bool isGeneralPatch(const fvPatch& patch)
 //======================================================================//
 
 /**
- * \brief Check if patch is a constraint or special patch
+ * \brief Return true if the patch is treated as a constraint or special patch.
  *
  * Constraint patches impose additional topological or
  * numerical constraints, or mark directions that should not receive
- * DG ghost-state updates (eg, overset and empty).
+ * DG ghost-state updates (for example, overset and empty).
+ *
+ * \param patch Boundary patch to classify.
+ * \return True for constraint or special patches.
  */
 inline bool isConstraintPatch(const fvPatch& patch)
 {
@@ -135,9 +144,12 @@ inline bool isConstraintPatch(const fvPatch& patch)
 //======================================================================//
 
 /**
- * \brief Check if patch type is recognised by DG framework
+ * \brief Return true if the patch type is recognised by the DG framework.
  *
  * Returns true if the patch belongs to any known DG category.
+ *
+ * \param patch Boundary patch to classify.
+ * \return True if the patch belongs to a supported DG category.
  */
 inline bool isKnownPatchType(const fvPatch& patch)
 {

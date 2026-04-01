@@ -24,6 +24,15 @@ License
     You should have received a copy of the GNU General Public License
     along with OpenFOAM.  If not, see <http://www.gnu.org/licenses/>.
 
+Class
+    Foam::faceGaussField<Type>
+
+Description
+    Inline implementations for Foam::faceGaussField.
+
+SourceFiles
+    faceGaussFieldI.H
+
 \*---------------------------------------------------------------------------*/
 
 #ifndef Foam_faceGaussFieldI_H

@@ -28,7 +28,7 @@ Class
     Foam::cellDof<Type>
 
 Description
-    Store degrees of freedom (Dof) of given Type for a DG cell.
+    Inline implementations for the Foam::cellDof class.
 
 SourceFiles
     cellDofI.H
@@ -43,7 +43,6 @@ namespace Foam
 
 // * * * * * * * * * * * Constructors  * * * * * * * * * * * * //
 
-// Default constructor
 template<class Type>
 cellDof<Type>::cellDof()
 :
@@ -53,7 +52,6 @@ cellDof<Type>::cellDof()
 {}
 
 
-// Copy constructor
 template<class Type>
 cellDof<Type>::cellDof(const cellDof<Type>& other)
 :
@@ -83,7 +81,6 @@ cellDof<Type>::cellDof
 }
 
 
-// Construct from ID + DoF list
 template<class Type>
 cellDof<Type>::cellDof
 (

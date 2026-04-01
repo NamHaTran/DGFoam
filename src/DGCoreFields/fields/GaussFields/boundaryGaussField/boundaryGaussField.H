@@ -35,6 +35,9 @@ Description
     and must be preserved when assigning values back with
     faceGaussField::assignBCGhostState().
 
+SourceFiles
+    boundaryGaussFieldI.H
+
 \*---------------------------------------------------------------------------*/
 
 #ifndef Foam_boundaryGaussField_H
@@ -49,12 +52,23 @@ namespace Foam
                   Class boundaryGaussField Declaration
 \*---------------------------------------------------------------------------*/
 
+/**
+ * \class Foam::boundaryGaussField
+ * \brief Flat container of Gauss-point values on boundary faces.
+ *
+ * \tparam Type Field value type stored at each boundary Gauss point.
+ *
+ * \details
+ * boundaryGaussField stores a one-dimensional sequence of values defined on
+ * boundary-face Gauss points. The mapping between list index and geometric
+ * location is managed externally by the corresponding faceGaussField helpers.
+ */
 template<class Type>
 class boundaryGaussField
 {
 private:
 
-        //- Stored Gauss-point values on boundary faces
+        /** \brief Stored values at boundary-face Gauss points. */
         List<Type> values_;
 
 
@@ -64,16 +78,24 @@ public:
     //                           Constructors
     //====================================================================//
 
-        //- Default constructor
+        /** \brief Construct an empty boundary Gauss field. */
         boundaryGaussField();
 
-        //- Construct boundary field with a given size
+        /**
+         * \brief Construct a boundary Gauss field with a given size.
+         *
+         * \param nSize Number of stored boundary Gauss-point values.
+         */
         boundaryGaussField
         (
             const label nSize
         );
 
-        //- Copy constructor
+        /**
+         * \brief Copy constructor.
+         *
+         * \param other Boundary Gauss field to copy from.
+         */
         boundaryGaussField
         (
             const boundaryGaussField<Type>& other
@@ -84,13 +106,23 @@ public:
     //                             Assignment
     //====================================================================//
 
-        //- Copy assignment
+        /**
+         * \brief Copy assignment operator.
+         *
+         * \param other Boundary Gauss field to copy from.
+         * \return Reference to this object.
+         */
         boundaryGaussField<Type>& operator=
         (
             const boundaryGaussField<Type>& other
         );
 
-        //- Assign uniform value
+        /**
+         * \brief Assign a uniform value to all stored boundary Gauss points.
+         *
+         * \param value Uniform value assigned to every entry.
+         * \return Reference to this object.
+         */
         boundaryGaussField<Type>& operator=
         (
             const Type& value
@@ -101,7 +133,7 @@ public:
     //                              Access
     //====================================================================//
 
-        //- Return number of stored values
+        /** \brief Return the number of stored boundary Gauss-point values. */
         inline label size() const;
 
 
@@ -109,10 +141,20 @@ public:
     //                           Value access
     //====================================================================//
 
-        //- Mutable element access
+        /**
+         * \brief Return writable access to one stored value.
+         *
+         * \param i Flat boundary Gauss-point index.
+         * \return Reference to the requested value.
+         */
         inline Type& operator[](const label i);
 
-        //- Const element access
+        /**
+         * \brief Return read-only access to one stored value.
+         *
+         * \param i Flat boundary Gauss-point index.
+         * \return Const reference to the requested value.
+         */
         inline const Type& operator[](const label i) const;
 };
 

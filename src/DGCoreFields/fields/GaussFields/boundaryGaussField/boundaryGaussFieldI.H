@@ -24,6 +24,15 @@ License
     You should have received a copy of the GNU General Public License
     along with OpenFOAM.  If not, see <http://www.gnu.org/licenses/>.
 
+Class
+    Foam::boundaryGaussField<Type>
+
+Description
+    Inline implementations for Foam::boundaryGaussField.
+
+SourceFiles
+    boundaryGaussFieldI.H
+
 \*---------------------------------------------------------------------------*/
 
 #ifndef Foam_boundaryGaussFieldI_H

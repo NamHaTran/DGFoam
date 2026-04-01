@@ -35,6 +35,7 @@ Description
 
 SourceFiles
     dgBasisField.C
+    dgBasisFieldI.H
 
 \*---------------------------------------------------------------------------*/
 
@@ -76,22 +77,22 @@ private:
     //                           Data members
     //====================================================================//
 
-        /** Reference to the DG geometric mesh */
+        /** \brief DG geometric mesh used to evaluate basis data. */
         const dgGeomMesh& mesh_;
 
-        /** Cell index associated with this basis field */
+        /** \brief Mesh cell index associated with this basis-field cache. */
         const label cellID_;
 
-        /** Local face labels of the cell */
+        /** \brief Local list of face labels belonging to the cell. */
         labelList faceLabels_;
 
-        /** Number of degrees of freedom in this cell */
+        /** \brief Number of basis functions, equal to the local cell DoF count. */
         label nDof_;
 
-        /** Scalar basis-function Gauss fields (one per DoF) */
+        /** \brief Scalar basis-function values at cell and face Gauss points. */
         List<GaussField<scalar>> basis_;
 
-        /** Derivative basis-function Gauss fields (one per DoF) */
+        /** \brief Basis-function derivative values stored as vector Gauss fields. */
         List<GaussField<vector>> dBasis_;
 
 public:
@@ -101,10 +102,13 @@ public:
     //====================================================================//
 
         /**
-         * \brief Construct basis fields for a given cell
+         * \brief Construct basis-function storage for one DG cell.
          *
-         * Initializes internal storage based on the cell geometry
-         * and polynomial order defined in the DG mesh.
+         * Initializes internal storage and precomputes the basis-function
+         * fields and derivative fields associated with the selected cell.
+         *
+         * \param cellID Mesh cell index.
+         * \param mesh DG geometric mesh that owns the cell.
          */
         dgBasisField(const label cellID, const dgGeomMesh& mesh);
 
@@ -113,18 +117,18 @@ public:
     //====================================================================//
 
         /**
-         * \brief Compute scalar basis-function Gauss fields
+         * \brief Compute scalar basis-function values at Gauss points.
          *
-         * Computes GaussField representations of all scalar
-         * basis functions for the associated cell.
+         * Populates one scalar GaussField per local basis function for the
+         * cell interior and each face of the cell.
          */
         void computeBasisField();
 
         /**
-         * \brief Compute derivative basis-function Gauss fields
+         * \brief Compute derivative basis-function values at Gauss points.
          *
-         * Computes GaussField representations of spatial derivatives
-         * of all basis functions for the associated cell.
+         * Populates one vector GaussField per local basis function using the
+         * derivative data available for the associated cell and faces.
          */
         void computeDBasisField();
 
@@ -133,26 +137,28 @@ public:
     //====================================================================//
 
         /**
-         * \brief Return GaussField of the specified basis function
+         * \brief Return the scalar GaussField of one basis function.
          *
-         * \param dof Degree-of-freedom index
+         * \param dof Local degree-of-freedom index.
+         * \return Read-only basis-function values at Gauss points.
          */
         const GaussField<scalar>& getBasis(const label dof) const;
 
         /**
-         * \brief Return GaussField of the specified derivative basis function
+         * \brief Return the derivative GaussField of one basis function.
          *
-         * \param dof Degree-of-freedom index
+         * \param dof Local degree-of-freedom index.
+         * \return Read-only derivative values at Gauss points.
          */
         const GaussField<vector>& getDBasis(const label dof) const;
 
-        /** Return owner cell index */
+        /** \brief Return the owner cell index. */
         inline label cellID() const { return cellID_; }
 
-        /** Return DG mesh associated with this cell basis */
+        /** \brief Return the DG geometric mesh associated with this basis field. */
         inline const dgGeomMesh& dgMesh() const { return mesh_; }
 
-        /** Return number of degrees of freedom */
+        /** \brief Return the number of local degrees of freedom. */
         inline label nDof() const { return nDof_; }
 };
 

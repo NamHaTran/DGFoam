@@ -28,8 +28,7 @@ Class
     Foam::dgBasisField
 
 Description
-    Stores precomputed GaussField of all basis functions and their derivatives
-    for a given cell in DG formulation.
+    Inline implementations for Foam::dgBasisField.
 
 SourceFiles
     dgBasisFieldI.H

@@ -28,7 +28,7 @@ Class
     Foam::dofField<Type>
 
 Description
-    Store degrees of freedom (Dof) of given Type for a DG cell.
+    Inline implementations for Foam::dofField.
 
 SourceFiles
     dofFieldI.H

@@ -87,11 +87,15 @@ private:
     mutable List<SamplePoint> prismSamples_;
     mutable List<SamplePoint> pyramidSamples_;
     mutable List<SamplePoint> tetSamples_;
+    mutable FixedList<List<SamplePoint>, 3> hexCollapsedSamples_;
+    mutable List<SamplePoint> prismCollapsedSamples_;
 
     mutable List<VtkSubCell> hexSubCells_;
     mutable List<VtkSubCell> prismSubCells_;
     mutable List<VtkSubCell> pyramidSubCells_;
     mutable List<VtkSubCell> tetSubCells_;
+    mutable FixedList<List<VtkSubCell>, 3> hexCollapsedSubCells_;
+    mutable List<VtkSubCell> prismCollapsedSubCells_;
 
     static void computeBasisAt
     (
@@ -106,16 +110,33 @@ private:
     SamplePoint makeSample(const vector& eta, const dgCellType type) const;
 
     const List<VtkSubCell>& subCells(const dgCellType type) const;
+    const List<VtkSubCell>& collapsedSubCells
+    (
+        const dgCellType type,
+        const label collapseDir
+    ) const;
 
     void buildHexSamples(List<SamplePoint>& samples) const;
     void buildPrismSamples(List<SamplePoint>& samples) const;
     void buildPyramidSamples(List<SamplePoint>& samples) const;
     void buildTetSamples(List<SamplePoint>& samples) const;
+    void buildHexCollapsedSamples
+    (
+        List<SamplePoint>& samples,
+        const label collapseDir
+    ) const;
+    void buildPrismCollapsedSamples(List<SamplePoint>& samples) const;
 
     void buildHexSubCells(List<VtkSubCell>& cells) const;
     void buildPrismSubCells(List<VtkSubCell>& cells) const;
     void buildPyramidSubCells(List<VtkSubCell>& cells) const;
     void buildTetSubCells(List<VtkSubCell>& cells) const;
+    void buildHexCollapsedSubCells
+    (
+        List<VtkSubCell>& cells,
+        const label collapseDir
+    ) const;
+    void buildPrismCollapsedSubCells(List<VtkSubCell>& cells) const;
 
     static pointField orientPrismVertices(const pointField& rawVertices);
 
@@ -155,12 +176,49 @@ public:
     ) const;
 
     const List<SamplePoint>& samplePoints(const dgCellType type) const;
+    const List<SamplePoint>& collapsedSamplePoints
+    (
+        const dgCellType type,
+        const label collapseDir
+    ) const;
 
     void appendVtkCells
     (
         const dgCellType type,
         const UList<point>& localPoints,
         const label pointOffset,
+        DynamicList<label>& connectivity,
+        DynamicList<label>& offsets,
+        DynamicList<unsigned char>& cellTypes
+    ) const;
+
+    void appendCollapsedVtkCells
+    (
+        const dgCellType type,
+        const label collapseDir,
+        const UList<point>& localPoints,
+        const label pointOffset,
+        DynamicList<label>& connectivity,
+        DynamicList<label>& offsets,
+        DynamicList<unsigned char>& cellTypes
+    ) const;
+
+    void appendVtkCells
+    (
+        const dgCellType type,
+        const UList<point>& localPoints,
+        const UList<label>& pointLabels,
+        DynamicList<label>& connectivity,
+        DynamicList<label>& offsets,
+        DynamicList<unsigned char>& cellTypes
+    ) const;
+
+    void appendCollapsedVtkCells
+    (
+        const dgCellType type,
+        const label collapseDir,
+        const UList<point>& localPoints,
+        const UList<label>& pointLabels,
         DynamicList<label>& connectivity,
         DynamicList<label>& offsets,
         DynamicList<unsigned char>& cellTypes

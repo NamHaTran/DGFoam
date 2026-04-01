@@ -36,7 +36,9 @@ Description
       - Face Gauss-point values (minus/plus sides)
 
 SourceFiles
-    GaussField.C
+    GaussFieldI.H
+    GaussFieldVectorI.H
+    GaussFieldScalarI.H
 
 \*---------------------------------------------------------------------------*/
 
@@ -87,19 +89,19 @@ private:
     //                           Data members
     //====================================================================//
 
-        /** Pointer to DoF field (read-only, non-owning) */
+        /** \brief Non-owning pointer to the source DoF field, when available. */
         const dofField<Type>* dofField_;
 
-        /** Cell index */
+        /** \brief Mesh cell index associated with this Gauss field. */
         label cellID_;
 
-        /** Pointer to DG geometric mesh (non-owning) */
+        /** \brief Non-owning pointer to the DG geometric mesh. */
         const dgGeomMesh* mesh_;
 
-        /** Gauss-point field inside the cell */
+        /** \brief Cell-interior Gauss-point values. */
         cellGaussField<Type> cellField_;
 
-        /** Gauss-point field on cell faces */
+        /** \brief Face Gauss-point values on the cell boundary. */
         faceGaussField<Type> faceField_;
 
 public:
@@ -108,7 +110,7 @@ public:
     //                           Constructors
     //====================================================================//
 
-        /** Default constructor */
+        /** \brief Construct an empty GaussField. */
         GaussField();
 
         /**
@@ -116,6 +118,10 @@ public:
          *
          * The Gauss values are initialized by interpolating
          * the DOF values of the given cell.
+         *
+         * \param dofField Source DoF field.
+         * \param cellID Mesh cell index.
+         * \param mesh DG geometric mesh containing the cell.
          */
         GaussField
         (
@@ -125,7 +131,10 @@ public:
         );
 
         /**
-         * \brief Construct empty GaussField for a cell
+         * \brief Construct an empty GaussField for one cell.
+         *
+         * \param cellID Mesh cell index.
+         * \param mesh DG geometric mesh containing the cell.
          */
         GaussField
         (
@@ -134,7 +143,11 @@ public:
         );
 
         /**
-         * \brief Construct GaussField with uniform initial value
+         * \brief Construct a GaussField with a uniform initial value.
+         *
+         * \param cellID Mesh cell index.
+         * \param mesh DG geometric mesh containing the cell.
+         * \param initVal Initial value assigned to all cell and face Gauss points.
          */
         GaussField
         (
@@ -143,23 +156,41 @@ public:
             const Type& initVal
         );
 
-        /** Copy constructor */
+        /**
+         * \brief Copy constructor.
+         *
+         * \param other Source GaussField to copy from.
+         */
         GaussField(const GaussField<Type>& other);
 
-        /** Construct from tmp */
+        /**
+         * \brief Construct by consuming a temporary GaussField.
+         *
+         * \param t Temporary GaussField whose storage is consumed.
+         */
         GaussField
         (
             const tmp<GaussField<Type>>& t
         );
 
-        //- Construct tmp GaussField
+        /**
+         * \brief Construct a temporary GaussField for one cell.
+         *
+         * \param cellID Mesh cell index.
+         * \param mesh DG geometric mesh containing the cell.
+         * \return Temporary GaussField.
+         */
         static tmp<GaussField<Type>> New
         (
             label cellID,
             const dgGeomMesh* mesh
         );
 
-        /** Move constructor */
+        /**
+         * \brief Move constructor.
+         *
+         * \param other Source GaussField whose storage is moved from.
+         */
         GaussField
         (
             GaussField<Type>&& other
@@ -170,19 +201,39 @@ public:
     //                           Assignment
     //====================================================================//
 
-        /** Copy assignment */
+        /**
+         * \brief Copy assignment operator.
+         *
+         * \param other Source GaussField to copy from.
+         * \return Reference to this object.
+         */
         GaussField<Type>& operator=(const GaussField<Type>& other);
 
-        /** Assign uniform value */
+        /**
+         * \brief Assign a uniform value to all stored Gauss points.
+         *
+         * \param value Uniform value assigned to cell and face Gauss points.
+         * \return Reference to this object.
+         */
         GaussField<Type>& operator=(const Type& value);
 
-        /** Move assignment */
+        /**
+         * \brief Move assignment operator.
+         *
+         * \param other Source GaussField whose storage is moved from.
+         * \return Reference to this object.
+         */
         GaussField<Type>& operator=
         (
             GaussField<Type>&& other
         ) noexcept;
 
-        /** Assignment from tmp */
+        /**
+         * \brief Assign by consuming a temporary GaussField.
+         *
+         * \param t Temporary GaussField whose storage is consumed.
+         * \return Reference to this object.
+         */
         GaussField<Type>& operator=
         (
             const tmp<GaussField<Type>>& t
@@ -196,25 +247,27 @@ public:
          * \brief Return DG geometric mesh
          *
          * Fatal error if mesh pointer is null.
+         *
+         * \return Pointer to the DG geometric mesh.
          */
         inline const dgGeomMesh* dgMesh() const;
 
-        /** Return cell index */
+        /** \brief Return the associated mesh cell index. */
         inline label cellID() const { return cellID_; }
 
-        /** Return pointer to DoF field */
+        /** \brief Return the pointer to the source DoF field, if any. */
         inline const dofField<Type>* dofFieldPtr() const { return dofField_; }
 
-        /** Access cell Gauss field */
+        /** \brief Return writable access to the cell-interior Gauss field. */
         inline cellGaussField<Type>& cellField()       { return cellField_; }
 
-        /** Const access to cell Gauss field */
+        /** \brief Return read-only access to the cell-interior Gauss field. */
         inline const cellGaussField<Type>& cellField() const { return cellField_; }
 
-        /** Access face Gauss field */
+        /** \brief Return writable access to the face Gauss field. */
         inline faceGaussField<Type>& faceField()       { return faceField_; }
 
-        /** Const access to face Gauss field */
+        /** \brief Return read-only access to the face Gauss field. */
         inline const faceGaussField<Type>& faceField() const { return faceField_; }
 
         /**
@@ -222,6 +275,9 @@ public:
          *
          * Internal faces return directly linked neighbour-cell DoFs.
          * Processor faces return the most recently synchronized buffer.
+         *
+         * \param localFaceI Local face index.
+         * \return Read-only neighbour cell DoF data.
          */
         inline const cellDof<Type>& neighbourCellDof
         (
@@ -249,22 +305,22 @@ public:
     //                      Direct Gauss access
     //====================================================================//
 
-        /** Access cell Gauss value by index */
+        /** \brief Return writable access to one cell-interior Gauss value. */
         inline Type& cellValueAt(label gpI);
 
-        /** Const access to cell Gauss value */
+        /** \brief Return read-only access to one cell-interior Gauss value. */
         inline const Type& cellValueAt(label gpI) const;
 
-        /** Access plus-side face Gauss value */
+        /** \brief Return writable access to one plus-side face Gauss value. */
         inline Type& facePlusValueAt(label faceI, label gpI);
 
-        /** Access minus-side face Gauss value */
+        /** \brief Return writable access to one minus-side face Gauss value. */
         inline Type& faceMinusValueAt(label faceI, label gpI);
 
-        /** Const access to plus-side face Gauss value */
+        /** \brief Return read-only access to one plus-side face Gauss value. */
         inline const Type& facePlusValueAt(label faceI, label gpI) const;
 
-        /** Const access to minus-side face Gauss value */
+        /** \brief Return read-only access to one minus-side face Gauss value. */
         inline const Type& faceMinusValueAt(label faceI, label gpI) const;
 
 
@@ -272,7 +328,13 @@ public:
     //                             Output
     //====================================================================//
 
-        /** Stream output */
+        /**
+         * \brief Write the combined cell and face Gauss values to a stream.
+         *
+         * \param os Output stream.
+         * \param gf Gauss field to serialize.
+         * \return Reference to the output stream.
+         */
         friend Ostream& operator<<(Ostream& os, const GaussField& gf)
         {
             os << "GaussField for cell " << gf.cellID() << ":\n";
@@ -286,25 +348,25 @@ public:
     //                Component access (vector fields)
     //====================================================================//
 
-        /** Return x-component */
+        /** \brief Return the x-component as a scalar GaussField. */
         GaussField<scalar> x() const;
 
-        /** Return y-component */
+        /** \brief Return the y-component as a scalar GaussField. */
         GaussField<scalar> y() const;
 
-        /** Return z-component */
+        /** \brief Return the z-component as a scalar GaussField. */
         GaussField<scalar> z() const;
 
-        /** Set x-component */
+        /** \brief Replace the x-component using a scalar GaussField. */
         void setX(const GaussField<scalar>& fx);
 
-        /** Set y-component */
+        /** \brief Replace the y-component using a scalar GaussField. */
         void setY(const GaussField<scalar>& fy);
 
-        /** Set z-component */
+        /** \brief Replace the z-component using a scalar GaussField. */
         void setZ(const GaussField<scalar>& fz);
 
-        /** Set all components */
+        /** \brief Replace all vector components using scalar GaussFields. */
         void setXYZ
         (
             const GaussField<scalar>& fx,
@@ -316,13 +378,13 @@ public:
     //                              Limiting
     //====================================================================//
 
-        /** Limit maximum value */
+        /** \brief Limit all stored values to a maximum value. */
         void limitMax(scalar maxVal);
 
-        /** Limit minimum value */
+        /** \brief Limit all stored values to a minimum value. */
         void limitMin(scalar minVal);
 
-        /** Limit value range */
+        /** \brief Limit all stored values to the range [minVal, maxVal]. */
         void limitRange(scalar minVal, scalar maxVal);
 };
 

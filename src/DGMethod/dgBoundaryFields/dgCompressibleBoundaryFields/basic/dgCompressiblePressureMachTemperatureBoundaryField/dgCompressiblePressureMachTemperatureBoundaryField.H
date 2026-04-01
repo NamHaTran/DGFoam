@@ -34,14 +34,49 @@ License
 namespace Foam
 {
 
+/*---------------------------------------------------------------------------*\
+    Class dgCompressiblePressureMachTemperatureBoundaryField Declaration
+\*---------------------------------------------------------------------------*/
+
+/**
+ * \class Foam::dgCompressiblePressureMachTemperatureBoundaryField
+ * \brief Compressible DG boundary condition prescribed by pressure, temperature, and Mach.
+ *
+ * \details
+ * Builds a constant ghost state from user-specified
+ * \f$(p_b,\,T_b,\,\mathbf{M}_b)\f$ data.
+ *
+ * The Mach vector is converted into velocity through the local speed of sound:
+ *
+ * \f[
+ *     \mathbf{U}_b = a_b \mathbf{M}_b,
+ * \f]
+ *
+ * where \f$a_b\f$ is the thermodynamic speed of sound evaluated from the
+ * prescribed boundary state. The ghost conservative state is then
+ *
+ * \f[
+ *     (\rho^+,\,\rho\mathbf{U}^+,\,E^+)
+ *     =
+ *     \mathcal{C}\!\left(p_b,\,T_b,\,\mathbf{U}_b\right).
+ * \f]
+ *
+ * The resulting state is constant over the whole patch and does not depend on
+ * the interior state.
+ */
 class dgCompressiblePressureMachTemperatureBoundaryField
 :
     public dgCompressibleBoundaryField
 {
 private:
 
+    /** \brief Prescribed boundary density in conservative form. */
     scalar rhoValue_;
+
+    /** \brief Prescribed boundary momentum in conservative form. */
     vector rhoUValue_;
+
+    /** \brief Prescribed boundary total energy in conservative form. */
     scalar EValue_;
 
 public:
@@ -56,8 +91,23 @@ public:
         const dictionary& dict
     );
 
+    /** \brief Default destructor. */
     virtual ~dgCompressiblePressureMachTemperatureBoundaryField() = default;
 
+    /**
+     * \brief Assign the precomputed constant ghost state.
+     *
+     * \param cellID Owner cell index.
+     * \param faceLocalID Local face index on the owner cell.
+     * \param localGauss Local Gauss-point index on the face.
+     * \param n Outward unit normal of the owner cell.
+     * \param rhoMinus Interior density.
+     * \param rhoUMinus Interior momentum.
+     * \param EMinus Interior total energy.
+     * \param rhoPlus Ghost density.
+     * \param rhoUPlus Ghost momentum.
+     * \param EPlus Ghost total energy.
+     */
     virtual void updateGhostState
     (
         const label cellID,
@@ -72,6 +122,7 @@ public:
         scalar& EPlus
     ) const override;
 
+    /** \brief Check that the boundary condition is applied on a supported patch type. */
     virtual void checkPatchType() const override;
 };
 

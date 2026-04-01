@@ -35,6 +35,7 @@ Description
 
 SourceFiles
     dgField.C
+    dgFieldI.H
 
 \*---------------------------------------------------------------------------*/
 
@@ -90,16 +91,16 @@ class dgField
     //                           Data members
     //====================================================================//
 
-        /** Reference to the DG geometric mesh */
+        /** \brief DG geometric mesh on which the field is defined. */
         const dgGeomMesh& mesh_;
 
-        /** Flag indicating whether this field owns DoF data */
+        /** \brief Flag indicating whether the field is constructed with DoF storage. */
         bool hasDof_;
 
-        /** Pointer to DoF field (null for DoF-less fields) */
+        /** \brief Optional DoF storage, null when the field is Gauss-value only. */
         autoPtr<dofField<Type>> dofPtr_;
 
-        /** GaussField values for each cell in the mesh */
+        /** \brief Per-cell Gauss-point representation of the DG field. */
         List<GaussField<Type>> gaussFields_;
 
         /**
@@ -128,10 +129,15 @@ public:
     //====================================================================//
 
         /**
-         * \brief Construct DG field
+         * \brief Construct a DG field on a DG geometric mesh.
          *
-         * Creates a DG field associated with a DG geometric mesh.
-         * Optionally allocates DoF storage.
+         * Optionally allocates DoF storage and initializes the corresponding
+         * Gauss-field representation for every cell in the mesh.
+         *
+         * \param io OpenFOAM I/O descriptor for the field object.
+         * \param mesh DG geometric mesh on which the field lives.
+         * \param hasDof Set to \c true to allocate a DoF field, or \c false
+         *     for Gauss-value-only fields.
          */
         dgField
         (
@@ -140,26 +146,28 @@ public:
             bool hasDof = true
         );
 
-        /** Copy construction is disabled */
+        /** \brief Copy construction is disabled. */
         dgField(const dgField&) = delete;
 
-        /** Copy assignment is disabled */
+        /** \brief Copy assignment is disabled. */
         dgField& operator=(const dgField&) = delete;
 
     //====================================================================//
     //                           Access
     //====================================================================//
 
-        /** Return true if this field owns DoF data */
+        /** \brief Return true if this field currently owns DoF storage. */
         inline bool hasDof() const
         {
             return dofPtr_ != nullptr;
         }
 
         /**
-         * \brief Return non-const access to DoF field
+         * \brief Return writable access to the DoF field.
          *
          * Fatal error if this field does not own DoF data.
+         *
+         * \return Reference to the owned DoF field.
          */
         inline dofField<Type>& dof()
         {
@@ -173,9 +181,11 @@ public:
         }
 
         /**
-         * \brief Return const access to DoF field
+         * \brief Return read-only access to the DoF field.
          *
          * Fatal error if this field does not own DoF data.
+         *
+         * \return Const reference to the owned DoF field.
          */
         inline const dofField<Type>& dof() const
         {
@@ -188,25 +198,25 @@ public:
             return *dofPtr_;
         }
 
-        /** Return non-const access to Gauss fields */
+        /** \brief Return writable access to all per-cell Gauss fields. */
         inline List<GaussField<Type>>& gaussFields()
         {
             return gaussFields_;
         }
 
-        /** Return const access to Gauss fields */
+        /** \brief Return read-only access to all per-cell Gauss fields. */
         inline const List<GaussField<Type>>& gaussFields() const
         {
             return gaussFields_;
         }
 
-        /** Return number of cells */
+        /** \brief Return the number of cells covered by the DG field. */
         inline label nCells() const
         {
             return gaussFields_.size();
         }
 
-        /** Return field object name */
+        /** \brief Return the registered object name of the field. */
         inline const word& name() const
         {
             return regIOobject::name();
@@ -226,6 +236,10 @@ public:
          *
          * This helper hides whether the neighbour is local (internal face)
          * or comes from a processor-face synchronization buffer.
+         *
+         * \param cellID Owner cell index.
+         * \param localFaceI Local face index inside the owner cell.
+         * \return Read-only neighbour cell DoF data for that face.
          */
         inline const cellDof<Type>& neighbourCellDof
         (
@@ -249,9 +263,10 @@ public:
     //====================================================================//
 
         /**
-         * \brief Write field data
+         * \brief Write the field data payload to a stream.
          *
-         * Writes field information via regIOobject.
+         * \param os Output stream receiving the serialized data.
+         * \return True if the write succeeds.
          */
         bool writeData(Ostream& os) const;
 
@@ -272,7 +287,10 @@ public:
     //====================================================================//
 
         /**
-         * \brief Assign uniform value to all Gauss fields
+         * \brief Assign a uniform value to all Gauss fields.
+         *
+         * \param value Uniform value assigned at every stored Gauss location.
+         * \return Reference to this field.
          */
         dgField<Type>& operator=(const Type& value);
 };

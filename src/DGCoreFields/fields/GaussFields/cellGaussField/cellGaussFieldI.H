@@ -24,6 +24,15 @@ License
     You should have received a copy of the GNU General Public License
     along with OpenFOAM.  If not, see <http://www.gnu.org/licenses/>.
 
+Class
+    Foam::cellGaussField<Type>
+
+Description
+    Inline implementations for Foam::cellGaussField.
+
+SourceFiles
+    cellGaussFieldI.H
+
 \*---------------------------------------------------------------------------*/
 
 #ifndef Foam_cellGaussFieldI_H

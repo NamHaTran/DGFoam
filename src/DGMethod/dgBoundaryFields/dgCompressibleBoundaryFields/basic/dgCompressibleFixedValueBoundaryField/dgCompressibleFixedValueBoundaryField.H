@@ -34,14 +34,52 @@ License
 namespace Foam
 {
 
+/*---------------------------------------------------------------------------*\
+            Class dgCompressibleFixedValueBoundaryField Declaration
+\*---------------------------------------------------------------------------*/
+
+/**
+ * \class Foam::dgCompressibleFixedValueBoundaryField
+ * \brief Compressible DG boundary condition with a prescribed constant state.
+ *
+ * \details
+ * Reads user-specified primitive data
+ * \f$(p_b,\,T_b,\,\mathbf{U}_b)\f$ and converts them once into a
+ * conservative ghost state that is reused at every boundary Gauss point.
+ *
+ * In compact form, the imposed exterior state is
+ *
+ * \f[
+ *     (\rho^+,\,\rho\mathbf{U}^+,\,E^+)
+ *     =
+ *     \mathcal{C}\!\left(p_b,\,T_b,\,\mathbf{U}_b\right),
+ * \f]
+ *
+ * where \f$\mathcal{C}(\cdot)\f$ denotes the thermo-model conversion from
+ * primitive to conservative variables. For an ideal-gas style conservative
+ * form this corresponds to
+ *
+ * \f[
+ *     \rho^+ = \rho(p_b, T_b), \qquad
+ *     \rho\mathbf{U}^+ = \rho^+ \mathbf{U}_b,
+ * \f]
+ *
+ * together with the compatible total-energy state returned by the selected
+ * thermodynamic model.
+ */
 class dgCompressibleFixedValueBoundaryField
 :
     public dgCompressibleBoundaryField
 {
 private:
 
+    /** \brief Prescribed boundary density in conservative form. */
     scalar rhoValue_;
+
+    /** \brief Prescribed boundary momentum in conservative form. */
     vector rhoUValue_;
+
+    /** \brief Prescribed boundary total energy in conservative form. */
     scalar EValue_;
 
 public:
@@ -56,8 +94,23 @@ public:
         const dictionary& dict
     );
 
+    /** \brief Default destructor. */
     virtual ~dgCompressibleFixedValueBoundaryField() = default;
 
+    /**
+     * \brief Assign the precomputed constant ghost state.
+     *
+     * \param cellID Owner cell index.
+     * \param faceLocalID Local face index on the owner cell.
+     * \param localGauss Local Gauss-point index on the face.
+     * \param n Outward unit normal of the owner cell.
+     * \param rhoMinus Interior density.
+     * \param rhoUMinus Interior momentum.
+     * \param EMinus Interior total energy.
+     * \param rhoPlus Ghost density.
+     * \param rhoUPlus Ghost momentum.
+     * \param EPlus Ghost total energy.
+     */
     virtual void updateGhostState
     (
         const label cellID,
@@ -72,6 +125,7 @@ public:
         scalar& EPlus
     ) const override;
 
+    /** \brief Check that the boundary condition is applied on a supported patch type. */
     virtual void checkPatchType() const override;
 };
 

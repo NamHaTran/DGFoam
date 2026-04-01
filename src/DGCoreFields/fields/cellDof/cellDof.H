@@ -28,13 +28,13 @@ Class
     Foam::cellDof<Type>
 
 Description
-    Container for degrees of freedom (DoF) of a DG cell.
+    Degree-of-freedom container for a DG cell.
 
     Stores all polynomial degrees of freedom associated with a single
     DG cell for a given field type.
 
 SourceFiles
-    cellDof.C
+    cellDofI.H
 
 \*---------------------------------------------------------------------------*/
 
@@ -86,13 +86,13 @@ private:
     //                           Data members
     //====================================================================//
 
-        /** Cell index in the mesh */
+        /** \brief Index of the mesh cell represented by this DoF container. */
         label cellID_;
 
-        /** Number of degrees of freedom stored in this cell */
+        /** \brief Number of degrees of freedom stored for the cell. */
         label nDof_;
 
-        /** List of degree-of-freedom values */
+        /** \brief Polynomial degree-of-freedom values ordered by local basis index. */
         List<Type> dof_;
 
 public:
@@ -109,14 +109,21 @@ public:
         cellDof();
 
         /**
-         * \brief Copy constructor
+         * \brief Copy constructor.
+         *
+         * \param other Source cell DoF container to copy from.
          */
         cellDof(const cellDof<Type>& other);
 
         /**
-         * \brief Construct from cell ID and DoF values
+         * \brief Construct from a cell index and an external DoF list.
          *
-         * Copies the provided DoF values into internal storage.
+         * Copies up to \p nDof values from \p inputDof into internal storage.
+         * Remaining entries, if any, are initialised to \c pTraits<Type>::zero.
+         *
+         * \param cellID Mesh cell index associated with the DoF set.
+         * \param nDof Number of DoFs to allocate for the cell.
+         * \param inputDof External DoF values copied into this object.
          */
         cellDof
         (
@@ -126,7 +133,9 @@ public:
         );
 
         /**
-         * \brief Construct from tmp
+         * \brief Construct by transferring storage from a temporary cellDof.
+         *
+         * \param t Temporary cell DoF container whose storage is consumed.
          */
         cellDof
         (
@@ -138,12 +147,18 @@ public:
     //====================================================================//
 
         /**
-         * \brief Copy assignment operator
+         * \brief Copy assignment operator.
+         *
+         * \param other Source cell DoF container to copy from.
+         * \return Reference to this object.
          */
         cellDof<Type>& operator=(const cellDof<Type>& other);
 
         /**
-         * \brief Assignment from tmp
+         * \brief Assign by transferring storage from a temporary cellDof.
+         *
+         * \param t Temporary cell DoF container whose storage is consumed.
+         * \return Reference to this object.
          */
         cellDof<Type>& operator=
         (
@@ -154,37 +169,47 @@ public:
     //                           Access
     //====================================================================//
 
-        /** Return non-const access to DoF list */
+        /** \brief Return writable access to the complete DoF storage. */
         inline List<Type>& dof()
         {
             return dof_;
         }
 
-        /** Return const access to DoF list */
+        /** \brief Return read-only access to the complete DoF storage. */
         inline const List<Type>& dof() const
         {
             return dof_;
         }
 
-        /** Return number of DoFs in this cell */
+        /** \brief Return the number of degrees of freedom stored in the cell. */
         inline label nDof() const
         {
             return nDof_;
         }
 
-        /** Return cell index */
+        /** \brief Return the mesh cell index associated with this DoF set. */
         inline label cellID() const
         {
             return cellID_;
         }
 
-        /** Non-const access to i-th DoF */
+        /**
+         * \brief Return writable access to one local degree of freedom.
+         *
+         * \param i Local DoF index inside the cell.
+         * \return Reference to the requested DoF value.
+         */
         inline Type& operator[](const label i)
         {
             return dof_[i];
         }
 
-        /** Const access to i-th DoF */
+        /**
+         * \brief Return read-only access to one local degree of freedom.
+         *
+         * \param i Local DoF index inside the cell.
+         * \return Const reference to the requested DoF value.
+         */
         inline const Type& operator[](const label i) const
         {
             return dof_[i];

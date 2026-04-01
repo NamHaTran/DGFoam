@@ -28,10 +28,10 @@ Class
     Foam::dgField
 
 Description
-    DG field class storing DOF and GaussField data for the whole mesh.
+    Inline implementations for Foam::dgField.
 
 SourceFiles
-    dgBasisFieldI.H
+    dgFieldI.H
 
 \*---------------------------------------------------------------------------*/
 

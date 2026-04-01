@@ -34,12 +34,49 @@ License
 namespace Foam
 {
 
+/*---------------------------------------------------------------------------*\
+           Class dgCompressibleIsothermoWallBoundaryField Declaration
+\*---------------------------------------------------------------------------*/
+
+/**
+ * \class Foam::dgCompressibleIsothermoWallBoundaryField
+ * \brief Isothermal no-slip wall condition for compressible DG fields.
+ *
+ * \details
+ * This wall model reconstructs the interior primitive pressure and then
+ * imposes a wall state with prescribed temperature and zero velocity:
+ *
+ * \f[
+ *     \mathbf{U}^+ = \mathbf{0}, \qquad
+ *     T^+ = T_w, \qquad
+ *     p^+ = p^- .
+ * \f]
+ *
+ * The interior pressure is recovered from the conservative interior state via
+ *
+ * \f[
+ *     \mathbf{U}^- = \frac{\rho\mathbf{U}^-}{\rho^-}, \qquad
+ *     k^- = \frac{1}{2}\left|\mathbf{U}^-\right|^2,
+ * \f]
+ *
+ * \f[
+ *     h_e^- = \frac{E^-}{\rho^-} - k^-,
+ * \qquad
+ *     T^- = T(h_e^-),
+ * \qquad
+ *     p^- = p(\rho^-, T^-).
+ * \f]
+ *
+ * The ghost conservative state is then obtained from
+ * \f$(p^+, T^+, \mathbf{U}^+)\f$ using the active thermodynamic model.
+ */
 class dgCompressibleIsothermoWallBoundaryField
 :
     public dgCompressibleBoundaryField
 {
 private:
 
+    /** \brief Prescribed wall temperature. */
     scalar TValue_;
 
 public:
@@ -54,8 +91,23 @@ public:
         const dictionary& dict
     );
 
+    /** \brief Default destructor. */
     virtual ~dgCompressibleIsothermoWallBoundaryField() = default;
 
+    /**
+     * \brief Build the isothermal no-slip ghost state.
+     *
+     * \param cellID Owner cell index.
+     * \param faceLocalID Local face index on the owner cell.
+     * \param localGauss Local Gauss-point index on the face.
+     * \param n Outward unit normal of the owner cell.
+     * \param rhoMinus Interior density.
+     * \param rhoUMinus Interior momentum.
+     * \param EMinus Interior total energy.
+     * \param rhoPlus Ghost density.
+     * \param rhoUPlus Ghost momentum.
+     * \param EPlus Ghost total energy.
+     */
     virtual void updateGhostState
     (
         const label cellID,
@@ -70,6 +122,7 @@ public:
         scalar& EPlus
     ) const override;
 
+    /** \brief Check that the boundary condition is applied on a wall patch. */
     virtual void checkPatchType() const override;
 };
 

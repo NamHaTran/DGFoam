@@ -34,7 +34,7 @@ Description
     between DG DoF storage and OpenFOAM volField representation.
 
 SourceFiles
-    dofField.C
+    dofFieldI.H
 
 \*---------------------------------------------------------------------------*/
 
@@ -81,13 +81,13 @@ private:
     //                           Data members
     //====================================================================//
 
-        /** Reference to DG geometric mesh */
+        /** \brief DG geometric mesh that defines the cell-wise DoF layout. */
         const dgGeomMesh& dgMesh_;
 
-        /** Cell-local DoF storage */
+        /** \brief Cell-local degree-of-freedom storage for the full mesh. */
         List<cellDof<Type>> cellDofs_;
 
-        /** Number of cells in the mesh */
+        /** \brief Number of cells represented in the field. */
         label nCells_;
 
         /**
@@ -97,10 +97,10 @@ private:
          */
         List<autoPtr<GeometricField<Type, fvPatchField, volMesh>>> foamFields_;
 
-        /** Number of DoFs per cell */
+        /** \brief Number of local degrees of freedom for each cell. */
         List<label> dofPerCell_;
 
-        /** Maximum number of DoFs across all cells */
+        /** \brief Maximum DoF count over all cells in the mesh. */
         label maxDoF_;
 
 public:
@@ -110,10 +110,16 @@ public:
     //====================================================================//
 
         /**
-         * \brief Construct from field name and I/O options
+         * \brief Construct a DoF field from OpenFOAM I/O information.
          *
-         * Creates OpenFOAM volFields corresponding to DG DoFs
-         * and reads data according to the provided IOobject options.
+         * Creates one OpenFOAM volume field per DoF index, reads available
+         * field files from disk, and reconstructs the cell-local DG DoF data.
+         *
+         * \param name Base field name.
+         * \param instance Time or instance directory.
+         * \param rOpt Read option used for the field object.
+         * \param wOpt Write option used for the generated volFields.
+         * \param mesh DG geometric mesh associated with the field.
          */
         dofField
         (
@@ -125,10 +131,12 @@ public:
         );
 
         /**
-         * \brief Construct zero-initialized DoF field
+         * \brief Construct a zero-initialized DoF field.
          *
-         * Creates an empty DoF field associated with the given
-         * DG geometric mesh.
+         * Allocates cell-local DoF storage for the given DG mesh and
+         * initializes all degrees of freedom to zero.
+         *
+         * \param mesh DG geometric mesh associated with the field.
          */
         dofField
         (
@@ -139,25 +147,35 @@ public:
     //                              Access
     //====================================================================//
 
-        /** Return const access to cell DoF list */
+        /** \brief Return read-only access to the full list of cell DoFs. */
         inline const List<cellDof<Type>>& cellDofList() const
         {
             return cellDofs_;
         }
 
-        /** Return non-const access to cell DoF list */
+        /** \brief Return writable access to the full list of cell DoFs. */
         inline List<cellDof<Type>>& cellDofList()
         {
             return cellDofs_;
         }
 
-        /** Return non-const access to DoFs of a given cell */
+        /**
+         * \brief Return writable access to the DoFs of one cell.
+         *
+         * \param i Cell index.
+         * \return Reference to the cell-local DoF container.
+         */
         inline cellDof<Type>& operator[](const label i)
         {
             return cellDofs_[i];
         }
 
-        /** Return const access to DoFs of a given cell */
+        /**
+         * \brief Return read-only access to the DoFs of one cell.
+         *
+         * \param i Cell index.
+         * \return Const reference to the cell-local DoF container.
+         */
         inline const cellDof<Type>& operator[](const label i) const
         {
             return cellDofs_[i];
@@ -168,16 +186,18 @@ public:
     //====================================================================//
 
         /**
-         * \brief Update OpenFOAM volFields from DG DoF values of one cell
+         * \brief Update the OpenFOAM volFields from one cell's DG DoFs.
          *
          * Copies the DoFs of a single DG cell into the corresponding
          * OpenFOAM volFields. This is the preferred hot-path synchronization
          * helper during explicit stage updates.
+         *
+         * \param cellID Cell index whose DoFs are copied to the volFields.
          */
         void updateCellDof(const label cellID);
 
         /**
-         * \brief Write OpenFOAM volFields to disk
+         * \brief Write all OpenFOAM DoF volFields to disk.
          */
         void write() const;
 };

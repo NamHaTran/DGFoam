@@ -34,6 +34,29 @@ License
 namespace Foam
 {
 
+/*---------------------------------------------------------------------------*\
+          Class dgCompressibleZeroGradientBoundaryField Declaration
+\*---------------------------------------------------------------------------*/
+
+/**
+ * \class Foam::dgCompressibleZeroGradientBoundaryField
+ * \brief Zero-gradient compressible DG boundary condition.
+ *
+ * \details
+ * Uses the default base-class ghost-state construction, which simply copies
+ * the interior conservative state to the exterior side:
+ *
+ * \f[
+ *     \rho^+ = \rho^-,
+ *     \qquad
+ *     \rho\mathbf{U}^+ = \rho\mathbf{U}^-,
+ *     \qquad
+ *     E^+ = E^-.
+ * \f]
+ *
+ * In a finite-volume sense this corresponds to a homogeneous normal-gradient
+ * condition on the primitive state.
+ */
 class dgCompressibleZeroGradientBoundaryField
 :
     public dgCompressibleBoundaryField
@@ -50,6 +73,7 @@ public:
         const dictionary& dict
     );
 
+    /** \brief Default destructor. */
     virtual ~dgCompressibleZeroGradientBoundaryField() = default;
 };
 

@@ -34,6 +34,35 @@ License
 namespace Foam
 {
 
+/*---------------------------------------------------------------------------*\
+             Class dgCompressibleSymmetryBoundaryField Declaration
+\*---------------------------------------------------------------------------*/
+
+/**
+ * \class Foam::dgCompressibleSymmetryBoundaryField
+ * \brief Symmetry boundary condition for compressible DG states.
+ *
+ * \details
+ * This boundary condition reflects only the normal component of momentum and
+ * leaves density and total energy unchanged:
+ *
+ * \f[
+ *     \rho^+ = \rho^-,
+ *     \qquad
+ *     E^+ = E^-,
+ * \f]
+ *
+ * \f[
+ *     \rho\mathbf{U}^+
+ *     =
+ *     \rho\mathbf{U}^-
+ *     -
+ *     2\left(\mathbf{n}\cdot\rho\mathbf{U}^-\right)\mathbf{n}.
+ * \f]
+ *
+ * Equivalently, in primitive variables the tangential velocity is preserved
+ * and the normal velocity changes sign across the symmetry plane.
+ */
 class dgCompressibleSymmetryBoundaryField
 :
     public dgCompressibleBoundaryField
@@ -50,8 +79,23 @@ public:
         const dictionary& dict
     );
 
+    /** \brief Default destructor. */
     virtual ~dgCompressibleSymmetryBoundaryField() = default;
 
+    /**
+     * \brief Reflect the interior state across the boundary normal.
+     *
+     * \param cellID Owner cell index.
+     * \param faceLocalID Local face index on the owner cell.
+     * \param localGauss Local Gauss-point index on the face.
+     * \param n Outward unit normal of the owner cell.
+     * \param rhoMinus Interior density.
+     * \param rhoUMinus Interior momentum.
+     * \param EMinus Interior total energy.
+     * \param rhoPlus Ghost density.
+     * \param rhoUPlus Ghost momentum.
+     * \param EPlus Ghost total energy.
+     */
     virtual void updateGhostState
     (
         const label cellID,
@@ -66,6 +110,7 @@ public:
         scalar& EPlus
     ) const override;
 
+    /** \brief Check that the boundary condition is applied on a symmetry patch. */
     virtual void checkPatchType() const override;
 };
 

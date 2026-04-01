@@ -34,7 +34,9 @@ Description
     within a single DG cell.
 
 SourceFiles
-    cellGaussField.C
+    cellGaussFieldI.H
+    cellGaussFieldScalarI.H
+    cellGaussFieldVectorI.H
 
 \*---------------------------------------------------------------------------*/
 
@@ -83,25 +85,25 @@ private:
     //                           Data members
     //====================================================================//
 
-        /** Cell index in the mesh */
+        /** \brief Mesh cell index associated with this Gauss field. */
         label cellID_;
 
-        /** Pointer to DG geometric mesh (non-owning) */
+        /** \brief Non-owning pointer to the DG geometric mesh. */
         const dgGeomMesh* dgMesh_;
 
-        /** Pointer to DG geometric cell (non-owning) */
+        /** \brief Non-owning pointer to the DG geometric cell. */
         const dgGeomCell* cell_;
 
-        /** Number of Gauss points in this cell */
+        /** \brief Number of interior Gauss points in the cell. */
         label nGauss_;
 
-        /** Number of degrees of freedom in this cell */
+        /** \brief Number of local degrees of freedom in the cell. */
         label nDof_;
 
-        /** Pointer to cell-local DoF container (non-owning) */
+        /** \brief Non-owning pointer to the cell-local DoF container. */
         const cellDof<Type>* dof_;
 
-        /** Values at Gauss integration points */
+        /** \brief Field values stored at the cell Gauss integration points. */
         List<Type> values_;
 
 
@@ -123,6 +125,9 @@ public:
          *
          * Initializes Gauss-point storage based on the cell geometry
          * and DoF information.
+         *
+         * \param dgMesh DG geometric mesh containing the cell.
+         * \param dof Cell-local DoF data used to size and later interpolate the field.
          */
         cellGaussField
         (
@@ -131,12 +136,18 @@ public:
         );
 
         /**
-         * \brief Copy constructor
+         * \brief Copy constructor.
+         *
+         * \param other Source cell Gauss field to copy from.
          */
         cellGaussField(const cellGaussField<Type>& other);
 
         /**
-         * \brief Construct with uniform initial value
+         * \brief Construct with a uniform initial value.
+         *
+         * \param cellID Mesh cell index.
+         * \param dgMesh DG geometric mesh containing the cell.
+         * \param initVal Initial value assigned at every Gauss point.
          */
         cellGaussField
         (
@@ -146,7 +157,10 @@ public:
         );
 
         /**
-         * \brief Construct with zero-initialized values
+         * \brief Construct with zero-initialized values.
+         *
+         * \param cellID Mesh cell index.
+         * \param dgMesh DG geometric mesh containing the cell.
          */
         cellGaussField
         (
@@ -158,11 +172,15 @@ public:
          * \brief Move constructor
          *
          * Transfers internal storage without copying.
+         *
+         * \param other Source cell Gauss field whose storage is moved from.
          */
         cellGaussField(cellGaussField<Type>&& other) noexcept;
 
         /**
-         * \brief Construct from tmp
+         * \brief Construct by consuming a temporary cellGaussField.
+         *
+         * \param t Temporary cell Gauss field whose storage is consumed.
          */
         cellGaussField
         (
@@ -173,25 +191,35 @@ public:
     //                              Access
     //====================================================================//
 
-        /** Non-const access to Gauss-point value */
+        /**
+         * \brief Return writable access to one cell Gauss-point value.
+         *
+         * \param gp Gauss-point index inside the cell.
+         * \return Reference to the stored value.
+         */
         inline Type& operator[](const label gp)
         {
             return values_[gp];
         }
 
-        /** Const access to Gauss-point value */
+        /**
+         * \brief Return read-only access to one cell Gauss-point value.
+         *
+         * \param gp Gauss-point index inside the cell.
+         * \return Const reference to the stored value.
+         */
         inline const Type& operator[](const label gp) const
         {
             return values_[gp];
         }
 
-        /** Return number of Gauss points */
+        /** \brief Return the number of Gauss points stored for the cell. */
         inline label size() const
         {
             return nGauss_;
         }
 
-        /** Return cell index */
+        /** \brief Return the associated mesh cell index. */
         inline label cellID() const
         {
             return cellID_;
@@ -201,6 +229,8 @@ public:
          * \brief Return DG geometric mesh
          *
          * Fatal error if pointer is null.
+         *
+         * \return Pointer to the DG geometric mesh.
          */
         inline const dgGeomMesh* dgMesh() const
         {
@@ -215,6 +245,8 @@ public:
          * \brief Return DG geometric cell
          *
          * Fatal error if pointer is null.
+         *
+         * \return Pointer to the DG geometric cell.
          */
         inline const dgGeomCell* cell() const
         {
@@ -242,7 +274,10 @@ public:
     //====================================================================//
 
         /**
-         * \brief Copy assignment
+         * \brief Copy assignment operator.
+         *
+         * \param other Source cell Gauss field to copy from.
+         * \return Reference to this object.
          */
         cellGaussField<Type>& operator=
         (
@@ -250,7 +285,10 @@ public:
         );
 
         /**
-         * \brief Assign uniform value to all Gauss points
+         * \brief Assign a uniform value to all Gauss points.
+         *
+         * \param value Uniform value assigned at every Gauss point.
+         * \return Reference to this object.
          */
         cellGaussField<Type>& operator=
         (
@@ -261,14 +299,20 @@ public:
          * \brief Move assignment
          *
          * Transfers internal storage without copying.
+         *
+         * \param other Source cell Gauss field whose storage is moved from.
+         * \return Reference to this object.
          */
         cellGaussField<Type>& operator=
         (
             cellGaussField<Type>&& other
         ) noexcept;
 
-        /** 
-         * \brief Assignment from tmp 
+        /**
+         * \brief Assign by consuming a temporary cellGaussField.
+         *
+         * \param t Temporary cell Gauss field whose storage is consumed.
+         * \return Reference to this object.
          */
         cellGaussField<Type>& operator=
         (
@@ -280,7 +324,11 @@ public:
     //====================================================================//
 
         /**
-         * \brief Stream output of Gauss-point values
+         * \brief Write the cell Gauss-point values to an output stream.
+         *
+         * \param os Output stream.
+         * \param cgf Cell Gauss field to serialize.
+         * \return Reference to the output stream.
          */
         friend Ostream& operator<<
         (
@@ -300,25 +348,25 @@ public:
     //                    Component access (vector fields)
     //====================================================================//
 
-        /** Return x-component as scalar Gauss field */
+        /** \brief Return the x-component as a scalar cellGaussField. */
         cellGaussField<scalar> x() const;
 
-        /** Return y-component as scalar Gauss field */
+        /** \brief Return the y-component as a scalar cellGaussField. */
         cellGaussField<scalar> y() const;
 
-        /** Return z-component as scalar Gauss field */
+        /** \brief Return the z-component as a scalar cellGaussField. */
         cellGaussField<scalar> z() const;
 
-        /** Set x-component from scalar Gauss field */
+        /** \brief Replace the x-component using a scalar cellGaussField. */
         void setX(const cellGaussField<scalar>& fx);
 
-        /** Set y-component from scalar Gauss field */
+        /** \brief Replace the y-component using a scalar cellGaussField. */
         void setY(const cellGaussField<scalar>& fy);
 
-        /** Set z-component from scalar Gauss field */
+        /** \brief Replace the z-component using a scalar cellGaussField. */
         void setZ(const cellGaussField<scalar>& fz);
 
-        /** Set all components from scalar Gauss fields */
+        /** \brief Replace all vector components using scalar cellGaussFields. */
         void setXYZ
         (
             const cellGaussField<scalar>& fx,
@@ -330,13 +378,13 @@ public:
     //                              Limiting
     //====================================================================//
 
-        /** Limit maximum value */
+        /** \brief Limit all stored values to a maximum value. */
         void limitMax(const scalar maxVal);
 
-        /** Limit minimum value */
+        /** \brief Limit all stored values to a minimum value. */
         void limitMin(const scalar minVal);
 
-        /** Limit value range */
+        /** \brief Limit all stored values to the range [minVal, maxVal]. */
         void limitRange(const scalar minVal, const scalar maxVal);
 };
 

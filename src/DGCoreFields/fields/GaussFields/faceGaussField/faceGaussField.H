@@ -34,7 +34,9 @@ Description
     including both minus (cell-local interior) and plus (exterior) sides.
 
 SourceFiles
-    faceGaussField.C
+    faceGaussFieldI.H
+    faceGaussFieldScalarI.H
+    faceGaussFieldVectorI.H
 
 \*---------------------------------------------------------------------------*/
 
@@ -88,58 +90,58 @@ private:
     //                           Data members
     //====================================================================//
 
-        /** Pointer to DG geometric mesh (non-owning) */
+        /** \brief Non-owning pointer to the DG geometric mesh. */
         const dgGeomMesh* mesh_;
 
-        /** Cell index associated with this face field */
+        /** \brief Mesh cell index associated with this face Gauss field. */
         label cellID_;
 
-        /** Pointer to DG geometric cell (non-owning) */
+        /** \brief Non-owning pointer to the DG geometric cell. */
         const dgGeomCell* cell_;
 
-        /** Pointer to list of face IDs belonging to the cell (non-owning) */
+        /** \brief Non-owning pointer to the global face IDs of the cell. */
         const labelList* facesID_;
 
-        /** Number of faces of the cell */
+        /** \brief Number of faces belonging to the cell. */
         label nFaces_;
 
-        /** Number of Gauss points per face */
+        /** \brief Number of Gauss points stored per face. */
         label nGaussPerFace_;
 
-        /** Total number of Gauss points on all faces */
+        /** \brief Total number of stored face Gauss points. */
         label nGauss_;
 
-        /** List of DG geometric faces (non-owning) */
+        /** \brief Non-owning pointers to the DG geometric faces of the cell. */
         List<dgGeomFace*> faces_;
 
-        /** Pointers to DoF containers of owner and neighbour cells */
+        /** \brief Pointers to the owner and neighbour cell DoF containers. */
         List<const cellDof<Type>*> cellsDof_;
 
-        /** Owned buffer of neighbour DoFs received on processor faces */
+        /** \brief Local copies of neighbour DoFs received on processor faces. */
         List<cellDof<Type>> bufferedNbrDof_;
 
-        /** Validity flag for processor-neighbour DoF buffer per face */
+        /** \brief Validity flags for the buffered processor-neighbour DoFs. */
         List<bool> bufferedNbrDofValid_;
 
-        /** Offset of Gauss points for each face */
+        /** \brief Flat-list offset of the first Gauss point of each face. */
         List<label> gaussOffset_;
 
-        /** Owner patch IDs for each face */
+        /** \brief Owner patch IDs for the faces, or -1 for internal faces. */
         List<label> ownerPatchIDs_;
 
-        /** Cell-local outward face normals */
+        /** \brief Outward face normals with respect to the owner cell. */
         List<vector> n_;
 
-        /** Face areas */
+        /** \brief Face areas. */
         List<scalar> faceAreas_;
 
-        /** Values on plus (exterior) side */
+        /** \brief Exterior-trace values at face Gauss points. */
         List<Type> plusValues_;
 
-        /** Values on minus (cell-local interior) side */
+        /** \brief Interior-trace values at face Gauss points. */
         List<Type> minusValues_;
 
-        /** Flux vectors at Gauss points */
+        /** \brief Flux vectors stored at face Gauss points when requested. */
         List<vector> flux_;
 
 public:
@@ -148,7 +150,7 @@ public:
     //                           Constructors
     //====================================================================//
 
-        /** Default constructor */
+        /** \brief Construct an empty face Gauss field. */
         faceGaussField();
 
         /**
@@ -156,6 +158,9 @@ public:
          *
          * Initializes face Gauss-point storage using DoFs
          * from owner and neighbour cells.
+         *
+         * \param cellsDof Owner-cell and neighbour-cell DoF pointers.
+         * \param mesh DG geometric mesh containing the cell and its faces.
          */
         faceGaussField
         (
@@ -163,14 +168,26 @@ public:
             const dgGeomMesh* mesh
         );
 
-        /** Copy constructor */
+        /**
+         * \brief Copy constructor.
+         *
+         * \param other Source face Gauss field to copy from.
+         */
         faceGaussField(const faceGaussField<Type>& other);
 
-        /** Move constructor */
+        /**
+         * \brief Move constructor.
+         *
+         * \param other Source face Gauss field whose storage is moved from.
+         */
         faceGaussField(faceGaussField<Type>&& other) noexcept;
 
         /**
-         * \brief Construct with uniform initial value
+         * \brief Construct with a uniform initial value.
+         *
+         * \param cellID Mesh cell index.
+         * \param mesh DG geometric mesh containing the cell.
+         * \param initVal Initial value assigned at every face Gauss point.
          */
         faceGaussField
         (
@@ -180,7 +197,10 @@ public:
         );
 
         /**
-         * \brief Construct with zero-initialized values
+         * \brief Construct with zero-initialized values.
+         *
+         * \param cellID Mesh cell index.
+         * \param mesh DG geometric mesh containing the cell.
          */
         faceGaussField
         (
@@ -189,7 +209,9 @@ public:
         );
 
         /**
-         * \brief Construct from tmp
+         * \brief Construct by consuming a temporary faceGaussField.
+         *
+         * \param t Temporary face Gauss field whose storage is consumed.
          */
         faceGaussField(const tmp<faceGaussField<Type>>& t);
 
@@ -197,13 +219,15 @@ public:
     //                              Access
     //====================================================================//
 
-        /** Return cell index */
+        /** \brief Return the associated mesh cell index. */
         inline label cellID() const { return cellID_; }
 
         /**
          * \brief Return DG geometric mesh
          *
          * Fatal error if pointer is null.
+         *
+         * \return Pointer to the DG geometric mesh.
          */
         inline const dgGeomMesh* dgMesh() const
         {
@@ -214,16 +238,16 @@ public:
             return mesh_;
         }
 
-        /** Return number of faces */
+        /** \brief Return the number of faces in the cell. */
         inline label nFaces() const { return nFaces_; }
 
-        /** Return total number of Gauss points */
+        /** \brief Return the total number of stored face Gauss points. */
         inline label nGauss() const { return nGauss_; }
 
-        /** Return number of Gauss points per face */
+        /** \brief Return the number of stored Gauss points per face. */
         inline label nGaussPerFace() const { return nGaussPerFace_; }
 
-        /** Return list of DG geometric faces */
+        /** \brief Return the list of DG geometric faces of the cell. */
         inline const List<dgGeomFace*>& faces() const
         {
             return faces_;
@@ -233,76 +257,83 @@ public:
     //                      Gauss-point value access
     //====================================================================//
 
-        /** Access plus-side value by global Gauss index */
+        /** \brief Return writable access to one flat plus-side value. */
         inline Type& plusValueAt(const label gi)       { return plusValues_[gi]; }
 
-        /** Access minus-side value by global Gauss index */
+        /** \brief Return writable access to one flat minus-side value. */
         inline Type& minusValueAt(const label gi)      { return minusValues_[gi]; }
 
-        /** Const access to plus-side value */
+        /** \brief Return read-only access to one flat plus-side value. */
         inline const Type& plusValue(const label gi) const  { return plusValues_[gi]; }
 
-        /** Const access to minus-side value */
+        /** \brief Return read-only access to one flat minus-side value. */
         inline const Type& minusValue(const label gi) const { return minusValues_[gi]; }
 
-        /** Access plus-side value by local face and Gauss index */
+        /** \brief Return writable access to a plus-side value on one face. */
         inline Type& plusValueOnFace(const label fI, const label gI)
         {
             return plusValues_[gaussOffset_[fI] + gI];
         }
 
+        /** \brief Return read-only access to a plus-side value on one face. */
         inline const Type& plusValueOnFace(const label fI, const label gI) const
         {
             return plusValues_[gaussOffset_[fI] + gI];
         }
 
-        /** Access minus-side value by local face and Gauss index */
+        /** \brief Return writable access to a minus-side value on one face. */
         inline Type& minusValueOnFace(const label fI, const label gI)
         {
             return minusValues_[gaussOffset_[fI] + gI];
         }
 
+        /** \brief Return read-only access to a minus-side value on one face. */
         inline const Type& minusValueOnFace(const label fI, const label gI) const
         {
             return minusValues_[gaussOffset_[fI] + gI];
         }
 
-        /** Access minus-side value using global face ID */
+        /** \brief Return writable access to a minus-side value using a global face ID. */
         inline Type& minusValueOnGlobalFace(const label faceID, const label gI)
         {
             return minusValues_[gaussOffset_[localFaceIndex(faceID)] + gI];
         }
 
+        /** \brief Return read-only access to a minus-side value using a global face ID. */
         inline const Type& minusValueOnGlobalFace(const label faceID, const label gI) const
         {
             return minusValues_[gaussOffset_[localFaceIndex(faceID)] + gI];
         }
 
-        /** Access plus-side value using global face ID */
+        /** \brief Return writable access to a plus-side value using a global face ID. */
         inline Type& plusValueOnGlobalFace(const label faceID, const label gI)
         {
             return plusValues_[gaussOffset_[localFaceIndex(faceID)] + gI];
         }
 
+        /** \brief Return read-only access to a plus-side value using a global face ID. */
         inline const Type& plusValueOnGlobalFace(const label faceID, const label gI) const
         {
             return plusValues_[gaussOffset_[localFaceIndex(faceID)] + gI];
         }
 
-        /** Return minus-side values */
+        /** \brief Return read-only access to the full minus-side storage. */
         inline const List<Type>& minusSide() const { return minusValues_; }
+        /** \brief Return writable access to the full minus-side storage. */
         inline List<Type>& minusSide() { return minusValues_; }
 
-        /** Return plus-side values */
+        /** \brief Return read-only access to the full plus-side storage. */
         inline const List<Type>& plusSide() const { return plusValues_; }
+        /** \brief Return writable access to the full plus-side storage. */
         inline List<Type>& plusSide() { return plusValues_; }
 
-        /** Access flux on a face Gauss point */
+        /** \brief Return read-only access to one flux vector on a face. */
         inline const vector& fluxOnFace(const label fI, const label gI) const
         {
             return flux_[gaussOffset_[fI] + gI];
         }
 
+        /** \brief Return writable access to one flux vector on a face. */
         inline vector& fluxOnFace(const label fI, const label gI)
         {
             return flux_[gaussOffset_[fI] + gI];
@@ -312,19 +343,22 @@ public:
     //                      Geometry access
     //====================================================================//
 
-        /** Return face normals */
+        /** \brief Return the outward face normals of the owner cell. */
         inline const List<vector>& normals() const { return n_; }
 
-        /** Return face areas */
+        /** \brief Return the face areas. */
         inline const List<scalar>& faceAreas() const { return faceAreas_; }
 
-        /** Return global face ID from local face index */
+        /** \brief Return the global face ID from a local face index. */
         inline label globalFaceID(const label fI) const { return (*facesID_)[fI]; }
 
         /**
          * \brief Return local face index from global face ID
          *
          * Fatal error if face is not found.
+         *
+         * \param faceID Global face ID.
+         * \return Local face index inside the owner cell.
          */
         inline label localFaceIndex(const label faceID) const 
         {
@@ -342,22 +376,22 @@ public:
             return -1;
         }
 
-        /** Check whether face is boundary */
+        /** \brief Return true if the specified local face is a boundary face. */
         inline bool isBoundary(const label fI) const { return faces_[fI]->isBoundary(); }
 
-        /** Check whether input cell is owner of face */
+        /** \brief Return true if the input cell is the owner of the specified face. */
         inline bool isOwner(const label fI, const label cellID) const 
         { 
             return faces_[fI]->isOwner(cellID); 
         }
 
-        /** Return owner patch ID */
+        /** \brief Return the owner patch ID, or -1 for internal faces. */
         inline label getOwnerPatchID(const label fI) const
         {
             return ownerPatchIDs_[fI];
         }
 
-        /** Set DoF pointers */
+        /** \brief Replace the owner/neighbour DoF pointer list. */
         inline void setCellsDof(const List<const cellDof<Type>*>& lst)
         {
             cellsDof_ = lst;
@@ -368,6 +402,9 @@ public:
          *
          * The input is copied into face-local owned storage so callers can
          * safely access the data after the communication helper returns.
+         *
+         * \param localFaceI Local face index.
+         * \param nbrDof Neighbour-cell DoFs received through synchronization.
          */
         inline void setBufferedNeighbourDof
         (
@@ -384,6 +421,9 @@ public:
          *
          * Internal faces return the directly linked neighbour cell DoFs.
          * Processor faces return the last communicated neighbour DoFs.
+         *
+         * \param localFaceI Local face index.
+         * \return Read-only neighbour cell DoF data.
          */
         inline const cellDof<Type>& neighbourCellDof
         (
@@ -462,25 +502,25 @@ public:
     //                           Operators
     //====================================================================//
 
-        /** Copy assignment */
+        /** \brief Copy assignment operator. */
         faceGaussField<Type>& operator=(const faceGaussField<Type>& other);
 
-        /** Move assignment */
+        /** \brief Move assignment operator. */
         faceGaussField<Type>& operator=
         (
             faceGaussField<Type>&& other
         ) noexcept;
 
-        /** Assignment from tmp */
+        /** \brief Assign by consuming a temporary faceGaussField. */
         faceGaussField<Type>& operator=
         (
             const tmp<faceGaussField<Type>>& t
         );
 
-        /** Assign uniform value */
+        /** \brief Assign a uniform value to all plus and minus Gauss points. */
         faceGaussField<Type>& operator=(const Type& v);
 
-        /** Initialize flux storage */
+        /** \brief Allocate the flux storage if it has not been allocated yet. */
         inline void initFlux() 
         { 
             if (flux_.size() == 0)
@@ -491,7 +531,13 @@ public:
     //                             Output
     //====================================================================//
 
-        /** Stream output of face Gauss values */
+        /**
+         * \brief Write the face Gauss-point values to an output stream.
+         *
+         * \param os Output stream.
+         * \param fgf Face Gauss field to serialize.
+         * \return Reference to the output stream.
+         */
         friend Ostream& operator<<
         (
             Ostream& os,
@@ -512,25 +558,25 @@ public:
     //                Component access (vector fields)
     //====================================================================//
 
-        /** Return x-component */
+        /** \brief Return the x-component as a scalar faceGaussField. */
         faceGaussField<scalar> x() const;
 
-        /** Return y-component */
+        /** \brief Return the y-component as a scalar faceGaussField. */
         faceGaussField<scalar> y() const;
 
-        /** Return z-component */
+        /** \brief Return the z-component as a scalar faceGaussField. */
         faceGaussField<scalar> z() const;
 
-        /** Set x-component */
+        /** \brief Replace the x-component using a scalar faceGaussField. */
         void setX(const faceGaussField<scalar>& fx);
 
-        /** Set y-component */
+        /** \brief Replace the y-component using a scalar faceGaussField. */
         void setY(const faceGaussField<scalar>& fy);
 
-        /** Set z-component */
+        /** \brief Replace the z-component using a scalar faceGaussField. */
         void setZ(const faceGaussField<scalar>& fz);
 
-        /** Set all components */
+        /** \brief Replace all vector components using scalar faceGaussFields. */
         void setXYZ
         (
             const faceGaussField<scalar>& fx,
@@ -542,13 +588,13 @@ public:
     //                              Limiting
     //====================================================================//
 
-        /** Limit maximum value */
+        /** \brief Limit all stored values to a maximum value. */
         void limitMax(const scalar maxVal);
 
-        /** Limit minimum value */
+        /** \brief Limit all stored values to a minimum value. */
         void limitMin(const scalar minVal);
 
-        /** Limit value range */
+        /** \brief Limit all stored values to the range [minVal, maxVal]. */
         void limitRange(const scalar minVal, const scalar maxVal);
 };
 
