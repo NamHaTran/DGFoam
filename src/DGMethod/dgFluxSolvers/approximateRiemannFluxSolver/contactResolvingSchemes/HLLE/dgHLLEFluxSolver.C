@@ -100,13 +100,33 @@ void Foam::dgHLLEFluxSolver::calcGamma
 ) const
 {
     const GaussField<scalar>& TG = thermo_.T().gaussFields()[cellID];
+    const thermoLaw& thermoLawModel = thermo_.thermo();
 
-    tmp<GaussField<scalar>> tCp = GaussField<scalar>::New(cellID, &mesh_);
-    tmp<GaussField<scalar>> tCv = GaussField<scalar>::New(cellID, &mesh_);
+    for (label gpI = 0; gpI < TG.cellField().size(); ++gpI)
+    {
+        const scalar T = TG.cellField()[gpI];
+        const scalar Cp = thermoLawModel.calcCp(T);
+        const scalar Cv = thermoLawModel.calcCv(T);
 
-    thermo_.thermo().calcCp(cellID, TG, tCp.ref());
-    thermo_.thermo().calcCv(cellID, TG, tCv.ref());
-    thermo_.thermo().calcGamma(cellID, tCp(), tCv(), gamma);
+        gamma.cellField()[gpI] = thermoLawModel.calcGamma(Cp, Cv);
+    }
+
+    for (label gpI = 0; gpI < TG.faceField().nGauss(); ++gpI)
+    {
+        const scalar TMinus = TG.faceField().minusValue(gpI);
+        const scalar CpMinus = thermoLawModel.calcCp(TMinus);
+        const scalar CvMinus = thermoLawModel.calcCv(TMinus);
+
+        gamma.faceField().minusValueAt(gpI) =
+            thermoLawModel.calcGamma(CpMinus, CvMinus);
+
+        const scalar TPlus = TG.faceField().plusValue(gpI);
+        const scalar CpPlus = thermoLawModel.calcCp(TPlus);
+        const scalar CvPlus = thermoLawModel.calcCv(TPlus);
+
+        gamma.faceField().plusValueAt(gpI) =
+            thermoLawModel.calcGamma(CpPlus, CvPlus);
+    }
 }
 
 
@@ -185,8 +205,6 @@ void Foam::dgHLLEFluxSolver::computeFlux
     const faceGaussField<vector>& UF   = U_.gaussFields()[cellID].faceField();
     const faceGaussField<scalar>& pF   = p_.gaussFields()[cellID].faceField();
     const faceGaussField<scalar>& aF   = thermo_.a().gaussFields()[cellID].faceField();
-    tmp<GaussField<scalar>> tH = thermo_.calcH(cellID);
-    const faceGaussField<scalar>& hF   = tH().faceField();
 
     tmp<GaussField<scalar>> tGamma = GaussField<scalar>::New(cellID, &mesh_);
     calcGamma(cellID, tGamma.ref());
@@ -198,6 +216,9 @@ void Foam::dgHLLEFluxSolver::computeFlux
     for (label fI = 0; fI < nFaces; ++fI)
     {
         const vector& n = F.normals()[fI];
+        boundaryGaussField<scalar> hMinus(nGauss);
+        boundaryGaussField<scalar> hPlus(nGauss);
+        thermo_.calcH(cellID, fI, hMinus, hPlus);
 
         for (label gI = 0; gI < nGauss; ++gI)
         {
@@ -214,8 +235,8 @@ void Foam::dgHLLEFluxSolver::computeFlux
             scalar aL = aF.minusValueOnFace(fI, gI);
             scalar aR = aF.plusValueOnFace(fI, gI);
 
-            scalar hL = hF.minusValueOnFace(fI, gI);
-            scalar hR = hF.plusValueOnFace(fI, gI);
+            scalar hL = hMinus[gI];
+            scalar hR = hPlus[gI];
 
             scalar gL = gF.minusValueOnFace(fI, gI);
             scalar gR = gF.plusValueOnFace(fI, gI);
@@ -265,8 +286,6 @@ void Foam::dgHLLEFluxSolver::computeFlux
     const faceGaussField<vector>& UF   = U_.gaussFields()[cellID].faceField();
     const faceGaussField<scalar>& pF   = p_.gaussFields()[cellID].faceField();
     const faceGaussField<scalar>& aF   = thermo_.a().gaussFields()[cellID].faceField();
-    tmp<GaussField<scalar>> tH = thermo_.calcH(cellID);
-    const faceGaussField<scalar>& hF   = tH().faceField();
 
     tmp<GaussField<scalar>> tGamma = GaussField<scalar>::New(cellID, &mesh_);
     calcGamma(cellID, tGamma.ref());
@@ -278,6 +297,9 @@ void Foam::dgHLLEFluxSolver::computeFlux
     for (label fI = 0; fI < nFaces; ++fI)
     {
         const vector& n = F.normals()[fI];
+        boundaryGaussField<scalar> hMinus(nGauss);
+        boundaryGaussField<scalar> hPlus(nGauss);
+        thermo_.calcH(cellID, fI, hMinus, hPlus);
 
         for (label gI = 0; gI < nGauss; ++gI)
         {
@@ -293,8 +315,8 @@ void Foam::dgHLLEFluxSolver::computeFlux
             scalar aL = aF.minusValueOnFace(fI, gI);
             scalar aR = aF.plusValueOnFace(fI, gI);
 
-            scalar hL = hF.minusValueOnFace(fI, gI);
-            scalar hR = hF.plusValueOnFace(fI, gI);
+            scalar hL = hMinus[gI];
+            scalar hR = hPlus[gI];
 
             scalar gL = gF.minusValueOnFace(fI, gI);
             scalar gR = gF.plusValueOnFace(fI, gI);

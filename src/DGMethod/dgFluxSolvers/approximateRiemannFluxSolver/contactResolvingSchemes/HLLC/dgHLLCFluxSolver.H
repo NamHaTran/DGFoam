@@ -47,6 +47,7 @@ namespace Foam
 {
     class dgThermoConservative;
     template<class Type> class faceGaussField;
+    template<class Type> class boundaryGaussField;
 }
 
 namespace Foam
@@ -188,6 +189,8 @@ public:
         const label localGaussID,
         const vector& n,
         const faceGaussField<scalar>& gammaF,
+        const boundaryGaussField<scalar>& hMinus,
+        const boundaryGaussField<scalar>& hPlus,
         scalar& SL,
         scalar& SR,
         scalar& SStar,

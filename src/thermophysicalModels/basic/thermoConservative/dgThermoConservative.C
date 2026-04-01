@@ -171,11 +171,78 @@ tmp<GaussField<scalar>> Foam::dgThermoConservative::calcH
     }
     else
     {
-        h = he_.gaussFields()[cellID]
-          + p_.gaussFields()[cellID]/rho_.gaussFields()[cellID];
+        const GaussField<scalar>& he = he_.gaussFields()[cellID];
+        const GaussField<scalar>& p = p_.gaussFields()[cellID];
+        const GaussField<scalar>& rho = rho_.gaussFields()[cellID];
+
+        for (label gpI = 0; gpI < h.cellField().size(); ++gpI)
+        {
+            h.cellField()[gpI] = he.cellField()[gpI] + p.cellField()[gpI]/rho.cellField()[gpI];
+        }
+
+        for (label gpI = 0; gpI < h.faceField().nGauss(); ++gpI)
+        {
+            h.faceField().minusValueAt(gpI) =
+                he.faceField().minusValue(gpI)
+              + p.faceField().minusValue(gpI)/rho.faceField().minusValue(gpI);
+
+            h.faceField().plusValueAt(gpI) =
+                he.faceField().plusValue(gpI)
+              + p.faceField().plusValue(gpI)/rho.faceField().plusValue(gpI);
+        }
     }
 
     return th;
+}
+
+
+void Foam::dgThermoConservative::calcH
+(
+    const label cellID,
+    const label localFaceID,
+    boundaryGaussField<scalar>& hMinus,
+    boundaryGaussField<scalar>& hPlus
+) const
+{
+    const faceGaussField<scalar>& he = he_.gaussFields()[cellID].faceField();
+    const label nGauss = he_.gaussFields()[cellID].faceField().nGaussPerFace();
+
+    if (hMinus.size() != nGauss)
+    {
+        hMinus = boundaryGaussField<scalar>(nGauss);
+    }
+
+    if (hPlus.size() != nGauss)
+    {
+        hPlus = boundaryGaussField<scalar>(nGauss);
+    }
+
+    if (heIsEnthalpy())
+    {
+        for (label gpI = 0; gpI < nGauss; ++gpI)
+        {
+            hMinus[gpI] = he.minusValueOnFace(localFaceID, gpI);
+            hPlus[gpI] = he.plusValueOnFace(localFaceID, gpI);
+        }
+    }
+    else
+    {
+        const faceGaussField<scalar>& p = p_.gaussFields()[cellID].faceField();
+        const faceGaussField<scalar>& rho = rho_.gaussFields()[cellID].faceField();
+
+        for (label gpI = 0; gpI < nGauss; ++gpI)
+        {
+            hMinus[gpI] =
+                he.minusValueOnFace(localFaceID, gpI)
+              + p.minusValueOnFace(localFaceID, gpI)
+               /rho.minusValueOnFace(localFaceID, gpI);
+
+            hPlus[gpI] =
+                he.plusValueOnFace(localFaceID, gpI)
+              + p.plusValueOnFace(localFaceID, gpI)
+               /rho.plusValueOnFace(localFaceID, gpI);
+        }
+    }
 }
 
 
@@ -193,11 +260,78 @@ tmp<GaussField<scalar>> Foam::dgThermoConservative::calcE
     }
     else
     {
-        e = he_.gaussFields()[cellID]
-          - p_.gaussFields()[cellID]/rho_.gaussFields()[cellID];
+        const GaussField<scalar>& he = he_.gaussFields()[cellID];
+        const GaussField<scalar>& p = p_.gaussFields()[cellID];
+        const GaussField<scalar>& rho = rho_.gaussFields()[cellID];
+
+        for (label gpI = 0; gpI < e.cellField().size(); ++gpI)
+        {
+            e.cellField()[gpI] = he.cellField()[gpI] - p.cellField()[gpI]/rho.cellField()[gpI];
+        }
+
+        for (label gpI = 0; gpI < e.faceField().nGauss(); ++gpI)
+        {
+            e.faceField().minusValueAt(gpI) =
+                he.faceField().minusValue(gpI)
+              - p.faceField().minusValue(gpI)/rho.faceField().minusValue(gpI);
+
+            e.faceField().plusValueAt(gpI) =
+                he.faceField().plusValue(gpI)
+              - p.faceField().plusValue(gpI)/rho.faceField().plusValue(gpI);
+        }
     }
 
     return te;
+}
+
+
+void Foam::dgThermoConservative::calcE
+(
+    const label cellID,
+    const label localFaceID,
+    boundaryGaussField<scalar>& eMinus,
+    boundaryGaussField<scalar>& ePlus
+) const
+{
+    const faceGaussField<scalar>& he = he_.gaussFields()[cellID].faceField();
+    const label nGauss = he_.gaussFields()[cellID].faceField().nGaussPerFace();
+
+    if (eMinus.size() != nGauss)
+    {
+        eMinus = boundaryGaussField<scalar>(nGauss);
+    }
+
+    if (ePlus.size() != nGauss)
+    {
+        ePlus = boundaryGaussField<scalar>(nGauss);
+    }
+
+    if (heIsInternalEnergy())
+    {
+        for (label gpI = 0; gpI < nGauss; ++gpI)
+        {
+            eMinus[gpI] = he.minusValueOnFace(localFaceID, gpI);
+            ePlus[gpI] = he.plusValueOnFace(localFaceID, gpI);
+        }
+    }
+    else
+    {
+        const faceGaussField<scalar>& p = p_.gaussFields()[cellID].faceField();
+        const faceGaussField<scalar>& rho = rho_.gaussFields()[cellID].faceField();
+
+        for (label gpI = 0; gpI < nGauss; ++gpI)
+        {
+            eMinus[gpI] =
+                he.minusValueOnFace(localFaceID, gpI)
+              - p.minusValueOnFace(localFaceID, gpI)
+               /rho.minusValueOnFace(localFaceID, gpI);
+
+            ePlus[gpI] =
+                he.plusValueOnFace(localFaceID, gpI)
+              - p.plusValueOnFace(localFaceID, gpI)
+               /rho.plusValueOnFace(localFaceID, gpI);
+        }
+    }
 }
 
 } // End namespace Foam

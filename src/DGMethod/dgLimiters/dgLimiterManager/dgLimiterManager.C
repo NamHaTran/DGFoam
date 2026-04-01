@@ -178,6 +178,11 @@ dgLimiter& dgLimiterManager::limiter(const word& name)
 
 void dgLimiterManager::correct()
 {
+    if (mesh_.pOrder() <= 0)
+    {
+        return;
+    }
+
     forAll(limiters_, limiterI)
     {
         limiters_[limiterI].correct();

@@ -37,19 +37,38 @@ forAll(mesh.cells(), cellI)
 
     // Momentum equation:
     //     d(rhoU)/dt + div(rhoU (x) U + pI) = 0
-    // The identity tensor is promoted to a Gauss field so pI can be formed
-    // pointwise at all quadrature points.
-    GaussField<symmTensor> identityTensor
-    (
-        cellI,
-        &dgMesh,
-        symmTensor::I
-    );
+    // Build the momentum flux explicitly at each Gauss point so we can
+    // benchmark the cost of GaussField operator overloading itself.
+    tmp<GaussField<tensor>> tMomentumFlux = GaussField<tensor>::New(cellI, &dgMesh);
+    GaussField<tensor>& momentumFlux = tMomentumFlux.ref();
 
-    // Thanks to operator overloading, rhoUG*UG and pG*identityTensor are
-    // pointwise Gauss-field products. This is one of the main reasons DG
-    // equation assembly in dgFoam stays close to the mathematical notation.
-    tmp<GaussField<tensor>> tMomentumFlux = rhoUG*UG + pG*identityTensor;
+    {
+        const cellGaussField<vector>& rhoUCell = rhoUG.cellField();
+        const cellGaussField<vector>& UCell = UG.cellField();
+        const cellGaussField<scalar>& pCell = pG.cellField();
+        cellGaussField<tensor>& momentumCell = momentumFlux.cellField();
+
+        for (label gpI = 0; gpI < momentumCell.size(); ++gpI)
+        {
+            momentumCell[gpI] = rhoUCell[gpI]*UCell[gpI] + pCell[gpI]*symmTensor::I;
+        }
+
+        const faceGaussField<vector>& rhoUFace = rhoUG.faceField();
+        const faceGaussField<vector>& UFace = UG.faceField();
+        const faceGaussField<scalar>& pFace = pG.faceField();
+        faceGaussField<tensor>& momentumFace = momentumFlux.faceField();
+
+        for (label gpI = 0; gpI < momentumFace.nGauss(); ++gpI)
+        {
+            momentumFace.minusValueAt(gpI) =
+                rhoUFace.minusValue(gpI)*UFace.minusValue(gpI)
+              + pFace.minusValue(gpI)*symmTensor::I;
+
+            momentumFace.plusValueAt(gpI) =
+                rhoUFace.plusValue(gpI)*UFace.plusValue(gpI)
+              + pFace.plusValue(gpI)*symmTensor::I;
+        }
+    }
 
     dgGeneralPDETerm<vector, tensor> momentumConvTerm
     (
@@ -63,7 +82,36 @@ forAll(mesh.cells(), cellI)
 
     // Total-energy equation:
     //     d(E)/dt + div((E + p)U) = 0
-    tmp<GaussField<vector>> tEnergyFlux = (EG + pG)*UG;
+    tmp<GaussField<vector>> tEnergyFlux = GaussField<vector>::New(cellI, &dgMesh);
+    GaussField<vector>& energyFlux = tEnergyFlux.ref();
+
+    {
+        const cellGaussField<scalar>& ECell = EG.cellField();
+        const cellGaussField<scalar>& pCell = pG.cellField();
+        const cellGaussField<vector>& UCell = UG.cellField();
+        cellGaussField<vector>& energyCell = energyFlux.cellField();
+
+        for (label gpI = 0; gpI < energyCell.size(); ++gpI)
+        {
+            energyCell[gpI] = (ECell[gpI] + pCell[gpI])*UCell[gpI];
+        }
+
+        const faceGaussField<scalar>& EFace = EG.faceField();
+        const faceGaussField<scalar>& pFace = pG.faceField();
+        const faceGaussField<vector>& UFace = UG.faceField();
+        faceGaussField<vector>& energyFace = energyFlux.faceField();
+
+        for (label gpI = 0; gpI < energyFace.nGauss(); ++gpI)
+        {
+            energyFace.minusValueAt(gpI) =
+                (EFace.minusValue(gpI) + pFace.minusValue(gpI))
+               *UFace.minusValue(gpI);
+
+            energyFace.plusValueAt(gpI) =
+                (EFace.plusValue(gpI) + pFace.plusValue(gpI))
+               *UFace.plusValue(gpI);
+        }
+    }
 
     dgGeneralPDETerm<scalar, vector> energyConvTerm
     (

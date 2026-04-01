@@ -29,11 +29,12 @@ if (runTime.isAdjustTimeStep())
         const cellGaussField<scalar>& aCell = thermo->a().gaussFields()[cellI].cellField();
 
         // lambdaMax approximates the stiffest local wave/transport speed.
-        // Build the pointwise sum in smaller tmp-backed steps to avoid
-        // over-referencing the same temporary cellGaussField object.
-        tmp<cellGaussField<scalar>> tLambdaCell = aCell + mag(UCell);
+        scalar lambdaMax = -GREAT;
 
-        const scalar lambdaMax = maxValue(tLambdaCell);
+        for (label gpI = 0; gpI < UCell.size(); ++gpI)
+        {
+            lambdaMax = max(lambdaMax, aCell[gpI] + mag(UCell[gpI]));
+        }
 
         const scalar dtCell = CFL*h/(pScale*lambdaMax);
         dt = min(dt, dtCell);

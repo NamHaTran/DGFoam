@@ -19,7 +19,12 @@ const boundaryGaussField<scalar> rhoB =
 const boundaryGaussField<vector> rhoUB =
     rhoUG.faceField().extractBCGhostState();
 
-boundaryGaussField<vector> UB = rhoUB/rhoB;
+boundaryGaussField<vector> UB(rhoB.size());
+
+for (label gpI = 0; gpI < rhoB.size(); ++gpI)
+{
+    UB[gpI] = rhoUB[gpI]/rhoB[gpI];
+}
 
 UG.faceField().assignBCGhostState(UB);
 

@@ -118,13 +118,33 @@ void Foam::dgHLLCFluxSolver::calcGamma
 ) const
 {
     const GaussField<scalar>& TG = thermo_.T().gaussFields()[cellID];
+    const thermoLaw& thermoLawModel = thermo_.thermo();
 
-    tmp<GaussField<scalar>> tCp = GaussField<scalar>::New(cellID, &mesh_);
-    tmp<GaussField<scalar>> tCv = GaussField<scalar>::New(cellID, &mesh_);
+    for (label gpI = 0; gpI < TG.cellField().size(); ++gpI)
+    {
+        const scalar T = TG.cellField()[gpI];
+        const scalar Cp = thermoLawModel.calcCp(T);
+        const scalar Cv = thermoLawModel.calcCv(T);
 
-    thermo_.thermo().calcCp(cellID, TG, tCp.ref());
-    thermo_.thermo().calcCv(cellID, TG, tCv.ref());
-    thermo_.thermo().calcGamma(cellID, tCp(), tCv(), gamma);
+        gamma.cellField()[gpI] = thermoLawModel.calcGamma(Cp, Cv);
+    }
+
+    for (label gpI = 0; gpI < TG.faceField().nGauss(); ++gpI)
+    {
+        const scalar TMinus = TG.faceField().minusValue(gpI);
+        const scalar CpMinus = thermoLawModel.calcCp(TMinus);
+        const scalar CvMinus = thermoLawModel.calcCv(TMinus);
+
+        gamma.faceField().minusValueAt(gpI) =
+            thermoLawModel.calcGamma(CpMinus, CvMinus);
+
+        const scalar TPlus = TG.faceField().plusValue(gpI);
+        const scalar CpPlus = thermoLawModel.calcCp(TPlus);
+        const scalar CvPlus = thermoLawModel.calcCv(TPlus);
+
+        gamma.faceField().plusValueAt(gpI) =
+            thermoLawModel.calcGamma(CpPlus, CvPlus);
+    }
 }
 
 // * * * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * * //
@@ -171,6 +191,8 @@ void Foam::dgHLLCFluxSolver::calcIntermediateState
     const label localGaussID,
     const vector& n,
     const faceGaussField<scalar>& gammaF,
+    const boundaryGaussField<scalar>& hMinus,
+    const boundaryGaussField<scalar>& hPlus,
 
     // Output
     scalar& SL,
@@ -200,8 +222,6 @@ void Foam::dgHLLCFluxSolver::calcIntermediateState
         // Calculate and cache intermediate states if the cell is owner
         const faceGaussField<vector>& UF   = U_.gaussFields()[cellID].faceField();
         const faceGaussField<scalar>& pF   = p_.gaussFields()[cellID].faceField();
-        tmp<GaussField<scalar>> tH = thermo_.calcH(cellID);
-        const faceGaussField<scalar>& hF   = tH().faceField();
 
         // Left (-) and right (+) states
         const scalar rhoR = rhoF.plusValueOnFace(localFaceID, localGaussID);
@@ -216,8 +236,8 @@ void Foam::dgHLLCFluxSolver::calcIntermediateState
         const scalar aR = aF.plusValueOnFace(localFaceID, localGaussID);
         const scalar aL = aF.minusValueOnFace(localFaceID, localGaussID);
 
-        const scalar hR = hF.plusValueOnFace(localFaceID, localGaussID);
-        const scalar hL = hF.minusValueOnFace(localFaceID, localGaussID);
+        const scalar hR = hPlus[localGaussID];
+        const scalar hL = hMinus[localGaussID];
 
         const scalar gammaR = gammaF.plusValueOnFace(localFaceID, localGaussID);
         const scalar gammaL = gammaF.minusValueOnFace(localFaceID, localGaussID);
@@ -327,6 +347,10 @@ void Foam::dgHLLCFluxSolver::computeFlux
     for (label fI = 0; fI < nFaces; fI++)
     {
         const vector& n(F.normals()[fI]);
+        boundaryGaussField<scalar> hMinus(nGaussPerFace);
+        boundaryGaussField<scalar> hPlus(nGaussPerFace);
+        thermo_.calcH(cellID, fI, hMinus, hPlus);
+
         for (label nG = 0; nG < nGaussPerFace; nG++)
         {
             scalar UL = U.minusValueOnFace(fI, nG);
@@ -342,6 +366,8 @@ void Foam::dgHLLCFluxSolver::computeFlux
                 nG,
                 n,
                 gammaF,
+                hMinus,
+                hPlus,
 
                 // output
                 SL,
@@ -455,6 +481,10 @@ void Foam::dgHLLCFluxSolver::computeFlux
     for (label fI = 0; fI < nFaces; fI++)
     {
         const vector& n(F.normals()[fI]);
+        boundaryGaussField<scalar> hMinus(nGaussPerFace);
+        boundaryGaussField<scalar> hPlus(nGaussPerFace);
+        thermo_.calcH(cellID, fI, hMinus, hPlus);
+
         for (label nG = 0; nG < nGaussPerFace; nG++)
         {
             vector UL = U.minusValueOnFace(fI, nG);
@@ -470,6 +500,8 @@ void Foam::dgHLLCFluxSolver::computeFlux
                 nG,
                 n,
                 gammaF,
+                hMinus,
+                hPlus,
 
                 // output
                 SL,

@@ -22,7 +22,23 @@ forAll(mesh.cells(), cellI)
 {
     // Rebuild the kinematic primitive field outside thermo so the thermo layer
     // remains focused on thermal variables.
-    U.gaussFields()[cellI] = rhoU.gaussFields()[cellI] / rho.gaussFields()[cellI];
+    const GaussField<scalar>& rhoG = rho.gaussFields()[cellI];
+    const GaussField<vector>& rhoUG = rhoU.gaussFields()[cellI];
+    GaussField<vector>& UG = U.gaussFields()[cellI];
+
+    for (label gpI = 0; gpI < UG.cellField().size(); ++gpI)
+    {
+        UG.cellField()[gpI] = rhoUG.cellField()[gpI]/rhoG.cellField()[gpI];
+    }
+
+    for (label gpI = 0; gpI < UG.faceField().nGauss(); ++gpI)
+    {
+        UG.faceField().minusValueAt(gpI) =
+            rhoUG.faceField().minusValue(gpI)/rhoG.faceField().minusValue(gpI);
+
+        UG.faceField().plusValueAt(gpI) =
+            rhoUG.faceField().plusValue(gpI)/rhoG.faceField().plusValue(gpI);
+    }
 
     // Reconstruct p, T, he, a, gamma, etc. from the stage-consistent
     // conservative state. This keeps the primitive and thermo layers in sync

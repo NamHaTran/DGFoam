@@ -60,6 +60,7 @@ class eqnOfState;
 class thermoLaw;
 class transportLaw;
 class energy;
+template<class Type> class boundaryGaussField;
 
 /*---------------------------------------------------------------------------*\
                     Class dgThermoConservative Declaration
@@ -300,8 +301,26 @@ public:
         /** Return enthalpy reconstructed from the stored energy variable */
         tmp<GaussField<scalar>> calcH(const label cellID) const;
 
+        /** Return face-local enthalpy reconstructed on one local face */
+        void calcH
+        (
+            const label cellID,
+            const label localFaceID,
+            boundaryGaussField<scalar>& hMinus,
+            boundaryGaussField<scalar>& hPlus
+        ) const;
+
         /** Return internal energy reconstructed from the stored energy variable */
         tmp<GaussField<scalar>> calcE(const label cellID) const;
+
+        /** Return face-local internal energy reconstructed on one local face */
+        void calcE
+        (
+            const label cellID,
+            const label localFaceID,
+            boundaryGaussField<scalar>& eMinus,
+            boundaryGaussField<scalar>& ePlus
+        ) const;
 
         /** Return pressure field */
         inline dgField<scalar>& p() { return p_; }
