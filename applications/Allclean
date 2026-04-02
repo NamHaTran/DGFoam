@@ -1,0 +1,19 @@
+#!/bin/sh
+
+set -e
+
+APP_ROOT="$(CDPATH= cd -- "$(dirname -- "$0")" && pwd -P)"
+
+echo "==> Cleaning utilities from $APP_ROOT/utilities/prepareDGDecomposedMesh"
+cd "$APP_ROOT/utilities/prepareDGDecomposedMesh"
+wclean
+
+echo "==> Cleaning compressible applications from $APP_ROOT/solvers/compressible/DGCompressibleFoam"
+cd "$APP_ROOT/solvers/compressible/DGCompressibleFoam"
+wclean
+
+echo "==> Cleaning derived function objects from $APP_ROOT/solvers/compressible/DGCompressibleFoam/derivedFunctionObjects"
+cd "$APP_ROOT/solvers/compressible/DGCompressibleFoam/derivedFunctionObjects"
+wclean libso
+
+#------------------------------------------------------------------------------

@@ -1,0 +1,14 @@
+#!/bin/sh
+
+set -e
+
+APP_ROOT="$(CDPATH= cd -- "$(dirname -- "$0")" && pwd -P)"
+
+echo "==> Building utilities from $APP_ROOT/utilities/prepareDGDecomposedMesh"
+cd "$APP_ROOT/utilities/prepareDGDecomposedMesh"
+wmake
+
+echo "==> Building compressible applications from $APP_ROOT/solvers/compressible/DGCompressibleFoam"
+"$APP_ROOT/solvers/compressible/DGCompressibleFoam/Allwmake"
+
+#------------------------------------------------------------------------------
