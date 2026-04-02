@@ -28,6 +28,7 @@ License
 
 #include "dgThermoConservative.H"
 #include "addToRunTimeSelectionTable.H"
+#include "dgExpr.H"
 
 namespace Foam
 {
@@ -174,22 +175,7 @@ tmp<GaussField<scalar>> Foam::dgThermoConservative::calcH
         const GaussField<scalar>& he = he_.gaussFields()[cellID];
         const GaussField<scalar>& p = p_.gaussFields()[cellID];
         const GaussField<scalar>& rho = rho_.gaussFields()[cellID];
-
-        for (label gpI = 0; gpI < h.cellField().size(); ++gpI)
-        {
-            h.cellField()[gpI] = he.cellField()[gpI] + p.cellField()[gpI]/rho.cellField()[gpI];
-        }
-
-        for (label gpI = 0; gpI < h.faceField().nGauss(); ++gpI)
-        {
-            h.faceField().minusValueAt(gpI) =
-                he.faceField().minusValue(gpI)
-              + p.faceField().minusValue(gpI)/rho.faceField().minusValue(gpI);
-
-            h.faceField().plusValueAt(gpI) =
-                he.faceField().plusValue(gpI)
-              + p.faceField().plusValue(gpI)/rho.faceField().plusValue(gpI);
-        }
+        dg::assign(h, dg::expr(he) + dg::expr(p)/dg::expr(rho));
     }
 
     return th;
@@ -263,22 +249,7 @@ tmp<GaussField<scalar>> Foam::dgThermoConservative::calcE
         const GaussField<scalar>& he = he_.gaussFields()[cellID];
         const GaussField<scalar>& p = p_.gaussFields()[cellID];
         const GaussField<scalar>& rho = rho_.gaussFields()[cellID];
-
-        for (label gpI = 0; gpI < e.cellField().size(); ++gpI)
-        {
-            e.cellField()[gpI] = he.cellField()[gpI] - p.cellField()[gpI]/rho.cellField()[gpI];
-        }
-
-        for (label gpI = 0; gpI < e.faceField().nGauss(); ++gpI)
-        {
-            e.faceField().minusValueAt(gpI) =
-                he.faceField().minusValue(gpI)
-              - p.faceField().minusValue(gpI)/rho.faceField().minusValue(gpI);
-
-            e.faceField().plusValueAt(gpI) =
-                he.faceField().plusValue(gpI)
-              - p.faceField().plusValue(gpI)/rho.faceField().plusValue(gpI);
-        }
+        dg::assign(e, dg::expr(he) - dg::expr(p)/dg::expr(rho));
     }
 
     return te;

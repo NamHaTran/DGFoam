@@ -27,6 +27,7 @@ License
 \*---------------------------------------------------------------------------*/
 
 #include "thermoLaw.H"
+#include "dgExpr.H"
 
 // * * * * * * * * * * * * * * Static Data Members * * * * * * * * * * * * * //
 
@@ -103,18 +104,18 @@ void Foam::thermoLaw::calcTFromInternalE
     GaussField<scalar>& T
 ) const
 {
-    for (label gpI = 0; gpI < e.cellField().size(); ++gpI)
-    {
-        T.cellField()[gpI] = calcTFromInternalE(e.cellField()[gpI]);
-    }
-
-    for (label gpI = 0; gpI < e.faceField().nGauss(); ++gpI)
-    {
-        T.faceField().minusValueAt(gpI) =
-            calcTFromInternalE(e.faceField().minusValue(gpI));
-        T.faceField().plusValueAt(gpI) =
-            calcTFromInternalE(e.faceField().plusValue(gpI));
-    }
+    dg::assign
+    (
+        T,
+        dg::map
+        (
+            [this](const scalar eValue)
+            {
+                return calcTFromInternalE(eValue);
+            },
+            dg::expr(e)
+        )
+    );
 }
 
 
@@ -138,18 +139,18 @@ void Foam::thermoLaw::calcTFromH
     GaussField<scalar>& T
 ) const
 {
-    for (label gpI = 0; gpI < h.cellField().size(); ++gpI)
-    {
-        T.cellField()[gpI] = calcTFromH(h.cellField()[gpI]);
-    }
-
-    for (label gpI = 0; gpI < h.faceField().nGauss(); ++gpI)
-    {
-        T.faceField().minusValueAt(gpI) =
-            calcTFromH(h.faceField().minusValue(gpI));
-        T.faceField().plusValueAt(gpI) =
-            calcTFromH(h.faceField().plusValue(gpI));
-    }
+    dg::assign
+    (
+        T,
+        dg::map
+        (
+            [this](const scalar hValue)
+            {
+                return calcTFromH(hValue);
+            },
+            dg::expr(h)
+        )
+    );
 }
 
 
@@ -173,16 +174,18 @@ void Foam::thermoLaw::calcCp
     GaussField<scalar>& Cp
 ) const
 {
-    for (label gpI = 0; gpI < T.cellField().size(); ++gpI)
-    {
-        Cp.cellField()[gpI] = calcCp(T.cellField()[gpI]);
-    }
-
-    for (label gpI = 0; gpI < T.faceField().nGauss(); ++gpI)
-    {
-        Cp.faceField().minusValueAt(gpI) = calcCp(T.faceField().minusValue(gpI));
-        Cp.faceField().plusValueAt(gpI) = calcCp(T.faceField().plusValue(gpI));
-    }
+    dg::assign
+    (
+        Cp,
+        dg::map
+        (
+            [this](const scalar TValue)
+            {
+                return calcCp(TValue);
+            },
+            dg::expr(T)
+        )
+    );
 }
 
 
@@ -206,16 +209,18 @@ void Foam::thermoLaw::calcCv
     GaussField<scalar>& Cv
 ) const
 {
-    for (label gpI = 0; gpI < T.cellField().size(); ++gpI)
-    {
-        Cv.cellField()[gpI] = calcCv(T.cellField()[gpI]);
-    }
-
-    for (label gpI = 0; gpI < T.faceField().nGauss(); ++gpI)
-    {
-        Cv.faceField().minusValueAt(gpI) = calcCv(T.faceField().minusValue(gpI));
-        Cv.faceField().plusValueAt(gpI) = calcCv(T.faceField().plusValue(gpI));
-    }
+    dg::assign
+    (
+        Cv,
+        dg::map
+        (
+            [this](const scalar TValue)
+            {
+                return calcCv(TValue);
+            },
+            dg::expr(T)
+        )
+    );
 }
 
 
@@ -240,26 +245,19 @@ void Foam::thermoLaw::calcGamma
     GaussField<scalar>& gamma
 ) const
 {
-    for (label gpI = 0; gpI < Cp.cellField().size(); ++gpI)
-    {
-        gamma.cellField()[gpI] =
-            calcGamma(Cp.cellField()[gpI], Cv.cellField()[gpI]);
-    }
-
-    for (label gpI = 0; gpI < Cp.faceField().nGauss(); ++gpI)
-    {
-        gamma.faceField().minusValueAt(gpI) = calcGamma
+    dg::assign
+    (
+        gamma,
+        dg::map
         (
-            Cp.faceField().minusValue(gpI),
-            Cv.faceField().minusValue(gpI)
-        );
-
-        gamma.faceField().plusValueAt(gpI) = calcGamma
-        (
-            Cp.faceField().plusValue(gpI),
-            Cv.faceField().plusValue(gpI)
-        );
-    }
+            [this](const scalar cpValue, const scalar cvValue)
+            {
+                return calcGamma(cpValue, cvValue);
+            },
+            dg::expr(Cp),
+            dg::expr(Cv)
+        )
+    );
 }
 
 
@@ -284,18 +282,18 @@ void Foam::thermoLaw::calcInternalE
     GaussField<scalar>& e
 ) const
 {
-    for (label gpI = 0; gpI < T.cellField().size(); ++gpI)
-    {
-        e.cellField()[gpI] = calcInternalE(T.cellField()[gpI]);
-    }
-
-    for (label gpI = 0; gpI < T.faceField().nGauss(); ++gpI)
-    {
-        e.faceField().minusValueAt(gpI) =
-            calcInternalE(T.faceField().minusValue(gpI));
-        e.faceField().plusValueAt(gpI) =
-            calcInternalE(T.faceField().plusValue(gpI));
-    }
+    dg::assign
+    (
+        e,
+        dg::map
+        (
+            [this](const scalar TValue)
+            {
+                return calcInternalE(TValue);
+            },
+            dg::expr(T)
+        )
+    );
 }
 
 
@@ -319,16 +317,18 @@ void Foam::thermoLaw::calcH
     GaussField<scalar>& h
 ) const
 {
-    for (label gpI = 0; gpI < T.cellField().size(); ++gpI)
-    {
-        h.cellField()[gpI] = calcH(T.cellField()[gpI]);
-    }
-
-    for (label gpI = 0; gpI < T.faceField().nGauss(); ++gpI)
-    {
-        h.faceField().minusValueAt(gpI) = calcH(T.faceField().minusValue(gpI));
-        h.faceField().plusValueAt(gpI) = calcH(T.faceField().plusValue(gpI));
-    }
+    dg::assign
+    (
+        h,
+        dg::map
+        (
+            [this](const scalar TValue)
+            {
+                return calcH(TValue);
+            },
+            dg::expr(T)
+        )
+    );
 }
 
 
@@ -353,26 +353,19 @@ void Foam::thermoLaw::calcSpeedOfSound
     GaussField<scalar>& a
 ) const
 {
-    for (label gpI = 0; gpI < T.cellField().size(); ++gpI)
-    {
-        a.cellField()[gpI] =
-            calcSpeedOfSound(T.cellField()[gpI], gamma.cellField()[gpI]);
-    }
-
-    for (label gpI = 0; gpI < T.faceField().nGauss(); ++gpI)
-    {
-        a.faceField().minusValueAt(gpI) = calcSpeedOfSound
+    dg::assign
+    (
+        a,
+        dg::map
         (
-            T.faceField().minusValue(gpI),
-            gamma.faceField().minusValue(gpI)
-        );
-
-        a.faceField().plusValueAt(gpI) = calcSpeedOfSound
-        (
-            T.faceField().plusValue(gpI),
-            gamma.faceField().plusValue(gpI)
-        );
-    }
+            [this](const scalar TValue, const scalar gammaValue)
+            {
+                return calcSpeedOfSound(TValue, gammaValue);
+            },
+            dg::expr(T),
+            dg::expr(gamma)
+        )
+    );
 }
 
 

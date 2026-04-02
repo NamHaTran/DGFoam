@@ -27,6 +27,7 @@ License
 \*---------------------------------------------------------------------------*/
 
 #include "eqnOfState.H"
+#include "dgExpr.H"
 
 // * * * * * * * * * * * * * * Static Data Members * * * * * * * * * * * * * //
 
@@ -98,29 +99,19 @@ void Foam::eqnOfState::calcRhoFromPT
     GaussField<scalar>& rho
 ) const
 {
-    for (label gpI = 0; gpI < p.cellField().size(); ++gpI)
-    {
-        rho.cellField()[gpI] = calcRhoFromPT
+    dg::assign
+    (
+        rho,
+        dg::map
         (
-            p.cellField()[gpI],
-            T.cellField()[gpI]
-        );
-    }
-
-    for (label gpI = 0; gpI < p.faceField().nGauss(); ++gpI)
-    {
-        rho.faceField().minusValueAt(gpI) = calcRhoFromPT
-        (
-            p.faceField().minusValue(gpI),
-            T.faceField().minusValue(gpI)
-        );
-
-        rho.faceField().plusValueAt(gpI) = calcRhoFromPT
-        (
-            p.faceField().plusValue(gpI),
-            T.faceField().plusValue(gpI)
-        );
-    }
+            [this](const scalar pValue, const scalar TValue)
+            {
+                return calcRhoFromPT(pValue, TValue);
+            },
+            dg::expr(p),
+            dg::expr(T)
+        )
+    );
 }
 
 
@@ -146,29 +137,19 @@ void Foam::eqnOfState::calcPFromRhoT
     GaussField<scalar>& p
 ) const
 {
-    for (label gpI = 0; gpI < rho.cellField().size(); ++gpI)
-    {
-        p.cellField()[gpI] = calcPFromRhoT
+    dg::assign
+    (
+        p,
+        dg::map
         (
-            rho.cellField()[gpI],
-            T.cellField()[gpI]
-        );
-    }
-
-    for (label gpI = 0; gpI < rho.faceField().nGauss(); ++gpI)
-    {
-        p.faceField().minusValueAt(gpI) = calcPFromRhoT
-        (
-            rho.faceField().minusValue(gpI),
-            T.faceField().minusValue(gpI)
-        );
-
-        p.faceField().plusValueAt(gpI) = calcPFromRhoT
-        (
-            rho.faceField().plusValue(gpI),
-            T.faceField().plusValue(gpI)
-        );
-    }
+            [this](const scalar rhoValue, const scalar TValue)
+            {
+                return calcPFromRhoT(rhoValue, TValue);
+            },
+            dg::expr(rho),
+            dg::expr(T)
+        )
+    );
 }
 
 
@@ -194,29 +175,19 @@ void Foam::eqnOfState::calcTFromPRho
     GaussField<scalar>& T
 ) const
 {
-    for (label gpI = 0; gpI < p.cellField().size(); ++gpI)
-    {
-        T.cellField()[gpI] = calcTFromPRho
+    dg::assign
+    (
+        T,
+        dg::map
         (
-            p.cellField()[gpI],
-            rho.cellField()[gpI]
-        );
-    }
-
-    for (label gpI = 0; gpI < p.faceField().nGauss(); ++gpI)
-    {
-        T.faceField().minusValueAt(gpI) = calcTFromPRho
-        (
-            p.faceField().minusValue(gpI),
-            rho.faceField().minusValue(gpI)
-        );
-
-        T.faceField().plusValueAt(gpI) = calcTFromPRho
-        (
-            p.faceField().plusValue(gpI),
-            rho.faceField().plusValue(gpI)
-        );
-    }
+            [this](const scalar pValue, const scalar rhoValue)
+            {
+                return calcTFromPRho(pValue, rhoValue);
+            },
+            dg::expr(p),
+            dg::expr(rho)
+        )
+    );
 }
 
 

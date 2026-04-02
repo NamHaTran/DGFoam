@@ -26,19 +26,17 @@ forAll(mesh.cells(), cellI)
     const GaussField<vector>& rhoUG = rhoU.gaussFields()[cellI];
     GaussField<vector>& UG = U.gaussFields()[cellI];
 
-    for (label gpI = 0; gpI < UG.cellField().size(); ++gpI)
-    {
-        UG.cellField()[gpI] = rhoUG.cellField()[gpI]/rhoG.cellField()[gpI];
-    }
+    dg::assign
+    (
+        UG.cellField(),
+        dg::expr(rhoUG.cellField())/dg::expr(rhoG.cellField())
+    );
 
-    for (label gpI = 0; gpI < UG.faceField().nGauss(); ++gpI)
-    {
-        UG.faceField().minusValueAt(gpI) =
-            rhoUG.faceField().minusValue(gpI)/rhoG.faceField().minusValue(gpI);
-
-        UG.faceField().plusValueAt(gpI) =
-            rhoUG.faceField().plusValue(gpI)/rhoG.faceField().plusValue(gpI);
-    }
+    dg::assign
+    (
+        UG.faceField(),
+        dg::expr(rhoUG.faceField())/dg::expr(rhoG.faceField())
+    );
 
     // Reconstruct p, T, he, a, gamma, etc. from the stage-consistent
     // conservative state. This keeps the primitive and thermo layers in sync

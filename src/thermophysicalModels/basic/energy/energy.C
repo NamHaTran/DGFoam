@@ -28,6 +28,7 @@ License
 
 #include "energy.H"
 #include "addToRunTimeSelectionTable.H"
+#include "dgExpr.H"
 
 namespace Foam
 {
@@ -93,16 +94,18 @@ void energy::calcEnthalpy
     GaussField<scalar>& h
 ) const
 {
-    for (label gpI = 0; gpI < T.cellField().size(); ++gpI)
-    {
-        h.cellField()[gpI] = calcEnthalpy(T.cellField()[gpI]);
-    }
-
-    for (label gpI = 0; gpI < T.faceField().nGauss(); ++gpI)
-    {
-        h.faceField().minusValueAt(gpI) = calcEnthalpy(T.faceField().minusValue(gpI));
-        h.faceField().plusValueAt(gpI) = calcEnthalpy(T.faceField().plusValue(gpI));
-    }
+    dg::assign
+    (
+        h,
+        dg::map
+        (
+            [this](const scalar TValue)
+            {
+                return calcEnthalpy(TValue);
+            },
+            dg::expr(T)
+        )
+    );
 }
 
 
@@ -126,16 +129,18 @@ void energy::calcHe
     GaussField<scalar>& he
 ) const
 {
-    for (label gpI = 0; gpI < T.cellField().size(); ++gpI)
-    {
-        he.cellField()[gpI] = calcHe(T.cellField()[gpI]);
-    }
-
-    for (label gpI = 0; gpI < T.faceField().nGauss(); ++gpI)
-    {
-        he.faceField().minusValueAt(gpI) = calcHe(T.faceField().minusValue(gpI));
-        he.faceField().plusValueAt(gpI) = calcHe(T.faceField().plusValue(gpI));
-    }
+    dg::assign
+    (
+        he,
+        dg::map
+        (
+            [this](const scalar TValue)
+            {
+                return calcHe(TValue);
+            },
+            dg::expr(T)
+        )
+    );
 }
 
 
@@ -159,16 +164,18 @@ void energy::calcTfromHe
     GaussField<scalar>& T
 ) const
 {
-    for (label gpI = 0; gpI < he.cellField().size(); ++gpI)
-    {
-        T.cellField()[gpI] = calcTfromHe(he.cellField()[gpI]);
-    }
-
-    for (label gpI = 0; gpI < he.faceField().nGauss(); ++gpI)
-    {
-        T.faceField().minusValueAt(gpI) = calcTfromHe(he.faceField().minusValue(gpI));
-        T.faceField().plusValueAt(gpI) = calcTfromHe(he.faceField().plusValue(gpI));
-    }
+    dg::assign
+    (
+        T,
+        dg::map
+        (
+            [this](const scalar heValue)
+            {
+                return calcTfromHe(heValue);
+            },
+            dg::expr(he)
+        )
+    );
 }
 
 

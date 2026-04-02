@@ -60,6 +60,7 @@ Description
 
 // DG libs (must have)
 #include "dgField.H"
+#include "dgExpr.H"
 #include "dgMath.H"
 #include "dgCompressibleBoundaryManager.H"
 #include "dgFluxSolverManager.H"

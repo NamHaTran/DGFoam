@@ -1,44 +1,49 @@
 #!/bin/sh
+
+set -e
+
+SRC_ROOT="$(CDPATH= cd -- "$(dirname -- "$0")" && pwd -P)"
+
 # Create symbolic includes
 #--------------------------------------------#
-echo "==> Linking includes in mesh/"
-cd mesh
+echo "==> Linking includes in $SRC_ROOT/mesh"
+cd "$SRC_ROOT/mesh"
 wmakeLnInclude -f .
 
-echo "==> Linking includes in math/"
-cd ../math
+echo "==> Linking includes in $SRC_ROOT/math"
+cd "$SRC_ROOT/math"
 wmakeLnInclude -f .
 
-echo "==> Linking includes in DGCoreFields/"
-cd ../DGCoreFields
+echo "==> Linking includes in $SRC_ROOT/DGCoreFields"
+cd "$SRC_ROOT/DGCoreFields"
 wmakeLnInclude -f .
 
-echo "==> Linking includes in thermophysicalModels/"
-cd ../thermophysicalModels
+echo "==> Linking includes in $SRC_ROOT/thermophysicalModels"
+cd "$SRC_ROOT/thermophysicalModels"
 wmakeLnInclude -f .
 
-echo "==> Linking includes in DGMethod/"
-cd ../DGMethod
+echo "==> Linking includes in $SRC_ROOT/DGMethod"
+cd "$SRC_ROOT/DGMethod"
 wmakeLnInclude -f .
 #--------------------------------------------#
 
 # Build DGCoreFields library first; it exposes field symbols needed by DGMesh
-echo "==> Building libDGCoreFields from DGCoreFields/"
-cd ../DGCoreFields
+echo "==> Building libDGCoreFields from $SRC_ROOT/DGCoreFields"
+cd "$SRC_ROOT/DGCoreFields"
 wmake libso
 
 # Build mesh library
-echo "==> Building libDGMesh from mesh/"
-cd ../mesh
+echo "==> Building libDGMesh from $SRC_ROOT/mesh"
+cd "$SRC_ROOT/mesh"
 wmake libso
 
 # Build thermophysicalModels library
-echo "==> Building libDGFluidThermophysicalModels from thermophysicalModels/"
-cd ../thermophysicalModels
+echo "==> Building libDGFluidThermophysicalModels from $SRC_ROOT/thermophysicalModels"
+cd "$SRC_ROOT/thermophysicalModels"
 wmake libso
 
 # Build DGMethod library
-echo "==> Building libDGMethod from DGMethod/"
-cd ../DGMethod
+echo "==> Building libDGMethod from $SRC_ROOT/DGMethod"
+cd "$SRC_ROOT/DGMethod"
 wmake libso
 #------------------------------------------------------------------------------

@@ -21,20 +21,13 @@ if (runTime.isAdjustTimeStep())
                 << abort(FatalError);
         }
 
-        // The time-step constraint is evaluated at interior Gauss points so the
-        // estimate sees the local high-order DG state, not just one cell average.
-        // cellGaussField behaves like a small per-cell field object, and the math
-        // layer overloads operators on it pointwise.
-        const cellGaussField<vector>& UCell = U.gaussFields()[cellI].cellField();
-        const cellGaussField<scalar>& aCell = thermo->a().gaussFields()[cellI].cellField();
+        const auto lambdaExpr =
+            dg::expr(thermo->a().gaussFields()[cellI].cellField())
+          + dg::mag(dg::expr(U.gaussFields()[cellI].cellField()));
 
-        // lambdaMax approximates the stiffest local wave/transport speed.
-        scalar lambdaMax = -GREAT;
-
-        for (label gpI = 0; gpI < UCell.size(); ++gpI)
-        {
-            lambdaMax = max(lambdaMax, aCell[gpI] + mag(UCell[gpI]));
-        }
+        // Keep the original CFL semantics: only interior Gauss points
+        // contribute to the local time-step estimate.
+        const scalar lambdaMax = dg::maxValue(lambdaExpr);
 
         const scalar dtCell = CFL*h/(pScale*lambdaMax);
         dt = min(dt, dtCell);

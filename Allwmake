@@ -1,12 +1,13 @@
 #!/bin/sh
 
-# Set DG_ROOT to this script's directory (absolute path)
+set -e
+
 export DG_ROOT="$(CDPATH= cd -- "$(dirname -- "$0")" && pwd -P)"
 
-echo "==> Entering $DG_ROOT/src and building DGFS libraries"
-cd "$DG_ROOT/src"
+echo "==> Building DG libraries from $DG_ROOT/src"
+"$DG_ROOT/src/Allwmake"
 
-# Run the Allwmake script in src/
-./Allwmake
+echo "==> Building DG applications from $DG_ROOT/applications"
+"$DG_ROOT/applications/Allwmake"
 
 #------------------------------------------------------------------------------

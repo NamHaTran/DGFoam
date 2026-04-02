@@ -33,6 +33,7 @@ License
 #include "transportLaw.H"
 #include "IOstreams.H"
 #include "error.H"
+#include "dgExpr.H"
 
 namespace Foam
 {
@@ -202,61 +203,53 @@ void Foam::rhoBasedConservative::update(const label& cellI)
     GaussField<scalar>& heG     = he_.gaussFields()[cellI];
     GaussField<scalar>& aG      = a_.gaussFields()[cellI];
 
-    const auto updatePoint =
-        [&](const scalar rho, const vector& rhoU, const scalar E,
-            scalar& T, scalar& p, scalar& he, scalar& a)
-        {
-            const vector U = rhoU/rho;
-            const scalar k = 0.5*magSqr(U);
+    const auto velocityExpr = dg::expr(rhoUG)/dg::expr(rhoG);
 
-            he = E/rho - k;
-            T = energy_().calcTfromHe(he);
-            p = eqnState_().calcPFromRhoT(rho, T);
+    dg::assign
+    (
+        heG,
+        dg::expr(EG)/dg::expr(rhoG) - 0.5*dg::magSqr(velocityExpr)
+    );
 
-            const scalar Cp = thermo_().calcCp(T);
-            const scalar Cv = thermo_().calcCv(T);
-            const scalar gamma = thermo_().calcGamma(Cp, Cv);
+    energy_().calcTfromHe(cellI, heG, TG);
+    eqnState_().calcPFromRhoT(cellI, rhoG, TG, pG);
 
-            a = thermo_().calcSpeedOfSound(T, gamma);
-        };
+    // This path is intentionally written as explicit pointwise loops.
+    // Creating temporary GaussField objects for Cp, Cv and gamma here adds
+    // avoidable allocation/copy overhead on a hot thermo-update path, so we
+    // bypass the GaussField operator wrappers and call the scalar thermo API
+    // directly at each Gauss point.
+    cellGaussField<scalar>& aCell = aG.cellField();
+    const cellGaussField<scalar>& TCell = TG.cellField();
 
-    for (label gpI = 0; gpI < rhoG.cellField().size(); ++gpI)
+    for (label gpI = 0; gpI < TCell.size(); ++gpI)
     {
-        updatePoint
-        (
-            rhoG.cellField()[gpI],
-            rhoUG.cellField()[gpI],
-            EG.cellField()[gpI],
-            TG.cellField()[gpI],
-            pG.cellField()[gpI],
-            heG.cellField()[gpI],
-            aG.cellField()[gpI]
-        );
+        const scalar T = TCell[gpI];
+        const scalar Cp = thermo_().calcCp(T);
+        const scalar Cv = thermo_().calcCv(T);
+        const scalar gamma = thermo_().calcGamma(Cp, Cv);
+
+        aCell[gpI] = thermo_().calcSpeedOfSound(T, gamma);
     }
 
-    for (label gpI = 0; gpI < rhoG.faceField().nGauss(); ++gpI)
-    {
-        updatePoint
-        (
-            rhoG.faceField().minusValue(gpI),
-            rhoUG.faceField().minusValue(gpI),
-            EG.faceField().minusValue(gpI),
-            TG.faceField().minusValueAt(gpI),
-            pG.faceField().minusValueAt(gpI),
-            heG.faceField().minusValueAt(gpI),
-            aG.faceField().minusValueAt(gpI)
-        );
+    faceGaussField<scalar>& aFace = aG.faceField();
+    const faceGaussField<scalar>& TFace = TG.faceField();
 
-        updatePoint
-        (
-            rhoG.faceField().plusValue(gpI),
-            rhoUG.faceField().plusValue(gpI),
-            EG.faceField().plusValue(gpI),
-            TG.faceField().plusValueAt(gpI),
-            pG.faceField().plusValueAt(gpI),
-            heG.faceField().plusValueAt(gpI),
-            aG.faceField().plusValueAt(gpI)
-        );
+    for (label gpI = 0; gpI < TFace.nGauss(); ++gpI)
+    {
+        const scalar TMinus = TFace.minusValue(gpI);
+        const scalar CpMinus = thermo_().calcCp(TMinus);
+        const scalar CvMinus = thermo_().calcCv(TMinus);
+        const scalar gammaMinus = thermo_().calcGamma(CpMinus, CvMinus);
+
+        aFace.minusValueAt(gpI) = thermo_().calcSpeedOfSound(TMinus, gammaMinus);
+
+        const scalar TPlus = TFace.plusValue(gpI);
+        const scalar CpPlus = thermo_().calcCp(TPlus);
+        const scalar CvPlus = thermo_().calcCv(TPlus);
+        const scalar gammaPlus = thermo_().calcGamma(CpPlus, CvPlus);
+
+        aFace.plusValueAt(gpI) = thermo_().calcSpeedOfSound(TPlus, gammaPlus);
     }
 }
 

@@ -37,38 +37,25 @@ forAll(mesh.cells(), cellI)
 
     // Momentum equation:
     //     d(rhoU)/dt + div(rhoU (x) U + pI) = 0
-    // Build the momentum flux explicitly at each Gauss point so we can
-    // benchmark the cost of GaussField operator overloading itself.
-    tmp<GaussField<tensor>> tMomentumFlux = GaussField<tensor>::New(cellI, &dgMesh);
-    GaussField<tensor>& momentumFlux = tMomentumFlux.ref();
+    //
+    // This is the minimal dgExpr prototype in action.
+    //
+    // Important reading guide:
+    // 1. dg::expr(field) does NOT compute anything.
+    //    It just creates a tiny leaf node that references the field.
+    // 2. operator* and operator+ below do NOT return a tmp<GaussField>.
+    //    They create a lightweight expression tree.
+    // 3. dg::evaluate<tensor>(...) is the point where the tree is finally
+    //    walked and materialized into a real GaussField storage object.
+    //
+    // So this line keeps the mathematical form easy to read, but the actual
+    // loop over Gauss points is hidden inside dg::assign()/dg::evaluate().
+    const auto momentumFluxExpr =
+        dg::expr(rhoUG)*dg::expr(UG)
+      + dg::expr(pG)*dg::uniform(symmTensor::I);
 
-    {
-        const cellGaussField<vector>& rhoUCell = rhoUG.cellField();
-        const cellGaussField<vector>& UCell = UG.cellField();
-        const cellGaussField<scalar>& pCell = pG.cellField();
-        cellGaussField<tensor>& momentumCell = momentumFlux.cellField();
-
-        for (label gpI = 0; gpI < momentumCell.size(); ++gpI)
-        {
-            momentumCell[gpI] = rhoUCell[gpI]*UCell[gpI] + pCell[gpI]*symmTensor::I;
-        }
-
-        const faceGaussField<vector>& rhoUFace = rhoUG.faceField();
-        const faceGaussField<vector>& UFace = UG.faceField();
-        const faceGaussField<scalar>& pFace = pG.faceField();
-        faceGaussField<tensor>& momentumFace = momentumFlux.faceField();
-
-        for (label gpI = 0; gpI < momentumFace.nGauss(); ++gpI)
-        {
-            momentumFace.minusValueAt(gpI) =
-                rhoUFace.minusValue(gpI)*UFace.minusValue(gpI)
-              + pFace.minusValue(gpI)*symmTensor::I;
-
-            momentumFace.plusValueAt(gpI) =
-                rhoUFace.plusValue(gpI)*UFace.plusValue(gpI)
-              + pFace.plusValue(gpI)*symmTensor::I;
-        }
-    }
+    tmp<GaussField<tensor>> tMomentumFlux =
+        dg::evaluate<tensor>(momentumFluxExpr, cellI, &dgMesh);
 
     dgGeneralPDETerm<vector, tensor> momentumConvTerm
     (
@@ -82,36 +69,14 @@ forAll(mesh.cells(), cellI)
 
     // Total-energy equation:
     //     d(E)/dt + div((E + p)U) = 0
-    tmp<GaussField<vector>> tEnergyFlux = GaussField<vector>::New(cellI, &dgMesh);
-    GaussField<vector>& energyFlux = tEnergyFlux.ref();
+    //
+    // Again, EG + pG is only a lazy recipe here.
+    // The intermediate sum is never stored as its own GaussField.
+    const auto energyFluxExpr =
+        (dg::expr(EG) + dg::expr(pG))*dg::expr(UG);
 
-    {
-        const cellGaussField<scalar>& ECell = EG.cellField();
-        const cellGaussField<scalar>& pCell = pG.cellField();
-        const cellGaussField<vector>& UCell = UG.cellField();
-        cellGaussField<vector>& energyCell = energyFlux.cellField();
-
-        for (label gpI = 0; gpI < energyCell.size(); ++gpI)
-        {
-            energyCell[gpI] = (ECell[gpI] + pCell[gpI])*UCell[gpI];
-        }
-
-        const faceGaussField<scalar>& EFace = EG.faceField();
-        const faceGaussField<scalar>& pFace = pG.faceField();
-        const faceGaussField<vector>& UFace = UG.faceField();
-        faceGaussField<vector>& energyFace = energyFlux.faceField();
-
-        for (label gpI = 0; gpI < energyFace.nGauss(); ++gpI)
-        {
-            energyFace.minusValueAt(gpI) =
-                (EFace.minusValue(gpI) + pFace.minusValue(gpI))
-               *UFace.minusValue(gpI);
-
-            energyFace.plusValueAt(gpI) =
-                (EFace.plusValue(gpI) + pFace.plusValue(gpI))
-               *UFace.plusValue(gpI);
-        }
-    }
+    tmp<GaussField<vector>> tEnergyFlux =
+        dg::evaluate<vector>(energyFluxExpr, cellI, &dgMesh);
 
     dgGeneralPDETerm<scalar, vector> energyConvTerm
     (

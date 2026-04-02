@@ -28,6 +28,7 @@ License
 
 #include "transportLaw.H"
 #include "IOstreams.H"
+#include "dgExpr.H"
 
 namespace Foam
 {
@@ -118,16 +119,18 @@ void Foam::transportLaw::calcMu
     GaussField<scalar>& mu
 ) const
 {
-    for (label gpI = 0; gpI < T.cellField().size(); ++gpI)
-    {
-        mu.cellField()[gpI] = calcMu(T.cellField()[gpI]);
-    }
-
-    for (label gpI = 0; gpI < T.faceField().nGauss(); ++gpI)
-    {
-        mu.faceField().minusValueAt(gpI) = calcMu(T.faceField().minusValue(gpI));
-        mu.faceField().plusValueAt(gpI) = calcMu(T.faceField().plusValue(gpI));
-    }
+    dg::assign
+    (
+        mu,
+        dg::map
+        (
+            [this](const scalar TValue)
+            {
+                return calcMu(TValue);
+            },
+            dg::expr(T)
+        )
+    );
 }
 
 
@@ -151,16 +154,18 @@ void Foam::transportLaw::calcKappa
     GaussField<scalar>& kappa
 ) const
 {
-    for (label gpI = 0; gpI < T.cellField().size(); ++gpI)
-    {
-        kappa.cellField()[gpI] = calcKappa(T.cellField()[gpI]);
-    }
-
-    for (label gpI = 0; gpI < T.faceField().nGauss(); ++gpI)
-    {
-        kappa.faceField().minusValueAt(gpI) = calcKappa(T.faceField().minusValue(gpI));
-        kappa.faceField().plusValueAt(gpI) = calcKappa(T.faceField().plusValue(gpI));
-    }
+    dg::assign
+    (
+        kappa,
+        dg::map
+        (
+            [this](const scalar TValue)
+            {
+                return calcKappa(TValue);
+            },
+            dg::expr(T)
+        )
+    );
 }
 
 
@@ -184,16 +189,18 @@ void Foam::transportLaw::calcPr
     GaussField<scalar>& Pr
 ) const
 {
-    for (label gpI = 0; gpI < T.cellField().size(); ++gpI)
-    {
-        Pr.cellField()[gpI] = calcPr(T.cellField()[gpI]);
-    }
-
-    for (label gpI = 0; gpI < T.faceField().nGauss(); ++gpI)
-    {
-        Pr.faceField().minusValueAt(gpI) = calcPr(T.faceField().minusValue(gpI));
-        Pr.faceField().plusValueAt(gpI) = calcPr(T.faceField().plusValue(gpI));
-    }
+    dg::assign
+    (
+        Pr,
+        dg::map
+        (
+            [this](const scalar TValue)
+            {
+                return calcPr(TValue);
+            },
+            dg::expr(T)
+        )
+    );
 }
 
 
