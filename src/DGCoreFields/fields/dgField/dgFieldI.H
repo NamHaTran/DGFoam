@@ -219,7 +219,18 @@ bool dgField<Type>::writeObject
         dofPtr_->write();
     }
 
-    return cellAverageVolField().ref().writeObject(streamOpt, writeOnProc);
+    tmp<GeometricField<Type, fvPatchField, volMesh>> tAvgField =
+        cellAverageVolField();
+
+    typename GeometricField<Type, fvPatchField, volMesh>::Boundary&
+        boundaryField = tAvgField.ref().boundaryFieldRef();
+
+    forAll(boundaryField, patchI)
+    {
+        boundaryField[patchI] = boundaryField[patchI].patchInternalField();
+    }
+
+    return tAvgField.ref().writeObject(streamOpt, writeOnProc);
 }
 
 template<class Type>

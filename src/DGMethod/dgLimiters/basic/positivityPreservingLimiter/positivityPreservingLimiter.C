@@ -254,6 +254,24 @@ void positivityPreservingLimiter::initializeConservativeFields()
 }
 
 
+void positivityPreservingLimiter::initializeThermo()
+{
+    thermoPtr_ = nullptr;
+
+    const objectRegistry& obr = mesh_.getFvMesh();
+
+    if (!obr.foundObject<dgThermoConservative>("dgThermoConservative"))
+    {
+        FatalErrorInFunction
+            << "Could not find dgThermoConservative in the mesh registry while "
+            << "constructing limiter '" << type() << "'."
+            << abort(FatalError);
+    }
+
+    thermoPtr_ = &obr.lookupObject<dgThermoConservative>("dgThermoConservative");
+}
+
+
 scalar positivityPreservingLimiter::densityMean(const label cellID) const
 {
     if (!densityFieldPtr_->hasDof())
@@ -300,6 +318,41 @@ scalar positivityPreservingLimiter::calcRhoThermoEnergy
         (mag(rho) > epsilon_ ? rho : (rho >= 0 ? epsilon_ : -epsilon_));
 
     return E - 0.5*magSqr(rhoU)/rhoSafe;
+}
+
+
+scalar positivityPreservingLimiter::calcMeanTemperature
+(
+    const scalar rho,
+    const vector& rhoU,
+    const scalar E
+) const
+{
+    const scalar rhoSafe =
+        (mag(rho) > epsilon_ ? rho : (rho >= 0 ? epsilon_ : -epsilon_));
+    const vector U = rhoU/rhoSafe;
+    const scalar he = E/rhoSafe - 0.5*magSqr(U);
+
+    return thermoPtr_->energyModel().calcTfromHe(he);
+}
+
+
+scalar positivityPreservingLimiter::calcMeanTotalEnergy
+(
+    const scalar rho,
+    const vector& U,
+    const scalar T
+) const
+{
+    const scalar he = thermoPtr_->energyModel().calcHe(T);
+    scalar E = rho*(he + 0.5*magSqr(U));
+
+    if (thermoPtr_->heIsEnthalpy())
+    {
+        E -= thermoPtr_->eos().calcPFromRhoT(rho, T);
+    }
+
+    return E;
 }
 
 
@@ -528,6 +581,70 @@ void positivityPreservingLimiter::setThetaFields
 }
 
 
+bool positivityPreservingLimiter::limitMeanState(const label cellID)
+{
+    if
+    (
+        !densityFieldPtr_->hasDof()
+     || !momentumFieldPtr_->hasDof()
+     || !energyFieldPtr_->hasDof()
+    )
+    {
+        return false;
+    }
+
+    cellDof<scalar>& rhoModes = densityFieldPtr_->dof()[cellID];
+    cellDof<vector>& rhoUModes = momentumFieldPtr_->dof()[cellID];
+    cellDof<scalar>& EModes = energyFieldPtr_->dof()[cellID];
+
+    if
+    (
+        rhoModes.nDof() < 1
+     || rhoUModes.nDof() < 1
+     || EModes.nDof() < 1
+    )
+    {
+        return false;
+    }
+
+    const scalar rho0 = rhoModes[0];
+    vector rhoU0 = rhoUModes[0];
+    scalar E0 = EModes[0];
+    scalar T0 = calcMeanTemperature(rho0, rhoU0, E0);
+    bool modified = false;
+
+    if (T0 < 0.0)
+    {
+        T0 = Tmin_;
+        modified = true;
+    }
+
+    const scalar rhoSafe =
+        (mag(rho0) > epsilon_ ? rho0 : (rho0 >= 0 ? epsilon_ : -epsilon_));
+    vector U0 = rhoU0/rhoSafe;
+    const scalar magU0 = mag(U0);
+
+    if (magU0 > magUmax_ && magU0 > SMALL)
+    {
+        U0 *= magUmax_/magU0;
+        modified = true;
+    }
+
+    if (!modified)
+    {
+        return false;
+    }
+
+    rhoUModes[0] = rho0*U0;
+    EModes[0] = calcMeanTotalEnergy(rho0, U0, T0);
+
+    momentumFieldPtr_->dof().updateCellDof(cellID);
+    energyFieldPtr_->dof().updateCellDof(cellID);
+
+    return true;
+}
+
+
 void positivityPreservingLimiter::postCorrect()
 {
     dgLimiter::postCorrect();
@@ -577,7 +694,10 @@ positivityPreservingLimiter::positivityPreservingLimiter
     densityFieldPtr_(nullptr),
     momentumFieldPtr_(nullptr),
     energyFieldPtr_(nullptr),
+    thermoPtr_(nullptr),
     epsilon_(dict.lookupOrDefault<scalar>("tolerance", 1.0e-8)),
+    Tmin_(dict.lookupOrDefault<scalar>("Tmin", 0.0)),
+    magUmax_(dict.lookupOrDefault<scalar>("magUmax", GREAT)),
     theta1_(1.0),
     theta2_(1.0),
     writeTheta_(dict.lookupOrDefault<bool>("writeTheta", false)),
@@ -585,6 +705,22 @@ positivityPreservingLimiter::positivityPreservingLimiter
     theta2FieldPtr_(nullptr)
 {
     initializeConservativeFields();
+    initializeThermo();
+
+    if (Tmin_ < 0.0)
+    {
+        FatalIOErrorInFunction(dict)
+            << "Entry 'Tmin' must be non-negative, but got " << Tmin_ << '.'
+            << exit(FatalIOError);
+    }
+
+    if (magUmax_ < 0.0)
+    {
+        FatalIOErrorInFunction(dict)
+            << "Entry 'magUmax' must be non-negative, but got "
+            << magUmax_ << '.'
+            << exit(FatalIOError);
+    }
 
     if (writeTheta_)
     {
@@ -631,12 +767,30 @@ void positivityPreservingLimiter::read(const dictionary& dict)
 {
     dgLimiter::read(normalizePositivityLimiterDict(dict));
     epsilon_ = dict.lookupOrDefault<scalar>("tolerance", 1.0e-8);
+    Tmin_ = dict.lookupOrDefault<scalar>("Tmin", 0.0);
+    magUmax_ = dict.lookupOrDefault<scalar>("magUmax", GREAT);
     theta1_ = 1.0;
     theta2_ = 1.0;
     writeTheta_ = dict.lookupOrDefault<bool>("writeTheta", false);
     theta1FieldPtr_.clear();
     theta2FieldPtr_.clear();
     initializeConservativeFields();
+    initializeThermo();
+
+    if (Tmin_ < 0.0)
+    {
+        FatalIOErrorInFunction(dict)
+            << "Entry 'Tmin' must be non-negative, but got " << Tmin_ << '.'
+            << exit(FatalIOError);
+    }
+
+    if (magUmax_ < 0.0)
+    {
+        FatalIOErrorInFunction(dict)
+            << "Entry 'magUmax' must be non-negative, but got "
+            << magUmax_ << '.'
+            << exit(FatalIOError);
+    }
 
     if (writeTheta_)
     {
@@ -693,24 +847,43 @@ void positivityPreservingLimiter::correct()
 
     for (label cellID = 0; cellID < mesh_.nCells(); ++cellID)
     {
-        computeThetaCoeffs(cellID, theta1_, theta2_);
+        const bool isP0Cell =
+            densityFieldPtr_->hasDof()
+         && densityFieldPtr_->dof()[cellID].nDof() <= 1;
+
+        if (isP0Cell)
+        {
+            theta1_ = 1.0;
+            theta2_ = 1.0;
+        }
+        else
+        {
+            computeThetaCoeffs(cellID, theta1_, theta2_);
+        }
+
         setThetaFields(cellID, theta1_, theta2_);
 
-        const scalar densityTheta = theta1_*theta2_;
-        const scalar otherTheta = theta2_;
+        const bool thetaLimited = !isP0Cell && (theta1_ < 1.0 || theta2_ < 1.0);
+        const bool applyMeanLimiter = isP0Cell || thetaLimited;
 
-        if (densityTheta >= 1.0 && otherTheta >= 1.0)
+        if (thetaLimited)
+        {
+            forAll(limitedFields_, fieldI)
+            {
+                limitCell(limitedFields_[fieldI], cellID);
+            }
+        }
+
+        const bool meanStateLimited =
+            applyMeanLimiter ? limitMeanState(cellID) : false;
+
+        if (!thetaLimited && !meanStateLimited)
         {
             continue;
         }
 
         ++nLimitedCells_;
         cacheLimitedCell(cellID);
-
-        forAll(limitedFields_, fieldI)
-        {
-            limitCell(limitedFields_[fieldI], cellID);
-        }
     }
 
     postCorrect();

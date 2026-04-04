@@ -418,6 +418,38 @@ dgEquiSpacedTessellation::collapsedSamplePoints
 
 
 const List<dgEquiSpacedTessellation::VtkSubCell>&
+dgEquiSpacedTessellation::vtkSubCells
+(
+    const dgCellType type
+) const
+{
+    return subCells(type);
+}
+
+
+const List<dgEquiSpacedTessellation::VtkSubCell>&
+dgEquiSpacedTessellation::collapsedVtkSubCells
+(
+    const dgCellType type,
+    const label collapseDir
+) const
+{
+    return collapsedSubCells(type, collapseDir);
+}
+
+
+void dgEquiSpacedTessellation::basisAt
+(
+    const dgCellType type,
+    const vector& eta,
+    List<scalar>& basis
+) const
+{
+    computeBasisAt(type, eta, pOrder_, basis);
+}
+
+
+const List<dgEquiSpacedTessellation::VtkSubCell>&
 dgEquiSpacedTessellation::subCells
 (
     const dgCellType type

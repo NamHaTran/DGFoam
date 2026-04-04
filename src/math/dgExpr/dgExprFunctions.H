@@ -18,6 +18,13 @@
  * - \c expr(field) wraps storage into a leaf;
  * - operators/functions build a lazy tree;
  * - \c assign/evaluate are the places where values are finally computed.
+ *
+ * This header is the best place to study the user-facing surface of the
+ * subsystem. Most APIs below do one of only three things:
+ *
+ * - enter the expression world from a DG storage object;
+ * - normalize literals so they can participate in a tree;
+ * - build a new recipe node representing one algebraic step.
  */
 
 #ifndef Foam_dgExprFunctions_H
@@ -32,6 +39,10 @@ namespace dg
  * \brief Enter the lazy DG-expression path from a full \c GaussField.
  *
  * Important: this returns a lightweight leaf object, not a new field.
+ *
+ * The returned leaf simply remembers how to read one interior value and one
+ * face trace from the original field. This is the explicit opt-in boundary
+ * between "plain DG storage" and "fused expression-template algebra".
  */
 template<class Type>
 inline gauss_field_ref<Type> expr(const GaussField<Type>& field)
@@ -107,6 +118,10 @@ inline tmp_face_gauss_field_ref<Type> expr(const tmp<faceGaussField<Type>>& fiel
  * This is the storage model for constants inside an expression tree. The value
  * is copied once into the leaf and then read identically at every quadrature
  * point.
+ *
+ * Most user code does not need to call this explicitly because mixed operators
+ * already normalize literals automatically. It is still useful when the code
+ * wants to be very explicit about intent, for example with \c symmTensor::I.
  */
 template<class Type>
 inline auto uniform(const Type& value)
@@ -122,6 +137,9 @@ inline auto uniform(const Type& value)
  * Example:
  *
  *     auto positive = dg::map([](const scalar x) { return max(x, 0.0); }, e);
+ *
+ * The callable is stored inside the resulting recipe node and is invoked later
+ * during evaluation, once per quadrature point.
  */
 template<class Func, class Expr>
 inline auto map(const Func& func, const Expr& expression)
@@ -144,6 +162,9 @@ inline auto map(const Func& func, const Expr& expression)
  *
  * Literals are accepted as long as at least one side is already an expression.
  * Non-expression operands are normalized into uniform leaves internally.
+ *
+ * The "at least one side is already an expression" rule prevents this API from
+ * becoming a generic replacement for ordinary scalar algebra outside DG code.
  */
 template<class Func, class LExpr, class RExpr>
 inline auto map(const Func& func, const LExpr& lhs, const RExpr& rhs)
@@ -175,7 +196,12 @@ inline auto map(const Func& func, const LExpr& lhs, const RExpr& rhs)
 }
 
 
-/// Unary minus on an expression tree. Returns a new lazy node, not a field.
+/**
+ * \brief Unary minus on an expression tree.
+ *
+ * Returns a new lazy node, not a field. The resulting object only says
+ * "negate my child value when sampled".
+ */
 template<class Expr>
 inline auto operator-(const Expr& expression)
     -> std::enable_if_t
@@ -188,7 +214,12 @@ inline auto operator-(const Expr& expression)
 }
 
 
-/// Pointwise addition between DG expression operands. Still lazy.
+/**
+ * \brief Pointwise addition between DG expression operands.
+ *
+ * Still lazy: the return value is a recipe node storing the left and right
+ * operands, not a materialized DG field.
+ */
 template<class LExpr, class RExpr>
 inline auto operator+(const LExpr& lhs, const RExpr& rhs)
     -> std::enable_if_t
@@ -208,7 +239,7 @@ inline auto operator+(const LExpr& lhs, const RExpr& rhs)
 }
 
 
-/// Pointwise subtraction between DG expression operands. Still lazy.
+/// \brief Pointwise subtraction between DG expression operands. Still lazy.
 template<class LExpr, class RExpr>
 inline auto operator-(const LExpr& lhs, const RExpr& rhs)
     -> std::enable_if_t
@@ -228,7 +259,7 @@ inline auto operator-(const LExpr& lhs, const RExpr& rhs)
 }
 
 
-/// Pointwise multiplication between DG expression operands. Still lazy.
+/// \brief Pointwise multiplication between DG expression operands. Still lazy.
 template<class LExpr, class RExpr>
 inline auto operator*(const LExpr& lhs, const RExpr& rhs)
     -> std::enable_if_t
@@ -248,7 +279,7 @@ inline auto operator*(const LExpr& lhs, const RExpr& rhs)
 }
 
 
-/// Pointwise division between DG expression operands. Still lazy.
+/// \brief Pointwise division between DG expression operands. Still lazy.
 template<class LExpr, class RExpr>
 inline auto operator/(const LExpr& lhs, const RExpr& rhs)
     -> std::enable_if_t
@@ -340,6 +371,9 @@ inline auto operator&&(const LExpr& lhs, const RExpr& rhs)
 
 /**
  * \brief Pointwise power between DG expression operands.
+ *
+ * This forwards to \c Foam::pow pointwise and returns another lazy binary
+ * recipe node.
  */
 template<class LExpr, class RExpr>
 inline auto pow(const LExpr& lhs, const RExpr& rhs)
@@ -360,7 +394,7 @@ inline auto pow(const LExpr& lhs, const RExpr& rhs)
 }
 
 
-/// Pointwise magnitude.
+/// \brief Pointwise magnitude. Builds a lazy unary recipe node.
 template<class Expr>
 inline auto mag(const Expr& expression)
     -> std::enable_if_t
@@ -373,7 +407,7 @@ inline auto mag(const Expr& expression)
 }
 
 
-/// Pointwise squared magnitude.
+/// \brief Pointwise squared magnitude. Builds a lazy unary recipe node.
 template<class Expr>
 inline auto magSqr(const Expr& expression)
     -> std::enable_if_t
@@ -386,7 +420,7 @@ inline auto magSqr(const Expr& expression)
 }
 
 
-/// Pointwise square root.
+/// \brief Pointwise square root. Builds a lazy unary recipe node.
 template<class Expr>
 inline auto sqrt(const Expr& expression)
     -> std::enable_if_t
@@ -399,7 +433,7 @@ inline auto sqrt(const Expr& expression)
 }
 
 
-/// Pointwise deviatoric part.
+/// \brief Pointwise deviatoric part. Builds a lazy unary recipe node.
 template<class Expr>
 inline auto dev(const Expr& expression)
     -> std::enable_if_t
@@ -412,7 +446,7 @@ inline auto dev(const Expr& expression)
 }
 
 
-/// Pointwise symmetric part.
+/// \brief Pointwise symmetric part. Builds a lazy unary recipe node.
 template<class Expr>
 inline auto symm(const Expr& expression)
     -> std::enable_if_t
@@ -425,7 +459,7 @@ inline auto symm(const Expr& expression)
 }
 
 
-/// Pointwise skew-symmetric part.
+/// \brief Pointwise skew-symmetric part. Builds a lazy unary recipe node.
 template<class Expr>
 inline auto skew(const Expr& expression)
     -> std::enable_if_t
@@ -438,7 +472,7 @@ inline auto skew(const Expr& expression)
 }
 
 
-/// Pointwise transpose.
+/// \brief Pointwise transpose. Builds a lazy unary recipe node.
 template<class Expr>
 inline auto T(const Expr& expression)
     -> std::enable_if_t
@@ -451,7 +485,7 @@ inline auto T(const Expr& expression)
 }
 
 
-/// Pointwise trace.
+/// \brief Pointwise trace. Builds a lazy unary recipe node.
 template<class Expr>
 inline auto tr(const Expr& expression)
     -> std::enable_if_t
@@ -464,7 +498,7 @@ inline auto tr(const Expr& expression)
 }
 
 
-/// Pointwise determinant.
+/// \brief Pointwise determinant. Builds a lazy unary recipe node.
 template<class Expr>
 inline auto det(const Expr& expression)
     -> std::enable_if_t
@@ -477,7 +511,7 @@ inline auto det(const Expr& expression)
 }
 
 
-/// Pointwise inverse.
+/// \brief Pointwise inverse. Builds a lazy unary recipe node.
 template<class Expr>
 inline auto inv(const Expr& expression)
     -> std::enable_if_t

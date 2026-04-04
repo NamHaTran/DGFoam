@@ -130,6 +130,8 @@ dofField<Type>::dofField
                 )
             );
         }
+
+        updateBoundaryField(d);
     }
 
     // Construct cellDof list from volFields
@@ -186,6 +188,27 @@ dofField<Type>::dofField
 // * * * * * * * * * * Member Functions  * * * * * * * * * //
 
 template<class Type>
+void dofField<Type>::updateBoundaryField(const label dofI)
+{
+    if (dofI < 0 || dofI >= foamFields_.size())
+    {
+        FatalErrorInFunction
+            << "DoF index " << dofI << " is out of range [0, "
+            << foamFields_.size() - 1 << "]"
+            << abort(FatalError);
+    }
+
+    typename GeometricField<Type, fvPatchField, volMesh>::Boundary&
+        boundaryField = foamFields_[dofI]->boundaryFieldRef();
+
+    forAll(boundaryField, patchI)
+    {
+        boundaryField[patchI] = boundaryField[patchI].patchInternalField();
+    }
+}
+
+
+template<class Type>
 void dofField<Type>::updateCellDof(const label cellID)
 {
     if (cellID < 0 || cellID >= nCells_)
@@ -215,9 +238,11 @@ void dofField<Type>::updateCellDof(const label cellID)
 template<class Type>
 void dofField<Type>::write() const
 {
-    for (const auto& fld : foamFields_)
+    forAll(foamFields_, dofI)
     {
-        fld->write();
+        const_cast<dofField<Type>&>(*this).updateBoundaryField(dofI);
+
+        foamFields_[dofI]->write();
     }
 }
 

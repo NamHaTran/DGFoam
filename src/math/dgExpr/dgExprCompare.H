@@ -1,6 +1,23 @@
 /**
  * \file
  * \brief Pointwise comparison support for DG expression trees.
+ *
+ * This header is intentionally different in spirit from the algebraic builders.
+ *
+ * Operators such as \c + or \c * build a new lazy recipe node.
+ * Comparison operators such as \c < or \c == do not build another DG
+ * expression. They immediately reduce the pointwise comparison over all
+ * supported quadrature points and return one \c bool.
+ *
+ * So:
+ *
+ *     dg::expr(a) + dg::expr(b)
+ *
+ * stays lazy, whereas
+ *
+ *     dg::expr(a) < dg::expr(b)
+ *
+ * is eager and produces a truth value right away.
  */
 
 #ifndef Foam_dgExprCompare_H
@@ -13,6 +30,13 @@ namespace dg
 
 /**
  * \brief Detect whether a predicate may compare the results of two operands.
+ *
+ * This trait checks two things:
+ *
+ * - whether \c Pred::apply(lhsValue, rhsValue) is a valid expression;
+ * - whether its result is convertible to \c bool.
+ *
+ * It keeps the comparison API available only for sensible value types.
  */
 template<class Pred, class LExpr, class RExpr, class = void>
 struct is_expr_comparison
@@ -128,7 +152,14 @@ struct not_equal_op
 /**
  * \brief Compare two normalized expression nodes over all supported values.
  *
- * The comparison is reduced with logical-and semantics.
+ * The comparison is reduced with logical-and semantics:
+ *
+ * - every sampled point must satisfy the predicate;
+ * - the first failing point returns \c false immediately;
+ * - if every reachable point passes, the final answer is \c true.
+ *
+ * This makes the operators read naturally as "all pointwise values satisfy the
+ * relation".
  */
 template<class Pred, class LNode, class RNode>
 inline bool compare_nodes(const LNode& lhs, const RNode& rhs)
@@ -197,6 +228,10 @@ inline bool compare_nodes(const LNode& lhs, const RNode& rhs)
 /**
  * \brief Compare two expression operands after normalizing literals to
  *        uniform-expression leaves.
+ *
+ * This is the comparison counterpart of the algebraic builders in
+ * \c dgExprFunctions.H: user operands are normalized first, then handed to the
+ * internal implementation.
  */
 template<class Pred, class LExpr, class RExpr>
 inline auto compare_expressions(const LExpr& lhs, const RExpr& rhs)

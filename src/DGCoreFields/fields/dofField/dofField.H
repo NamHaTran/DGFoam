@@ -103,6 +103,16 @@ private:
         /** \brief Maximum DoF count over all cells in the mesh. */
         label maxDoF_;
 
+        /**
+         * \brief Refresh boundary faces from the adjacent cell values.
+         *
+         * This keeps the on-disk boundaryField section synchronized with the
+         * current cell values before a volField is written.
+         *
+         * \param dofI DoF index whose boundary values should be refreshed.
+         */
+        void updateBoundaryField(const label dofI);
+
 public:
 
     //====================================================================//

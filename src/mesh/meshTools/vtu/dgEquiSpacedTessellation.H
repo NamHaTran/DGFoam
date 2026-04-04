@@ -182,6 +182,20 @@ public:
         const label collapseDir
     ) const;
 
+    const List<VtkSubCell>& vtkSubCells(const dgCellType type) const;
+    const List<VtkSubCell>& collapsedVtkSubCells
+    (
+        const dgCellType type,
+        const label collapseDir
+    ) const;
+
+    void basisAt
+    (
+        const dgCellType type,
+        const vector& eta,
+        List<scalar>& basis
+    ) const;
+
     void appendVtkCells
     (
         const dgCellType type,

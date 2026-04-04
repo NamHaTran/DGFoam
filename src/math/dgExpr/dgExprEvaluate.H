@@ -10,6 +10,9 @@
  *
  * - reduce the values to a scalar/aggregate result, or
  * - write them into concrete DG fields.
+ *
+ * This is the execution boundary of \c dgExpr. If earlier headers answer
+ * "what is the recipe?", this header answers "when and how is that recipe run?".
  */
 
 #ifndef Foam_dgExprEvaluate_H
@@ -32,6 +35,13 @@ namespace detail
  * This helper is used by reductions such as \c maxValue, \c minValue, \c sum
  * and \c average. It centralizes the "walk every accessible DG point" logic so
  * those algorithms only need to describe what to do with each sampled value.
+ *
+ * Conceptually, this is the reduction analogue of \c assign():
+ *
+ * - ask the expression whether it supports cell and/or face access;
+ * - ask for the number of available points;
+ * - visit each point exactly once;
+ * - let the caller decide what to do with each sampled value.
  */
 template<class Expr, class Func>
 inline bool forEachExprValue(const Expr& expression, Func&& func)
@@ -98,6 +108,9 @@ inline expr_result_t<Expr> firstExprValue(const Expr& expression)
 
 /**
  * \brief Compute the maximum scalar value stored in an expression.
+ *
+ * This is an eager reduction. Unlike the algebraic builders, it returns an
+ * actual scalar immediately.
  */
 template<class Expr>
 inline std::enable_if_t
@@ -235,6 +248,12 @@ inline auto average(const Expr& expression)
  * This is the fused execution step for cell-only storage. The destination
  * field already owns memory; we simply loop once and ask the expression tree
  * for the value at each quadrature point.
+ *
+ * Use \c assign(dst, expr) when:
+ *
+ * - storage already exists and should be reused;
+ * - the caller wants to avoid a fresh allocation;
+ * - the natural execution model is "write into this field".
  */
 template<class Type, class Expr>
 inline std::enable_if_t<is_expression_v<Expr>, void> assign
@@ -323,6 +342,8 @@ inline std::enable_if_t<is_expression_v<Expr>, void> assign
  *
  * Use this when you want a fresh owning field instead of assigning into an
  * existing destination.
+ *
+ * This is the allocation-producing counterpart of \c assign().
  */
 template<class ResultType, class Expr>
 inline std::enable_if_t<is_expression_v<Expr>, tmp<cellGaussField<ResultType>>>
@@ -344,6 +365,8 @@ evaluateCell
 
 /**
  * \brief Materialize a cell-only expression using its natural result type.
+ *
+ * The result type comes from \c expr_result_t<Expr>.
  */
 template<class Expr>
 inline std::enable_if_t<is_expression_v<Expr>, tmp<cellGaussField<expr_result_t<Expr>>>>
@@ -383,6 +406,8 @@ evaluateFace
 
 /**
  * \brief Materialize a face-only expression using its natural result type.
+ *
+ * The result type comes from \c expr_result_t<Expr>.
  */
 template<class Expr>
 inline std::enable_if_t<is_expression_v<Expr>, tmp<faceGaussField<expr_result_t<Expr>>>>
@@ -422,6 +447,9 @@ inline std::enable_if_t<is_expression_v<Expr>, tmp<GaussField<ResultType>>> eval
 
 /**
  * \brief Materialize an expression using its natural result type.
+ *
+ * This is the most ergonomic full-field execution entry point when the caller
+ * does not need to force a different destination type.
  */
 template<class Expr>
 inline std::enable_if_t<is_expression_v<Expr>, tmp<GaussField<expr_result_t<Expr>>>> evaluate
