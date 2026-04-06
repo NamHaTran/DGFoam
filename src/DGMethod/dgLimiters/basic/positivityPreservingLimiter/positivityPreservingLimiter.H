@@ -36,7 +36,6 @@ Description
 #define Foam_positivityPreservingLimiter_H
 
 #include "dgLimiter.H"
-#include "dgThermoConservative.H"
 #include "volFieldsFwd.H"
 
 namespace Foam
@@ -46,6 +45,34 @@ namespace Foam
                 Class positivityPreservingLimiter Declaration
 \*---------------------------------------------------------------------------*/
 
+/**
+ * \class Foam::positivityPreservingLimiter
+ * \brief Zhang-Shu-style positivity limiter for DG conservative fields
+ *
+ * \details
+ * This limiter enforces positivity by scaling higher-order modal content in
+ * the conservative fields associated with density, momentum, and total energy.
+ *
+ * For each cell, the limiter:
+ * - evaluates the minimum density over cell and face Gauss samples,
+ * - computes \c theta1 for density positivity,
+ * - evaluates the thermodynamic energy
+ *   \f$\rho e = E - \tfrac{1}{2} |\rho U|^2/\rho\f$ on the modified state,
+ * - computes \c theta2 for thermodynamic-energy positivity,
+ * - scales higher-order modes of the limited fields by the required factor.
+ *
+ * The limiting pattern is:
+ * \f[
+ * (\rho,\rho U,E)
+ * \;\rightarrow\;
+ * \theta_1,\theta_2
+ * \;\rightarrow\;
+ * \text{scale higher-order modes}
+ * \f]
+ *
+ * This implementation operates directly on every cell and therefore may be
+ * used without a troubled-cell detector.
+ */
 class positivityPreservingLimiter
 :
     public dgLimiter
@@ -80,17 +107,8 @@ class positivityPreservingLimiter
         /** Total-energy field used in the rhoe positivity check. */
         dgField<scalar>* energyFieldPtr_;
 
-        /** Thermodynamic model used to convert between conservative and primitive states. */
-        const dgThermoConservative* thermoPtr_;
-
         /** Positivity tolerance read from dictionary keyword `tolerance`. */
         scalar epsilon_;
-
-        /** Temperature assigned to the mean state when a negative temperature is detected. */
-        scalar Tmin_;
-
-        /** Maximum allowed mean-state velocity magnitude. */
-        scalar magUmax_;
 
         /** Cell-local theta1 cached during correct(). */
         scalar theta1_;
@@ -109,9 +127,6 @@ class positivityPreservingLimiter
 
         /** \brief Resolve density, momentum, and energy fields from the limiter setup. */
         void initializeConservativeFields();
-
-        /** \brief Resolve the conservative thermodynamic model from the mesh registry. */
-        void initializeThermo();
 
         /** \brief Return the mean density stored in the zeroth modal coefficient. */
         scalar densityMean(const label cellID) const;
@@ -136,22 +151,6 @@ class positivityPreservingLimiter
             const scalar rho,
             const vector& rhoU,
             const scalar E
-        ) const;
-
-        /** \brief Reconstruct the mean-state temperature from conservative variables. */
-        scalar calcMeanTemperature
-        (
-            const scalar rho,
-            const vector& rhoU,
-            const scalar E
-        ) const;
-
-        /** \brief Reconstruct the conservative total energy from mean-state primitive variables. */
-        scalar calcMeanTotalEnergy
-        (
-            const scalar rho,
-            const vector& U,
-            const scalar T
         ) const;
 
         /** \brief Clamp the Zhang-Shu style limiter coefficient to [0, 1]. */
@@ -203,9 +202,6 @@ class positivityPreservingLimiter
             const scalar theta2
         ) const;
 
-        /** \brief Limit the zeroth conservative mode in one cell and return true when modified. */
-        bool limitMeanState(const label cellID);
-
 protected:
 
         /** \brief Report limiter usage after one correct() pass. */
@@ -238,9 +234,7 @@ public:
      * density  rho;
      * momentum rhoU;
      * energy   E;
-     * tolerance 1e-8;
-     * Tmin      0;
-     * magUmax   1e10;
+     * tolerance  1e-8;
      * writeTheta false;
      * \endverbatim
      *

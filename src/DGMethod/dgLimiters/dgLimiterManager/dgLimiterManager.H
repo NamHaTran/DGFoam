@@ -54,6 +54,33 @@ class Ostream;
                      Class dgLimiterManager Declaration
 \*---------------------------------------------------------------------------*/
 
+/**
+ * \class Foam::dgLimiterManager
+ * \brief Manager for runtime-selected DG limiters
+ *
+ * \details
+ * This class owns the ordered list of limiter instances configured in
+ * \c constant/dgOptions and applies them sequentially during the DG update.
+ *
+ * The manager is responsible for:
+ * - reading the \c limiters sub-dictionary,
+ * - constructing each limiter from its runtime type,
+ * - preserving dictionary order through \c limiterNames_,
+ * - reloading the limiter list when the dictionary changes,
+ * - dispatching \c correct() on every configured limiter.
+ *
+ * The execution pattern is:
+ * \f[
+ * \text{read limiter dictionaries}
+ * \;\rightarrow\;
+ * \text{construct limiter list}
+ * \;\rightarrow\;
+ * \text{apply limiters in configured order}
+ * \f]
+ *
+ * If no limiter configuration is present, the manager remains valid and
+ * \c correct() becomes a no-op.
+ */
 class dgLimiterManager
 :
     public IOdictionary

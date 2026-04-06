@@ -54,6 +54,35 @@ namespace Foam
                            Class dgLimiter Declaration
 \*---------------------------------------------------------------------------*/
 
+/**
+ * \class Foam::dgLimiter
+ * \brief Runtime-selectable base class for DG limiters
+ *
+ * \details
+ * This class provides the common infrastructure used by all DG limiters in
+ * the limiter pipeline.
+ *
+ * The base wrapper is responsible for:
+ * - storing the limiter dictionary,
+ * - resolving the DG fields listed in \c fields,
+ * - constructing an optional troubled-cell detector,
+ * - tracking which cells were limited during one pass,
+ * - rebuilding cell and neighbour Gauss values after modal changes.
+ *
+ * The default limiter workflow is:
+ * \f[
+ * \text{detect troubled cells}
+ * \;\rightarrow\;
+ * \text{limit selected fields}
+ * \;\rightarrow\;
+ * \text{reconstruct Gauss values}
+ * \f]
+ *
+ * Derived classes implement the actual limiting action through
+ * \c limitField() for scalar and vector DG fields, and may override
+ * \c correct() when they need to operate on every cell directly instead of
+ * using a detector-driven pass.
+ */
 class dgLimiter
 {
 public:
