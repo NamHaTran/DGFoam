@@ -149,18 +149,45 @@ void Foam::rhoBasedConservative::validateModels()
     const transportLaw& tr = transport_();
     const energy& eng      = energy_();
 
-    // Equation of state: ideal-gas or thermal perfect gas
-    if (!(eos.isIdealGas() || eos.isThermalPerfectGas()))
+    // Equation of state: ideal-gas, thermal-perfect gas, or supported real gas
+    if (!(eos.isIdealGas() || eos.isThermalPerfectGas() || eos.isRealGas()))
     {
         FatalErrorInFunction
-            << "rhoBasedConservative requires an ideal-gas-based or "
-            << "thermal-perfect-gas equation of state." << nl
+            << "rhoBasedConservative requires an ideal-gas, thermal-perfect, "
+            << "or supported real-gas equation of state." << nl
             << "Detected EOS type: " << eos.type()
             << exit(FatalError);
     }
 
-    // Thermo law: perfect-gas or kinetic thermo
-    if (!(th.isPerfectGasThermo() || th.isKineticThermo()))
+    // Real-gas support currently uses constantCp only as a reference caloric
+    // relation; ideal-gas and kinetic paths retain the previous flexibility.
+    if (eos.isRealGas())
+    {
+        if (th.type() != "constantCp")
+        {
+            FatalErrorInFunction
+                << "rhoBasedConservative currently supports real-gas EOS only "
+                << "with thermoLaw 'constantCp'." << nl
+                << "Detected thermo type: " << th.type()
+                << exit(FatalError);
+        }
+
+        if
+        (
+            !eos.canCalcTFromRhoE()
+         || !eos.canCalcPFromRhoE()
+         || !eos.canCalcAFromRhoE()
+         || !eos.canCalcEFromRhoT()
+        )
+        {
+            FatalErrorInFunction
+                << "Selected real-gas EOS '" << eos.type()
+                << "' does not provide the conservative reconstruction hooks "
+                << "required by rhoBasedConservative."
+                << exit(FatalError);
+        }
+    }
+    else if (!(th.isPerfectGasThermo() || th.isKineticThermo()))
     {
         FatalErrorInFunction
             << "rhoBasedConservative requires a perfect-gas or kinetic "
@@ -211,45 +238,50 @@ void Foam::rhoBasedConservative::update(const label& cellI)
         dg::expr(EG)/dg::expr(rhoG) - 0.5*dg::magSqr(velocityExpr)
     );
 
-    energy_().calcTfromHe(cellI, heG, TG);
-    eqnState_().calcPFromRhoT(cellI, rhoG, TG, pG);
-
-    // This path is intentionally written as explicit pointwise loops.
-    // Creating temporary GaussField objects for Cp, Cv and gamma here adds
-    // avoidable allocation/copy overhead on a hot thermo-update path, so we
-    // bypass the GaussField operator wrappers and call the scalar thermo API
-    // directly at each Gauss point.
     cellGaussField<scalar>& aCell = aG.cellField();
-    const cellGaussField<scalar>& TCell = TG.cellField();
+    cellGaussField<scalar>& TCellMutable = TG.cellField();
+    cellGaussField<scalar>& pCellMutable = pG.cellField();
+    const cellGaussField<scalar>& rhoCell = rhoG.cellField();
+    const cellGaussField<scalar>& heCell = heG.cellField();
 
-    for (label gpI = 0; gpI < TCell.size(); ++gpI)
+    for (label gpI = 0; gpI < heCell.size(); ++gpI)
     {
-        const scalar T = TCell[gpI];
-        const scalar Cp = thermo_().calcCp(T);
-        const scalar Cv = thermo_().calcCv(T);
-        const scalar gamma = thermo_().calcGamma(Cp, Cv);
+        const scalar rho = rhoCell[gpI];
+        const scalar he = heCell[gpI];
+        const scalar T = calcTemperatureFromRhoHe(rho, he);
 
-        aCell[gpI] = thermo_().calcSpeedOfSound(T, gamma);
+        TCellMutable[gpI] = T;
+        pCellMutable[gpI] = calcPressureFromRhoHe(rho, he);
+        aCell[gpI] = calcSpeedOfSoundFromRhoHe(rho, he);
     }
 
     faceGaussField<scalar>& aFace = aG.faceField();
-    const faceGaussField<scalar>& TFace = TG.faceField();
+    faceGaussField<scalar>& TFaceMutable = TG.faceField();
+    faceGaussField<scalar>& pFaceMutable = pG.faceField();
+    const faceGaussField<scalar>& rhoFace = rhoG.faceField();
+    const faceGaussField<scalar>& heFace = heG.faceField();
 
-    for (label gpI = 0; gpI < TFace.nGauss(); ++gpI)
+    for (label gpI = 0; gpI < heFace.nGauss(); ++gpI)
     {
-        const scalar TMinus = TFace.minusValue(gpI);
-        const scalar CpMinus = thermo_().calcCp(TMinus);
-        const scalar CvMinus = thermo_().calcCv(TMinus);
-        const scalar gammaMinus = thermo_().calcGamma(CpMinus, CvMinus);
+        const scalar rhoMinus = rhoFace.minusValue(gpI);
+        const scalar heMinus = heFace.minusValue(gpI);
+        const scalar TMinus = calcTemperatureFromRhoHe(rhoMinus, heMinus);
 
-        aFace.minusValueAt(gpI) = thermo_().calcSpeedOfSound(TMinus, gammaMinus);
+        TFaceMutable.minusValueAt(gpI) = TMinus;
+        pFaceMutable.minusValueAt(gpI) =
+            calcPressureFromRhoHe(rhoMinus, heMinus);
+        aFace.minusValueAt(gpI) =
+            calcSpeedOfSoundFromRhoHe(rhoMinus, heMinus);
 
-        const scalar TPlus = TFace.plusValue(gpI);
-        const scalar CpPlus = thermo_().calcCp(TPlus);
-        const scalar CvPlus = thermo_().calcCv(TPlus);
-        const scalar gammaPlus = thermo_().calcGamma(CpPlus, CvPlus);
+        const scalar rhoPlus = rhoFace.plusValue(gpI);
+        const scalar hePlus = heFace.plusValue(gpI);
+        const scalar TPlus = calcTemperatureFromRhoHe(rhoPlus, hePlus);
 
-        aFace.plusValueAt(gpI) = thermo_().calcSpeedOfSound(TPlus, gammaPlus);
+        TFaceMutable.plusValueAt(gpI) = TPlus;
+        pFaceMutable.plusValueAt(gpI) =
+            calcPressureFromRhoHe(rhoPlus, hePlus);
+        aFace.plusValueAt(gpI) =
+            calcSpeedOfSoundFromRhoHe(rhoPlus, hePlus);
     }
 }
 
@@ -286,14 +318,9 @@ void Foam::rhoBasedConservative::updateBC(const label& cellI)
         const scalar k = 0.5*magSqr(U);
 
         heB[gpI] = EB[gpI]/rhoB[gpI] - k;
-        TB[gpI] = energy_().calcTfromHe(heB[gpI]);
-        pB[gpI] = eqnState_().calcPFromRhoT(rhoB[gpI], TB[gpI]);
-
-        const scalar Cp = thermo_().calcCp(TB[gpI]);
-        const scalar Cv = thermo_().calcCv(TB[gpI]);
-        const scalar gamma = thermo_().calcGamma(Cp, Cv);
-
-        aB[gpI] = thermo_().calcSpeedOfSound(TB[gpI], gamma);
+        TB[gpI] = calcTemperatureFromRhoHe(rhoB[gpI], heB[gpI]);
+        pB[gpI] = calcPressureFromRhoHe(rhoB[gpI], heB[gpI]);
+        aB[gpI] = calcSpeedOfSoundFromRhoHe(rhoB[gpI], heB[gpI]);
     }
 
     TG.faceField().assignBCGhostState(TB);

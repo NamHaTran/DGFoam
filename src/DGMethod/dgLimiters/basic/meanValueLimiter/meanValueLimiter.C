@@ -249,7 +249,7 @@ scalar meanValueLimiter::calcMeanTemperature
     const vector U = rhoU/rhoSafe;
     const scalar he = E/rhoSafe - 0.5*magSqr(U);
 
-    return thermoPtr_->energyModel().calcTfromHe(he);
+    return thermoPtr_->calcTemperatureFromRhoHe(rhoSafe, he);
 }
 
 
@@ -260,7 +260,7 @@ scalar meanValueLimiter::calcMeanTotalEnergy
     const scalar T
 ) const
 {
-    const scalar he = thermoPtr_->energyModel().calcHe(T);
+    const scalar he = thermoPtr_->calcHeFromRhoT(rho, T);
     scalar E = rho*(he + 0.5*magSqr(U));
 
     if (thermoPtr_->heIsEnthalpy())

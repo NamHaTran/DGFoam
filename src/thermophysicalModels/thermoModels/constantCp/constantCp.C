@@ -66,11 +66,14 @@ Foam::constantCp::constantCp
     Cv_(Zero),
     gamma_(Zero)
 {
-    // constantCp only compatible with IdealGas category of eqnOfState
-    if (!eos.isIdealGas())
+    // constantCp supplies the reference ideal-gas caloric relation. For
+    // real-gas EOS such as Peng-Robinson, DGFoam reconstructs T/p/a through
+    // the EOS and keeps constantCp for Cp/Cv/gamma only.
+    if (!(eos.isIdealGas() || eos.isRealGas()))
     {
         FatalErrorInFunction
-            << "thermoLaw " << type() <<" requires an ideal-gas type eqnOfState."
+            << "thermoLaw " << type()
+            << " requires an ideal-gas or real-gas type eqnOfState."
             << " Selected EOS: " << eos.type()
             << exit(FatalError);
     }

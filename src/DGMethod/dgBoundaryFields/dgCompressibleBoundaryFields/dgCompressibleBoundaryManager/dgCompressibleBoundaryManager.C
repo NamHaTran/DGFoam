@@ -148,7 +148,7 @@ void dgCompressibleBoundaryManager::initializeConservatives
 ) const
 {
     const scalar rho0 = thermo_.eos().calcRhoFromPT(internalP_, internalT_);
-    const scalar e0   = thermo_.thermo().calcInternalE(internalT_);
+    const scalar e0   = thermo_.calcHeFromRhoT(rho0, internalT_);
 
     rho  = rho0;
     rhoU = rho0*internalU_;

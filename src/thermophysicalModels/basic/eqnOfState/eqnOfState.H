@@ -237,6 +237,91 @@ public:
         return Zero;
     }
 
+    /**
+     * \brief Compute temperature from density and internal energy at one point
+     */
+    virtual scalar calcTFromRhoE
+    (
+        const scalar rho,
+        const scalar e
+    ) const
+    {
+        FatalErrorInFunction
+            << "Pointwise calcTFromRhoE() not supported by this EOS model"
+            << exit(FatalError);
+
+        return Zero;
+    }
+
+    /**
+     * \brief Compute pressure from density and internal energy at one point
+     */
+    virtual scalar calcPFromRhoE
+    (
+        const scalar rho,
+        const scalar e
+    ) const
+    {
+        FatalErrorInFunction
+            << "Pointwise calcPFromRhoE() not supported by this EOS model"
+            << exit(FatalError);
+
+        return Zero;
+    }
+
+    /**
+     * \brief Compute internal energy from density and pressure at one point
+     */
+    virtual scalar calcEFromRhoP
+    (
+        const scalar rho,
+        const scalar p
+    ) const
+    {
+        FatalErrorInFunction
+            << "Pointwise calcEFromRhoP() not supported by this EOS model"
+            << exit(FatalError);
+
+        return Zero;
+    }
+
+    /**
+     * \brief Compute internal energy from density and temperature at one point
+     */
+    virtual scalar calcEFromRhoT
+    (
+        const scalar rho,
+        const scalar T
+    ) const
+    {
+        if (canCalcPFromRhoT() && canCalcEFromRhoP())
+        {
+            return calcEFromRhoP(rho, calcPFromRhoT(rho, T));
+        }
+
+        FatalErrorInFunction
+            << "Pointwise calcEFromRhoT() not supported by this EOS model"
+            << exit(FatalError);
+
+        return Zero;
+    }
+
+    /**
+     * \brief Compute speed of sound from density and internal energy
+     */
+    virtual scalar calcAFromRhoE
+    (
+        const scalar rho,
+        const scalar e
+    ) const
+    {
+        FatalErrorInFunction
+            << "Pointwise calcAFromRhoE() not supported by this EOS model"
+            << exit(FatalError);
+
+        return Zero;
+    }
+
     //====================================================================//
     //           Fundamental thermodynamic relations (Gauss fields)
     //
@@ -321,6 +406,24 @@ public:
 
     /** Return true if T(p,rho) is supported */
     virtual bool canCalcTFromPRho() const { return false; }
+
+    /** Return true if T(rho,e) is supported */
+    virtual bool canCalcTFromRhoE() const { return false; }
+
+    /** Return true if p(rho,e) is supported */
+    virtual bool canCalcPFromRhoE() const { return false; }
+
+    /** Return true if e(rho,p) is supported */
+    virtual bool canCalcEFromRhoP() const { return false; }
+
+    /** Return true if e(rho,T) is supported */
+    virtual bool canCalcEFromRhoT() const
+    {
+        return canCalcPFromRhoT() && canCalcEFromRhoP();
+    }
+
+    /** Return true if a(rho,e) is supported */
+    virtual bool canCalcAFromRhoE() const { return false; }
 
     // EOS classification flags
 

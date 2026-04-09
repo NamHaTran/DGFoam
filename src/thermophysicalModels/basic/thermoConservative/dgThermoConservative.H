@@ -298,6 +298,34 @@ public:
         /** Return speed-of-sound field */
         inline const dgField<scalar>& a() const { return a_; }
 
+        /** Reconstruct temperature from density and stored thermodynamic energy */
+        scalar calcTemperatureFromRhoHe
+        (
+            const scalar rho,
+            const scalar he
+        ) const;
+
+        /** Reconstruct pressure from density and stored thermodynamic energy */
+        scalar calcPressureFromRhoHe
+        (
+            const scalar rho,
+            const scalar he
+        ) const;
+
+        /** Reconstruct speed of sound from density and stored thermodynamic energy */
+        scalar calcSpeedOfSoundFromRhoHe
+        (
+            const scalar rho,
+            const scalar he
+        ) const;
+
+        /** Reconstruct stored thermodynamic energy from density and temperature */
+        scalar calcHeFromRhoT
+        (
+            const scalar rho,
+            const scalar T
+        ) const;
+
         /** Return enthalpy reconstructed from the stored energy variable */
         tmp<GaussField<scalar>> calcH(const label cellID) const;
 

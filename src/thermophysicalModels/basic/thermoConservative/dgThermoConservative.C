@@ -158,6 +158,71 @@ void Foam::dgThermoConservative::synch()
 }
 
 
+scalar Foam::dgThermoConservative::calcTemperatureFromRhoHe
+(
+    const scalar rho,
+    const scalar he
+) const
+{
+    if (heIsInternalEnergy() && eos().canCalcTFromRhoE())
+    {
+        return eos().calcTFromRhoE(rho, he);
+    }
+
+    return energyModel().calcTfromHe(he);
+}
+
+
+scalar Foam::dgThermoConservative::calcPressureFromRhoHe
+(
+    const scalar rho,
+    const scalar he
+) const
+{
+    if (heIsInternalEnergy() && eos().canCalcPFromRhoE())
+    {
+        return eos().calcPFromRhoE(rho, he);
+    }
+
+    return eos().calcPFromRhoT(rho, calcTemperatureFromRhoHe(rho, he));
+}
+
+
+scalar Foam::dgThermoConservative::calcSpeedOfSoundFromRhoHe
+(
+    const scalar rho,
+    const scalar he
+) const
+{
+    if (heIsInternalEnergy() && eos().canCalcAFromRhoE())
+    {
+        return eos().calcAFromRhoE(rho, he);
+    }
+
+    const scalar T = calcTemperatureFromRhoHe(rho, he);
+    const scalar Cp = thermo().calcCp(T);
+    const scalar Cv = thermo().calcCv(T);
+    const scalar gamma = thermo().calcGamma(Cp, Cv);
+
+    return thermo().calcSpeedOfSound(T, gamma);
+}
+
+
+scalar Foam::dgThermoConservative::calcHeFromRhoT
+(
+    const scalar rho,
+    const scalar T
+) const
+{
+    if (heIsInternalEnergy() && eos().canCalcEFromRhoT())
+    {
+        return eos().calcEFromRhoT(rho, T);
+    }
+
+    return energyModel().calcHe(T);
+}
+
+
 tmp<GaussField<scalar>> Foam::dgThermoConservative::calcH
 (
     const label cellID
