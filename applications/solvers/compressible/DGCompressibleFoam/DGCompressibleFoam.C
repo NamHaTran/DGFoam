@@ -108,10 +108,6 @@ int main(int argc, char *argv[])
     // Each outer iteration is one physical time step.
     while (runTime.run())
     {
-        // Estimate the stable explicit time step from the current state
-        // before incrementing the OpenFOAM time database.
-        #include "calculateDeltaT.H"
-
         ++runTime;
 
         Info<< "Time = " << runTime.timeName() << nl
@@ -137,6 +133,10 @@ int main(int argc, char *argv[])
         // Clear stage bookkeeping so the next physical step starts from
         // stage 0 with fresh residual storage.
         timeDiscretization.reset();
+
+        // Estimate the stable explicit time step from the current state
+        // before incrementing the OpenFOAM time database.
+        #include "calculateDeltaT.H"
 
         runTime.write();
         runTime.printExecutionTime(Info);

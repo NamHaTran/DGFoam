@@ -3,6 +3,16 @@ if (runTime.isAdjustTimeStep())
     // Compute a global explicit time step from the current DG state.
     // The estimate is cell-local, then reduced to the minimum over the whole mesh.
     const scalar CFL = runTime.controlDict().getOrDefault<scalar>("maxCo", 0.5);
+    const scalar maxDeltaT =
+        runTime.controlDict().getOrDefault<scalar>("maxDeltaT", GREAT);
+
+    if (maxDeltaT <= SMALL)
+    {
+        FatalIOErrorInFunction(runTime.controlDict())
+            << "Entry 'maxDeltaT' must be positive, but got "
+            << maxDeltaT << '.'
+            << exit(FatalIOError);
+    }
 
     // Explicit DG schemes usually tighten the CFL with the polynomial order.
     // Here we use the common (p+1)^2 scaling.
@@ -34,6 +44,7 @@ if (runTime.isAdjustTimeStep())
     }
 
     reduce(dt, minOp<scalar>());
+    dt = min(dt, maxDeltaT);
 
     if (dt <= SMALL)
     {
