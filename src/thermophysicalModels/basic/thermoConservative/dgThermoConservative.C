@@ -116,7 +116,8 @@ Foam::dgThermoConservative::dgThermoConservative
     T_
     (
         mesh_.getFvMesh().lookupObjectRef<dgField<scalar>>("T")
-    )
+    ),
+    TMean_(mesh_.nCells(), scalar(SMALL))
 {
     // No model construction here.
     // Derived classes will call initModels() after base constructor completes.
@@ -158,7 +159,7 @@ void Foam::dgThermoConservative::synch()
 }
 
 
-scalar Foam::dgThermoConservative::calcTemperatureFromRhoHe
+scalar Foam::dgThermoConservative::calcRawTemperatureFromRhoHe
 (
     const scalar rho,
     const scalar he
@@ -173,8 +174,60 @@ scalar Foam::dgThermoConservative::calcTemperatureFromRhoHe
 }
 
 
+scalar Foam::dgThermoConservative::clampTemperature
+(
+    const scalar T,
+    const scalar TMean
+) const
+{
+    if (T >= 0)
+    {
+        return T;
+    }
+
+    if (TMean >= 0)
+    {
+        return TMean;
+    }
+
+    return scalar(SMALL);
+}
+
+
+scalar Foam::dgThermoConservative::clampTemperature
+(
+    const label cellID,
+    const scalar T
+) const
+{
+    return clampTemperature(T, TMean_[cellID]);
+}
+
+
+void Foam::dgThermoConservative::setTMean
+(
+    const label cellID,
+    const scalar TMean
+)
+{
+    TMean_[cellID] = clampTemperature(TMean, TMean_[cellID]);
+}
+
+
+scalar Foam::dgThermoConservative::calcTemperatureFromRhoHe
+(
+    const label cellID,
+    const scalar rho,
+    const scalar he
+) const
+{
+    return clampTemperature(cellID, calcRawTemperatureFromRhoHe(rho, he));
+}
+
+
 scalar Foam::dgThermoConservative::calcPressureFromRhoHe
 (
+    const label cellID,
     const scalar rho,
     const scalar he
 ) const
@@ -184,12 +237,13 @@ scalar Foam::dgThermoConservative::calcPressureFromRhoHe
         return eos().calcPFromRhoE(rho, he);
     }
 
-    return eos().calcPFromRhoT(rho, calcTemperatureFromRhoHe(rho, he));
+    return eos().calcPFromRhoT(rho, calcTemperatureFromRhoHe(cellID, rho, he));
 }
 
 
 scalar Foam::dgThermoConservative::calcSpeedOfSoundFromRhoHe
 (
+    const label cellID,
     const scalar rho,
     const scalar he
 ) const
@@ -199,7 +253,7 @@ scalar Foam::dgThermoConservative::calcSpeedOfSoundFromRhoHe
         return eos().calcAFromRhoE(rho, he);
     }
 
-    const scalar T = calcTemperatureFromRhoHe(rho, he);
+    const scalar T = calcTemperatureFromRhoHe(cellID, rho, he);
     const scalar Cp = thermo().calcCp(T);
     const scalar Cv = thermo().calcCv(T);
     const scalar gamma = thermo().calcGamma(Cp, Cv);

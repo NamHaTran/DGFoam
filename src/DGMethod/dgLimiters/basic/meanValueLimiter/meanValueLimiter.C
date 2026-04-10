@@ -240,6 +240,7 @@ scalar meanValueLimiter::safeDensityForDivision(const scalar rho) const
 
 scalar meanValueLimiter::calcMeanTemperature
 (
+    const label cellID,
     const scalar rho,
     const vector& rhoU,
     const scalar E
@@ -249,7 +250,7 @@ scalar meanValueLimiter::calcMeanTemperature
     const vector U = rhoU/rhoSafe;
     const scalar he = E/rhoSafe - 0.5*magSqr(U);
 
-    return thermoPtr_->calcTemperatureFromRhoHe(rhoSafe, he);
+    return thermoPtr_->calcTemperatureFromRhoHe(cellID, rhoSafe, he);
 }
 
 
@@ -363,7 +364,7 @@ bool meanValueLimiter::limitCellMeanValue(const label cellID)
         updateRhoU = true;
     }
 
-    scalar T0 = calcMeanTemperature(rhoModes[0], rhoUModes[0], EModes[0]);
+    scalar T0 = calcMeanTemperature(cellID, rhoModes[0], rhoUModes[0], EModes[0]);
     const scalar TClamped = min(max(T0, Tmin_), Tmax_);
 
     if (TClamped != T0)

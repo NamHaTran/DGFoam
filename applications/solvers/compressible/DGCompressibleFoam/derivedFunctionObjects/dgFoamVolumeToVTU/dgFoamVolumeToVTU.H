@@ -46,11 +46,7 @@ SourceFiles
 #include "scalar.H"
 #include "vector.H"
 #include "word.H"
-#include "List.H"
 #include "fileName.H"
-#include "dgEquiSpacedTessellation.H"
-
-#include <memory>
 
 namespace Foam
 {
@@ -69,24 +65,40 @@ namespace dgFunctionObjects
 
 /**
  * \class Foam::dgFunctionObjects::dgFoamVolumeToVTU
- * \brief Sample DGCompressibleFoam volume fields and write VTU/PVTU output
+ * \brief Export DGCompressibleFoam modal volume fields as native VTK Lagrange cells
  *
  * \details
- * dgFoamVolumeToVTU exports a tessellated volumetric representation of the
- * reconstructed DG solution for ParaView. At each write event it:
+ * dgFoamVolumeToVTU exports one native VTK high-order cell per DG cell. At
+ * each write event it:
  * - looks up the conservative DG fields and thermo object from the region
  *   registry,
- * - builds an equi-spaced sampling lattice in the reference element of each
- *   supported cell topology,
- * - evaluates modal DoFs at those sampling points,
- * - reconstructs primitive variables pointwise from the sampled conservative
- *   state,
+ * - reconstructs conservative and primitive variables directly at the native
+ *   VTK Lagrange nodes,
  * - writes one VTU piece per rank and a master PVTU aggregator in parallel.
  *
- * The generated dataset is intended for visualization rather than restart or
- * exact numerical post-processing. Optional point merging can be used to
- * smooth element-interface jumps for faster qualitative inspection in
- * ParaView.
+ * The function object intentionally mirrors the standalone dgToVTKLagrange
+ * algorithm, but uses the already-constructed solver thermo object so the
+ * primitive reconstruction stays consistent with DGCompressibleFoam.
+ *
+ * Example declaration in \c system/controlDict:
+ * \verbatim
+ * functions
+ * {
+ *     volumeToVTU
+ *     {
+ *         type            dgFoamVolumeToVTU;
+ *         libs            ("libDGCompressibleDerivedFunctionObjects.so");
+ *         writeControl    writeTime;
+ *
+ *         // Optional overrides
+ *         region          region0;
+ *         rho             rho;
+ *         rhoU            rhoU;
+ *         E               E;
+ *         thermo          dgThermoConservative;
+ *     }
+ * }
+ * \endverbatim
  */
 class dgFoamVolumeToVTU
 :
@@ -110,44 +122,14 @@ class dgFoamVolumeToVTU
     /** Registry name of the solver thermo object */
     word thermoName_;
 
-    /** Number of equi-spaced sub-intervals along each reference direction */
-    label n_;
-
-    /** DG polynomial order read from \c system/dgSchemes */
-    label pOrder_;
-
-    /** Enable collapsed through-thickness output for extruded 2D cases */
-    bool twoDMode_;
-
-    /** Cartesian axis normal to the 2D plane when \c twoDMode_ is enabled */
-    label twoDNormalAxis_;
-
-    /** Merge coincident tessellation points for smoother visualization */
-    bool mergeSharedPoints_;
-
-    /** Absolute tolerance used when merging coincident sampled points */
-    scalar pointMergeTol_;
-
-    /** Constant-pressure heat capacity read from thermo dictionaries */
-    scalar Cp_;
-
-    /** Constant-volume heat capacity reconstructed as \c Cp - R */
-    scalar Cv_;
-
-    /** Specific gas constant taken from the active equation of state */
-    scalar R_;
-
-    /** Guard to avoid repeating dictionary parsing and validation work */
+    /** Guard to avoid repeating lightweight validation work */
     bool initialized_;
 
-    /** Cached sampling/tessellation helper shared across supported cell types */
-    std::unique_ptr<dgEquiSpacedTessellation> tessellationPtr_;
-
     /**
-     * \brief Lazily initialize thermo constants and sampling configuration
+     * \brief Lazily validate solver-owned thermo access
      *
-     * This routine validates the supported thermo chain, reads the DG order
-     * from \c system/dgSchemes, and prepares the reusable tessellation helper.
+     * This routine only checks that the function object can resolve the
+     * required mesh and thermo objects from the region registry.
      */
     void initialize();
 
@@ -166,9 +148,6 @@ class dgFoamVolumeToVTU
     /** Return the thermo object associated with the active solver region */
     const dgThermoConservative& thermo() const;
 
-    /** Return the cached equi-spaced tessellation helper */
-    const dgEquiSpacedTessellation& tessellation() const;
-
     /** Return the output directory for the current write time */
     fileName outputDir() const;
 
@@ -177,23 +156,6 @@ class dgFoamVolumeToVTU
 
     /** Return the master PVTU aggregator path */
     fileName pvtuFileName() const;
-
-    /**
-     * \brief Evaluate a modal DG field at one sampling point
-     *
-     * \tparam Type Scalar or vector field type
-     * \param field DG field to be reconstructed
-     * \param cellI Cell index
-     * \param basis Basis-function values at the target point
-     * \return Reconstructed field value at the sampling point
-     */
-    template<class Type>
-    static Type evaluateField
-    (
-        const dgField<Type>& field,
-        const label cellI,
-        const List<scalar>& basis
-    );
 
     /** Write the rank-local VTU piece file */
     void writePiece(const fileName& filePath) const;

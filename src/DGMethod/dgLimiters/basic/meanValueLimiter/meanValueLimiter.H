@@ -126,6 +126,7 @@ class meanValueLimiter
         /** \brief Return the mean-state temperature reconstructed from conservative variables. */
         scalar calcMeanTemperature
         (
+            const label cellID,
             const scalar rho,
             const vector& rhoU,
             const scalar E

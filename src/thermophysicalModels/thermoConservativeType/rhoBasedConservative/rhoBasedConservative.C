@@ -217,6 +217,23 @@ void Foam::rhoBasedConservative::validateModels()
     }
 }
 
+
+scalar Foam::rhoBasedConservative::calcTMean
+(
+    const scalar rho0,
+    const vector& rhoU0,
+    const scalar E0
+) const
+{
+    const scalar rho0Safe =
+        mag(rho0) > VSMALL ? rho0 : (rho0 >= 0 ? VSMALL : -VSMALL);
+    const vector U0 = rhoU0/rho0Safe;
+    const scalar he0 = E0/rho0Safe - 0.5*magSqr(U0);
+
+    return clampTemperature(calcRawTemperatureFromRhoHe(rho0Safe, he0), scalar(SMALL));
+}
+
+
 void Foam::rhoBasedConservative::update(const label& cellI)
 {
     // Conservative fields
@@ -238,21 +255,39 @@ void Foam::rhoBasedConservative::update(const label& cellI)
         dg::expr(EG)/dg::expr(rhoG) - 0.5*dg::magSqr(velocityExpr)
     );
 
+    // Reconstruct one cell-mean temperature from the conservative mean
+    // state (DoF 0). This acts as a fallback when a pointwise reconstruction
+    // produces a slightly negative temperature during restart/rebuild.
+    const scalar TMean =
+        calcTMean
+        (
+            rho_.dof()[cellI][0],
+            rhoU_.dof()[cellI][0],
+            E_.dof()[cellI][0]
+        );
+    setTMean(cellI, TMean);
+
     cellGaussField<scalar>& aCell = aG.cellField();
     cellGaussField<scalar>& TCellMutable = TG.cellField();
     cellGaussField<scalar>& pCellMutable = pG.cellField();
     const cellGaussField<scalar>& rhoCell = rhoG.cellField();
     const cellGaussField<scalar>& heCell = heG.cellField();
 
+    // Rebuild T, p, and a at cell-interior Gauss points from the current
+    // conservative polynomial. If T becomes negative, fall back to TMean.
     for (label gpI = 0; gpI < heCell.size(); ++gpI)
     {
         const scalar rho = rhoCell[gpI];
         const scalar he = heCell[gpI];
-        const scalar T = calcTemperatureFromRhoHe(rho, he);
+        const scalar T = calcTemperatureFromRhoHe(cellI, rho, he);
 
         TCellMutable[gpI] = T;
-        pCellMutable[gpI] = calcPressureFromRhoHe(rho, he);
-        aCell[gpI] = calcSpeedOfSoundFromRhoHe(rho, he);
+        pCellMutable[gpI] = eos().calcPFromRhoT(rho, T);
+
+        const scalar Cp = thermo().calcCp(T);
+        const scalar Cv = thermo().calcCv(T);
+        const scalar gamma = thermo().calcGamma(Cp, Cv);
+        aCell[gpI] = thermo().calcSpeedOfSound(T, gamma);
     }
 
     faceGaussField<scalar>& aFace = aG.faceField();
@@ -261,27 +296,71 @@ void Foam::rhoBasedConservative::update(const label& cellI)
     const faceGaussField<scalar>& rhoFace = rhoG.faceField();
     const faceGaussField<scalar>& heFace = heG.faceField();
 
-    for (label gpI = 0; gpI < heFace.nGauss(); ++gpI)
+    // Rebuild face thermo states on both minus and plus sides. For the plus
+    // side of internal faces, also compute the neighbour-cell mean
+    // temperature from the neighbour DoF-0 state as its local fallback.
+    for (label localFaceI = 0; localFaceI < heFace.nFaces(); ++localFaceI)
     {
-        const scalar rhoMinus = rhoFace.minusValue(gpI);
-        const scalar heMinus = heFace.minusValue(gpI);
-        const scalar TMinus = calcTemperatureFromRhoHe(rhoMinus, heMinus);
+        scalar TMeanPlus = TMean;
 
-        TFaceMutable.minusValueAt(gpI) = TMinus;
-        pFaceMutable.minusValueAt(gpI) =
-            calcPressureFromRhoHe(rhoMinus, heMinus);
-        aFace.minusValueAt(gpI) =
-            calcSpeedOfSoundFromRhoHe(rhoMinus, heMinus);
+        if (!heFace.isBoundary(localFaceI))
+        {
+            TMeanPlus =
+                calcTMean
+                (
+                    rho_.neighbourCellDof(cellI, localFaceI)[0],
+                    rhoU_.neighbourCellDof(cellI, localFaceI)[0],
+                    E_.neighbourCellDof(cellI, localFaceI)[0]
+                );
+        }
 
-        const scalar rhoPlus = rhoFace.plusValue(gpI);
-        const scalar hePlus = heFace.plusValue(gpI);
-        const scalar TPlus = calcTemperatureFromRhoHe(rhoPlus, hePlus);
+        // Traverse the Gauss points on the current face and rebuild minus/plus
+        // thermo traces from conservative traces. Small negative temperatures
+        // are replaced by the corresponding mean-state temperature.
+        for (label gpI = 0; gpI < heFace.nGaussPerFace(); ++gpI)
+        {
+            const scalar rhoMinus = rhoFace.minusValueOnFace(localFaceI, gpI);
+            const scalar heMinus = heFace.minusValueOnFace(localFaceI, gpI);
+            const scalar TMinus =
+                clampTemperature
+                (
+                    calcRawTemperatureFromRhoHe(rhoMinus, heMinus),
+                    TMean
+                );
 
-        TFaceMutable.plusValueAt(gpI) = TPlus;
-        pFaceMutable.plusValueAt(gpI) =
-            calcPressureFromRhoHe(rhoPlus, hePlus);
-        aFace.plusValueAt(gpI) =
-            calcSpeedOfSoundFromRhoHe(rhoPlus, hePlus);
+            TFaceMutable.minusValueOnFace(localFaceI, gpI) = TMinus;
+            pFaceMutable.minusValueOnFace(localFaceI, gpI) =
+                eos().calcPFromRhoT(rhoMinus, TMinus);
+
+            {
+                const scalar Cp = thermo().calcCp(TMinus);
+                const scalar Cv = thermo().calcCv(TMinus);
+                const scalar gamma = thermo().calcGamma(Cp, Cv);
+                aFace.minusValueOnFace(localFaceI, gpI) =
+                    thermo().calcSpeedOfSound(TMinus, gamma);
+            }
+
+            const scalar rhoPlus = rhoFace.plusValueOnFace(localFaceI, gpI);
+            const scalar hePlus = heFace.plusValueOnFace(localFaceI, gpI);
+            const scalar TPlus =
+                clampTemperature
+                (
+                    calcRawTemperatureFromRhoHe(rhoPlus, hePlus),
+                    TMeanPlus
+                );
+
+            TFaceMutable.plusValueOnFace(localFaceI, gpI) = TPlus;
+            pFaceMutable.plusValueOnFace(localFaceI, gpI) =
+                eos().calcPFromRhoT(rhoPlus, TPlus);
+
+            {
+                const scalar Cp = thermo().calcCp(TPlus);
+                const scalar Cv = thermo().calcCv(TPlus);
+                const scalar gamma = thermo().calcGamma(Cp, Cv);
+                aFace.plusValueOnFace(localFaceI, gpI) =
+                    thermo().calcSpeedOfSound(TPlus, gamma);
+            }
+        }
     }
 }
 
@@ -307,20 +386,35 @@ void Foam::rhoBasedConservative::updateBC(const label& cellI)
     const boundaryGaussField<scalar> EB =
         EG.faceField().extractBCGhostState();
 
+    // Reconstruct one owner-cell mean temperature from DoF 0 and use it as
+    // the boundary fallback when a ghost-state reconstruction yields a small
+    // negative temperature.
+    const scalar TMean = TMean_[cellI];
+
     boundaryGaussField<scalar> TB(rhoB.size());
     boundaryGaussField<scalar> pB(rhoB.size());
     boundaryGaussField<scalar> heB(rhoB.size());
     boundaryGaussField<scalar> aB(rhoB.size());
 
+    // Rebuild thermo boundary traces from the ghost conservative state and
+    // replace any negative temperature with the owner-cell mean temperature.
     for (label gpI = 0; gpI < rhoB.size(); ++gpI)
     {
         const vector U = rhoUB[gpI]/rhoB[gpI];
         const scalar k = 0.5*magSqr(U);
 
         heB[gpI] = EB[gpI]/rhoB[gpI] - k;
-        TB[gpI] = calcTemperatureFromRhoHe(rhoB[gpI], heB[gpI]);
-        pB[gpI] = calcPressureFromRhoHe(rhoB[gpI], heB[gpI]);
-        aB[gpI] = calcSpeedOfSoundFromRhoHe(rhoB[gpI], heB[gpI]);
+
+        const scalar T =
+            clampTemperature(calcRawTemperatureFromRhoHe(rhoB[gpI], heB[gpI]), TMean);
+
+        TB[gpI] = T;
+        pB[gpI] = eos().calcPFromRhoT(rhoB[gpI], T);
+
+        const scalar Cp = thermo().calcCp(T);
+        const scalar Cv = thermo().calcCv(T);
+        const scalar gamma = thermo().calcGamma(Cp, Cv);
+        aB[gpI] = thermo().calcSpeedOfSound(T, gamma);
     }
 
     TG.faceField().assignBCGhostState(TB);

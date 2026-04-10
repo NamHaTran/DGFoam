@@ -60,7 +60,7 @@ dgCompressibleIsothermoWallBoundaryField
 
 void dgCompressibleIsothermoWallBoundaryField::updateGhostState
 (
-    const label,
+    const label cellID,
     const label,
     const label,
     const vector&,
@@ -75,7 +75,7 @@ void dgCompressibleIsothermoWallBoundaryField::updateGhostState
     const vector UMinus = rhoUMinus/rhoMinus;
     const scalar kMinus = 0.5*magSqr(UMinus);
     const scalar heMinus = EMinus/rhoMinus - kMinus;
-    const scalar pMinus = thermo_.calcPressureFromRhoHe(rhoMinus, heMinus);
+    const scalar pMinus = thermo_.calcPressureFromRhoHe(cellID, rhoMinus, heMinus);
 
     primitiveToConservative
     (

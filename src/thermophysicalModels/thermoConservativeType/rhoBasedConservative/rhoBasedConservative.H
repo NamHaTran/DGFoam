@@ -90,6 +90,23 @@ class rhoBasedConservative
 :
     public dgThermoConservative
 {
+private:
+
+        /**
+         * \brief Reconstruct a mean-state temperature from conservative mean values.
+         *
+         * \details
+         * This helper converts one cell-mean conservative state
+         * \f$(\rho_0,\rho U_0,E_0)\f$ into a fallback mean temperature used
+         * when pointwise temperature reconstruction becomes slightly negative.
+         */
+        scalar calcTMean
+        (
+            const scalar rho0,
+            const vector& rhoU0,
+            const scalar E0
+        ) const;
+
 public:
 
     //- Runtime type information

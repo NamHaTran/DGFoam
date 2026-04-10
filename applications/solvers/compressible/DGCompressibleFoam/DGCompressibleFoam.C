@@ -79,6 +79,8 @@ Description
 
 int main(int argc, char *argv[])
 {
+    #include "dgPostProcess.H"
+
     #include "setRootCase.H"
 
     // Build the standard OpenFOAM run-time database:

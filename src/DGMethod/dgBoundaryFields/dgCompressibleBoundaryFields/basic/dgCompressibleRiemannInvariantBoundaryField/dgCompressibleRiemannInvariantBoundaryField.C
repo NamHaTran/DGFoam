@@ -87,12 +87,11 @@ dgCompressibleRiemannInvariantBoundaryField
     UInf_ = readInfOrValue<vector>(coeffDict, "UInf", "UValue");
 
     rhoInf_ = thermo_.eos().calcRhoFromPT(pInf_, TInf_);
-    const scalar heInf = thermo_.calcHeFromRhoT(rhoInf_, TInf_);
 
     const scalar CpInf = thermo_.thermo().calcCp(TInf_);
     const scalar CvInf = thermo_.thermo().calcCv(TInf_);
     gammaInf_ = thermo_.thermo().calcGamma(CpInf, CvInf);
-    cInf_ = thermo_.calcSpeedOfSoundFromRhoHe(rhoInf_, heInf);
+    cInf_ = thermo_.thermo().calcSpeedOfSound(TInf_, gammaInf_);
 
     fallbackToZeroGradientIfTangential_ =
         coeffDict.lookupOrDefault<bool>
@@ -127,7 +126,7 @@ dgCompressibleRiemannInvariantBoundaryField
 
 void dgCompressibleRiemannInvariantBoundaryField::updateGhostState
 (
-    const label,
+    const label cellID,
     const label,
     const label,
     const vector& n,
@@ -169,7 +168,7 @@ void dgCompressibleRiemannInvariantBoundaryField::updateGhostState
 
     const scalar kMinus = 0.5*magSqr(UMinus);
     const scalar heMinus = EMinus/rhoMinus - kMinus;
-    const scalar pMinus = thermo_.calcPressureFromRhoHe(rhoMinus, heMinus);
+    const scalar pMinus = thermo_.calcPressureFromRhoHe(cellID, rhoMinus, heMinus);
     const scalar cMinusLocal = sqrt(gammaInf_*pMinus/rhoMinus);
     const scalar machMinus = mag(VnMinus)/max(cMinusLocal, SMALL);
 

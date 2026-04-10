@@ -69,7 +69,7 @@ dgCompressiblePressureOutflowBoundaryField
 
 void dgCompressiblePressureOutflowBoundaryField::updateGhostState
 (
-    const label,
+    const label cellID,
     const label,
     const label,
     const vector& n,
@@ -86,7 +86,7 @@ void dgCompressiblePressureOutflowBoundaryField::updateGhostState
     const scalar kMinus = 0.5*magSqr(UMinus);
     const scalar heMinus = EMinus/rhoMinusSafe - kMinus;
     const scalar aMinus =
-        max(thermo_.calcSpeedOfSoundFromRhoHe(rhoMinusSafe, heMinus), scalar(SMALL));
+        max(thermo_.calcSpeedOfSoundFromRhoHe(cellID, rhoMinusSafe, heMinus), scalar(SMALL));
     const scalar machMinus = mag(n & UMinus)/aMinus;
 
     if (machMinus >= subsonicMachThreshold_)

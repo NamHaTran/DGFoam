@@ -241,11 +241,19 @@ vector dgEquiSpacedTessellation::canonicalEtaFromXi
 
         case dgCellType::TET:
         {
+            const scalar denom2 = 1.0 - xi3;
             const scalar denom1 = -xi2 - xi3;
+
+            if (mag(denom2) <= SMALL)
+            {
+                return vector(-1.0, -1.0, xi3);
+            }
+
+            const scalar eta2 = 2.0*(xi2 + 1.0)/denom2 - 1.0;
 
             if (mag(denom1) <= SMALL)
             {
-                return vector(-1.0, -1.0, xi3);
+                return vector(-1.0, eta2, xi3);
             }
 
             return xiToEtaTet(xi);

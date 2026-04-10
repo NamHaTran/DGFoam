@@ -56,7 +56,7 @@ dgCompressibleAdiabaticWallBoundaryField
 
 void dgCompressibleAdiabaticWallBoundaryField::updateGhostState
 (
-    const label,
+    const label cellID,
     const label,
     const label,
     const vector&,
@@ -71,8 +71,8 @@ void dgCompressibleAdiabaticWallBoundaryField::updateGhostState
     const vector UMinus = rhoUMinus/rhoMinus;
     const scalar kMinus = 0.5*magSqr(UMinus);
     const scalar heMinus = EMinus/rhoMinus - kMinus;
-    const scalar TMinus = thermo_.calcTemperatureFromRhoHe(rhoMinus, heMinus);
-    const scalar pMinus = thermo_.calcPressureFromRhoHe(rhoMinus, heMinus);
+    const scalar TMinus = thermo_.calcTemperatureFromRhoHe(cellID, rhoMinus, heMinus);
+    const scalar pMinus = thermo_.calcPressureFromRhoHe(cellID, rhoMinus, heMinus);
 
     primitiveToConservative
     (

@@ -45,6 +45,7 @@ SourceFiles
 #include "autoPtr.H"
 #include "runTimeSelectionTables.H"
 #include "word.H"
+#include "List.H"
 #include "scalar.H"
 #include "vector.H"
 #include "Ostream.H"
@@ -157,6 +158,37 @@ protected:
 
         /** Temperature field (output storage) */
         dgField<scalar>& T_;
+
+        /** Cached cell-wise mean temperature used as fallback for negative T. */
+        List<scalar> TMean_;
+
+        /** Reconstruct temperature from density and stored thermodynamic energy without fallback. */
+        scalar calcRawTemperatureFromRhoHe
+        (
+            const scalar rho,
+            const scalar he
+        ) const;
+
+        /** Replace a negative temperature with a supplied mean-state fallback. */
+        scalar clampTemperature
+        (
+            const scalar T,
+            const scalar TMean
+        ) const;
+
+        /** Replace a negative temperature with the cached fallback of one cell. */
+        scalar clampTemperature
+        (
+            const label cellID,
+            const scalar T
+        ) const;
+
+        /** Store the cached mean-temperature fallback for one cell. */
+        void setTMean
+        (
+            const label cellID,
+            const scalar TMean
+        );
 
 public:
 
@@ -298,9 +330,13 @@ public:
         /** Return speed-of-sound field */
         inline const dgField<scalar>& a() const { return a_; }
 
+        /** Return the cached mean-temperature fallback for one cell. */
+        inline scalar TMean(const label cellID) const { return TMean_[cellID]; }
+
         /** Reconstruct temperature from density and stored thermodynamic energy */
         scalar calcTemperatureFromRhoHe
         (
+            const label cellID,
             const scalar rho,
             const scalar he
         ) const;
@@ -308,6 +344,7 @@ public:
         /** Reconstruct pressure from density and stored thermodynamic energy */
         scalar calcPressureFromRhoHe
         (
+            const label cellID,
             const scalar rho,
             const scalar he
         ) const;
@@ -315,6 +352,7 @@ public:
         /** Reconstruct speed of sound from density and stored thermodynamic energy */
         scalar calcSpeedOfSoundFromRhoHe
         (
+            const label cellID,
             const scalar rho,
             const scalar he
         ) const;

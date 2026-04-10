@@ -131,9 +131,10 @@ void dgCompressibleBoundaryField::pressureMachTemperatureToConservative
     scalar& E
 ) const
 {
-    const scalar rhoRef = thermo_.eos().calcRhoFromPT(p, T);
-    const scalar heRef = thermo_.calcHeFromRhoT(rhoRef, T);
-    const scalar a = thermo_.calcSpeedOfSoundFromRhoHe(rhoRef, heRef);
+    const scalar Cp = thermo_.thermo().calcCp(T);
+    const scalar Cv = thermo_.thermo().calcCv(T);
+    const scalar gamma = thermo_.thermo().calcGamma(Cp, Cv);
+    const scalar a = thermo_.thermo().calcSpeedOfSound(T, gamma);
 
     primitiveToConservative(p, T, a*Mach, rho, rhoU, E);
 }
