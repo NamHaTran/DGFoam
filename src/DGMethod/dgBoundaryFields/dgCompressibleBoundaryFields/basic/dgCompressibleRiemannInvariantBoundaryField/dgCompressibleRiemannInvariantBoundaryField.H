@@ -136,6 +136,10 @@ namespace Foam
  *
  * with the total energy assembled consistently with the selected internal-
  * energy or enthalpy formulation in the thermodynamic model.
+ *
+ * Optionally, the boundary can fall back to a zero-gradient ghost state when
+ * the interior velocity is nearly tangential to the patch, detected from the
+ * angle between \f$\mathbf{U}^{-}\f$ and the patch normal.
  */
 class dgCompressibleRiemannInvariantBoundaryField
 :
@@ -163,6 +167,15 @@ private:
 
     /** \brief Freestream isentropic invariant \f$s_{\infty}=p_{\infty}/\rho_{\infty}^{\gamma}\f$. */
     scalar sInf_;
+
+    /** \brief Fall back to a copied ghost state when the interior flow is nearly tangential. */
+    bool fallbackToZeroGradientIfTangential_;
+
+    /** \brief Angular tolerance in degrees around 90 deg for the tangential-flow fallback. */
+    scalar tangentialAngleTolDeg_;
+
+    /** \brief Minimum interior speed required before evaluating the angle criterion. */
+    scalar tangentialMinSpeed_;
 
 public:
 

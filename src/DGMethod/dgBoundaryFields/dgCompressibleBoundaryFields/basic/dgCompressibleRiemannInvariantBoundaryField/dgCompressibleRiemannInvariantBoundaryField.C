@@ -29,6 +29,7 @@ License
 #include "dgCompressibleRiemannInvariantBoundaryField.H"
 #include "dgThermoConservative.H"
 #include "addToRunTimeSelectionTable.H"
+#include "unitConversion.H"
 
 namespace Foam
 {
@@ -74,7 +75,10 @@ dgCompressibleRiemannInvariantBoundaryField
     rhoInf_(Zero),
     gammaInf_(Zero),
     cInf_(Zero),
-    sInf_(Zero)
+    sInf_(Zero),
+    fallbackToZeroGradientIfTangential_(true),
+    tangentialAngleTolDeg_(5.0),
+    tangentialMinSpeed_(1e-6)
 {
     const dictionary& coeffDict = dict.subDict("compressibleRiemannInvariantCoeff");
 
@@ -89,6 +93,31 @@ dgCompressibleRiemannInvariantBoundaryField
     const scalar CvInf = thermo_.thermo().calcCv(TInf_);
     gammaInf_ = thermo_.thermo().calcGamma(CpInf, CvInf);
     cInf_ = thermo_.calcSpeedOfSoundFromRhoHe(rhoInf_, heInf);
+
+    fallbackToZeroGradientIfTangential_ =
+        coeffDict.lookupOrDefault<bool>
+        (
+            "fallbackToZeroGradientIfTangential",
+            true
+        );
+
+    tangentialAngleTolDeg_ =
+        coeffDict.lookupOrDefault<scalar>
+        (
+            "tangentialAngleTolDeg",
+            5.0
+        );
+
+    tangentialMinSpeed_ =
+        coeffDict.lookupOrDefault<scalar>
+        (
+            "tangentialMinSpeed",
+            1e-6
+        );
+
+    tangentialAngleTolDeg_ =
+        min(max(tangentialAngleTolDeg_, scalar(0)), scalar(90));
+    tangentialMinSpeed_ = max(tangentialMinSpeed_, scalar(0));
 
     // This characteristic form assumes a calorically perfect-gas style
     // relation with one reference gamma.
@@ -117,6 +146,26 @@ void dgCompressibleRiemannInvariantBoundaryField::updateGhostState
     const vector UMinus = rhoUMinus/rhoMinus;
     const scalar VnMinus = n & UMinus;
     const scalar VnInf = n & UInf_;
+    const scalar magUMinus = mag(UMinus);
+
+    if
+    (
+        fallbackToZeroGradientIfTangential_
+     && magUMinus > tangentialMinSpeed_
+    )
+    {
+        const scalar cosTheta = min(mag(VnMinus)/magUMinus, scalar(1));
+        const scalar tangentialCosTol =
+            Foam::sin(degToRad(tangentialAngleTolDeg_));
+
+        if (cosTheta <= tangentialCosTol)
+        {
+            rhoPlus = rhoMinus;
+            rhoUPlus = rhoUMinus;
+            EPlus = EMinus;
+            return;
+        }
+    }
 
     const scalar kMinus = 0.5*magSqr(UMinus);
     const scalar heMinus = EMinus/rhoMinus - kMinus;

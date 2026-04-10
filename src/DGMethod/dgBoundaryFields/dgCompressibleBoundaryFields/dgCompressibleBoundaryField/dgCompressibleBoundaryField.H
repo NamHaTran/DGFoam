@@ -95,6 +95,13 @@ protected:
         scalar& E
     ) const;
 
+    scalar pressureVelocityToConservativeEnergy
+    (
+        const scalar p,
+        const scalar rho,
+        const vector& U
+    ) const;
+
 public:
 
     TypeName("compressible::boundaryField");

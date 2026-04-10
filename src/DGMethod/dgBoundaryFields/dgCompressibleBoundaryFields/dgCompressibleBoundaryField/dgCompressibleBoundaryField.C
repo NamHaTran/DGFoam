@@ -138,6 +138,25 @@ void dgCompressibleBoundaryField::pressureMachTemperatureToConservative
     primitiveToConservative(p, T, a*Mach, rho, rhoU, E);
 }
 
+
+scalar dgCompressibleBoundaryField::pressureVelocityToConservativeEnergy
+(
+    const scalar p,
+    const scalar rho,
+    const vector& U
+) const
+{
+    const scalar T = thermo_.eos().calcTFromPRho(p, rho);
+    const scalar he = thermo_.calcHeFromRhoT(rho, T);
+
+    if (thermo_.heIsInternalEnergy())
+    {
+        return rho*(he + 0.5*magSqr(U));
+    }
+
+    return rho*(he + 0.5*magSqr(U)) - p;
+}
+
 } // End namespace Foam
 
 // ************************************************************************* //
