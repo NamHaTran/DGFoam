@@ -177,7 +177,8 @@ bool KXRCF::detect(const label cellID) const
                 {
                     const vector directionVal =
                         directionFace.minusValueOnFace(localFaceI, gpI);
-                    const scalar beta = directionVal & face.normal();
+                    const scalar beta =
+                        directionVal & directionFace.normals()[localFaceI];
 
                     const scalar qMinus = qFace.minusValueOnFace(localFaceI, gpI);
                     qNorm = max(qNorm, mag(qMinus));
@@ -253,7 +254,8 @@ bool KXRCF::detect(const label cellID) const
                 {
                     const vector directionVal =
                         directionFace.minusValueOnFace(localFaceI, gpI);
-                    const scalar beta = directionVal & face.normal();
+                    const scalar beta =
+                        directionVal & directionFace.normals()[localFaceI];
 
                     const scalar qMinus =
                         qFace.minusValueOnFace(localFaceI, gpI).component(cmpt);

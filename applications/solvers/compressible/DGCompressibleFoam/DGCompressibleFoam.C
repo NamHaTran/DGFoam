@@ -107,6 +107,11 @@ int main(int argc, char *argv[])
     // - dgTimeDiscretization manages stage looping and residual updates.
     #include "readSolverSettings.H"
 
+    // Estimate the stable explicit time step before the first stage. This is
+    // especially important for pseudo-LTS because the per-cell increments are
+    // derived from the same calculation.
+    #include "calculateDeltaT.H"
+
     // Each outer iteration is one physical time step.
     while (runTime.run())
     {

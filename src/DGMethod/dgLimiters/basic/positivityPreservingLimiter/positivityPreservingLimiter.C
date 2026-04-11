@@ -330,7 +330,6 @@ void positivityPreservingLimiter::computeThetaCoeffs
 ) const
 {
     const scalar meanRho = densityMean(cellID);
-    const dgGeomCell& cell = *mesh_.cells()[cellID];
 
     const GaussField<scalar>& rhoGF = densityFieldPtr_->gaussFields()[cellID];
     const GaussField<vector>& rhoUGF = momentumFieldPtr_->gaussFields()[cellID];
@@ -343,9 +342,6 @@ void positivityPreservingLimiter::computeThetaCoeffs
     const faceGaussField<scalar>& rhoFace = rhoGF.faceField();
     const faceGaussField<vector>& rhoUFace = rhoUGF.faceField();
     const faceGaussField<scalar>& EFace = EGF.faceField();
-
-    const List<scalar>& cellWeights = cell.weights();
-    const List<scalar>& J3D = cell.J3D();
 
     label nFaceSamples = 0;
 
@@ -363,8 +359,6 @@ void positivityPreservingLimiter::computeThetaCoeffs
         sample.rho = rhoCell[gpI];
         sample.rhoU = rhoUCell[gpI];
         sample.E = ECell[gpI];
-        sample.meanWeight = cellWeights[gpI]*J3D[gpI];
-        sample.contributesToMean = true;
 
         minRho = min(minRho, sample.rho);
         samples.append(sample);
@@ -381,8 +375,6 @@ void positivityPreservingLimiter::computeThetaCoeffs
             sample.rho = rhoFace.minusValueOnFace(localFaceI, gpI);
             sample.rhoU = rhoUFace.minusValueOnFace(localFaceI, gpI);
             sample.E = EFace.minusValueOnFace(localFaceI, gpI);
-            sample.meanWeight = Zero;
-            sample.contributesToMean = false;
 
             minRho = min(minRho, sample.rho);
             samples.append(sample);
@@ -391,8 +383,6 @@ void positivityPreservingLimiter::computeThetaCoeffs
 
     theta1 = thetaCoeff(meanRho, minRho, min(epsilon_, meanRho));
 
-    scalar weightedRhoThermoEnergySum = Zero;
-    scalar totalVolume = Zero;
     scalar minRhoThermoEnergy = GREAT;
 
     forAll(samples, sampleI)
@@ -405,17 +395,12 @@ void positivityPreservingLimiter::computeThetaCoeffs
 
         minRhoThermoEnergy =
             min(minRhoThermoEnergy, rhoThermoEnergy);
-
-        if (sample.contributesToMean)
-        {
-            weightedRhoThermoEnergySum +=
-                sample.meanWeight*rhoThermoEnergy;
-            totalVolume += sample.meanWeight;
-        }
     }
 
+    const vector& meanRhoU = momentumFieldPtr_->dof()[cellID].dof()[0];
+    const scalar meanE = energyFieldPtr_->dof()[cellID].dof()[0];
     const scalar meanRhoThermoEnergy =
-        weightedRhoThermoEnergySum/max(totalVolume, VSMALL);
+        calcRhoThermoEnergy(meanRho, meanRhoU, meanE);
 
     theta2 =
         thetaCoeff

@@ -143,6 +143,15 @@ private:
         /** True once the current physical time step has entered its first stage. */
         bool timeStepStarted_;
 
+        /** Use per-cell pseudo-time increments instead of the global time-step. */
+        Switch localTimeStepping_;
+
+        /** Maximum allowed ratio between local pseudo-time and global minimum time-step. */
+        scalar localTimeStepMaxRatio_;
+
+        /** Per-cell pseudo-time increments used when local time stepping is enabled. */
+        List<scalar> localDeltaT_;
+
         /**
          * Reference scalar residual summaries built from the warmup time steps.
          *
@@ -230,6 +239,44 @@ public:
             return runTime_.deltaTValue();
         }
 
+        /** \brief Return true when pseudo-local time stepping is enabled. */
+        inline bool localTimeStepping() const
+        {
+            return localTimeStepping_;
+        }
+
+        /** \brief Return the maximum local/global pseudo-time-step ratio. */
+        inline scalar localTimeStepMaxRatio() const
+        {
+            return localTimeStepMaxRatio_;
+        }
+
+        /**
+         * \brief Return the time increment used to update one cell.
+         *
+         * With local pseudo-time stepping disabled, this is the global
+         * \c runTime.deltaTValue(). With LTS enabled, this is the capped
+         * per-cell pseudo-time increment.
+         */
+        inline scalar cellDeltaT(const label cellID) const
+        {
+            if (!localTimeStepping_)
+            {
+                return deltaTValue();
+            }
+
+            if (cellID < 0 || cellID >= localDeltaT_.size())
+            {
+                FatalErrorInFunction
+                    << "Cell index " << cellID
+                    << " is out of range for localDeltaT of size "
+                    << localDeltaT_.size() << '.'
+                    << abort(FatalError);
+            }
+
+            return localDeltaT_[cellID];
+        }
+
         /** \brief Return the cached \c ddtSchemes dictionary block. */
         inline const dictionary& dict() const
         {
@@ -283,6 +330,25 @@ public:
         }
 
     // Driver API
+
+        /**
+         * \brief Set a single global explicit time step.
+         *
+         * This updates the OpenFOAM runtime clock step. If local pseudo-time
+         * stepping is enabled, all local increments are also reset to this
+         * global value.
+         */
+        void setDeltaT(const scalar dt);
+
+        /**
+         * \brief Set candidate cell-wise explicit time steps.
+         *
+         * The OpenFOAM runtime clock is set to the global minimum of
+         * \p cellDeltaT. If local pseudo-time stepping is enabled, the
+         * selected time scheme uses the capped per-cell values while the
+         * runtime clock still advances by the global minimum.
+         */
+        void setDeltaT(const List<scalar>& cellDeltaT);
 
         /**
          * \brief Set the current stage index on both the driver and the active scheme.
@@ -405,13 +471,13 @@ public:
         }
 
         /**
-         * \brief Apply one stage update to a single cell using \c runTime.deltaTValue().
+         * \brief Apply one stage update to a single cell using the active time increment.
          *
          * \param cellID Local DG cell index
          */
         inline void updateStage(const label cellID)
         {
-            updateStage(cellID, deltaTValue());
+            updateStage(cellID, cellDeltaT(cellID));
         }
 
         /**
@@ -432,7 +498,7 @@ public:
          */
         inline void finalizeTimeStep(const label cellID)
         {
-            timeScheme_().finalizeTimeStep(cellID, deltaTValue());
+            timeScheme_().finalizeTimeStep(cellID, cellDeltaT(cellID));
         }
 
         /**
@@ -588,6 +654,17 @@ public:
          * \param os Output stream
          */
         void writeInfo(Ostream& os) const;
+
+        /**
+         * \brief Write optional time-discretization parameters.
+         *
+         * Parameters that are inactive or not meaningful are intentionally not
+         * printed. For example, local pseudo-time-stepping options are printed
+         * only when local time stepping is enabled.
+         *
+         * \param os Output stream
+         */
+        void writeParameters(Ostream& os) const;
 
         /**
          * \brief Write the normalized maximum absolute residual of every DOF.

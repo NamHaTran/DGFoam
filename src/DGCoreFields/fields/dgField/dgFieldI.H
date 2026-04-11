@@ -153,36 +153,8 @@ dgField<Type>::cellAverageVolField() const
 
         forAll(weights, gpI)
         {
-            scalar refJacobian = 1.0;
-
-            switch (cell.type())
-            {
-                case dgCellType::HEX:
-                    break;
-
-                case dgCellType::PRISM:
-                    refJacobian =
-                        referenceJacobian::prismRefToHexRef(cell.gaussPoints()[gpI]);
-                    break;
-
-                case dgCellType::PYRAMID:
-                    refJacobian =
-                        referenceJacobian::pyramidRefToHexRef(cell.gaussPoints()[gpI]);
-                    break;
-
-                case dgCellType::TET:
-                    refJacobian =
-                        referenceJacobian::tetRefToHexRef(cell.gaussPoints()[gpI]);
-                    break;
-
-                default:
-                    FatalErrorInFunction
-                        << "Unsupported cell type for cell-average write in cell "
-                        << cellI << nl
-                        << abort(FatalError);
-            }
-
-            const scalar quadWeight = weights[gpI]*J3D[gpI]*refJacobian;
+            // J3D is det(dX/deta), including collapsed-coordinate factors.
+            const scalar quadWeight = weights[gpI]*J3D[gpI];
             integral += cellField[gpI]*quadWeight;
             totalWeight += quadWeight;
         }

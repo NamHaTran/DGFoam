@@ -597,16 +597,50 @@ void Foam::dgGeomFace::computeBasisAndDerivatives()
 
 void Foam::dgGeomFace::computeLameParameters()
 {
-    // Access cell shape
-    const cellShape& ownerShape = mesh_.cellShapes()[ownerId_];
-    pointField ownerCellPoints = ownerShape.points(mesh_.points());
+    const List<vector2D>& gauss2D = refFace_->gaussPoints();
 
-    // Calculate Jacobian 2D at Gauss points
     J2D_.setSize(nGauss_);
 
     for (label gp = 0; gp < nGauss_; ++gp)
     {
-        J2D_[gp] = Foam::geometricJacobian::calcLameParam(ownerCellType_, ownerPos_, gaussPointsOwner_[gp], ownerCellPoints);
+        const scalar eta1 = gauss2D[gp].x();
+        const scalar eta2 = gauss2D[gp].y();
+
+        if (type_ == dgFaceType::TRI)
+        {
+            const scalar a = 0.5*(1.0 + eta1);
+            const scalar b = 0.5*(1.0 + eta2);
+
+            const vector e01 = globalPoints_[1] - globalPoints_[0];
+            const vector e02 = globalPoints_[2] - globalPoints_[0];
+
+            const vector dX_dEta1 = 0.5*(e01 - b*e02);
+            const vector dX_dEta2 = 0.5*(1.0 - a)*e02;
+
+            J2D_[gp] = mag(dX_dEta1 ^ dX_dEta2);
+        }
+        else if (type_ == dgFaceType::QUAD)
+        {
+            const vector dX_dEta1 =
+                -0.25*(1.0 - eta2)*globalPoints_[0]
+              +  0.25*(1.0 - eta2)*globalPoints_[1]
+              +  0.25*(1.0 + eta2)*globalPoints_[2]
+              -  0.25*(1.0 + eta2)*globalPoints_[3];
+
+            const vector dX_dEta2 =
+                -0.25*(1.0 - eta1)*globalPoints_[0]
+              -  0.25*(1.0 + eta1)*globalPoints_[1]
+              +  0.25*(1.0 + eta1)*globalPoints_[2]
+              +  0.25*(1.0 - eta1)*globalPoints_[3];
+
+            J2D_[gp] = mag(dX_dEta1 ^ dX_dEta2);
+        }
+        else
+        {
+            FatalErrorInFunction
+                << "Unsupported face type for 2D Jacobian calculation: "
+                << type_ << abort(FatalError);
+        }
     }
 }
 

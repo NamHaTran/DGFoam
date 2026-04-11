@@ -85,8 +85,6 @@ class positivityPreservingLimiter
             scalar rho;
             vector rhoU;
             scalar E;
-            scalar meanWeight;
-            bool contributesToMean;
         };
 
         /** Name of the density field read from the limiter dictionary. */

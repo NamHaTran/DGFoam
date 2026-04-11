@@ -308,42 +308,13 @@ public:
             const label nDof = refCell_->nDof();
             Foam::SquareMatrix<scalar> M(nDof, Zero);
 
-            const List<vector>& gaussPts = refCell_->gaussPoints();
             const List<scalar>& w = refCell_->weights();
             const List<List<scalar>>& b = refCell_->basis();
 
-            for (label gp = 0; gp < gaussPts.size(); ++gp)
+            forAll(w, gp)
             {
-                scalar refJacobian = 1.0;
-
-                switch (type_)
-                {
-                    case dgCellType::HEX:
-                        break;
-
-                    case dgCellType::PRISM:
-                        refJacobian =
-                            referenceJacobian::prismRefToHexRef(gaussPts[gp]);
-                        break;
-
-                    case dgCellType::PYRAMID:
-                        refJacobian =
-                            referenceJacobian::pyramidRefToHexRef(gaussPts[gp]);
-                        break;
-
-                    case dgCellType::TET:
-                        refJacobian =
-                            referenceJacobian::tetRefToHexRef(gaussPts[gp]);
-                        break;
-
-                    default:
-                        FatalErrorInFunction
-                            << "Unsupported cell type for mass matrix calculation: "
-                            << type_ << nl
-                            << abort(FatalError);
-                }
-
-                const scalar quadWeight = w[gp]*J3D_[gp]*refJacobian;
+                // J3D_ is det(dX/deta), including collapsed-coordinate factors.
+                const scalar quadWeight = w[gp]*J3D_[gp];
 
                 for (label i = 0; i < nDof; ++i)
                 {
@@ -363,42 +334,13 @@ public:
             const label nDof = refCell_->nDof();
             List<scalar> diag(nDof, Zero);
 
-            const List<vector>& gaussPts = refCell_->gaussPoints();
             const List<scalar>& w = refCell_->weights();
             const List<List<scalar>>& b = refCell_->basis();
 
-            for (label gp = 0; gp < gaussPts.size(); ++gp)
+            forAll(w, gp)
             {
-                scalar refJacobian = 1.0;
-
-                switch (type_)
-                {
-                    case dgCellType::HEX:
-                        break;
-
-                    case dgCellType::PRISM:
-                        refJacobian =
-                            referenceJacobian::prismRefToHexRef(gaussPts[gp]);
-                        break;
-
-                    case dgCellType::PYRAMID:
-                        refJacobian =
-                            referenceJacobian::pyramidRefToHexRef(gaussPts[gp]);
-                        break;
-
-                    case dgCellType::TET:
-                        refJacobian =
-                            referenceJacobian::tetRefToHexRef(gaussPts[gp]);
-                        break;
-
-                    default:
-                        FatalErrorInFunction
-                            << "Unsupported cell type for mass matrix diagonal calculation: "
-                            << type_ << nl
-                            << abort(FatalError);
-                }
-
-                const scalar quadWeight = w[gp]*J3D_[gp]*refJacobian;
+                // J3D_ is det(dX/deta), including collapsed-coordinate factors.
+                const scalar quadWeight = w[gp]*J3D_[gp];
 
                 for (label i = 0; i < nDof; ++i)
                 {

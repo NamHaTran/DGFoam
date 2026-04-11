@@ -323,6 +323,9 @@ dgTimeDiscretization::dgTimeDiscretization
     nStage_(0),
     stageI_(0),
     timeStepStarted_(false),
+    localTimeStepping_(false),
+    localTimeStepMaxRatio_(20),
+    localDeltaT_(mesh.nCells(), runTime.deltaTValue()),
     scalarResidualReference_(),
     vectorResidualReference_(),
     residualReferenceWarmupSteps_(5),
@@ -336,6 +339,19 @@ dgTimeDiscretization::dgTimeDiscretization
     }
 
     schemeType_ = ddtSchemeDict_.get<word>("scheme");
+    localTimeStepping_ =
+        ddtSchemeDict_.getOrDefault<Switch>("localTimeStepping", false);
+    localTimeStepMaxRatio_ =
+        ddtSchemeDict_.getOrDefault<scalar>("localTimeStepMaxRatio", 20);
+
+    if (localTimeStepping_ && localTimeStepMaxRatio_ < 1)
+    {
+        FatalIOErrorInFunction(ddtSchemeDict_)
+            << "Entry 'localTimeStepMaxRatio' must be >= 1 when "
+            << "localTimeStepping is enabled, but got "
+            << localTimeStepMaxRatio_ << '.'
+            << exit(FatalIOError);
+    }
 
     dictionary schemeDict(ddtSchemeDict_);
 
@@ -368,7 +384,132 @@ void dgTimeDiscretization::writeInfo(Ostream& os) const
 {
     os  << "dgTimeDiscretization:" << nl
         << "  scheme : " << schemeType_ << nl
-        << "  stages : " << nStage_ << nl << nl;
+        << "  stages : " << nStage_ << nl;
+
+    writeParameters(os);
+
+    os << nl;
+}
+
+
+void dgTimeDiscretization::writeParameters(Ostream& os) const
+{
+    bool wroteHeader = false;
+
+    if (localTimeStepping_)
+    {
+        if (!wroteHeader)
+        {
+            os << "  parameters:" << nl;
+            wroteHeader = true;
+        }
+
+        os  << "    localTimeStepping : enabled" << nl
+            << "    localTimeStepMaxRatio : "
+            << localTimeStepMaxRatio_ << nl;
+    }
+}
+
+
+void dgTimeDiscretization::setDeltaT(const scalar dt)
+{
+    if (dt <= SMALL)
+    {
+        FatalErrorInFunction
+            << "Non-positive deltaT = " << dt
+            << abort(FatalError);
+    }
+
+    runTime_.setDeltaT(dt);
+
+    if (localTimeStepping_)
+    {
+        localDeltaT_.setSize(mesh_.nCells(), dt);
+    }
+}
+
+
+void dgTimeDiscretization::setDeltaT(const List<scalar>& cellDeltaT)
+{
+    if (cellDeltaT.size() != mesh_.nCells())
+    {
+        FatalErrorInFunction
+            << "cellDeltaT size " << cellDeltaT.size()
+            << " does not match the local DG cell count "
+            << mesh_.nCells() << '.'
+            << abort(FatalError);
+    }
+
+    scalar dtMin = GREAT;
+
+    forAll(cellDeltaT, cellI)
+    {
+        const scalar dtCell = cellDeltaT[cellI];
+
+        if (dtCell <= SMALL)
+        {
+            FatalErrorInFunction
+                << "Non-positive candidate cellDeltaT for cell " << cellI
+                << ": " << dtCell
+                << abort(FatalError);
+        }
+
+        dtMin = min(dtMin, dtCell);
+    }
+
+    reduce(dtMin, minOp<scalar>());
+
+    if (dtMin <= SMALL || dtMin == GREAT)
+    {
+        FatalErrorInFunction
+            << "Computed non-positive global deltaT = " << dtMin
+            << abort(FatalError);
+    }
+
+    if (!localTimeStepping_)
+    {
+        runTime_.setDeltaT(dtMin);
+        return;
+    }
+
+    localDeltaT_.setSize(cellDeltaT.size());
+
+    const scalar maxLocalDeltaT =
+        localTimeStepMaxRatio_ < GREAT
+      ? localTimeStepMaxRatio_*dtMin
+      : GREAT;
+
+    scalar localDtMin = GREAT;
+    scalar localDtMax = Zero;
+    scalar localDtSum = Zero;
+    label nLocalDt = localDeltaT_.size();
+
+    forAll(cellDeltaT, cellI)
+    {
+        localDeltaT_[cellI] = min(cellDeltaT[cellI], maxLocalDeltaT);
+        localDtMin = min(localDtMin, localDeltaT_[cellI]);
+        localDtMax = max(localDtMax, localDeltaT_[cellI]);
+        localDtSum += localDeltaT_[cellI];
+    }
+
+    reduce(localDtMin, minOp<scalar>());
+    reduce(localDtMax, maxOp<scalar>());
+    reduce(localDtSum, sumOp<scalar>());
+    reduce(nLocalDt, sumOp<label>());
+
+    if (localDtMin <= SMALL || localDtMin == GREAT)
+    {
+        FatalErrorInFunction
+            << "Computed non-positive localDeltaT minimum = " << localDtMin
+            << abort(FatalError);
+    }
+
+    runTime_.setDeltaT(localDtMin);
+
+    Info<< "localDeltaT min/mean/max = "
+        << localDtMin << " / "
+        << localDtSum/max(scalar(nLocalDt), scalar(1)) << " / "
+        << localDtMax << nl;
 }
 
 

@@ -1,7 +1,8 @@
-if (runTime.isAdjustTimeStep())
+if (runTime.isAdjustTimeStep() || timeDiscretization.localTimeStepping())
 {
-    // Compute a global explicit time step from the current DG state.
-    // The estimate is cell-local, then reduced to the minimum over the whole mesh.
+    // Compute explicit time-step estimates from the current DG state.
+    // dgTimeDiscretization decides whether the selected scheme receives the
+    // global minimum or capped per-cell pseudo-time increments.
     const scalar CFL = runTime.controlDict().getOrDefault<scalar>("maxCo", 0.5);
     const scalar maxDeltaT =
         runTime.controlDict().getOrDefault<scalar>("maxDeltaT", GREAT);
@@ -17,7 +18,7 @@ if (runTime.isAdjustTimeStep())
     // Explicit DG schemes usually tighten the CFL with the polynomial order.
     // Here we use the common (p+1)^2 scaling.
     const scalar pScale = sqr(scalar(dgMesh.pOrder() + 1));
-    scalar dt = GREAT;
+    List<scalar> candidateDeltaT(dgMesh.nCells(), runTime.deltaTValue());
 
     for (label cellI = 0; cellI < dgMesh.nCells(); ++cellI)
     {
@@ -39,19 +40,17 @@ if (runTime.isAdjustTimeStep())
         // contribute to the local time-step estimate.
         const scalar lambdaMax = dg::maxValue(lambdaExpr);
 
-        const scalar dtCell = CFL*h/(pScale*lambdaMax);
-        dt = min(dt, dtCell);
+        if (lambdaMax <= SMALL)
+        {
+            FatalErrorInFunction
+                << "Non-positive maximum wave speed for cell " << cellI
+                << ": lambdaMax = " << lambdaMax
+                << abort(FatalError);
+        }
+
+        const scalar dtCell = min(CFL*h/(pScale*lambdaMax), maxDeltaT);
+        candidateDeltaT[cellI] = dtCell;
     }
 
-    reduce(dt, minOp<scalar>());
-    dt = min(dt, maxDeltaT);
-
-    if (dt <= SMALL)
-    {
-        FatalErrorInFunction
-            << "Computed non-positive deltaT = " << dt
-            << abort(FatalError);
-    }
-
-    runTime.setDeltaT(dt);
+    timeDiscretization.setDeltaT(candidateDeltaT);
 }

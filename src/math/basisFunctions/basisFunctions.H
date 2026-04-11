@@ -99,9 +99,9 @@ inline label getNumBasis(const label pOrder, const dgCellType type)
         // --------------------------------------------------
         case dgCellType::PYRAMID:
         {
-            for (label i = 0; i <= pOrder; ++i)
-                for (label j = 0; j <= pOrder - i; ++j)
-                    for (label k = 0; k <= pOrder - i - j; ++k)
+            for (label k = 0; k <= pOrder; ++k)
+                for (label i = 0; i <= pOrder - k; ++i)
+                    for (label j = 0; j <= pOrder - k; ++j)
                         ++count;
 
             return count;
@@ -469,9 +469,8 @@ inline void computePrismBasisAndDerivatives
  * with index ranges
  *
  * \f[
- *   0 \le i \le p, \qquad
- *   0 \le j \le p-i, \qquad
- *   0 \le k \le p-i-j.
+ *   0 \le k \le p, \qquad
+ *   0 \le i,j \le p-k.
  * \f]
  *
  * where:
@@ -562,34 +561,34 @@ inline void computePyramidBasisAndDerivatives
     label idx = 0;
     const scalar half = 0.5;
 
-    for (label i = 0; i <= pOrder; ++i)
+    for (label k = 0; k <= pOrder; ++k)
     {
-        const scalar Pi  = jacobi(static_cast<unsigned>(i), 0.0, 0.0, eta1);
-        const scalar dPi = jacobi_prime(static_cast<unsigned>(i), 0.0, 0.0, eta1);
-
-        for (label j = 0; j <= pOrder - i; ++j)
+        for (label i = 0; i <= pOrder - k; ++i)
         {
-            const scalar Pj  = jacobi(static_cast<unsigned>(j), 0.0, 0.0, eta2);
-            const scalar dPj = jacobi_prime(static_cast<unsigned>(j), 0.0, 0.0, eta2);
+            const scalar Pi  = jacobi(static_cast<unsigned>(i), 0.0, 0.0, eta1);
+            const scalar dPi = jacobi_prime(static_cast<unsigned>(i), 0.0, 0.0, eta1);
 
-            const label ij = i + j;
-
-            const scalar oneMinusEta3 = 1.0 - eta3;
-
-            // ((1 - eta3)/2)^(i+j)
-            const scalar powTerm =
-                (ij == 0) ? 1.0 :
-                std::pow(oneMinusEta3 * half, ij);
-
-            const scalar dPowTerm_deta3 =
-                (ij == 0) ? 0.0 :
-                -ij * half *
-                std::pow(oneMinusEta3 * half, ij - 1);
-
-            for (label k = 0; k <= pOrder - i - j; ++k)
+            for (label j = 0; j <= pOrder - k; ++j)
             {
+                const scalar Pj  = jacobi(static_cast<unsigned>(j), 0.0, 0.0, eta2);
+                const scalar dPj = jacobi_prime(static_cast<unsigned>(j), 0.0, 0.0, eta2);
+
+                const label ij = i + j;
+
+                const scalar oneMinusEta3 = 1.0 - eta3;
+
+                // ((1 - eta3)/2)^(i+j)
+                const scalar powTerm =
+                    (ij == 0) ? 1.0 :
+                    std::pow(oneMinusEta3 * half, ij);
+
+                const scalar dPowTerm_deta3 =
+                    (ij == 0) ? 0.0 :
+                    -ij * half *
+                    std::pow(oneMinusEta3 * half, ij - 1);
+
                 const scalar alpha =
-                    2.0 * i + 2.0 * j + 2.0;
+                    2.0*ij + 2.0;
 
                 const scalar Pk =
                     jacobi(static_cast<unsigned>(k), alpha, 0.0, eta3);

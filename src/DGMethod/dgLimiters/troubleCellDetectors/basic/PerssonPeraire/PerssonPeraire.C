@@ -85,7 +85,6 @@ List<label> pOrderModeIndices
     switch (cellType)
     {
         case dgCellType::HEX:
-        case dgCellType::PYRAMID:
         case dgCellType::TET:
         {
             for (label i = 0; i <= pOrder; ++i)
@@ -95,6 +94,27 @@ List<label> pOrderModeIndices
                     for (label k = 0; k <= pOrder - i - j; ++k)
                     {
                         if (i + j + k == pOrder)
+                        {
+                            indices.append(modeI);
+                        }
+
+                        ++modeI;
+                    }
+                }
+            }
+
+            break;
+        }
+
+        case dgCellType::PYRAMID:
+        {
+            for (label k = 0; k <= pOrder; ++k)
+            {
+                for (label i = 0; i <= pOrder - k; ++i)
+                {
+                    for (label j = 0; j <= pOrder - k; ++j)
+                    {
+                        if (max(i, j) + k == pOrder)
                         {
                             indices.append(modeI);
                         }

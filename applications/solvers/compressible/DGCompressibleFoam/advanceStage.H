@@ -3,9 +3,8 @@
 forAll(mesh.cells(), cellI)
 {
     // updateStage() pulls the residual buffer for this cell and applies the
-    // active explicit scheme (Euler, RK, SSPRK, ...) to rho/rhoU/E.
-    // dgTimeDiscretization hides all stage coefficients and old-field storage,
-    // so the solver just says "advance this cell one stage".
+    // active explicit scheme (Euler, RK, SSPRK, ...) to rho/rhoU/E. The time
+    // discretization driver selects either global deltaT or local pseudo-deltaT.
     timeDiscretization.updateStage(cellI);
 }
 
