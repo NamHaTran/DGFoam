@@ -48,7 +48,7 @@ Description
     - cellGaussField, faceGaussField, and boundaryGaussField behave much like
       scalar/vector/tensor containers, so many expressions can be written in a
       compact pointwise algebra style.
-    - dgGeneralPDETerm assembles one semi-discrete DG operator for one cell.
+    - dgConvectiveTerm assembles one semi-discrete DG operator for one cell.
     - dgTimeDiscretization drives the explicit stage loop and updates the
       registered conservative fields using the selected time scheme.
 
@@ -65,9 +65,12 @@ Description
 #include "dgCompressibleBoundaryManager.H"
 #include "dgFluxSolverManager.H"
 #include "dgLimiterManager.H"
+#include "dgMassProjection.H"
 #include "dgTimeDiscretization.H"
 #include "dgThermoConservative.H"
-#include "dgGeneralPDETerm.H"
+#include "dgConvectiveTerm.H"
+#include "dgDiffusiveTerm.H"
+#include "dgGradProjectionTerm.H"
 
 
 // Test libs
@@ -127,11 +130,14 @@ int main(int argc, char *argv[])
         {
             // 1) Synchronize stage input fields and impose BCs.
             #include "prepareStageFields.H"
-            // 2) Assemble the semi-discrete DG residual for this stage.
+            // 2) Project conservative gradients and rebuild gradient-derived
+            //    primitive/thermo data for this stage.
+            #include "solveAuxiliaryEqn.H"
+            // 3) Assemble the semi-discrete DG residual for this stage.
             //    This is where dgFoam feels most mathematical: Gauss fields
             //    support pointwise +, -, *, / just like ordinary values.
             #include "assembleStageResiduals.H"
-            // 3) Apply the explicit stage update to the registered fields.
+            // 4) Apply the explicit stage update to the registered fields.
             #include "advanceStage.H"
 
             timeDiscretization.writeResiduals(Info);

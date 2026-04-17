@@ -72,6 +72,26 @@ void dgCompressibleSlipWallBoundaryField::updateGhostState
 }
 
 
+void dgCompressibleSlipWallBoundaryField::updateBCValue
+(
+    const label,
+    const label,
+    const label,
+    const vector& n,
+    const scalar rhoMinus,
+    const vector& rhoUMinus,
+    const scalar EMinus,
+    scalar& rhoBC,
+    vector& rhoUBC,
+    scalar& EBC
+) const
+{
+    rhoBC  = rhoMinus;
+    rhoUBC = rhoUMinus - (n & rhoUMinus)*n;
+    EBC    = EMinus;
+}
+
+
 void dgCompressibleSlipWallBoundaryField::checkPatchType() const
 {
     if (this->patch_.type() != "wall")

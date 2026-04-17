@@ -17,7 +17,7 @@ IOdictionary dgSchemesDict
 );
 
 // fluxSolverManager is the indirection layer that picks the right numerical
-// flux for each equation term when dgGeneralPDETerm asks for a surface flux.
+// flux for each equation term when dgConvectiveTerm asks for a surface flux.
 // This lets the PDE assembly code say "mass term", "momentum term", etc.
 // without hard-wiring Roe/HLLC/Rusanov logic inside the solver.
 dgFluxSolverManager fluxSolverManager
@@ -50,5 +50,16 @@ timeDiscretization.registerField(rho);
 timeDiscretization.registerField(rhoU);
 timeDiscretization.registerField(E);
 
+// Auxiliary mass projection for conservative gradients
+//     S = grad(C), C = (rho, rhoU, E).
+// The fields are solved algebraically each stage before flux assembly and are
+// not time-advanced by dgTimeDiscretization.
+dgMassProjection massProjection(dgMesh);
+
+massProjection.registerField(SRho);
+massProjection.registerField(SRhoU);
+massProjection.registerField(SE);
+
 timeDiscretization.writeInfo(Info);
+massProjection.writeInfo(Info);
 limiterManager.listLimiters(Info);

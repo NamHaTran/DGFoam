@@ -47,3 +47,48 @@ dgField<scalar> E
     dgMesh,
     true
 );
+
+// Conservative gradients S = grad(C), with C = (rho, rhoU, E).
+// These auxiliary DG fields own DoFs but are initialized to zero and kept out
+// of run-time I/O.
+dgField<vector> SRho
+(
+    IOobject
+    (
+        "SRho",
+        runTime.timeName(),
+        mesh,
+        IOobject::NO_READ,
+        IOobject::NO_WRITE
+    ),
+    dgMesh,
+    true
+);
+
+dgField<tensor> SRhoU
+(
+    IOobject
+    (
+        "SRhoU",
+        runTime.timeName(),
+        mesh,
+        IOobject::NO_READ,
+        IOobject::NO_WRITE
+    ),
+    dgMesh,
+    true
+);
+
+dgField<vector> SE
+(
+    IOobject
+    (
+        "SE",
+        runTime.timeName(),
+        mesh,
+        IOobject::NO_READ,
+        IOobject::NO_WRITE
+    ),
+    dgMesh,
+    true
+);

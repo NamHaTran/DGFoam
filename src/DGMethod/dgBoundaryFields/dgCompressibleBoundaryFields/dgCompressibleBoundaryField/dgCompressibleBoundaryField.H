@@ -61,6 +61,8 @@ class dgThermoConservative;
  * Defines the common interface used to compute conservative ghost states
  * \f$(\rho, \rho \mathbf{U}, E)^+\f$ from interior states at boundary-face
  * Gauss points.
+ * It also exposes a matching per-Gauss-point interface for prescribed
+ * middle-state values stored in faceGaussField::midValues().
  *
  * The class stores patch, DG mesh, and thermodynamic references and provides
  * helper conversions from primitive or pressure-Mach-temperature data to the
@@ -155,6 +157,25 @@ public:
         rhoPlus  = rhoMinus;
         rhoUPlus = rhoUMinus;
         EPlus    = EMinus;
+    }
+
+    virtual void updateBCValue
+    (
+        const label cellID,
+        const label faceLocalID,
+        const label localGauss,
+        const vector& n,
+        const scalar rhoMinus,
+        const vector& rhoUMinus,
+        const scalar EMinus,
+        scalar& rhoBC,
+        vector& rhoUBC,
+        scalar& EBC
+    ) const
+    {
+        rhoBC  = rhoMinus;
+        rhoUBC = rhoUMinus;
+        EBC    = EMinus;
     }
 
     virtual void checkPatchType() const {}

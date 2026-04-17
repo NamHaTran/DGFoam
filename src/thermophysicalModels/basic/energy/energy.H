@@ -50,6 +50,7 @@ SourceFiles
 #include "dgGeomMesh.H"
 #include "dgMath.H"
 #include "thermoLaw.H"
+#include "vector.H"
 
 namespace Foam
 {
@@ -182,6 +183,19 @@ public:
     virtual scalar calcHe(const scalar T) const = 0;
 
     virtual scalar calcTfromHe(const scalar he) const = 0;
+
+    /**
+     * \brief Compute \f$\nabla T\f$ from the stored energy gradient.
+     *
+     * The default implementation uses finite differences of \c calcTfromHe().
+     * Derived energy models should override this with an analytic expression
+     * when available.
+     */
+    virtual vector calcGradTfromHe
+    (
+        const scalar he,
+        const vector& gradHe
+    ) const;
 
     /**
      * \brief Compute enthalpy from temperature

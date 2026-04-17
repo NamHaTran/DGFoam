@@ -156,11 +156,12 @@ void dgCompressibleBoundaryManager::initializeConservatives
 }
 
 
-void dgCompressibleBoundaryManager::updateValue
+void dgCompressibleBoundaryManager::update
 (
     GaussField<scalar>& rhoG,
     GaussField<vector>& rhoUG,
-    GaussField<scalar>& EG
+    GaussField<scalar>& EG,
+    GaussField<vector>& UG
 ) const
 {
     const label cellID = rhoG.cellID();
@@ -168,6 +169,7 @@ void dgCompressibleBoundaryManager::updateValue
     faceGaussField<scalar>& rhoFace = rhoG.faceField();
     faceGaussField<vector>& rhoUFace = rhoUG.faceField();
     faceGaussField<scalar>& EFace = EG.faceField();
+    faceGaussField<vector>& UFace = UG.faceField();
 
     for (label faceI = 0; faceI < rhoFace.nFaces(); ++faceI)
     {
@@ -200,6 +202,24 @@ void dgCompressibleBoundaryManager::updateValue
                 rhoFace.plusValueOnFace(faceI, g),
                 rhoUFace.plusValueOnFace(faceI, g),
                 EFace.plusValueOnFace(faceI, g)
+            );
+
+            UFace.plusValueOnFace(faceI, g) =
+                rhoUFace.plusValueOnFace(faceI, g)
+               /rhoFace.plusValueOnFace(faceI, g);
+
+            bConditions_[conditionI]->updateBCValue
+            (
+                cellID,
+                faceI,
+                g,
+                n,
+                rhoFace.minusValueOnFace(faceI, g),
+                rhoUFace.minusValueOnFace(faceI, g),
+                EFace.minusValueOnFace(faceI, g),
+                rhoFace.midValueOnFace(faceI, g),
+                rhoUFace.midValueOnFace(faceI, g),
+                EFace.midValueOnFace(faceI, g)
             );
         }
     }

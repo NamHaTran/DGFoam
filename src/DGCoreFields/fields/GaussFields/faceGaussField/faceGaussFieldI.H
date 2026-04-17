@@ -65,6 +65,7 @@ faceGaussField<Type>::faceGaussField()
     faceAreas_(),
     plusValues_(),
     minusValues_(),
+    midValues_(),
     flux_()
 {}
 
@@ -125,8 +126,10 @@ faceGaussField<Type>::faceGaussField
 
     plusValues_.setSize(nGauss_);
     minusValues_.setSize(nGauss_);
+    midValues_.setSize(nGauss_);
 
     interpolateFromDof();
+    midValues_ = plusValues_;
 }
 
 
@@ -183,6 +186,7 @@ faceGaussField<Type>::faceGaussField
 
     plusValues_.setSize(nGauss_, initVal);
     minusValues_.setSize(nGauss_, initVal);
+    midValues_.setSize(nGauss_, initVal);
 }
 
 
@@ -238,6 +242,7 @@ faceGaussField<Type>::faceGaussField
 
     plusValues_.setSize(nGauss_);
     minusValues_.setSize(nGauss_);
+    midValues_.setSize(nGauss_, pTraits<Type>::zero);
 }
 
 
@@ -265,6 +270,7 @@ faceGaussField<Type>::faceGaussField
     faceAreas_(other.faceAreas_),
     plusValues_(other.plusValues_),
     minusValues_(other.minusValues_),
+    midValues_(other.midValues_),
     flux_(other.flux_)
 {}
 
@@ -292,6 +298,7 @@ faceGaussField<Type>::faceGaussField
     faceAreas_(std::move(other.faceAreas_)),
     plusValues_(std::move(other.plusValues_)),
     minusValues_(std::move(other.minusValues_)),
+    midValues_(std::move(other.midValues_)),
     flux_(std::move(other.flux_))
 {}
 
@@ -514,6 +521,81 @@ void Foam::faceGaussField<Type>::assignBCGhostState
 }
 
 
+template<class Type>
+boundaryGaussField<Type> Foam::faceGaussField<Type>::extractMidValue() const
+{
+    label nBoundaryGauss = 0;
+
+    for (label faceI = 0; faceI < nFaces_; ++faceI)
+    {
+        if (isBoundary(faceI))
+        {
+            nBoundaryGauss += nGaussPerFace_;
+        }
+    }
+
+    boundaryGaussField<Type> bgf(nBoundaryGauss);
+
+    label bgi = 0;
+
+    for (label faceI = 0; faceI < nFaces_; ++faceI)
+    {
+        if (!isBoundary(faceI))
+        {
+            continue;
+        }
+
+        for (label gI = 0; gI < nGaussPerFace_; ++gI)
+        {
+            bgf[bgi++] = midValueOnFace(faceI, gI);
+        }
+    }
+
+    return bgf;
+}
+
+
+template<class Type>
+void Foam::faceGaussField<Type>::assignMidValue
+(
+    const boundaryGaussField<Type>& bgf
+)
+{
+    label expectedSize = 0;
+
+    for (label faceI = 0; faceI < nFaces_; ++faceI)
+    {
+        if (isBoundary(faceI))
+        {
+            expectedSize += nGaussPerFace_;
+        }
+    }
+
+    if (bgf.size() != expectedSize)
+    {
+        FatalErrorInFunction
+            << "boundaryGaussField size mismatch for cell " << cellID_ << nl
+            << "Expected " << expectedSize << " values but received "
+            << bgf.size() << abort(FatalError);
+    }
+
+    label bgi = 0;
+
+    for (label faceI = 0; faceI < nFaces_; ++faceI)
+    {
+        if (!isBoundary(faceI))
+        {
+            continue;
+        }
+
+        for (label gI = 0; gI < nGaussPerFace_; ++gI)
+        {
+            midValueOnFace(faceI, gI) = bgf[bgi++];
+        }
+    }
+}
+
+
 // Assignment operator
 template<class Type>
 inline faceGaussField<Type>& faceGaussField<Type>::operator=
@@ -540,6 +622,7 @@ inline faceGaussField<Type>& faceGaussField<Type>::operator=
     faceAreas_     = other.faceAreas_;
     plusValues_    = other.plusValues_;
     minusValues_   = other.minusValues_;
+    midValues_     = other.midValues_;
     flux_          = other.flux_;
 
     return *this;
@@ -572,6 +655,7 @@ inline faceGaussField<Type>& faceGaussField<Type>::operator=
         faceAreas_     = std::move(other.faceAreas_);
         plusValues_    = std::move(other.plusValues_);
         minusValues_   = std::move(other.minusValues_);
+        midValues_     = std::move(other.midValues_);
         flux_          = std::move(other.flux_);
     }
 
@@ -609,6 +693,7 @@ inline faceGaussField<Type>& faceGaussField<Type>::operator=
     {
         plusValues_[i] = v; 
         minusValues_[i] = v;
+        midValues_[i] = v;
     }
     return *this;
 }

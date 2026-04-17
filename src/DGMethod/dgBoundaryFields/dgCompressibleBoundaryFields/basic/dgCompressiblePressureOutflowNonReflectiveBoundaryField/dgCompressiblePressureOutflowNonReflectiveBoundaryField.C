@@ -107,6 +107,42 @@ void dgCompressiblePressureOutflowNonReflectiveBoundaryField::updateGhostState
 }
 
 
+void dgCompressiblePressureOutflowNonReflectiveBoundaryField::updateBCValue
+(
+    const label cellID,
+    const label,
+    const label,
+    const vector& n,
+    const scalar rhoMinus,
+    const vector& rhoUMinus,
+    const scalar EMinus,
+    scalar& rhoBC,
+    vector& rhoUBC,
+    scalar& EBC
+) const
+{
+    const scalar rhoMinusSafe = max(rhoMinus, scalar(SMALL));
+    const vector UMinus = rhoUMinus/rhoMinusSafe;
+    const scalar kMinus = 0.5*magSqr(UMinus);
+    const scalar heMinus = EMinus/rhoMinusSafe - kMinus;
+    const scalar aMinus =
+        max(thermo_.calcSpeedOfSoundFromRhoHe(cellID, rhoMinusSafe, heMinus), scalar(SMALL));
+    const scalar machMinus = mag(n & UMinus)/aMinus;
+
+    if (machMinus >= subsonicMachThreshold_)
+    {
+        rhoBC = rhoMinus;
+        rhoUBC = rhoUMinus;
+        EBC = EMinus;
+        return;
+    }
+
+    rhoBC = rhoMinus;
+    rhoUBC = rhoUMinus;
+    EBC = pressureVelocityToConservativeEnergy(pValue_, rhoMinusSafe, UMinus);
+}
+
+
 void dgCompressiblePressureOutflowNonReflectiveBoundaryField::checkPatchType() const
 {
     if (this->patch_.type() != "patch")

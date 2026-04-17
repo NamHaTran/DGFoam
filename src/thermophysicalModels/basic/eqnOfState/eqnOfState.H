@@ -322,6 +322,46 @@ public:
         return Zero;
     }
 
+    /**
+     * \brief Compute \f$\nabla p\f$ from \f$p(\rho,T)\f$.
+     *
+     * The base implementation finite-differences the pointwise EOS relation.
+     * Derived EOS models should override this when analytic derivatives are
+     * available.
+     */
+    virtual vector calcGradPFromRhoT
+    (
+        const scalar rho,
+        const scalar T,
+        const vector& gradRho,
+        const vector& gradT
+    ) const;
+
+    /**
+     * \brief Compute \f$\nabla T\f$ from \f$T(\rho,e)\f$.
+     *
+     * The base implementation finite-differences the pointwise EOS relation.
+     * Here \c e is the specific internal energy and \c gradE is its gradient.
+     */
+    virtual vector calcGradTFromRhoE
+    (
+        const scalar rho,
+        const scalar e,
+        const vector& gradRho,
+        const vector& gradE
+    ) const;
+
+    /**
+     * \brief Compute \f$\nabla p\f$ from \f$p(\rho,e)\f$.
+     */
+    virtual vector calcGradPFromRhoE
+    (
+        const scalar rho,
+        const scalar e,
+        const vector& gradRho,
+        const vector& gradE
+    ) const;
+
     //====================================================================//
     //           Fundamental thermodynamic relations (Gauss fields)
     //

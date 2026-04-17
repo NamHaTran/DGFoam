@@ -186,6 +186,14 @@ public:
          * \param cellID Cell index
          */
         virtual void updateBC(const label& cellID) override;
+
+        /**
+         * \brief Update pressure and temperature gradients for a given cell.
+         *
+         * Uses conservative gradients and the externally computed velocity
+         * gradient to reconstruct \f$\nabla T\f$ and \f$\nabla p\f$.
+         */
+        virtual void updateGradient(const label& cellID) override;
 };
 
 } // End namespace Foam

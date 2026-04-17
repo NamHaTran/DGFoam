@@ -48,6 +48,7 @@ SourceFiles
 #include "List.H"
 #include "scalar.H"
 #include "vector.H"
+#include "tensor.H"
 #include "Ostream.H"
 #include "eqnOfState.H"
 #include "thermoLaw.H"
@@ -150,6 +151,15 @@ protected:
         /** Conservative total energy field (read-only) */
         const dgField<scalar>& E_;
 
+        /** Conservative density gradient field (read-only) */
+        const dgField<vector>& SRho_;
+
+        /** Conservative momentum gradient field (read-only) */
+        const dgField<tensor>& SRhoU_;
+
+        /** Conservative total energy gradient field (read-only) */
+        const dgField<vector>& SE_;
+
         /** Velocity field (output storage) */
         dgField<vector>& U_;
 
@@ -158,6 +168,15 @@ protected:
 
         /** Temperature field (output storage) */
         dgField<scalar>& T_;
+
+        /** Velocity-gradient field computed outside thermo (read-only) */
+        const dgField<tensor>& gradU_;
+
+        /** Pressure-gradient field (output storage) */
+        dgField<vector>& gradP_;
+
+        /** Temperature-gradient field (output storage) */
+        dgField<vector>& gradT_;
 
         /** Cached cell-wise mean temperature used as fallback for negative T. */
         List<scalar> TMean_;
@@ -278,9 +297,23 @@ public:
         virtual void updateBC(const label& cellID) = 0;
 
         /**
+         * \brief Update pressure and temperature gradients for a cell.
+         *
+         * Velocity gradients are supplied by the solver through \c gradU.
+         * Concrete thermo models own the chain-rule details for their state
+         * variables and selected sub-models.
+         */
+        virtual void updateGradient(const label& cellID) = 0;
+
+        /**
          * \brief Synchronize thermo-owned scalar fields across processor faces
          */
         void synch();
+
+        /**
+         * \brief Synchronize thermo-computed gradient fields.
+         */
+        void synchGradient();
 
         /**
          * \brief Write model data
@@ -399,6 +432,32 @@ public:
         /** Return velocity field */
         inline dgField<vector>& U() { return U_; }
         inline const dgField<vector>& U() const { return U_; }
+
+        /** Return conservative density-gradient field */
+        inline const dgField<vector>& SRho() const { return SRho_; }
+
+        /** Return conservative density-gradient field */
+        inline const dgField<vector>& Srho() const { return SRho_; }
+
+        /** Return conservative momentum-gradient field */
+        inline const dgField<tensor>& SRhoU() const { return SRhoU_; }
+
+        /** Return conservative momentum-gradient field */
+        inline const dgField<tensor>& SrhoU() const { return SRhoU_; }
+
+        /** Return conservative total-energy-gradient field */
+        inline const dgField<vector>& SE() const { return SE_; }
+
+        /** Return velocity-gradient field */
+        inline const dgField<tensor>& gradU() const { return gradU_; }
+
+        /** Return pressure-gradient field */
+        inline dgField<vector>& gradP() { return gradP_; }
+        inline const dgField<vector>& gradP() const { return gradP_; }
+
+        /** Return temperature-gradient field */
+        inline dgField<vector>& gradT() { return gradT_; }
+        inline const dgField<vector>& gradT() const { return gradT_; }
 };
 
 } // End namespace Foam

@@ -419,6 +419,36 @@ scalar pengRobinson::calcAFromRhoE
     return std::sqrt(max(chi + kappa*h, SMALL));
 }
 
+
+vector pengRobinson::calcGradPFromRhoT
+(
+    const scalar rho,
+    const scalar T,
+    const vector& gradRho,
+    const vector& gradT
+) const
+{
+    const scalar rhoSafe = max(rho, SMALL);
+    const scalar TSafe = max(T, SMALL);
+    const scalar denom = 1.0/(rhoSafe*rhoSafe)
+        + 2.0*bCoeff_/rhoSafe
+        - bCoeff_*bCoeff_;
+    const scalar alphaT = alpha(TSafe);
+    const scalar sqrtAlpha = std::sqrt(alphaT);
+
+    const scalar dPdrhoT =
+        R_*TSafe/sqr(1.0 - bCoeff_*rhoSafe)
+      - 2.0*aCoeff_*alphaT*rhoSafe*(1.0 + bCoeff_*rhoSafe)
+       /sqr(max(denom*rhoSafe*rhoSafe, SMALL));
+
+    const scalar dPdT =
+        R_/(1.0/rhoSafe - bCoeff_)
+      + aCoeff_*fw_*sqrtAlpha
+       /(std::sqrt(max(TSafe*Tc_, SMALL))*max(denom, SMALL));
+
+    return dPdrhoT*gradRho + dPdT*gradT;
+}
+
 } // End namespace Foam
 
 // ************************************************************************* //

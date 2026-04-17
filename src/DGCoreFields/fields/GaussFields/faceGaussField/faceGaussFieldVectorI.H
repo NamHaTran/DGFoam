@@ -43,6 +43,7 @@ inline faceGaussField<scalar> faceGaussField<vector>::x() const
     {
         result.plusValueAt(i)  = plusValues_[i].x();
         result.minusValueAt(i) = minusValues_[i].x();
+        result.midValueAt(i)   = midValues_[i].x();
     }
     return result;
 }
@@ -55,6 +56,7 @@ inline faceGaussField<scalar> faceGaussField<vector>::y() const
     {
         result.plusValueAt(i)  = plusValues_[i].y();
         result.minusValueAt(i) = minusValues_[i].y();
+        result.midValueAt(i)   = midValues_[i].y();
     }
     return result;
 }
@@ -67,6 +69,7 @@ inline faceGaussField<scalar> faceGaussField<vector>::z() const
     {
         result.plusValueAt(i)  = plusValues_[i].z();
         result.minusValueAt(i) = minusValues_[i].z();
+        result.midValueAt(i)   = midValues_[i].z();
     }
     return result;
 }
@@ -86,6 +89,7 @@ inline void faceGaussField<vector>::setX(const faceGaussField<scalar>& fx)
     {
         plusValues_[i].x()  = fx.plusValue(i);
         minusValues_[i].x() = fx.minusValue(i);
+        midValues_[i].x()   = fx.midValue(i);
     }
 }
 
@@ -104,6 +108,7 @@ inline void faceGaussField<vector>::setY(const faceGaussField<scalar>& fy)
     {
         plusValues_[i].y()  = fy.plusValue(i);
         minusValues_[i].y() = fy.minusValue(i);
+        midValues_[i].y()   = fy.midValue(i);
     }
 }
 
@@ -122,6 +127,7 @@ inline void faceGaussField<vector>::setZ(const faceGaussField<scalar>& fz)
     {
         plusValues_[i].z()  = fz.plusValue(i);
         minusValues_[i].z() = fz.minusValue(i);
+        midValues_[i].z()   = fz.midValue(i);
     }
 }
 
@@ -154,6 +160,7 @@ inline void faceGaussField<vector>::setXYZ
     {
         plusValues_[i]  = vector(fx.plusValue(i),  fy.plusValue(i),  fz.plusValue(i));
         minusValues_[i] = vector(fx.minusValue(i), fy.minusValue(i), fz.minusValue(i));
+        midValues_[i]   = vector(fx.midValue(i),   fy.midValue(i),   fz.midValue(i));
     }
 }
 
@@ -248,4 +255,3 @@ inline void faceGaussField<vector>::limitRange
 } // namespace Foam
 
 // ************************************************************************* //
-

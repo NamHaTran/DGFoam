@@ -32,6 +32,13 @@ License
 
 namespace Foam
 {
+namespace
+{
+scalar finiteDifferenceStep(const scalar value)
+{
+    return max(1e-6*max(mag(value), scalar(1)), scalar(1e-12));
+}
+}
 
 defineTypeNameAndDebug(energy, 0);
 defineRunTimeSelectionTable(energy, dictionary);
@@ -84,6 +91,20 @@ autoPtr<energy> energy::New(const word& name, const dictionary& dict, const dgGe
     }
 
     return cstrIter()(name, dict, mesh, thermo);
+}
+
+
+vector energy::calcGradTfromHe
+(
+    const scalar he,
+    const vector& gradHe
+) const
+{
+    const scalar h = finiteDifferenceStep(he);
+    const scalar dTdHe =
+        (calcTfromHe(he + h) - calcTfromHe(he - h))/(2.0*h);
+
+    return dTdHe*gradHe;
 }
 
 

@@ -88,7 +88,10 @@ public:
         energyTransport,
 
         /** Scalar transport equation */
-        scalarTransport
+        scalarTransport,
+
+        /** Auxiliary equation, e.g. projection equations */
+        auxiliaryEqn
     };
 
 protected:
@@ -264,6 +267,8 @@ public:
                 os << "energyTransport"; break;
             case dgFluxSolver::equationType::scalarTransport:
                 os << "scalarTransport"; break;
+            case dgFluxSolver::equationType::auxiliaryEqn:
+                os << "auxiliaryEqn"; break;
             default:
                 os << "UnknownEquationType"; break;
         }

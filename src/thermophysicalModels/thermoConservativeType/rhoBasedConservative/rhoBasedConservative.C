@@ -37,6 +37,47 @@ License
 
 namespace Foam
 {
+namespace
+{
+scalar safeDensity(const scalar rho)
+{
+    return mag(rho) > VSMALL ? rho : (rho >= 0 ? VSMALL : -VSMALL);
+}
+
+
+vector gradKineticEnergy
+(
+    const vector& U,
+    const tensor& gradU
+)
+{
+    return vector
+    (
+        U.x()*gradU.xx() + U.y()*gradU.yx() + U.z()*gradU.zx(),
+        U.x()*gradU.xy() + U.y()*gradU.yy() + U.z()*gradU.zy(),
+        U.x()*gradU.xz() + U.y()*gradU.yz() + U.z()*gradU.zz()
+    );
+}
+
+
+vector gradSpecificInternalEnergy
+(
+    const scalar rho,
+    const vector& U,
+    const scalar E,
+    const vector& gradRho,
+    const tensor& gradU,
+    const vector& gradE
+)
+{
+    const scalar rhoSafe = safeDensity(rho);
+
+    return
+        gradE/rhoSafe
+      - (E/sqr(rhoSafe))*gradRho
+      - gradKineticEnergy(U, gradU);
+}
+}
 
 // * * * * * * * * * * * * * Static Data Members * * * * * * * * * * * * * * //
 
@@ -360,6 +401,220 @@ void Foam::rhoBasedConservative::update(const label& cellI)
                 aFace.plusValueOnFace(localFaceI, gpI) =
                     thermo().calcSpeedOfSound(TPlus, gamma);
             }
+        }
+    }
+}
+
+
+void Foam::rhoBasedConservative::updateGradient(const label& cellI)
+{
+    // Step 1: gather the already-reconstructed primitive/thermal state.
+    // rho/E are conservative inputs, while U/T/he were refreshed earlier by
+    // update(). This function assumes that sequence has already happened.
+    const GaussField<scalar>& rhoG = rho_.gaussFields()[cellI];
+    const GaussField<scalar>& EG = E_.gaussFields()[cellI];
+    const GaussField<vector>& UG = U_.gaussFields()[cellI];
+    const GaussField<scalar>& TG = T_.gaussFields()[cellI];
+    const GaussField<scalar>& heG = he_.gaussFields()[cellI];
+
+    // Step 2: gather the gradient inputs. The conservative gradients
+    // SRho/SE come from the conservative solution, and gradU is intentionally
+    // computed outside thermo so the thermo layer only applies thermodynamic
+    // chain rules.
+    const GaussField<vector>& SRhoG = SRho_.gaussFields()[cellI];
+    const GaussField<vector>& SEG = SE_.gaussFields()[cellI];
+    const GaussField<tensor>& gradUG = gradU_.gaussFields()[cellI];
+
+    // Step 3: get writable storage for the thermo-derived gradients.
+    // updateGradient() owns only gradP and gradT; it does not modify gradU or
+    // the conservative gradients.
+    GaussField<vector>& gradPG = gradP_.gaussFields()[cellI];
+    GaussField<vector>& gradTG = gradT_.gaussFields()[cellI];
+
+    // Step 4: work on interior Gauss points first. These views avoid repeated
+    // cellField() lookups in the point loop below.
+    const cellGaussField<scalar>& rhoCell = rhoG.cellField();
+    const cellGaussField<scalar>& ECell = EG.cellField();
+    const cellGaussField<vector>& UCell = UG.cellField();
+    const cellGaussField<scalar>& TCell = TG.cellField();
+    const cellGaussField<scalar>& heCell = heG.cellField();
+    const cellGaussField<vector>& SRhoCell = SRhoG.cellField();
+    const cellGaussField<vector>& SECell = SEG.cellField();
+    const cellGaussField<tensor>& gradUCell = gradUG.cellField();
+
+    cellGaussField<vector>& gradPCell = gradPG.cellField();
+    cellGaussField<vector>& gradTCell = gradTG.cellField();
+
+    // Step 5: reconstruct gradients at cell-interior Gauss points.
+    //
+    // For rhoBasedConservative the stored thermal energy is the specific
+    // internal energy
+    //
+    //     he = E/rho - 0.5*magSqr(U)
+    //
+    // so its gradient is obtained from conservative gradients plus the
+    // externally supplied velocity gradient. Once grad(he) is known, the
+    // selected EOS/energy model maps it to grad(T), then EOS maps
+    // (rho, T, grad(rho), grad(T)) to grad(p).
+    for (label gpI = 0; gpI < heCell.size(); ++gpI)
+    {
+        // Step 5a: apply the conservative-to-internal-energy chain rule.
+        const vector gradHe =
+            gradSpecificInternalEnergy
+            (
+                rhoCell[gpI],
+                UCell[gpI],
+                ECell[gpI],
+                SRhoCell[gpI],
+                gradUCell[gpI],
+                SECell[gpI]
+            );
+
+        if (heIsInternalEnergy() && eos().canCalcTFromRhoE())
+        {
+            // Step 5b-1: real-gas or EOS-owned caloric closures can provide
+            // grad(T) directly from T(rho, he).
+            gradTCell[gpI] =
+                eos().calcGradTFromRhoE
+                (
+                    rhoCell[gpI],
+                    heCell[gpI],
+                    SRhoCell[gpI],
+                    gradHe
+                );
+        }
+        else
+        {
+            // Step 5b-2: otherwise use the energy model relation T(he).
+            // The base energy API falls back to finite differences when a
+            // concrete model has no analytic implementation.
+            gradTCell[gpI] =
+                energyModel().calcGradTfromHe(heCell[gpI], gradHe);
+        }
+
+        // Step 5c: pressure is always differentiated through p(rho, T).
+        // EOS models with explicit derivatives override this hook; the base
+        // EOS implementation provides a finite-difference fallback.
+        gradPCell[gpI] =
+            eos().calcGradPFromRhoT
+            (
+                rhoCell[gpI],
+                TCell[gpI],
+                SRhoCell[gpI],
+                gradTCell[gpI]
+            );
+    }
+
+    // Step 6: repeat the same chain-rule reconstruction on face Gauss data.
+    // Both minus and plus traces are updated because viscous/gradient-aware
+    // fluxes may read either side of an internal or processor face.
+    const faceGaussField<scalar>& rhoFace = rhoG.faceField();
+    const faceGaussField<scalar>& EFace = EG.faceField();
+    const faceGaussField<vector>& UFace = UG.faceField();
+    const faceGaussField<scalar>& TFace = TG.faceField();
+    const faceGaussField<scalar>& heFace = heG.faceField();
+    const faceGaussField<vector>& SRhoFace = SRhoG.faceField();
+    const faceGaussField<vector>& SEFace = SEG.faceField();
+    const faceGaussField<tensor>& gradUFace = gradUG.faceField();
+
+    faceGaussField<vector>& gradPFace = gradPG.faceField();
+    faceGaussField<vector>& gradTFace = gradTG.faceField();
+
+    for (label localFaceI = 0; localFaceI < heFace.nFaces(); ++localFaceI)
+    {
+        for (label gpI = 0; gpI < heFace.nGaussPerFace(); ++gpI)
+        {
+            // Step 6a: minus-side trace owned by the current cell.
+            const vector gradHeMinus =
+                gradSpecificInternalEnergy
+                (
+                    rhoFace.minusValueOnFace(localFaceI, gpI),
+                    UFace.minusValueOnFace(localFaceI, gpI),
+                    EFace.minusValueOnFace(localFaceI, gpI),
+                    SRhoFace.minusValueOnFace(localFaceI, gpI),
+                    gradUFace.minusValueOnFace(localFaceI, gpI),
+                    SEFace.minusValueOnFace(localFaceI, gpI)
+                );
+
+            if (heIsInternalEnergy() && eos().canCalcTFromRhoE())
+            {
+                // Step 6b: convert minus-side grad(he) to grad(T).
+                gradTFace.minusValueOnFace(localFaceI, gpI) =
+                    eos().calcGradTFromRhoE
+                    (
+                        rhoFace.minusValueOnFace(localFaceI, gpI),
+                        heFace.minusValueOnFace(localFaceI, gpI),
+                        SRhoFace.minusValueOnFace(localFaceI, gpI),
+                        gradHeMinus
+                    );
+            }
+            else
+            {
+                // Step 6b fallback path for models where T is supplied by
+                // the energy model instead of the EOS.
+                gradTFace.minusValueOnFace(localFaceI, gpI) =
+                    energyModel().calcGradTfromHe
+                    (
+                        heFace.minusValueOnFace(localFaceI, gpI),
+                        gradHeMinus
+                    );
+            }
+
+            // Step 6c: convert minus-side grad(rho), grad(T) to grad(p).
+            gradPFace.minusValueOnFace(localFaceI, gpI) =
+                eos().calcGradPFromRhoT
+                (
+                    rhoFace.minusValueOnFace(localFaceI, gpI),
+                    TFace.minusValueOnFace(localFaceI, gpI),
+                    SRhoFace.minusValueOnFace(localFaceI, gpI),
+                    gradTFace.minusValueOnFace(localFaceI, gpI)
+                );
+
+            // Step 6d: plus-side trace. On internal/processor faces this is
+            // the neighbour trace already stored in the faceGaussField.
+            const vector gradHePlus =
+                gradSpecificInternalEnergy
+                (
+                    rhoFace.plusValueOnFace(localFaceI, gpI),
+                    UFace.plusValueOnFace(localFaceI, gpI),
+                    EFace.plusValueOnFace(localFaceI, gpI),
+                    SRhoFace.plusValueOnFace(localFaceI, gpI),
+                    gradUFace.plusValueOnFace(localFaceI, gpI),
+                    SEFace.plusValueOnFace(localFaceI, gpI)
+                );
+
+            if (heIsInternalEnergy() && eos().canCalcTFromRhoE())
+            {
+                // Step 6e: convert plus-side grad(he) to grad(T).
+                gradTFace.plusValueOnFace(localFaceI, gpI) =
+                    eos().calcGradTFromRhoE
+                    (
+                        rhoFace.plusValueOnFace(localFaceI, gpI),
+                        heFace.plusValueOnFace(localFaceI, gpI),
+                        SRhoFace.plusValueOnFace(localFaceI, gpI),
+                        gradHePlus
+                    );
+            }
+            else
+            {
+                // Step 6e fallback path through the energy model.
+                gradTFace.plusValueOnFace(localFaceI, gpI) =
+                    energyModel().calcGradTfromHe
+                    (
+                        heFace.plusValueOnFace(localFaceI, gpI),
+                        gradHePlus
+                    );
+            }
+
+            // Step 6f: convert plus-side grad(rho), grad(T) to grad(p).
+            gradPFace.plusValueOnFace(localFaceI, gpI) =
+                eos().calcGradPFromRhoT
+                (
+                    rhoFace.plusValueOnFace(localFaceI, gpI),
+                    TFace.plusValueOnFace(localFaceI, gpI),
+                    SRhoFace.plusValueOnFace(localFaceI, gpI),
+                    gradTFace.plusValueOnFace(localFaceI, gpI)
+                );
         }
     }
 }

@@ -31,9 +31,9 @@ Description
     Lightweight boundary Gauss-point field container.
 
     Stores only a flat list of values on boundary-face Gauss points.
-    The ordering is defined externally by faceGaussField::extractBCGhostState()
-    and must be preserved when assigning values back with
-    faceGaussField::assignBCGhostState().
+    The ordering is defined externally by faceGaussField helpers such as
+    extractBCGhostState()/assignBCGhostState() and
+    extractMidValue()/assignMidValue().
 
 SourceFiles
     boundaryGaussFieldI.H

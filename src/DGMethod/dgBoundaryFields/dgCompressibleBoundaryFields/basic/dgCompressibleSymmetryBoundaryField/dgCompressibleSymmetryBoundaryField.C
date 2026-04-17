@@ -72,6 +72,26 @@ void dgCompressibleSymmetryBoundaryField::updateGhostState
 }
 
 
+void dgCompressibleSymmetryBoundaryField::updateBCValue
+(
+    const label,
+    const label,
+    const label,
+    const vector& n,
+    const scalar rhoMinus,
+    const vector& rhoUMinus,
+    const scalar EMinus,
+    scalar& rhoBC,
+    vector& rhoUBC,
+    scalar& EBC
+) const
+{
+    rhoBC  = rhoMinus;
+    rhoUBC = rhoUMinus - (n & rhoUMinus)*n;
+    EBC    = EMinus;
+}
+
+
 void dgCompressibleSymmetryBoundaryField::checkPatchType() const
 {
     if (this->patch_.type() != "symmetry")

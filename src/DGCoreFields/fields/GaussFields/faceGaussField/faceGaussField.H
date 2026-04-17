@@ -71,6 +71,7 @@ namespace Foam
  * For each Gauss point on a face, the class stores:
  * - Minus-side value (the current cell / interior trace)
  * - Plus-side value (the neighbour or boundary / exterior trace)
+ * - Middle-state value used by weak face formulations
  *
  * The class is designed for cell-centric DG formulations and
  * supports flux computation across cell interfaces.
@@ -140,6 +141,9 @@ private:
 
         /** \brief Interior-trace values at face Gauss points. */
         List<Type> minusValues_;
+
+        /** \brief Middle-state values at face Gauss points. */
+        List<Type> midValues_;
 
         /** \brief Flux vectors stored at face Gauss points when requested. */
         List<vector> flux_;
@@ -269,6 +273,12 @@ public:
         /** \brief Return read-only access to one flat minus-side value. */
         inline const Type& minusValue(const label gi) const { return minusValues_[gi]; }
 
+        /** \brief Return writable access to one flat middle-state value. */
+        inline Type& midValueAt(const label gi)       { return midValues_[gi]; }
+
+        /** \brief Return read-only access to one flat middle-state value. */
+        inline const Type& midValue(const label gi) const  { return midValues_[gi]; }
+
         /** \brief Return writable access to a plus-side value on one face. */
         inline Type& plusValueOnFace(const label fI, const label gI)
         {
@@ -291,6 +301,18 @@ public:
         inline const Type& minusValueOnFace(const label fI, const label gI) const
         {
             return minusValues_[gaussOffset_[fI] + gI];
+        }
+
+        /** \brief Return writable access to a middle-state value on one face. */
+        inline Type& midValueOnFace(const label fI, const label gI)
+        {
+            return midValues_[gaussOffset_[fI] + gI];
+        }
+
+        /** \brief Return read-only access to a middle-state value on one face. */
+        inline const Type& midValueOnFace(const label fI, const label gI) const
+        {
+            return midValues_[gaussOffset_[fI] + gI];
         }
 
         /** \brief Return writable access to a minus-side value using a global face ID. */
@@ -317,6 +339,18 @@ public:
             return plusValues_[gaussOffset_[localFaceIndex(faceID)] + gI];
         }
 
+        /** \brief Return writable access to a middle-state value using a global face ID. */
+        inline Type& midValueOnGlobalFace(const label faceID, const label gI)
+        {
+            return midValues_[gaussOffset_[localFaceIndex(faceID)] + gI];
+        }
+
+        /** \brief Return read-only access to a middle-state value using a global face ID. */
+        inline const Type& midValueOnGlobalFace(const label faceID, const label gI) const
+        {
+            return midValues_[gaussOffset_[localFaceIndex(faceID)] + gI];
+        }
+
         /** \brief Return read-only access to the full minus-side storage. */
         inline const List<Type>& minusSide() const { return minusValues_; }
         /** \brief Return writable access to the full minus-side storage. */
@@ -326,6 +360,11 @@ public:
         inline const List<Type>& plusSide() const { return plusValues_; }
         /** \brief Return writable access to the full plus-side storage. */
         inline List<Type>& plusSide() { return plusValues_; }
+
+        /** \brief Return read-only access to the full middle-state storage. */
+        inline const List<Type>& midValues() const { return midValues_; }
+        /** \brief Return writable access to the full middle-state storage. */
+        inline List<Type>& midValues() { return midValues_; }
 
         /** \brief Return read-only access to one flux vector on a face. */
         inline const vector& fluxOnFace(const label fI, const label gI) const
@@ -489,6 +528,19 @@ public:
          */
         void assignBCGhostState(const boundaryGaussField<Type>& bgf);
 
+        /**
+         * \brief Extract middle-state values on boundary faces into a flat
+         * boundaryGaussField using local-face order then Gauss-point order.
+         */
+        boundaryGaussField<Type> extractMidValue() const;
+
+        /**
+         * \brief Assign flat boundaryGaussField values back to middle-state
+         * values on boundary faces using the same ordering as
+         * extractMidValue().
+         */
+        void assignMidValue(const boundaryGaussField<Type>& bgf);
+
     //====================================================================//
     //                        Interpolation
     //====================================================================//
@@ -517,7 +569,7 @@ public:
             const tmp<faceGaussField<Type>>& t
         );
 
-        /** \brief Assign a uniform value to all plus and minus Gauss points. */
+        /** \brief Assign a uniform value to all plus, minus, and middle Gauss points. */
         faceGaussField<Type>& operator=(const Type& v);
 
         /** \brief Allocate the flux storage if it has not been allocated yet. */
@@ -588,13 +640,13 @@ public:
     //                              Limiting
     //====================================================================//
 
-        /** \brief Limit all stored values to a maximum value. */
+        /** \brief Limit plus/minus values to a maximum value. */
         void limitMax(const scalar maxVal);
 
-        /** \brief Limit all stored values to a minimum value. */
+        /** \brief Limit plus/minus values to a minimum value. */
         void limitMin(const scalar minVal);
 
-        /** \brief Limit all stored values to the range [minVal, maxVal]. */
+        /** \brief Limit plus/minus values to the range [minVal, maxVal]. */
         void limitRange(const scalar minVal, const scalar maxVal);
 };
 

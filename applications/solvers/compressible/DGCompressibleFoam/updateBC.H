@@ -10,23 +10,7 @@ GaussField<scalar>& EG    = E.gaussFields()[cellI];
 GaussField<scalar>& rhoG  = rho.gaussFields()[cellI];
 GaussField<vector>& rhoUG = rhoU.gaussFields()[cellI];
 
-compressibleBC->updateValue(rhoG, rhoUG, EG);
-
-// Rebuild boundary velocity outside thermo so dgThermo keeps responsibility
-// only for thermal variables.
-const boundaryGaussField<scalar> rhoB =
-    rhoG.faceField().extractBCGhostState();
-const boundaryGaussField<vector> rhoUB =
-    rhoUG.faceField().extractBCGhostState();
-
-boundaryGaussField<vector> UB(rhoB.size());
-
-for (label gpI = 0; gpI < rhoB.size(); ++gpI)
-{
-    UB[gpI] = rhoUB[gpI]/rhoB[gpI];
-}
-
-UG.faceField().assignBCGhostState(UB);
+compressibleBC->update(rhoG, rhoUG, EG, UG);
 
 // Rebuild p/T/he/a on the just-updated ghost conservative state so the
 // boundary face traces used by DG fluxes are fully consistent.

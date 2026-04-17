@@ -87,8 +87,14 @@ dofField<Type>::dofField
             IOobject::NO_WRITE
         );
 
-        // Determine if volField file exists
-        if (probeIO.typeHeaderOk<GeometricField<Type, fvPatchField, volMesh>>(true))
+        // Determine if volField file exists. Honour NO_READ so auxiliary
+        // DoF fields can be forced to start from zero even if stale files are
+        // present in the time directory.
+        if
+        (
+            rOpt != IOobject::NO_READ
+         && probeIO.typeHeaderOk<GeometricField<Type, fvPatchField, volMesh>>(true)
+        )
         {
             //Info<< "Reading DoF volField: " << fieldName << nl;
 

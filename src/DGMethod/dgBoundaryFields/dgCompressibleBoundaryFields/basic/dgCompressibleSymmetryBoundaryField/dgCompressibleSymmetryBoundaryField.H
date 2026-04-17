@@ -110,6 +110,20 @@ public:
         scalar& EPlus
     ) const override;
 
+    virtual void updateBCValue
+    (
+        const label cellID,
+        const label faceLocalID,
+        const label localGauss,
+        const vector& n,
+        const scalar rhoMinus,
+        const vector& rhoUMinus,
+        const scalar EMinus,
+        scalar& rhoBC,
+        vector& rhoUBC,
+        scalar& EBC
+    ) const override;
+
     /** \brief Check that the boundary condition is applied on a symmetry patch. */
     virtual void checkPatchType() const override;
 };

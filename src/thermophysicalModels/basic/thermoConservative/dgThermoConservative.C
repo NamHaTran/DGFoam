@@ -105,6 +105,18 @@ Foam::dgThermoConservative::dgThermoConservative
     (
         mesh_.getFvMesh().lookupObject<dgField<scalar>>("E")
     ),
+    SRho_
+    (
+        mesh_.getFvMesh().lookupObject<dgField<vector>>("SRho")
+    ),
+    SRhoU_
+    (
+        mesh_.getFvMesh().lookupObject<dgField<tensor>>("SRhoU")
+    ),
+    SE_
+    (
+        mesh_.getFvMesh().lookupObject<dgField<vector>>("SE")
+    ),
     U_
     (
         mesh_.getFvMesh().lookupObjectRef<dgField<vector>>("U")
@@ -116,6 +128,18 @@ Foam::dgThermoConservative::dgThermoConservative
     T_
     (
         mesh_.getFvMesh().lookupObjectRef<dgField<scalar>>("T")
+    ),
+    gradU_
+    (
+        mesh_.getFvMesh().lookupObject<dgField<tensor>>("gradU")
+    ),
+    gradP_
+    (
+        mesh_.getFvMesh().lookupObjectRef<dgField<vector>>("gradP")
+    ),
+    gradT_
+    (
+        mesh_.getFvMesh().lookupObjectRef<dgField<vector>>("gradT")
     ),
     TMean_(mesh_.nCells(), scalar(SMALL))
 {
@@ -156,6 +180,13 @@ void Foam::dgThermoConservative::synch()
 {
     he_.synch();
     a_.synch();
+}
+
+
+void Foam::dgThermoConservative::synchGradient()
+{
+    gradP_.synch();
+    gradT_.synch();
 }
 
 

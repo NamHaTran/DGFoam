@@ -175,6 +175,17 @@ public:
         const scalar rho
     ) const override;
 
+    /**
+     * \brief Compute ideal-gas pressure gradient.
+     */
+    virtual vector calcGradPFromRhoT
+    (
+        const scalar rho,
+        const scalar T,
+        const vector& gradRho,
+        const vector& gradT
+    ) const override;
+
     //==============================================================//
     //              Capability flags
     //==============================================================//

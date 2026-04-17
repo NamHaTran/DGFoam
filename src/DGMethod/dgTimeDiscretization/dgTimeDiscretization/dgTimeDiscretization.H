@@ -42,7 +42,8 @@ SourceFiles
 #include "autoPtr.H"
 #include "dictionary.H"
 #include "dgGeomMesh.H"
-#include "dgGeneralPDETerm.H"
+#include "dgConvectiveTerm.H"
+#include "dgDiffusiveTerm.H"
 #include "dgTimeScheme.H"
 #include "error.H"
 

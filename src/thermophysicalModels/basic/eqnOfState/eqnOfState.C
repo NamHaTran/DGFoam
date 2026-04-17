@@ -33,6 +33,39 @@ License
 
 namespace Foam
 {
+    namespace
+    {
+        scalar finiteDifferenceStep(const scalar value)
+        {
+            return max(1e-6*max(mag(value), scalar(1)), scalar(1e-12));
+        }
+
+
+        template<class Function>
+        scalar finiteDifferenceDerivative
+        (
+            const scalar x,
+            const scalar y,
+            const bool first,
+            const Function& f
+        )
+        {
+            const scalar h = finiteDifferenceStep(first ? x : y);
+
+            if (first)
+            {
+                if (x - h > SMALL)
+                {
+                    return (f(x + h, y) - f(x - h, y))/(2.0*h);
+                }
+
+                return (f(x + h, y) - f(x, y))/h;
+            }
+
+            return (f(x, y + h) - f(x, y - h))/(2.0*h);
+        }
+    }
+
     // Register type name and default debug switch
     defineTypeNameAndDebug(eqnOfState, 0);
 
@@ -90,6 +123,75 @@ Foam::autoPtr<Foam::eqnOfState> Foam::eqnOfState::New
 
 
 // * * * * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * //
+
+Foam::vector Foam::eqnOfState::calcGradPFromRhoT
+(
+    const scalar rho,
+    const scalar T,
+    const vector& gradRho,
+    const vector& gradT
+) const
+{
+    const auto pOfRhoT =
+        [this](const scalar rhoValue, const scalar TValue)
+        {
+            return calcPFromRhoT(rhoValue, TValue);
+        };
+
+    const scalar dPdrho =
+        finiteDifferenceDerivative(rho, T, true, pOfRhoT);
+    const scalar dPdT =
+        finiteDifferenceDerivative(rho, T, false, pOfRhoT);
+
+    return dPdrho*gradRho + dPdT*gradT;
+}
+
+
+Foam::vector Foam::eqnOfState::calcGradTFromRhoE
+(
+    const scalar rho,
+    const scalar e,
+    const vector& gradRho,
+    const vector& gradE
+) const
+{
+    const auto TOfRhoE =
+        [this](const scalar rhoValue, const scalar eValue)
+        {
+            return calcTFromRhoE(rhoValue, eValue);
+        };
+
+    const scalar dTdrho =
+        finiteDifferenceDerivative(rho, e, true, TOfRhoE);
+    const scalar dTde =
+        finiteDifferenceDerivative(rho, e, false, TOfRhoE);
+
+    return dTdrho*gradRho + dTde*gradE;
+}
+
+
+Foam::vector Foam::eqnOfState::calcGradPFromRhoE
+(
+    const scalar rho,
+    const scalar e,
+    const vector& gradRho,
+    const vector& gradE
+) const
+{
+    const auto pOfRhoE =
+        [this](const scalar rhoValue, const scalar eValue)
+        {
+            return calcPFromRhoE(rhoValue, eValue);
+        };
+
+    const scalar dPdrho =
+        finiteDifferenceDerivative(rho, e, true, pOfRhoE);
+    const scalar dPde =
+        finiteDifferenceDerivative(rho, e, false, pOfRhoE);
+
+    return dPdrho*gradRho + dPde*gradE;
+}
+
 
 void Foam::eqnOfState::calcRhoFromPT
 (

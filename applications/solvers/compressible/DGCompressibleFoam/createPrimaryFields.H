@@ -49,6 +49,49 @@ dgField<vector> U
     false
 );
 
+// Primitive gradients are derived Gauss-value fields without DoFs.
+dgField<tensor> gradU
+(
+    IOobject
+    (
+        "gradU",
+        runTime.timeName(),
+        mesh,
+        IOobject::NO_READ,
+        IOobject::NO_WRITE
+    ),
+    dgMesh,
+    false
+);
+
+dgField<vector> gradP
+(
+    IOobject
+    (
+        "gradP",
+        runTime.timeName(),
+        mesh,
+        IOobject::NO_READ,
+        IOobject::NO_WRITE
+    ),
+    dgMesh,
+    false
+);
+
+dgField<vector> gradT
+(
+    IOobject
+    (
+        "gradT",
+        runTime.timeName(),
+        mesh,
+        IOobject::NO_READ,
+        IOobject::NO_WRITE
+    ),
+    dgMesh,
+    false
+);
+
 // Primitive values are filled by the thermo reconstruction from rho/rhoU/E.
 // Physical boundary ghost states are handled separately by the compressible
 // boundary manager, which writes conservative traces and then asks thermo to

@@ -95,6 +95,20 @@ public:
         scalar& EPlus
     ) const override;
 
+    virtual void updateBCValue
+    (
+        const label cellID,
+        const label faceLocalID,
+        const label localGauss,
+        const vector& n,
+        const scalar rhoMinus,
+        const vector& rhoUMinus,
+        const scalar EMinus,
+        scalar& rhoBC,
+        vector& rhoUBC,
+        scalar& EBC
+    ) const override;
+
     virtual void checkPatchType() const override;
 };
 

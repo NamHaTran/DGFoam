@@ -66,6 +66,11 @@ class dgThermoConservative;
  * The manager also stores the uniform internal primitive reference state and
  * uses it to initialize conservative DG fields before patch ghost states are
  * populated on boundary-face Gauss points.
+ *
+ * \note Compressible boundary conditions provide two weak forms:
+ * weak Riemann ghost states, used by default for the governing equations in
+ * DGFoam, and weak prescribed boundary values, reserved for auxiliary
+ * equations solved with the LDG method.
  */
 class dgCompressibleBoundaryManager
 {
@@ -116,11 +121,12 @@ public:
         dgField<scalar>& E
     ) const;
 
-    void updateValue
+    void update
     (
         GaussField<scalar>& rhoG,
         GaussField<vector>& rhoUG,
-        GaussField<scalar>& EG
+        GaussField<scalar>& EG,
+        GaussField<vector>& UG
     ) const;
 };
 

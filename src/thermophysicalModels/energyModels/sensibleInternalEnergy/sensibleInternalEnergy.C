@@ -73,6 +73,17 @@ Foam::scalar Foam::sensibleInternalEnergy::calcTfromHe(const scalar he) const
 }
 
 
+Foam::vector Foam::sensibleInternalEnergy::calcGradTfromHe
+(
+    const scalar he,
+    const vector& gradHe
+) const
+{
+    const scalar T = calcTfromHe(he);
+    return gradHe/max(thermo_.calcCv(T), SMALL);
+}
+
+
 // ************************************************************************* //
 
 } // End namespace Foam

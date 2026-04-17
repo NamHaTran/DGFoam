@@ -157,6 +157,15 @@ public:
      * \param T     Temperature field to be written
      */
     virtual scalar calcTfromHe(const scalar he) const override;
+
+    /**
+     * \brief Compute \f$\nabla T\f$ from \f$\nabla e\f$.
+     */
+    virtual vector calcGradTfromHe
+    (
+        const scalar he,
+        const vector& gradHe
+    ) const override;
 };
 
 } // End namespace Foam

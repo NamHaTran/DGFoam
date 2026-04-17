@@ -90,4 +90,16 @@ Foam::scalar Foam::idealGas::calcTFromPRho
     return p / (rho * R_);
 }
 
+
+Foam::vector Foam::idealGas::calcGradPFromRhoT
+(
+    const scalar rho,
+    const scalar T,
+    const vector& gradRho,
+    const vector& gradT
+) const
+{
+    return R_*(T*gradRho + rho*gradT);
+}
+
 // ************************************************************************* //

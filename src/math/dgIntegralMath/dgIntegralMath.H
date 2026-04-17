@@ -38,6 +38,7 @@ SourceFiles
 #include "cellGaussField.H"
 #include "faceGaussField.H"
 #include "dgGeomFace.H"
+#include "products.H"
 
 namespace Foam
 {
@@ -81,6 +82,37 @@ inline vector volumeIntegral(const cellGaussField<vector>& gradPhi, const cellGa
     for (label g = 0; g < nGauss; ++g)
     {
         volInt += J3D[g] * (gradPhi[g] & F[g]) * w[g];
+    }
+
+    return volInt;
+}
+
+/**
+ * \brief Volume integral for the gradient-projection weak form.
+ *
+ * Computes \f$\int_\Omega \nabla\phi\,C\,dV\f$.
+ * If C is scalar the result is vector; if C is vector the result is tensor.
+ *
+ * \param gradPhi Gradient of basis function at Gauss points
+ * \param C       Projected field at cell Gauss points
+ */
+template<class Type>
+inline typename outerProduct<vector, Type>::type gradProjectionVolumeIntegral
+(
+    const cellGaussField<vector>& gradPhi,
+    const cellGaussField<Type>& C
+)
+{
+    typename outerProduct<vector, Type>::type volInt =
+        pTraits<typename outerProduct<vector, Type>::type>::zero;
+
+    const label nGauss = C.size();
+    const List<scalar>& w = C.cell()->weights();
+    const List<scalar>& J3D = C.cell()->J3D();
+
+    for (label g = 0; g < nGauss; ++g)
+    {
+        volInt += J3D[g] * (gradPhi[g] * C[g]) * w[g];
     }
 
     return volInt;
@@ -179,6 +211,47 @@ inline vector surfaceIntegral(const faceGaussField<scalar>& phi, const faceGauss
         {
             // fluxOnFace already returns T·n (vector)
             surfInt += J2D[g] * phi.minusValueOnFace(faceI, g) * F.fluxOnFace(faceI, g) * w[g];
+        }
+    }
+
+    return surfInt;
+}
+
+/**
+ * \brief Surface integral for gradient-projection terms using face mid-state.
+ *
+ * Computes \f$\int_{\partial\Omega}\phi\,C^\ast n\,dS\f$.
+ * If C is scalar the result is vector; if C is vector the result is tensor.
+ *
+ * \param phi Scalar basis function at face Gauss points
+ * \param C   Projected field at face Gauss points
+ */
+template<class Type>
+inline typename outerProduct<Type, vector>::type gradProjectionSurfaceIntegral
+(
+    const faceGaussField<scalar>& phi,
+    const faceGaussField<Type>& C
+)
+{
+    typename outerProduct<Type, vector>::type surfInt =
+        pTraits<typename outerProduct<Type, vector>::type>::zero;
+
+    const label nFaces = C.nFaces();
+
+    for (label faceI = 0; faceI < nFaces; ++faceI)
+    {
+        const vector n = C.normals()[faceI];
+        const label nGauss = C.nGaussPerFace();
+        const List<scalar>& w = C.faces()[faceI]->weights();
+        const List<scalar>& J2D = C.faces()[faceI]->J2D();
+
+        for (label g = 0; g < nGauss; ++g)
+        {
+            surfInt +=
+                J2D[g]
+              * phi.minusValueOnFace(faceI, g)
+              * (C.midValueOnFace(faceI, g) * n)
+              * w[g];
         }
     }
 

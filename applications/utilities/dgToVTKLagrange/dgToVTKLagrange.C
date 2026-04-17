@@ -40,6 +40,7 @@ Description
 #include "dgGeomMesh.H"
 #include "dgThermoConservative.H"
 #include "dgVtkLagrangeTools.H"
+#include "troubleCellDetector.H"
 
 #include <vector>
 
@@ -72,6 +73,16 @@ struct ExportPointData
     std::vector<scalar> T;
     std::vector<scalar> a;
 };
+
+
+/** \brief Conservative state sampled at one Lagrange node. */
+struct ConservativeSample
+{
+    scalar rho;
+    vector rhoU;
+    scalar E;
+};
+
 
 /**
  * \brief Reconstruct a modal DG field at one interpolation point in one cell.
@@ -119,6 +130,295 @@ Type evaluateModalField
     }
 
     return value;
+}
+
+
+/**
+ * \brief Return the zeroth modal coefficient for one DG field in one cell.
+ *
+ * \details
+ * The modal basis used by DGFoam stores the cell-average value in DoF0. The
+ * \c smoothContinuousFields exporter option uses this value as a constant
+ * reconstruction in cells that are not marked troubled by KXRCF.
+ */
+template<class Type>
+Type evaluateCellMeanField
+(
+    const dgField<Type>& field,
+    const label cellI
+)
+{
+    const cellDof<Type>& cellModes = field.dof()[cellI];
+
+    if (cellModes.nDof() == 0)
+    {
+        FatalErrorInFunction
+            << "Field " << field.name() << " has no DoF in cell "
+            << cellI << exit(FatalError);
+    }
+
+    return cellModes[0];
+}
+
+
+/**
+ * \brief Zhang-Shu limiter coefficient clamped to [0, 1].
+ */
+scalar limiterTheta
+(
+    const scalar meanValue,
+    const scalar minValue,
+    const scalar omega,
+    const scalar epsilon
+)
+{
+    const scalar scale = max(scalar(1), mag(meanValue));
+
+    if (mag(meanValue - minValue) <= epsilon*scale)
+    {
+        return 1.0;
+    }
+
+    const scalar rawTheta = (meanValue - omega)/(meanValue - minValue);
+    return min(max(rawTheta, scalar(0)), scalar(1));
+}
+
+
+/**
+ * \brief Return rho*e from conservative variables with a guarded rho.
+ */
+scalar thermoEnergyDensity
+(
+    const scalar rho,
+    const vector& rhoU,
+    const scalar E,
+    const scalar epsilon
+)
+{
+    const scalar rhoSafe =
+        (mag(rho) > epsilon ? rho : (rho >= 0 ? epsilon : -epsilon));
+
+    return E - 0.5*magSqr(rhoU)/rhoSafe;
+}
+
+
+/**
+ * \brief Scale the non-mean modal content in one cell.
+ */
+template<class Type>
+void scaleHighOrderModes
+(
+    dgField<Type>& field,
+    const label cellI,
+    const scalar theta
+)
+{
+    if (!field.hasDof() || theta >= 1.0)
+    {
+        return;
+    }
+
+    cellDof<Type>& cellModes = field.dof()[cellI];
+
+    for (label modeI = 1; modeI < cellModes.nDof(); ++modeI)
+    {
+        cellModes[modeI] *= theta;
+    }
+
+    field.dof().updateCellDof(cellI);
+}
+
+
+/**
+ * \brief Limit modal conservative fields using the same Lagrange nodes that are
+ *        later written to VTK.
+ */
+void limitConservativeFieldsAtLagrangeNodes
+(
+    const dgGeomMesh& dgMesh,
+    dgField<scalar>& rhoField,
+    dgField<vector>& rhoUField,
+    dgField<scalar>& EField,
+    const scalar epsilon
+)
+{
+    label nLimitedCells = 0;
+
+    const label pOrder = dgMesh.pOrder();
+    const label hoOrder = dgVtkLagrange::exportOrder(pOrder);
+
+    if (hoOrder > 8)
+    {
+        FatalErrorInFunction
+            << "Current dgToVTKLagrange implementation supports "
+            << "high-order export up to order 8. "
+            << "Detected DG pOrder = " << pOrder
+            << ", which maps to VTK order " << hoOrder
+            << exit(FatalError);
+    }
+
+    for (label cellI = 0; cellI < dgMesh.nCells(); ++cellI)
+    {
+        const dgGeomCell* cellPtr = dgMesh.cells()[cellI];
+
+        if (!cellPtr)
+        {
+            continue;
+        }
+
+        if (rhoField.dof()[cellI].nDof() <= 1)
+        {
+            continue;
+        }
+
+        const dgCellType type = cellPtr->type();
+
+        if (!dgVtkLagrange::supportsNativeLagrange(type))
+        {
+            if (type == dgCellType::PYRAMID)
+            {
+                continue;
+            }
+
+            FatalErrorInFunction
+                << "Unsupported DG cell type "
+                << dgVtkLagrange::cellTypeName(type)
+                << " in cell " << cellI << exit(FatalError);
+        }
+
+        const std::vector<vector> pyfrPts =
+            dgVtkLagrange::pyfrStdElementPoints(type, hoOrder);
+        const std::vector<label> nodemap =
+            dgVtkLagrange::vtkNodemap(type, pyfrPts.size());
+
+        DynamicList<ConservativeSample> samples(nodemap.size());
+        scalar minRho = GREAT;
+
+        for (const label pyfrPointI : nodemap)
+        {
+            const vector eta =
+                dgVtkLagrange::xiToEta(type, pyfrPts[pyfrPointI]);
+
+            List<scalar> basis;
+            dgVtkLagrange::computeBasisAt(type, eta, pOrder, basis);
+
+            ConservativeSample sample;
+            sample.rho = evaluateModalField(rhoField, cellI, basis);
+            sample.rhoU = evaluateModalField(rhoUField, cellI, basis);
+            sample.E = evaluateModalField(EField, cellI, basis);
+
+            minRho = min(minRho, sample.rho);
+            samples.append(sample);
+        }
+
+        const scalar meanRho = rhoField.dof()[cellI].dof()[0];
+        const vector& meanRhoU = rhoUField.dof()[cellI].dof()[0];
+        const scalar meanE = EField.dof()[cellI].dof()[0];
+
+        const scalar theta1 =
+            limiterTheta(meanRho, minRho, min(epsilon, meanRho), epsilon);
+
+        scalar minRhoThermoEnergy = GREAT;
+
+        forAll(samples, sampleI)
+        {
+            const ConservativeSample& sample = samples[sampleI];
+            const scalar limitedRho =
+                meanRho + theta1*(sample.rho - meanRho);
+
+            minRhoThermoEnergy =
+                min
+                (
+                    minRhoThermoEnergy,
+                    thermoEnergyDensity
+                    (
+                        limitedRho,
+                        sample.rhoU,
+                        sample.E,
+                        epsilon
+                    )
+                );
+        }
+
+        const scalar meanRhoThermoEnergy =
+            thermoEnergyDensity(meanRho, meanRhoU, meanE, epsilon);
+
+        const scalar theta2 =
+            limiterTheta
+            (
+                meanRhoThermoEnergy,
+                minRhoThermoEnergy,
+                min(min(epsilon, meanRho), meanRhoThermoEnergy),
+                epsilon
+            );
+
+        if (theta1 >= 1.0 && theta2 >= 1.0)
+        {
+            continue;
+        }
+
+        scaleHighOrderModes(rhoField, cellI, theta1*theta2);
+        scaleHighOrderModes(rhoUField, cellI, theta2);
+        scaleHighOrderModes(EField, cellI, theta2);
+
+        ++nLimitedCells;
+    }
+
+    reduce(nLimitedCells, sumOp<label>());
+
+    Info<< "Lagrange-node positivity limiter applied on "
+        << nLimitedCells << " cell(s)." << nl;
+}
+
+
+/**
+ * \brief Detect troubled cells using the KXRCF inflow-jump sensor.
+ */
+List<bool> detectKXRCFTroubledCells
+(
+    const dgGeomMesh& dgMesh,
+    const scalar threshold,
+    const bool LPRMode,
+    label& nTroubledCells
+)
+{
+    dictionary detectorDict;
+
+    wordList checkFields(3);
+    checkFields[0] = "rho";
+    checkFields[1] = "rhoU";
+    checkFields[2] = "E";
+
+    detectorDict.set("checkFields", checkFields);
+    detectorDict.set("directionField", word("rhoU"));
+    detectorDict.set("threshold", threshold);
+    detectorDict.set("LPRMode", LPRMode);
+    detectorDict.set("includeBoundaryFaces", true);
+    detectorDict.set("report", false);
+
+    autoPtr<troubleCellDetector> detector =
+        troubleCellDetector::New("KXRCF", detectorDict, dgMesh);
+
+    List<bool> troubledCells(dgMesh.nCells(), false);
+    nTroubledCells = 0;
+
+    for (label cellI = 0; cellI < dgMesh.nCells(); ++cellI)
+    {
+        if (!dgMesh.cells()[cellI])
+        {
+            continue;
+        }
+
+        if (detector->detect(cellI))
+        {
+            troubledCells[cellI] = true;
+            ++nTroubledCells;
+        }
+    }
+
+    reduce(nTroubledCells, sumOp<label>());
+
+    return troubledCells;
 }
 
 
@@ -179,27 +479,31 @@ void ensureOutputDir(const Time& runTime)
  * This routine converts a modal DG representation into a nodal VTK Lagrange
  * representation. The algorithm is:
  * 1. Determine the VTK export order corresponding to the DG polynomial order.
- * 2. Loop over all DG cells and skip null entries.
- * 3. Reject unsupported element types, while counting pyramids that are not
+ * 2. Optionally use the KXRCF detector to mark troubled cells when
+ *    \c smoothContinuousFields is enabled.
+ * 3. Apply the internal Lagrange-node positivity limiter.
+ * 4. Loop over all DG cells and skip null entries.
+ * 5. Reject unsupported element types, while counting pyramids that are not
  *    yet exported in native VTK Lagrange form.
- * 4. For the current cell, obtain:
+ * 6. For the current cell, obtain:
  *    - the PyFR standard-element points for the chosen high-order output,
  *    - the VTK node permutation (`nodemap`) expected by native Lagrange cells,
  *    - and the physical cell vertices.
- * 5. Traverse the export nodes in VTK order. For each node:
+ * 7. Traverse the export nodes in VTK order. For each node:
  *    - map the PyFR reference coordinate \f$\xi\f$ to the internal DG
  *      reference coordinate \f$\eta\f$,
- *    - evaluate the DG basis at \f$\eta\f$,
  *    - map \f$\eta\f$ to the physical point \f$\mathbf{x}\f$,
  *    - reconstruct \f$\rho\f$, \f$\rho\mathbf{U}\f$, and \f$E\f$ from modal
  *      coefficients,
+ *    - if \c smoothContinuousFields is enabled, reconstruct with full DoF only
+ *      on KXRCF-marked cells and use DoF0 as a constant value elsewhere,
  *    - derive \f$\mathbf{U}\f$, internal energy \f$e\f$, pressure, temperature,
  *      and speed of sound, with density clipped by `SMALL` to avoid division
  *      by zero,
  *    - append both coordinates and point-data values to contiguous buffers.
- * 6. Append cell connectivity, offsets, and the native VTK cell type so the
+ * 8. Append cell connectivity, offsets, and the native VTK cell type so the
  *    buffered points are interpreted as one high-order Lagrange cell.
- * 7. After all cells are processed, write the VTU piece containing geometry
+ * 9. After all cells are processed, write the VTU piece containing geometry
  *    plus scalar/vector point-data arrays.
  *
  * The resulting VTU stores solution samples at interpolation nodes, which
@@ -210,10 +514,14 @@ void exportTimeStep
 (
     const Time& runTime,
     const dgGeomMesh& dgMesh,
-    const dgField<scalar>& rhoField,
-    const dgField<vector>& rhoUField,
-    const dgField<scalar>& EField,
-    const dgThermoConservative& thermo
+    dgField<scalar>& rhoField,
+    dgField<vector>& rhoUField,
+    dgField<scalar>& EField,
+    const dgThermoConservative& thermo,
+    const scalar limiterEpsilon,
+    const bool smoothContinuousFields,
+    const scalar kxrcfThreshold,
+    const bool kxrcfLPRMode
 )
 {
     dgVtkLagrange::GridBuffers grid;
@@ -232,6 +540,40 @@ void exportTimeStep
             << ", which maps to VTK order " << hoOrder
             << exit(FatalError);
     }
+
+    List<bool> troubledCells(dgMesh.nCells(), true);
+    label nTroubledCells = 0;
+
+    if (smoothContinuousFields)
+    {
+        troubledCells =
+            detectKXRCFTroubledCells
+            (
+                dgMesh,
+                kxrcfThreshold,
+                kxrcfLPRMode,
+                nTroubledCells
+            );
+    }
+
+    Info<< "KXRCF troubled cells marked for full-DoF Lagrange "
+        << "reconstruction: " << nTroubledCells;
+
+    if (!smoothContinuousFields)
+    {
+        Info<< " (smoothContinuousFields disabled)";
+    }
+
+    Info<< nl;
+
+    limitConservativeFieldsAtLagrangeNodes
+    (
+        dgMesh,
+        rhoField,
+        rhoUField,
+        EField,
+        limiterEpsilon
+    );
 
     for (label cellI = 0; cellI < dgMesh.nCells(); ++cellI)
     {
@@ -264,19 +606,33 @@ void exportTimeStep
         const std::vector<label> nodemap =
             dgVtkLagrange::vtkNodemap(type, pyfrPts.size());
         const label pointOffset = grid.points.size();
+        const bool useFullDof =
+            !smoothContinuousFields || troubledCells[cellI];
+
+        const scalar rhoMean = evaluateCellMeanField(rhoField, cellI);
+        const vector rhoUMean = evaluateCellMeanField(rhoUField, cellI);
+        const scalar EMean = evaluateCellMeanField(EField, cellI);
 
         for (const label pyfrPointI : nodemap)
         {
             const vector xi = pyfrPts[pyfrPointI];
             const vector eta = dgVtkLagrange::xiToEta(type, xi);
 
-            List<scalar> basis;
-            dgVtkLagrange::computeBasisAt(type, eta, pOrder, basis);
-
             const point x = mapEtaToX(eta, cellVertices, type);
-            const scalar rhoVal = evaluateModalField(rhoField, cellI, basis);
-            const vector rhoUVal = evaluateModalField(rhoUField, cellI, basis);
-            const scalar EVal = evaluateModalField(EField, cellI, basis);
+
+            scalar rhoVal = rhoMean;
+            vector rhoUVal = rhoUMean;
+            scalar EVal = EMean;
+
+            if (useFullDof)
+            {
+                List<scalar> basis;
+                dgVtkLagrange::computeBasisAt(type, eta, pOrder, basis);
+
+                rhoVal = evaluateModalField(rhoField, cellI, basis);
+                rhoUVal = evaluateModalField(rhoUField, cellI, basis);
+                EVal = evaluateModalField(EField, cellI, basis);
+            }
 
             const scalar rhoSafe = max(rhoVal, SMALL);
             const vector UVal = rhoUVal/rhoSafe;
@@ -364,12 +720,59 @@ int main(int argc, char *argv[])
     (
         "Export DGFoam modal results to VTK_LAGRANGE VTU/PVTU files."
     );
+    argList::addOption
+    (
+        "lagrangeLimiterTolerance",
+        "scalar",
+        "Tolerance used by the internal Lagrange-node positivity limiter "
+        "(default: 1e-6)"
+    );
+    argList::addOption
+    (
+        "kxrcfThreshold",
+        "scalar",
+        "KXRCF troubled-cell detector threshold used by "
+        "-smoothContinuousFields (default: 1)"
+    );
+    argList::addBoolOption
+    (
+        "kxrcfLPRMode",
+        "Use the LPR normalization in the KXRCF detector when "
+        "-smoothContinuousFields is enabled"
+    );
+    argList::addBoolOption
+    (
+        "smoothContinuousFields",
+        "Use KXRCF to keep full DoF only near strong discontinuities and "
+        "write DoF0 values in smooth cells"
+    );
 
     #include "setRootCase.H"
     #include "createTime.H"
     #include "createMesh.H"
 
     instantList timeDirs = timeSelector::select0(runTime, args);
+
+    const scalar lagrangeLimiterTolerance =
+        args.getOrDefault<scalar>("lagrangeLimiterTolerance", 1.0e-6);
+    const scalar kxrcfThreshold =
+        args.getOrDefault<scalar>("kxrcfThreshold", 1.0);
+    const bool kxrcfLPRMode = args.found("kxrcfLPRMode");
+    const bool smoothContinuousFields = args.found("smoothContinuousFields");
+
+    if (lagrangeLimiterTolerance <= 0)
+    {
+        FatalErrorInFunction
+            << "Option -lagrangeLimiterTolerance must be positive, but got "
+            << lagrangeLimiterTolerance << exit(FatalError);
+    }
+
+    if (kxrcfThreshold <= 0)
+    {
+        FatalErrorInFunction
+            << "Option -kxrcfThreshold must be positive, but got "
+            << kxrcfThreshold << exit(FatalError);
+    }
 
     dgGeomMesh dgMesh(mesh);
 
@@ -467,6 +870,90 @@ int main(int argc, char *argv[])
                 false
             );
 
+            dgField<vector> SRho
+            (
+                IOobject
+                (
+                    "SRho",
+                    runTime.timeName(),
+                    mesh,
+                    IOobject::NO_READ,
+                    IOobject::NO_WRITE
+                ),
+                dgMesh,
+                true
+            );
+
+            dgField<tensor> SRhoU
+            (
+                IOobject
+                (
+                    "SRhoU",
+                    runTime.timeName(),
+                    mesh,
+                    IOobject::NO_READ,
+                    IOobject::NO_WRITE
+                ),
+                dgMesh,
+                true
+            );
+
+            dgField<vector> SE
+            (
+                IOobject
+                (
+                    "SE",
+                    runTime.timeName(),
+                    mesh,
+                    IOobject::NO_READ,
+                    IOobject::NO_WRITE
+                ),
+                dgMesh,
+                true
+            );
+
+            dgField<tensor> gradU
+            (
+                IOobject
+                (
+                    "gradU",
+                    runTime.timeName(),
+                    mesh,
+                    IOobject::NO_READ,
+                    IOobject::NO_WRITE
+                ),
+                dgMesh,
+                false
+            );
+
+            dgField<vector> gradP
+            (
+                IOobject
+                (
+                    "gradP",
+                    runTime.timeName(),
+                    mesh,
+                    IOobject::NO_READ,
+                    IOobject::NO_WRITE
+                ),
+                dgMesh,
+                false
+            );
+
+            dgField<vector> gradT
+            (
+                IOobject
+                (
+                    "gradT",
+                    runTime.timeName(),
+                    mesh,
+                    IOobject::NO_READ,
+                    IOobject::NO_WRITE
+                ),
+                dgMesh,
+                false
+            );
+
             IOdictionary thermoDict
             (
                 IOobject
@@ -485,7 +972,19 @@ int main(int argc, char *argv[])
             autoPtr<dgThermoConservative> thermo =
                 dgThermoConservative::New(dgThermoTypeName, thermoDict, dgMesh);
 
-            exportTimeStep(runTime, dgMesh, rho, rhoU, E, thermo());
+            exportTimeStep
+            (
+                runTime,
+                dgMesh,
+                rho,
+                rhoU,
+                E,
+                thermo(),
+                lagrangeLimiterTolerance,
+                smoothContinuousFields,
+                kxrcfThreshold,
+                kxrcfLPRMode
+            );
         }
 
         if (Pstream::parRun())

@@ -28,124 +28,136 @@ License
 
 // * * * * * * * * * * * * * Private Member Functions  * * * * * * * * * * * //
 
-template<class UType, class FType>
-inline void Foam::dgGeneralPDETerm<UType, FType>::checkTypes() const
+template<class UType>
+inline void Foam::dgGradProjectionTerm<UType>::checkTypes() const
 {
     static_assert
     (
-        (std::is_same<UType, scalar>::value && std::is_same<FType, vector>::value)
-     ||
-        (std::is_same<UType, vector>::value && std::is_same<FType, tensor>::value),
-        "dgGeneralPDETerm: invalid (UType, FType) combination. "
-        "Allowed: (scalar, vector) or (vector, tensor)"
+        std::is_same<UType, scalar>::value
+     || std::is_same<UType, vector>::value,
+        "dgGradProjectionTerm: invalid UType. Allowed: scalar or vector"
+    );
+
+    static_assert
+    (
+        std::is_same
+        <
+            residual_type,
+            typename outerProduct<UType, vector>::type
+        >::value,
+        "dgGradProjectionTerm: volume and surface projection result types differ"
     );
 }
 
 
 // * * * * * * * * * * * * * * * Constructors  * * * * * * * * * * * * * * * //
 
-template<class UType, class FType>
-Foam::dgGeneralPDETerm<UType, FType>::dgGeneralPDETerm
+template<class UType>
+Foam::dgGradProjectionTerm<UType>::dgGradProjectionTerm
 (
     const word& termName,
-    dgFluxSolver::equationType eqnType,
     const dgBasisField& basis,
     const GaussField<UType>& U,
-    GaussField<FType>& F,
-    dgFluxSolverManager& fluxSolver
+    const dgFluxSolver::equationType eqnType
 )
 :
     termName_(termName),
     eqnType_(eqnType),
     cellID_(basis.cellID()),
     basis_(basis),
-    U_(U),
-    F_(new GaussField<FType>(F)),
-    fluxSolver_(fluxSolver),
+    U_(new GaussField<UType>(U)),
     nDof_(basis_.nDof()),
-    R_(nDof_, pTraits<UType>::zero)
+    R_(nDof_, pTraits<residual_type>::zero)
 {
     checkTypes();
-
-    // Initialize flux field
-    F_.ref().faceField().initFlux();
-
-    // Set equation type in flux solver
-    fluxSolver_.solver(termName_+"Flux").setEquationType(eqnType_);
 }
 
-template<class UType, class FType>
-Foam::dgGeneralPDETerm<UType, FType>::dgGeneralPDETerm
+
+template<class UType>
+Foam::dgGradProjectionTerm<UType>::dgGradProjectionTerm
 (
     const word& termName,
-    dgFluxSolver::equationType eqnType,
     const dgBasisField& basis,
-    const GaussField<UType>& U,
-    const tmp<GaussField<FType>>& tF,
-    dgFluxSolverManager& fluxSolver
+    const tmp<GaussField<UType>>& tU,
+    const dgFluxSolver::equationType eqnType
 )
 :
     termName_(termName),
     eqnType_(eqnType),
     cellID_(basis.cellID()),
     basis_(basis),
-    U_(U),
-    F_(tF),
-    fluxSolver_(fluxSolver),
+    U_(tU),
     nDof_(basis_.nDof()),
-    R_(nDof_, pTraits<UType>::zero)
+    R_(nDof_, pTraits<residual_type>::zero)
 {
     checkTypes();
-
-    // Initialize flux field
-    F_.ref().faceField().initFlux();
-
-    // Set equation type in flux solver
-    fluxSolver_.solver(termName_+"Flux").setEquationType(eqnType_);
 }
 
 
 // * * * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * * //
 
-template<class UType, class FType>
-void Foam::dgGeneralPDETerm<UType, FType>::updateFlux()
+template<class UType>
+void Foam::dgGradProjectionTerm<UType>::updateFlux()
 {
-    fluxSolver_.solver(termName_+"Flux").computeFlux
-    (
-        cellID_,
-        F_.ref().faceField(),
-        U_.faceField()
-    );
+    faceGaussField<UType>& UFace = U_.ref().faceField();
+
+    const label nFaces = UFace.nFaces();
+    const label nGauss = UFace.nGaussPerFace();
+
+    for (label faceI = 0; faceI < nFaces; ++faceI)
+    {
+        if (UFace.isBoundary(faceI))
+        {
+            continue;
+        }
+
+        for (label gI = 0; gI < nGauss; ++gI)
+        {
+            UFace.midValueOnFace(faceI, gI) =
+                scalar(0.5)
+               *(
+                    UFace.minusValueOnFace(faceI, gI)
+                  + UFace.plusValueOnFace(faceI, gI)
+                );
+        }
+    }
 }
 
 
-template<class UType, class FType>
-void Foam::dgGeneralPDETerm<UType, FType>::calcResidual()
+template<class UType>
+void Foam::dgGradProjectionTerm<UType>::calcResidual()
 {
     forAll (R_, i)
     {
-        R_[i] = pTraits<UType>::zero;
+        R_[i] = pTraits<residual_type>::zero;
     }
 
     for (label i = 0; i < nDof_; ++i)
     {
-        // Gradient of basis phi_i
         const GaussField<vector>& gradPhi = basis_.getDBasis(i);
 
-        const UType volTerm =
+        const residual_type volTerm =
         (
             i == 0
-          ? pTraits<UType>::zero
-          : Foam::volumeIntegral(gradPhi.cellField(), F_().cellField())
+          ? pTraits<residual_type>::zero
+          : Foam::gradProjectionVolumeIntegral
+            (
+                gradPhi.cellField(),
+                U_().cellField()
+            )
         );
 
-        // Basis phi_i on faces
         const GaussField<scalar>& phi = basis_.getBasis(i);
 
-        const UType surfTerm = Foam::surfaceIntegral(phi.faceField(), F_().faceField());
+        const residual_type surfTerm =
+            Foam::gradProjectionSurfaceIntegral
+            (
+                phi.faceField(),
+                U_().faceField()
+            );
 
-        R_[i] += volTerm;
-        R_[i] -= surfTerm;
+        R_[i] -= volTerm;
+        R_[i] += surfTerm;
     }
 }
 

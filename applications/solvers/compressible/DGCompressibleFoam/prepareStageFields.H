@@ -3,7 +3,7 @@
 // A good mental model is:
 // - dgTimeDiscretization owns the stage state,
 // - the solver makes all derived Gauss fields consistent with that state,
-// - only then can dgGeneralPDETerm assemble residuals safely.
+// - only then can dgConvectiveTerm assemble residuals safely.
 
 // Flux assembly uses primitive interface values, so start each stage from a
 // synchronized p/T/U processor state.

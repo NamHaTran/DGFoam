@@ -384,6 +384,17 @@ public:
         const scalar e
     ) const override;
 
+    /**
+     * \brief Compute \f$\nabla p\f$ for the explicit PR relation p(rho,T).
+     */
+    virtual vector calcGradPFromRhoT
+    (
+        const scalar rho,
+        const scalar T,
+        const vector& gradRho,
+        const vector& gradT
+    ) const override;
+
     virtual bool canCalcRhoFromPT() const override { return true; }
     virtual bool canCalcPFromRhoT() const override { return true; }
     virtual bool canCalcTFromPRho() const override { return true; }

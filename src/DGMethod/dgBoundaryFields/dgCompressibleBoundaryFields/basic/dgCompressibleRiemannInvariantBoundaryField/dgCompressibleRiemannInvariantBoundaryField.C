@@ -234,6 +234,36 @@ void dgCompressibleRiemannInvariantBoundaryField::updateGhostState
 }
 
 
+void dgCompressibleRiemannInvariantBoundaryField::updateBCValue
+(
+    const label cellID,
+    const label faceLocalID,
+    const label localGauss,
+    const vector& n,
+    const scalar rhoMinus,
+    const vector& rhoUMinus,
+    const scalar EMinus,
+    scalar& rhoBC,
+    vector& rhoUBC,
+    scalar& EBC
+) const
+{
+    updateGhostState
+    (
+        cellID,
+        faceLocalID,
+        localGauss,
+        n,
+        rhoMinus,
+        rhoUMinus,
+        EMinus,
+        rhoBC,
+        rhoUBC,
+        EBC
+    );
+}
+
+
 void dgCompressibleRiemannInvariantBoundaryField::checkPatchType() const
 {
     if (this->patch_.type() != "patch")

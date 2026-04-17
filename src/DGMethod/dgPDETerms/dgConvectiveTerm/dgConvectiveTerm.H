@@ -25,18 +25,18 @@ License
     along with OpenFOAM.  If not, see <http://www.gnu.org/licenses/>.
 
 Class
-    Foam::dgGeneralPDETerm
+    Foam::dgConvectiveTerm
 
 Description
-    Generic DG PDE term used for residual assembly.
+    Convective DG PDE term used for residual assembly.
 
 SourceFiles
-    dgGeneralPDETerm.C
+    dgConvectiveTerm.C
 
 \*---------------------------------------------------------------------------*/
 
-#ifndef Foam_dgGeneralPDETerm_H
-#define Foam_dgGeneralPDETerm_H
+#ifndef Foam_dgConvectiveTerm_H
+#define Foam_dgConvectiveTerm_H
 
 #include "word.H"
 #include "List.H"
@@ -55,12 +55,12 @@ namespace Foam
 {
 
 /*---------------------------------------------------------------------------*\
-                       Class dgGeneralPDETerm Declaration
+                       Class dgConvectiveTerm Declaration
 \*---------------------------------------------------------------------------*/
 
 /**
- * \class Foam::dgGeneralPDETerm
- * \brief Generic DG PDE term for residual assembly
+ * \class Foam::dgConvectiveTerm
+ * \brief Convective DG PDE term for residual assembly
  *
  * \tparam UType Type of solution variable (scalar or vector)
  * \tparam FType Type of flux (vector or tensor)
@@ -92,7 +92,7 @@ namespace Foam
  * - Is used repeatedly during residual assembly
  */
 template<class UType, class FType>
-class dgGeneralPDETerm
+class dgConvectiveTerm
 {
 private:
 
@@ -147,7 +147,7 @@ public:
      * \param F          Flux field at Gauss points
      * \param fluxSolver Flux solver manager
      */
-    dgGeneralPDETerm
+    dgConvectiveTerm
     (
         const word& termName,
         dgFluxSolver::equationType eqnType,
@@ -167,7 +167,7 @@ public:
      * \param F          Flux field at Gauss points
      * \param fluxSolver Flux solver manager
      */
-    dgGeneralPDETerm
+    dgConvectiveTerm
     (
         const word& termName,
         dgFluxSolver::equationType eqnType,
@@ -178,7 +178,7 @@ public:
     );
 
     //- Destructor
-    ~dgGeneralPDETerm() = default;
+    ~dgConvectiveTerm() = default;
 
     // Access --------------------------------------------------------------
 
@@ -216,7 +216,7 @@ public:
 } // End namespace Foam
 
 #ifdef NoRepository
-    #include "dgGeneralPDETermI.H"
+    #include "dgConvectiveTermI.H"
 #endif
 
 #endif

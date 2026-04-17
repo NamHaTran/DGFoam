@@ -83,6 +83,26 @@ void dgCompressibleFixedValueBoundaryField::updateGhostState
 }
 
 
+void dgCompressibleFixedValueBoundaryField::updateBCValue
+(
+    const label,
+    const label,
+    const label,
+    const vector&,
+    const scalar,
+    const vector&,
+    const scalar,
+    scalar& rhoBC,
+    vector& rhoUBC,
+    scalar& EBC
+) const
+{
+    rhoBC  = rhoValue_;
+    rhoUBC = rhoUValue_;
+    EBC    = EValue_;
+}
+
+
 void dgCompressibleFixedValueBoundaryField::checkPatchType() const
 {
     if
