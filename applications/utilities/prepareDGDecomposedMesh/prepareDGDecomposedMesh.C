@@ -52,7 +52,7 @@ int main(int argc, char *argv[])
     // Create DG geometric mesh (global mesh)
     // ---------------------------------------------------------------------
 
-    dgGeomMesh dgMesh(mesh);
+    dgGeomMesh dgMesh(mesh, false);
 
     Info<< "Creating DG Geometric Mesh with polynomial order "
         << dgMesh.pOrder() << nl << endl;

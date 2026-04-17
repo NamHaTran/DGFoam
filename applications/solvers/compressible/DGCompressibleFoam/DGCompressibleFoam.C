@@ -25,7 +25,18 @@ License
     along with OpenFOAM.  If not, see <http://www.gnu.org/licenses/>.
 
 Description
-    Minimal density-based DG solver for inviscid/compressible experiments.
+    Density-based DG solver for the compressible Navier-Stokes-Fourier
+    equations.
+
+    The solver advances the conservative variables
+
+        rho, rhoU, E
+
+    and assembles the mass, momentum, and total-energy conservation laws with
+    convective fluxes, Newtonian viscous stress, and Fourier heat conduction.
+    LDG auxiliary equations project the conservative gradients needed to
+    reconstruct grad(U), grad(T), and other thermo gradients before the
+    diffusive residual is assembled.
 
     Tutorial execution flow:
     1. Build the OpenFOAM time database and fvMesh.
@@ -36,7 +47,8 @@ Description
        - compute a global explicit deltaT from the current DG state,
        - iterate over RK/Euler stages managed by dgTimeDiscretization,
        - prepare stage input states and boundary data,
-       - assemble cell-local DG residuals,
+       - project LDG auxiliary gradients for viscous/thermal terms,
+       - assemble cell-local DG residuals for mass, momentum, and energy,
        - advance the registered conservative fields.
     6. Write the updated state and proceed to the next physical step.
 
@@ -48,7 +60,12 @@ Description
     - cellGaussField, faceGaussField, and boundaryGaussField behave much like
       scalar/vector/tensor containers, so many expressions can be written in a
       compact pointwise algebra style.
-    - dgConvectiveTerm assembles one semi-discrete DG operator for one cell.
+    - dgConvectiveTerm assembles convective DG operators with the selected
+      numerical flux.
+    - dgDiffusiveTerm assembles the central diffusive DG operators for
+      viscous stress and heat conduction.
+    - dgGradProjectionTerm and dgMassProjection solve the LDG auxiliary
+      gradient blocks used by the Navier-Stokes-Fourier closure.
     - dgTimeDiscretization drives the explicit stage loop and updates the
       registered conservative fields using the selected time scheme.
 

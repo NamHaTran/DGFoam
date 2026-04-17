@@ -90,21 +90,21 @@ inline vector volumeIntegral(const cellGaussField<vector>& gradPhi, const cellGa
 /**
  * \brief Volume integral for the gradient-projection weak form.
  *
- * Computes \f$\int_\Omega \nabla\phi\,C\,dV\f$.
+ * Computes \f$\int_\Omega C\,\nabla\phi\,dV\f$.
  * If C is scalar the result is vector; if C is vector the result is tensor.
  *
  * \param gradPhi Gradient of basis function at Gauss points
  * \param C       Projected field at cell Gauss points
  */
 template<class Type>
-inline typename outerProduct<vector, Type>::type gradProjectionVolumeIntegral
+inline typename outerProduct<Type, vector>::type gradProjectionVolumeIntegral
 (
     const cellGaussField<vector>& gradPhi,
     const cellGaussField<Type>& C
 )
 {
-    typename outerProduct<vector, Type>::type volInt =
-        pTraits<typename outerProduct<vector, Type>::type>::zero;
+    typename outerProduct<Type, vector>::type volInt =
+        pTraits<typename outerProduct<Type, vector>::type>::zero;
 
     const label nGauss = C.size();
     const List<scalar>& w = C.cell()->weights();
@@ -112,7 +112,7 @@ inline typename outerProduct<vector, Type>::type gradProjectionVolumeIntegral
 
     for (label g = 0; g < nGauss; ++g)
     {
-        volInt += J3D[g] * (gradPhi[g] * C[g]) * w[g];
+        volInt += J3D[g] * (C[g] * gradPhi[g]) * w[g];
     }
 
     return volInt;

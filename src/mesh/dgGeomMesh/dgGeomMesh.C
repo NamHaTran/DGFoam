@@ -99,7 +99,8 @@ Foam::label readPOrder(const Foam::fvMesh& mesh)
 // Construct from fvMesh and read polynomial order from system/dgSchemes
 Foam::dgGeomMesh::dgGeomMesh
 (
-    const fvMesh& mesh
+    const fvMesh& mesh,
+    const bool buildBasisFields
 )
 :
     mesh_(mesh),
@@ -196,11 +197,14 @@ Foam::dgGeomMesh::dgGeomMesh
     // Assign face connectivity to processor patches if running in parallel
     assignFaceConnectivityToProcPatches();
 
-    // Basis data depend only on geometry/p-order, so cache them once here.
-    basisFields_.setSize(mesh_.nCells());
-    for (label cellI = 0; cellI < mesh_.nCells(); ++cellI)
+    if (buildBasisFields)
     {
-        basisFields_[cellI] = new dgBasisField(cellI, *this);
+        // Basis data depend only on geometry/p-order, so cache them once here.
+        basisFields_.setSize(mesh_.nCells());
+        for (label cellI = 0; cellI < mesh_.nCells(); ++cellI)
+        {
+            basisFields_[cellI] = new dgBasisField(cellI, *this);
+        }
     }
 }
 

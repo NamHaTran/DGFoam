@@ -31,15 +31,15 @@ Description
     DG auxiliary projection term for equations that project the gradient of
     a state field C into an auxiliary unknown.
 
-        - volInt(grad(phi)*C dv) + surfInt(phi*flux(C) dS)
+        - volInt(C*grad(phi) dv) + surfInt(phi*flux(C) dS)
 
     This term is meant for the weak form block
 
-        volInt(grad(phi)*C dv) - surfInt(phi*flux(C) dS)
+        volInt(C*grad(phi) dv) - surfInt(phi*flux(C) dS)
 
     after it is moved to the residual side with the opposite sign:
 
-        R = -volInt(grad(phi)*C dv) + surfInt(phi*flux(C) dS)
+        R = -volInt(C*grad(phi) dv) + surfInt(phi*flux(C) dS)
 
     The face flux is not obtained from dgFluxSolverManager, and termName_ is
     not looked up in dgSchemes to select a flux solver. For auxiliary equations
@@ -52,7 +52,8 @@ Description
 
     Supported state/result pairs:
     - C scalar -> residual vector
-    - C vector -> residual tensor
+    - C vector -> residual tensor with rows as vector components and columns
+      as spatial directions
 
 \*---------------------------------------------------------------------------*/
 
@@ -89,7 +90,7 @@ namespace Foam
  * updateFlux() writes the central face state into faceField().midValues().
  * calcResidual() then integrates
  *
- *     R_i = - int_Omega grad(phi_i) C dV
+ *     R_i = - int_Omega C grad(phi_i) dV
  *           + int_dOmega phi_i C* n dS
  *
  * for each basis function. termName_ is not used to look up dgSchemes or
@@ -121,7 +122,7 @@ private:
     label nDof_;
 
     /** Residual values per degree of freedom. */
-    List<typename outerProduct<vector, UType>::type> R_;
+    List<typename outerProduct<UType, vector>::type> R_;
 
     /** Compile-time validation for supported state/result pairs. */
     inline void checkTypes() const;
@@ -131,8 +132,8 @@ public:
     /** Type of the projected state C. */
     using state_type = UType;
 
-    /** Type of grad(phi)*C and C*n. */
-    using residual_type = typename outerProduct<vector, UType>::type;
+    /** Type of C*grad(phi) and C*n. */
+    using residual_type = typename outerProduct<UType, vector>::type;
 
     /**
      * \brief Construct from a persistent GaussField state C.
@@ -184,7 +185,7 @@ public:
     void updateFlux();
 
     /**
-     * \brief Assemble R = -volInt(grad(phi)*C) + surfInt(phi*C* n).
+     * \brief Assemble R = -volInt(C*grad(phi)) + surfInt(phi*C* n).
      */
     void calcResidual();
 };

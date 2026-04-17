@@ -134,7 +134,7 @@ public:
          * The DG polynomial order is read from \c system/dgSchemes under
          * \c dgDiscretization/pOrder.
          */
-        dgGeomMesh(const fvMesh& mesh);
+        dgGeomMesh(const fvMesh& mesh, const bool buildBasisFields = true);
 
     /** Destructor */
     ~dgGeomMesh();

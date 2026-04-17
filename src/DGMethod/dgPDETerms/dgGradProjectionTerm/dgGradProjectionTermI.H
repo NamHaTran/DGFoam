@@ -43,7 +43,7 @@ inline void Foam::dgGradProjectionTerm<UType>::checkTypes() const
         std::is_same
         <
             residual_type,
-            typename outerProduct<UType, vector>::type
+            typename outerProduct<vector, UType>::type
         >::value,
         "dgGradProjectionTerm: volume and surface projection result types differ"
     );
@@ -134,18 +134,17 @@ void Foam::dgGradProjectionTerm<UType>::calcResidual()
 
     for (label i = 0; i < nDof_; ++i)
     {
-        const GaussField<vector>& gradPhi = basis_.getDBasis(i);
+        residual_type volTerm = pTraits<residual_type>::zero;
 
-        const residual_type volTerm =
-        (
-            i == 0
-          ? pTraits<residual_type>::zero
-          : Foam::gradProjectionVolumeIntegral
+        if (i != 0)
+        {
+            const GaussField<vector>& gradPhi = basis_.getDBasis(i);
+            volTerm = Foam::gradProjectionVolumeIntegral
             (
                 gradPhi.cellField(),
                 U_().cellField()
-            )
-        );
+            );
+        }
 
         const GaussField<scalar>& phi = basis_.getBasis(i);
 

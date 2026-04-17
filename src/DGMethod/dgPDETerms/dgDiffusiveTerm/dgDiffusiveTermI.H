@@ -173,14 +173,17 @@ void Foam::dgDiffusiveTerm<UType, FType>::calcResidual()
 
     for (label i = 0; i < nDof_; ++i)
     {
-        const GaussField<vector>& gradPhi = basis_.getDBasis(i);
+        UType volTerm = pTraits<UType>::zero;
 
-        const UType volTerm =
-        (
-            i == 0
-          ? pTraits<UType>::zero
-          : Foam::volumeIntegral(gradPhi.cellField(), F_().cellField())
-        );
+        if (i != 0)
+        {
+            const GaussField<vector>& gradPhi = basis_.getDBasis(i);
+            volTerm = Foam::volumeIntegral
+            (
+                gradPhi.cellField(),
+                F_().cellField()
+            );
+        }
 
         const GaussField<scalar>& phi = basis_.getBasis(i);
 

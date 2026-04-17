@@ -12,7 +12,7 @@
 //
 //    dgGradProjectionTerm assembles the weak gradient equation
 //
-//        M S = - int_Omega grad(phi) C dV
+//        M S = - int_Omega C grad(phi) dV
 //              + int_dOmega phi C* n dS
 //
 //    where C is rho, rhoU, or E.  Internal faces use the LDG-style central
@@ -158,6 +158,8 @@ forAll(mesh.cells(), cellI)
 }
 
 thermo->synchGradient();
+
+massProjection.writeResiduals(Info);
 
 massProjection.clearResiduals();
 
