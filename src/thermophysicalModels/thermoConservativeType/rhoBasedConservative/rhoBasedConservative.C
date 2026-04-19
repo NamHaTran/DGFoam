@@ -179,6 +179,7 @@ void Foam::rhoBasedConservative::initModels()
         << "  thermo          = " << thermo_().type() << nl
         << "  transport       = " << transport_().type() << nl
         << "  energy          = " << energy_().type() << nl
+        << "  selfDiffusion   = " << Switch(selfDiffusion_) << nl
         << endl;
 }
 

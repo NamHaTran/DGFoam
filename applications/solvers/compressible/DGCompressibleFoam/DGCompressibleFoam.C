@@ -87,12 +87,11 @@ Description
 #include "dgThermoConservative.H"
 #include "dgConvectiveTerm.H"
 #include "dgDiffusiveTerm.H"
+#include "dgSourceTerm.H"
 #include "dgGradProjectionTerm.H"
 
 
-// Test libs
 #include "dgBasisField.H"
-#include "debugProcessorFaceExchange.H"
 
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
@@ -108,6 +107,7 @@ int main(int argc, char *argv[])
     // - mesh reads the polyMesh and creates the underlying fvMesh.
     #include "createTime.H"
     #include "createMesh.H"
+    #include "readGravitationalAcceleration.H"
 
     // Build the DG-specific geometric layer on top of fvMesh. This is the
     // core geometry/data structure used throughout the solver: it provides
@@ -153,7 +153,7 @@ int main(int argc, char *argv[])
             // 3) Assemble the semi-discrete DG residual for this stage.
             //    This is where dgFoam feels most mathematical: Gauss fields
             //    support pointwise +, -, *, / just like ordinary values.
-            #include "assembleStageResiduals.H"
+            #include "stateResiduals/assembleStageResiduals.H"
             // 4) Apply the explicit stage update to the registered fields.
             #include "advanceStage.H"
 

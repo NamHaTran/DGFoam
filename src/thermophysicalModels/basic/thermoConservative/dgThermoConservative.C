@@ -59,6 +59,10 @@ Foam::dgThermoConservative::dgThermoConservative
     ),
     name_(name),
     dict_(dict),
+    selfDiffusion_
+    (
+        dict.subDict("dgThermo").lookupOrDefault<bool>("selfDiffusion", false)
+    ),
     mesh_(mesh),
 
     // Null initialization. Derived class will allocate real models.

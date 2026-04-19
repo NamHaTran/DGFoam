@@ -55,5 +55,5 @@ IOobject boundaryConditionsIO
 
 autoPtr<dgCompressibleBoundaryManager> compressibleBC
 (
-    new dgCompressibleBoundaryManager(boundaryConditionsIO, dgMesh)
+    new dgCompressibleBoundaryManager(boundaryConditionsIO, thermo(), dgMesh)
 );

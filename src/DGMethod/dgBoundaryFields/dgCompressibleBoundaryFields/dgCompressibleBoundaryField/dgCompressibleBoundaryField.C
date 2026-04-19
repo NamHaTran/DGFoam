@@ -27,6 +27,7 @@ License
 \*---------------------------------------------------------------------------*/
 
 #include "dgCompressibleBoundaryField.H"
+#include "dgCompressibleBoundaryManager.H"
 #include "dgThermoConservative.H"
 #include "addToRunTimeSelectionTable.H"
 #include <string>
@@ -66,8 +67,15 @@ dgCompressibleBoundaryField::dgCompressibleBoundaryField
     patch_(patch),
     dgMesh_(dgMesh),
     thermo_(thermo),
-    dict_(dict)
-{}
+    dict_(dict),
+    coupling_(dict.lookupOrDefault<bool>("coupling", false)),
+    couplePatchName_(word::null)
+{
+    if (dict.found("couplePatch"))
+    {
+        couplePatchName_ = dict.get<word>("couplePatch");
+    }
+}
 
 
 autoPtr<dgCompressibleBoundaryField> dgCompressibleBoundaryField::New
@@ -156,6 +164,36 @@ scalar dgCompressibleBoundaryField::pressureVelocityToConservativeEnergy
     }
 
     return rho*(he + 0.5*magSqr(U)) - p;
+}
+
+
+void dgCompressibleBoundaryField::resolveCoupling
+(
+    const dgCompressibleBoundaryManager& manager
+)
+{
+    if (!coupling_)
+    {
+        return;
+    }
+
+    if (couplePatchName_ == word::null)
+    {
+        FatalIOErrorInFunction(dict_)
+            << "Boundary condition " << this->type()
+            << " on patch " << patch_.name()
+            << " has coupling enabled but no couplePatch entry"
+            << exit(FatalIOError);
+    }
+
+    if (!manager.foundBoundaryField(couplePatchName_))
+    {
+        FatalIOErrorInFunction(dict_)
+            << "Boundary condition " << this->type()
+            << " on patch " << patch_.name()
+            << " couples to unknown patch " << couplePatchName_
+            << exit(FatalIOError);
+    }
 }
 
 } // End namespace Foam

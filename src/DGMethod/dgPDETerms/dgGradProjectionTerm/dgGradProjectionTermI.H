@@ -106,7 +106,7 @@ void Foam::dgGradProjectionTerm<UType>::updateFlux()
 
     for (label faceI = 0; faceI < nFaces; ++faceI)
     {
-        if (UFace.isBoundary(faceI))
+        if (UFace.isBoundary(faceI) && !UFace.isProcessorPatch(faceI))
         {
             continue;
         }

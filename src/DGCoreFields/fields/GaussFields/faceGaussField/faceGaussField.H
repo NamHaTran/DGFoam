@@ -418,6 +418,12 @@ public:
         /** \brief Return true if the specified local face is a boundary face. */
         inline bool isBoundary(const label fI) const { return faces_[fI]->isBoundary(); }
 
+        /** \brief Return true if the specified local face lies on a processor patch. */
+        inline bool isProcessorPatch(const label fI) const
+        {
+            return faces_[fI]->isProcessorPatch();
+        }
+
         /** \brief Return true if the input cell is the owner of the specified face. */
         inline bool isOwner(const label fI, const label cellID) const 
         { 

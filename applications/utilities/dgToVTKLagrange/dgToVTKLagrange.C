@@ -554,17 +554,15 @@ void exportTimeStep
                 kxrcfLPRMode,
                 nTroubledCells
             );
+
+        Info<< "KXRCF troubled cells marked for full-DoF Lagrange "
+            << "reconstruction: " << nTroubledCells << nl;
     }
-
-    Info<< "KXRCF troubled cells marked for full-DoF Lagrange "
-        << "reconstruction: " << nTroubledCells;
-
-    if (!smoothContinuousFields)
+    else
     {
-        Info<< " (smoothContinuousFields disabled)";
+        Info<< "smoothContinuousFields disabled; exporting full DoF in all "
+            << "cells without running KXRCF." << nl;
     }
-
-    Info<< nl;
 
     limitConservativeFieldsAtLagrangeNodes
     (
@@ -767,7 +765,7 @@ int main(int argc, char *argv[])
             << lagrangeLimiterTolerance << exit(FatalError);
     }
 
-    if (kxrcfThreshold <= 0)
+    if (smoothContinuousFields && kxrcfThreshold <= 0)
     {
         FatalErrorInFunction
             << "Option -kxrcfThreshold must be positive, but got "

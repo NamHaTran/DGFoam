@@ -116,6 +116,22 @@ void dgCompressibleAdiabaticWallBoundaryField::updateBCValue
 }
 
 
+void dgCompressibleAdiabaticWallBoundaryField::correctSelfDiffusionFlux
+(
+    const label,
+    const label,
+    const label,
+    const vector& n,
+    vector& massDiffFlux
+) const
+{
+    if (thermo_.selfDiffusion())
+    {
+        massDiffFlux -= (massDiffFlux & n)*n;
+    }
+}
+
+
 void dgCompressibleAdiabaticWallBoundaryField::checkPatchType() const
 {
     if (this->patch_.type() != "wall")

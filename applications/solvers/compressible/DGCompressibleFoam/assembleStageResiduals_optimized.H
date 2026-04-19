@@ -1,21 +1,9 @@
-// Optimized semi-discrete compressible Navier-Stokes-Fourier residual
-// assembly.
+// Optimized semi-discrete DG residual assembly.
 //
 // This version mirrors assembleStageResiduals.H but builds algebraic flux
 // fields with explicit loops over Gauss points. That is a little more verbose,
 // but it can improve performance because it avoids constructing temporary
 // expression/evaluation fields for these pointwise fluxes.
-//
-// The conservative system is assembled equation by equation:
-//
-//     mass     : d(rho)/dt  + div(Fc_rho)        = 0
-//     momentum : d(rhoU)/dt + div(Fc_m + Fd_m)   = 0
-//     energy   : d(E)/dt    + div(Fc_E + Fd_E)   = 0
-//
-// where the Navier-Stokes-Fourier diffusive fluxes are
-//
-//     Fd_m = -tau,
-//     Fd_E = -(tau.U + kappa grad(T)).
 //
 // Use assembleStageResiduals.H when readability and compact mathematical
 // expressions are preferred. Use this optimized include when the cost of
@@ -33,23 +21,10 @@ forAll(mesh.cells(), cellI)
     GaussField<tensor>& gradUG  = gradU.gaussFields()[cellI];
     GaussField<vector>& gradTG  = gradT.gaussFields()[cellI];
 
-    //==================================================================//
-    //                          Mass conservation
-    //==================================================================//
+    // Mass equation:
+    //     d(rho)/dt + div(rho U) = 0
     //
-    // General equation:
-    //
-    //     d(rho)/dt + div(Fc_rho) = 0
-    //
-    // with
-    //
-    //     Fc_rho = rho U.
-    //
-    // Convective term assembly:
     // rhoUG already stores rho*U, so no auxiliary flux field is needed.
-    //
-    // Diffusive term assembly:
-    // no Navier-Stokes-Fourier mass diffusion term is used.
     dgConvectiveTerm<scalar, vector> massConvTerm
     (
         "massConvTerm",
@@ -60,22 +35,8 @@ forAll(mesh.cells(), cellI)
         fluxSolverManager
     );
 
-    //==================================================================//
-    //                       Momentum conservation
-    //==================================================================//
-    //
-    // General equation:
-    //
-    //     d(rhoU)/dt + div(Fc_m + Fd_m) = 0
-    //
-    // with
-    //
-    //     Fc_m = rhoU (x) U + pI,
-    //     Fd_m = -tau,
-    //     tau  = mu*(gradU + gradU^T - 2/3 tr(gradU) I).
-    //
-    // Momentum convective term assembly:
-    // Build Fc_m at interior, minus, and plus Gauss points.
+    // Momentum convective flux:
+    //     Fc_m = rhoU (x) U + pI
     //
     // Explicitly fill cell, minus, and plus Gauss values instead of using
     // dgExpr. This keeps exactly one materialized flux field.
@@ -121,21 +82,8 @@ forAll(mesh.cells(), cellI)
         fluxSolverManager
     );
 
-    //==================================================================//
-    //                     Total-energy conservation
-    //==================================================================//
-    //
-    // General equation:
-    //
-    //     d(E)/dt + div(Fc_E + Fd_E) = 0
-    //
-    // with
-    //
-    //     Fc_E = (E + p) U,
-    //     Fd_E = -(tau.U + kappa grad(T)).
-    //
-    // Energy convective term assembly:
-    // Build Fc_E at interior, minus, and plus Gauss points.
+    // Total-energy convective flux:
+    //     Fc_E = (E + p) U
     tmp<GaussField<vector>> tEnergyFlux =
         GaussField<vector>::New(cellI, &dgMesh);
     GaussField<vector>& energyFlux = tEnergyFlux.ref();
@@ -180,17 +128,7 @@ forAll(mesh.cells(), cellI)
         fluxSolverManager
     );
 
-    //==================================================================//
-    //             Shared Navier-Stokes-Fourier diffusive closure
-    //==================================================================//
-    //
-    // The momentum and energy diffusive sub-blocks share tau.  The optimized
-    // path computes both diffusive flux fields in one pass over Gauss points:
-    //
-    //     Fd_m = -tau,
-    //     Fd_E = -(tau.U + kappa grad(T)).
-    //
-    // Transport properties from the thermo API:
+    // Navier-Stokes-Fourier transport properties from the thermo API:
     //     mu = dynamic viscosity
     //     kappa = thermal conductivity
     GaussField<scalar> muG(cellI, &dgMesh);
@@ -199,11 +137,14 @@ forAll(mesh.cells(), cellI)
     thermo->transport().calcMu(cellI, TG, muG);
     thermo->transport().calcKappa(cellI, TG, kappaG);
 
-    // Momentum diffusive term assembly:
-    // tMomentumDiffFlux stores Fd_m = -tau.
+    // Momentum diffusive flux:
+    //     Fdiff_m = -tau
     //
-    // Energy diffusive term assembly:
-    // tEnergyDiffFlux stores Fd_E = -(tau.U + kappa grad(T)).
+    // Total-energy diffusive flux:
+    //     Fdiff_E = -(tau.U + kappa grad(T))
+    //
+    // tau is written explicitly at each Gauss point:
+    //     tau = mu*(gradU + gradU^T - 2/3 tr(gradU) I)
     tmp<GaussField<tensor>> tMomentumDiffFlux =
         GaussField<tensor>::New(cellI, &dgMesh);
     GaussField<tensor>& momentumDiffFlux = tMomentumDiffFlux.ref();
@@ -282,8 +223,6 @@ forAll(mesh.cells(), cellI)
         }
     }
 
-    // Momentum diffusive DG term:
-    // Integrate Fd_m with dgDiffusiveTerm's central face flux.
     dgDiffusiveTerm<vector, tensor> momentumDiffTerm
     (
         "momentumDiffTerm",
@@ -293,8 +232,6 @@ forAll(mesh.cells(), cellI)
         tMomentumDiffFlux
     );
 
-    // Energy diffusive DG term:
-    // Integrate Fd_E with dgDiffusiveTerm's central face flux.
     dgDiffusiveTerm<scalar, vector> energyDiffTerm
     (
         "energyDiffTerm",
@@ -304,10 +241,6 @@ forAll(mesh.cells(), cellI)
         tEnergyDiffFlux
     );
 
-    //==================================================================//
-    //                         Residual assembly
-    //==================================================================//
-    //
     // Numerical face fluxes:
     // - convective terms use dgFluxSolverManager-selected Riemann solvers,
     // - diffusive terms use dgDiffusiveTerm's fixed central flux.
@@ -324,12 +257,6 @@ forAll(mesh.cells(), cellI)
     energyConvTerm.calcResidual();
     energyDiffTerm.calcResidual();
 
-    //==================================================================//
-    //                   Store residuals for time update
-    //==================================================================//
-    //
-    // Store each equation contribution on the matching conservative field.
-    // Momentum and energy each receive both convective and diffusive residuals.
     timeDiscretization.addResidual
     (
         rho.name(),

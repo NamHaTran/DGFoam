@@ -37,6 +37,7 @@ Description
 
 #include "dictionary.H"
 #include "IOdictionary.H"
+#include "regIOobject.H"
 #include "DynamicList.H"
 #include "labelList.H"
 #include "dgGeomMesh.H"
@@ -73,6 +74,8 @@ class dgThermoConservative;
  * equations solved with the LDG method.
  */
 class dgCompressibleBoundaryManager
+:
+    public regIOobject
 {
 private:
 
@@ -88,8 +91,25 @@ private:
 
     void readInternalField(const dictionary& dict);
     void constructBoundaryConditions(const dictionary& dict);
+    void resolveCouplings();
 
 public:
+
+    TypeName("dgCompressibleBoundaryManager");
+
+    dgCompressibleBoundaryManager
+    (
+        const dictionary& boundaryDict,
+        const dgThermoConservative& thermo,
+        const dgGeomMesh& mesh
+    );
+
+    dgCompressibleBoundaryManager
+    (
+        const IOobject& io,
+        const dgThermoConservative& thermo,
+        const dgGeomMesh& mesh
+    );
 
     dgCompressibleBoundaryManager
     (
@@ -105,10 +125,26 @@ public:
 
     ~dgCompressibleBoundaryManager() = default;
 
+    virtual bool writeData(Ostream& os) const override;
+
     inline label conditionIndex(const label patchID) const
     {
         return patchToCondition_[patchID];
     }
+
+    label conditionIndex(const word& patchName) const;
+
+    bool foundBoundaryField(const word& patchName) const;
+
+    const dgCompressibleBoundaryField& boundaryField
+    (
+        const word& patchName
+    ) const;
+
+    dgCompressibleBoundaryField& boundaryFieldRef
+    (
+        const word& patchName
+    );
 
     inline const scalar& internalP() const { return internalP_; }
     inline const scalar& internalT() const { return internalT_; }
@@ -127,6 +163,11 @@ public:
         GaussField<vector>& rhoUG,
         GaussField<scalar>& EG,
         GaussField<vector>& UG
+    ) const;
+
+    void correctSelfDiffusionFlux
+    (
+        GaussField<vector>& massDiffFlux
     ) const;
 };
 

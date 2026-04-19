@@ -15,9 +15,10 @@
 //        M S = - int_Omega C grad(phi) dV
 //              + int_dOmega phi C* n dS
 //
-//    where C is rho, rhoU, or E.  Internal faces use the LDG-style central
-//    state C* = 0.5*(C- + C+).  Physical boundary faces use the middle state
-//    already supplied by updateBC.H through faceGaussField::midValues().
+//    where C is rho, rhoU, or E.  Internal and processor faces use the
+//    LDG-style central state C* = 0.5*(C- + C+).  Physical boundary faces use
+//    the middle state already supplied by updateBC.H through
+//    faceGaussField::midValues().
 //
 // 2. Rebuild primitive/thermal gradients from those conservative gradients.
 //    In particular, gradU is not solved as an independent DoF field here; it
@@ -66,9 +67,9 @@ forAll(mesh.cells(), cellI)
         EG
     );
 
-    // Step 1c: fill C* on internal faces, then assemble the modal residual
-    // for M S = R.  Boundary C* values are intentionally left as provided by
-    // the boundary-condition path.
+    // Step 1c: fill C* on internal and processor faces, then assemble the
+    // modal residual for M S = R.  Physical boundary C* values are
+    // intentionally left as provided by the boundary-condition path.
     auxGradRhoTerm.updateFlux();
     auxGradRhoUTerm.updateFlux();
     auxGradETerm.updateFlux();

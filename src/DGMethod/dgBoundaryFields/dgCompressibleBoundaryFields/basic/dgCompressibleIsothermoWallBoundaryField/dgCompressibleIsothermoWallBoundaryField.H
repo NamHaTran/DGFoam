@@ -136,6 +136,15 @@ public:
         scalar& EBC
     ) const override;
 
+    virtual void correctSelfDiffusionFlux
+    (
+        const label cellID,
+        const label faceLocalID,
+        const label localGauss,
+        const vector& n,
+        vector& massDiffFlux
+    ) const override;
+
     /** \brief Check that the boundary condition is applied on a wall patch. */
     virtual void checkPatchType() const override;
 };

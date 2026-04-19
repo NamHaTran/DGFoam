@@ -34,17 +34,28 @@ License
 namespace Foam
 {
 
+defineTypeNameAndDebug(dgCompressibleBoundaryManager, 0);
+
 dgCompressibleBoundaryManager::dgCompressibleBoundaryManager
 (
     const dictionary& boundaryDict,
+    const dgThermoConservative& thermo,
     const dgGeomMesh& mesh
 )
 :
-    mesh_(mesh),
-    thermo_
+    regIOobject
     (
-        mesh.getFvMesh().lookupObject<dgThermoConservative>("dgThermoConservative")
+        IOobject
+        (
+            "dgCompressibleBoundaryManager",
+            mesh.getFvMesh().time().constant(),
+            mesh.getFvMesh().thisDb(),
+            IOobject::NO_READ,
+            IOobject::NO_WRITE
+        )
     ),
+    mesh_(mesh),
+    thermo_(thermo),
     patchToCondition_(mesh.getFvMesh().boundary().size(), -1),
     internalP_(Zero),
     internalT_(Zero),
@@ -52,20 +63,30 @@ dgCompressibleBoundaryManager::dgCompressibleBoundaryManager
 {
     readInternalField(boundaryDict);
     constructBoundaryConditions(boundaryDict);
+    resolveCouplings();
 }
 
 
 dgCompressibleBoundaryManager::dgCompressibleBoundaryManager
 (
     const IOobject& io,
+    const dgThermoConservative& thermo,
     const dgGeomMesh& mesh
 )
 :
-    mesh_(mesh),
-    thermo_
+    regIOobject
     (
-        mesh.getFvMesh().lookupObject<dgThermoConservative>("dgThermoConservative")
+        IOobject
+        (
+            "dgCompressibleBoundaryManager",
+            mesh.getFvMesh().time().constant(),
+            mesh.getFvMesh().thisDb(),
+            IOobject::NO_READ,
+            IOobject::NO_WRITE
+        )
     ),
+    mesh_(mesh),
+    thermo_(thermo),
     patchToCondition_(mesh.getFvMesh().boundary().size(), -1),
     internalP_(Zero),
     internalT_(Zero),
@@ -74,7 +95,44 @@ dgCompressibleBoundaryManager::dgCompressibleBoundaryManager
     IOdictionary boundaryDict(io);
     readInternalField(boundaryDict);
     constructBoundaryConditions(boundaryDict);
+    resolveCouplings();
 }
+
+
+dgCompressibleBoundaryManager::dgCompressibleBoundaryManager
+(
+    const dictionary& boundaryDict,
+    const dgGeomMesh& mesh
+)
+:
+    dgCompressibleBoundaryManager
+    (
+        boundaryDict,
+        mesh.getFvMesh().lookupObject<dgThermoConservative>
+        (
+            "dgThermoConservative"
+        ),
+        mesh
+    )
+{}
+
+
+dgCompressibleBoundaryManager::dgCompressibleBoundaryManager
+(
+    const IOobject& io,
+    const dgGeomMesh& mesh
+)
+:
+    dgCompressibleBoundaryManager
+    (
+        io,
+        mesh.getFvMesh().lookupObject<dgThermoConservative>
+        (
+            "dgThermoConservative"
+        ),
+        mesh
+    )
+{}
 
 
 void dgCompressibleBoundaryManager::readInternalField(const dictionary& dict)
@@ -137,6 +195,86 @@ void dgCompressibleBoundaryManager::constructBoundaryConditions
     }
 
     bConditions_.shrink();
+}
+
+
+void dgCompressibleBoundaryManager::resolveCouplings()
+{
+    forAll(bConditions_, conditionI)
+    {
+        bConditions_[conditionI]->resolveCoupling(*this);
+    }
+}
+
+
+bool dgCompressibleBoundaryManager::writeData(Ostream& os) const
+{
+    os  << "nBoundaryConditions " << bConditions_.size() << token::END_STATEMENT
+        << nl;
+
+    return os.good();
+}
+
+
+label dgCompressibleBoundaryManager::conditionIndex
+(
+    const word& patchName
+) const
+{
+    const fvBoundaryMesh& patches = mesh_.getFvMesh().boundary();
+    const label patchID = patches.findPatchID(patchName);
+
+    if (patchID < 0)
+    {
+        return -1;
+    }
+
+    return patchToCondition_[patchID];
+}
+
+
+bool dgCompressibleBoundaryManager::foundBoundaryField
+(
+    const word& patchName
+) const
+{
+    return conditionIndex(patchName) >= 0;
+}
+
+
+const dgCompressibleBoundaryField& dgCompressibleBoundaryManager::boundaryField
+(
+    const word& patchName
+) const
+{
+    const label conditionI = conditionIndex(patchName);
+
+    if (conditionI < 0)
+    {
+        FatalErrorInFunction
+            << "No compressible DG boundary condition found for patch "
+            << patchName << exit(FatalError);
+    }
+
+    return bConditions_[conditionI]();
+}
+
+
+dgCompressibleBoundaryField& dgCompressibleBoundaryManager::boundaryFieldRef
+(
+    const word& patchName
+)
+{
+    const label conditionI = conditionIndex(patchName);
+
+    if (conditionI < 0)
+    {
+        FatalErrorInFunction
+            << "No compressible DG boundary condition found for patch "
+            << patchName << exit(FatalError);
+    }
+
+    return bConditions_[conditionI]();
 }
 
 
@@ -221,6 +359,54 @@ void dgCompressibleBoundaryManager::update
                 rhoUFace.midValueOnFace(faceI, g),
                 EFace.midValueOnFace(faceI, g)
             );
+        }
+    }
+}
+
+
+void dgCompressibleBoundaryManager::correctSelfDiffusionFlux
+(
+    GaussField<vector>& massDiffFlux
+) const
+{
+    if (!thermo_.selfDiffusion())
+    {
+        return;
+    }
+
+    const label cellID = massDiffFlux.cellID();
+    faceGaussField<vector>& fluxFace = massDiffFlux.faceField();
+
+    for (label faceI = 0; faceI < fluxFace.nFaces(); ++faceI)
+    {
+        if (!fluxFace.isBoundary(faceI))
+        {
+            continue;
+        }
+
+        const label patchID = fluxFace.getOwnerPatchID(faceI);
+        const label conditionI = patchToCondition_[patchID];
+
+        if (conditionI < 0)
+        {
+            continue;
+        }
+
+        const vector n = fluxFace.faces()[faceI]->normal();
+
+        for (label g = 0; g < fluxFace.nGaussPerFace(); ++g)
+        {
+            bConditions_[conditionI]->correctSelfDiffusionFlux
+            (
+                cellID,
+                faceI,
+                g,
+                n,
+                fluxFace.minusValueOnFace(faceI, g)
+            );
+
+            fluxFace.plusValueOnFace(faceI, g) =
+                fluxFace.minusValueOnFace(faceI, g);
         }
     }
 }

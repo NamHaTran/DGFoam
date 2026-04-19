@@ -154,8 +154,9 @@ public:
     /**
      * \brief Compute central numerical surface flux.
      *
-     * Boundary faces first copy plus-side flux values from minus-side values,
-     * then the same central formula is applied on all faces.
+     * Physical boundary faces first copy plus-side flux values from
+     * minus-side values. Internal and processor faces use their existing
+     * plus/minus traces in the same central formula.
      */
     void updateFlux();
 

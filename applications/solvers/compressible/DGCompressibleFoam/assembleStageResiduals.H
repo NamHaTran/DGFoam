@@ -1,17 +1,10 @@
-// Assemble the semi-discrete compressible Navier-Stokes-Fourier residual
-// cell by cell.
-//
-// The conservative system is written in divergence form as
-//
-//     dQ/dt + div(Fc(Q) + Fd(Q, gradQ)) = 0,
-//
-// with Q = (rho, rhoU, E).  This readable version builds the fluxes using
-// dgExpr algebra on GaussField objects, so each block keeps the same shape as
-// the continuum equation:
-//
-//     mass     : convective only
-//     momentum : convective + viscous stress
-//     energy   : convective + viscous work + Fourier heat conduction
+// Assemble the semi-discrete DG residual cell by cell.
+// Each dgConvectiveTerm computes
+//     R(U) = volume contribution + surface contribution
+// for one conservation law and hands the modal residual to the time integrator.
+// This file is intentionally written in a "physics first" style: most flux
+// expressions below are direct algebra on GaussField objects, so they read
+// similarly to the continuum equations.
 forAll(mesh.cells(), cellI)
 {
     // dgBasisField exposes basis values/derivatives for the current cell and
@@ -33,22 +26,8 @@ forAll(mesh.cells(), cellI)
     // dgConvectiveTerm then consumes these Gauss-point fields and performs
     // the DG integrals for one equation on this one cell.
 
-    //==================================================================//
-    //                          Mass conservation
-    //==================================================================//
-    //
-    // General equation:
-    //
-    //     d(rho)/dt + div(Fc_rho) = 0
-    //
-    // with
-    //
-    //     Fc_rho = rho U.
-    //
-    // There is no Navier-Stokes-Fourier diffusive mass flux in this model.
-    //
-    // Convective term assembly:
-    // rhoUG already stores rho*U at cell and face Gauss points.
+    // Mass equation:
+    //     d(rho)/dt + div(rho U) = 0
     dgConvectiveTerm<scalar, vector> massConvTerm
     (
         "massConvTerm",
@@ -59,23 +38,8 @@ forAll(mesh.cells(), cellI)
         fluxSolverManager
     );
 
-    //==================================================================//
-    //                       Momentum conservation
-    //==================================================================//
-    //
-    // General equation:
-    //
-    //     d(rhoU)/dt + div(Fc_m + Fd_m) = 0
-    //
-    // with
-    //
-    //     Fc_m = rhoU (x) U + pI,
-    //     Fd_m = -tau,
-    //     tau  = mu*(gradU + gradU^T - 2/3 tr(gradU) I).
-    //
-    // Momentum convective term assembly:
-    // Build Fc_m at all Gauss points, then let dgConvectiveTerm integrate it
-    // with the fluxSolverManager-selected numerical flux.
+    // Momentum equation:
+    //     d(rhoU)/dt + div(rhoU (x) U + pI) = 0
     //
     // This is the minimal dgExpr prototype in action.
     //
@@ -106,57 +70,11 @@ forAll(mesh.cells(), cellI)
         fluxSolverManager
     );
 
-    // The transport properties are evaluated through the selected thermo
-    // transport model, so Sutherland/power-law/etc. stay runtime-selected.
-    // muG and kappaG are full GaussField objects because the diffusive flux
-    // needs both cell values and face minus/plus values.
-    GaussField<scalar> muG(cellI, &dgMesh);
-    GaussField<scalar> kappaG(cellI, &dgMesh);
-
-    thermo->transport().calcMu(cellI, TG, muG);
-    thermo->transport().calcKappa(cellI, TG, kappaG);
-
-    // Momentum diffusive term assembly:
-    // Build the Newtonian stress and store the conservative diffusive flux
-    // Fd_m = -tau.  dgDiffusiveTerm applies the central flux on faces.
-    const auto tauExpr =
-        dg::expr(muG)
-       *(
-            dg::expr(gradUG)
-          + dg::T(dg::expr(gradUG))
-          - scalar(2.0/3.0)
-           *dg::tr(dg::expr(gradUG))
-           *dg::uniform(symmTensor::I)
-        );
-
-    tmp<GaussField<tensor>> tMomentumDiffFlux =
-        dg::evaluate<tensor>(-tauExpr, cellI, &dgMesh);
-
-    dgDiffusiveTerm<vector, tensor> momentumDiffTerm
-    (
-        "momentumDiffTerm",
-        dgFluxSolver::equationType::momentumTransport,
-        basisField,
-        rhoUG,
-        tMomentumDiffFlux
-    );
-
-    //==================================================================//
-    //                     Total-energy conservation
-    //==================================================================//
+    // Total-energy equation:
+    //     d(E)/dt + div((E + p)U) = 0
     //
-    // General equation:
-    //
-    //     d(E)/dt + div(Fc_E + Fd_E) = 0
-    //
-    // with
-    //
-    //     Fc_E = (E + p) U,
-    //     Fd_E = -(tau.U + kappa grad(T)).
-    //
-    // Energy convective term assembly:
-    // EG + pG is only a lazy expression recipe here; the intermediate sum is
-    // never stored as its own GaussField.
+    // Again, EG + pG is only a lazy recipe here.
+    // The intermediate sum is never stored as its own GaussField.
     const auto energyFluxExpr =
         (dg::expr(EG) + dg::expr(pG))*dg::expr(UG);
 
@@ -173,7 +91,48 @@ forAll(mesh.cells(), cellI)
         fluxSolverManager
     );
 
-    // Energy diffusive term assembly:
+    // Navier-Stokes-Fourier diffusive terms:
+    //
+    // Momentum:
+    //     d(rhoU)/dt + div(Fc_m - tau) = 0
+    //
+    // Total energy:
+    //     d(E)/dt + div(Fc_E - tau.U - kappa grad(T)) = 0
+    //
+    // The transport properties are evaluated through the selected thermo
+    // transport model, so Sutherland/power-law/etc. stay runtime-selected.
+    // muG and kappaG are full GaussField objects because the diffusive flux
+    // needs both cell values and face minus/plus values.
+    GaussField<scalar> muG(cellI, &dgMesh);
+    GaussField<scalar> kappaG(cellI, &dgMesh);
+
+    thermo->transport().calcMu(cellI, TG, muG);
+    thermo->transport().calcKappa(cellI, TG, kappaG);
+
+    // Pointwise Newtonian stress:
+    //     tau = mu*(gradU + gradU^T - 2/3 tr(gradU) I)
+    const auto tauExpr =
+        dg::expr(muG)
+       *(
+            dg::expr(gradUG)
+          + dg::T(dg::expr(gradUG))
+          - scalar(2.0/3.0)
+           *dg::tr(dg::expr(gradUG))
+           *dg::uniform(symmTensor::I)
+        );
+
+    // Momentum diffusive flux stored in conservative-flux form:
+    //     Fdiff_m = -tau
+    //
+    // dgDiffusiveTerm later applies the fixed central flux on faces.
+    // Physical boundary faces copy plus flux values from minus values before
+    // averaging. Processor faces keep their synchronized plus/minus traces.
+    tmp<GaussField<tensor>> tMomentumDiffFlux =
+        dg::evaluate<tensor>(-tauExpr, cellI, &dgMesh);
+
+    // Energy diffusive flux in conservative-flux form:
+    //     Fdiff_E = -(tau.U + kappa grad(T))
+    //
     // The first part is viscous work, the second is Fourier conduction.
     const auto energyDiffFluxExpr =
        -(
@@ -184,6 +143,21 @@ forAll(mesh.cells(), cellI)
     tmp<GaussField<vector>> tEnergyDiffFlux =
         dg::evaluate<vector>(energyDiffFluxExpr, cellI, &dgMesh);
 
+    // Implementation note:
+    // A user can still write explicit loops over Gauss points when raw speed
+    // matters most, because that can reduce temporary field construction.
+    // Here we use dgExpr so the algebraic form of each PDE term stays compact
+    // and close to the continuum equation.
+
+    dgDiffusiveTerm<vector, tensor> momentumDiffTerm
+    (
+        "momentumDiffTerm",
+        dgFluxSolver::equationType::momentumTransport,
+        basisField,
+        rhoUG,
+        tMomentumDiffFlux
+    );
+
     dgDiffusiveTerm<scalar, vector> energyDiffTerm
     (
         "energyDiffTerm",
@@ -193,63 +167,25 @@ forAll(mesh.cells(), cellI)
         tEnergyDiffFlux
     );
 
-    //==================================================================//
-    //                         Residual assembly
-    //==================================================================//
-    //
-    // updateFlux() computes the face flux:
-    // - convective terms use fluxSolverManager-selected numerical fluxes,
-    // - diffusive terms use dgDiffusiveTerm's central flux.
-    //
-    // calcResidual() then combines volume and surface contributions into the
-    // modal residual vector R() for each conservation law.
+    // updateFlux() computes the numerical surface fluxes requested by the
+    // term's configured flux solver; calcResidual() then combines volume and
+    // surface contributions into the modal residual vector R().
+    // In other words:
+    // - dgConvectiveTerm knows how to integrate a DG term,
+    // - dgFluxSolverManager knows how to close it with a numerical flux.
     massConvTerm.updateFlux();
-    // debugProcessorFaceExchange::printFaceFlux
-    // (
-    //     "mass numerical flux",
-    //     massConvTerm.fluxField()
-    // );
-    // debugProcessorFaceExchange::printFaceIntegral
-    // (
-    //     "mass face integral",
-    //     massConvTerm.fluxField()
-    // );
     massConvTerm.calcResidual();
 
     momentumConvTerm.updateFlux();
     momentumDiffTerm.updateFlux();
-    // debugProcessorFaceExchange::printFaceFlux
-    // (
-    //     "momentum numerical flux",
-    //     momentumConvTerm.fluxField()
-    // );
-    // debugProcessorFaceExchange::printFaceIntegral
-    // (
-    //     "momentum face integral",
-    //     momentumConvTerm.fluxField()
-    // );
     momentumConvTerm.calcResidual();
     momentumDiffTerm.calcResidual();
 
     energyConvTerm.updateFlux();
     energyDiffTerm.updateFlux();
-    // debugProcessorFaceExchange::printFaceFlux
-    // (
-    //     "energy numerical flux",
-    //     energyConvTerm.fluxField()
-    // );
-    // debugProcessorFaceExchange::printFaceIntegral
-    // (
-    //     "energy face integral",
-    //     energyConvTerm.fluxField()
-    // );
     energyConvTerm.calcResidual();
     energyDiffTerm.calcResidual();
 
-    //==================================================================//
-    //                   Store residuals for time update
-    //==================================================================//
-    //
     // The time discretization object stores residuals per registered field
     // and per stage. The actual update is deferred to advanceStage.H.
     timeDiscretization.addResidual

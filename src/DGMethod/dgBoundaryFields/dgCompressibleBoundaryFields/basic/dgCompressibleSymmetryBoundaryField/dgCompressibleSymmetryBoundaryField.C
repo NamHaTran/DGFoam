@@ -27,6 +27,7 @@ License
 \*---------------------------------------------------------------------------*/
 
 #include "dgCompressibleSymmetryBoundaryField.H"
+#include "dgThermoConservative.H"
 #include "addToRunTimeSelectionTable.H"
 
 namespace Foam
@@ -89,6 +90,22 @@ void dgCompressibleSymmetryBoundaryField::updateBCValue
     rhoBC  = rhoMinus;
     rhoUBC = rhoUMinus - (n & rhoUMinus)*n;
     EBC    = EMinus;
+}
+
+
+void dgCompressibleSymmetryBoundaryField::correctSelfDiffusionFlux
+(
+    const label,
+    const label,
+    const label,
+    const vector& n,
+    vector& massDiffFlux
+) const
+{
+    if (thermo_.selfDiffusion())
+    {
+        massDiffFlux -= (massDiffFlux & n)*n;
+    }
 }
 
 

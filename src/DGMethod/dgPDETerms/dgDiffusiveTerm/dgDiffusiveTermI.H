@@ -57,7 +57,7 @@ void Foam::dgDiffusiveTerm<UType, FType>::updateCentralFlux
 
         for (label gI = 0; gI < nGauss; ++gI)
         {
-            if (F.isBoundary(fI))
+            if (F.isBoundary(fI) && !F.isProcessorPatch(fI))
             {
                 F.plusValueOnFace(fI, gI) = F.minusValueOnFace(fI, gI);
             }
@@ -87,7 +87,7 @@ void Foam::dgDiffusiveTerm<UType, FType>::updateCentralFlux
 
         for (label gI = 0; gI < nGauss; ++gI)
         {
-            if (F.isBoundary(fI))
+            if (F.isBoundary(fI) && !F.isProcessorPatch(fI))
             {
                 F.plusValueOnFace(fI, gI) = F.minusValueOnFace(fI, gI);
             }

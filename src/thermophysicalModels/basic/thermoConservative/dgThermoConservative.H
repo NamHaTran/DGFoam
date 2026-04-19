@@ -118,6 +118,9 @@ protected:
         /** Root dictionary (immutable snapshot) */
         const dictionary dict_;
 
+        /** Enable Franz-Durst self-diffusion terms in compressible residuals */
+        const bool selfDiffusion_;
+
         /** Reference to DG geometric mesh (non-owning) */
         const dgGeomMesh& mesh_;
 
@@ -338,6 +341,9 @@ public:
 
         /** Return energy model */
         inline const energy& energyModel() const { return energy_(); }
+
+        /** Return true if Franz-Durst self-diffusion terms are enabled */
+        inline bool selfDiffusion() const { return selfDiffusion_; }
 
         /** Return gas constant */
         inline scalar R() const { return R_; }

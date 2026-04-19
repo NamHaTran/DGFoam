@@ -119,6 +119,22 @@ void dgCompressibleIsothermoWallBoundaryField::updateBCValue
 }
 
 
+void dgCompressibleIsothermoWallBoundaryField::correctSelfDiffusionFlux
+(
+    const label,
+    const label,
+    const label,
+    const vector& n,
+    vector& massDiffFlux
+) const
+{
+    if (thermo_.selfDiffusion())
+    {
+        massDiffFlux -= (massDiffFlux & n)*n;
+    }
+}
+
+
 void dgCompressibleIsothermoWallBoundaryField::checkPatchType() const
 {
     if (this->patch_.type() != "wall")

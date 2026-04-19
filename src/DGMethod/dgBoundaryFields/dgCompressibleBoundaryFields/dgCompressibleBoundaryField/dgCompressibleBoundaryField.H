@@ -48,6 +48,8 @@ namespace Foam
 {
 
 class dgThermoConservative;
+class dgCompressibleBoundaryManager;
+template<class Type> class GaussField;
 
 /*---------------------------------------------------------------------------*\
                  Class dgCompressibleBoundaryField Declaration
@@ -76,6 +78,8 @@ protected:
     const dgGeomMesh& dgMesh_;
     const dgThermoConservative& thermo_;
     const dictionary dict_;
+    bool coupling_;
+    word couplePatchName_;
 
     void primitiveToConservative
     (
@@ -178,7 +182,26 @@ public:
         EBC    = EMinus;
     }
 
+    virtual void correctSelfDiffusionFlux
+    (
+        const label cellID,
+        const label faceLocalID,
+        const label localGauss,
+        const vector& n,
+        vector& massDiffFlux
+    ) const
+    {}
+
     virtual void checkPatchType() const {}
+
+    inline bool coupling() const { return coupling_; }
+
+    inline const word& couplePatchName() const { return couplePatchName_; }
+
+    virtual void resolveCoupling
+    (
+        const dgCompressibleBoundaryManager& manager
+    );
 };
 
 } // End namespace Foam
