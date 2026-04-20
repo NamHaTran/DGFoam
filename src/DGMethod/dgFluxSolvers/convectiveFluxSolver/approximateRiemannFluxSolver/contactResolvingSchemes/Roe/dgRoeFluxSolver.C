@@ -69,6 +69,7 @@ dgRoeFluxSolver::dgRoeFluxSolver
     ),
     warnedVariableGamma_(false)
 {
+    fType_ = dgFluxSolver::fluxType::convective;
     read(dict);
 }
 

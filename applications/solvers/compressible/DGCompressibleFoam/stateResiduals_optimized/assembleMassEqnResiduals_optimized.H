@@ -8,6 +8,7 @@ dgConvectiveTerm<scalar, vector> massConvTerm
 (
     "massConvTerm",
     dgFluxSolver::equationType::massTransport,
+    dgFluxSolver::fluxType::convective,
     basisField,
     rhoG,
     rhoUG,
@@ -65,9 +66,11 @@ dgDiffusiveTerm<scalar, vector> massDiffTerm
 (
     "massDiffTerm",
     dgFluxSolver::equationType::massTransport,
+    dgFluxSolver::fluxType::diffusive,
     basisField,
     rhoG,
-    tMassDiffFlux
+    tMassDiffFlux,
+    fluxSolverManager
 );
 
 massConvTerm.updateFlux();

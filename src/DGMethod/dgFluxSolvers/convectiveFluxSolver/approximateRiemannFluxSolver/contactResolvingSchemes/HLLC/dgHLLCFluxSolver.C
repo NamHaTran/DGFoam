@@ -64,6 +64,7 @@ Foam::dgHLLCFluxSolver::dgHLLCFluxSolver
         mesh.getFvMesh().lookupObject<dgField<scalar>>("p")
     )
 {
+    fType_ = dgFluxSolver::fluxType::convective;
     read(dict);
 
     // Resize intermediate lists

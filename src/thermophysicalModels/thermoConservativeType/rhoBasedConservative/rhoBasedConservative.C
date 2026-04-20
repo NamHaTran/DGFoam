@@ -288,6 +288,7 @@ void Foam::rhoBasedConservative::update(const label& cellI)
     GaussField<scalar>& pG      = p_.gaussFields()[cellI];
     GaussField<scalar>& heG     = he_.gaussFields()[cellI];
     GaussField<scalar>& aG      = a_.gaussFields()[cellI];
+    GaussField<scalar>& muG     = mu_.gaussFields()[cellI];
 
     const auto velocityExpr = dg::expr(rhoUG)/dg::expr(rhoG);
 
@@ -310,6 +311,7 @@ void Foam::rhoBasedConservative::update(const label& cellI)
     setTMean(cellI, TMean);
 
     cellGaussField<scalar>& aCell = aG.cellField();
+    cellGaussField<scalar>& muCell = muG.cellField();
     cellGaussField<scalar>& TCellMutable = TG.cellField();
     cellGaussField<scalar>& pCellMutable = pG.cellField();
     const cellGaussField<scalar>& rhoCell = rhoG.cellField();
@@ -330,9 +332,11 @@ void Foam::rhoBasedConservative::update(const label& cellI)
         const scalar Cv = thermo().calcCv(T);
         const scalar gamma = thermo().calcGamma(Cp, Cv);
         aCell[gpI] = thermo().calcSpeedOfSound(T, gamma);
+        muCell[gpI] = transport().calcMu(T);
     }
 
     faceGaussField<scalar>& aFace = aG.faceField();
+    faceGaussField<scalar>& muFace = muG.faceField();
     faceGaussField<scalar>& TFaceMutable = TG.faceField();
     faceGaussField<scalar>& pFaceMutable = pG.faceField();
     const faceGaussField<scalar>& rhoFace = rhoG.faceField();
@@ -380,6 +384,8 @@ void Foam::rhoBasedConservative::update(const label& cellI)
                 const scalar gamma = thermo().calcGamma(Cp, Cv);
                 aFace.minusValueOnFace(localFaceI, gpI) =
                     thermo().calcSpeedOfSound(TMinus, gamma);
+                muFace.minusValueOnFace(localFaceI, gpI) =
+                    transport().calcMu(TMinus);
             }
 
             const scalar rhoPlus = rhoFace.plusValueOnFace(localFaceI, gpI);
@@ -401,6 +407,8 @@ void Foam::rhoBasedConservative::update(const label& cellI)
                 const scalar gamma = thermo().calcGamma(Cp, Cv);
                 aFace.plusValueOnFace(localFaceI, gpI) =
                     thermo().calcSpeedOfSound(TPlus, gamma);
+                muFace.plusValueOnFace(localFaceI, gpI) =
+                    transport().calcMu(TPlus);
             }
         }
     }
@@ -634,6 +642,7 @@ void Foam::rhoBasedConservative::updateBC(const label& cellI)
     GaussField<scalar>& pG      = p_.gaussFields()[cellI];
     GaussField<scalar>& heG     = he_.gaussFields()[cellI];
     GaussField<scalar>& aG      = a_.gaussFields()[cellI];
+    GaussField<scalar>& muG     = mu_.gaussFields()[cellI];
 
     const boundaryGaussField<scalar> rhoB =
         rhoG.faceField().extractBCGhostState();
@@ -651,6 +660,7 @@ void Foam::rhoBasedConservative::updateBC(const label& cellI)
     boundaryGaussField<scalar> pB(rhoB.size());
     boundaryGaussField<scalar> heB(rhoB.size());
     boundaryGaussField<scalar> aB(rhoB.size());
+    boundaryGaussField<scalar> muB(rhoB.size());
 
     // Rebuild thermo boundary traces from the ghost conservative state and
     // replace any negative temperature with the owner-cell mean temperature.
@@ -671,12 +681,14 @@ void Foam::rhoBasedConservative::updateBC(const label& cellI)
         const scalar Cv = thermo().calcCv(T);
         const scalar gamma = thermo().calcGamma(Cp, Cv);
         aB[gpI] = thermo().calcSpeedOfSound(T, gamma);
+        muB[gpI] = transport().calcMu(T);
     }
 
     TG.faceField().assignBCGhostState(TB);
     pG.faceField().assignBCGhostState(pB);
     heG.faceField().assignBCGhostState(heB);
     aG.faceField().assignBCGhostState(aB);
+    muG.faceField().assignBCGhostState(muB);
 }
 
 } // End namespace Foam

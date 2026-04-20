@@ -43,7 +43,7 @@ forAll(mesh.cells(), cellI)
     thermo->update(cellI);
 }
 
-// he and a are thermo-owned fields, so thermo handles their processor
+// he, a, and mu are thermo-owned fields, so thermo handles their processor
 // synchronization internally after the cell-local reconstruction is complete.
 thermo->synch();
 

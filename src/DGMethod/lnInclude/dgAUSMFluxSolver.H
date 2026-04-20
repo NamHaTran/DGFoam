@@ -1,1 +1,1 @@
-../dgFluxSolvers/approximateRiemannFluxSolver/contactResolvingSchemes/AUSM/dgAUSMFluxSolver.H
+../dgFluxSolvers/convectiveFluxSolver/approximateRiemannFluxSolver/contactResolvingSchemes/AUSM/dgAUSMFluxSolver.H

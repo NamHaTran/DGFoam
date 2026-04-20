@@ -111,7 +111,9 @@ public:
     )
     :
         dgFluxSolver(name, dict, mesh)
-    {}
+    {
+        fType_ = dgFluxSolver::fluxType::both;
+    }
 
     //- Destructor
     virtual ~dgCentralFluxSolver() = default;

@@ -30,13 +30,23 @@ dgConvectiveTerm<scalar, vector> energyConvTerm
 (
     "energyConvTerm",
     dgFluxSolver::equationType::energyTransport,
+    dgFluxSolver::fluxType::convective,
     basisField,
     EG,
     tEnergyFlux,
     fluxSolverManager
 );
 
-tmp<GaussField<vector>> tEnergyDiffFlux;
+// Keep the NSF molecular/thermal energy flux separate from Franz-Durst
+// self-diffusion so each can select a distinct diffusive numerical flux.
+const auto energyDiffFluxExpr =
+    (dg::expr(tMomentumDiffFlux()) & dg::expr(UG))
+  - dg::expr(kappaG)*dg::expr(gradTG);
+
+tmp<GaussField<vector>> tEnergyDiffFlux =
+    dg::evaluate<vector>(energyDiffFluxExpr, cellI, &dgMesh);
+
+tmp<GaussField<vector>> tSelfDiffusionEnergyFlux;
 
 if (selfDiffusion)
 {
@@ -52,19 +62,22 @@ if (selfDiffusion)
 
     compressibleBC->correctSelfDiffusionFlux(tMassDiffFlux.ref());
 
-    // Assemble the molecular/thermal energy flux
+    // Assemble the Franz-Durst energy flux
     //
-    //     Fd_E = tauT.U - (E/rho)mD - kappa grad(T).
+    //     Fd_E,self = tau_mD.U - (E/rho)mD.
     //
-    // Here tauT is the total molecular momentum flux assembled in the
-    // momentum block and E/rho is the specific total energy.
-    const auto energyDiffFluxExpr =
-        (dg::expr(tMomentumDiffFlux()) & dg::expr(UG))
-      - (dg::expr(EG)/dg::expr(rhoG))*dg::expr(tMassDiffFlux())
-      - dg::expr(kappaG)*dg::expr(gradTG);
+    // The NSF part, (-tau).U - kappa grad(T), stays in energyDiffTerm.
+    const auto selfDiffusionEnergyFluxExpr =
+        (dg::expr(tSelfDiffusionMomentumFlux()) & dg::expr(UG))
+      - (dg::expr(EG)/dg::expr(rhoG))*dg::expr(tMassDiffFlux());
 
-    tEnergyDiffFlux =
-        dg::evaluate<vector>(energyDiffFluxExpr, cellI, &dgMesh);
+    tSelfDiffusionEnergyFlux =
+        dg::evaluate<vector>
+        (
+            selfDiffusionEnergyFluxExpr,
+            cellI,
+            &dgMesh
+        );
 
     // Assemble the gradient of the specific total energy
     //
@@ -84,9 +97,13 @@ if (selfDiffusion)
     //         + tauT:gradU
     //         - mD.grad(E/rho)
     //         + rho g.U.
+    const auto totalMomentumDiffFluxExpr =
+        dg::expr(tMomentumDiffFlux())
+      + dg::expr(tSelfDiffusionMomentumFlux());
+
     const auto energySourceExpr =
         dg::expr(pG)*dg::tr(dg::expr(gradUG))
-      + (dg::expr(tMomentumDiffFlux()) && dg::expr(gradUG))
+      + (totalMomentumDiffFluxExpr && dg::expr(gradUG))
       - (dg::expr(tMassDiffFlux()) & gradSpecificEnergyExpr);
       // Gravity power is temporarily disabled while isolating self-diffusion:
       // + dg::expr(rhoG)*(dg::expr(UG) & dg::uniform(g.value()));
@@ -110,23 +127,16 @@ if (selfDiffusion)
         energySourceTerm.R()
     );
 }
-else
-{
-    const auto energyDiffFluxExpr =
-        (dg::expr(tMomentumDiffFlux()) & dg::expr(UG))
-      - dg::expr(kappaG)*dg::expr(gradTG);
-
-    tEnergyDiffFlux =
-        dg::evaluate<vector>(energyDiffFluxExpr, cellI, &dgMesh);
-}
 
 dgDiffusiveTerm<scalar, vector> energyDiffTerm
 (
     "energyDiffTerm",
     dgFluxSolver::equationType::energyTransport,
+    dgFluxSolver::fluxType::diffusive,
     basisField,
     EG,
-    tEnergyDiffFlux
+    tEnergyDiffFlux,
+    fluxSolverManager
 );
 
 energyConvTerm.updateFlux();
@@ -134,16 +144,56 @@ energyDiffTerm.updateFlux();
 energyConvTerm.calcResidual();
 energyDiffTerm.calcResidual();
 
-timeDiscretization.addResidual
-(
-    E.name(),
-    cellI,
-    energyConvTerm.R()
-);
+if (selfDiffusion)
+{
+    dgDiffusiveTerm<scalar, vector> selfDiffusionEnergyTerm
+    (
+        "selfDiffusionEnergyTerm",
+        dgFluxSolver::equationType::energyTransport,
+        dgFluxSolver::fluxType::diffusive,
+        basisField,
+        EG,
+        tSelfDiffusionEnergyFlux,
+        fluxSolverManager
+    );
 
-timeDiscretization.addResidual
-(
-    E.name(),
-    cellI,
-    energyDiffTerm.R()
-);
+    selfDiffusionEnergyTerm.updateFlux();
+    selfDiffusionEnergyTerm.calcResidual();
+
+    timeDiscretization.addResidual
+    (
+        E.name(),
+        cellI,
+        energyConvTerm.R()
+    );
+
+    timeDiscretization.addResidual
+    (
+        E.name(),
+        cellI,
+        energyDiffTerm.R()
+    );
+
+    timeDiscretization.addResidual
+    (
+        E.name(),
+        cellI,
+        selfDiffusionEnergyTerm.R()
+    );
+}
+else
+{
+    timeDiscretization.addResidual
+    (
+        E.name(),
+        cellI,
+        energyConvTerm.R()
+    );
+
+    timeDiscretization.addResidual
+    (
+        E.name(),
+        cellI,
+        energyDiffTerm.R()
+    );
+}

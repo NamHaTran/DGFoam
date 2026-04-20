@@ -28,7 +28,7 @@ Class
     Foam::dgDiffusiveTerm
 
 Description
-    Diffusive DG PDE term used for residual assembly with a fixed central flux.
+    Diffusive DG PDE term used for residual assembly.
 
 SourceFiles
     dgDiffusiveTerm.C
@@ -45,7 +45,7 @@ SourceFiles
 
 #include "dgBasisField.H"
 #include "GaussField.H"
-#include "dgFluxSolver.H"
+#include "dgFluxSolverManager.H"
 #include "dgMath.H"
 
 #include <type_traits>
@@ -64,15 +64,8 @@ namespace Foam
  * \tparam UType Type of solution variable (scalar or vector)
  * \tparam FType Type of diffusive flux (vector or tensor)
  *
- * The constructor mirrors dgConvectiveTerm except that no
- * dgFluxSolverManager is needed. The numerical surface flux is always the
- * central flux:
- *
- *     F* . n = 0.5*(F- . n + F+ . n)
- *
- * Boundary faces use F+ = F-. This is the intended path for fluxes built from
- * gradient fields where the boundary exterior gradient is prescribed equal to
- * the interior gradient.
+ * The constructor mirrors dgConvectiveTerm. The numerical surface flux is
+ * selected through dgFluxSolverManager using the PDE term name.
  */
 template<class UType, class FType>
 class dgDiffusiveTerm
@@ -84,6 +77,9 @@ private:
 
     /** Equation type tag, kept for symmetry with dgConvectiveTerm. */
     dgFluxSolver::equationType eqnType_;
+
+    /** Flux type required by this PDE term. */
+    dgFluxSolver::fluxType fluxType_;
 
     /** Owner cell index. */
     label cellID_;
@@ -97,6 +93,9 @@ private:
     /** Diffusive flux field evaluated at Gauss points. */
     tmp<GaussField<FType>> F_;
 
+    /** Flux solver manager. */
+    dgFluxSolverManager& fluxSolver_;
+
     /** Number of degrees of freedom in this cell. */
     label nDof_;
 
@@ -105,12 +104,6 @@ private:
 
     /** Compile-time validation of UType/FType combination. */
     inline void checkTypes() const;
-
-    /** Apply the fixed central flux to scalar-equation vector fluxes. */
-    static void updateCentralFlux(faceGaussField<vector>& F);
-
-    /** Apply the fixed central flux to vector-equation tensor fluxes. */
-    static void updateCentralFlux(faceGaussField<tensor>& F);
 
 public:
 
@@ -121,18 +114,22 @@ public:
     (
         const word& termName,
         dgFluxSolver::equationType eqnType,
+        dgFluxSolver::fluxType fluxType,
         const dgBasisField& basis,
         const GaussField<UType>& U,
-        GaussField<FType>& F
+        GaussField<FType>& F,
+        dgFluxSolverManager& fluxSolver
     );
 
     dgDiffusiveTerm
     (
         const word& termName,
         dgFluxSolver::equationType eqnType,
+        dgFluxSolver::fluxType fluxType,
         const dgBasisField& basis,
         const GaussField<UType>& U,
-        const tmp<GaussField<FType>>& tF
+        const tmp<GaussField<FType>>& tF,
+        dgFluxSolverManager& fluxSolver
     );
 
     ~dgDiffusiveTerm() = default;
@@ -151,12 +148,13 @@ public:
 
     inline dgFluxSolver::equationType equationType() const { return eqnType_; }
 
+    inline dgFluxSolver::fluxType fluxType() const { return fluxType_; }
+
     /**
-     * \brief Compute central numerical surface flux.
+     * \brief Compute numerical surface flux.
      *
-     * Physical boundary faces first copy plus-side flux values from
-     * minus-side values. Internal and processor faces use their existing
-     * plus/minus traces in the same central formula.
+     * Selects the appropriate dgFluxSolver via dgFluxSolverManager
+     * and updates the face Gauss flux field.
      */
     void updateFlux();
 

@@ -49,6 +49,7 @@ Foam::dgConvectiveTerm<UType, FType>::dgConvectiveTerm
 (
     const word& termName,
     dgFluxSolver::equationType eqnType,
+    dgFluxSolver::fluxType fluxType,
     const dgBasisField& basis,
     const GaussField<UType>& U,
     GaussField<FType>& F,
@@ -57,6 +58,7 @@ Foam::dgConvectiveTerm<UType, FType>::dgConvectiveTerm
 :
     termName_(termName),
     eqnType_(eqnType),
+    fluxType_(fluxType),
     cellID_(basis.cellID()),
     basis_(basis),
     U_(U),
@@ -71,7 +73,7 @@ Foam::dgConvectiveTerm<UType, FType>::dgConvectiveTerm
     F_.ref().faceField().initFlux();
 
     // Set equation type in flux solver
-    fluxSolver_.solver(termName_+"Flux").setEquationType(eqnType_);
+    fluxSolver_.solver(termName_+"Flux", fluxType_).setEquationType(eqnType_);
 }
 
 template<class UType, class FType>
@@ -79,6 +81,7 @@ Foam::dgConvectiveTerm<UType, FType>::dgConvectiveTerm
 (
     const word& termName,
     dgFluxSolver::equationType eqnType,
+    dgFluxSolver::fluxType fluxType,
     const dgBasisField& basis,
     const GaussField<UType>& U,
     const tmp<GaussField<FType>>& tF,
@@ -87,6 +90,7 @@ Foam::dgConvectiveTerm<UType, FType>::dgConvectiveTerm
 :
     termName_(termName),
     eqnType_(eqnType),
+    fluxType_(fluxType),
     cellID_(basis.cellID()),
     basis_(basis),
     U_(U),
@@ -101,7 +105,7 @@ Foam::dgConvectiveTerm<UType, FType>::dgConvectiveTerm
     F_.ref().faceField().initFlux();
 
     // Set equation type in flux solver
-    fluxSolver_.solver(termName_+"Flux").setEquationType(eqnType_);
+    fluxSolver_.solver(termName_+"Flux", fluxType_).setEquationType(eqnType_);
 }
 
 
@@ -110,7 +114,7 @@ Foam::dgConvectiveTerm<UType, FType>::dgConvectiveTerm
 template<class UType, class FType>
 void Foam::dgConvectiveTerm<UType, FType>::updateFlux()
 {
-    fluxSolver_.solver(termName_+"Flux").computeFlux
+    fluxSolver_.solver(termName_+"Flux", fluxType_).computeFlux
     (
         cellID_,
         F_.ref().faceField(),

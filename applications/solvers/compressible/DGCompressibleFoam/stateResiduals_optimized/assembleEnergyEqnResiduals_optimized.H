@@ -41,6 +41,7 @@ dgConvectiveTerm<scalar, vector> energyConvTerm
 (
     "energyConvTerm",
     dgFluxSolver::equationType::energyTransport,
+    dgFluxSolver::fluxType::convective,
     basisField,
     EG,
     tEnergyFlux,
@@ -123,9 +124,11 @@ dgDiffusiveTerm<scalar, vector> energyDiffTerm
 (
     "energyDiffTerm",
     dgFluxSolver::equationType::energyTransport,
+    dgFluxSolver::fluxType::diffusive,
     basisField,
     EG,
-    tEnergyDiffFlux
+    tEnergyDiffFlux,
+    fluxSolverManager
 );
 
 dgSourceTerm<scalar> energySourceTerm

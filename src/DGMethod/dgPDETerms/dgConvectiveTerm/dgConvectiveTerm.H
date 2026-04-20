@@ -102,6 +102,9 @@ private:
     /** Equation type for flux interpretation */
     dgFluxSolver::equationType eqnType_;
 
+    /** Flux type required by this PDE term */
+    dgFluxSolver::fluxType fluxType_;
+
     /** Owner cell index */
     label cellID_;
 
@@ -151,6 +154,7 @@ public:
     (
         const word& termName,
         dgFluxSolver::equationType eqnType,
+        dgFluxSolver::fluxType fluxType,
         const dgBasisField& basis,
         const GaussField<UType>& U,
         GaussField<FType>& F,
@@ -171,6 +175,7 @@ public:
     (
         const word& termName,
         dgFluxSolver::equationType eqnType,
+        dgFluxSolver::fluxType fluxType,
         const dgBasisField& basis,
         const GaussField<UType>& U,
         const tmp<GaussField<FType>>& tF,
@@ -193,6 +198,9 @@ public:
 
     /** Return Gauss flux field, including face numerical flux values */
     inline const GaussField<FType>& fluxField() const { return F_(); }
+
+    /** Return flux type required by this term */
+    inline dgFluxSolver::fluxType fluxType() const { return fluxType_; }
 
     // Core operations -----------------------------------------------------
 

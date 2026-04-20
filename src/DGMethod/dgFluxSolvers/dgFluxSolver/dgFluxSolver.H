@@ -94,6 +94,19 @@ public:
         auxiliaryEqn
     };
 
+    // Enumeration for identifying the physical flux family
+    enum class fluxType
+    {
+        /** Convective numerical flux solver */
+        convective,
+
+        /** Diffusive numerical flux solver */
+        diffusive,
+
+        /** Numerical flux solver valid for both convective and diffusive terms */
+        both
+    };
+
 protected:
 
     // Attributes
@@ -109,6 +122,9 @@ protected:
 
         /** Equation type used for interpreting left/right states */
         equationType eqnType_;
+
+        /** Flux family handled by this solver */
+        fluxType fType_;
 
 public:
 
@@ -246,6 +262,10 @@ public:
 
         /** Return equation type */
         inline equationType getEquationType() const { return eqnType_; }
+
+        /** Return flux type */
+        inline fluxType getFluxType() const { return fType_; }
+
 };
 
     /**
@@ -271,6 +291,29 @@ public:
                 os << "auxiliaryEqn"; break;
             default:
                 os << "UnknownEquationType"; break;
+        }
+        return os;
+    }
+
+    /**
+     * \brief Stream output for dgFluxSolver::fluxType
+     *
+     * \param os   Output stream
+     * \param type Flux type
+     * \return Output stream
+     */
+    inline Ostream& operator<< (Ostream& os, const dgFluxSolver::fluxType& type)
+    {
+        switch (type)
+        {
+            case dgFluxSolver::fluxType::convective:
+                os << "convective"; break;
+            case dgFluxSolver::fluxType::diffusive:
+                os << "diffusive"; break;
+            case dgFluxSolver::fluxType::both:
+                os << "both"; break;
+            default:
+                os << "UnknownFluxType"; break;
         }
         return os;
     }

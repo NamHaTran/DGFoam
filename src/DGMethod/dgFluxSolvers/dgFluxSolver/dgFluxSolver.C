@@ -46,7 +46,9 @@ Foam::dgFluxSolver::dgFluxSolver
 :
     name_(name),
     dict_(dict),
-    mesh_(mesh)
+    mesh_(mesh),
+    eqnType_(equationType::auxiliaryEqn),
+    fType_(fluxType::diffusive)
 {}
 
 
@@ -112,4 +114,3 @@ void Foam::dgFluxSolver::decomposeU
 
 } // End namespace Foam
 // ************************************************************************* //
-

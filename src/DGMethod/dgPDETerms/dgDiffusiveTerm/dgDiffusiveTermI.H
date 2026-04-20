@@ -42,66 +42,6 @@ inline void Foam::dgDiffusiveTerm<UType, FType>::checkTypes() const
 }
 
 
-template<class UType, class FType>
-void Foam::dgDiffusiveTerm<UType, FType>::updateCentralFlux
-(
-    faceGaussField<vector>& F
-)
-{
-    const label nFaces = F.nFaces();
-    const label nGauss = F.nGaussPerFace();
-
-    for (label fI = 0; fI < nFaces; ++fI)
-    {
-        const vector& n = F.normals()[fI];
-
-        for (label gI = 0; gI < nGauss; ++gI)
-        {
-            if (F.isBoundary(fI) && !F.isProcessorPatch(fI))
-            {
-                F.plusValueOnFace(fI, gI) = F.minusValueOnFace(fI, gI);
-            }
-
-            const vector FL = F.minusValueOnFace(fI, gI);
-            const vector FR = F.plusValueOnFace(fI, gI);
-            const scalar fC = scalar(0.5)*((FL & n) + (FR & n));
-
-            F.fluxOnFace(fI, gI) = fC*n;
-        }
-    }
-}
-
-
-template<class UType, class FType>
-void Foam::dgDiffusiveTerm<UType, FType>::updateCentralFlux
-(
-    faceGaussField<tensor>& F
-)
-{
-    const label nFaces = F.nFaces();
-    const label nGauss = F.nGaussPerFace();
-
-    for (label fI = 0; fI < nFaces; ++fI)
-    {
-        const vector& n = F.normals()[fI];
-
-        for (label gI = 0; gI < nGauss; ++gI)
-        {
-            if (F.isBoundary(fI) && !F.isProcessorPatch(fI))
-            {
-                F.plusValueOnFace(fI, gI) = F.minusValueOnFace(fI, gI);
-            }
-
-            const tensor FL = F.minusValueOnFace(fI, gI);
-            const tensor FR = F.plusValueOnFace(fI, gI);
-            const vector fC = scalar(0.5)*((FL & n) + (FR & n));
-
-            F.fluxOnFace(fI, gI) = fC;
-        }
-    }
-}
-
-
 // * * * * * * * * * * * * * * * Constructors  * * * * * * * * * * * * * * * //
 
 template<class UType, class FType>
@@ -109,23 +49,29 @@ Foam::dgDiffusiveTerm<UType, FType>::dgDiffusiveTerm
 (
     const word& termName,
     dgFluxSolver::equationType eqnType,
+    dgFluxSolver::fluxType fluxType,
     const dgBasisField& basis,
     const GaussField<UType>& U,
-    GaussField<FType>& F
+    GaussField<FType>& F,
+    dgFluxSolverManager& fluxSolver
 )
 :
     termName_(termName),
     eqnType_(eqnType),
+    fluxType_(fluxType),
     cellID_(basis.cellID()),
     basis_(basis),
     U_(U),
     F_(new GaussField<FType>(F)),
+    fluxSolver_(fluxSolver),
     nDof_(basis_.nDof()),
     R_(nDof_, pTraits<UType>::zero)
 {
     checkTypes();
 
     F_.ref().faceField().initFlux();
+
+    fluxSolver_.solver(termName_+"Flux", fluxType_).setEquationType(eqnType_);
 }
 
 
@@ -134,23 +80,29 @@ Foam::dgDiffusiveTerm<UType, FType>::dgDiffusiveTerm
 (
     const word& termName,
     dgFluxSolver::equationType eqnType,
+    dgFluxSolver::fluxType fluxType,
     const dgBasisField& basis,
     const GaussField<UType>& U,
-    const tmp<GaussField<FType>>& tF
+    const tmp<GaussField<FType>>& tF,
+    dgFluxSolverManager& fluxSolver
 )
 :
     termName_(termName),
     eqnType_(eqnType),
+    fluxType_(fluxType),
     cellID_(basis.cellID()),
     basis_(basis),
     U_(U),
     F_(tF),
+    fluxSolver_(fluxSolver),
     nDof_(basis_.nDof()),
     R_(nDof_, pTraits<UType>::zero)
 {
     checkTypes();
 
     F_.ref().faceField().initFlux();
+
+    fluxSolver_.solver(termName_+"Flux", fluxType_).setEquationType(eqnType_);
 }
 
 
@@ -159,7 +111,12 @@ Foam::dgDiffusiveTerm<UType, FType>::dgDiffusiveTerm
 template<class UType, class FType>
 void Foam::dgDiffusiveTerm<UType, FType>::updateFlux()
 {
-    updateCentralFlux(F_.ref().faceField());
+    fluxSolver_.solver(termName_+"Flux", fluxType_).computeFlux
+    (
+        cellID_,
+        F_.ref().faceField(),
+        U_.faceField()
+    );
 }
 
 

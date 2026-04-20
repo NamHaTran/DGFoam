@@ -66,10 +66,11 @@ namespace Foam
  * \li Stored energy variable \f$he\f$
  * \li Speed of sound \f$a\f$
  *
- * Additional thermodynamic and transport properties such as
- * \f$C_p\f$, \f$C_v\f$, \f$\gamma\f$, \f$\kappa\f$, \f$\mu\f$, and
- * \f$\mathrm{Pr}\f$ are evaluated on demand through the thermoLaw and
- * transportLaw APIs instead of being stored as dgField data. The meaning of
+ * Additional thermodynamic and transport properties such as \f$C_p\f$,
+ * \f$C_v\f$, \f$\gamma\f$, \f$\kappa\f$, and \f$\mathrm{Pr}\f$ are evaluated
+ * on demand through the thermoLaw and transportLaw APIs. Dynamic viscosity
+ * \f$\mu\f$ is cached as a dgField after temperature clamping so diffusive
+ * numerical fluxes can reuse synchronized face values. The meaning of
  * \f$he\f$ is determined by the selected energy model.
  *
  * All operations are performed locally at Gauss points of each DG cell,

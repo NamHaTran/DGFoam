@@ -16,6 +16,7 @@ dgConvectiveTerm<scalar, vector> massConvTerm
 (
     "massConvTerm",
     dgFluxSolver::equationType::massTransport,
+    dgFluxSolver::fluxType::convective,
     basisField,
     rhoG,
     rhoUG,
@@ -24,13 +25,6 @@ dgConvectiveTerm<scalar, vector> massConvTerm
 
 massConvTerm.updateFlux();
 massConvTerm.calcResidual();
-
-timeDiscretization.addResidual
-(
-    rho.name(),
-    cellI,
-    massConvTerm.R()
-);
 
 if (selfDiffusion)
 {
@@ -54,22 +48,40 @@ if (selfDiffusion)
 
     compressibleBC->correctSelfDiffusionFlux(tMassDiffFlux.ref());
 
-    dgDiffusiveTerm<scalar, vector> massDiffTerm
+    dgDiffusiveTerm<scalar, vector> selfDiffusionMassTerm
     (
-        "massDiffTerm",
+        "selfDiffusionMassTerm",
         dgFluxSolver::equationType::massTransport,
+        dgFluxSolver::fluxType::diffusive,
         basisField,
         rhoG,
-        tMassDiffFlux
+        tMassDiffFlux,
+        fluxSolverManager
     );
 
-    massDiffTerm.updateFlux();
-    massDiffTerm.calcResidual();
+    selfDiffusionMassTerm.updateFlux();
+    selfDiffusionMassTerm.calcResidual();
 
     timeDiscretization.addResidual
     (
         rho.name(),
         cellI,
-        massDiffTerm.R()
+        massConvTerm.R()
+    );
+
+    timeDiscretization.addResidual
+    (
+        rho.name(),
+        cellI,
+        selfDiffusionMassTerm.R()
+    );
+}
+else
+{
+    timeDiscretization.addResidual
+    (
+        rho.name(),
+        cellI,
+        massConvTerm.R()
     );
 }

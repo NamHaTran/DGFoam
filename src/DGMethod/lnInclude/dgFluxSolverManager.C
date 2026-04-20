@@ -1,1 +1,1 @@
-../dgFluxSolvers/dgFluxSolverManager/dgFluxSolverManager.C
+../dgFluxSolvers/dgFluxSolver/dgFluxSolverManager.C

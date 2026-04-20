@@ -97,6 +97,19 @@ Foam::dgThermoConservative::dgThermoConservative
         mesh,
         false
     ),
+    mu_
+    (
+        IOobject
+        (
+            "mu",
+            mesh.getFvMesh().time().timeName(),
+            mesh.getFvMesh(),
+            IOobject::NO_READ,
+            IOobject::NO_WRITE
+        ),
+        mesh,
+        false
+    ),
     rho_
     (
         mesh_.getFvMesh().lookupObject<dgField<scalar>>("rho")
@@ -184,6 +197,7 @@ void Foam::dgThermoConservative::synch()
 {
     he_.synch();
     a_.synch();
+    mu_.synch();
 }
 
 

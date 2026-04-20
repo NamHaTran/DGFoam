@@ -38,6 +38,7 @@ dgConvectiveTerm<vector, tensor> momentumConvTerm
 (
     "momentumConvTerm",
     dgFluxSolver::equationType::momentumTransport,
+    dgFluxSolver::fluxType::convective,
     basisField,
     rhoUG,
     tMomentumFlux,
@@ -128,9 +129,11 @@ dgDiffusiveTerm<vector, tensor> momentumDiffTerm
 (
     "momentumDiffTerm",
     dgFluxSolver::equationType::momentumTransport,
+    dgFluxSolver::fluxType::diffusive,
     basisField,
     rhoUG,
-    tMomentumDiffFlux
+    tMomentumDiffFlux,
+    fluxSolverManager
 );
 
 dgSourceTerm<vector> momentumSourceTerm

@@ -55,6 +55,7 @@ Foam::dgHLLEFluxSolver::dgHLLEFluxSolver
     U_  ( mesh.getFvMesh().lookupObject<dgField<vector>>("U")   ),
     p_  ( mesh.getFvMesh().lookupObject<dgField<scalar>>("p")   )
 {
+    fType_ = dgFluxSolver::fluxType::convective;
     read(dict);
 }
 

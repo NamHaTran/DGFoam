@@ -18,10 +18,9 @@ forAll(mesh.cells(), cellI)
     GaussField<vector>& gradPG  = gradP.gaussFields()[cellI];
     GaussField<vector>& gradTG  = gradT.gaussFields()[cellI];
 
-    GaussField<scalar> muG(cellI, &dgMesh);
+    const GaussField<scalar>& muG = thermo->mu().gaussFields()[cellI];
     GaussField<scalar> kappaG(cellI, &dgMesh);
 
-    thermo->transport().calcMu(cellI, TG, muG);
     thermo->transport().calcKappa(cellI, TG, kappaG);
 
     #include "stateResiduals_optimized/assembleMassEqnResiduals_optimized.H"

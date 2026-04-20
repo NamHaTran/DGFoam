@@ -89,7 +89,7 @@ namespace Foam
  * {
  *     fluxSolvers
  *     {
- *         default             AUSM;
+ *         defaultConvective   AUSM;
  *         massConvTermFlux    AUSM;
  *         momentumConvTermFlux AUSM;
  *         energyConvTermFlux  AUSM;

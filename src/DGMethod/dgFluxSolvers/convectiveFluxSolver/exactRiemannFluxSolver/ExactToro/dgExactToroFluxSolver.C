@@ -324,6 +324,7 @@ dgExactToroFluxSolver::dgExactToroFluxSolver
     ),
     warnedVariableGamma_(false)
 {
+    fType_ = dgFluxSolver::fluxType::convective;
     read(dict);
 }
 

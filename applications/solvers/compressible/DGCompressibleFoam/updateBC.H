@@ -12,6 +12,6 @@ GaussField<vector>& rhoUG = rhoU.gaussFields()[cellI];
 
 compressibleBC->update(rhoG, rhoUG, EG, UG);
 
-// Rebuild p/T/he/a on the just-updated ghost conservative state so the
+// Rebuild p/T/he/a/mu on the just-updated ghost conservative state so the
 // boundary face traces used by DG fluxes are fully consistent.
 thermo->updateBC(cellI);

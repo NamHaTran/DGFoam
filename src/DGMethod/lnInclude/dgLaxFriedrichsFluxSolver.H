@@ -1,1 +1,1 @@
-../dgFluxSolvers/approximateRiemannFluxSolver/centralSchemes/LaxFriedrichs/dgLaxFriedrichsFluxSolver.H
+../dgFluxSolvers/convectiveFluxSolver/approximateRiemannFluxSolver/centralSchemes/LaxFriedrichs/dgLaxFriedrichsFluxSolver.H

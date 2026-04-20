@@ -77,6 +77,7 @@ dgAUSMFluxSolver::dgAUSMFluxSolver
     usePressureMachCorrection_(true),
     useVelocityPressureCorrection_(true)
 {
+    fType_ = dgFluxSolver::fluxType::convective;
     read(dict);
 }
 

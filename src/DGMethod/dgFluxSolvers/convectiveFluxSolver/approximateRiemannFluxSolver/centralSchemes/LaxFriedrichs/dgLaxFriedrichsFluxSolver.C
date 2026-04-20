@@ -52,7 +52,9 @@ dgLaxFriedrichsFluxSolver::dgLaxFriedrichsFluxSolver
 
     thermo_( mesh.getFvMesh().lookupObject<dgThermoConservative>("dgThermoConservative") ),
     U_( mesh.getFvMesh().lookupObject<dgField<vector>>("U") )
-{}
+{
+    fType_ = dgFluxSolver::fluxType::convective;
+}
 
 // * * * * * * * * * * Dissipation coefficient * * * * * * * * * * //
 

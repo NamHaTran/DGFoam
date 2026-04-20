@@ -32,14 +32,12 @@ forAll(mesh.cells(), cellI)
     GaussField<vector>& gradPG  = gradP.gaussFields()[cellI];
     GaussField<vector>& gradTG  = gradT.gaussFields()[cellI];
 
-    // The transport properties are evaluated through the selected thermo
-    // transport model, so Sutherland/power-law/etc. stay runtime-selected.
-    // muG and kappaG are full GaussField objects because the diffusive flux
-    // needs both cell values and face minus/plus values.
-    GaussField<scalar> muG(cellI, &dgMesh);
+    // Dynamic viscosity is cached by dgThermo during update/updateBC from the
+    // limited/clamped temperature field. Thermal conductivity is still built
+    // on demand from the same stage-consistent T field.
+    const GaussField<scalar>& muG = thermo->mu().gaussFields()[cellI];
     GaussField<scalar> kappaG(cellI, &dgMesh);
 
-    thermo->transport().calcMu(cellI, TG, muG);
     thermo->transport().calcKappa(cellI, TG, kappaG);
 
     #include "stateResiduals/assembleMassEqnResiduals.H"

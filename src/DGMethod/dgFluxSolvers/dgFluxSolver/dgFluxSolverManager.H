@@ -66,11 +66,12 @@ class Ostream;
  *
  * Each equation term (e.g. massConvTermFlux, momentumConvTermFlux)
  * can be mapped to a specific numerical flux solver. If a term is
- * not explicitly defined, a default solver is used.
+ * not explicitly defined, the default solver for the requested flux type is
+ * used.
  *
  * The manager supports:
  * - Term-specific flux solver selection
- * - A global default solver fallback
+ * - Convective and diffusive default solver fallbacks
  * - Optional solver-specific coefficient sub-dictionaries
  *
  * \par Example dictionary
@@ -79,7 +80,8 @@ class Ostream;
  * {
  *     fluxSolvers
  *     {
- *         default                 central;
+ *         defaultConvective       central;
+ *         defaultDiffusive        centralDiffusive;
  *
  *         massConvTermFlux        HLLC;
  *         momentumConvTermFlux    LaxFriedrichs;
@@ -90,7 +92,8 @@ class Ostream;
  *         // - momentumDiffusiveFlux
  *         // - energyConvectiveFlux
  *         // - energyDiffusiveFlux
- *         // fall back to the default solver if not specified.
+ *         // fall back to the default solver for their flux type if not
+ *         // specified.
  *     }
  *
  *     fluxSolversCoeffs
@@ -122,8 +125,11 @@ private:
         /** Term names corresponding to fluxSolverList_ ordering */
         List<word> termList_;
 
-        /** Default flux solver used when a term is not configured (may be null) */
-        autoPtr<dgFluxSolver> defaultFluxSolver_;
+        /** Default convective solver used when a term is not configured */
+        autoPtr<dgFluxSolver> defaultConvectiveFluxSolver_;
+
+        /** Default diffusive solver used when a term is not configured */
+        autoPtr<dgFluxSolver> defaultDiffusiveFluxSolver_;
 
         /** Cached \c fluxSchemes sub-dictionary */
         dictionary fluxSchemesDict_;
@@ -136,7 +142,7 @@ public:
          * \brief Construct from dgSchemes dictionary and DG mesh
          *
          * Parses \c fluxSchemes and constructs term-specific solvers and
-         * an optional default solver.
+         * optional convective and diffusive default solvers.
          *
          * \param dgSchemesDict dgSchemes dictionary
          * \param mesh          DG geometric mesh
@@ -167,20 +173,22 @@ public:
         inline bool has(const word& term) const;
 
         /**
-         * \brief Return solver by term name (const)
-         *
-         * Falls back to the default solver if available; otherwise triggers
-         * an error for missing configuration.
+         * \brief Return solver by term name and validate flux type (const)
          *
          * \param term Equation-term name
+         * \param fType Flux type requested by the PDE term
          * \return Const reference to selected solver
          */
-        const dgFluxSolver& solver(const word& term) const;
+        const dgFluxSolver& solver
+        (
+            const word& term,
+            dgFluxSolver::fluxType fType
+        ) const;
 
         /**
          * \brief Reset all solvers
          *
-         * Calls reset() on all term-specific solvers and the default solver
+         * Calls reset() on all term-specific solvers and default solvers
          * (if present).
          */
         inline void reset()
@@ -190,25 +198,35 @@ public:
                 fluxSolverList_[i].reset();
             }
 
-            if (defaultFluxSolver_.valid())
+            if (defaultConvectiveFluxSolver_.valid())
             {
-                defaultFluxSolver_().reset();
+                defaultConvectiveFluxSolver_().reset();
+            }
+
+            if (defaultDiffusiveFluxSolver_.valid())
+            {
+                defaultDiffusiveFluxSolver_().reset();
             }
         }
 
         /**
-         * \brief Return solver by term name (non-const)
+         * \brief Return solver by term name and validate flux type
          *
          * \param term Equation-term name
+         * \param fType Flux type requested by the PDE term
          * \return Reference to selected solver
          */
-        dgFluxSolver& solver(const word& term);
+        dgFluxSolver& solver
+        (
+            const word& term,
+            dgFluxSolver::fluxType fType
+        );
 
         /**
          * \brief Print configured terms and their solver types
          *
          * Writes the mapping of term names to solver types, including the
-         * default solver if configured.
+         * default solvers if configured.
          *
          * \param os Output stream
          */

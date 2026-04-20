@@ -85,9 +85,10 @@ template<class Type> class boundaryGaussField;
  * The model operates in a fully cell-local and Gauss-point-resolved
  * manner and provides the stored thermodynamic and transport quantities
  * required by compressible DG formulations. Additional properties such as
- * \f$C_p\f$, \f$C_v\f$, \f$\gamma\f$, \f$\kappa\f$, \f$\mu\f$, and
- * \f$\mathrm{Pr}\f$ are intended to be evaluated on demand through the
- * thermoLaw and transportLaw APIs instead of being stored as dgField data.
+ * \f$C_p\f$, \f$C_v\f$, \f$\gamma\f$, \f$\kappa\f$, and \f$\mathrm{Pr}\f$
+ * are intended to be evaluated on demand through the thermoLaw and
+ * transportLaw APIs. Dynamic viscosity \f$\mu\f$ is cached as a dgField
+ * because diffusive numerical fluxes need synchronized face values.
  * The stored thermodynamic energy variable \c he may represent either
  * sensible internal energy or sensible enthalpy, depending on the selected
  * energy model.
@@ -144,6 +145,9 @@ protected:
 
         /** Speed of sound */
         dgField<scalar> a_;
+
+        /** Dynamic viscosity */
+        dgField<scalar> mu_;
 
         /** Conservative density field (read-only) */
         const dgField<scalar>& rho_;
@@ -368,6 +372,9 @@ public:
 
         /** Return speed-of-sound field */
         inline const dgField<scalar>& a() const { return a_; }
+
+        /** Return dynamic-viscosity field */
+        inline const dgField<scalar>& mu() const { return mu_; }
 
         /** Return the cached mean-temperature fallback for one cell. */
         inline scalar TMean(const label cellID) const { return TMean_[cellID]; }
