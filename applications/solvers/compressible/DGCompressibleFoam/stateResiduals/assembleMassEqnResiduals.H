@@ -28,25 +28,8 @@ massConvTerm.calcResidual();
 
 if (selfDiffusion)
 {
-    // Assemble the Franz-Durst self-diffusive mass flux
-    //
-    //     Fd_rho = mD
-    //            = -mu*(grad(p)/p - 0.5*grad(T)/T).
-    //
-    // This flux enters the mass equation as
-    //
-    //     d(rho)/dt + div(rho U + mD) = 0.
-    const auto massDiffFluxExpr =
-       -dg::expr(muG)
-       *(
-            dg::expr(gradPG)/dg::expr(pG)
-          - scalar(0.5)*dg::expr(gradTG)/dg::expr(TG)
-        );
-
-    tmp<GaussField<vector>> tMassDiffFlux =
-        dg::evaluate<vector>(massDiffFluxExpr, cellI, &dgMesh);
-
-    compressibleBC->correctSelfDiffusionFlux(tMassDiffFlux.ref());
+    // Franz-Durst self-diffusive mass flux mD is preassembled once per cell
+    // in assembleStageResiduals.H and reused across mass/momentum/energy.
 
     dgDiffusiveTerm<scalar, vector> selfDiffusionMassTerm
     (
@@ -83,5 +66,40 @@ else
         rho.name(),
         cellI,
         massConvTerm.R()
+    );
+}
+
+if (artificialDiffusion)
+{
+    const auto artificialDiffusionMassFluxExpr =
+       -dg::expr(muAVG)*dg::expr(SRhoG);
+
+    tmp<GaussField<vector>> tArtificialDiffusionMassFlux =
+        dg::evaluate<vector>
+        (
+            artificialDiffusionMassFluxExpr,
+            cellI,
+            &dgMesh
+        );
+
+    dgDiffusiveTerm<scalar, vector> artificialDiffusionMassTerm
+    (
+        "artificialDiffusionMassTerm",
+        dgFluxSolver::equationType::massTransport,
+        dgFluxSolver::fluxType::diffusive,
+        basisField,
+        rhoG,
+        tArtificialDiffusionMassFlux,
+        fluxSolverManager
+    );
+
+    artificialDiffusionMassTerm.updateFlux();
+    artificialDiffusionMassTerm.calcResidual();
+
+    timeDiscretization.addResidual
+    (
+        rho.name(),
+        cellI,
+        artificialDiffusionMassTerm.R()
     );
 }

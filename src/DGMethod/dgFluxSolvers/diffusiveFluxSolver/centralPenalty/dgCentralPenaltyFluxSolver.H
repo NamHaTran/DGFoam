@@ -47,22 +47,28 @@ class dgCentralPenaltyFluxSolver
 {
 private:
 
-    /** Viscosity field used in the penalty coefficient */
-    const dgField<scalar>& mu_;
+    /** Diffusion-coefficient field used in the penalty coefficient */
+    const dgField<scalar>& diffCoef_;
 
     /** User coefficient in the CIP penalty */
     scalar CIP_;
 
-    /** Name of the viscosity field in the object registry */
-    word muName_;
+    /** Name of the diffusion-coefficient field in the object registry */
+    word diffCoefName_;
 
-    static word readMuName(const dictionary& dict);
+    static const dictionary& coeffDict
+    (
+        const word& name,
+        const dictionary& dict
+    );
+
+    static word readDiffCoefName(const word& name, const dictionary& dict);
 
     scalar penaltyCoeff
     (
         const label cellID,
         const label fI,
-        const faceGaussField<scalar>& muFace
+        const faceGaussField<scalar>& diffCoefFace
     ) const;
 
 public:

@@ -49,7 +49,11 @@ dgCompressibleSymmetryBoundaryField::dgCompressibleSymmetryBoundaryField
     const dictionary& dict
 )
 :
-    dgCompressibleBoundaryField(patch, dgMesh, thermo, dict)
+    dgCompressibleBoundaryField(patch, dgMesh, thermo, dict),
+    velocityWeakEnforcement_
+    (
+        dict.lookupOrDefault<bool>("velocityWeakEnforcement", false)
+    )
 {}
 
 
@@ -68,7 +72,17 @@ void dgCompressibleSymmetryBoundaryField::updateGhostState
 ) const
 {
     rhoPlus  = rhoMinus;
-    rhoUPlus = rhoUMinus - 2.0*(n & rhoUMinus)*n;
+    rhoUPlus = rhoUMinus;
+
+    if (velocityWeakEnforcement_)
+    {
+        rhoUPlus -= (n & rhoUMinus)*n;
+    }
+    else
+    {
+        rhoUPlus -= 2.0*(n & rhoUMinus)*n;
+    }
+
     EPlus    = EMinus;
 }
 

@@ -19,6 +19,12 @@ if (runTime.isAdjustTimeStep() || timeDiscretization.localTimeStepping())
     // Here we use the common (p+1)^2 scaling.
     const scalar pScale = sqr(scalar(dgMesh.pOrder() + 1));
     List<scalar> candidateDeltaT(dgMesh.nCells(), runTime.deltaTValue());
+    const bool artificialDiffusion = artificialDiffusionNonSmooth.enabled();
+
+    if (artificialDiffusion)
+    {
+        artificialDiffusionNonSmooth.updateMuAV();
+    }
 
     for (label cellI = 0; cellI < dgMesh.nCells(); ++cellI)
     {
@@ -48,7 +54,18 @@ if (runTime.isAdjustTimeStep() || timeDiscretization.localTimeStepping())
                 << abort(FatalError);
         }
 
-        const scalar dtCell = min(CFL*h/(pScale*lambdaMax), maxDeltaT);
+        scalar dtCell = CFL*h/(pScale*lambdaMax);
+
+        if (artificialDiffusion)
+        {
+            dtCell = min
+            (
+                dtCell,
+                artificialDiffusionNonSmooth.diffusiveDeltaT(cellI)
+            );
+        }
+
+        dtCell = min(dtCell, maxDeltaT);
         candidateDeltaT[cellI] = dtCell;
     }
 

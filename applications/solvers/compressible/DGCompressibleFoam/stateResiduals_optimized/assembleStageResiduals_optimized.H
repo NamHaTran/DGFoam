@@ -2,6 +2,13 @@
 //
 // This version mirrors stateResiduals/assembleStageResiduals.H but builds
 // algebraic flux/source fields with explicit loops over Gauss points.
+const bool selfDiffusion = thermo->selfDiffusion();
+const bool artificialDiffusion = artificialDiffusionNonSmooth.enabled();
+const dgField<scalar>& muAV =
+    artificialDiffusion
+  ? artificialDiffusionNonSmooth.updateMuAV()
+  : artificialDiffusionNonSmooth.muAV();
+
 forAll(mesh.cells(), cellI)
 {
     const Foam::dgBasisField& basisField = dgMesh.basisField(cellI);
@@ -13,10 +20,12 @@ forAll(mesh.cells(), cellI)
     GaussField<scalar>& rhoG    = rho.gaussFields()[cellI];
     GaussField<vector>& rhoUG   = rhoU.gaussFields()[cellI];
     GaussField<vector>& SRhoG   = SRho.gaussFields()[cellI];
+    GaussField<tensor>& SRhoUG  = SRhoU.gaussFields()[cellI];
     GaussField<vector>& SEG     = SE.gaussFields()[cellI];
     GaussField<tensor>& gradUG  = gradU.gaussFields()[cellI];
     GaussField<vector>& gradPG  = gradP.gaussFields()[cellI];
     GaussField<vector>& gradTG  = gradT.gaussFields()[cellI];
+    const GaussField<scalar>& muAVG = muAV.gaussFields()[cellI];
 
     const GaussField<scalar>& muG = thermo->mu().gaussFields()[cellI];
     GaussField<scalar> kappaG(cellI, &dgMesh);

@@ -67,6 +67,10 @@ class dgCompressibleSymmetryBoundaryField
 :
     public dgCompressibleBoundaryField
 {
+private:
+
+    bool velocityWeakEnforcement_;
+
 public:
 
     TypeName("compressible::symmetry");

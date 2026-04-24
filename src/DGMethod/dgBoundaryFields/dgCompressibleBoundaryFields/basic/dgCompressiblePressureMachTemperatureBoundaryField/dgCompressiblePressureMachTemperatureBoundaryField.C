@@ -54,14 +54,9 @@ dgCompressiblePressureMachTemperatureBoundaryField
     rhoUValue_(Zero),
     EValue_(Zero)
 {
-    const dictionary& coeffDict = dict.subDict
-    (
-        "compressiblePressureMachTemperatureCoeff"
-    );
-
-    const scalar pValue = coeffDict.get<scalar>("pValue");
-    const scalar TValue = coeffDict.get<scalar>("TValue");
-    const vector machValue = coeffDict.get<vector>("MachValue");
+    const scalar pValue = dict.get<scalar>("pValue");
+    const scalar TValue = dict.get<scalar>("TValue");
+    const vector machValue = dict.get<vector>("MachValue");
 
     pressureMachTemperatureToConservative
     (

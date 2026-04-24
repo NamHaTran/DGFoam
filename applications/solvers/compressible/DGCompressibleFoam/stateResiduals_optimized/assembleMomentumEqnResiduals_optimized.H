@@ -2,7 +2,7 @@
 //                      Momentum conservation
 //======================================================================//
 //
-//     d(rhoU)/dt + div(rhoU (x) U + pI + tauT) = rho*g.
+//     d(rhoU)/dt + div(Fc_m + Fd_m) = rho*g.
 tmp<GaussField<tensor>> tMomentumFlux =
     GaussField<tensor>::New(cellI, &dgMesh);
 GaussField<tensor>& momentumFlux = tMomentumFlux.ref();
@@ -49,10 +49,6 @@ tmp<GaussField<tensor>> tMomentumDiffFlux =
     GaussField<tensor>::New(cellI, &dgMesh);
 GaussField<tensor>& momentumDiffFlux = tMomentumDiffFlux.ref();
 
-tmp<GaussField<vector>> tMomentumSource =
-    GaussField<vector>::New(cellI, &dgMesh);
-GaussField<vector>& momentumSource = tMomentumSource.ref();
-
 for (label gpI = 0; gpI < momentumDiffFlux.cellField().size(); ++gpI)
 {
     const scalar muValue = muG.cellField()[gpI];
@@ -64,16 +60,7 @@ for (label gpI = 0; gpI < momentumDiffFlux.cellField().size(); ++gpI)
     tau.yy() -= scalar(2.0/3.0)*muValue*divU;
     tau.zz() -= scalar(2.0/3.0)*muValue*divU;
 
-    const vector& mD = massDiffFlux.cellField()[gpI];
-    const vector& UValue = UG.cellField()[gpI];
-    tensor massMomentumDiff = mD*UValue + UValue*mD;
-    const scalar mDDotU = mD & UValue;
-    massMomentumDiff.xx() -= scalar(2.0/3.0)*mDDotU;
-    massMomentumDiff.yy() -= scalar(2.0/3.0)*mDDotU;
-    massMomentumDiff.zz() -= scalar(2.0/3.0)*mDDotU;
-
-    momentumDiffFlux.cellField()[gpI] = -tau + massMomentumDiff;
-    momentumSource.cellField()[gpI] = rhoG.cellField()[gpI]*g.value();
+    momentumDiffFlux.cellField()[gpI] = -tau;
 }
 
 faceGaussField<tensor>& momentumDiffFace = momentumDiffFlux.faceField();
@@ -101,27 +88,77 @@ for (label faceI = 0; faceI < momentumDiffFace.nFaces(); ++faceI)
         tauPlus.yy() -= scalar(2.0/3.0)*muPlus*divUPlus;
         tauPlus.zz() -= scalar(2.0/3.0)*muPlus*divUPlus;
 
-        const vector& mDMinus =
-            massDiffFace.minusValueOnFace(faceI, gpI);
-        const vector& UMinus = UFace.minusValueOnFace(faceI, gpI);
-        tensor massMomentumDiffMinus = mDMinus*UMinus + UMinus*mDMinus;
-        const scalar mDMinusDotU = mDMinus & UMinus;
-        massMomentumDiffMinus.xx() -= scalar(2.0/3.0)*mDMinusDotU;
-        massMomentumDiffMinus.yy() -= scalar(2.0/3.0)*mDMinusDotU;
-        massMomentumDiffMinus.zz() -= scalar(2.0/3.0)*mDMinusDotU;
+        momentumDiffFace.minusValueOnFace(faceI, gpI) = -tauMinus;
+        momentumDiffFace.plusValueOnFace(faceI, gpI) = -tauPlus;
+    }
+}
 
-        const vector& mDPlus = massDiffFace.plusValueOnFace(faceI, gpI);
-        const vector& UPlus = UFace.plusValueOnFace(faceI, gpI);
-        tensor massMomentumDiffPlus = mDPlus*UPlus + UPlus*mDPlus;
-        const scalar mDPlusDotU = mDPlus & UPlus;
-        massMomentumDiffPlus.xx() -= scalar(2.0/3.0)*mDPlusDotU;
-        massMomentumDiffPlus.yy() -= scalar(2.0/3.0)*mDPlusDotU;
-        massMomentumDiffPlus.zz() -= scalar(2.0/3.0)*mDPlusDotU;
+tmp<GaussField<tensor>> tSelfDiffusionMomentumFlux =
+    GaussField<tensor>::New(cellI, &dgMesh);
+GaussField<tensor>& selfDiffusionMomentumFlux =
+    tSelfDiffusionMomentumFlux.ref();
 
-        momentumDiffFace.minusValueOnFace(faceI, gpI) =
-            -tauMinus + massMomentumDiffMinus;
-        momentumDiffFace.plusValueOnFace(faceI, gpI) =
-            -tauPlus + massMomentumDiffPlus;
+if (selfDiffusion)
+{
+    for
+    (
+        label gpI = 0;
+        gpI < selfDiffusionMomentumFlux.cellField().size();
+        ++gpI
+    )
+    {
+        const vector& mD = massDiffFlux.cellField()[gpI];
+        const vector& UValue = UG.cellField()[gpI];
+        tensor massMomentumDiff = mD*UValue + UValue*mD;
+        const scalar mDDotU = mD & UValue;
+        massMomentumDiff.xx() -= scalar(2.0/3.0)*mDDotU;
+        massMomentumDiff.yy() -= scalar(2.0/3.0)*mDDotU;
+        massMomentumDiff.zz() -= scalar(2.0/3.0)*mDDotU;
+
+        selfDiffusionMomentumFlux.cellField()[gpI] = massMomentumDiff;
+    }
+
+    faceGaussField<tensor>& selfDiffusionMomentumFace =
+        selfDiffusionMomentumFlux.faceField();
+
+    for
+    (
+        label faceI = 0;
+        faceI < selfDiffusionMomentumFace.nFaces();
+        ++faceI
+    )
+    {
+        for
+        (
+            label gpI = 0;
+            gpI < selfDiffusionMomentumFace.nGaussPerFace();
+            ++gpI
+        )
+        {
+            const vector& mDMinus =
+                massDiffFace.minusValueOnFace(faceI, gpI);
+            const vector& UMinus = UFace.minusValueOnFace(faceI, gpI);
+            tensor massMomentumDiffMinus =
+                mDMinus*UMinus + UMinus*mDMinus;
+            const scalar mDMinusDotU = mDMinus & UMinus;
+            massMomentumDiffMinus.xx() -= scalar(2.0/3.0)*mDMinusDotU;
+            massMomentumDiffMinus.yy() -= scalar(2.0/3.0)*mDMinusDotU;
+            massMomentumDiffMinus.zz() -= scalar(2.0/3.0)*mDMinusDotU;
+
+            const vector& mDPlus =
+                massDiffFace.plusValueOnFace(faceI, gpI);
+            const vector& UPlus = UFace.plusValueOnFace(faceI, gpI);
+            tensor massMomentumDiffPlus = mDPlus*UPlus + UPlus*mDPlus;
+            const scalar mDPlusDotU = mDPlus & UPlus;
+            massMomentumDiffPlus.xx() -= scalar(2.0/3.0)*mDPlusDotU;
+            massMomentumDiffPlus.yy() -= scalar(2.0/3.0)*mDPlusDotU;
+            massMomentumDiffPlus.zz() -= scalar(2.0/3.0)*mDPlusDotU;
+
+            selfDiffusionMomentumFace.minusValueOnFace(faceI, gpI) =
+                massMomentumDiffMinus;
+            selfDiffusionMomentumFace.plusValueOnFace(faceI, gpI) =
+                massMomentumDiffPlus;
+        }
     }
 }
 
@@ -136,36 +173,130 @@ dgDiffusiveTerm<vector, tensor> momentumDiffTerm
     fluxSolverManager
 );
 
-dgSourceTerm<vector> momentumSourceTerm
-(
-    "momentumSourceTerm",
-    basisField,
-    momentumSource
-);
-
 momentumConvTerm.updateFlux();
 momentumDiffTerm.updateFlux();
 momentumConvTerm.calcResidual();
 momentumDiffTerm.calcResidual();
-momentumSourceTerm.calcResidual();
 
-timeDiscretization.addResidual
-(
-    rhoU.name(),
-    cellI,
-    momentumConvTerm.R()
-);
+if (selfDiffusion)
+{
+    dgDiffusiveTerm<vector, tensor> selfDiffusionMomentumTerm
+    (
+        "selfDiffusionMomentumTerm",
+        dgFluxSolver::equationType::momentumTransport,
+        dgFluxSolver::fluxType::diffusive,
+        basisField,
+        rhoUG,
+        tSelfDiffusionMomentumFlux,
+        fluxSolverManager
+    );
 
-timeDiscretization.addResidual
-(
-    rhoU.name(),
-    cellI,
-    momentumDiffTerm.R()
-);
+    selfDiffusionMomentumTerm.updateFlux();
+    selfDiffusionMomentumTerm.calcResidual();
 
-timeDiscretization.addResidual
-(
-    rhoU.name(),
-    cellI,
-    momentumSourceTerm.R()
-);
+    timeDiscretization.addResidual
+    (
+        rhoU.name(),
+        cellI,
+        momentumConvTerm.R()
+    );
+
+    timeDiscretization.addResidual
+    (
+        rhoU.name(),
+        cellI,
+        momentumDiffTerm.R()
+    );
+
+    timeDiscretization.addResidual
+    (
+        rhoU.name(),
+        cellI,
+        selfDiffusionMomentumTerm.R()
+    );
+}
+else
+{
+    timeDiscretization.addResidual
+    (
+        rhoU.name(),
+        cellI,
+        momentumConvTerm.R()
+    );
+
+    timeDiscretization.addResidual
+    (
+        rhoU.name(),
+        cellI,
+        momentumDiffTerm.R()
+    );
+}
+
+if (artificialDiffusion)
+{
+    tmp<GaussField<tensor>> tArtificialDiffusionMomentumFlux =
+        GaussField<tensor>::New(cellI, &dgMesh);
+    GaussField<tensor>& artificialDiffusionMomentumFlux =
+        tArtificialDiffusionMomentumFlux.ref();
+
+    for
+    (
+        label gpI = 0;
+        gpI < artificialDiffusionMomentumFlux.cellField().size();
+        ++gpI
+    )
+    {
+        artificialDiffusionMomentumFlux.cellField()[gpI] =
+           -muAVG.cellField()[gpI]*SRhoUG.cellField()[gpI];
+    }
+
+    faceGaussField<tensor>& artificialDiffusionMomentumFace =
+        artificialDiffusionMomentumFlux.faceField();
+    const faceGaussField<scalar>& muAVFace = muAVG.faceField();
+    const faceGaussField<tensor>& SRhoUFace = SRhoUG.faceField();
+
+    for
+    (
+        label faceI = 0;
+        faceI < artificialDiffusionMomentumFace.nFaces();
+        ++faceI
+    )
+    {
+        for
+        (
+            label gpI = 0;
+            gpI < artificialDiffusionMomentumFace.nGaussPerFace();
+            ++gpI
+        )
+        {
+            artificialDiffusionMomentumFace.minusValueOnFace(faceI, gpI) =
+               -muAVFace.minusValueOnFace(faceI, gpI)
+               *SRhoUFace.minusValueOnFace(faceI, gpI);
+
+            artificialDiffusionMomentumFace.plusValueOnFace(faceI, gpI) =
+               -muAVFace.plusValueOnFace(faceI, gpI)
+               *SRhoUFace.plusValueOnFace(faceI, gpI);
+        }
+    }
+
+    dgDiffusiveTerm<vector, tensor> artificialDiffusionMomentumTerm
+    (
+        "artificialDiffusionMomentumTerm",
+        dgFluxSolver::equationType::momentumTransport,
+        dgFluxSolver::fluxType::diffusive,
+        basisField,
+        rhoUG,
+        tArtificialDiffusionMomentumFlux,
+        fluxSolverManager
+    );
+
+    artificialDiffusionMomentumTerm.updateFlux();
+    artificialDiffusionMomentumTerm.calcResidual();
+
+    timeDiscretization.addResidual
+    (
+        rhoU.name(),
+        cellI,
+        artificialDiffusionMomentumTerm.R()
+    );
+}

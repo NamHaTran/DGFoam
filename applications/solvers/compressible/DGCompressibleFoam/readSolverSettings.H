@@ -16,6 +16,17 @@ IOdictionary dgSchemesDict
     )
 );
 
+// NonSmooth artificial diffusion owns and registers muAV before the flux
+// manager is built, so artificial-diffusion flux solvers can use muAV in their
+// penalty coefficients.
+dgArtificialDiffusionNonSmooth artificialDiffusionNonSmooth
+(
+    dgMesh,
+    rho,
+    U,
+    thermo->a()
+);
+
 // fluxSolverManager is the indirection layer that picks the right numerical
 // flux for each equation term when dgConvectiveTerm asks for a surface flux.
 // This lets the PDE assembly code say "mass term", "momentum term", etc.
@@ -62,4 +73,5 @@ massProjection.registerField(SE);
 
 timeDiscretization.writeInfo(Info);
 massProjection.writeInfo(Info);
+artificialDiffusionNonSmooth.writeInfo(Info);
 limiterManager.listLimiters(Info);

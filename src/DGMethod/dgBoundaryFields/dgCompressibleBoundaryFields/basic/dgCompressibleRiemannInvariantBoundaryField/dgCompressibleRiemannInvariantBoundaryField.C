@@ -80,11 +80,9 @@ dgCompressibleRiemannInvariantBoundaryField
     tangentialAngleTolDeg_(5.0),
     tangentialMinSpeed_(1e-6)
 {
-    const dictionary& coeffDict = dict.subDict("compressibleRiemannInvariantCoeff");
-
-    pInf_ = readInfOrValue<scalar>(coeffDict, "pInf", "pValue");
-    TInf_ = readInfOrValue<scalar>(coeffDict, "TInf", "TValue");
-    UInf_ = readInfOrValue<vector>(coeffDict, "UInf", "UValue");
+    pInf_ = readInfOrValue<scalar>(dict, "pInf", "pValue");
+    TInf_ = readInfOrValue<scalar>(dict, "TInf", "TValue");
+    UInf_ = readInfOrValue<vector>(dict, "UInf", "UValue");
 
     rhoInf_ = thermo_.eos().calcRhoFromPT(pInf_, TInf_);
 
@@ -94,21 +92,21 @@ dgCompressibleRiemannInvariantBoundaryField
     cInf_ = thermo_.thermo().calcSpeedOfSound(TInf_, gammaInf_);
 
     fallbackToZeroGradientIfTangential_ =
-        coeffDict.lookupOrDefault<bool>
+        dict.lookupOrDefault<bool>
         (
             "fallbackToZeroGradientIfTangential",
             true
         );
 
     tangentialAngleTolDeg_ =
-        coeffDict.lookupOrDefault<scalar>
+        dict.lookupOrDefault<scalar>
         (
             "tangentialAngleTolDeg",
             5.0
         );
 
     tangentialMinSpeed_ =
-        coeffDict.lookupOrDefault<scalar>
+        dict.lookupOrDefault<scalar>
         (
             "tangentialMinSpeed",
             1e-6

@@ -36,6 +36,7 @@ Description
 #define Foam_positivityPreservingLimiter_H
 
 #include "dgLimiter.H"
+#include "dgThermoConservative.H"
 #include "volFieldsFwd.H"
 
 namespace Foam
@@ -55,10 +56,11 @@ namespace Foam
  *
  * For each cell, the limiter:
  * - evaluates the minimum density over cell and face Gauss samples,
- * - computes \c theta1 for density positivity,
+ * - computes \c theta1 for density positivity using the \c rhoMin floor,
  * - evaluates the thermodynamic energy
  *   \f$\rho e = E - \tfrac{1}{2} |\rho U|^2/\rho\f$ on the modified state,
- * - computes \c theta2 for thermodynamic-energy positivity,
+ * - computes \c theta2 for thermodynamic-energy positivity relative to the
+ *   \c Tmin floor,
  * - scales higher-order modes of the limited fields by the required factor.
  *
  * The limiting pattern is:
@@ -108,6 +110,15 @@ class positivityPreservingLimiter
         /** Positivity tolerance read from dictionary keyword `tolerance`. */
         scalar epsilon_;
 
+        /** Conservative thermodynamics used for Tmin-to-energy conversion. */
+        const dgThermoConservative* thermoPtr_;
+
+        /** Minimum allowed density at limiter sample points. */
+        scalar rhoMin_;
+
+        /** Minimum allowed temperature used to derive the energy floor. */
+        scalar Tmin_;
+
         /** Cell-local theta1 cached during correct(). */
         scalar theta1_;
 
@@ -125,6 +136,9 @@ class positivityPreservingLimiter
 
         /** \brief Resolve density, momentum, and energy fields from the limiter setup. */
         void initializeConservativeFields();
+
+        /** \brief Resolve the conservative thermodynamic model from the mesh registry. */
+        void initializeThermo();
 
         /** \brief Return the mean density stored in the zeroth modal coefficient. */
         scalar densityMean(const label cellID) const;
@@ -150,6 +164,9 @@ class positivityPreservingLimiter
             const vector& rhoU,
             const scalar E
         ) const;
+
+        /** \brief Return the thermodynamic-energy floor implied by \c Tmin_. */
+        scalar calcRhoThermoEnergyFloor(const scalar rho) const;
 
         /** \brief Clamp the Zhang-Shu style limiter coefficient to [0, 1]. */
         scalar thetaCoeff
@@ -233,6 +250,8 @@ public:
      * momentum rhoU;
      * energy   E;
      * tolerance  1e-8;
+     * rhoMin     1e-8;
+     * Tmin       1e-8;
      * writeTheta false;
      * \endverbatim
      *

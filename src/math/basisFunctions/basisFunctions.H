@@ -46,6 +46,7 @@ SourceFiles
 #include "scalar.H"
 #include "label.H"
 #include "List.H"
+#include "DynamicList.H"
 #include "error.H"
 #include "refCoordTransforms.H"
 
@@ -132,6 +133,155 @@ inline label getNumBasis(const label pOrder, const dgCellType type)
             return -1; // suppress compiler warning
         }
     }
+}
+
+
+/**
+ * \brief Return modal indices in the highest polynomial shells.
+ *
+ * This helper exposes the basis-ordering convention used by the DG modal
+ * basis functions.  It is intended for sensors and limiters that need to
+ * inspect the highest-order modal content without duplicating topology-specific
+ * indexing logic.
+ *
+ * For simplex-like spaces (tetrahedron and the current hexahedron basis), the
+ * modal shell is identified by \f$i+j+k\f$.  For prisms it is
+ * \f$\max(i,j+k)\f$, and for pyramids it is \f$\max(i,j)+k\f$.
+ *
+ * \param pOrder Polynomial order.
+ * \param type DG cell type.
+ * \param nShells Number of highest modal shells to include.  A value of 1
+ *        selects only the order-\f$p\f$ shell.
+ * \param nDof Output total number of modal DoFs for this topology/order.
+ * \return List of selected modal indices in basis-function storage order.
+ */
+inline List<label> highOrderModeIndices
+(
+    const label pOrder,
+    const dgCellType type,
+    const label nShells,
+    label& nDof
+)
+{
+    if (nShells < 1)
+    {
+        FatalErrorInFunction
+            << "Number of high-order modal shells must be >= 1. Got "
+            << nShells << nl
+            << exit(FatalError);
+    }
+
+    DynamicList<label> indices;
+    label modeI = 0;
+    const label cutoff = max(pOrder - nShells, label(-1));
+
+    switch (type)
+    {
+        case dgCellType::HEX:
+        case dgCellType::TET:
+        {
+            for (label i = 0; i <= pOrder; ++i)
+            {
+                for (label j = 0; j <= pOrder - i; ++j)
+                {
+                    for (label k = 0; k <= pOrder - i - j; ++k)
+                    {
+                        if (i + j + k > cutoff)
+                        {
+                            indices.append(modeI);
+                        }
+
+                        ++modeI;
+                    }
+                }
+            }
+
+            break;
+        }
+
+        case dgCellType::PYRAMID:
+        {
+            for (label k = 0; k <= pOrder; ++k)
+            {
+                for (label i = 0; i <= pOrder - k; ++i)
+                {
+                    for (label j = 0; j <= pOrder - k; ++j)
+                    {
+                        if (max(i, j) + k > cutoff)
+                        {
+                            indices.append(modeI);
+                        }
+
+                        ++modeI;
+                    }
+                }
+            }
+
+            break;
+        }
+
+        case dgCellType::PRISM:
+        {
+            for (label i = 0; i <= pOrder; ++i)
+            {
+                for (label j = 0; j <= pOrder; ++j)
+                {
+                    for (label k = 0; k <= pOrder - j; ++k)
+                    {
+                        if (max(i, j + k) > cutoff)
+                        {
+                            indices.append(modeI);
+                        }
+
+                        ++modeI;
+                    }
+                }
+            }
+
+            break;
+        }
+
+        case dgCellType::INVALID:
+        default:
+        {
+            FatalErrorInFunction
+                << "Unsupported or invalid cell type for high-order modal "
+                << "index lookup: " << type << nl
+                << exit(FatalError);
+        }
+    }
+
+    nDof = modeI;
+
+    List<label> selected(indices.size());
+    forAll(indices, i)
+    {
+        selected[i] = indices[i];
+    }
+
+    return selected;
+}
+
+
+/**
+ * \brief Return modal indices in the highest polynomial shells.
+ *
+ * Convenience overload for callers that do not need the total modal DoF count.
+ *
+ * \param pOrder Polynomial order.
+ * \param type DG cell type.
+ * \param nShells Number of highest modal shells to include.
+ * \return List of selected modal indices in basis-function storage order.
+ */
+inline List<label> highOrderModeIndices
+(
+    const label pOrder,
+    const dgCellType type,
+    const label nShells
+)
+{
+    label nDof = Zero;
+    return highOrderModeIndices(pOrder, type, nShells, nDof);
 }
 
 

@@ -51,16 +51,41 @@ dgCompressibleIsothermoWallBoundaryField
 )
 :
     dgCompressibleBoundaryField(patch, dgMesh, thermo, dict),
-    TValue_(Zero)
+    TValue_(Zero),
+    rampTime_(Zero),
+    velocityWeakEnforcement_(false)
 {
-    const dictionary& coeffDict = dict.subDict("compressibleIsothermoWallCoeff");
-    TValue_ = coeffDict.get<scalar>("TValue");
+    TValue_ = dict.get<scalar>("TValue");
+    rampTime_ = dict.lookupOrDefault<scalar>("rampTime", 0);
+    velocityWeakEnforcement_ =
+        dict.lookupOrDefault<bool>("velocityWeakEnforcement", false);
+
+    if (rampTime_ < 0)
+    {
+        FatalIOErrorInFunction(dict)
+            << "Entry 'rampTime' must be non-negative, but got "
+            << rampTime_ << nl
+            << exit(FatalIOError);
+    }
+}
+
+
+scalar dgCompressibleIsothermoWallBoundaryField::rampFraction() const
+{
+    if (rampTime_ <= SMALL)
+    {
+        return scalar(1);
+    }
+
+    const scalar timeValue = dgMesh_.getFvMesh().time().value();
+
+    return min(max(timeValue/rampTime_, scalar(0)), scalar(1));
 }
 
 
 void dgCompressibleIsothermoWallBoundaryField::updateGhostState
 (
-    const label cellID,
+    const label,
     const label,
     const label,
     const vector&,
@@ -72,20 +97,13 @@ void dgCompressibleIsothermoWallBoundaryField::updateGhostState
     scalar& EPlus
 ) const
 {
-    const vector UMinus = rhoUMinus/rhoMinus;
-    const scalar kMinus = 0.5*magSqr(UMinus);
-    const scalar heMinus = EMinus/rhoMinus - kMinus;
-    const scalar pMinus = thermo_.calcPressureFromRhoHe(cellID, rhoMinus, heMinus);
-
-    primitiveToConservative
-    (
-        pMinus,
-        TValue_,
-        vector(Zero),
-        rhoPlus,
-        rhoUPlus,
-        EPlus
-    );
+    const scalar alpha = rampFraction();
+    rhoPlus = rhoMinus;
+    rhoUPlus =
+        velocityWeakEnforcement_
+      ? (scalar(1) - alpha)*rhoUMinus
+      : (scalar(1) - scalar(2)*alpha)*rhoUMinus;
+    EPlus = EMinus;
 }
 
 
@@ -103,19 +121,30 @@ void dgCompressibleIsothermoWallBoundaryField::updateBCValue
     scalar& EBC
 ) const
 {
-    updateGhostState
-    (
-        cellID,
-        faceLocalID,
-        localGauss,
-        n,
-        rhoMinus,
-        rhoUMinus,
-        EMinus,
-        rhoBC,
-        rhoUBC,
-        EBC
-    );
+    const scalar rhoMinusSafe = max(rhoMinus, SMALL);
+    const vector UMinus = rhoUMinus/rhoMinusSafe;
+    const scalar kMinus = 0.5*magSqr(UMinus);
+    const scalar heMinus = EMinus/rhoMinusSafe - kMinus;
+    const scalar TMinus =
+        thermo_.calcTemperatureFromRhoHe(cellID, rhoMinusSafe, heMinus);
+    const scalar alpha = rampFraction();
+    const vector UBC = (scalar(1) - alpha)*UMinus;
+    const scalar TBC = (scalar(1) - alpha)*TMinus + alpha*TValue_;
+    const scalar rhoBCSafe = max(rhoMinus, SMALL);
+    const scalar heBC = thermo_.calcHeFromRhoT(rhoBCSafe, TBC);
+
+    rhoBC = rhoMinus;
+    rhoUBC = rhoBCSafe*UBC;
+
+    if (thermo_.heIsInternalEnergy())
+    {
+        EBC = rhoBCSafe*(heBC + 0.5*magSqr(UBC));
+    }
+    else
+    {
+        const scalar pBC = thermo_.eos().calcPFromRhoT(rhoBCSafe, TBC);
+        EBC = rhoBCSafe*(heBC + 0.5*magSqr(UBC)) - pBC;
+    }
 }
 
 

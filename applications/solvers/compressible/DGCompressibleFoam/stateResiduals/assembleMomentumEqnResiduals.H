@@ -61,18 +61,6 @@ tmp<GaussField<tensor>> tSelfDiffusionMomentumFlux;
 
 if (selfDiffusion)
 {
-    const auto massDiffFluxExpr =
-       -dg::expr(muG)
-       *(
-            dg::expr(gradPG)/dg::expr(pG)
-          - scalar(0.5)*dg::expr(gradTG)/dg::expr(TG)
-        );
-
-    tmp<GaussField<vector>> tMassDiffFlux =
-        dg::evaluate<vector>(massDiffFluxExpr, cellI, &dgMesh);
-
-    compressibleBC->correctSelfDiffusionFlux(tMassDiffFlux.ref());
-
     // Assemble the Franz-Durst molecular-momentum transport tensor
     //
     //     tau_mD = mD (x) U + U (x) mD - 2/3 (mD.U) I.
@@ -159,6 +147,41 @@ else
         rhoU.name(),
         cellI,
         momentumDiffTerm.R()
+    );
+}
+
+if (artificialDiffusion)
+{
+    const auto artificialDiffusionMomentumFluxExpr =
+       -dg::expr(muAVG)*dg::expr(SRhoUG);
+
+    tmp<GaussField<tensor>> tArtificialDiffusionMomentumFlux =
+        dg::evaluate<tensor>
+        (
+            artificialDiffusionMomentumFluxExpr,
+            cellI,
+            &dgMesh
+        );
+
+    dgDiffusiveTerm<vector, tensor> artificialDiffusionMomentumTerm
+    (
+        "artificialDiffusionMomentumTerm",
+        dgFluxSolver::equationType::momentumTransport,
+        dgFluxSolver::fluxType::diffusive,
+        basisField,
+        rhoUG,
+        tArtificialDiffusionMomentumFlux,
+        fluxSolverManager
+    );
+
+    artificialDiffusionMomentumTerm.updateFlux();
+    artificialDiffusionMomentumTerm.calcResidual();
+
+    timeDiscretization.addResidual
+    (
+        rhoU.name(),
+        cellI,
+        artificialDiffusionMomentumTerm.R()
     );
 }
 

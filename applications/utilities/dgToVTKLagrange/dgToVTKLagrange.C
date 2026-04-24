@@ -40,7 +40,6 @@ Description
 #include "dgGeomMesh.H"
 #include "dgThermoConservative.H"
 #include "dgVtkLagrangeTools.H"
-#include "troubleCellDetector.H"
 
 #include <vector>
 
@@ -137,9 +136,9 @@ Type evaluateModalField
  * \brief Return the zeroth modal coefficient for one DG field in one cell.
  *
  * \details
- * The modal basis used by DGFoam stores the cell-average value in DoF0. The
- * \c smoothContinuousFields exporter option uses this value as a constant
- * reconstruction in cells that are not marked troubled by KXRCF.
+ * The modal basis used by DGFoam stores the cell-average value in DoF0. This
+ * value is used as a constant reconstruction when theta-based smoothing clamps
+ * a cell to its mean value.
  */
 template<class Type>
 Type evaluateCellMeanField
@@ -226,6 +225,85 @@ void scaleHighOrderModes
     }
 
     field.dof().updateCellDof(cellI);
+}
+
+
+/**
+ * \brief Clamp conservative fields to DoF0 using stored limiter theta.
+ *
+ * Cells satisfying the theta condition and their local face-neighbour cells are
+ * clamped.
+ */
+void clampConservativeFieldsByTheta
+(
+    const dgGeomMesh& dgMesh,
+    dgField<scalar>& rhoField,
+    dgField<vector>& rhoUField,
+    dgField<scalar>& EField,
+    const scalar clampTheta,
+    const volScalarField& theta1Field,
+    const volScalarField& theta2Field
+)
+{
+    List<bool> clampCells(dgMesh.nCells(), false);
+
+    for (label cellI = 0; cellI < dgMesh.nCells(); ++cellI)
+    {
+        const dgGeomCell* cellPtr = dgMesh.cells()[cellI];
+
+        if (!cellPtr)
+        {
+            continue;
+        }
+
+        const scalar theta1 = theta1Field.primitiveField()[cellI];
+        const scalar theta2 = theta2Field.primitiveField()[cellI];
+        const bool clampCell =
+            (theta1 >= clampTheta && theta1 < scalar(1))
+         || (theta2 >= clampTheta && theta2 < scalar(1));
+
+        if (clampCell)
+        {
+            clampCells[cellI] = true;
+
+            const labelList& neighbourCells = cellPtr->neighborCells();
+
+            forAll(neighbourCells, neighbourI)
+            {
+                const label neighbourCellI = neighbourCells[neighbourI];
+
+                if
+                (
+                    neighbourCellI >= 0
+                 && neighbourCellI < dgMesh.nCells()
+                 && dgMesh.cells()[neighbourCellI]
+                )
+                {
+                    clampCells[neighbourCellI] = true;
+                }
+            }
+        }
+    }
+
+    label nClampedCells = 0;
+
+    forAll(clampCells, cellI)
+    {
+        if (clampCells[cellI])
+        {
+            scaleHighOrderModes(rhoField, cellI, scalar(0));
+            scaleHighOrderModes(rhoUField, cellI, scalar(0));
+            scaleHighOrderModes(EField, cellI, scalar(0));
+            ++nClampedCells;
+        }
+    }
+
+    reduce(nClampedCells, sumOp<label>());
+
+    Info<< "smoothByClampingTheta " << clampTheta
+        << ": clamped rho/rhoU/E high-order modes to zero in marked cells "
+        << "and their local neighbours, total "
+        << nClampedCells << " cell(s)." << nl;
 }
 
 
@@ -372,57 +450,6 @@ void limitConservativeFieldsAtLagrangeNodes
 
 
 /**
- * \brief Detect troubled cells using the KXRCF inflow-jump sensor.
- */
-List<bool> detectKXRCFTroubledCells
-(
-    const dgGeomMesh& dgMesh,
-    const scalar threshold,
-    const bool LPRMode,
-    label& nTroubledCells
-)
-{
-    dictionary detectorDict;
-
-    wordList checkFields(3);
-    checkFields[0] = "rho";
-    checkFields[1] = "rhoU";
-    checkFields[2] = "E";
-
-    detectorDict.set("checkFields", checkFields);
-    detectorDict.set("directionField", word("rhoU"));
-    detectorDict.set("threshold", threshold);
-    detectorDict.set("LPRMode", LPRMode);
-    detectorDict.set("includeBoundaryFaces", true);
-    detectorDict.set("report", false);
-
-    autoPtr<troubleCellDetector> detector =
-        troubleCellDetector::New("KXRCF", detectorDict, dgMesh);
-
-    List<bool> troubledCells(dgMesh.nCells(), false);
-    nTroubledCells = 0;
-
-    for (label cellI = 0; cellI < dgMesh.nCells(); ++cellI)
-    {
-        if (!dgMesh.cells()[cellI])
-        {
-            continue;
-        }
-
-        if (detector->detect(cellI))
-        {
-            troubledCells[cellI] = true;
-            ++nTroubledCells;
-        }
-    }
-
-    reduce(nTroubledCells, sumOp<label>());
-
-    return troubledCells;
-}
-
-
-/**
  * \brief Return the output directory for the current export time.
  */
 fileName outputDir(const Time& runTime)
@@ -457,11 +484,55 @@ fileName pvtuFileName(const Time& runTime)
 
 
 /**
+ * \brief Return the top-level PVD timeline manifest for all exported times.
+ */
+fileName pvdFileName(const Time& runTime)
+{
+    return runTime.globalPath()/"VTK_Lagrange"/"dgToVTKLagrange.pvd";
+}
+
+
+/**
  * \brief Create the output directory for the current time if needed.
  */
 void ensureOutputDir(const Time& runTime)
 {
     mkDir(outputDir(runTime));
+}
+
+
+/**
+ * \brief Write a ParaView PVD manifest that references all exported times.
+ */
+void writePvdManifest(const Time& runTime, const instantList& timeDirs)
+{
+    const fileName manifestPath = pvdFileName(runTime);
+    mkDir(manifestPath.path());
+
+    OFstream os(manifestPath);
+    os.precision(16);
+
+    os  << "<?xml version=\"1.0\"?>" << nl
+        << "<VTKFile type=\"Collection\" version=\"0.1\" "
+        << "byte_order=\"LittleEndian\">" << nl
+        << "  <Collection>" << nl;
+
+    forAll(timeDirs, timeI)
+    {
+        const instant& timeInst = timeDirs[timeI];
+        const fileName dataSet =
+            fileName(timeInst.name())
+           /(Pstream::parRun()
+                ? fileName("dgToVTKLagrange.pvtu")
+                : fileName("dgToVTKLagrange.vtu"));
+
+        os  << "    <DataSet timestep=\"" << timeInst.value()
+            << "\" group=\"\" part=\"0\" file=\"" << dataSet.c_str()
+            << "\"/>" << nl;
+    }
+
+    os  << "  </Collection>" << nl
+        << "</VTKFile>" << nl;
 }
 
 
@@ -479,9 +550,11 @@ void ensureOutputDir(const Time& runTime)
  * This routine converts a modal DG representation into a nodal VTK Lagrange
  * representation. The algorithm is:
  * 1. Determine the VTK export order corresponding to the DG polynomial order.
- * 2. Optionally use the KXRCF detector to mark troubled cells when
- *    \c smoothContinuousFields is enabled.
- * 3. Apply the internal Lagrange-node positivity limiter.
+ * 2. Optionally use positivity-preserving theta fields to clamp selected
+ *    conservative variables to DoF0 where requested by
+ *    \c smoothByClampingTheta.
+ * 3. Apply the internal Lagrange-node positivity limiter to the possibly
+ *    clamped fields.
  * 4. Loop over all DG cells and skip null entries.
  * 5. Reject unsupported element types, while counting pyramids that are not
  *    yet exported in native VTK Lagrange form.
@@ -495,8 +568,6 @@ void ensureOutputDir(const Time& runTime)
  *    - map \f$\eta\f$ to the physical point \f$\mathbf{x}\f$,
  *    - reconstruct \f$\rho\f$, \f$\rho\mathbf{U}\f$, and \f$E\f$ from modal
  *      coefficients,
- *    - if \c smoothContinuousFields is enabled, reconstruct with full DoF only
- *      on KXRCF-marked cells and use DoF0 as a constant value elsewhere,
  *    - derive \f$\mathbf{U}\f$, internal energy \f$e\f$, pressure, temperature,
  *      and speed of sound, with density clipped by `SMALL` to avoid division
  *      by zero,
@@ -519,9 +590,10 @@ void exportTimeStep
     dgField<scalar>& EField,
     const dgThermoConservative& thermo,
     const scalar limiterEpsilon,
-    const bool smoothContinuousFields,
-    const scalar kxrcfThreshold,
-    const bool kxrcfLPRMode
+    const bool smoothByClampingTheta,
+    const scalar clampTheta,
+    const volScalarField* theta1FieldPtr,
+    const volScalarField* theta2FieldPtr
 )
 {
     dgVtkLagrange::GridBuffers grid;
@@ -541,27 +613,18 @@ void exportTimeStep
             << exit(FatalError);
     }
 
-    List<bool> troubledCells(dgMesh.nCells(), true);
-    label nTroubledCells = 0;
-
-    if (smoothContinuousFields)
+    if (smoothByClampingTheta && theta1FieldPtr && theta2FieldPtr)
     {
-        troubledCells =
-            detectKXRCFTroubledCells
-            (
-                dgMesh,
-                kxrcfThreshold,
-                kxrcfLPRMode,
-                nTroubledCells
-            );
-
-        Info<< "KXRCF troubled cells marked for full-DoF Lagrange "
-            << "reconstruction: " << nTroubledCells << nl;
-    }
-    else
-    {
-        Info<< "smoothContinuousFields disabled; exporting full DoF in all "
-            << "cells without running KXRCF." << nl;
+        clampConservativeFieldsByTheta
+        (
+            dgMesh,
+            rhoField,
+            rhoUField,
+            EField,
+            clampTheta,
+            *theta1FieldPtr,
+            *theta2FieldPtr
+        );
     }
 
     limitConservativeFieldsAtLagrangeNodes
@@ -604,12 +667,6 @@ void exportTimeStep
         const std::vector<label> nodemap =
             dgVtkLagrange::vtkNodemap(type, pyfrPts.size());
         const label pointOffset = grid.points.size();
-        const bool useFullDof =
-            !smoothContinuousFields || troubledCells[cellI];
-
-        const scalar rhoMean = evaluateCellMeanField(rhoField, cellI);
-        const vector rhoUMean = evaluateCellMeanField(rhoUField, cellI);
-        const scalar EMean = evaluateCellMeanField(EField, cellI);
 
         for (const label pyfrPointI : nodemap)
         {
@@ -618,19 +675,12 @@ void exportTimeStep
 
             const point x = mapEtaToX(eta, cellVertices, type);
 
-            scalar rhoVal = rhoMean;
-            vector rhoUVal = rhoUMean;
-            scalar EVal = EMean;
+            List<scalar> basis;
+            dgVtkLagrange::computeBasisAt(type, eta, pOrder, basis);
 
-            if (useFullDof)
-            {
-                List<scalar> basis;
-                dgVtkLagrange::computeBasisAt(type, eta, pOrder, basis);
-
-                rhoVal = evaluateModalField(rhoField, cellI, basis);
-                rhoUVal = evaluateModalField(rhoUField, cellI, basis);
-                EVal = evaluateModalField(EField, cellI, basis);
-            }
+            const scalar rhoVal = evaluateModalField(rhoField, cellI, basis);
+            const vector rhoUVal = evaluateModalField(rhoUField, cellI, basis);
+            const scalar EVal = evaluateModalField(EField, cellI, basis);
 
             const scalar rhoSafe = max(rhoVal, SMALL);
             const vector UVal = rhoUVal/rhoSafe;
@@ -690,6 +740,7 @@ void exportTimeStep
             << " pyramid cells because native VTK_LAGRANGE pyramid export is "
             << "not implemented yet." << nl;
     }
+
 }
 
 } // End anonymous namespace
@@ -727,22 +778,11 @@ int main(int argc, char *argv[])
     );
     argList::addOption
     (
-        "kxrcfThreshold",
+        "smoothByClampingTheta",
         "scalar",
-        "KXRCF troubled-cell detector threshold used by "
-        "-smoothContinuousFields (default: 1)"
-    );
-    argList::addBoolOption
-    (
-        "kxrcfLPRMode",
-        "Use the LPR normalization in the KXRCF detector when "
-        "-smoothContinuousFields is enabled"
-    );
-    argList::addBoolOption
-    (
-        "smoothContinuousFields",
-        "Use KXRCF to keep full DoF only near strong discontinuities and "
-        "write DoF0 values in smooth cells"
+        "If theta1/theta2 fields exist, zero all high-order modes of "
+        "rho/rhoU/E in cells where inputTheta <= theta1 < 1 or "
+        "inputTheta <= theta2 < 1, and in their local neighbour cells"
     );
 
     #include "setRootCase.H"
@@ -753,10 +793,11 @@ int main(int argc, char *argv[])
 
     const scalar lagrangeLimiterTolerance =
         args.getOrDefault<scalar>("lagrangeLimiterTolerance", 1.0e-6);
-    const scalar kxrcfThreshold =
-        args.getOrDefault<scalar>("kxrcfThreshold", 1.0);
-    const bool kxrcfLPRMode = args.found("kxrcfLPRMode");
-    const bool smoothContinuousFields = args.found("smoothContinuousFields");
+    const bool smoothByClampingTheta = args.found("smoothByClampingTheta");
+    const scalar clampTheta =
+        smoothByClampingTheta
+      ? args.get<scalar>("smoothByClampingTheta")
+      : scalar(1);
 
     if (lagrangeLimiterTolerance <= 0)
     {
@@ -765,11 +806,11 @@ int main(int argc, char *argv[])
             << lagrangeLimiterTolerance << exit(FatalError);
     }
 
-    if (smoothContinuousFields && kxrcfThreshold <= 0)
+    if (smoothByClampingTheta && (clampTheta < 0 || clampTheta > 1))
     {
         FatalErrorInFunction
-            << "Option -kxrcfThreshold must be positive, but got "
-            << kxrcfThreshold << exit(FatalError);
+            << "Option -smoothByClampingTheta must be in [0, 1], but got "
+            << clampTheta << exit(FatalError);
     }
 
     dgGeomMesh dgMesh(mesh);
@@ -825,6 +866,53 @@ int main(int argc, char *argv[])
                 dgMesh,
                 true
             );
+
+            autoPtr<volScalarField> theta1Ptr(nullptr);
+            autoPtr<volScalarField> theta2Ptr(nullptr);
+            bool activeSmoothByClampingTheta = smoothByClampingTheta;
+
+            if (smoothByClampingTheta)
+            {
+                IOobject theta1IO
+                (
+                    "theta1",
+                    runTime.timeName(),
+                    mesh,
+                    IOobject::MUST_READ,
+                    IOobject::NO_WRITE
+                );
+
+                IOobject theta2IO
+                (
+                    "theta2",
+                    runTime.timeName(),
+                    mesh,
+                    IOobject::MUST_READ,
+                    IOobject::NO_WRITE
+                );
+
+                if
+                (
+                    theta1IO.typeHeaderOk<volScalarField>(false)
+                 && theta2IO.typeHeaderOk<volScalarField>(false)
+                )
+                {
+                    theta1Ptr.reset(new volScalarField(theta1IO, mesh));
+                    theta2Ptr.reset(new volScalarField(theta2IO, mesh));
+                }
+                else
+                {
+                    activeSmoothByClampingTheta = false;
+
+                    WarningInFunction
+                        << "Option -smoothByClampingTheta was requested, but "
+                        << "could not find both positivity-preserving limiter "
+                        << "fields theta1 and theta2 at time "
+                        << runTime.timeName()
+                        << ". Disabling smoothByClampingTheta for this time "
+                        << "and exporting normally." << nl;
+                }
+            }
 
             dgField<scalar> p
             (
@@ -979,9 +1067,10 @@ int main(int argc, char *argv[])
                 E,
                 thermo(),
                 lagrangeLimiterTolerance,
-                smoothContinuousFields,
-                kxrcfThreshold,
-                kxrcfLPRMode
+                activeSmoothByClampingTheta,
+                clampTheta,
+                theta1Ptr.valid() ? &theta1Ptr() : nullptr,
+                theta2Ptr.valid() ? &theta2Ptr() : nullptr
             );
         }
 
@@ -1017,9 +1106,11 @@ int main(int argc, char *argv[])
             Pstream::barrier(UPstream::worldComm);
         }
 
-        Info<< "  Wrote "
-            << (Pstream::parRun() ? pvtuFileName(runTime) : pieceFileName(runTime))
-            << nl << endl;
+    }
+
+    if (!Pstream::parRun() || Pstream::master())
+    {
+        writePvdManifest(runTime, timeDirs);
     }
 
     return 0;

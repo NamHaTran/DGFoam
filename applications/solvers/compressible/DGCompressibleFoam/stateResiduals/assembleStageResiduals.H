@@ -13,6 +13,11 @@
 //     momentum : convective + viscous/mass-diffusive stress + gravity
 //     energy   : convective + mechanical/thermal fluxes + volume sources
 const bool selfDiffusion = thermo->selfDiffusion();
+const bool artificialDiffusion = artificialDiffusionNonSmooth.enabled();
+const dgField<scalar>& muAV =
+    artificialDiffusion
+  ? artificialDiffusionNonSmooth.updateMuAV()
+  : artificialDiffusionNonSmooth.muAV();
 
 forAll(mesh.cells(), cellI)
 {
@@ -27,10 +32,12 @@ forAll(mesh.cells(), cellI)
     GaussField<scalar>& rhoG    = rho.gaussFields()[cellI];
     GaussField<vector>& rhoUG   = rhoU.gaussFields()[cellI];
     GaussField<vector>& SRhoG   = SRho.gaussFields()[cellI];
+    GaussField<tensor>& SRhoUG  = SRhoU.gaussFields()[cellI];
     GaussField<vector>& SEG     = SE.gaussFields()[cellI];
     GaussField<tensor>& gradUG  = gradU.gaussFields()[cellI];
     GaussField<vector>& gradPG  = gradP.gaussFields()[cellI];
     GaussField<vector>& gradTG  = gradT.gaussFields()[cellI];
+    const GaussField<scalar>& muAVG = muAV.gaussFields()[cellI];
 
     // Dynamic viscosity is cached by dgThermo during update/updateBC from the
     // limited/clamped temperature field. Thermal conductivity is still built
@@ -39,6 +46,23 @@ forAll(mesh.cells(), cellI)
     GaussField<scalar> kappaG(cellI, &dgMesh);
 
     thermo->transport().calcKappa(cellI, TG, kappaG);
+
+    tmp<GaussField<vector>> tMassDiffFlux;
+
+    if (selfDiffusion)
+    {
+        const auto massDiffFluxExpr =
+           -dg::expr(muG)
+           *(
+                dg::expr(gradPG)/dg::expr(pG)
+              - scalar(0.5)*dg::expr(gradTG)/dg::expr(TG)
+            );
+
+        tMassDiffFlux =
+            dg::evaluate<vector>(massDiffFluxExpr, cellI, &dgMesh);
+
+        compressibleBC->correctSelfDiffusionFlux(tMassDiffFlux.ref());
+    }
 
     #include "stateResiduals/assembleMassEqnResiduals.H"
     #include "stateResiduals/assembleMomentumEqnResiduals.H"

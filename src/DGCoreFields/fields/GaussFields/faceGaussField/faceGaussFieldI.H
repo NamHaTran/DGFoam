@@ -363,7 +363,12 @@ void Foam::faceGaussField<Type>::interpolateFromDof()
         const label faceID = (*facesID_)[localFaceI];
         const label owner = mesh_->faceOwner()[faceID];
         const bool isOwner = (owner == cellID_);
-        bool isBoundaryFace = faces_[localFaceI]->isBoundary();
+        const bool hasNeighbourDof =
+        (
+            cellsDof_.size() > localFaceI + 1
+         && cellsDof_[localFaceI + 1] != nullptr
+        );
+        bool isBoundaryFace = faces_[localFaceI]->isBoundary() || !hasNeighbourDof;
 
         const dgGeomFace& face = *faces_[localFaceI];
 
@@ -415,6 +420,21 @@ void Foam::faceGaussField<Type>::interpolateFromDof()
         else
         {
             // This face has both owner and neighbor sides, so it is internal
+            if (!hasNeighbourDof)
+            {
+                forAll(gpOwner, i)
+                {
+                    minusValues_[offset + i] = pTraits<Type>::zero;
+                    for (label k = 0; k < cellPDof.nDof(); ++k)
+                    {
+                        minusValues_[offset + i] += cellPDof[k]*ownerBasis[i][k];
+                    }
+
+                    plusValues_[offset + i] = minusValues_[offset + i];
+                }
+
+                continue;
+            }
             
             // Get Gauss points for neighbor sides
             const List<vector>& gpNeigh = face.gaussPointsNeighbor();

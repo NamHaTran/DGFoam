@@ -50,18 +50,6 @@ tmp<GaussField<vector>> tSelfDiffusionEnergyFlux;
 
 if (selfDiffusion)
 {
-    const auto massDiffFluxExpr =
-       -dg::expr(muG)
-       *(
-            dg::expr(gradPG)/dg::expr(pG)
-          - scalar(0.5)*dg::expr(gradTG)/dg::expr(TG)
-        );
-
-    tmp<GaussField<vector>> tMassDiffFlux =
-        dg::evaluate<vector>(massDiffFluxExpr, cellI, &dgMesh);
-
-    compressibleBC->correctSelfDiffusionFlux(tMassDiffFlux.ref());
-
     // Assemble the Franz-Durst energy flux
     //
     //     Fd_E,self = tau_mD.U - (E/rho)mD.
@@ -195,5 +183,40 @@ else
         E.name(),
         cellI,
         energyDiffTerm.R()
+    );
+}
+
+if (artificialDiffusion)
+{
+    const auto artificialDiffusionEnergyFluxExpr =
+       -dg::expr(muAVG)*dg::expr(SEG);
+
+    tmp<GaussField<vector>> tArtificialDiffusionEnergyFlux =
+        dg::evaluate<vector>
+        (
+            artificialDiffusionEnergyFluxExpr,
+            cellI,
+            &dgMesh
+        );
+
+    dgDiffusiveTerm<scalar, vector> artificialDiffusionEnergyTerm
+    (
+        "artificialDiffusionEnergyTerm",
+        dgFluxSolver::equationType::energyTransport,
+        dgFluxSolver::fluxType::diffusive,
+        basisField,
+        EG,
+        tArtificialDiffusionEnergyFlux,
+        fluxSolverManager
+    );
+
+    artificialDiffusionEnergyTerm.updateFlux();
+    artificialDiffusionEnergyTerm.calcResidual();
+
+    timeDiscretization.addResidual
+    (
+        E.name(),
+        cellI,
+        artificialDiffusionEnergyTerm.R()
     );
 }

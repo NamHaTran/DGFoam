@@ -69,7 +69,7 @@ GaussField<Type>::GaussField
     cellID_(cellID),
     mesh_(mesh),
     cellField_(mesh, &(*dofField)[cellID]),
-    faceField_(cellID, mesh)
+    faceField_()
 {
     if (!dofField_ || !mesh_)
     {
@@ -90,7 +90,7 @@ GaussField<Type>::GaussField
         cellsDof[i + 1] = (nid >= 0 ? &(*dofField_)[nid] : nullptr);
     }
 
-    faceField_.setCellsDof(cellsDof);
+    faceField_ = faceGaussField<Type>(cellsDof, mesh_);
 }
 
 

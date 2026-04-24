@@ -81,6 +81,7 @@ Description
 #include "dgMath.H"
 #include "dgCompressibleBoundaryManager.H"
 #include "dgFluxSolverManager.H"
+#include "dgArtificialDiffusionNonSmooth.H"
 #include "dgLimiterManager.H"
 #include "dgMassProjection.H"
 #include "dgTimeDiscretization.H"

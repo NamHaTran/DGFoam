@@ -53,11 +53,9 @@ dgCompressibleFixedValueBoundaryField::dgCompressibleFixedValueBoundaryField
     rhoUValue_(Zero),
     EValue_(Zero)
 {
-    const dictionary& coeffDict = dict.subDict("compressibleFixedValueCoeff");
-
-    const scalar pValue = coeffDict.get<scalar>("pValue");
-    const scalar TValue = coeffDict.get<scalar>("TValue");
-    const vector UValue = coeffDict.get<vector>("UValue");
+    const scalar pValue = dict.get<scalar>("pValue");
+    const scalar TValue = dict.get<scalar>("TValue");
+    const vector UValue = dict.get<vector>("UValue");
 
     primitiveToConservative(pValue, TValue, UValue, rhoValue_, rhoUValue_, EValue_);
 }

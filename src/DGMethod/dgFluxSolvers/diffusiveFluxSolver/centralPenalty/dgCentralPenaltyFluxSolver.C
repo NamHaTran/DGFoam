@@ -23,22 +23,49 @@ defineTypeNameAndDebug(dgCentralPenaltyFluxSolver, 0);
 addToRunTimeSelectionTable(dgFluxSolver, dgCentralPenaltyFluxSolver, dictionary);
 
 
-word dgCentralPenaltyFluxSolver::readMuName(const dictionary& dict)
+const dictionary& dgCentralPenaltyFluxSolver::coeffDict
+(
+    const word& name,
+    const dictionary& dict
+)
 {
-    const dictionary* readDict = &dict;
-
     if (dict.found("fluxSolversCoeffs"))
     {
         const dictionary& coeffsDict = dict.subDict("fluxSolversCoeffs");
-        const word coeffKey("centralPenaltyCoeffs");
+        const word termCoeffKey(name + "Coeffs");
 
-        if (coeffsDict.found(coeffKey))
+        if (coeffsDict.found(termCoeffKey))
         {
-            readDict = &coeffsDict.subDict(coeffKey);
+            return coeffsDict.subDict(termCoeffKey);
+        }
+
+        if (coeffsDict.found("centralPenaltyCoeffs"))
+        {
+            return coeffsDict.subDict("centralPenaltyCoeffs");
         }
     }
 
-    return readDict->lookupOrDefault<word>("mu", "mu");
+    return dict;
+}
+
+
+word dgCentralPenaltyFluxSolver::readDiffCoefName
+(
+    const word& name,
+    const dictionary& dict
+)
+{
+    const dictionary& readDict = coeffDict(name, dict);
+
+    if (!readDict.found("diffCoef"))
+    {
+        FatalIOErrorInFunction(readDict)
+            << "Missing required entry 'diffCoef' for centralPenalty flux "
+            << "solver '" << name << "'."
+            << nl << exit(FatalIOError);
+    }
+
+    return readDict.get<word>("diffCoef");
 }
 
 
@@ -50,15 +77,15 @@ dgCentralPenaltyFluxSolver::dgCentralPenaltyFluxSolver
 )
 :
     dgFluxSolver(name, dict, mesh),
-    mu_
+    diffCoef_
     (
         mesh.getFvMesh().lookupObject<dgField<scalar>>
         (
-            readMuName(dict)
+            readDiffCoefName(name, dict)
         )
     ),
     CIP_(1.0),
-    muName_(readMuName(dict))
+    diffCoefName_(readDiffCoefName(name, dict))
 {
     fType_ = dgFluxSolver::fluxType::diffusive;
     read(dict);
@@ -67,28 +94,19 @@ dgCentralPenaltyFluxSolver::dgCentralPenaltyFluxSolver
 
 void dgCentralPenaltyFluxSolver::read(const dictionary& dict)
 {
-    const dictionary* readDict = &dict;
+    const dictionary& readDict = coeffDict(name_, dict);
 
-    if (dict.found("fluxSolversCoeffs"))
+    CIP_ = readDict.lookupOrDefault<scalar>("CIP", CIP_);
+    const word requestedDiffCoefName =
+        readDict.lookupOrDefault<word>("diffCoef", diffCoefName_);
+
+    if (requestedDiffCoefName != diffCoefName_)
     {
-        const dictionary& coeffsDict = dict.subDict("fluxSolversCoeffs");
-        const word coeffKey("centralPenaltyCoeffs");
-
-        if (coeffsDict.found(coeffKey))
-        {
-            readDict = &coeffsDict.subDict(coeffKey);
-        }
-    }
-
-    CIP_ = readDict->lookupOrDefault<scalar>("CIP", CIP_);
-    const word requestedMuName = readDict->lookupOrDefault<word>("mu", muName_);
-
-    if (requestedMuName != muName_)
-    {
-        FatalIOErrorInFunction(*readDict)
-            << "Cannot change viscosity field name for centralPenalty after "
-            << "construction. Constructed with mu = " << muName_
-            << ", requested mu = " << requestedMuName << "."
+        FatalIOErrorInFunction(readDict)
+            << "Cannot change diffusion-coefficient field name for "
+            << "centralPenalty after construction. Constructed with "
+            << "diffCoef = " << diffCoefName_
+            << ", requested diffCoef = " << requestedDiffCoefName << "."
             << nl << exit(FatalIOError);
     }
 }
@@ -98,11 +116,11 @@ scalar dgCentralPenaltyFluxSolver::penaltyCoeff
 (
     const label cellID,
     const label fI,
-    const faceGaussField<scalar>& muFace
+    const faceGaussField<scalar>& diffCoefFace
 ) const
 {
-    const dgGeomMesh* dgMesh = muFace.dgMesh();
-    const label faceID = muFace.globalFaceID(fI);
+    const dgGeomMesh* dgMesh = diffCoefFace.dgMesh();
+    const label faceID = diffCoefFace.globalFaceID(fI);
     const fvMesh& fvMesh = dgMesh->getFvMesh();
 
     const label owner = fvMesh.faceOwner()[faceID];
@@ -115,22 +133,22 @@ scalar dgCentralPenaltyFluxSolver::penaltyCoeff
         VN = fvMesh.V()[neighbour];
     }
 
-    const scalar faceArea = max(muFace.faceAreas()[fI], VSMALL);
+    const scalar faceArea = max(diffCoefFace.faceAreas()[fI], VSMALL);
     const scalar h = max(min(VO, VN)/faceArea, VSMALL);
     const scalar p = scalar(dgMesh->pOrder());
 
-    scalar mu = scalar(0);
-    for (label gI = 0; gI < muFace.nGaussPerFace(); ++gI)
+    scalar diffCoef = scalar(0);
+    for (label gI = 0; gI < diffCoefFace.nGaussPerFace(); ++gI)
     {
-        mu += scalar(0.5)
+        diffCoef += scalar(0.5)
             *(
-                muFace.minusValueOnFace(fI, gI)
-              + muFace.plusValueOnFace(fI, gI)
+                diffCoefFace.minusValueOnFace(fI, gI)
+              + diffCoefFace.plusValueOnFace(fI, gI)
              );
     }
-    mu /= max(muFace.nGaussPerFace(), label(1));
+    diffCoef /= max(diffCoefFace.nGaussPerFace(), label(1));
 
-    return CIP_*mu*sqr(p + scalar(1))/h;
+    return CIP_*diffCoef*sqr(p + scalar(1))/h;
 }
 
 
@@ -141,8 +159,8 @@ void dgCentralPenaltyFluxSolver::computeFlux
     const faceGaussField<scalar>& U
 )
 {
-    const faceGaussField<scalar>& muFace =
-        mu_.gaussFields()[cellID].faceField();
+    const faceGaussField<scalar>& diffCoefFace =
+        diffCoef_.gaussFields()[cellID].faceField();
 
     const label nFaces = F.nFaces();
     const label nGauss = F.nGaussPerFace();
@@ -150,7 +168,7 @@ void dgCentralPenaltyFluxSolver::computeFlux
     for (label fI = 0; fI < nFaces; ++fI)
     {
         const vector& n = F.normals()[fI];
-        const scalar penalty = penaltyCoeff(cellID, fI, muFace);
+        const scalar penalty = penaltyCoeff(cellID, fI, diffCoefFace);
 
         for (label gI = 0; gI < nGauss; ++gI)
         {
@@ -181,8 +199,8 @@ void dgCentralPenaltyFluxSolver::computeFlux
     const faceGaussField<vector>& U
 )
 {
-    const faceGaussField<scalar>& muFace =
-        mu_.gaussFields()[cellID].faceField();
+    const faceGaussField<scalar>& diffCoefFace =
+        diffCoef_.gaussFields()[cellID].faceField();
 
     const label nFaces = F.nFaces();
     const label nGauss = F.nGaussPerFace();
@@ -190,7 +208,7 @@ void dgCentralPenaltyFluxSolver::computeFlux
     for (label fI = 0; fI < nFaces; ++fI)
     {
         const vector& n = F.normals()[fI];
-        const scalar penalty = penaltyCoeff(cellID, fI, muFace);
+        const scalar penalty = penaltyCoeff(cellID, fI, diffCoefFace);
 
         for (label gI = 0; gI < nGauss; ++gI)
         {

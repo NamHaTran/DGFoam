@@ -28,8 +28,8 @@ License
 
 #include "PerssonPeraire.H"
 #include <cmath>
-#include "DynamicList.H"
 #include "addToRunTimeSelectionTable.H"
+#include "basisFunctions.H"
 #include "dgCellType.H"
 #include "error.H"
 
@@ -44,129 +44,6 @@ scalar defaultS0(const label pOrder)
     const scalar Se0 = 1.0/std::pow(scalar(pOrder + 1), 4.0);
     return std::log10(max(Se0, VSMALL));
 }
-
-dgCellType inferCellType(const dgGeomCell& cell)
-{
-    switch (cell.nPoints())
-    {
-        case 4:
-            return dgCellType::TET;
-
-        case 5:
-            return dgCellType::PYRAMID;
-
-        case 6:
-            return dgCellType::PRISM;
-
-        case 8:
-            return dgCellType::HEX;
-
-        default:
-            FatalErrorInFunction
-                << "Unsupported cell topology with " << cell.nPoints()
-                << " points and " << cell.nFaces() << " faces."
-                << abort(FatalError);
-    }
-
-    return dgCellType::INVALID;
-}
-
-
-List<label> pOrderModeIndices
-(
-    const dgCellType cellType,
-    const label pOrder,
-    label& nDof
-)
-{
-    DynamicList<label> indices;
-    label modeI = 0;
-
-    switch (cellType)
-    {
-        case dgCellType::HEX:
-        case dgCellType::TET:
-        {
-            for (label i = 0; i <= pOrder; ++i)
-            {
-                for (label j = 0; j <= pOrder - i; ++j)
-                {
-                    for (label k = 0; k <= pOrder - i - j; ++k)
-                    {
-                        if (i + j + k == pOrder)
-                        {
-                            indices.append(modeI);
-                        }
-
-                        ++modeI;
-                    }
-                }
-            }
-
-            break;
-        }
-
-        case dgCellType::PYRAMID:
-        {
-            for (label k = 0; k <= pOrder; ++k)
-            {
-                for (label i = 0; i <= pOrder - k; ++i)
-                {
-                    for (label j = 0; j <= pOrder - k; ++j)
-                    {
-                        if (max(i, j) + k == pOrder)
-                        {
-                            indices.append(modeI);
-                        }
-
-                        ++modeI;
-                    }
-                }
-            }
-
-            break;
-        }
-
-        case dgCellType::PRISM:
-        {
-            for (label i = 0; i <= pOrder; ++i)
-            {
-                for (label j = 0; j <= pOrder; ++j)
-                {
-                    for (label k = 0; k <= pOrder - j; ++k)
-                    {
-                        if (i == pOrder || j + k == pOrder)
-                        {
-                            indices.append(modeI);
-                        }
-
-                        ++modeI;
-                    }
-                }
-            }
-
-            break;
-        }
-
-        default:
-            FatalErrorInFunction
-                << "Unsupported cell type " << cellType
-                << " when collecting p-order modal indices."
-                << abort(FatalError);
-    }
-
-    nDof = modeI;
-
-    List<label> cached(indices.size());
-
-    forAll(indices, i)
-    {
-        cached[i] = indices[i];
-    }
-
-    return cached;
-}
-
 
 scalar vectorComponentValue(const vector& v, const direction cmpt)
 {
@@ -200,10 +77,28 @@ PerssonPeraire::PerssonPeraire
     hexNDof_(Zero),
     prismNDof_(Zero),
     pyramidNDof_(Zero),
-    tetPModeDof_(pOrderModeIndices(dgCellType::TET, mesh.pOrder(), tetNDof_)),
-    hexPModeDof_(pOrderModeIndices(dgCellType::HEX, mesh.pOrder(), hexNDof_)),
-    prismPModeDof_(pOrderModeIndices(dgCellType::PRISM, mesh.pOrder(), prismNDof_)),
-    pyramidPModeDof_(pOrderModeIndices(dgCellType::PYRAMID, mesh.pOrder(), pyramidNDof_)),
+    tetPModeDof_
+    (
+        highOrderModeIndices(mesh.pOrder(), dgCellType::TET, 1, tetNDof_)
+    ),
+    hexPModeDof_
+    (
+        highOrderModeIndices(mesh.pOrder(), dgCellType::HEX, 1, hexNDof_)
+    ),
+    prismPModeDof_
+    (
+        highOrderModeIndices(mesh.pOrder(), dgCellType::PRISM, 1, prismNDof_)
+    ),
+    pyramidPModeDof_
+    (
+        highOrderModeIndices
+        (
+            mesh.pOrder(),
+            dgCellType::PYRAMID,
+            1,
+            pyramidNDof_
+        )
+    ),
     s0_(dict.lookupOrDefault<scalar>("s0", defaultS0(mesh.pOrder()))),
     kappa_(dict.lookupOrDefault<scalar>("kappa", 1.0))
 {}
@@ -266,7 +161,7 @@ label PerssonPeraire::expectedNDof(const dgCellType cellType) const
 bool PerssonPeraire::detect(const label cellID) const
 {
     const dgGeomCell& cell = *mesh_.cells()[cellID];
-    const dgCellType cellType = inferCellType(cell);
+    const dgCellType cellType = cell.type();
     const List<label>& pModeDof = this->pModeDof(cellType);
     const label expectedDof = expectedNDof(cellType);
     const List<List<scalar>>& basis = cell.basis();

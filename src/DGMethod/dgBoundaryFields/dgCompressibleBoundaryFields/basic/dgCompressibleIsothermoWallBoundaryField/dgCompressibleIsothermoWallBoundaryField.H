@@ -44,7 +44,9 @@ namespace Foam
  *
  * \details
  * This wall model reconstructs the interior primitive pressure and then
- * imposes a wall state with prescribed temperature and zero velocity:
+ * imposes a wall state with prescribed temperature and zero velocity.  The
+ * optional \c rampTime entry linearly ramps these fixed wall values from the
+ * local interior state:
  *
  * \f[
  *     \mathbf{U}^+ = \mathbf{0}, \qquad
@@ -78,6 +80,12 @@ private:
 
     /** \brief Prescribed wall temperature. */
     scalar TValue_;
+
+    /** \brief Linear ramp duration for fixed wall values; disabled when non-positive. */
+    scalar rampTime_;
+    bool velocityWeakEnforcement_;
+
+    scalar rampFraction() const;
 
 public:
 

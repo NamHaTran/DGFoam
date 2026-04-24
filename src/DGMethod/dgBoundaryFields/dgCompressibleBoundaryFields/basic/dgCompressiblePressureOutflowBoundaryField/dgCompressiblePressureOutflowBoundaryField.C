@@ -54,14 +54,11 @@ dgCompressiblePressureOutflowBoundaryField
     pValue_(Zero),
     subsonicMachThreshold_(0.99)
 {
-    const dictionary& coeffDict =
-        dict.subDict("compressiblePressureOutflowCoeff");
-
-    pValue_ = max(coeffDict.get<scalar>("pValue"), scalar(SMALL));
+    pValue_ = max(dict.get<scalar>("pValue"), scalar(SMALL));
     subsonicMachThreshold_ =
         max
         (
-            coeffDict.lookupOrDefault<scalar>("subsonicMachThreshold", 0.99),
+            dict.lookupOrDefault<scalar>("subsonicMachThreshold", 0.99),
             scalar(0)
         );
 }

@@ -254,6 +254,24 @@ void positivityPreservingLimiter::initializeConservativeFields()
 }
 
 
+void positivityPreservingLimiter::initializeThermo()
+{
+    thermoPtr_ = nullptr;
+
+    const objectRegistry& obr = mesh_.getFvMesh();
+
+    if (!obr.foundObject<dgThermoConservative>("dgThermoConservative"))
+    {
+        FatalErrorInFunction
+            << "Could not find dgThermoConservative in the mesh registry while "
+            << "constructing limiter '" << type() << "'."
+            << abort(FatalError);
+    }
+
+    thermoPtr_ = &obr.lookupObject<dgThermoConservative>("dgThermoConservative");
+}
+
+
 scalar positivityPreservingLimiter::densityMean(const label cellID) const
 {
     if (!densityFieldPtr_->hasDof())
@@ -300,6 +318,24 @@ scalar positivityPreservingLimiter::calcRhoThermoEnergy
         (mag(rho) > epsilon_ ? rho : (rho >= 0 ? epsilon_ : -epsilon_));
 
     return E - 0.5*magSqr(rhoU)/rhoSafe;
+}
+
+
+scalar positivityPreservingLimiter::calcRhoThermoEnergyFloor
+(
+    const scalar rho
+) const
+{
+    const scalar rhoFloor = max(rho, rhoMin_);
+    const scalar heFloor = thermoPtr_->calcHeFromRhoT(rhoFloor, Tmin_);
+    scalar floor = rhoFloor*heFloor;
+
+    if (thermoPtr_->heIsEnthalpy())
+    {
+        floor -= thermoPtr_->eos().calcPFromRhoT(rhoFloor, Tmin_);
+    }
+
+    return floor;
 }
 
 
@@ -381,9 +417,9 @@ void positivityPreservingLimiter::computeThetaCoeffs
         }
     }
 
-    theta1 = thetaCoeff(meanRho, minRho, min(epsilon_, meanRho));
+    theta1 = thetaCoeff(meanRho, minRho, min(rhoMin_, meanRho));
 
-    scalar minRhoThermoEnergy = GREAT;
+    scalar minRhoThermoEnergyMargin = GREAT;
 
     forAll(samples, sampleI)
     {
@@ -392,22 +428,32 @@ void positivityPreservingLimiter::computeThetaCoeffs
             modifiedDensityValue(sample.rho, meanRho, theta1);
         const scalar rhoThermoEnergy =
             calcRhoThermoEnergy(rho, sample.rhoU, sample.E);
+        const scalar rhoThermoEnergyFloor =
+            calcRhoThermoEnergyFloor(rho);
 
-        minRhoThermoEnergy =
-            min(minRhoThermoEnergy, rhoThermoEnergy);
+        minRhoThermoEnergyMargin =
+            min
+            (
+                minRhoThermoEnergyMargin,
+                rhoThermoEnergy - rhoThermoEnergyFloor
+            );
     }
 
     const vector& meanRhoU = momentumFieldPtr_->dof()[cellID].dof()[0];
     const scalar meanE = energyFieldPtr_->dof()[cellID].dof()[0];
     const scalar meanRhoThermoEnergy =
         calcRhoThermoEnergy(meanRho, meanRhoU, meanE);
+    const scalar meanRhoThermoEnergyFloor =
+        calcRhoThermoEnergyFloor(meanRho);
+    const scalar meanRhoThermoEnergyMargin =
+        meanRhoThermoEnergy - meanRhoThermoEnergyFloor;
 
     theta2 =
         thetaCoeff
         (
-            meanRhoThermoEnergy,
-            minRhoThermoEnergy,
-            min(min(epsilon_, meanRho), meanRhoThermoEnergy)
+            meanRhoThermoEnergyMargin,
+            minRhoThermoEnergyMargin,
+            min(scalar(0), meanRhoThermoEnergyMargin)
         );
 }
 
@@ -563,6 +609,9 @@ positivityPreservingLimiter::positivityPreservingLimiter
     momentumFieldPtr_(nullptr),
     energyFieldPtr_(nullptr),
     epsilon_(dict.lookupOrDefault<scalar>("tolerance", 1.0e-8)),
+    thermoPtr_(nullptr),
+    rhoMin_(dict.lookupOrDefault<scalar>("rhoMin", epsilon_)),
+    Tmin_(dict.lookupOrDefault<scalar>("Tmin", epsilon_)),
     theta1_(1.0),
     theta2_(1.0),
     writeTheta_(dict.lookupOrDefault<bool>("writeTheta", false)),
@@ -570,6 +619,31 @@ positivityPreservingLimiter::positivityPreservingLimiter
     theta2FieldPtr_(nullptr)
 {
     initializeConservativeFields();
+    initializeThermo();
+
+    if (epsilon_ <= 0)
+    {
+        FatalIOErrorInFunction(dict)
+            << "Entry 'tolerance' must be positive, but got "
+            << epsilon_ << '.'
+            << exit(FatalIOError);
+    }
+
+    if (rhoMin_ <= 0)
+    {
+        FatalIOErrorInFunction(dict)
+            << "Entry 'rhoMin' must be positive, but got "
+            << rhoMin_ << '.'
+            << exit(FatalIOError);
+    }
+
+    if (Tmin_ <= 0)
+    {
+        FatalIOErrorInFunction(dict)
+            << "Entry 'Tmin' must be positive, but got "
+            << Tmin_ << '.'
+            << exit(FatalIOError);
+    }
 
     if (writeTheta_)
     {
@@ -616,12 +690,39 @@ void positivityPreservingLimiter::read(const dictionary& dict)
 {
     dgLimiter::read(normalizePositivityLimiterDict(dict));
     epsilon_ = dict.lookupOrDefault<scalar>("tolerance", 1.0e-8);
+    rhoMin_ = dict.lookupOrDefault<scalar>("rhoMin", epsilon_);
+    Tmin_ = dict.lookupOrDefault<scalar>("Tmin", epsilon_);
     theta1_ = 1.0;
     theta2_ = 1.0;
     writeTheta_ = dict.lookupOrDefault<bool>("writeTheta", false);
     theta1FieldPtr_.clear();
     theta2FieldPtr_.clear();
     initializeConservativeFields();
+    initializeThermo();
+
+    if (epsilon_ <= 0)
+    {
+        FatalIOErrorInFunction(dict)
+            << "Entry 'tolerance' must be positive, but got "
+            << epsilon_ << '.'
+            << exit(FatalIOError);
+    }
+
+    if (rhoMin_ <= 0)
+    {
+        FatalIOErrorInFunction(dict)
+            << "Entry 'rhoMin' must be positive, but got "
+            << rhoMin_ << '.'
+            << exit(FatalIOError);
+    }
+
+    if (Tmin_ <= 0)
+    {
+        FatalIOErrorInFunction(dict)
+            << "Entry 'Tmin' must be positive, but got "
+            << Tmin_ << '.'
+            << exit(FatalIOError);
+    }
 
     if (writeTheta_)
     {
