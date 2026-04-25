@@ -109,10 +109,8 @@ namespace Foam
  *     TRef     300;         // [K]
  *     omega    0.74;        // [-]
  *     Pr       0.72;        // [-]
- *
- *     // Optional overrides
- *     // kB    1.380649e-23;   // [J/K]
- *     // NA    6.02214076e23;  // [1/mol]
+ *     kB       1.380649e-23; // [J/K]
+ *     NA       6.02214076e23;// [1/mol]
  * }
  * \endcode
  *
@@ -141,10 +139,10 @@ private:
         /** Constant Prandtl number \f$\mathrm{Pr}_0\f$ [-] */
         scalar Pr0_;
 
-        /** Boltzmann constant \f$k_B\f$ [J/K] (optional override) */
+        /** Boltzmann constant \f$k_B\f$ [J/K] */
         scalar kB_;
 
-        /** Avogadro constant \f$N_A\f$ [mol^{-1}] (optional override) */
+        /** Avogadro constant \f$N_A\f$ [mol^{-1}] */
         scalar NA_;
 
     // Derived quantities

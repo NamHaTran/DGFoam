@@ -328,7 +328,7 @@ void dgCompressibleBoundaryManager::update
 
         for (label g = 0; g < rhoFace.nGaussPerFace(); ++g)
         {
-            bConditions_[conditionI]->updateGhostState
+            bConditions_[conditionI]->updateConservativeGhostState
             (
                 cellID,
                 faceI,
@@ -346,7 +346,7 @@ void dgCompressibleBoundaryManager::update
                 rhoUFace.plusValueOnFace(faceI, g)
                /rhoFace.plusValueOnFace(faceI, g);
 
-            bConditions_[conditionI]->updateBCValue
+            bConditions_[conditionI]->updatePrimitiveBCValue
             (
                 cellID,
                 faceI,
@@ -364,18 +364,13 @@ void dgCompressibleBoundaryManager::update
 }
 
 
-void dgCompressibleBoundaryManager::correctSelfDiffusionFlux
+void dgCompressibleBoundaryManager::correctFlux
 (
-    GaussField<vector>& massDiffFlux
+    GaussField<vector>& flux
 ) const
 {
-    if (!thermo_.selfDiffusion())
-    {
-        return;
-    }
-
-    const label cellID = massDiffFlux.cellID();
-    faceGaussField<vector>& fluxFace = massDiffFlux.faceField();
+    const label cellID = flux.cellID();
+    faceGaussField<vector>& fluxFace = flux.faceField();
 
     for (label faceI = 0; faceI < fluxFace.nFaces(); ++faceI)
     {
@@ -396,7 +391,7 @@ void dgCompressibleBoundaryManager::correctSelfDiffusionFlux
 
         for (label g = 0; g < fluxFace.nGaussPerFace(); ++g)
         {
-            bConditions_[conditionI]->correctSelfDiffusionFlux
+            bConditions_[conditionI]->correctFlux
             (
                 cellID,
                 faceI,
@@ -407,6 +402,49 @@ void dgCompressibleBoundaryManager::correctSelfDiffusionFlux
 
             fluxFace.plusValueOnFace(faceI, g) =
                 fluxFace.minusValueOnFace(faceI, g);
+        }
+    }
+}
+
+
+void dgCompressibleBoundaryManager::correctGradient
+(
+    GaussField<vector>& grad
+) const
+{
+    const label cellID = grad.cellID();
+    faceGaussField<vector>& gradFace = grad.faceField();
+
+    for (label faceI = 0; faceI < gradFace.nFaces(); ++faceI)
+    {
+        if (!gradFace.isBoundary(faceI))
+        {
+            continue;
+        }
+
+        const label patchID = gradFace.getOwnerPatchID(faceI);
+        const label conditionI = patchToCondition_[patchID];
+
+        if (conditionI < 0)
+        {
+            continue;
+        }
+
+        const vector n = gradFace.faces()[faceI]->normal();
+
+        for (label g = 0; g < gradFace.nGaussPerFace(); ++g)
+        {
+            bConditions_[conditionI]->correctGradient
+            (
+                cellID,
+                faceI,
+                g,
+                n,
+                gradFace.minusValueOnFace(faceI, g)
+            );
+
+            gradFace.plusValueOnFace(faceI, g) =
+                gradFace.minusValueOnFace(faceI, g);
         }
     }
 }

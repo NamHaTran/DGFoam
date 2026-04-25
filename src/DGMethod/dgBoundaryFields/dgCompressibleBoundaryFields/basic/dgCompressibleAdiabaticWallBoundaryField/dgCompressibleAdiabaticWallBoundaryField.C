@@ -54,7 +54,7 @@ dgCompressibleAdiabaticWallBoundaryField
 {}
 
 
-void dgCompressibleAdiabaticWallBoundaryField::updateGhostState
+void dgCompressibleAdiabaticWallBoundaryField::updateConservativeGhostState
 (
     const label cellID,
     const label,
@@ -86,7 +86,7 @@ void dgCompressibleAdiabaticWallBoundaryField::updateGhostState
 }
 
 
-void dgCompressibleAdiabaticWallBoundaryField::updateBCValue
+void dgCompressibleAdiabaticWallBoundaryField::updatePrimitiveBCValue
 (
     const label cellID,
     const label faceLocalID,
@@ -100,7 +100,7 @@ void dgCompressibleAdiabaticWallBoundaryField::updateBCValue
     scalar& EBC
 ) const
 {
-    updateGhostState
+    updateConservativeGhostState
     (
         cellID,
         faceLocalID,
@@ -116,18 +116,31 @@ void dgCompressibleAdiabaticWallBoundaryField::updateBCValue
 }
 
 
-void dgCompressibleAdiabaticWallBoundaryField::correctSelfDiffusionFlux
+void dgCompressibleAdiabaticWallBoundaryField::correctGradient
 (
     const label,
     const label,
     const label,
     const vector& n,
-    vector& massDiffFlux
+    vector& grad
+) const
+{
+    grad -= (grad & n)*n;
+}
+
+
+void dgCompressibleAdiabaticWallBoundaryField::correctFlux
+(
+    const label,
+    const label,
+    const label,
+    const vector& n,
+    vector& flux
 ) const
 {
     if (thermo_.selfDiffusion())
     {
-        massDiffFlux -= (massDiffFlux & n)*n;
+        flux -= (flux & n)*n;
     }
 }
 

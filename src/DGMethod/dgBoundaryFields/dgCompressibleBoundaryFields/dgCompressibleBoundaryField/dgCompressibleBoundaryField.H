@@ -144,7 +144,7 @@ public:
         const dictionary& dict
     );
 
-    virtual void updateGhostState
+    virtual void updateConservativeGhostState
     (
         const label cellID,
         const label faceLocalID,
@@ -163,7 +163,7 @@ public:
         EPlus    = EMinus;
     }
 
-    virtual void updateBCValue
+    virtual void updatePrimitiveBCValue
     (
         const label cellID,
         const label faceLocalID,
@@ -182,13 +182,23 @@ public:
         EBC    = EMinus;
     }
 
-    virtual void correctSelfDiffusionFlux
+    virtual void correctGradient
     (
         const label cellID,
         const label faceLocalID,
         const label localGauss,
         const vector& n,
-        vector& massDiffFlux
+        vector& grad
+    ) const
+    {}
+
+    virtual void correctFlux
+    (
+        const label cellID,
+        const label faceLocalID,
+        const label localGauss,
+        const vector& n,
+        vector& flux
     ) const
     {}
 

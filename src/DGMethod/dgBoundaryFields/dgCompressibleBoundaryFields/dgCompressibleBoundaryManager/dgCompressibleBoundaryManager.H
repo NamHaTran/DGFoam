@@ -165,9 +165,14 @@ public:
         GaussField<vector>& UG
     ) const;
 
-    void correctSelfDiffusionFlux
+    void correctFlux
     (
-        GaussField<vector>& massDiffFlux
+        GaussField<vector>& flux
+    ) const;
+
+    void correctGradient
+    (
+        GaussField<vector>& grad
     ) const;
 };
 

@@ -111,7 +111,7 @@ public:
      * \param rhoUPlus Ghost momentum.
      * \param EPlus Ghost total energy.
      */
-    virtual void updateGhostState
+    virtual void updateConservativeGhostState
     (
         const label cellID,
         const label faceLocalID,
@@ -125,7 +125,7 @@ public:
         scalar& EPlus
     ) const override;
 
-    virtual void updateBCValue
+    virtual void updatePrimitiveBCValue
     (
         const label cellID,
         const label faceLocalID,

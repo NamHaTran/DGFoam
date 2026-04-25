@@ -13,6 +13,7 @@
 //     momentum : convective + viscous/mass-diffusive stress + gravity
 //     energy   : convective + mechanical/thermal fluxes + volume sources
 const bool selfDiffusion = thermo->selfDiffusion();
+const scalar selfDiffCoeffScale = thermo->selfDiffCoeffScale();
 const bool artificialDiffusion = artificialDiffusionNonSmooth.enabled();
 const dgField<scalar>& muAV =
     artificialDiffusion
@@ -52,7 +53,7 @@ forAll(mesh.cells(), cellI)
     if (selfDiffusion)
     {
         const auto massDiffFluxExpr =
-           -dg::expr(muG)
+           -selfDiffCoeffScale*dg::expr(muG)
            *(
                 dg::expr(gradPG)/dg::expr(pG)
               - scalar(0.5)*dg::expr(gradTG)/dg::expr(TG)
@@ -61,7 +62,7 @@ forAll(mesh.cells(), cellI)
         tMassDiffFlux =
             dg::evaluate<vector>(massDiffFluxExpr, cellI, &dgMesh);
 
-        compressibleBC->correctSelfDiffusionFlux(tMassDiffFlux.ref());
+        compressibleBC->correctFlux(tMassDiffFlux.ref());
     }
 
     #include "stateResiduals/assembleMassEqnResiduals.H"

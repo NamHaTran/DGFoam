@@ -32,6 +32,21 @@ License
 
 namespace Foam
 {
+namespace
+{
+scalar readSelfDiffCoeffScale(const dictionary& dict, const bool selfDiffusion)
+{
+    if (!selfDiffusion)
+    {
+        return scalar(1);
+    }
+
+    return
+        dict.subDict("mixture")
+            .subDict("selfDiffusion")
+            .get<scalar>("D0");
+}
+}
 // * * * * * * * * * Static Data Members * * * * * * * * * * * * * * * * * * //
 
 defineTypeNameAndDebug(dgThermoConservative, 0);
@@ -63,6 +78,7 @@ Foam::dgThermoConservative::dgThermoConservative
     (
         dict.subDict("dgThermo").lookupOrDefault<bool>("selfDiffusion", false)
     ),
+    selfDiffCoeffScale_(readSelfDiffCoeffScale(dict, selfDiffusion_)),
     mesh_(mesh),
 
     // Null initialization. Derived class will allocate real models.

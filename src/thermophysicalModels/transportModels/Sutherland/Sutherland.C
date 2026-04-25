@@ -34,6 +34,22 @@ License
 
 namespace Foam
 {
+namespace
+{
+const dictionary& transportCoeffDict(const dictionary& coeff)
+{
+    if (!coeff.found("transport"))
+    {
+        FatalIOErrorInFunction(coeff)
+            << "Sutherland transport model requires a 'transport' "
+            << "sub-dictionary containing entries 'As', 'S' (or 'Ts'), "
+            << "and 'Pr'."
+            << nl << exit(FatalIOError);
+    }
+
+    return coeff.subDict("transport");
+}
+}
 
 // * * * * * * * * * * * * * Static Data Members * * * * * * * * * * * * * //
 
@@ -52,9 +68,9 @@ Sutherland::Sutherland
 )
 :
     transportLaw(name, dict, mesh, thermo),
-    As_(1.458e-5),
-    S_(110.4),
-    Pr0_(0.72)
+    As_(Zero),
+    S_(Zero),
+    Pr0_(Zero)
 {
     read();
 }
@@ -90,20 +106,41 @@ Foam::scalar Sutherland::calcPr(const scalar) const
 
 void Sutherland::read()
 {
-    if (coeff_.found("As"))
+    const dictionary& transportDict = transportCoeffDict(coeff_);
+
+    if (!transportDict.found("As"))
     {
-        As_ = readScalar(coeff_.lookup("As"));
+        FatalIOErrorInFunction(transportDict)
+            << "Missing required entry 'As' in Sutherland transport "
+            << "dictionary."
+            << nl << exit(FatalIOError);
+    }
+    As_ = readScalar(transportDict.lookup("As"));
+
+    if (transportDict.found("S"))
+    {
+        S_ = readScalar(transportDict.lookup("S"));
+    }
+    else if (transportDict.found("Ts"))
+    {
+        S_ = readScalar(transportDict.lookup("Ts"));
+    }
+    else
+    {
+        FatalIOErrorInFunction(transportDict)
+            << "Missing required entry 'S' (or legacy alias 'Ts') in "
+            << "Sutherland transport dictionary."
+            << nl << exit(FatalIOError);
     }
 
-    if (coeff_.found("S"))
+    if (!transportDict.found("Pr"))
     {
-        S_ = readScalar(coeff_.lookup("S"));
+        FatalIOErrorInFunction(transportDict)
+            << "Missing required entry 'Pr' in Sutherland transport "
+            << "dictionary."
+            << nl << exit(FatalIOError);
     }
-
-    if (coeff_.found("Pr"))
-    {
-        Pr0_ = readScalar(coeff_.lookup("Pr"));
-    }
+    Pr0_ = readScalar(transportDict.lookup("Pr"));
 
     if (As_ <= 0)
     {

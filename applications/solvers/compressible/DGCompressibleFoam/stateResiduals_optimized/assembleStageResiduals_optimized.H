@@ -3,6 +3,7 @@
 // This version mirrors stateResiduals/assembleStageResiduals.H but builds
 // algebraic flux/source fields with explicit loops over Gauss points.
 const bool selfDiffusion = thermo->selfDiffusion();
+const scalar selfDiffCoeffScale = thermo->selfDiffCoeffScale();
 const bool artificialDiffusion = artificialDiffusionNonSmooth.enabled();
 const dgField<scalar>& muAV =
     artificialDiffusion

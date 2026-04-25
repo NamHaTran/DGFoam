@@ -3,7 +3,7 @@
 //======================================================================//
 //
 //     d(rho)/dt + div(Fc_rho + Fd_rho) = 0,
-//     mD = -mu*(grad(p)/p - 0.5*grad(T)/T).
+//     mD = -D0*mu*(grad(p)/p - 0.5*grad(T)/T).
 dgConvectiveTerm<scalar, vector> massConvTerm
 (
     "massConvTerm",
@@ -34,7 +34,7 @@ if (selfDiffusion)
     for (label gpI = 0; gpI < massDiffFlux.cellField().size(); ++gpI)
     {
         massDiffFlux.cellField()[gpI] =
-           -muG.cellField()[gpI]
+           -selfDiffCoeffScale*muG.cellField()[gpI]
            *(
                 gradPG.cellField()[gpI]/pG.cellField()[gpI]
               - scalar(0.5)*gradTG.cellField()[gpI]/TG.cellField()[gpI]
@@ -46,7 +46,7 @@ if (selfDiffusion)
         for (label gpI = 0; gpI < massDiffFace.nGaussPerFace(); ++gpI)
         {
             massDiffFace.minusValueOnFace(faceI, gpI) =
-               -muFace.minusValueOnFace(faceI, gpI)
+               -selfDiffCoeffScale*muFace.minusValueOnFace(faceI, gpI)
                *(
                     gradPFace.minusValueOnFace(faceI, gpI)
                    /pFace.minusValueOnFace(faceI, gpI)
@@ -56,7 +56,7 @@ if (selfDiffusion)
                 );
 
             massDiffFace.plusValueOnFace(faceI, gpI) =
-               -muFace.plusValueOnFace(faceI, gpI)
+               -selfDiffCoeffScale*muFace.plusValueOnFace(faceI, gpI)
                *(
                     gradPFace.plusValueOnFace(faceI, gpI)
                    /pFace.plusValueOnFace(faceI, gpI)
@@ -67,7 +67,7 @@ if (selfDiffusion)
         }
     }
 
-    compressibleBC->correctSelfDiffusionFlux(massDiffFlux);
+    compressibleBC->correctFlux(massDiffFlux);
 
     dgDiffusiveTerm<scalar, vector> selfDiffusionMassTerm
     (

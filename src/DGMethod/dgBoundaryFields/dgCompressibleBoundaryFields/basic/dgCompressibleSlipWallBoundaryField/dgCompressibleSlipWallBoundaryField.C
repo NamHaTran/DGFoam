@@ -52,7 +52,7 @@ dgCompressibleSlipWallBoundaryField::dgCompressibleSlipWallBoundaryField
 {}
 
 
-void dgCompressibleSlipWallBoundaryField::updateGhostState
+void dgCompressibleSlipWallBoundaryField::updateConservativeGhostState
 (
     const label,
     const label,
@@ -72,7 +72,7 @@ void dgCompressibleSlipWallBoundaryField::updateGhostState
 }
 
 
-void dgCompressibleSlipWallBoundaryField::updateBCValue
+void dgCompressibleSlipWallBoundaryField::updatePrimitiveBCValue
 (
     const label,
     const label,

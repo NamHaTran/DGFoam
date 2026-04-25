@@ -165,6 +165,9 @@ protected:
     /** Enable the velocity-difference contribution to the interface pressure. */
     bool useVelocityPressureCorrection_;
 
+    /** Ensures that the AUSM fallback warning is emitted only once. */
+    mutable bool warnedFallback_;
+
     /**
      * \brief Positive/negative supersonic Mach split.
      * \param side Select plus/minus polynomial branch.

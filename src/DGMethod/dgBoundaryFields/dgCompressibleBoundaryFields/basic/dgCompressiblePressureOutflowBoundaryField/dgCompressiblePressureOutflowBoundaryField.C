@@ -64,7 +64,7 @@ dgCompressiblePressureOutflowBoundaryField
 }
 
 
-void dgCompressiblePressureOutflowBoundaryField::updateGhostState
+void dgCompressiblePressureOutflowBoundaryField::updateConservativeGhostState
 (
     const label cellID,
     const label,
@@ -100,7 +100,7 @@ void dgCompressiblePressureOutflowBoundaryField::updateGhostState
 }
 
 
-void dgCompressiblePressureOutflowBoundaryField::updateBCValue
+void dgCompressiblePressureOutflowBoundaryField::updatePrimitiveBCValue
 (
     const label cellID,
     const label faceLocalID,
@@ -114,7 +114,7 @@ void dgCompressiblePressureOutflowBoundaryField::updateBCValue
     scalar& EBC
 ) const
 {
-    updateGhostState
+    updateConservativeGhostState
     (
         cellID,
         faceLocalID,

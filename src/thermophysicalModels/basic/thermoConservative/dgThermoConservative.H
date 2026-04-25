@@ -122,6 +122,9 @@ protected:
         /** Enable Franz-Durst self-diffusion terms in compressible residuals */
         const bool selfDiffusion_;
 
+        /** User-defined scaling applied to the self-diffusion mass flux */
+        const scalar selfDiffCoeffScale_;
+
         /** Reference to DG geometric mesh (non-owning) */
         const dgGeomMesh& mesh_;
 
@@ -348,6 +351,9 @@ public:
 
         /** Return true if Franz-Durst self-diffusion terms are enabled */
         inline bool selfDiffusion() const { return selfDiffusion_; }
+
+        /** Return the scaling coefficient applied to self-diffusion fluxes */
+        inline scalar selfDiffCoeffScale() const { return selfDiffCoeffScale_; }
 
         /** Return gas constant */
         inline scalar R() const { return R_; }

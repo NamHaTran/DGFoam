@@ -57,7 +57,7 @@ dgCompressibleSymmetryBoundaryField::dgCompressibleSymmetryBoundaryField
 {}
 
 
-void dgCompressibleSymmetryBoundaryField::updateGhostState
+void dgCompressibleSymmetryBoundaryField::updateConservativeGhostState
 (
     const label,
     const label,
@@ -87,7 +87,7 @@ void dgCompressibleSymmetryBoundaryField::updateGhostState
 }
 
 
-void dgCompressibleSymmetryBoundaryField::updateBCValue
+void dgCompressibleSymmetryBoundaryField::updatePrimitiveBCValue
 (
     const label,
     const label,
@@ -107,18 +107,18 @@ void dgCompressibleSymmetryBoundaryField::updateBCValue
 }
 
 
-void dgCompressibleSymmetryBoundaryField::correctSelfDiffusionFlux
+void dgCompressibleSymmetryBoundaryField::correctFlux
 (
     const label,
     const label,
     const label,
     const vector& n,
-    vector& massDiffFlux
+    vector& flux
 ) const
 {
     if (thermo_.selfDiffusion())
     {
-        massDiffFlux -= (massDiffFlux & n)*n;
+        flux -= (flux & n)*n;
     }
 }
 

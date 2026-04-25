@@ -767,6 +767,13 @@ void positivityPreservingLimiter::read(const dictionary& dict)
 
 void positivityPreservingLimiter::correct()
 {
+    // This limiter scales higher-order modal content around the cell mean.
+    // For p=0 only the mean remains, so leave the state unchanged here.
+    if (mesh_.pOrder() <= 0)
+    {
+        return;
+    }
+
     preCorrect();
     resetThetaFields();
 

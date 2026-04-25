@@ -122,7 +122,7 @@ dgCompressibleRiemannInvariantBoundaryField
 }
 
 
-void dgCompressibleRiemannInvariantBoundaryField::updateGhostState
+void dgCompressibleRiemannInvariantBoundaryField::updateConservativeGhostState
 (
     const label cellID,
     const label,
@@ -232,7 +232,7 @@ void dgCompressibleRiemannInvariantBoundaryField::updateGhostState
 }
 
 
-void dgCompressibleRiemannInvariantBoundaryField::updateBCValue
+void dgCompressibleRiemannInvariantBoundaryField::updatePrimitiveBCValue
 (
     const label cellID,
     const label faceLocalID,
@@ -246,7 +246,7 @@ void dgCompressibleRiemannInvariantBoundaryField::updateBCValue
     scalar& EBC
 ) const
 {
-    updateGhostState
+    updateConservativeGhostState
     (
         cellID,
         faceLocalID,

@@ -382,6 +382,13 @@ void dgLimiter::read(const dictionary& dict)
 
 void dgLimiter::correct()
 {
+    // Detector-based/high-order limiters act on modal content beyond DoF0.
+    // For p=0 there is no higher-order content to modify, so they are skipped.
+    if (mesh_.pOrder() <= 0)
+    {
+        return;
+    }
+
     if (!detector_.valid())
     {
         FatalErrorInFunction

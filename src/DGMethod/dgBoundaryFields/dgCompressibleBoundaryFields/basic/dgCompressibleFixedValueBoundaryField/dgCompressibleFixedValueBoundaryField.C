@@ -61,7 +61,7 @@ dgCompressibleFixedValueBoundaryField::dgCompressibleFixedValueBoundaryField
 }
 
 
-void dgCompressibleFixedValueBoundaryField::updateGhostState
+void dgCompressibleFixedValueBoundaryField::updateConservativeGhostState
 (
     const label,
     const label,
@@ -81,7 +81,7 @@ void dgCompressibleFixedValueBoundaryField::updateGhostState
 }
 
 
-void dgCompressibleFixedValueBoundaryField::updateBCValue
+void dgCompressibleFixedValueBoundaryField::updatePrimitiveBCValue
 (
     const label,
     const label,

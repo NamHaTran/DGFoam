@@ -104,6 +104,12 @@ private:
     /// Ensures that the variable-gamma warning is emitted only once.
     mutable bool warnedVariableGamma_;
 
+    /// Ensures that the vacuum-fallback warning is emitted only once.
+    mutable bool warnedVacuumFallback_;
+
+    /// Ensures that the non-convergence fallback warning is emitted only once.
+    mutable bool warnedNewtonFallback_;
+
     /**
      * \brief Compute the ratio of specific heats at all Gauss points of a cell.
      * \param cellID Cell for which the Gauss field is assembled.

@@ -34,6 +34,7 @@ License
 #include "IOstreams.H"
 #include "error.H"
 #include "dgExpr.H"
+#include "dgCompressibleBoundaryManager.H"
 
 namespace Foam
 {
@@ -180,6 +181,7 @@ void Foam::rhoBasedConservative::initModels()
         << "  transport       = " << transport_().type() << nl
         << "  energy          = " << energy_().type() << nl
         << "  selfDiffusion   = " << Switch(selfDiffusion_) << nl
+        << "  selfDiffusionD0 = " << selfDiffCoeffScale_ << nl
         << endl;
 }
 
@@ -625,6 +627,22 @@ void Foam::rhoBasedConservative::updateGradient(const label& cellI)
                     gradTFace.plusValueOnFace(localFaceI, gpI)
                 );
         }
+    }
+
+    // Correct thermo-derived gradients on boundary faces using the boundary
+    // manager so wall/outlet BCs can enforce their face-normal constraints on
+    // both grad(T) and grad(p).
+    const objectRegistry& obr = mesh_.getFvMesh();
+
+    if (obr.foundObject<dgCompressibleBoundaryManager>("dgCompressibleBoundaryManager"))
+    {
+        const dgCompressibleBoundaryManager& compressibleBC =
+            obr.lookupObject<dgCompressibleBoundaryManager>
+            (
+                "dgCompressibleBoundaryManager"
+            );
+
+        compressibleBC.correctGradient(gradTG);
     }
 }
 

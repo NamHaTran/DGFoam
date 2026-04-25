@@ -116,7 +116,7 @@ public:
      * \param rhoUPlus Ghost momentum.
      * \param EPlus Ghost total energy.
      */
-    virtual void updateGhostState
+    virtual void updateConservativeGhostState
     (
         const label cellID,
         const label faceLocalID,
@@ -130,7 +130,7 @@ public:
         scalar& EPlus
     ) const override;
 
-    virtual void updateBCValue
+    virtual void updatePrimitiveBCValue
     (
         const label cellID,
         const label faceLocalID,
@@ -144,13 +144,13 @@ public:
         scalar& EBC
     ) const override;
 
-    virtual void correctSelfDiffusionFlux
+    virtual void correctFlux
     (
         const label cellID,
         const label faceLocalID,
         const label localGauss,
         const vector& n,
-        vector& massDiffFlux
+        vector& flux
     ) const override;
 
     /** \brief Check that the boundary condition is applied on a wall patch. */

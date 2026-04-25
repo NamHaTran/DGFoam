@@ -34,6 +34,56 @@ License
 
 namespace Foam
 {
+namespace
+{
+
+inline void calcRusanovFlux
+(
+    const scalar rhoL,
+    const scalar rhoR,
+    const vector& ULv,
+    const vector& URv,
+    const scalar EL,
+    const scalar ER,
+    const scalar pL,
+    const scalar pR,
+    const scalar aL,
+    const scalar aR,
+    const vector& n,
+    scalar& massFlux,
+    vector& momentumFlux,
+    scalar& energyFlux
+)
+{
+    const scalar aLSafe = max(aL, SMALL);
+    const scalar aRSafe = max(aR, SMALL);
+    const scalar unL = (ULv & n);
+    const scalar unR = (URv & n);
+    const scalar sMax = max(mag(unL) + aLSafe, mag(unR) + aRSafe);
+
+    const scalar massFluxL = rhoL*unL;
+    const scalar massFluxR = rhoR*unR;
+
+    const vector momentumFluxL = massFluxL*ULv + pL*n;
+    const vector momentumFluxR = massFluxR*URv + pR*n;
+
+    const scalar energyFluxL = unL*(EL + pL);
+    const scalar energyFluxR = unR*(ER + pR);
+
+    massFlux =
+        0.5*(massFluxL + massFluxR)
+      - 0.5*sMax*(rhoR - rhoL);
+
+    momentumFlux =
+        0.5*(momentumFluxL + momentumFluxR)
+      - 0.5*sMax*(rhoR*URv - rhoL*ULv);
+
+    energyFlux =
+        0.5*(energyFluxL + energyFluxR)
+      - 0.5*sMax*(ER - EL);
+}
+
+}
 
 defineTypeNameAndDebug(dgAUSMFluxSolver, 0);
 addToRunTimeSelectionTable(dgFluxSolver, dgAUSMFluxSolver, dictionary);
@@ -75,7 +125,8 @@ dgAUSMFluxSolver::dgAUSMFluxSolver
     sigma_(1.0),
     Mco_(0.01),
     usePressureMachCorrection_(true),
-    useVelocityPressureCorrection_(true)
+    useVelocityPressureCorrection_(true),
+    warnedFallback_(false)
 {
     fType_ = dgFluxSolver::fluxType::convective;
     read(dict);
@@ -286,6 +337,45 @@ void dgAUSMFluxSolver::calcAUSMFlux
     const scalar aLSafe = max(aL, SMALL);
     const scalar aRSafe = max(aR, SMALL);
 
+    if
+    (
+        !std::isfinite(rhoL) || !std::isfinite(rhoR)
+     || !std::isfinite(pL) || !std::isfinite(pR)
+     || !std::isfinite(aL) || !std::isfinite(aR)
+     || !std::isfinite(EL) || !std::isfinite(ER)
+     || rhoL <= SMALL || rhoR <= SMALL
+     || pL <= SMALL || pR <= SMALL
+     || aL <= SMALL || aR <= SMALL
+    )
+    {
+        if (!warnedFallback_)
+        {
+            warnedFallback_ = true;
+
+            WarningInFunction
+                << "AUSM detected a non-physical interface state and will "
+                << "fall back to local Rusanov flux." << nl
+                << "rhoL=" << rhoL << ", rhoR=" << rhoR
+                << ", pL=" << pL << ", pR=" << pR
+                << ", aL=" << aL << ", aR=" << aR << nl;
+        }
+
+        calcRusanovFlux
+        (
+            rhoLSafe, rhoRSafe,
+            ULv, URv,
+            EL, ER,
+            pLSafe, pRSafe,
+            aLSafe, aRSafe,
+            n,
+            massFlux,
+            momentumFlux,
+            energyFlux
+        );
+
+        return;
+    }
+
     vector t1(Zero);
     vector t2(Zero);
     makeONB(n, t1, t2);
@@ -339,6 +429,37 @@ void dgAUSMFluxSolver::calcAUSMFlux
            *P5Function(1, alpha_, MR);
 
         pbar += pu;
+    }
+
+    if (!std::isfinite(Mbar) || !std::isfinite(pbar))
+    {
+        if (!warnedFallback_)
+        {
+            warnedFallback_ = true;
+
+            WarningInFunction
+                << "AUSM produced a non-finite split state and will fall back "
+                << "to local Rusanov flux." << nl
+                << "rhoL=" << rhoL << ", rhoR=" << rhoR
+                << ", pL=" << pL << ", pR=" << pR
+                << ", aL=" << aL << ", aR=" << aR
+                << ", Mbar=" << Mbar << ", pbar=" << pbar << nl;
+        }
+
+        calcRusanovFlux
+        (
+            rhoLSafe, rhoRSafe,
+            ULv, URv,
+            EL, ER,
+            pLSafe, pRSafe,
+            aLSafe, aRSafe,
+            n,
+            massFlux,
+            momentumFlux,
+            energyFlux
+        );
+
+        return;
     }
 
     if (Mbar >= 0.0)

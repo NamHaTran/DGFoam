@@ -253,7 +253,7 @@ void dgCompressibleMachInletKnudsenOutletCouplingBoundaryField::resolveCoupling
 
 
 void
-dgCompressibleMachInletKnudsenOutletCouplingBoundaryField::updateGhostState
+dgCompressibleMachInletKnudsenOutletCouplingBoundaryField::updateConservativeGhostState
 (
     const label,
     const label,
@@ -280,7 +280,7 @@ dgCompressibleMachInletKnudsenOutletCouplingBoundaryField::updateGhostState
 
 
 void
-dgCompressibleMachInletKnudsenOutletCouplingBoundaryField::updateBCValue
+dgCompressibleMachInletKnudsenOutletCouplingBoundaryField::updatePrimitiveBCValue
 (
     const label cellID,
     const label faceLocalID,
@@ -294,7 +294,7 @@ dgCompressibleMachInletKnudsenOutletCouplingBoundaryField::updateBCValue
     scalar& EBC
 ) const
 {
-    updateGhostState
+    updateConservativeGhostState
     (
         cellID,
         faceLocalID,

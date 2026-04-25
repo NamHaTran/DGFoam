@@ -34,6 +34,40 @@ License
 
 namespace Foam
 {
+namespace
+{
+const dictionary& transportCoeffDict(const dictionary& coeff)
+{
+    if (!coeff.found("transport"))
+    {
+        FatalIOErrorInFunction(coeff)
+            << "powerVHS transport model requires a 'transport' "
+            << "sub-dictionary containing entries 'molMass', 'dRef', "
+            << "'TRef', 'omega', 'Pr', 'kB', and 'NA'."
+            << nl << exit(FatalIOError);
+    }
+
+    return coeff.subDict("transport");
+}
+
+
+scalar readRequiredScalar
+(
+    const dictionary& dict,
+    const word& key
+)
+{
+    if (!dict.found(key))
+    {
+        FatalIOErrorInFunction(dict)
+            << "Missing required entry '" << key
+            << "' in powerVHS transport dictionary."
+            << nl << exit(FatalIOError);
+    }
+
+    return readScalar(dict.lookup(key));
+}
+}
 
 // * * * * * * * * * * * * * * Static Data Members * * * * * * * * * * * * * //
 
@@ -54,14 +88,14 @@ Foam::powerVHS::powerVHS
 )
 :
     transportLaw(name, dict, mesh, thermo),
-    molMass_(28.0134),   // air-like (N2)
-    dRef_(3.7e-10),      // 3.7 Å
-    TRef_(300.0),
-    omega_(0.74),
-    Pr0_(0.72),
-    kB_(1.380649e-23),
-    NA_(6.02214076e23),
-    muRef_(1.8e-5)       // temporary seed (updated in read)
+    molMass_(Zero),
+    dRef_(Zero),
+    TRef_(Zero),
+    omega_(Zero),
+    Pr0_(Zero),
+    kB_(Zero),
+    NA_(Zero),
+    muRef_(Zero)
 {
     powerVHS::read();
 }
@@ -99,15 +133,15 @@ Foam::scalar Foam::powerVHS::calcPr(const scalar) const
 
 void Foam::powerVHS::read()
 {
-    // Parse input coefficients
-    if (coeff_.found("molMass")) molMass_ = readScalar(coeff_.lookup("molMass"));
-    if (coeff_.found("dRef"))    dRef_    = readScalar(coeff_.lookup("dRef"));
-    if (coeff_.found("TRef"))    TRef_    = readScalar(coeff_.lookup("TRef"));
-    if (coeff_.found("omega"))   omega_   = readScalar(coeff_.lookup("omega"));
-    if (coeff_.found("Pr"))      Pr0_     = readScalar(coeff_.lookup("Pr"));
+    const dictionary& transportDict = transportCoeffDict(coeff_);
 
-    if (coeff_.found("kB")) kB_ = readScalar(coeff_.lookup("kB"));
-    if (coeff_.found("NA")) NA_ = readScalar(coeff_.lookup("NA"));
+    molMass_ = readRequiredScalar(transportDict, "molMass");
+    dRef_    = readRequiredScalar(transportDict, "dRef");
+    TRef_    = readRequiredScalar(transportDict, "TRef");
+    omega_   = readRequiredScalar(transportDict, "omega");
+    Pr0_     = readRequiredScalar(transportDict, "Pr");
+    kB_      = readRequiredScalar(transportDict, "kB");
+    NA_      = readRequiredScalar(transportDict, "NA");
 
 
     // Validate

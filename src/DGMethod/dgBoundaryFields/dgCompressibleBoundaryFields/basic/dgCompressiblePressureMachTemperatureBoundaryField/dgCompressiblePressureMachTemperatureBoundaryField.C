@@ -70,7 +70,7 @@ dgCompressiblePressureMachTemperatureBoundaryField
 }
 
 
-void dgCompressiblePressureMachTemperatureBoundaryField::updateGhostState
+void dgCompressiblePressureMachTemperatureBoundaryField::updateConservativeGhostState
 (
     const label,
     const label,
@@ -90,7 +90,7 @@ void dgCompressiblePressureMachTemperatureBoundaryField::updateGhostState
 }
 
 
-void dgCompressiblePressureMachTemperatureBoundaryField::updateBCValue
+void dgCompressiblePressureMachTemperatureBoundaryField::updatePrimitiveBCValue
 (
     const label,
     const label,

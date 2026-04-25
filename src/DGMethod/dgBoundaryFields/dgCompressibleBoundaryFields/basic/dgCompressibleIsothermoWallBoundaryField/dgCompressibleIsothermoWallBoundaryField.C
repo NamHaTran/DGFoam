@@ -83,7 +83,7 @@ scalar dgCompressibleIsothermoWallBoundaryField::rampFraction() const
 }
 
 
-void dgCompressibleIsothermoWallBoundaryField::updateGhostState
+void dgCompressibleIsothermoWallBoundaryField::updateConservativeGhostState
 (
     const label,
     const label,
@@ -107,7 +107,7 @@ void dgCompressibleIsothermoWallBoundaryField::updateGhostState
 }
 
 
-void dgCompressibleIsothermoWallBoundaryField::updateBCValue
+void dgCompressibleIsothermoWallBoundaryField::updatePrimitiveBCValue
 (
     const label cellID,
     const label faceLocalID,
@@ -148,18 +148,18 @@ void dgCompressibleIsothermoWallBoundaryField::updateBCValue
 }
 
 
-void dgCompressibleIsothermoWallBoundaryField::correctSelfDiffusionFlux
+void dgCompressibleIsothermoWallBoundaryField::correctFlux
 (
     const label,
     const label,
     const label,
     const vector& n,
-    vector& massDiffFlux
+    vector& flux
 ) const
 {
     if (thermo_.selfDiffusion())
     {
-        massDiffFlux -= (massDiffFlux & n)*n;
+        flux -= (flux & n)*n;
     }
 }
 
