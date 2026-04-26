@@ -126,15 +126,6 @@ class dgFoamSurfaceToVTU
     /** Resolved boundary-patch indices corresponding to \c patchNames_ */
     labelList patchIDs_;
 
-    /** Constant-pressure heat capacity read from thermo dictionaries */
-    scalar Cp_;
-
-    /** Constant-volume heat capacity reconstructed as \c Cp - R */
-    scalar Cv_;
-
-    /** Specific gas constant taken from the active equation of state */
-    scalar R_;
-
     /** Guard to avoid repeating dictionary parsing and validation work */
     bool initialized_;
 
@@ -185,7 +176,8 @@ class dgFoamSurfaceToVTU
     (
         const dgField<Type>& field,
         const label cellI,
-        const List<scalar>& basis
+        const List<scalar>& basis,
+        const scalar highOrderScale = 1
     );
 
     /** Write the rank-local VTU surface piece file */

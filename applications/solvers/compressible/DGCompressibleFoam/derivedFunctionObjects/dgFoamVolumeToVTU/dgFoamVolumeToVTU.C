@@ -37,6 +37,7 @@ License
 #include "dgGeomMesh.H"
 #include "dgThermoConservative.H"
 #include "dgVtkLagrangeTools.H"
+#include "volFields.H"
 
 #include <vector>
 
@@ -62,6 +63,8 @@ struct ExportPointData
     std::vector<scalar> p;
     std::vector<scalar> T;
     std::vector<scalar> a;
+    std::vector<scalar> theta1;
+    std::vector<scalar> theta2;
 };
 
 
@@ -70,7 +73,8 @@ Type evaluateModalField
 (
     const dgField<Type>& field,
     const label cellI,
-    const List<scalar>& basis
+    const List<scalar>& basis,
+    const scalar highOrderScale = 1
 )
 {
     const cellDof<Type>& cellModes = field.dof()[cellI];
@@ -89,7 +93,8 @@ Type evaluateModalField
 
     for (label modeI = 0; modeI < cellModes.nDof(); ++modeI)
     {
-        value += basis[modeI]*cellModes[modeI];
+        const scalar modeScale = (modeI == 0 ? scalar(1) : highOrderScale);
+        value += modeScale*basis[modeI]*cellModes[modeI];
     }
 
     return value;
@@ -276,12 +281,23 @@ fileName dgFoamVolumeToVTU::pvtuFileName() const
 
 void dgFoamVolumeToVTU::writePiece(const fileName& filePath) const
 {
+    const fvMesh& meshRef = mesh();
     const dgField<scalar>& rhoFieldRef = rhoField();
     const dgField<vector>& rhoUFieldRef = rhoUField();
     const dgField<scalar>& EFieldRef = EField();
     const dgThermoConservative& thermoRef = thermo();
 
-    dgGeomMesh dgMesh(mesh());
+    const volScalarField* theta1FieldPtr =
+        meshRef.foundObject<volScalarField>("theta1")
+      ? &meshRef.lookupObject<volScalarField>("theta1")
+      : nullptr;
+
+    const volScalarField* theta2FieldPtr =
+        meshRef.foundObject<volScalarField>("theta2")
+      ? &meshRef.lookupObject<volScalarField>("theta2")
+      : nullptr;
+
+    dgGeomMesh dgMesh(meshRef);
 
     const label pOrder = dgMesh.pOrder();
     const label hoOrder = dgVtkLagrange::exportOrder(pOrder);
@@ -330,6 +346,11 @@ void dgFoamVolumeToVTU::writePiece(const fileName& filePath) const
         const std::vector<label> nodemap =
             dgVtkLagrange::vtkNodemap(type, pyfrPts.size());
         const label pointOffset = grid.points.size();
+        const scalar theta1 =
+            theta1FieldPtr ? theta1FieldPtr->primitiveField()[cellI] : scalar(1);
+        const scalar theta2 =
+            theta2FieldPtr ? theta2FieldPtr->primitiveField()[cellI] : scalar(1);
+        const scalar rhoTheta = theta1*theta2;
 
         for (const label pyfrPointI : nodemap)
         {
@@ -340,9 +361,12 @@ void dgFoamVolumeToVTU::writePiece(const fileName& filePath) const
             dgVtkLagrange::computeBasisAt(type, eta, pOrder, basis);
 
             const point x = mapEtaToX(eta, cellVertices, type);
-            const scalar rhoVal = evaluateModalField(rhoFieldRef, cellI, basis);
-            const vector rhoUVal = evaluateModalField(rhoUFieldRef, cellI, basis);
-            const scalar EVal = evaluateModalField(EFieldRef, cellI, basis);
+            const scalar rhoVal =
+                evaluateModalField(rhoFieldRef, cellI, basis, rhoTheta);
+            const vector rhoUVal =
+                evaluateModalField(rhoUFieldRef, cellI, basis, theta2);
+            const scalar EVal =
+                evaluateModalField(EFieldRef, cellI, basis, theta2);
 
             const scalar rhoSafe = max(rhoVal, SMALL);
             const vector UVal = rhoUVal/rhoSafe;
@@ -357,6 +381,8 @@ void dgFoamVolumeToVTU::writePiece(const fileName& filePath) const
             pointData.T.push_back(thermoRef.calcTemperatureFromRhoHe(cellI, rhoSafe, eVal));
             pointData.p.push_back(thermoRef.calcPressureFromRhoHe(cellI, rhoSafe, eVal));
             pointData.a.push_back(thermoRef.calcSpeedOfSoundFromRhoHe(cellI, rhoSafe, eVal));
+            pointData.theta1.push_back(theta1);
+            pointData.theta2.push_back(theta2);
         }
 
         for (label localPointI = 0; localPointI < label(nodemap.size()); ++localPointI)
@@ -376,7 +402,9 @@ void dgFoamVolumeToVTU::writePiece(const fileName& filePath) const
         {"e", &pointData.e},
         {"p", &pointData.p},
         {"T", &pointData.T},
-        {"a", &pointData.a}
+        {"a", &pointData.a},
+        {"theta1", &pointData.theta1},
+        {"theta2", &pointData.theta2}
     };
 
     const std::vector<dgVtkLagrange::VectorPointData> vectorArrays
@@ -415,7 +443,9 @@ void dgFoamVolumeToVTU::writePvtu(const fileName& filePath) const
         {"e", 1},
         {"p", 1},
         {"T", 1},
-        {"a", 1}
+        {"a", 1},
+        {"theta1", 1},
+        {"theta2", 1}
     };
 
     dgVtkLagrange::writePvtu

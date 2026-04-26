@@ -39,13 +39,15 @@ License
 #include "dgField.H"
 #include "dgThermoConservative.H"
 #include "dgAffineMapping.H"
+#include "dgVtkLagrangeTools.H"
 #include "basisFunctions.H"
 #include "boundBox.H"
 #include "refCoordTransforms.H"
+#include "volFields.H"
 
 #include <cmath>
-#include <initializer_list>
 #include <unordered_map>
+#include <vector>
 
 namespace Foam
 {
@@ -182,25 +184,6 @@ inline void computeBasisAt
     }
 }
 
-
-inline void appendVtkCell
-(
-    std::initializer_list<label> pointLabels,
-    const unsigned char vtkType,
-    DynamicList<label>& connectivity,
-    DynamicList<label>& offsets,
-    DynamicList<unsigned char>& cellTypes
-)
-{
-    for (const label pointI : pointLabels)
-    {
-        connectivity.append(pointI);
-    }
-
-    offsets.append(connectivity.size());
-    cellTypes.append(vtkType);
-}
-
 } // End anonymous namespace
 
 
@@ -228,9 +211,6 @@ dgFoamSurfaceToVTU::dgFoamSurfaceToVTU
     pointMergeTol_(-1),
     patchNames_(),
     patchIDs_(),
-    Cp_(Zero),
-    Cv_(Zero),
-    R_(Zero),
     initialized_(false)
 {
     read(dict);
@@ -320,9 +300,6 @@ bool dgFoamSurfaceToVTU::read(const dictionary& dict)
 
     patchIDs_.setSize(0);
     pOrder_ = -1;
-    Cp_ = Zero;
-    Cv_ = Zero;
-    R_ = Zero;
     initialized_ = false;
 
     return true;
@@ -378,24 +355,6 @@ void dgFoamSurfaceToVTU::initialize()
             << exit(FatalError);
     }
 
-    if
-    (
-        dgThermo.eos().type() != "idealGas"
-     || dgThermo.thermo().type() != "constantCp"
-     || dgThermo.energyModel().type() != "sensibleInternalEnergy"
-    )
-    {
-        FatalErrorInFunction
-            << type() << " currently supports only the thermo chain" << nl
-            << "  eos    = idealGas" << nl
-            << "  thermo = constantCp" << nl
-            << "  energy = sensibleInternalEnergy" << nl
-            << "Detected: eos=" << dgThermo.eos().type()
-            << ", thermo=" << dgThermo.thermo().type()
-            << ", energy=" << dgThermo.energyModel().type()
-            << exit(FatalError);
-    }
-
     IOdictionary dgSchemesDict
     (
         IOobject
@@ -410,49 +369,6 @@ void dgFoamSurfaceToVTU::initialize()
 
     pOrder_ =
         readLabel(dgSchemesDict.subDict("dgDiscretization").lookup("pOrder"));
-
-    IOdictionary thermoDict
-    (
-        IOobject
-        (
-            "thermophysicalProperties",
-            runTime_.constant(),
-            meshRef,
-            IOobject::MUST_READ,
-            IOobject::NO_WRITE
-        )
-    );
-
-    if (!thermoDict.found("mixture"))
-    {
-        FatalIOErrorInFunction(thermoDict)
-            << "Missing 'mixture' sub-dictionary in thermophysicalProperties."
-            << exit(FatalIOError);
-    }
-
-    const dictionary& mixDict = thermoDict.subDict("mixture");
-
-    if (!mixDict.found("thermodynamics"))
-    {
-        FatalIOErrorInFunction(mixDict)
-            << "Missing 'thermodynamics' sub-dictionary in 'mixture' for "
-            << type() << '.'
-            << exit(FatalIOError);
-    }
-
-    const dictionary& thermoCoeffs = mixDict.subDict("thermodynamics");
-    Cp_ = readScalar(thermoCoeffs.lookup("Cp"));
-    R_ = dgThermo.R();
-    Cv_ = Cp_ - R_;
-
-    if (Cv_ <= SMALL)
-    {
-        FatalIOErrorInFunction(thermoDict)
-            << "Computed Cv = Cp - R <= 0 for dgFoamSurfaceToVTU."
-            << nl
-            << "Cp = " << Cp_ << ", R = " << R_
-            << exit(FatalIOError);
-    }
 
     if (n_ == 0)
     {
@@ -569,7 +485,8 @@ Type dgFoamSurfaceToVTU::evaluateField
 (
     const dgField<Type>& field,
     const label cellI,
-    const List<scalar>& basis
+    const List<scalar>& basis,
+    const scalar highOrderScale
 )
 {
     const List<Type>& cellDof = field.dof()[cellI].dof();
@@ -586,7 +503,8 @@ Type dgFoamSurfaceToVTU::evaluateField
 
     forAll(cellDof, dofI)
     {
-        value += cellDof[dofI]*basis[dofI];
+        const scalar modeScale = (dofI == 0 ? scalar(1) : highOrderScale);
+        value += modeScale*cellDof[dofI]*basis[dofI];
     }
 
     return value;
@@ -599,15 +517,29 @@ void dgFoamSurfaceToVTU::writePiece(const fileName& filePath) const
     const dgField<scalar>& rho = rhoField();
     const dgField<vector>& rhoU = rhoUField();
     const dgField<scalar>& E = EField();
+    const dgThermoConservative& thermoRef = thermo();
 
-    DynamicList<vector> points;
-    DynamicList<scalar> rhoCellValues;
-    DynamicList<scalar> pCellValues;
-    DynamicList<scalar> TCellValues;
-    DynamicList<vector> UCellValues;
-    DynamicList<label> connectivity;
-    DynamicList<label> offsets;
-    DynamicList<unsigned char> cellTypes;
+    const volScalarField* theta1FieldPtr =
+        meshRef.foundObject<volScalarField>("theta1")
+      ? &meshRef.lookupObject<volScalarField>("theta1")
+      : nullptr;
+
+    const volScalarField* theta2FieldPtr =
+        meshRef.foundObject<volScalarField>("theta2")
+      ? &meshRef.lookupObject<volScalarField>("theta2")
+      : nullptr;
+
+    dgVtkLagrange::GridBuffers grid;
+    std::vector<scalar> rhoValues;
+    std::vector<vector> rhoUValues;
+    std::vector<scalar> EValues;
+    std::vector<vector> UValues;
+    std::vector<scalar> eValues;
+    std::vector<scalar> pValues;
+    std::vector<scalar> TValues;
+    std::vector<scalar> aValues;
+    std::vector<scalar> theta1Values;
+    std::vector<scalar> theta2Values;
 
     scalar mergeTol = -1;
     std::unordered_map<PointMergeKey, label, PointMergeKeyHash> mergedPointMap;
@@ -627,6 +559,71 @@ void dgFoamSurfaceToVTU::writePiece(const fileName& filePath) const
                 << mergeTol << endl;
         }
     }
+
+    const auto appendPoint =
+    [&]
+    (
+        const point& physicalPoint,
+        const label ownerCellI,
+        const pointField& ownerCellVertices,
+        const dgCellType ownerCellType,
+        const scalar theta1,
+        const scalar theta2
+    ) -> label
+    {
+        if (mergeSharedPoints_)
+        {
+            const PointMergeKey key = makePointMergeKey(physicalPoint, mergeTol);
+            const auto iter = mergedPointMap.find(key);
+
+            if (iter != mergedPointMap.end())
+            {
+                return iter->second;
+            }
+
+            const label pointI = grid.points.size();
+            mergedPointMap.emplace(key, pointI);
+        }
+
+        const vector ownerEta =
+            mapXToEta(physicalPoint, ownerCellVertices, ownerCellType);
+
+        List<scalar> basis;
+        computeBasisAt(ownerCellType, ownerEta, pOrder_, basis);
+
+        const scalar rhoTheta = theta1*theta2;
+        const scalar rhoValue = evaluateField(rho, ownerCellI, basis, rhoTheta);
+        const vector rhoUValue = evaluateField(rhoU, ownerCellI, basis, theta2);
+        const scalar EValue = evaluateField(E, ownerCellI, basis, theta2);
+
+        const scalar rhoSafe = max(rhoValue, SMALL);
+        const vector UValue = rhoUValue/rhoSafe;
+        const scalar eValue = EValue/rhoSafe - 0.5*magSqr(UValue);
+
+        const label pointI = grid.points.size();
+        grid.points.push_back(physicalPoint);
+        rhoValues.push_back(rhoValue);
+        rhoUValues.push_back(rhoUValue);
+        EValues.push_back(EValue);
+        UValues.push_back(UValue);
+        eValues.push_back(eValue);
+        TValues.push_back
+        (
+            thermoRef.calcTemperatureFromRhoHe(ownerCellI, rhoSafe, eValue)
+        );
+        pValues.push_back
+        (
+            thermoRef.calcPressureFromRhoHe(ownerCellI, rhoSafe, eValue)
+        );
+        aValues.push_back
+        (
+            thermoRef.calcSpeedOfSoundFromRhoHe(ownerCellI, rhoSafe, eValue)
+        );
+        theta1Values.push_back(theta1);
+        theta2Values.push_back(theta2);
+
+        return pointI;
+    };
 
     const fvBoundaryMesh& patches = meshRef.boundary();
 
@@ -665,11 +662,18 @@ void dgFoamSurfaceToVTU::writePiece(const fileName& filePath) const
                 ownerShape.points(meshRef.points());
             const dgCellType ownerCellType =
                 cellTypeFromVertexCount(ownerCellVertices.size());
+            const scalar theta1 =
+                theta1FieldPtr
+              ? theta1FieldPtr->primitiveField()[ownerCellI]
+              : scalar(1);
+            const scalar theta2 =
+                theta2FieldPtr
+              ? theta2FieldPtr->primitiveField()[ownerCellI]
+              : scalar(1);
 
             if (nFacePoints == 3)
             {
                 labelList localToGlobal(trianglePointCount(n_), -1);
-                pointField localPoints(trianglePointCount(n_), point::zero);
 
                 for (label row = 0; row <= n_; ++row)
                 {
@@ -684,34 +688,16 @@ void dgFoamSurfaceToVTU::writePiece(const fileName& filePath) const
                         );
                         const point physicalPoint =
                             mapToPhysicalTriangle(rs, faceVertices);
-                        localPoints[localPointI] = physicalPoint;
-
-                        if (mergeSharedPoints_)
-                        {
-                            const PointMergeKey key =
-                                makePointMergeKey(physicalPoint, mergeTol);
-                            const auto iter = mergedPointMap.find(key);
-
-                            if (iter == mergedPointMap.end())
-                            {
-                                const label pointI = points.size();
-                                mergedPointMap.emplace(key, pointI);
-
-                                points.append(physicalPoint);
-                                localToGlobal[localPointI] = pointI;
-                            }
-                            else
-                            {
-                                const label pointI = iter->second;
-                                localToGlobal[localPointI] = pointI;
-                            }
-                        }
-                        else
-                        {
-                            const label pointI = points.size();
-                            points.append(physicalPoint);
-                            localToGlobal[localPointI] = pointI;
-                        }
+                        localToGlobal[localPointI] =
+                            appendPoint
+                            (
+                                physicalPoint,
+                                ownerCellI,
+                                ownerCellVertices,
+                                ownerCellType,
+                                theta1,
+                                theta2
+                            );
                     }
                 }
 
@@ -719,99 +705,39 @@ void dgFoamSurfaceToVTU::writePiece(const fileName& filePath) const
                 {
                     for (label col = 0; col < n_ - row; ++col)
                     {
-                        appendVtkCell
+                        grid.connectivity.push_back
                         (
-                            {
-                                localToGlobal[trianglePointIndex(n_, row, col)],
-                                localToGlobal[trianglePointIndex(n_, row, col + 1)],
-                                localToGlobal[trianglePointIndex(n_, row + 1, col)]
-                            },
-                            vtkTriType,
-                            connectivity,
-                            offsets,
-                            cellTypes
+                            localToGlobal[trianglePointIndex(n_, row, col)]
                         );
-
-                        {
-                            const label p0 = trianglePointIndex(n_, row, col);
-                            const label p1 = trianglePointIndex(n_, row, col + 1);
-                            const label p2 = trianglePointIndex(n_, row + 1, col);
-                            const point subFaceCenter =
-                                (localPoints[p0] + localPoints[p1] + localPoints[p2])/3.0;
-                            const vector ownerEta =
-                                mapXToEta(subFaceCenter, ownerCellVertices, ownerCellType);
-                            List<scalar> basis;
-                            computeBasisAt(ownerCellType, ownerEta, pOrder_, basis);
-
-                            const scalar rhoValue =
-                                evaluateField(rho, ownerCellI, basis);
-                            const vector rhoUValue =
-                                evaluateField(rhoU, ownerCellI, basis);
-                            const scalar EValue =
-                                evaluateField(E, ownerCellI, basis);
-                            const scalar rhoSafe =
-                                (mag(rhoValue) > VSMALL)
-                              ? rhoValue
-                              : (rhoValue >= 0.0 ? VSMALL : -VSMALL);
-                            const vector UValue = rhoUValue/rhoSafe;
-                            const scalar eValue =
-                                EValue/rhoSafe - 0.5*magSqr(UValue);
-                            const scalar TValue = eValue/Cv_;
-                            const scalar pValue = rhoValue*R_*TValue;
-
-                            rhoCellValues.append(rhoValue);
-                            pCellValues.append(pValue);
-                            TCellValues.append(TValue);
-                            UCellValues.append(UValue);
-                        }
+                        grid.connectivity.push_back
+                        (
+                            localToGlobal[trianglePointIndex(n_, row, col + 1)]
+                        );
+                        grid.connectivity.push_back
+                        (
+                            localToGlobal[trianglePointIndex(n_, row + 1, col)]
+                        );
+                        grid.offsets.push_back(grid.connectivity.size());
+                        grid.cellTypes.push_back(vtkTriType);
+                        grid.partitions.push_back(Pstream::myProcNo());
 
                         if (row + col < n_ - 1)
                         {
-                            appendVtkCell
+                            grid.connectivity.push_back
                             (
-                                {
-                                    localToGlobal[trianglePointIndex(n_, row, col + 1)],
-                                    localToGlobal[trianglePointIndex(n_, row + 1, col + 1)],
-                                    localToGlobal[trianglePointIndex(n_, row + 1, col)]
-                                },
-                                vtkTriType,
-                                connectivity,
-                                offsets,
-                                cellTypes
+                                localToGlobal[trianglePointIndex(n_, row, col + 1)]
                             );
-
-                            {
-                                const label p0 = trianglePointIndex(n_, row, col + 1);
-                                const label p1 = trianglePointIndex(n_, row + 1, col + 1);
-                                const label p2 = trianglePointIndex(n_, row + 1, col);
-                                const point subFaceCenter =
-                                    (localPoints[p0] + localPoints[p1] + localPoints[p2])/3.0;
-                                const vector ownerEta =
-                                    mapXToEta(subFaceCenter, ownerCellVertices, ownerCellType);
-                                List<scalar> basis;
-                                computeBasisAt(ownerCellType, ownerEta, pOrder_, basis);
-
-                                const scalar rhoValue =
-                                    evaluateField(rho, ownerCellI, basis);
-                                const vector rhoUValue =
-                                    evaluateField(rhoU, ownerCellI, basis);
-                                const scalar EValue =
-                                    evaluateField(E, ownerCellI, basis);
-                                const scalar rhoSafe =
-                                    (mag(rhoValue) > VSMALL)
-                                  ? rhoValue
-                                  : (rhoValue >= 0.0 ? VSMALL : -VSMALL);
-                                const vector UValue = rhoUValue/rhoSafe;
-                                const scalar eValue =
-                                    EValue/rhoSafe - 0.5*magSqr(UValue);
-                                const scalar TValue = eValue/Cv_;
-                                const scalar pValue = rhoValue*R_*TValue;
-
-                                rhoCellValues.append(rhoValue);
-                                pCellValues.append(pValue);
-                                TCellValues.append(TValue);
-                                UCellValues.append(UValue);
-                            }
+                            grid.connectivity.push_back
+                            (
+                                localToGlobal[trianglePointIndex(n_, row + 1, col + 1)]
+                            );
+                            grid.connectivity.push_back
+                            (
+                                localToGlobal[trianglePointIndex(n_, row + 1, col)]
+                            );
+                            grid.offsets.push_back(grid.connectivity.size());
+                            grid.cellTypes.push_back(vtkTriType);
+                            grid.partitions.push_back(Pstream::myProcNo());
                         }
                     }
                 }
@@ -819,7 +745,6 @@ void dgFoamSurfaceToVTU::writePiece(const fileName& filePath) const
             else
             {
                 labelList localToGlobal((n_ + 1)*(n_ + 1), -1);
-                pointField localPoints((n_ + 1)*(n_ + 1), point::zero);
 
                 for (label row = 0; row <= n_; ++row)
                 {
@@ -833,34 +758,16 @@ void dgFoamSurfaceToVTU::writePiece(const fileName& filePath) const
                         );
                         const point physicalPoint =
                             mapToPhysicalQuad(eta, faceVertices);
-                        localPoints[localPointI] = physicalPoint;
-
-                        if (mergeSharedPoints_)
-                        {
-                            const PointMergeKey key =
-                                makePointMergeKey(physicalPoint, mergeTol);
-                            const auto iter = mergedPointMap.find(key);
-
-                            if (iter == mergedPointMap.end())
-                            {
-                                const label pointI = points.size();
-                                mergedPointMap.emplace(key, pointI);
-
-                                points.append(physicalPoint);
-                                localToGlobal[localPointI] = pointI;
-                            }
-                            else
-                            {
-                                const label pointI = iter->second;
-                                localToGlobal[localPointI] = pointI;
-                            }
-                        }
-                        else
-                        {
-                            const label pointI = points.size();
-                            points.append(physicalPoint);
-                            localToGlobal[localPointI] = pointI;
-                        }
+                        localToGlobal[localPointI] =
+                            appendPoint
+                            (
+                                physicalPoint,
+                                ownerCellI,
+                                ownerCellVertices,
+                                ownerCellType,
+                                theta1,
+                                theta2
+                            );
                     }
                 }
 
@@ -873,210 +780,72 @@ void dgFoamSurfaceToVTU::writePiece(const fileName& filePath) const
                         const label p3 = (row + 1)*(n_ + 1) + col;
                         const label p2 = p3 + 1;
 
-                        appendVtkCell
-                        (
-                            {
-                                localToGlobal[p0],
-                                localToGlobal[p1],
-                                localToGlobal[p2],
-                                localToGlobal[p3]
-                            },
-                            vtkQuadType,
-                            connectivity,
-                            offsets,
-                            cellTypes
-                        );
-
-                        {
-                            const point subFaceCenter =
-                                (localPoints[p0] + localPoints[p1]
-                               + localPoints[p2] + localPoints[p3])/4.0;
-                            const vector ownerEta =
-                                mapXToEta(subFaceCenter, ownerCellVertices, ownerCellType);
-                            List<scalar> basis;
-                            computeBasisAt(ownerCellType, ownerEta, pOrder_, basis);
-
-                            const scalar rhoValue =
-                                evaluateField(rho, ownerCellI, basis);
-                            const vector rhoUValue =
-                                evaluateField(rhoU, ownerCellI, basis);
-                            const scalar EValue =
-                                evaluateField(E, ownerCellI, basis);
-                            const scalar rhoSafe =
-                                (mag(rhoValue) > VSMALL)
-                              ? rhoValue
-                              : (rhoValue >= 0.0 ? VSMALL : -VSMALL);
-                            const vector UValue = rhoUValue/rhoSafe;
-                            const scalar eValue =
-                                EValue/rhoSafe - 0.5*magSqr(UValue);
-                            const scalar TValue = eValue/Cv_;
-                            const scalar pValue = rhoValue*R_*TValue;
-
-                            rhoCellValues.append(rhoValue);
-                            pCellValues.append(pValue);
-                            TCellValues.append(TValue);
-                            UCellValues.append(UValue);
-                        }
+                        grid.connectivity.push_back(localToGlobal[p0]);
+                        grid.connectivity.push_back(localToGlobal[p1]);
+                        grid.connectivity.push_back(localToGlobal[p2]);
+                        grid.connectivity.push_back(localToGlobal[p3]);
+                        grid.offsets.push_back(grid.connectivity.size());
+                        grid.cellTypes.push_back(vtkQuadType);
+                        grid.partitions.push_back(Pstream::myProcNo());
                     }
                 }
             }
         }
     }
 
-    mkDir(filePath.path());
+    const std::vector<dgVtkLagrange::ScalarPointData> scalarArrays
+    {
+        {"rho", &rhoValues},
+        {"E", &EValues},
+        {"e", &eValues},
+        {"p", &pValues},
+        {"T", &TValues},
+        {"a", &aValues},
+        {"theta1", &theta1Values},
+        {"theta2", &theta2Values}
+    };
 
-    OFstream os(filePath);
-    os.precision(16);
+    const std::vector<dgVtkLagrange::VectorPointData> vectorArrays
+    {
+        {"rhoU", &rhoUValues},
+        {"U", &UValues}
+    };
 
-    const label nPoints = points.size();
-    const label nCells = offsets.size();
-
-    if
+    dgVtkLagrange::writeVtuPiece
     (
-        rhoCellValues.size() != nCells
-     || pCellValues.size() != nCells
-     || TCellValues.size() != nCells
-     || UCellValues.size() != nCells
-    )
-    {
-        FatalErrorInFunction
-            << "Cell-data count mismatch while writing surface VTU: nCells="
-            << nCells
-            << ", rho=" << rhoCellValues.size()
-            << ", p=" << pCellValues.size()
-            << ", T=" << TCellValues.size()
-            << ", U=" << UCellValues.size()
-            << exit(FatalError);
-    }
-
-    os  << "<?xml version=\"1.0\"?>" << nl
-        << "<VTKFile type=\"UnstructuredGrid\" version=\"0.1\" "
-        << "byte_order=\"LittleEndian\">" << nl
-        << "  <UnstructuredGrid>" << nl
-        << "    <Piece NumberOfPoints=\"" << nPoints
-        << "\" NumberOfCells=\"" << nCells << "\">" << nl
-        << "      <PointData/>" << nl
-        << "      <CellData>" << nl
-        << "        <DataArray type=\"Float64\" Name=\"rho\" "
-        << "NumberOfComponents=\"1\" format=\"ascii\">" << nl;
-
-    forAll(rhoCellValues, cellI)
-    {
-        os << "          " << rhoCellValues[cellI] << nl;
-    }
-
-    os  << "        </DataArray>" << nl
-        << "        <DataArray type=\"Float64\" Name=\"p\" "
-        << "NumberOfComponents=\"1\" format=\"ascii\">" << nl;
-
-    forAll(pCellValues, cellI)
-    {
-        os << "          " << pCellValues[cellI] << nl;
-    }
-
-    os  << "        </DataArray>" << nl
-        << "        <DataArray type=\"Float64\" Name=\"T\" "
-        << "NumberOfComponents=\"1\" format=\"ascii\">" << nl;
-
-    forAll(TCellValues, cellI)
-    {
-        os << "          " << TCellValues[cellI] << nl;
-    }
-
-    os  << "        </DataArray>" << nl
-        << "        <DataArray type=\"Float64\" Name=\"U\" "
-        << "NumberOfComponents=\"3\" format=\"ascii\">" << nl;
-
-    forAll(UCellValues, cellI)
-    {
-        const vector& value = UCellValues[cellI];
-        os  << "          "
-            << value.x() << ' '
-            << value.y() << ' '
-            << value.z() << nl;
-    }
-
-    os  << "        </DataArray>" << nl
-        << "      </CellData>" << nl
-        << "      <Points>" << nl
-        << "        <DataArray type=\"Float64\" NumberOfComponents=\"3\" "
-        << "format=\"ascii\">" << nl;
-
-    forAll(points, pointI)
-    {
-        const vector& point = points[pointI];
-        os  << "          "
-            << point.x() << ' '
-            << point.y() << ' '
-            << point.z() << nl;
-    }
-
-    os  << "        </DataArray>" << nl
-        << "      </Points>" << nl
-        << "      <Cells>" << nl
-        << "        <DataArray type=\"Int64\" Name=\"connectivity\" "
-        << "format=\"ascii\">" << nl;
-
-    forAll(connectivity, connI)
-    {
-        os << "          " << connectivity[connI] << nl;
-    }
-
-    os  << "        </DataArray>" << nl
-        << "        <DataArray type=\"Int64\" Name=\"offsets\" "
-        << "format=\"ascii\">" << nl;
-
-    forAll(offsets, cellI)
-    {
-        os << "          " << offsets[cellI] << nl;
-    }
-
-    os  << "        </DataArray>" << nl
-        << "        <DataArray type=\"UInt8\" Name=\"types\" "
-        << "format=\"ascii\">" << nl;
-
-    forAll(cellTypes, cellI)
-    {
-        os << "          " << label(cellTypes[cellI]) << nl;
-    }
-
-    os  << "        </DataArray>" << nl
-        << "      </Cells>" << nl
-        << "    </Piece>" << nl
-        << "  </UnstructuredGrid>" << nl
-        << "</VTKFile>" << nl;
+        filePath,
+        runTime_.value(),
+        grid,
+        scalarArrays,
+        vectorArrays
+    );
 }
 
 
 void dgFoamSurfaceToVTU::writePvtu(const fileName& filePath) const
 {
-    mkDir(filePath.path());
-
-    OFstream os(filePath);
-
-    os  << "<?xml version=\"1.0\"?>" << nl
-        << "<VTKFile type=\"PUnstructuredGrid\" version=\"0.1\" "
-        << "byte_order=\"LittleEndian\">" << nl
-        << "  <PUnstructuredGrid GhostLevel=\"0\">" << nl
-        << "    <PPointData/>" << nl
-        << "    <PCellData>" << nl
-        << "      <PDataArray type=\"Float64\" Name=\"rho\" NumberOfComponents=\"1\"/>" << nl
-        << "      <PDataArray type=\"Float64\" Name=\"p\" NumberOfComponents=\"1\"/>" << nl
-        << "      <PDataArray type=\"Float64\" Name=\"T\" NumberOfComponents=\"1\"/>" << nl
-        << "      <PDataArray type=\"Float64\" Name=\"U\" NumberOfComponents=\"3\"/>" << nl
-        << "    </PCellData>" << nl
-        << "    <PPoints>" << nl
-        << "      <PDataArray type=\"Float64\" NumberOfComponents=\"3\"/>" << nl
-        << "    </PPoints>" << nl;
-
-    for (label procI = 0; procI < Pstream::nProcs(); ++procI)
+    const std::vector<dgVtkLagrange::PointDataSchema> pointData
     {
-        os  << "    <Piece Source=\""
-            << name() << "_" << procI << ".vtu\"/>" << nl;
-    }
+        {"rho", 1},
+        {"rhoU", 3},
+        {"E", 1},
+        {"U", 3},
+        {"e", 1},
+        {"p", 1},
+        {"T", 1},
+        {"a", 1},
+        {"theta1", 1},
+        {"theta2", 1}
+    };
 
-    os  << "  </PUnstructuredGrid>" << nl
-        << "</VTKFile>" << nl;
+    dgVtkLagrange::writePvtu
+    (
+        filePath,
+        runTime_.value(),
+        Pstream::nProcs(),
+        name(),
+        pointData
+    );
 }
 
 } // End namespace dgFunctionObjects
