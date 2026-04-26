@@ -106,7 +106,8 @@ if (selfDiffusion)
         basisField,
         rhoUG,
         tSelfDiffusionMomentumFlux,
-        fluxSolverManager
+        fluxSolverManager,
+        true
     );
 
     selfDiffusionMomentumTerm.updateFlux();

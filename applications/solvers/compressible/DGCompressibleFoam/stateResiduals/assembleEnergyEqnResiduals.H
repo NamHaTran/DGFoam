@@ -2,24 +2,27 @@
 //                    Total-energy conservation
 //======================================================================//
 //
-//     d(E)/dt + div(Fc_E + Fd_E) = S_E
+//     d(rho Ec)/dt + div(rho U Ec)
+//       = div(qT) + Ek div(mD) - div(P U) - div(tauT.U)
 //
-// with E storing rho*E_specific in the code and
+// with E storing rho*Ec in the code and
 //
-//     Fc_E = (E + p) U,
-//     Fd_E = tauT.U - (E/rho)mD - kappa grad(T),
-//     S_E  = p tr(gradU) + tauT:gradU
-//          - mD.grad(E/rho) + rho g.U.
+//     tauT = -mu*(gradU + gradU^T - 2/3 tr(gradU) I)
+//          + mD (x) U + U (x) mD - 2/3 (mD.U) I,
+//     qT   = -kappa grad(T) + mD e,
+//     Ec   = e + Ek,
+//     Ek   = 0.5*(U.U).
 //
-// The term (E/rho) div(mD) is written as
+// In conservative left-hand-side form the divergence terms are assembled as
 //
-//     div((E/rho)mD) - mD.grad(E/rho),
+//     d(E)/dt + div(E U + P U + tauT.U + qT) = Ek div(mD).
 //
-// so no second derivative of mD is required.
+// The div(mD) operator is handled by a dgDiffusiveTerm, as in the mass
+// equation.
 //
-// Assemble the convective/pressure energy flux
+// Assemble the convective energy flux
 //
-//     Fc_E = (E + p) U.
+//     Fc_E = E U + P U.
 const auto energyFluxExpr =
     (dg::expr(EG) + dg::expr(pG))*dg::expr(UG);
 
@@ -37,10 +40,16 @@ dgConvectiveTerm<scalar, vector> energyConvTerm
     fluxSolverManager
 );
 
-// Keep the NSF molecular/thermal energy flux separate from Franz-Durst
-// self-diffusion so each can select a distinct diffusive numerical flux.
+// Keep the pressure/NSF molecular/thermal energy flux separate from
+// Franz-Durst self-diffusion so each can select a distinct diffusive
+// numerical flux.
+//
+//     F_E,NSF = tau_NSF.U + q_NSF
+//             = tau_NSF.U - kappa grad(T)
+//
+// where tau_NSF is stored in tMomentumDiffFlux.
 const auto energyDiffFluxExpr =
-    (dg::expr(tMomentumDiffFlux()) & dg::expr(UG))
+  (dg::expr(tMomentumDiffFlux()) & dg::expr(UG))
   - dg::expr(kappaG)*dg::expr(gradTG);
 
 tmp<GaussField<vector>> tEnergyDiffFlux =
@@ -50,14 +59,21 @@ tmp<GaussField<vector>> tSelfDiffusionEnergyFlux;
 
 if (selfDiffusion)
 {
-    // Assemble the Franz-Durst energy flux
+    // Assemble the Franz-Durst molecular-momentum and heat-flux part:
     //
-    //     Fd_E,self = tau_mD.U - (E/rho)mD.
+    //     Fd_E,self = tau_mD.U + e*mD.
     //
-    // The NSF part, (-tau).U - kappa grad(T), stays in energyDiffTerm.
+    // Use the thermo model for e(T) instead of reconstructing it from
+    // Ec - Ek.  This keeps the heat flux consistent with the active
+    // caloric relation.
+    tmp<GaussField<scalar>> tInternalEnergy =
+        GaussField<scalar>::New(cellI, &dgMesh);
+
+    thermo->energyModel().calcHe(cellI, TG, tInternalEnergy.ref());
+
     const auto selfDiffusionEnergyFluxExpr =
         (dg::expr(tSelfDiffusionMomentumFlux()) & dg::expr(UG))
-      - (dg::expr(EG)/dg::expr(rhoG))*dg::expr(tMassDiffFlux());
+      + dg::expr(tInternalEnergy())*dg::expr(tMassDiffFlux());
 
     tSelfDiffusionEnergyFlux =
         dg::evaluate<vector>
@@ -66,54 +82,6 @@ if (selfDiffusion)
             cellI,
             &dgMesh
         );
-
-    // Assemble the gradient of the specific total energy
-    //
-    //     grad(E/rho) = (rho grad(E) - E grad(rho))/rho^2.
-    //
-    // In code notation, E is already rho*E_specific, SE = grad(E), and
-    // SRho = grad(rho).
-    const auto gradSpecificEnergyExpr =
-        (
-            dg::expr(SEG)*dg::expr(rhoG)
-          - dg::expr(EG)*dg::expr(SRhoG)
-        )/(dg::expr(rhoG)*dg::expr(rhoG));
-
-    // Assemble the energy volume source
-    //
-    //     S_E = p tr(gradU)
-    //         + tauT:gradU
-    //         - mD.grad(E/rho)
-    //         + rho g.U.
-    const auto totalMomentumDiffFluxExpr =
-        dg::expr(tMomentumDiffFlux())
-      + dg::expr(tSelfDiffusionMomentumFlux());
-
-    const auto energySourceExpr =
-        dg::expr(pG)*dg::tr(dg::expr(gradUG))
-      + (totalMomentumDiffFluxExpr && dg::expr(gradUG))
-      - (dg::expr(tMassDiffFlux()) & gradSpecificEnergyExpr);
-      // Gravity power is temporarily disabled while isolating self-diffusion:
-      // + dg::expr(rhoG)*(dg::expr(UG) & dg::uniform(g.value()));
-
-    tmp<GaussField<scalar>> tEnergySource =
-        dg::evaluate<scalar>(energySourceExpr, cellI, &dgMesh);
-
-    dgSourceTerm<scalar> energySourceTerm
-    (
-        "energySourceTerm",
-        basisField,
-        tEnergySource()
-    );
-
-    energySourceTerm.calcResidual();
-
-    timeDiscretization.addResidual
-    (
-        E.name(),
-        cellI,
-        energySourceTerm.R()
-    );
 }
 
 dgDiffusiveTerm<scalar, vector> energyDiffTerm
@@ -142,11 +110,53 @@ if (selfDiffusion)
         basisField,
         EG,
         tSelfDiffusionEnergyFlux,
-        fluxSolverManager
+        fluxSolverManager,
+        true
     );
 
     selfDiffusionEnergyTerm.updateFlux();
     selfDiffusionEnergyTerm.calcResidual();
+
+    dgDiffusiveTerm<scalar, vector> selfDiffusionMassDivergenceTerm
+    (
+        "selfDiffusionMassTerm",
+        dgFluxSolver::equationType::massTransport,
+        dgFluxSolver::fluxType::diffusive,
+        basisField,
+        rhoG,
+        tMassDiffFlux,
+        fluxSolverManager,
+        true
+    );
+
+    selfDiffusionMassDivergenceTerm.updateFlux();
+    selfDiffusionMassDivergenceTerm.calcResidual();
+
+    List<scalar> kineticMassDiffResidual
+    (
+        selfDiffusionMassDivergenceTerm.R().size(),
+        pTraits<scalar>::zero
+    );
+
+    const cellDof<scalar>& rhoDof = rho.dof()[cellI];
+    const cellDof<vector>& rhoUDof = rhoU.dof()[cellI];
+
+    forAll(kineticMassDiffResidual, dofI)
+    {
+        const scalar rhoValue =
+            max(mag(rhoDof[dofI]), VSMALL);
+        const vector UValue = rhoUDof[dofI]/rhoValue;
+
+        const scalar kineticEnergy =
+            scalar(0.5)*(UValue & UValue);
+
+        // selfDiffusionMassDivergenceTerm.R() is the residual contribution
+        // for +div(mD) on the left-hand side of the mass equation, i.e.
+        // -div(mD) in the explicit update.  The energy equation has
+        // +Ek*div(mD) on the right-hand side, so the sign is reversed here.
+        kineticMassDiffResidual[dofI] =
+           -kineticEnergy*selfDiffusionMassDivergenceTerm.R()[dofI];
+    }
 
     timeDiscretization.addResidual
     (
@@ -167,6 +177,13 @@ if (selfDiffusion)
         E.name(),
         cellI,
         selfDiffusionEnergyTerm.R()
+    );
+
+    timeDiscretization.addResidual
+    (
+        E.name(),
+        cellI,
+        kineticMassDiffResidual
     );
 }
 else

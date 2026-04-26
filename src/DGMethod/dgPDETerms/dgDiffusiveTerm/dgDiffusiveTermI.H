@@ -53,7 +53,8 @@ Foam::dgDiffusiveTerm<UType, FType>::dgDiffusiveTerm
     const dgBasisField& basis,
     const GaussField<UType>& U,
     GaussField<FType>& F,
-    dgFluxSolverManager& fluxSolver
+    dgFluxSolverManager& fluxSolver,
+    const bool removeHighOrder
 )
 :
     termName_(termName),
@@ -65,6 +66,7 @@ Foam::dgDiffusiveTerm<UType, FType>::dgDiffusiveTerm
     F_(new GaussField<FType>(F)),
     fluxSolver_(fluxSolver),
     nDof_(basis_.nDof()),
+    removeHighOrder_(removeHighOrder),
     R_(nDof_, pTraits<UType>::zero)
 {
     checkTypes();
@@ -84,7 +86,8 @@ Foam::dgDiffusiveTerm<UType, FType>::dgDiffusiveTerm
     const dgBasisField& basis,
     const GaussField<UType>& U,
     const tmp<GaussField<FType>>& tF,
-    dgFluxSolverManager& fluxSolver
+    dgFluxSolverManager& fluxSolver,
+    const bool removeHighOrder
 )
 :
     termName_(termName),
@@ -96,6 +99,7 @@ Foam::dgDiffusiveTerm<UType, FType>::dgDiffusiveTerm
     F_(tF),
     fluxSolver_(fluxSolver),
     nDof_(basis_.nDof()),
+    removeHighOrder_(removeHighOrder),
     R_(nDof_, pTraits<UType>::zero)
 {
     checkTypes();
@@ -128,7 +132,9 @@ void Foam::dgDiffusiveTerm<UType, FType>::calcResidual()
         R_[i] = pTraits<UType>::zero;
     }
 
-    for (label i = 0; i < nDof_; ++i)
+    const label nResidualDof = removeHighOrder_ ? min(nDof_, label(1)) : nDof_;
+
+    for (label i = 0; i < nResidualDof; ++i)
     {
         UType volTerm = pTraits<UType>::zero;
 

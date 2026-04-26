@@ -2,7 +2,10 @@
 //                    Total-energy conservation
 //======================================================================//
 //
-//     d(E)/dt + div(Fc_E + Fd_E) = S_E.
+//     d(rho Ec)/dt + div(rho U Ec)
+//       = div(qT) + Ek div(mD) - div(P U) - div(tauT.U).
+//
+// This explicit-loop version mirrors stateResiduals/assembleEnergyEqnResiduals.H.
 tmp<GaussField<vector>> tEnergyFlux =
     GaussField<vector>::New(cellI, &dgMesh);
 GaussField<vector>& energyFlux = tEnergyFlux.ref();
@@ -89,10 +92,6 @@ tmp<GaussField<vector>> tSelfDiffusionEnergyFlux =
 GaussField<vector>& selfDiffusionEnergyFlux =
     tSelfDiffusionEnergyFlux.ref();
 
-tmp<GaussField<scalar>> tEnergySource =
-    GaussField<scalar>::New(cellI, &dgMesh);
-GaussField<scalar>& energySource = tEnergySource.ref();
-
 if (selfDiffusion)
 {
     for
@@ -102,35 +101,20 @@ if (selfDiffusion)
         ++gpI
     )
     {
-        const scalar rhoValue = rhoG.cellField()[gpI];
-        const scalar EValue = EG.cellField()[gpI];
         const vector& UValue = UG.cellField()[gpI];
         const vector& mD = massDiffFlux.cellField()[gpI];
-        const tensor tauT =
-            momentumDiffFlux.cellField()[gpI]
-          + selfDiffusionMomentumFlux.cellField()[gpI];
+        const scalar internalEnergy =
+            thermo->energyModel().calcHe(TG.cellField()[gpI]);
 
         selfDiffusionEnergyFlux.cellField()[gpI] =
             (selfDiffusionMomentumFlux.cellField()[gpI] & UValue)
-          - (EValue/rhoValue)*mD;
-
-        const vector gradSpecificEnergy =
-            (
-                rhoValue*SEG.cellField()[gpI]
-              - EValue*SRhoG.cellField()[gpI]
-            )/(rhoValue*rhoValue);
-
-        energySource.cellField()[gpI] =
-            pG.cellField()[gpI]*tr(gradUG.cellField()[gpI])
-          + (tauT && gradUG.cellField()[gpI])
-          - (mD & gradSpecificEnergy);
+          + internalEnergy*mD;
     }
 
     faceGaussField<vector>& selfDiffusionEnergyFace =
         selfDiffusionEnergyFlux.faceField();
     faceGaussField<tensor>& selfDiffusionMomentumFace =
         selfDiffusionMomentumFlux.faceField();
-    const faceGaussField<scalar>& rhoFace = rhoG.faceField();
 
     for
     (
@@ -151,9 +135,11 @@ if (selfDiffusion)
                     selfDiffusionMomentumFace.minusValueOnFace(faceI, gpI)
                   & UFace.minusValueOnFace(faceI, gpI)
                 )
-              - (
-                    EFace.minusValueOnFace(faceI, gpI)
-                   /rhoFace.minusValueOnFace(faceI, gpI)
+              + (
+                    thermo->energyModel().calcHe
+                    (
+                        TFace.minusValueOnFace(faceI, gpI)
+                    )
                 )*massDiffFace.minusValueOnFace(faceI, gpI);
 
             selfDiffusionEnergyFace.plusValueOnFace(faceI, gpI) =
@@ -161,28 +147,14 @@ if (selfDiffusion)
                     selfDiffusionMomentumFace.plusValueOnFace(faceI, gpI)
                   & UFace.plusValueOnFace(faceI, gpI)
                 )
-              - (
-                    EFace.plusValueOnFace(faceI, gpI)
-                   /rhoFace.plusValueOnFace(faceI, gpI)
+              + (
+                    thermo->energyModel().calcHe
+                    (
+                        TFace.plusValueOnFace(faceI, gpI)
+                    )
                 )*massDiffFace.plusValueOnFace(faceI, gpI);
         }
     }
-
-    dgSourceTerm<scalar> energySourceTerm
-    (
-        "energySourceTerm",
-        basisField,
-        energySource
-    );
-
-    energySourceTerm.calcResidual();
-
-    timeDiscretization.addResidual
-    (
-        E.name(),
-        cellI,
-        energySourceTerm.R()
-    );
 }
 
 dgDiffusiveTerm<scalar, vector> energyDiffTerm
@@ -217,6 +189,42 @@ if (selfDiffusion)
     selfDiffusionEnergyTerm.updateFlux();
     selfDiffusionEnergyTerm.calcResidual();
 
+    dgDiffusiveTerm<scalar, vector> selfDiffusionMassDivergenceTerm
+    (
+        "selfDiffusionMassTerm",
+        dgFluxSolver::equationType::massTransport,
+        dgFluxSolver::fluxType::diffusive,
+        basisField,
+        rhoG,
+        tMassDiffFlux,
+        fluxSolverManager
+    );
+
+    selfDiffusionMassDivergenceTerm.updateFlux();
+    selfDiffusionMassDivergenceTerm.calcResidual();
+
+    List<scalar> kineticMassDiffResidual
+    (
+        selfDiffusionMassDivergenceTerm.R().size(),
+        pTraits<scalar>::zero
+    );
+
+    const cellDof<scalar>& rhoDof = rho.dof()[cellI];
+    const cellDof<vector>& rhoUDof = rhoU.dof()[cellI];
+
+    forAll(kineticMassDiffResidual, dofI)
+    {
+        const scalar rhoValue =
+            max(mag(rhoDof[dofI]), VSMALL);
+        const vector UValue = rhoUDof[dofI]/rhoValue;
+
+        const scalar kineticEnergy =
+            scalar(0.5)*(UValue & UValue);
+
+        kineticMassDiffResidual[dofI] =
+           -kineticEnergy*selfDiffusionMassDivergenceTerm.R()[dofI];
+    }
+
     timeDiscretization.addResidual
     (
         E.name(),
@@ -236,6 +244,13 @@ if (selfDiffusion)
         E.name(),
         cellI,
         selfDiffusionEnergyTerm.R()
+    );
+
+    timeDiscretization.addResidual
+    (
+        E.name(),
+        cellI,
+        kineticMassDiffResidual
     );
 }
 else

@@ -52,6 +52,7 @@ forAll(mesh.cells(), cellI)
 
     if (selfDiffusion)
     {
+        // Franz-Durst mass diffusion is preassembled once per cell and reused across all three PDEs
         const auto massDiffFluxExpr =
            -selfDiffCoeffScale*dg::expr(muG)
            *(

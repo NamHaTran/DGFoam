@@ -39,7 +39,8 @@ if (selfDiffusion)
         basisField,
         rhoG,
         tMassDiffFlux,
-        fluxSolverManager
+        fluxSolverManager,
+        true
     );
 
     selfDiffusionMassTerm.updateFlux();

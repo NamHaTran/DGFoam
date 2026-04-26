@@ -99,6 +99,9 @@ private:
     /** Number of degrees of freedom in this cell. */
     label nDof_;
 
+    /** Keep only the cell-mean residual contribution when enabled. */
+    bool removeHighOrder_;
+
     /** Residual values per degree of freedom. */
     List<UType> R_;
 
@@ -118,7 +121,8 @@ public:
         const dgBasisField& basis,
         const GaussField<UType>& U,
         GaussField<FType>& F,
-        dgFluxSolverManager& fluxSolver
+        dgFluxSolverManager& fluxSolver,
+        const bool removeHighOrder = false
     );
 
     dgDiffusiveTerm
@@ -129,7 +133,8 @@ public:
         const dgBasisField& basis,
         const GaussField<UType>& U,
         const tmp<GaussField<FType>>& tF,
-        dgFluxSolverManager& fluxSolver
+        dgFluxSolverManager& fluxSolver,
+        const bool removeHighOrder = false
     );
 
     ~dgDiffusiveTerm() = default;
