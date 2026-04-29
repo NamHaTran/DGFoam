@@ -1,0 +1,26 @@
+#!/bin/sh
+
+set -e
+
+APP_ROOT="$(CDPATH= cd -- "$(dirname -- "$0")" && pwd -P)"
+
+echo "==> Cleaning utilities from $APP_ROOT/utilities/prepareDGDecomposedMesh"
+cd "$APP_ROOT/utilities/prepareDGDecomposedMesh"
+wclean
+
+echo "==> Cleaning utilities from $APP_ROOT/utilities/dgToVTKLagrange"
+cd "$APP_ROOT/utilities/dgToVTKLagrange"
+wclean
+
+echo "==> Cleaning utilities from $APP_ROOT/utilities/convertFoamResultsToDG"
+cd "$APP_ROOT/utilities/convertFoamResultsToDG"
+wclean
+
+echo "==> Cleaning utilities from $APP_ROOT/utilities/generateDGInitialFields"
+cd "$APP_ROOT/utilities/generateDGInitialFields"
+wclean
+
+echo "==> Cleaning compressible applications from $APP_ROOT/solvers/compressible/DGCompressibleFoam"
+"$APP_ROOT/solvers/compressible/DGCompressibleFoam/Allwclean"
+
+#------------------------------------------------------------------------------

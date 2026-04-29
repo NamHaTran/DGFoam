@@ -326,10 +326,10 @@ Private Attributes</h2></td></tr>
 <tr class="memdesc:a54d8b830b6ad98f45208eedfba9e6ce3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constant Prandtl number \(\mathrm{Pr}_0\) [-].  <br /></td></tr>
 <tr class="separator:a54d8b830b6ad98f45208eedfba9e6ce3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5f9e3f14db245463c0d3bc7b48ed3452" id="r_a5f9e3f14db245463c0d3bc7b48ed3452"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1powerVHS.html#a5f9e3f14db245463c0d3bc7b48ed3452">kB_</a></td></tr>
-<tr class="memdesc:a5f9e3f14db245463c0d3bc7b48ed3452"><td class="mdescLeft">&#160;</td><td class="mdescRight">Boltzmann constant \(k_B\) [J/K] (optional override)  <br /></td></tr>
+<tr class="memdesc:a5f9e3f14db245463c0d3bc7b48ed3452"><td class="mdescLeft">&#160;</td><td class="mdescRight">Boltzmann constant \(k_B\) [J/K].  <br /></td></tr>
 <tr class="separator:a5f9e3f14db245463c0d3bc7b48ed3452"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab2cfce95e78c38e4f629dce27c195e79" id="r_ab2cfce95e78c38e4f629dce27c195e79"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1powerVHS.html#ab2cfce95e78c38e4f629dce27c195e79">NA_</a></td></tr>
-<tr class="memdesc:ab2cfce95e78c38e4f629dce27c195e79"><td class="mdescLeft">&#160;</td><td class="mdescRight">Avogadro constant \(N_A\) [mol^{-1}] (optional override)  <br /></td></tr>
+<tr class="memdesc:ab2cfce95e78c38e4f629dce27c195e79"><td class="mdescLeft">&#160;</td><td class="mdescRight">Avogadro constant \(N_A\) [mol^{-1}].  <br /></td></tr>
 <tr class="separator:ab2cfce95e78c38e4f629dce27c195e79"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7eeb7f2f98ee53b766547d920fe70826" id="r_a7eeb7f2f98ee53b766547d920fe70826"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1powerVHS.html#a7eeb7f2f98ee53b766547d920fe70826">muRef_</a></td></tr>
 <tr class="memdesc:a7eeb7f2f98ee53b766547d920fe70826"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reference viscosity \(\mu_{\mathrm{ref}}\) at \(T_{\mathrm{ref}}\) [kg/(m·s)].  <br /></td></tr>
@@ -411,13 +411,11 @@ Additional Inherited Members</h2></td></tr>
 <div class="line">    TRef     300;         <span class="comment">// [K]</span></div>
 <div class="line">    omega    0.74;        <span class="comment">// [-]</span></div>
 <div class="line">    Pr       0.72;        <span class="comment">// [-]</span></div>
-<div class="line"> </div>
-<div class="line">    <span class="comment">// Optional overrides</span></div>
-<div class="line">    <span class="comment">// kB    1.380649e-23;   // [J/K]</span></div>
-<div class="line">    <span class="comment">// NA    6.02214076e23;  // [1/mol]</span></div>
+<div class="line">    <a class="code hl_class" href="classFoam_1_1GaussField.html">kB</a>       1.380649e-23; <span class="comment">// [J/K]</span></div>
+<div class="line">    <a class="code hl_class" href="classFoam_1_1GaussField.html">NA</a>       6.02214076e23;<span class="comment">// [1/mol]</span></div>
 <div class="line">}</div>
 <div class="ttc" id="aclassFoam_1_1GaussField_html"><div class="ttname"><a href="classFoam_1_1GaussField.html">Foam::GaussField</a></div><div class="ttdoc">Combined Gauss-point field for a DG cell.</div><div class="ttdef"><b>Definition</b> GaussField.H:85</div></div>
-<div class="ttc" id="aclassFoam_1_1powerVHS_html"><div class="ttname"><a href="classFoam_1_1powerVHS.html">Foam::powerVHS</a></div><div class="ttdoc">Variable-Hard-Sphere (VHS) power-law viscosity model.</div><div class="ttdef"><b>Definition</b> powerVHS.H:124</div></div>
+<div class="ttc" id="aclassFoam_1_1powerVHS_html"><div class="ttname"><a href="classFoam_1_1powerVHS.html">Foam::powerVHS</a></div><div class="ttdoc">Variable-Hard-Sphere (VHS) power-law viscosity model.</div><div class="ttdef"><b>Definition</b> powerVHS.H:122</div></div>
 </div><!-- fragment --> </dd></dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a1cdc764d9e0b4251f4e14d0eb6f988ed" name="a1cdc764d9e0b4251f4e14d0eb6f988ed"></a>
@@ -2506,7 +2504,7 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Boltzmann constant \(k_B\) [J/K] (optional override) </p>
+<p>Boltzmann constant \(k_B\) [J/K]. </p>
 
 </div>
 </div>
@@ -2530,7 +2528,7 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Avogadro constant \(N_A\) [mol^{-1}] (optional override) </p>
+<p>Avogadro constant \(N_A\) [mol^{-1}]. </p>
 
 </div>
 </div>

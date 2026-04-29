@@ -107,7 +107,7 @@ if (selfDiffusion)
         rhoUG,
         tSelfDiffusionMomentumFlux,
         fluxSolverManager,
-        true
+        false
     );
 
     selfDiffusionMomentumTerm.updateFlux();

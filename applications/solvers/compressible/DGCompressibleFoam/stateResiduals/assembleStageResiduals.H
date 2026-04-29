@@ -40,13 +40,11 @@ forAll(mesh.cells(), cellI)
     GaussField<vector>& gradTG  = gradT.gaussFields()[cellI];
     const GaussField<scalar>& muAVG = muAV.gaussFields()[cellI];
 
-    // Dynamic viscosity is cached by dgThermo during update/updateBC from the
-    // limited/clamped temperature field. Thermal conductivity is still built
-    // on demand from the same stage-consistent T field.
+    // Transport properties are cached by dgThermo during update/updateBC from
+    // the limited/clamped temperature field.
     const GaussField<scalar>& muG = thermo->mu().gaussFields()[cellI];
-    GaussField<scalar> kappaG(cellI, &dgMesh);
-
-    thermo->transport().calcKappa(cellI, TG, kappaG);
+    const GaussField<scalar>& kappaG =
+        thermo->kappa().gaussFields()[cellI];
 
     tmp<GaussField<vector>> tMassDiffFlux;
 

@@ -82,9 +82,9 @@ class Ostream;
  *
  * \f[
  *     \mathbf{U}^n
- *     \xrightarrow{\text{save old state}}
+ *     \stackrel{\mathrm{save\ old\ state}}{\longrightarrow}
  *     \mathbf{U}^{(0)}, \mathbf{U}^{(1)}, \dots
- *     \xrightarrow{\text{final stage}}
+ *     \stackrel{\mathrm{final\ stage}}{\longrightarrow}
  *     \mathbf{U}^{n+1}.
  * \f]
  */

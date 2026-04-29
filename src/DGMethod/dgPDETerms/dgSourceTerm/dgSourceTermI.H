@@ -33,7 +33,8 @@ Foam::dgSourceTerm<Type>::dgSourceTerm
 (
     const word& termName,
     const dgBasisField& basis,
-    const cellGaussField<Type>& S
+    const cellGaussField<Type>& S,
+    const bool removeHighOrder
 )
 :
     termName_(termName),
@@ -41,6 +42,7 @@ Foam::dgSourceTerm<Type>::dgSourceTerm
     basis_(basis),
     S_(new cellGaussField<Type>(S)),
     nDof_(basis_.nDof()),
+    removeHighOrder_(removeHighOrder),
     R_(nDof_, pTraits<Type>::zero)
 {}
 
@@ -50,7 +52,8 @@ Foam::dgSourceTerm<Type>::dgSourceTerm
 (
     const word& termName,
     const dgBasisField& basis,
-    const tmp<cellGaussField<Type>>& tS
+    const tmp<cellGaussField<Type>>& tS,
+    const bool removeHighOrder
 )
 :
     termName_(termName),
@@ -58,6 +61,7 @@ Foam::dgSourceTerm<Type>::dgSourceTerm
     basis_(basis),
     S_(tS),
     nDof_(basis_.nDof()),
+    removeHighOrder_(removeHighOrder),
     R_(nDof_, pTraits<Type>::zero)
 {}
 
@@ -67,7 +71,8 @@ Foam::dgSourceTerm<Type>::dgSourceTerm
 (
     const word& termName,
     const dgBasisField& basis,
-    const GaussField<Type>& S
+    const GaussField<Type>& S,
+    const bool removeHighOrder
 )
 :
     termName_(termName),
@@ -75,6 +80,7 @@ Foam::dgSourceTerm<Type>::dgSourceTerm
     basis_(basis),
     S_(new cellGaussField<Type>(S.cellField())),
     nDof_(basis_.nDof()),
+    removeHighOrder_(removeHighOrder),
     R_(nDof_, pTraits<Type>::zero)
 {}
 
@@ -103,7 +109,9 @@ void Foam::dgSourceTerm<Type>::calcResidual()
     const List<scalar>& w = S.cell()->weights();
     const List<scalar>& J3D = S.cell()->J3D();
 
-    for (label dofI = 0; dofI < nDof_; ++dofI)
+    const label nResidualDof = removeHighOrder_ ? min(nDof_, label(1)) : nDof_;
+
+    for (label dofI = 0; dofI < nResidualDof; ++dofI)
     {
         const cellGaussField<scalar>& phi =
             basis_.getBasis(dofI).cellField();

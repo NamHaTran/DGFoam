@@ -40,7 +40,9 @@ Description
 #include "dgGeomMesh.H"
 #include "dgThermoConservative.H"
 #include "dgVtkLagrangeTools.H"
+#include "basisFunctions.H"
 
+#include <array>
 #include <vector>
 
 namespace Foam
@@ -48,700 +50,12 @@ namespace Foam
 namespace
 {
 
-/**
- * \brief Point-wise conservative and derived quantities written to VTK.
- *
- * \details
- * The export utility reconstructs DG modal fields at every VTK Lagrange node.
- * For each reconstructed point it stores:
- * - conservative variables \f$\rho\f$, \f$\rho \mathbf{U}\f$, \f$E\f$,
- * - primitive variables \f$\mathbf{U}\f$, \f$p\f$, \f$T\f$,
- * - and auxiliary thermodynamic data \f$e\f$, \f$a\f$.
- *
- * The arrays are accumulated in the same order as `grid.points`, so they can
- * be passed directly to `dgVtkLagrange::writeVtuPiece()`.
- */
-struct ExportPointData
-{
-    std::vector<scalar> rho;
-    std::vector<vector> rhoU;
-    std::vector<scalar> E;
-    std::vector<vector> U;
-    std::vector<scalar> e;
-    std::vector<scalar> p;
-    std::vector<scalar> T;
-    std::vector<scalar> a;
-};
 
-
-/** \brief Conservative state sampled at one Lagrange node. */
-struct ConservativeSample
-{
-    scalar rho;
-    vector rhoU;
-    scalar E;
-};
-
-
-/**
- * \brief Reconstruct a modal DG field at one interpolation point in one cell.
- *
- * \tparam Type Scalar or vector field value type.
- * \param field DG field containing modal coefficients on every cell.
- * \param cellI Cell index whose local modal expansion is evaluated.
- * \param basis Values of the local basis functions at the target point.
- * \return Reconstructed physical value \f$\sum_i \phi_i(\xi)\hat{u}_i\f$.
- *
- * \details
- * The DG solution is stored as modal coefficients per cell. This helper
- * evaluates the polynomial inside `cellI` by forming the dot product between:
- * - the modal coefficients in `field.dof()[cellI]`, and
- * - the basis values already evaluated at the local export point.
- *
- * A strict size check is performed before reconstruction because a mismatch
- * would indicate inconsistent polynomial order or an invalid nodal basis.
- */
-template<class Type>
-Type evaluateModalField
-(
-    const dgField<Type>& field,
-    const label cellI,
-    const List<scalar>& basis
-)
-{
-    const cellDof<Type>& cellModes = field.dof()[cellI];
-
-    if (cellModes.nDof() != basis.size())
-    {
-        FatalErrorInFunction
-            << "Basis size mismatch while evaluating field " << field.name()
-            << " in cell " << cellI
-            << ". DoFs = " << cellModes.nDof()
-            << ", basis size = " << basis.size()
-            << exit(FatalError);
-    }
-
-    Type value = pTraits<Type>::zero;
-
-    for (label modeI = 0; modeI < cellModes.nDof(); ++modeI)
-    {
-        value += basis[modeI]*cellModes[modeI];
-    }
-
-    return value;
-}
-
-
-/**
- * \brief Return the zeroth modal coefficient for one DG field in one cell.
- *
- * \details
- * The modal basis used by DGFoam stores the cell-average value in DoF0. This
- * value is used as a constant reconstruction when theta-based smoothing clamps
- * a cell to its mean value.
- */
-template<class Type>
-Type evaluateCellMeanField
-(
-    const dgField<Type>& field,
-    const label cellI
-)
-{
-    const cellDof<Type>& cellModes = field.dof()[cellI];
-
-    if (cellModes.nDof() == 0)
-    {
-        FatalErrorInFunction
-            << "Field " << field.name() << " has no DoF in cell "
-            << cellI << exit(FatalError);
-    }
-
-    return cellModes[0];
-}
-
-
-/**
- * \brief Zhang-Shu limiter coefficient clamped to [0, 1].
- */
-scalar limiterTheta
-(
-    const scalar meanValue,
-    const scalar minValue,
-    const scalar omega,
-    const scalar epsilon
-)
-{
-    const scalar scale = max(scalar(1), mag(meanValue));
-
-    if (mag(meanValue - minValue) <= epsilon*scale)
-    {
-        return 1.0;
-    }
-
-    const scalar rawTheta = (meanValue - omega)/(meanValue - minValue);
-    return min(max(rawTheta, scalar(0)), scalar(1));
-}
-
-
-/**
- * \brief Return rho*e from conservative variables with a guarded rho.
- */
-scalar thermoEnergyDensity
-(
-    const scalar rho,
-    const vector& rhoU,
-    const scalar E,
-    const scalar epsilon
-)
-{
-    const scalar rhoSafe =
-        (mag(rho) > epsilon ? rho : (rho >= 0 ? epsilon : -epsilon));
-
-    return E - 0.5*magSqr(rhoU)/rhoSafe;
-}
-
-
-/**
- * \brief Scale the non-mean modal content in one cell.
- */
-template<class Type>
-void scaleHighOrderModes
-(
-    dgField<Type>& field,
-    const label cellI,
-    const scalar theta
-)
-{
-    if (!field.hasDof() || theta >= 1.0)
-    {
-        return;
-    }
-
-    cellDof<Type>& cellModes = field.dof()[cellI];
-
-    for (label modeI = 1; modeI < cellModes.nDof(); ++modeI)
-    {
-        cellModes[modeI] *= theta;
-    }
-
-    field.dof().updateCellDof(cellI);
-}
-
-
-/**
- * \brief Clamp conservative fields to DoF0 using stored limiter theta.
- *
- * Cells satisfying the theta condition and their local face-neighbour cells are
- * clamped.
- */
-void clampConservativeFieldsByTheta
-(
-    const dgGeomMesh& dgMesh,
-    dgField<scalar>& rhoField,
-    dgField<vector>& rhoUField,
-    dgField<scalar>& EField,
-    const scalar clampTheta,
-    const volScalarField& theta1Field,
-    const volScalarField& theta2Field
-)
-{
-    List<bool> clampCells(dgMesh.nCells(), false);
-
-    for (label cellI = 0; cellI < dgMesh.nCells(); ++cellI)
-    {
-        const dgGeomCell* cellPtr = dgMesh.cells()[cellI];
-
-        if (!cellPtr)
-        {
-            continue;
-        }
-
-        const scalar theta1 = theta1Field.primitiveField()[cellI];
-        const scalar theta2 = theta2Field.primitiveField()[cellI];
-        const bool clampCell =
-            (theta1 >= clampTheta && theta1 < scalar(1))
-         || (theta2 >= clampTheta && theta2 < scalar(1));
-
-        if (clampCell)
-        {
-            clampCells[cellI] = true;
-
-            const labelList& neighbourCells = cellPtr->neighborCells();
-
-            forAll(neighbourCells, neighbourI)
-            {
-                const label neighbourCellI = neighbourCells[neighbourI];
-
-                if
-                (
-                    neighbourCellI >= 0
-                 && neighbourCellI < dgMesh.nCells()
-                 && dgMesh.cells()[neighbourCellI]
-                )
-                {
-                    clampCells[neighbourCellI] = true;
-                }
-            }
-        }
-    }
-
-    label nClampedCells = 0;
-
-    forAll(clampCells, cellI)
-    {
-        if (clampCells[cellI])
-        {
-            scaleHighOrderModes(rhoField, cellI, scalar(0));
-            scaleHighOrderModes(rhoUField, cellI, scalar(0));
-            scaleHighOrderModes(EField, cellI, scalar(0));
-            ++nClampedCells;
-        }
-    }
-
-    reduce(nClampedCells, sumOp<label>());
-
-    Info<< "smoothByClampingTheta " << clampTheta
-        << ": clamped rho/rhoU/E high-order modes to zero in marked cells "
-        << "and their local neighbours, total "
-        << nClampedCells << " cell(s)." << nl;
-}
-
-
-/**
- * \brief Limit modal conservative fields using the same Lagrange nodes that are
- *        later written to VTK.
- */
-void limitConservativeFieldsAtLagrangeNodes
-(
-    const dgGeomMesh& dgMesh,
-    dgField<scalar>& rhoField,
-    dgField<vector>& rhoUField,
-    dgField<scalar>& EField,
-    const scalar epsilon
-)
-{
-    label nLimitedCells = 0;
-
-    const label pOrder = dgMesh.pOrder();
-    const label hoOrder = dgVtkLagrange::exportOrder(pOrder);
-
-    if (hoOrder > 8)
-    {
-        FatalErrorInFunction
-            << "Current dgToVTKLagrange implementation supports "
-            << "high-order export up to order 8. "
-            << "Detected DG pOrder = " << pOrder
-            << ", which maps to VTK order " << hoOrder
-            << exit(FatalError);
-    }
-
-    for (label cellI = 0; cellI < dgMesh.nCells(); ++cellI)
-    {
-        const dgGeomCell* cellPtr = dgMesh.cells()[cellI];
-
-        if (!cellPtr)
-        {
-            continue;
-        }
-
-        if (rhoField.dof()[cellI].nDof() <= 1)
-        {
-            continue;
-        }
-
-        const dgCellType type = cellPtr->type();
-
-        if (!dgVtkLagrange::supportsNativeLagrange(type))
-        {
-            if (type == dgCellType::PYRAMID)
-            {
-                continue;
-            }
-
-            FatalErrorInFunction
-                << "Unsupported DG cell type "
-                << dgVtkLagrange::cellTypeName(type)
-                << " in cell " << cellI << exit(FatalError);
-        }
-
-        const std::vector<vector> pyfrPts =
-            dgVtkLagrange::pyfrStdElementPoints(type, hoOrder);
-        const std::vector<label> nodemap =
-            dgVtkLagrange::vtkNodemap(type, pyfrPts.size());
-
-        DynamicList<ConservativeSample> samples(nodemap.size());
-        scalar minRho = GREAT;
-
-        for (const label pyfrPointI : nodemap)
-        {
-            const vector eta =
-                dgVtkLagrange::xiToEta(type, pyfrPts[pyfrPointI]);
-
-            List<scalar> basis;
-            dgVtkLagrange::computeBasisAt(type, eta, pOrder, basis);
-
-            ConservativeSample sample;
-            sample.rho = evaluateModalField(rhoField, cellI, basis);
-            sample.rhoU = evaluateModalField(rhoUField, cellI, basis);
-            sample.E = evaluateModalField(EField, cellI, basis);
-
-            minRho = min(minRho, sample.rho);
-            samples.append(sample);
-        }
-
-        const scalar meanRho = rhoField.dof()[cellI].dof()[0];
-        const vector& meanRhoU = rhoUField.dof()[cellI].dof()[0];
-        const scalar meanE = EField.dof()[cellI].dof()[0];
-
-        const scalar theta1 =
-            limiterTheta(meanRho, minRho, min(epsilon, meanRho), epsilon);
-
-        scalar minRhoThermoEnergy = GREAT;
-
-        forAll(samples, sampleI)
-        {
-            const ConservativeSample& sample = samples[sampleI];
-            const scalar limitedRho =
-                meanRho + theta1*(sample.rho - meanRho);
-
-            minRhoThermoEnergy =
-                min
-                (
-                    minRhoThermoEnergy,
-                    thermoEnergyDensity
-                    (
-                        limitedRho,
-                        sample.rhoU,
-                        sample.E,
-                        epsilon
-                    )
-                );
-        }
-
-        const scalar meanRhoThermoEnergy =
-            thermoEnergyDensity(meanRho, meanRhoU, meanE, epsilon);
-
-        const scalar theta2 =
-            limiterTheta
-            (
-                meanRhoThermoEnergy,
-                minRhoThermoEnergy,
-                min(min(epsilon, meanRho), meanRhoThermoEnergy),
-                epsilon
-            );
-
-        if (theta1 >= 1.0 && theta2 >= 1.0)
-        {
-            continue;
-        }
-
-        scaleHighOrderModes(rhoField, cellI, theta1*theta2);
-        scaleHighOrderModes(rhoUField, cellI, theta2);
-        scaleHighOrderModes(EField, cellI, theta2);
-
-        ++nLimitedCells;
-    }
-
-    reduce(nLimitedCells, sumOp<label>());
-
-    Info<< "Lagrange-node positivity limiter applied on "
-        << nLimitedCells << " cell(s)." << nl;
-}
-
-
-/**
- * \brief Return the output directory for the current export time.
- */
-fileName outputDir(const Time& runTime)
-{
-    return runTime.globalPath()/"VTK_Lagrange"/runTime.timeName();
-}
-
-
-/**
- * \brief Return the VTU piece file written by the current MPI rank.
- */
-fileName pieceFileName(const Time& runTime)
-{
-    const fileName dir = outputDir(runTime);
-
-    if (Pstream::parRun())
-    {
-        return dir/("dgToVTKLagrange_" + Foam::name(Pstream::myProcNo()) + ".vtu");
-    }
-
-    return dir/"dgToVTKLagrange.vtu";
-}
-
-
-/**
- * \brief Return the parallel PVTU manifest file for the current time.
- */
-fileName pvtuFileName(const Time& runTime)
-{
-    return outputDir(runTime)/"dgToVTKLagrange.pvtu";
-}
-
-
-/**
- * \brief Return the top-level PVD timeline manifest for all exported times.
- */
-fileName pvdFileName(const Time& runTime)
-{
-    return runTime.globalPath()/"VTK_Lagrange"/"dgToVTKLagrange.pvd";
-}
-
-
-/**
- * \brief Create the output directory for the current time if needed.
- */
-void ensureOutputDir(const Time& runTime)
-{
-    mkDir(outputDir(runTime));
-}
-
-
-/**
- * \brief Write a ParaView PVD manifest that references all exported times.
- */
-void writePvdManifest(const Time& runTime, const instantList& timeDirs)
-{
-    const fileName manifestPath = pvdFileName(runTime);
-    mkDir(manifestPath.path());
-
-    OFstream os(manifestPath);
-    os.precision(16);
-
-    os  << "<?xml version=\"1.0\"?>" << nl
-        << "<VTKFile type=\"Collection\" version=\"0.1\" "
-        << "byte_order=\"LittleEndian\">" << nl
-        << "  <Collection>" << nl;
-
-    forAll(timeDirs, timeI)
-    {
-        const instant& timeInst = timeDirs[timeI];
-        const fileName dataSet =
-            fileName(timeInst.name())
-           /(Pstream::parRun()
-                ? fileName("dgToVTKLagrange.pvtu")
-                : fileName("dgToVTKLagrange.vtu"));
-
-        os  << "    <DataSet timestep=\"" << timeInst.value()
-            << "\" group=\"\" part=\"0\" file=\"" << dataSet.c_str()
-            << "\"/>" << nl;
-    }
-
-    os  << "  </Collection>" << nl
-        << "</VTKFile>" << nl;
-}
-
-
-/**
- * \brief Export one DG time-step to native VTK Lagrange unstructured data.
- *
- * \param runTime Current OpenFOAM time object used for naming the output.
- * \param dgMesh DG geometric mesh that defines polynomial order and cell maps.
- * \param rhoField Modal density field.
- * \param rhoUField Modal momentum field.
- * \param EField Modal total-energy field.
- * \param thermo Thermodynamic model used to recover primitive variables.
- *
- * \details
- * This routine converts a modal DG representation into a nodal VTK Lagrange
- * representation. The algorithm is:
- * 1. Determine the VTK export order corresponding to the DG polynomial order.
- * 2. Optionally use positivity-preserving theta fields to clamp selected
- *    conservative variables to DoF0 where requested by
- *    \c smoothByClampingTheta.
- * 3. Apply the internal Lagrange-node positivity limiter to the possibly
- *    clamped fields.
- * 4. Loop over all DG cells and skip null entries.
- * 5. Reject unsupported element types, while counting pyramids that are not
- *    yet exported in native VTK Lagrange form.
- * 6. For the current cell, obtain:
- *    - the PyFR standard-element points for the chosen high-order output,
- *    - the VTK node permutation (`nodemap`) expected by native Lagrange cells,
- *    - and the physical cell vertices.
- * 7. Traverse the export nodes in VTK order. For each node:
- *    - map the PyFR reference coordinate \f$\xi\f$ to the internal DG
- *      reference coordinate \f$\eta\f$,
- *    - map \f$\eta\f$ to the physical point \f$\mathbf{x}\f$,
- *    - reconstruct \f$\rho\f$, \f$\rho\mathbf{U}\f$, and \f$E\f$ from modal
- *      coefficients,
- *    - derive \f$\mathbf{U}\f$, internal energy \f$e\f$, pressure, temperature,
- *      and speed of sound, with density clipped by `SMALL` to avoid division
- *      by zero,
- *    - append both coordinates and point-data values to contiguous buffers.
- * 8. Append cell connectivity, offsets, and the native VTK cell type so the
- *    buffered points are interpreted as one high-order Lagrange cell.
- * 9. After all cells are processed, write the VTU piece containing geometry
- *    plus scalar/vector point-data arrays.
- *
- * The resulting VTU stores solution samples at interpolation nodes, which
- * allows ParaView to render the element curvature and the high-order field
- * variation directly without first projecting to a low-order mesh.
- */
-void exportTimeStep
-(
-    const Time& runTime,
-    const dgGeomMesh& dgMesh,
-    dgField<scalar>& rhoField,
-    dgField<vector>& rhoUField,
-    dgField<scalar>& EField,
-    const dgThermoConservative& thermo,
-    const scalar limiterEpsilon,
-    const bool smoothByClampingTheta,
-    const scalar clampTheta,
-    const volScalarField* theta1FieldPtr,
-    const volScalarField* theta2FieldPtr
-)
-{
-    dgVtkLagrange::GridBuffers grid;
-    ExportPointData pointData;
-    label skippedPyramids = 0;
-
-    const label pOrder = dgMesh.pOrder();
-    const label hoOrder = dgVtkLagrange::exportOrder(pOrder);
-
-    if (hoOrder > 8)
-    {
-        FatalErrorInFunction
-            << "Current dgToVTKLagrange implementation supports "
-            << "high-order export up to order 8. "
-            << "Detected DG pOrder = " << pOrder
-            << ", which maps to VTK order " << hoOrder
-            << exit(FatalError);
-    }
-
-    if (smoothByClampingTheta && theta1FieldPtr && theta2FieldPtr)
-    {
-        clampConservativeFieldsByTheta
-        (
-            dgMesh,
-            rhoField,
-            rhoUField,
-            EField,
-            clampTheta,
-            *theta1FieldPtr,
-            *theta2FieldPtr
-        );
-    }
-
-    limitConservativeFieldsAtLagrangeNodes
-    (
-        dgMesh,
-        rhoField,
-        rhoUField,
-        EField,
-        limiterEpsilon
-    );
-
-    for (label cellI = 0; cellI < dgMesh.nCells(); ++cellI)
-    {
-        const dgGeomCell* cellPtr = dgMesh.cells()[cellI];
-
-        if (!cellPtr)
-        {
-            continue;
-        }
-
-        const dgCellType type = cellPtr->type();
-
-        if (!dgVtkLagrange::supportsNativeLagrange(type))
-        {
-            if (type == dgCellType::PYRAMID)
-            {
-                ++skippedPyramids;
-                continue;
-            }
-
-            FatalErrorInFunction
-                << "Unsupported DG cell type "
-                << dgVtkLagrange::cellTypeName(type)
-                << " in cell " << cellI << exit(FatalError);
-        }
-
-        const pointField& cellVertices = cellPtr->points();
-        const std::vector<vector> pyfrPts =
-            dgVtkLagrange::pyfrStdElementPoints(type, hoOrder);
-        const std::vector<label> nodemap =
-            dgVtkLagrange::vtkNodemap(type, pyfrPts.size());
-        const label pointOffset = grid.points.size();
-
-        for (const label pyfrPointI : nodemap)
-        {
-            const vector xi = pyfrPts[pyfrPointI];
-            const vector eta = dgVtkLagrange::xiToEta(type, xi);
-
-            const point x = mapEtaToX(eta, cellVertices, type);
-
-            List<scalar> basis;
-            dgVtkLagrange::computeBasisAt(type, eta, pOrder, basis);
-
-            const scalar rhoVal = evaluateModalField(rhoField, cellI, basis);
-            const vector rhoUVal = evaluateModalField(rhoUField, cellI, basis);
-            const scalar EVal = evaluateModalField(EField, cellI, basis);
-
-            const scalar rhoSafe = max(rhoVal, SMALL);
-            const vector UVal = rhoUVal/rhoSafe;
-            const scalar eVal = EVal/rhoSafe - 0.5*magSqr(UVal);
-
-            grid.points.push_back(x);
-            pointData.rho.push_back(rhoVal);
-            pointData.rhoU.push_back(rhoUVal);
-            pointData.E.push_back(EVal);
-            pointData.U.push_back(UVal);
-            pointData.e.push_back(eVal);
-            pointData.T.push_back(thermo.calcTemperatureFromRhoHe(cellI, rhoSafe, eVal));
-            pointData.p.push_back(thermo.calcPressureFromRhoHe(cellI, rhoSafe, eVal));
-            pointData.a.push_back(thermo.calcSpeedOfSoundFromRhoHe(cellI, rhoSafe, eVal));
-        }
-
-        for (label localPointI = 0; localPointI < label(nodemap.size()); ++localPointI)
-        {
-            grid.connectivity.push_back(pointOffset + localPointI);
-        }
-
-        grid.offsets.push_back(grid.connectivity.size());
-        grid.cellTypes.push_back(dgVtkLagrange::vtkLagrangeType(type));
-        grid.partitions.push_back(Pstream::myProcNo());
-    }
-
-    const std::vector<dgVtkLagrange::ScalarPointData> scalarArrays
-    {
-        {"rho", &pointData.rho},
-        {"E", &pointData.E},
-        {"e", &pointData.e},
-        {"p", &pointData.p},
-        {"T", &pointData.T},
-        {"a", &pointData.a}
-    };
-
-    const std::vector<dgVtkLagrange::VectorPointData> vectorArrays
-    {
-        {"rhoU", &pointData.rhoU},
-        {"U", &pointData.U}
-    };
-
-    ensureOutputDir(runTime);
-    dgVtkLagrange::writeVtuPiece
-    (
-        pieceFileName(runTime),
-        runTime.value(),
-        grid,
-        scalarArrays,
-        vectorArrays
-    );
-
-    if (skippedPyramids > 0)
-    {
-        WarningInFunction
-            << "Skipped " << skippedPyramids
-            << " pyramid cells because native VTK_LAGRANGE pyramid export is "
-            << "not implemented yet." << nl;
-    }
-
-}
+#include "dgToVTKLagrangeTypes.H"
+#include "dgToVTKLagrangeFieldOps.H"
+#include "dgToVTKLagrangeOutput.H"
+#include "dgToVTKLagrangeExportVolume.H"
+#include "dgToVTKLagrangeExportPatches.H"
 
 } // End anonymous namespace
 } // End namespace Foam
@@ -769,6 +83,17 @@ int main(int argc, char *argv[])
     (
         "Export DGFoam modal results to VTK_LAGRANGE VTU/PVTU files."
     );
+    argList::addBoolOption
+    (
+        "no-internal",
+        "Do not export volume cells; write only high-order boundary patches"
+    );
+    argList::addOption
+    (
+        "patchList",
+        "wordList",
+        "Boundary patches to export with -no-internal, e.g. \"(inlet wall)\""
+    );
     argList::addOption
     (
         "lagrangeLimiterTolerance",
@@ -793,6 +118,10 @@ int main(int argc, char *argv[])
 
     const scalar lagrangeLimiterTolerance =
         args.getOrDefault<scalar>("lagrangeLimiterTolerance", 1.0e-6);
+    const bool noInternal = args.found("no-internal");
+    const bool hasPatchList = args.found("patchList");
+    const wordList patchNames =
+        hasPatchList ? args.getList<word>("patchList") : wordList();
     const bool smoothByClampingTheta = args.found("smoothByClampingTheta");
     const scalar clampTheta =
         smoothByClampingTheta
@@ -811,6 +140,13 @@ int main(int argc, char *argv[])
         FatalErrorInFunction
             << "Option -smoothByClampingTheta must be in [0, 1], but got "
             << clampTheta << exit(FatalError);
+    }
+
+    if (hasPatchList && !noInternal)
+    {
+        FatalErrorInFunction
+            << "Option -patchList is only valid together with -no-internal."
+            << exit(FatalError);
     }
 
     dgGeomMesh dgMesh(mesh);
@@ -1058,23 +394,45 @@ int main(int argc, char *argv[])
             autoPtr<dgThermoConservative> thermo =
                 dgThermoConservative::New(dgThermoTypeName, thermoDict, dgMesh);
 
-            exportTimeStep
-            (
-                runTime,
-                dgMesh,
-                rho,
-                rhoU,
-                E,
-                thermo(),
-                lagrangeLimiterTolerance,
-                activeSmoothByClampingTheta,
-                clampTheta,
-                theta1Ptr.valid() ? &theta1Ptr() : nullptr,
-                theta2Ptr.valid() ? &theta2Ptr() : nullptr
-            );
+            if (noInternal)
+            {
+                exportPatchOnlyTimeStep
+                (
+                    runTime,
+                    mesh,
+                    dgMesh,
+                    rho,
+                    rhoU,
+                    E,
+                    thermo(),
+                    lagrangeLimiterTolerance,
+                    activeSmoothByClampingTheta,
+                    clampTheta,
+                    theta1Ptr.valid() ? &theta1Ptr() : nullptr,
+                    theta2Ptr.valid() ? &theta2Ptr() : nullptr,
+                    patchNames
+                );
+            }
+            else
+            {
+                exportTimeStep
+                (
+                    runTime,
+                    dgMesh,
+                    rho,
+                    rhoU,
+                    E,
+                    thermo(),
+                    lagrangeLimiterTolerance,
+                    activeSmoothByClampingTheta,
+                    clampTheta,
+                    theta1Ptr.valid() ? &theta1Ptr() : nullptr,
+                    theta2Ptr.valid() ? &theta2Ptr() : nullptr
+                );
+            }
         }
 
-        if (Pstream::parRun())
+        if (!noInternal && Pstream::parRun())
         {
             Pstream::barrier(UPstream::worldComm);
 
@@ -1108,7 +466,7 @@ int main(int argc, char *argv[])
 
     }
 
-    if (!Pstream::parRun() || Pstream::master())
+    if (!noInternal && (!Pstream::parRun() || Pstream::master()))
     {
         writePvdManifest(runTime, timeDirs);
     }

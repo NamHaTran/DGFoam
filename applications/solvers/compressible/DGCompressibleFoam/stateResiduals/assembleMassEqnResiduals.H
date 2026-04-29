@@ -40,7 +40,7 @@ if (selfDiffusion)
         rhoG,
         tMassDiffFlux,
         fluxSolverManager,
-        true
+        false
     );
 
     selfDiffusionMassTerm.updateFlux();

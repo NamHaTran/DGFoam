@@ -160,7 +160,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>    cellID_(cellID),</div>
 <div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>    mesh_(mesh),</div>
 <div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>    cellField_(mesh, &amp;(*dofField)[cellID]),</div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>    faceField_(cellID, mesh)</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>    faceField_()</div>
 <div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>{</div>
 <div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>    <span class="keywordflow">if</span> (!dofField_ || !mesh_)</div>
 <div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>    {</div>
@@ -181,7 +181,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>        cellsDof[i + 1] = (nid &gt;= 0 ? &amp;(*dofField_)[nid] : <span class="keyword">nullptr</span>);</div>
 <div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>    }</div>
 <div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span> </div>
-<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>    faceField_.setCellsDof(cellsDof);</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>    faceField_ = faceGaussField&lt;Type&gt;(cellsDof, mesh_);</div>
 <div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>}</div>
 <div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span> </div>
 <div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span> </div>

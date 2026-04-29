@@ -99,10 +99,13 @@ Inheritance diagram for Foam::eqnOfState:</div>
 <div class="dyncontent">
 <div class="center"><img src="classFoam_1_1eqnOfState__inherit__graph.png" border="0" usemap="#aFoam_1_1eqnOfState_inherit__map" alt="Inheritance graph"/></div>
 <map name="aFoam_1_1eqnOfState_inherit__map" id="aFoam_1_1eqnOfState_inherit__map">
-<area shape="rect" title="Base class for single&#45;phase equations of state." alt="" coords="5,5,144,31"/>
-<area shape="rect" href="classFoam_1_1idealGas.html" title="Ideal&#45;gas equation of state." alt="" coords="13,79,136,104"/>
-<area shape="poly" title=" " alt="" coords="69,44,70,78,65,79,63,45"/>
-<area shape="poly" title=" " alt="" coords="86,45,84,79,79,78,81,44"/>
+<area shape="rect" title="Base class for single&#45;phase equations of state." alt="" coords="80,5,219,31"/>
+<area shape="rect" href="classFoam_1_1idealGas.html" title="Ideal&#45;gas equation of state." alt="" coords="5,79,128,104"/>
+<area shape="poly" title=" " alt="" coords="120,41,75,80,72,76,117,37"/>
+<area shape="poly" title=" " alt="" coords="134,43,89,81,85,76,131,39"/>
+<area shape="rect" href="classFoam_1_1pengRobinson.html" title="Peng&#45;Robinson real&#45;gas equation of state for single&#45;species flows." alt="" coords="153,79,311,104"/>
+<area shape="poly" title=" " alt="" coords="168,39,213,76,210,81,164,43"/>
+<area shape="poly" title=" " alt="" coords="182,37,227,76,224,80,179,41"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
@@ -131,39 +134,78 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a2fcf2ce66d3f2a5c924c396156ece28c" id="r_a2fcf2ce66d3f2a5c924c396156ece28c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1eqnOfState.html#a2fcf2ce66d3f2a5c924c396156ece28c">R</a> () <a class="el" href="classFoam_1_1GaussField.html">const</a> =0</td></tr>
 <tr class="memdesc:a2fcf2ce66d3f2a5c924c396156ece28c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return gas constant R.  <br /></td></tr>
 <tr class="separator:a2fcf2ce66d3f2a5c924c396156ece28c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5e886123a06f2ac0d79cc151e43c593d" id="r_a5e886123a06f2ac0d79cc151e43c593d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1eqnOfState.html#a5e886123a06f2ac0d79cc151e43c593d">calcRhoFromPT</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> <a class="el" href="createPrimaryFields_8H.html#ac26fa601ec3cea0a11ac0fd4f2a6bb63">p</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> <a class="el" href="namespaceFoam.html#a5faf7f302ed6c6307e3668365456af74">T</a>) <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
+<tr class="memitem:a5e886123a06f2ac0d79cc151e43c593d" id="r_a5e886123a06f2ac0d79cc151e43c593d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1eqnOfState.html#a5e886123a06f2ac0d79cc151e43c593d">calcRhoFromPT</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> <a class="el" href="dgFluxSolvers_2convectiveFluxSolver_2exactRiemannFluxSolver_2ExactToro_2dgExactToroFluxSolver_8C.html#a321a48806c8f4b6d07e24fd98f8e4cf1">p</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> <a class="el" href="namespaceFoam.html#a5faf7f302ed6c6307e3668365456af74">T</a>) <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
 <tr class="memdesc:a5e886123a06f2ac0d79cc151e43c593d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute density from pressure and temperature at one point.  <br /></td></tr>
 <tr class="separator:a5e886123a06f2ac0d79cc151e43c593d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5163e9f442480de5110481f90790b2b8" id="r_a5163e9f442480de5110481f90790b2b8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1eqnOfState.html#a5163e9f442480de5110481f90790b2b8">calcPFromRhoT</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> <a class="el" href="dynamicVarDeclaration_8cpp.html#ae7a21fded6f5e50f59fb05c0735f2479">rho</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> <a class="el" href="namespaceFoam.html#a5faf7f302ed6c6307e3668365456af74">T</a>) <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
+<tr class="memitem:a5163e9f442480de5110481f90790b2b8" id="r_a5163e9f442480de5110481f90790b2b8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1eqnOfState.html#a5163e9f442480de5110481f90790b2b8">calcPFromRhoT</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> <a class="el" href="dgFluxSolvers_2convectiveFluxSolver_2exactRiemannFluxSolver_2ExactToro_2dgExactToroFluxSolver_8C.html#ac2f6bd0057296e22b6f1da8890d317de">rho</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> <a class="el" href="namespaceFoam.html#a5faf7f302ed6c6307e3668365456af74">T</a>) <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
 <tr class="memdesc:a5163e9f442480de5110481f90790b2b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute pressure from density and temperature at one point.  <br /></td></tr>
 <tr class="separator:a5163e9f442480de5110481f90790b2b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a06233e4f2305937651fd1a059e0e8352" id="r_a06233e4f2305937651fd1a059e0e8352"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1eqnOfState.html#a06233e4f2305937651fd1a059e0e8352">calcTFromPRho</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> <a class="el" href="createPrimaryFields_8H.html#ac26fa601ec3cea0a11ac0fd4f2a6bb63">p</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> <a class="el" href="dynamicVarDeclaration_8cpp.html#ae7a21fded6f5e50f59fb05c0735f2479">rho</a>) <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
+<tr class="memitem:a06233e4f2305937651fd1a059e0e8352" id="r_a06233e4f2305937651fd1a059e0e8352"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1eqnOfState.html#a06233e4f2305937651fd1a059e0e8352">calcTFromPRho</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> <a class="el" href="dgFluxSolvers_2convectiveFluxSolver_2exactRiemannFluxSolver_2ExactToro_2dgExactToroFluxSolver_8C.html#a321a48806c8f4b6d07e24fd98f8e4cf1">p</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> <a class="el" href="dgFluxSolvers_2convectiveFluxSolver_2exactRiemannFluxSolver_2ExactToro_2dgExactToroFluxSolver_8C.html#ac2f6bd0057296e22b6f1da8890d317de">rho</a>) <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
 <tr class="memdesc:a06233e4f2305937651fd1a059e0e8352"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute temperature from pressure and density at one point.  <br /></td></tr>
 <tr class="separator:a06233e4f2305937651fd1a059e0e8352"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae404de5dd9983a37325cad5458972a04" id="r_ae404de5dd9983a37325cad5458972a04"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="classFoam_1_1GaussField.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1eqnOfState.html#ae404de5dd9983a37325cad5458972a04">calcRhoFromPT</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">label</a> <a class="el" href="classFoam_1_1GaussField.html">cellI</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">GaussField</a>&lt; <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &gt; &amp;<a class="el" href="createPrimaryFields_8H.html#ac26fa601ec3cea0a11ac0fd4f2a6bb63">p</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">GaussField</a>&lt; <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &gt; &amp;<a class="el" href="namespaceFoam.html#a5faf7f302ed6c6307e3668365456af74">T</a>, <a class="el" href="classFoam_1_1GaussField.html">GaussField</a>&lt; <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &gt; &amp;<a class="el" href="dynamicVarDeclaration_8cpp.html#ae7a21fded6f5e50f59fb05c0735f2479">rho</a>) <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
+<tr class="memitem:a8e2667722e2cc544d56976d9743bcdf8" id="r_a8e2667722e2cc544d56976d9743bcdf8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1eqnOfState.html#a8e2667722e2cc544d56976d9743bcdf8">calcTFromRhoE</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> <a class="el" href="dgFluxSolvers_2convectiveFluxSolver_2exactRiemannFluxSolver_2ExactToro_2dgExactToroFluxSolver_8C.html#ac2f6bd0057296e22b6f1da8890d317de">rho</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> <a class="el" href="dgFoamVolumeToVTU_2dgFoamVolumeToVTU_8C.html#a4a1b92c1093ef60fa294e4d3293c6e76">e</a>) <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
+<tr class="memdesc:a8e2667722e2cc544d56976d9743bcdf8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute temperature from density and internal energy at one point.  <br /></td></tr>
+<tr class="separator:a8e2667722e2cc544d56976d9743bcdf8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a803af57f76b45f85e4e591d8fea044d1" id="r_a803af57f76b45f85e4e591d8fea044d1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1eqnOfState.html#a803af57f76b45f85e4e591d8fea044d1">calcPFromRhoE</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> <a class="el" href="dgFluxSolvers_2convectiveFluxSolver_2exactRiemannFluxSolver_2ExactToro_2dgExactToroFluxSolver_8C.html#ac2f6bd0057296e22b6f1da8890d317de">rho</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> <a class="el" href="dgFoamVolumeToVTU_2dgFoamVolumeToVTU_8C.html#a4a1b92c1093ef60fa294e4d3293c6e76">e</a>) <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
+<tr class="memdesc:a803af57f76b45f85e4e591d8fea044d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute pressure from density and internal energy at one point.  <br /></td></tr>
+<tr class="separator:a803af57f76b45f85e4e591d8fea044d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4c3873bea86c52ef9375d8c25b625c9e" id="r_a4c3873bea86c52ef9375d8c25b625c9e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1eqnOfState.html#a4c3873bea86c52ef9375d8c25b625c9e">calcEFromRhoP</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> <a class="el" href="dgFluxSolvers_2convectiveFluxSolver_2exactRiemannFluxSolver_2ExactToro_2dgExactToroFluxSolver_8C.html#ac2f6bd0057296e22b6f1da8890d317de">rho</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> <a class="el" href="dgFluxSolvers_2convectiveFluxSolver_2exactRiemannFluxSolver_2ExactToro_2dgExactToroFluxSolver_8C.html#a321a48806c8f4b6d07e24fd98f8e4cf1">p</a>) <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
+<tr class="memdesc:a4c3873bea86c52ef9375d8c25b625c9e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute internal energy from density and pressure at one point.  <br /></td></tr>
+<tr class="separator:a4c3873bea86c52ef9375d8c25b625c9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a660b04de6842ae25054aeaa7243b3165" id="r_a660b04de6842ae25054aeaa7243b3165"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1eqnOfState.html#a660b04de6842ae25054aeaa7243b3165">calcEFromRhoT</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> <a class="el" href="dgFluxSolvers_2convectiveFluxSolver_2exactRiemannFluxSolver_2ExactToro_2dgExactToroFluxSolver_8C.html#ac2f6bd0057296e22b6f1da8890d317de">rho</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> <a class="el" href="namespaceFoam.html#a5faf7f302ed6c6307e3668365456af74">T</a>) <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
+<tr class="memdesc:a660b04de6842ae25054aeaa7243b3165"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute internal energy from density and temperature at one point.  <br /></td></tr>
+<tr class="separator:a660b04de6842ae25054aeaa7243b3165"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3c73738a42d0c7f8eaf56579cd7ad3ac" id="r_a3c73738a42d0c7f8eaf56579cd7ad3ac"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1eqnOfState.html#a3c73738a42d0c7f8eaf56579cd7ad3ac">calcAFromRhoE</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> <a class="el" href="dgFluxSolvers_2convectiveFluxSolver_2exactRiemannFluxSolver_2ExactToro_2dgExactToroFluxSolver_8C.html#ac2f6bd0057296e22b6f1da8890d317de">rho</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> <a class="el" href="dgFoamVolumeToVTU_2dgFoamVolumeToVTU_8C.html#a4a1b92c1093ef60fa294e4d3293c6e76">e</a>) <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
+<tr class="memdesc:a3c73738a42d0c7f8eaf56579cd7ad3ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute speed of sound from density and internal energy.  <br /></td></tr>
+<tr class="separator:a3c73738a42d0c7f8eaf56579cd7ad3ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7f30a84e67cd7772c9b10bbc7e6b7563" id="r_a7f30a84e67cd7772c9b10bbc7e6b7563"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="classFoam_1_1GaussField.html">vector</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1eqnOfState.html#a7f30a84e67cd7772c9b10bbc7e6b7563">calcGradPFromRhoT</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> <a class="el" href="dgFluxSolvers_2convectiveFluxSolver_2exactRiemannFluxSolver_2ExactToro_2dgExactToroFluxSolver_8C.html#ac2f6bd0057296e22b6f1da8890d317de">rho</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> <a class="el" href="namespaceFoam.html#a5faf7f302ed6c6307e3668365456af74">T</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">vector</a> &amp;<a class="el" href="classFoam_1_1GaussField.html">gradRho</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">vector</a> &amp;<a class="el" href="createPrimaryFields_8H.html#a9e18fe91c9278a8b2e26a2c414ba7c5b">gradT</a>) <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
+<tr class="memdesc:a7f30a84e67cd7772c9b10bbc7e6b7563"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute \(\nabla p\) from \(p(\rho,T)\).  <br /></td></tr>
+<tr class="separator:a7f30a84e67cd7772c9b10bbc7e6b7563"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa1227f27351c86d23aef3ac549facce2" id="r_aa1227f27351c86d23aef3ac549facce2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="classFoam_1_1GaussField.html">vector</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1eqnOfState.html#aa1227f27351c86d23aef3ac549facce2">calcGradTFromRhoE</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> <a class="el" href="dgFluxSolvers_2convectiveFluxSolver_2exactRiemannFluxSolver_2ExactToro_2dgExactToroFluxSolver_8C.html#ac2f6bd0057296e22b6f1da8890d317de">rho</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> <a class="el" href="dgFoamVolumeToVTU_2dgFoamVolumeToVTU_8C.html#a4a1b92c1093ef60fa294e4d3293c6e76">e</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">vector</a> &amp;<a class="el" href="classFoam_1_1GaussField.html">gradRho</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">vector</a> &amp;<a class="el" href="classFoam_1_1GaussField.html">gradE</a>) <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
+<tr class="memdesc:aa1227f27351c86d23aef3ac549facce2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute \(\nabla T\) from \(T(\rho,e)\).  <br /></td></tr>
+<tr class="separator:aa1227f27351c86d23aef3ac549facce2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a307fb9b292a6b98b3f8ee11234a1f7de" id="r_a307fb9b292a6b98b3f8ee11234a1f7de"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="classFoam_1_1GaussField.html">vector</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1eqnOfState.html#a307fb9b292a6b98b3f8ee11234a1f7de">calcGradPFromRhoE</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> <a class="el" href="dgFluxSolvers_2convectiveFluxSolver_2exactRiemannFluxSolver_2ExactToro_2dgExactToroFluxSolver_8C.html#ac2f6bd0057296e22b6f1da8890d317de">rho</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> <a class="el" href="dgFoamVolumeToVTU_2dgFoamVolumeToVTU_8C.html#a4a1b92c1093ef60fa294e4d3293c6e76">e</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">vector</a> &amp;<a class="el" href="classFoam_1_1GaussField.html">gradRho</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">vector</a> &amp;<a class="el" href="classFoam_1_1GaussField.html">gradE</a>) <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
+<tr class="memdesc:a307fb9b292a6b98b3f8ee11234a1f7de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute \(\nabla p\) from \(p(\rho,e)\).  <br /></td></tr>
+<tr class="separator:a307fb9b292a6b98b3f8ee11234a1f7de"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae404de5dd9983a37325cad5458972a04" id="r_ae404de5dd9983a37325cad5458972a04"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="classFoam_1_1GaussField.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1eqnOfState.html#ae404de5dd9983a37325cad5458972a04">calcRhoFromPT</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">label</a> <a class="el" href="classFoam_1_1GaussField.html">cellI</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">GaussField</a>&lt; <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &gt; &amp;<a class="el" href="dgFluxSolvers_2convectiveFluxSolver_2exactRiemannFluxSolver_2ExactToro_2dgExactToroFluxSolver_8C.html#a321a48806c8f4b6d07e24fd98f8e4cf1">p</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">GaussField</a>&lt; <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &gt; &amp;<a class="el" href="namespaceFoam.html#a5faf7f302ed6c6307e3668365456af74">T</a>, <a class="el" href="classFoam_1_1GaussField.html">GaussField</a>&lt; <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &gt; &amp;<a class="el" href="dgFluxSolvers_2convectiveFluxSolver_2exactRiemannFluxSolver_2ExactToro_2dgExactToroFluxSolver_8C.html#ac2f6bd0057296e22b6f1da8890d317de">rho</a>) <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
 <tr class="memdesc:ae404de5dd9983a37325cad5458972a04"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute density from pressure and temperature.  <br /></td></tr>
 <tr class="separator:ae404de5dd9983a37325cad5458972a04"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac9893d915e3752c31ee418c7affe5881" id="r_ac9893d915e3752c31ee418c7affe5881"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="classFoam_1_1GaussField.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1eqnOfState.html#ac9893d915e3752c31ee418c7affe5881">calcRhoFromPT</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1boundaryGaussField.html">boundaryGaussField</a>&lt; <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &gt; &amp;<a class="el" href="createPrimaryFields_8H.html#ac26fa601ec3cea0a11ac0fd4f2a6bb63">p</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1boundaryGaussField.html">boundaryGaussField</a>&lt; <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &gt; &amp;<a class="el" href="namespaceFoam.html#a5faf7f302ed6c6307e3668365456af74">T</a>, <a class="el" href="classFoam_1_1boundaryGaussField.html">boundaryGaussField</a>&lt; <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &gt; &amp;<a class="el" href="dynamicVarDeclaration_8cpp.html#ae7a21fded6f5e50f59fb05c0735f2479">rho</a>) <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
+<tr class="memitem:ac9893d915e3752c31ee418c7affe5881" id="r_ac9893d915e3752c31ee418c7affe5881"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="classFoam_1_1GaussField.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1eqnOfState.html#ac9893d915e3752c31ee418c7affe5881">calcRhoFromPT</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1boundaryGaussField.html">boundaryGaussField</a>&lt; <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &gt; &amp;<a class="el" href="dgFluxSolvers_2convectiveFluxSolver_2exactRiemannFluxSolver_2ExactToro_2dgExactToroFluxSolver_8C.html#a321a48806c8f4b6d07e24fd98f8e4cf1">p</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1boundaryGaussField.html">boundaryGaussField</a>&lt; <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &gt; &amp;<a class="el" href="namespaceFoam.html#a5faf7f302ed6c6307e3668365456af74">T</a>, <a class="el" href="classFoam_1_1boundaryGaussField.html">boundaryGaussField</a>&lt; <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &gt; &amp;<a class="el" href="dgFluxSolvers_2convectiveFluxSolver_2exactRiemannFluxSolver_2ExactToro_2dgExactToroFluxSolver_8C.html#ac2f6bd0057296e22b6f1da8890d317de">rho</a>) <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
 <tr class="separator:ac9893d915e3752c31ee418c7affe5881"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aed9af958578fea8080cdcc3d1a0cc95d" id="r_aed9af958578fea8080cdcc3d1a0cc95d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="classFoam_1_1GaussField.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1eqnOfState.html#aed9af958578fea8080cdcc3d1a0cc95d">calcPFromRhoT</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">label</a> <a class="el" href="classFoam_1_1GaussField.html">cellI</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">GaussField</a>&lt; <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &gt; &amp;<a class="el" href="dynamicVarDeclaration_8cpp.html#ae7a21fded6f5e50f59fb05c0735f2479">rho</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">GaussField</a>&lt; <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &gt; &amp;<a class="el" href="namespaceFoam.html#a5faf7f302ed6c6307e3668365456af74">T</a>, <a class="el" href="classFoam_1_1GaussField.html">GaussField</a>&lt; <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &gt; &amp;<a class="el" href="createPrimaryFields_8H.html#ac26fa601ec3cea0a11ac0fd4f2a6bb63">p</a>) <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
+<tr class="memitem:aed9af958578fea8080cdcc3d1a0cc95d" id="r_aed9af958578fea8080cdcc3d1a0cc95d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="classFoam_1_1GaussField.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1eqnOfState.html#aed9af958578fea8080cdcc3d1a0cc95d">calcPFromRhoT</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">label</a> <a class="el" href="classFoam_1_1GaussField.html">cellI</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">GaussField</a>&lt; <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &gt; &amp;<a class="el" href="dgFluxSolvers_2convectiveFluxSolver_2exactRiemannFluxSolver_2ExactToro_2dgExactToroFluxSolver_8C.html#ac2f6bd0057296e22b6f1da8890d317de">rho</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">GaussField</a>&lt; <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &gt; &amp;<a class="el" href="namespaceFoam.html#a5faf7f302ed6c6307e3668365456af74">T</a>, <a class="el" href="classFoam_1_1GaussField.html">GaussField</a>&lt; <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &gt; &amp;<a class="el" href="dgFluxSolvers_2convectiveFluxSolver_2exactRiemannFluxSolver_2ExactToro_2dgExactToroFluxSolver_8C.html#a321a48806c8f4b6d07e24fd98f8e4cf1">p</a>) <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
 <tr class="memdesc:aed9af958578fea8080cdcc3d1a0cc95d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute pressure from density and temperature.  <br /></td></tr>
 <tr class="separator:aed9af958578fea8080cdcc3d1a0cc95d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a794e8dd77870a52f6639f035e289a810" id="r_a794e8dd77870a52f6639f035e289a810"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="classFoam_1_1GaussField.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1eqnOfState.html#a794e8dd77870a52f6639f035e289a810">calcPFromRhoT</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1boundaryGaussField.html">boundaryGaussField</a>&lt; <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &gt; &amp;<a class="el" href="dynamicVarDeclaration_8cpp.html#ae7a21fded6f5e50f59fb05c0735f2479">rho</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1boundaryGaussField.html">boundaryGaussField</a>&lt; <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &gt; &amp;<a class="el" href="namespaceFoam.html#a5faf7f302ed6c6307e3668365456af74">T</a>, <a class="el" href="classFoam_1_1boundaryGaussField.html">boundaryGaussField</a>&lt; <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &gt; &amp;<a class="el" href="createPrimaryFields_8H.html#ac26fa601ec3cea0a11ac0fd4f2a6bb63">p</a>) <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
+<tr class="memitem:a794e8dd77870a52f6639f035e289a810" id="r_a794e8dd77870a52f6639f035e289a810"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="classFoam_1_1GaussField.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1eqnOfState.html#a794e8dd77870a52f6639f035e289a810">calcPFromRhoT</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1boundaryGaussField.html">boundaryGaussField</a>&lt; <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &gt; &amp;<a class="el" href="dgFluxSolvers_2convectiveFluxSolver_2exactRiemannFluxSolver_2ExactToro_2dgExactToroFluxSolver_8C.html#ac2f6bd0057296e22b6f1da8890d317de">rho</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1boundaryGaussField.html">boundaryGaussField</a>&lt; <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &gt; &amp;<a class="el" href="namespaceFoam.html#a5faf7f302ed6c6307e3668365456af74">T</a>, <a class="el" href="classFoam_1_1boundaryGaussField.html">boundaryGaussField</a>&lt; <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &gt; &amp;<a class="el" href="dgFluxSolvers_2convectiveFluxSolver_2exactRiemannFluxSolver_2ExactToro_2dgExactToroFluxSolver_8C.html#a321a48806c8f4b6d07e24fd98f8e4cf1">p</a>) <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
 <tr class="separator:a794e8dd77870a52f6639f035e289a810"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad6c796978db6c1616521de4cf852d31b" id="r_ad6c796978db6c1616521de4cf852d31b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="classFoam_1_1GaussField.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1eqnOfState.html#ad6c796978db6c1616521de4cf852d31b">calcTFromPRho</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">label</a> <a class="el" href="classFoam_1_1GaussField.html">cellI</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">GaussField</a>&lt; <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &gt; &amp;<a class="el" href="createPrimaryFields_8H.html#ac26fa601ec3cea0a11ac0fd4f2a6bb63">p</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">GaussField</a>&lt; <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &gt; &amp;<a class="el" href="dynamicVarDeclaration_8cpp.html#ae7a21fded6f5e50f59fb05c0735f2479">rho</a>, <a class="el" href="classFoam_1_1GaussField.html">GaussField</a>&lt; <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &gt; &amp;<a class="el" href="namespaceFoam.html#a5faf7f302ed6c6307e3668365456af74">T</a>) <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
+<tr class="memitem:ad6c796978db6c1616521de4cf852d31b" id="r_ad6c796978db6c1616521de4cf852d31b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="classFoam_1_1GaussField.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1eqnOfState.html#ad6c796978db6c1616521de4cf852d31b">calcTFromPRho</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">label</a> <a class="el" href="classFoam_1_1GaussField.html">cellI</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">GaussField</a>&lt; <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &gt; &amp;<a class="el" href="dgFluxSolvers_2convectiveFluxSolver_2exactRiemannFluxSolver_2ExactToro_2dgExactToroFluxSolver_8C.html#a321a48806c8f4b6d07e24fd98f8e4cf1">p</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">GaussField</a>&lt; <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &gt; &amp;<a class="el" href="dgFluxSolvers_2convectiveFluxSolver_2exactRiemannFluxSolver_2ExactToro_2dgExactToroFluxSolver_8C.html#ac2f6bd0057296e22b6f1da8890d317de">rho</a>, <a class="el" href="classFoam_1_1GaussField.html">GaussField</a>&lt; <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &gt; &amp;<a class="el" href="namespaceFoam.html#a5faf7f302ed6c6307e3668365456af74">T</a>) <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
 <tr class="memdesc:ad6c796978db6c1616521de4cf852d31b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute temperature from pressure and density.  <br /></td></tr>
 <tr class="separator:ad6c796978db6c1616521de4cf852d31b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a78c992ff03d3b33d4c6f91eabfdf10e2" id="r_a78c992ff03d3b33d4c6f91eabfdf10e2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="classFoam_1_1GaussField.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1eqnOfState.html#a78c992ff03d3b33d4c6f91eabfdf10e2">calcTFromPRho</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1boundaryGaussField.html">boundaryGaussField</a>&lt; <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &gt; &amp;<a class="el" href="createPrimaryFields_8H.html#ac26fa601ec3cea0a11ac0fd4f2a6bb63">p</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1boundaryGaussField.html">boundaryGaussField</a>&lt; <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &gt; &amp;<a class="el" href="dynamicVarDeclaration_8cpp.html#ae7a21fded6f5e50f59fb05c0735f2479">rho</a>, <a class="el" href="classFoam_1_1boundaryGaussField.html">boundaryGaussField</a>&lt; <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &gt; &amp;<a class="el" href="namespaceFoam.html#a5faf7f302ed6c6307e3668365456af74">T</a>) <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
+<tr class="memitem:a78c992ff03d3b33d4c6f91eabfdf10e2" id="r_a78c992ff03d3b33d4c6f91eabfdf10e2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="classFoam_1_1GaussField.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1eqnOfState.html#a78c992ff03d3b33d4c6f91eabfdf10e2">calcTFromPRho</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1boundaryGaussField.html">boundaryGaussField</a>&lt; <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &gt; &amp;<a class="el" href="dgFluxSolvers_2convectiveFluxSolver_2exactRiemannFluxSolver_2ExactToro_2dgExactToroFluxSolver_8C.html#a321a48806c8f4b6d07e24fd98f8e4cf1">p</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1boundaryGaussField.html">boundaryGaussField</a>&lt; <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &gt; &amp;<a class="el" href="dgFluxSolvers_2convectiveFluxSolver_2exactRiemannFluxSolver_2ExactToro_2dgExactToroFluxSolver_8C.html#ac2f6bd0057296e22b6f1da8890d317de">rho</a>, <a class="el" href="classFoam_1_1boundaryGaussField.html">boundaryGaussField</a>&lt; <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &gt; &amp;<a class="el" href="namespaceFoam.html#a5faf7f302ed6c6307e3668365456af74">T</a>) <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
 <tr class="separator:a78c992ff03d3b33d4c6f91eabfdf10e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3291a187ff233d34e8fc78fd9a1fbca6" id="r_a3291a187ff233d34e8fc78fd9a1fbca6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="classFoam_1_1GaussField.html">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1eqnOfState.html#a3291a187ff233d34e8fc78fd9a1fbca6">canCalcRhoFromPT</a> () <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
-<tr class="memdesc:a3291a187ff233d34e8fc78fd9a1fbca6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if <a class="el" href="dynamicVarDeclaration_8cpp.html#ae7a21fded6f5e50f59fb05c0735f2479">rho(p,T)</a> is supported.  <br /></td></tr>
+<tr class="memdesc:a3291a187ff233d34e8fc78fd9a1fbca6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if <a class="el" href="dgFluxSolvers_2convectiveFluxSolver_2exactRiemannFluxSolver_2ExactToro_2dgExactToroFluxSolver_8C.html#ac2f6bd0057296e22b6f1da8890d317de">rho(p,T)</a> is supported.  <br /></td></tr>
 <tr class="separator:a3291a187ff233d34e8fc78fd9a1fbca6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8cd5ba40878162951db68ce90e4a46ae" id="r_a8cd5ba40878162951db68ce90e4a46ae"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="classFoam_1_1GaussField.html">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1eqnOfState.html#a8cd5ba40878162951db68ce90e4a46ae">canCalcPFromRhoT</a> () <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
-<tr class="memdesc:a8cd5ba40878162951db68ce90e4a46ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if p(rho,T) is supported.  <br /></td></tr>
+<tr class="memdesc:a8cd5ba40878162951db68ce90e4a46ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if <a class="el" href="dgFluxSolvers_2convectiveFluxSolver_2exactRiemannFluxSolver_2ExactToro_2dgExactToroFluxSolver_8C.html#a321a48806c8f4b6d07e24fd98f8e4cf1">p(rho,T)</a> is supported.  <br /></td></tr>
 <tr class="separator:a8cd5ba40878162951db68ce90e4a46ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac78add49a308131d2843c620930fce74" id="r_ac78add49a308131d2843c620930fce74"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="classFoam_1_1GaussField.html">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1eqnOfState.html#ac78add49a308131d2843c620930fce74">canCalcTFromPRho</a> () <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
-<tr class="memdesc:ac78add49a308131d2843c620930fce74"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if T(p,rho) is supported.  <br /></td></tr>
+<tr class="memdesc:ac78add49a308131d2843c620930fce74"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if <a class="el" href="dgFoamVolumeToVTU_2dgFoamVolumeToVTU_8C.html#a4dbc9afb19bab1e36dcd0d05f570b3a8">T(p,rho)</a> is supported.  <br /></td></tr>
 <tr class="separator:ac78add49a308131d2843c620930fce74"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abc2024d5477b960fe808964701746cfc" id="r_abc2024d5477b960fe808964701746cfc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="classFoam_1_1GaussField.html">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1eqnOfState.html#abc2024d5477b960fe808964701746cfc">canCalcTFromRhoE</a> () <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
+<tr class="memdesc:abc2024d5477b960fe808964701746cfc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if <a class="el" href="dgFoamVolumeToVTU_2dgFoamVolumeToVTU_8C.html#a4dbc9afb19bab1e36dcd0d05f570b3a8">T(rho,e)</a> is supported.  <br /></td></tr>
+<tr class="separator:abc2024d5477b960fe808964701746cfc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a40976b0b4b8cca628061c8023c70c891" id="r_a40976b0b4b8cca628061c8023c70c891"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="classFoam_1_1GaussField.html">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1eqnOfState.html#a40976b0b4b8cca628061c8023c70c891">canCalcPFromRhoE</a> () <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
+<tr class="memdesc:a40976b0b4b8cca628061c8023c70c891"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if <a class="el" href="dgFluxSolvers_2convectiveFluxSolver_2exactRiemannFluxSolver_2ExactToro_2dgExactToroFluxSolver_8C.html#a321a48806c8f4b6d07e24fd98f8e4cf1">p(rho,e)</a> is supported.  <br /></td></tr>
+<tr class="separator:a40976b0b4b8cca628061c8023c70c891"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abcb34b6d0c8614af208046a1bc93ef0a" id="r_abcb34b6d0c8614af208046a1bc93ef0a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="classFoam_1_1GaussField.html">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1eqnOfState.html#abcb34b6d0c8614af208046a1bc93ef0a">canCalcEFromRhoP</a> () <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
+<tr class="memdesc:abcb34b6d0c8614af208046a1bc93ef0a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if <a class="el" href="dgFoamVolumeToVTU_2dgFoamVolumeToVTU_8C.html#a4a1b92c1093ef60fa294e4d3293c6e76">e(rho,p)</a> is supported.  <br /></td></tr>
+<tr class="separator:abcb34b6d0c8614af208046a1bc93ef0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9ece7f47c187d1a0ff858464f5003214" id="r_a9ece7f47c187d1a0ff858464f5003214"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="classFoam_1_1GaussField.html">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1eqnOfState.html#a9ece7f47c187d1a0ff858464f5003214">canCalcEFromRhoT</a> () <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
+<tr class="memdesc:a9ece7f47c187d1a0ff858464f5003214"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if <a class="el" href="dgFoamVolumeToVTU_2dgFoamVolumeToVTU_8C.html#a4a1b92c1093ef60fa294e4d3293c6e76">e(rho,T)</a> is supported.  <br /></td></tr>
+<tr class="separator:a9ece7f47c187d1a0ff858464f5003214"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab457f8b848c6c5c3d69fb66c4193a379" id="r_ab457f8b848c6c5c3d69fb66c4193a379"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="classFoam_1_1GaussField.html">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1eqnOfState.html#ab457f8b848c6c5c3d69fb66c4193a379">canCalcAFromRhoE</a> () <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
+<tr class="memdesc:ab457f8b848c6c5c3d69fb66c4193a379"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if <a class="el" href="dgFoamVolumeToVTU_2dgFoamVolumeToVTU_8C.html#adeaf58b4864c841206ddbc4bacc3b760">a(rho,e)</a> is supported.  <br /></td></tr>
+<tr class="separator:ab457f8b848c6c5c3d69fb66c4193a379"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0d4f0890fe5145ecaa8bdb16897773e4" id="r_a0d4f0890fe5145ecaa8bdb16897773e4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="classFoam_1_1GaussField.html">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1eqnOfState.html#a0d4f0890fe5145ecaa8bdb16897773e4">isIdealGas</a> () <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
 <tr class="memdesc:a0d4f0890fe5145ecaa8bdb16897773e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ideal-gas–type EOS.  <br /></td></tr>
 <tr class="separator:a0d4f0890fe5145ecaa8bdb16897773e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -189,39 +231,78 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a2fcf2ce66d3f2a5c924c396156ece28c" id="r_a2fcf2ce66d3f2a5c924c396156ece28c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1eqnOfState.html#a2fcf2ce66d3f2a5c924c396156ece28c">R</a> () <a class="el" href="classFoam_1_1GaussField.html">const</a> =0</td></tr>
 <tr class="memdesc:a2fcf2ce66d3f2a5c924c396156ece28c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return gas constant R.  <br /></td></tr>
 <tr class="separator:a2fcf2ce66d3f2a5c924c396156ece28c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5e886123a06f2ac0d79cc151e43c593d" id="r_a5e886123a06f2ac0d79cc151e43c593d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1eqnOfState.html#a5e886123a06f2ac0d79cc151e43c593d">calcRhoFromPT</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> <a class="el" href="createPrimaryFields_8H.html#ac26fa601ec3cea0a11ac0fd4f2a6bb63">p</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> <a class="el" href="namespaceFoam.html#a5faf7f302ed6c6307e3668365456af74">T</a>) <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
+<tr class="memitem:a5e886123a06f2ac0d79cc151e43c593d" id="r_a5e886123a06f2ac0d79cc151e43c593d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1eqnOfState.html#a5e886123a06f2ac0d79cc151e43c593d">calcRhoFromPT</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> <a class="el" href="dgFluxSolvers_2convectiveFluxSolver_2exactRiemannFluxSolver_2ExactToro_2dgExactToroFluxSolver_8C.html#a321a48806c8f4b6d07e24fd98f8e4cf1">p</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> <a class="el" href="namespaceFoam.html#a5faf7f302ed6c6307e3668365456af74">T</a>) <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
 <tr class="memdesc:a5e886123a06f2ac0d79cc151e43c593d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute density from pressure and temperature at one point.  <br /></td></tr>
 <tr class="separator:a5e886123a06f2ac0d79cc151e43c593d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5163e9f442480de5110481f90790b2b8" id="r_a5163e9f442480de5110481f90790b2b8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1eqnOfState.html#a5163e9f442480de5110481f90790b2b8">calcPFromRhoT</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> <a class="el" href="dynamicVarDeclaration_8cpp.html#ae7a21fded6f5e50f59fb05c0735f2479">rho</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> <a class="el" href="namespaceFoam.html#a5faf7f302ed6c6307e3668365456af74">T</a>) <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
+<tr class="memitem:a5163e9f442480de5110481f90790b2b8" id="r_a5163e9f442480de5110481f90790b2b8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1eqnOfState.html#a5163e9f442480de5110481f90790b2b8">calcPFromRhoT</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> <a class="el" href="dgFluxSolvers_2convectiveFluxSolver_2exactRiemannFluxSolver_2ExactToro_2dgExactToroFluxSolver_8C.html#ac2f6bd0057296e22b6f1da8890d317de">rho</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> <a class="el" href="namespaceFoam.html#a5faf7f302ed6c6307e3668365456af74">T</a>) <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
 <tr class="memdesc:a5163e9f442480de5110481f90790b2b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute pressure from density and temperature at one point.  <br /></td></tr>
 <tr class="separator:a5163e9f442480de5110481f90790b2b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a06233e4f2305937651fd1a059e0e8352" id="r_a06233e4f2305937651fd1a059e0e8352"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1eqnOfState.html#a06233e4f2305937651fd1a059e0e8352">calcTFromPRho</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> <a class="el" href="createPrimaryFields_8H.html#ac26fa601ec3cea0a11ac0fd4f2a6bb63">p</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> <a class="el" href="dynamicVarDeclaration_8cpp.html#ae7a21fded6f5e50f59fb05c0735f2479">rho</a>) <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
+<tr class="memitem:a06233e4f2305937651fd1a059e0e8352" id="r_a06233e4f2305937651fd1a059e0e8352"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1eqnOfState.html#a06233e4f2305937651fd1a059e0e8352">calcTFromPRho</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> <a class="el" href="dgFluxSolvers_2convectiveFluxSolver_2exactRiemannFluxSolver_2ExactToro_2dgExactToroFluxSolver_8C.html#a321a48806c8f4b6d07e24fd98f8e4cf1">p</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> <a class="el" href="dgFluxSolvers_2convectiveFluxSolver_2exactRiemannFluxSolver_2ExactToro_2dgExactToroFluxSolver_8C.html#ac2f6bd0057296e22b6f1da8890d317de">rho</a>) <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
 <tr class="memdesc:a06233e4f2305937651fd1a059e0e8352"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute temperature from pressure and density at one point.  <br /></td></tr>
 <tr class="separator:a06233e4f2305937651fd1a059e0e8352"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a522e27c192b854c825fdf6680ec42ef6" id="r_a522e27c192b854c825fdf6680ec42ef6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="classFoam_1_1GaussField.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1eqnOfState.html#a522e27c192b854c825fdf6680ec42ef6">calcRhoFromPT</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">label</a> <a class="el" href="classFoam_1_1GaussField.html">cellI</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">GaussField</a>&lt; <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &gt; &amp;<a class="el" href="createPrimaryFields_8H.html#ac26fa601ec3cea0a11ac0fd4f2a6bb63">p</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">GaussField</a>&lt; <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &gt; &amp;<a class="el" href="namespaceFoam.html#a5faf7f302ed6c6307e3668365456af74">T</a>, <a class="el" href="classFoam_1_1GaussField.html">GaussField</a>&lt; <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &gt; &amp;<a class="el" href="dynamicVarDeclaration_8cpp.html#ae7a21fded6f5e50f59fb05c0735f2479">rho</a>) <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
+<tr class="memitem:a8e2667722e2cc544d56976d9743bcdf8" id="r_a8e2667722e2cc544d56976d9743bcdf8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1eqnOfState.html#a8e2667722e2cc544d56976d9743bcdf8">calcTFromRhoE</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> <a class="el" href="dgFluxSolvers_2convectiveFluxSolver_2exactRiemannFluxSolver_2ExactToro_2dgExactToroFluxSolver_8C.html#ac2f6bd0057296e22b6f1da8890d317de">rho</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> <a class="el" href="dgFoamVolumeToVTU_2dgFoamVolumeToVTU_8C.html#a4a1b92c1093ef60fa294e4d3293c6e76">e</a>) <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
+<tr class="memdesc:a8e2667722e2cc544d56976d9743bcdf8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute temperature from density and internal energy at one point.  <br /></td></tr>
+<tr class="separator:a8e2667722e2cc544d56976d9743bcdf8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a803af57f76b45f85e4e591d8fea044d1" id="r_a803af57f76b45f85e4e591d8fea044d1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1eqnOfState.html#a803af57f76b45f85e4e591d8fea044d1">calcPFromRhoE</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> <a class="el" href="dgFluxSolvers_2convectiveFluxSolver_2exactRiemannFluxSolver_2ExactToro_2dgExactToroFluxSolver_8C.html#ac2f6bd0057296e22b6f1da8890d317de">rho</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> <a class="el" href="dgFoamVolumeToVTU_2dgFoamVolumeToVTU_8C.html#a4a1b92c1093ef60fa294e4d3293c6e76">e</a>) <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
+<tr class="memdesc:a803af57f76b45f85e4e591d8fea044d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute pressure from density and internal energy at one point.  <br /></td></tr>
+<tr class="separator:a803af57f76b45f85e4e591d8fea044d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4c3873bea86c52ef9375d8c25b625c9e" id="r_a4c3873bea86c52ef9375d8c25b625c9e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1eqnOfState.html#a4c3873bea86c52ef9375d8c25b625c9e">calcEFromRhoP</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> <a class="el" href="dgFluxSolvers_2convectiveFluxSolver_2exactRiemannFluxSolver_2ExactToro_2dgExactToroFluxSolver_8C.html#ac2f6bd0057296e22b6f1da8890d317de">rho</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> <a class="el" href="dgFluxSolvers_2convectiveFluxSolver_2exactRiemannFluxSolver_2ExactToro_2dgExactToroFluxSolver_8C.html#a321a48806c8f4b6d07e24fd98f8e4cf1">p</a>) <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
+<tr class="memdesc:a4c3873bea86c52ef9375d8c25b625c9e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute internal energy from density and pressure at one point.  <br /></td></tr>
+<tr class="separator:a4c3873bea86c52ef9375d8c25b625c9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a660b04de6842ae25054aeaa7243b3165" id="r_a660b04de6842ae25054aeaa7243b3165"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1eqnOfState.html#a660b04de6842ae25054aeaa7243b3165">calcEFromRhoT</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> <a class="el" href="dgFluxSolvers_2convectiveFluxSolver_2exactRiemannFluxSolver_2ExactToro_2dgExactToroFluxSolver_8C.html#ac2f6bd0057296e22b6f1da8890d317de">rho</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> <a class="el" href="namespaceFoam.html#a5faf7f302ed6c6307e3668365456af74">T</a>) <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
+<tr class="memdesc:a660b04de6842ae25054aeaa7243b3165"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute internal energy from density and temperature at one point.  <br /></td></tr>
+<tr class="separator:a660b04de6842ae25054aeaa7243b3165"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3c73738a42d0c7f8eaf56579cd7ad3ac" id="r_a3c73738a42d0c7f8eaf56579cd7ad3ac"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1eqnOfState.html#a3c73738a42d0c7f8eaf56579cd7ad3ac">calcAFromRhoE</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> <a class="el" href="dgFluxSolvers_2convectiveFluxSolver_2exactRiemannFluxSolver_2ExactToro_2dgExactToroFluxSolver_8C.html#ac2f6bd0057296e22b6f1da8890d317de">rho</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> <a class="el" href="dgFoamVolumeToVTU_2dgFoamVolumeToVTU_8C.html#a4a1b92c1093ef60fa294e4d3293c6e76">e</a>) <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
+<tr class="memdesc:a3c73738a42d0c7f8eaf56579cd7ad3ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute speed of sound from density and internal energy.  <br /></td></tr>
+<tr class="separator:a3c73738a42d0c7f8eaf56579cd7ad3ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1271066404571dac62cf4d7322f55be1" id="r_a1271066404571dac62cf4d7322f55be1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="classFoam_1_1GaussField.html">vector</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1eqnOfState.html#a1271066404571dac62cf4d7322f55be1">calcGradPFromRhoT</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> <a class="el" href="dgFluxSolvers_2convectiveFluxSolver_2exactRiemannFluxSolver_2ExactToro_2dgExactToroFluxSolver_8C.html#ac2f6bd0057296e22b6f1da8890d317de">rho</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> <a class="el" href="namespaceFoam.html#a5faf7f302ed6c6307e3668365456af74">T</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">vector</a> &amp;<a class="el" href="classFoam_1_1GaussField.html">gradRho</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">vector</a> &amp;<a class="el" href="createPrimaryFields_8H.html#a9e18fe91c9278a8b2e26a2c414ba7c5b">gradT</a>) <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
+<tr class="memdesc:a1271066404571dac62cf4d7322f55be1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute \(\nabla p\) from \(p(\rho,T)\).  <br /></td></tr>
+<tr class="separator:a1271066404571dac62cf4d7322f55be1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a58e4d8e0198bf8d5ec5ffe0bf8fb919e" id="r_a58e4d8e0198bf8d5ec5ffe0bf8fb919e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="classFoam_1_1GaussField.html">vector</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1eqnOfState.html#a58e4d8e0198bf8d5ec5ffe0bf8fb919e">calcGradTFromRhoE</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> <a class="el" href="dgFluxSolvers_2convectiveFluxSolver_2exactRiemannFluxSolver_2ExactToro_2dgExactToroFluxSolver_8C.html#ac2f6bd0057296e22b6f1da8890d317de">rho</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> <a class="el" href="dgFoamVolumeToVTU_2dgFoamVolumeToVTU_8C.html#a4a1b92c1093ef60fa294e4d3293c6e76">e</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">vector</a> &amp;<a class="el" href="classFoam_1_1GaussField.html">gradRho</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">vector</a> &amp;<a class="el" href="classFoam_1_1GaussField.html">gradE</a>) <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
+<tr class="memdesc:a58e4d8e0198bf8d5ec5ffe0bf8fb919e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute \(\nabla T\) from \(T(\rho,e)\).  <br /></td></tr>
+<tr class="separator:a58e4d8e0198bf8d5ec5ffe0bf8fb919e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aac4e036d259174ab78beb3aa27753d7f" id="r_aac4e036d259174ab78beb3aa27753d7f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="classFoam_1_1GaussField.html">vector</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1eqnOfState.html#aac4e036d259174ab78beb3aa27753d7f">calcGradPFromRhoE</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> <a class="el" href="dgFluxSolvers_2convectiveFluxSolver_2exactRiemannFluxSolver_2ExactToro_2dgExactToroFluxSolver_8C.html#ac2f6bd0057296e22b6f1da8890d317de">rho</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> <a class="el" href="dgFoamVolumeToVTU_2dgFoamVolumeToVTU_8C.html#a4a1b92c1093ef60fa294e4d3293c6e76">e</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">vector</a> &amp;<a class="el" href="classFoam_1_1GaussField.html">gradRho</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">vector</a> &amp;<a class="el" href="classFoam_1_1GaussField.html">gradE</a>) <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
+<tr class="memdesc:aac4e036d259174ab78beb3aa27753d7f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute \(\nabla p\) from \(p(\rho,e)\).  <br /></td></tr>
+<tr class="separator:aac4e036d259174ab78beb3aa27753d7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a522e27c192b854c825fdf6680ec42ef6" id="r_a522e27c192b854c825fdf6680ec42ef6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="classFoam_1_1GaussField.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1eqnOfState.html#a522e27c192b854c825fdf6680ec42ef6">calcRhoFromPT</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">label</a> <a class="el" href="classFoam_1_1GaussField.html">cellI</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">GaussField</a>&lt; <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &gt; &amp;<a class="el" href="dgFluxSolvers_2convectiveFluxSolver_2exactRiemannFluxSolver_2ExactToro_2dgExactToroFluxSolver_8C.html#a321a48806c8f4b6d07e24fd98f8e4cf1">p</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">GaussField</a>&lt; <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &gt; &amp;<a class="el" href="namespaceFoam.html#a5faf7f302ed6c6307e3668365456af74">T</a>, <a class="el" href="classFoam_1_1GaussField.html">GaussField</a>&lt; <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &gt; &amp;<a class="el" href="dgFluxSolvers_2convectiveFluxSolver_2exactRiemannFluxSolver_2ExactToro_2dgExactToroFluxSolver_8C.html#ac2f6bd0057296e22b6f1da8890d317de">rho</a>) <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
 <tr class="memdesc:a522e27c192b854c825fdf6680ec42ef6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute density from pressure and temperature.  <br /></td></tr>
 <tr class="separator:a522e27c192b854c825fdf6680ec42ef6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4571c8f66975412a041234909c999cf3" id="r_a4571c8f66975412a041234909c999cf3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="classFoam_1_1GaussField.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1eqnOfState.html#a4571c8f66975412a041234909c999cf3">calcRhoFromPT</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1boundaryGaussField.html">boundaryGaussField</a>&lt; <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &gt; &amp;<a class="el" href="createPrimaryFields_8H.html#ac26fa601ec3cea0a11ac0fd4f2a6bb63">p</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1boundaryGaussField.html">boundaryGaussField</a>&lt; <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &gt; &amp;<a class="el" href="namespaceFoam.html#a5faf7f302ed6c6307e3668365456af74">T</a>, <a class="el" href="classFoam_1_1boundaryGaussField.html">boundaryGaussField</a>&lt; <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &gt; &amp;<a class="el" href="dynamicVarDeclaration_8cpp.html#ae7a21fded6f5e50f59fb05c0735f2479">rho</a>) <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
+<tr class="memitem:a4571c8f66975412a041234909c999cf3" id="r_a4571c8f66975412a041234909c999cf3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="classFoam_1_1GaussField.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1eqnOfState.html#a4571c8f66975412a041234909c999cf3">calcRhoFromPT</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1boundaryGaussField.html">boundaryGaussField</a>&lt; <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &gt; &amp;<a class="el" href="dgFluxSolvers_2convectiveFluxSolver_2exactRiemannFluxSolver_2ExactToro_2dgExactToroFluxSolver_8C.html#a321a48806c8f4b6d07e24fd98f8e4cf1">p</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1boundaryGaussField.html">boundaryGaussField</a>&lt; <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &gt; &amp;<a class="el" href="namespaceFoam.html#a5faf7f302ed6c6307e3668365456af74">T</a>, <a class="el" href="classFoam_1_1boundaryGaussField.html">boundaryGaussField</a>&lt; <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &gt; &amp;<a class="el" href="dgFluxSolvers_2convectiveFluxSolver_2exactRiemannFluxSolver_2ExactToro_2dgExactToroFluxSolver_8C.html#ac2f6bd0057296e22b6f1da8890d317de">rho</a>) <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
 <tr class="separator:a4571c8f66975412a041234909c999cf3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a65f54ba85805d32858e1397f16c71c67" id="r_a65f54ba85805d32858e1397f16c71c67"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="classFoam_1_1GaussField.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1eqnOfState.html#a65f54ba85805d32858e1397f16c71c67">calcPFromRhoT</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">label</a> <a class="el" href="classFoam_1_1GaussField.html">cellI</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">GaussField</a>&lt; <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &gt; &amp;<a class="el" href="dynamicVarDeclaration_8cpp.html#ae7a21fded6f5e50f59fb05c0735f2479">rho</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">GaussField</a>&lt; <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &gt; &amp;<a class="el" href="namespaceFoam.html#a5faf7f302ed6c6307e3668365456af74">T</a>, <a class="el" href="classFoam_1_1GaussField.html">GaussField</a>&lt; <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &gt; &amp;<a class="el" href="createPrimaryFields_8H.html#ac26fa601ec3cea0a11ac0fd4f2a6bb63">p</a>) <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
+<tr class="memitem:a65f54ba85805d32858e1397f16c71c67" id="r_a65f54ba85805d32858e1397f16c71c67"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="classFoam_1_1GaussField.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1eqnOfState.html#a65f54ba85805d32858e1397f16c71c67">calcPFromRhoT</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">label</a> <a class="el" href="classFoam_1_1GaussField.html">cellI</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">GaussField</a>&lt; <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &gt; &amp;<a class="el" href="dgFluxSolvers_2convectiveFluxSolver_2exactRiemannFluxSolver_2ExactToro_2dgExactToroFluxSolver_8C.html#ac2f6bd0057296e22b6f1da8890d317de">rho</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">GaussField</a>&lt; <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &gt; &amp;<a class="el" href="namespaceFoam.html#a5faf7f302ed6c6307e3668365456af74">T</a>, <a class="el" href="classFoam_1_1GaussField.html">GaussField</a>&lt; <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &gt; &amp;<a class="el" href="dgFluxSolvers_2convectiveFluxSolver_2exactRiemannFluxSolver_2ExactToro_2dgExactToroFluxSolver_8C.html#a321a48806c8f4b6d07e24fd98f8e4cf1">p</a>) <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
 <tr class="memdesc:a65f54ba85805d32858e1397f16c71c67"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute pressure from density and temperature.  <br /></td></tr>
 <tr class="separator:a65f54ba85805d32858e1397f16c71c67"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aefe28373f9e4c45be5228ed43e2fd7ed" id="r_aefe28373f9e4c45be5228ed43e2fd7ed"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="classFoam_1_1GaussField.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1eqnOfState.html#aefe28373f9e4c45be5228ed43e2fd7ed">calcPFromRhoT</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1boundaryGaussField.html">boundaryGaussField</a>&lt; <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &gt; &amp;<a class="el" href="dynamicVarDeclaration_8cpp.html#ae7a21fded6f5e50f59fb05c0735f2479">rho</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1boundaryGaussField.html">boundaryGaussField</a>&lt; <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &gt; &amp;<a class="el" href="namespaceFoam.html#a5faf7f302ed6c6307e3668365456af74">T</a>, <a class="el" href="classFoam_1_1boundaryGaussField.html">boundaryGaussField</a>&lt; <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &gt; &amp;<a class="el" href="createPrimaryFields_8H.html#ac26fa601ec3cea0a11ac0fd4f2a6bb63">p</a>) <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
+<tr class="memitem:aefe28373f9e4c45be5228ed43e2fd7ed" id="r_aefe28373f9e4c45be5228ed43e2fd7ed"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="classFoam_1_1GaussField.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1eqnOfState.html#aefe28373f9e4c45be5228ed43e2fd7ed">calcPFromRhoT</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1boundaryGaussField.html">boundaryGaussField</a>&lt; <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &gt; &amp;<a class="el" href="dgFluxSolvers_2convectiveFluxSolver_2exactRiemannFluxSolver_2ExactToro_2dgExactToroFluxSolver_8C.html#ac2f6bd0057296e22b6f1da8890d317de">rho</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1boundaryGaussField.html">boundaryGaussField</a>&lt; <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &gt; &amp;<a class="el" href="namespaceFoam.html#a5faf7f302ed6c6307e3668365456af74">T</a>, <a class="el" href="classFoam_1_1boundaryGaussField.html">boundaryGaussField</a>&lt; <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &gt; &amp;<a class="el" href="dgFluxSolvers_2convectiveFluxSolver_2exactRiemannFluxSolver_2ExactToro_2dgExactToroFluxSolver_8C.html#a321a48806c8f4b6d07e24fd98f8e4cf1">p</a>) <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
 <tr class="separator:aefe28373f9e4c45be5228ed43e2fd7ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab66dce55045f7d82adcc73a81004888a" id="r_ab66dce55045f7d82adcc73a81004888a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="classFoam_1_1GaussField.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1eqnOfState.html#ab66dce55045f7d82adcc73a81004888a">calcTFromPRho</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">label</a> <a class="el" href="classFoam_1_1GaussField.html">cellI</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">GaussField</a>&lt; <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &gt; &amp;<a class="el" href="createPrimaryFields_8H.html#ac26fa601ec3cea0a11ac0fd4f2a6bb63">p</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">GaussField</a>&lt; <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &gt; &amp;<a class="el" href="dynamicVarDeclaration_8cpp.html#ae7a21fded6f5e50f59fb05c0735f2479">rho</a>, <a class="el" href="classFoam_1_1GaussField.html">GaussField</a>&lt; <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &gt; &amp;<a class="el" href="namespaceFoam.html#a5faf7f302ed6c6307e3668365456af74">T</a>) <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
+<tr class="memitem:ab66dce55045f7d82adcc73a81004888a" id="r_ab66dce55045f7d82adcc73a81004888a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="classFoam_1_1GaussField.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1eqnOfState.html#ab66dce55045f7d82adcc73a81004888a">calcTFromPRho</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">label</a> <a class="el" href="classFoam_1_1GaussField.html">cellI</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">GaussField</a>&lt; <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &gt; &amp;<a class="el" href="dgFluxSolvers_2convectiveFluxSolver_2exactRiemannFluxSolver_2ExactToro_2dgExactToroFluxSolver_8C.html#a321a48806c8f4b6d07e24fd98f8e4cf1">p</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">GaussField</a>&lt; <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &gt; &amp;<a class="el" href="dgFluxSolvers_2convectiveFluxSolver_2exactRiemannFluxSolver_2ExactToro_2dgExactToroFluxSolver_8C.html#ac2f6bd0057296e22b6f1da8890d317de">rho</a>, <a class="el" href="classFoam_1_1GaussField.html">GaussField</a>&lt; <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &gt; &amp;<a class="el" href="namespaceFoam.html#a5faf7f302ed6c6307e3668365456af74">T</a>) <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
 <tr class="memdesc:ab66dce55045f7d82adcc73a81004888a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute temperature from pressure and density.  <br /></td></tr>
 <tr class="separator:ab66dce55045f7d82adcc73a81004888a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6dad5294eef016cf745966645c1371db" id="r_a6dad5294eef016cf745966645c1371db"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="classFoam_1_1GaussField.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1eqnOfState.html#a6dad5294eef016cf745966645c1371db">calcTFromPRho</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1boundaryGaussField.html">boundaryGaussField</a>&lt; <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &gt; &amp;<a class="el" href="createPrimaryFields_8H.html#ac26fa601ec3cea0a11ac0fd4f2a6bb63">p</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1boundaryGaussField.html">boundaryGaussField</a>&lt; <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &gt; &amp;<a class="el" href="dynamicVarDeclaration_8cpp.html#ae7a21fded6f5e50f59fb05c0735f2479">rho</a>, <a class="el" href="classFoam_1_1boundaryGaussField.html">boundaryGaussField</a>&lt; <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &gt; &amp;<a class="el" href="namespaceFoam.html#a5faf7f302ed6c6307e3668365456af74">T</a>) <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
+<tr class="memitem:a6dad5294eef016cf745966645c1371db" id="r_a6dad5294eef016cf745966645c1371db"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="classFoam_1_1GaussField.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1eqnOfState.html#a6dad5294eef016cf745966645c1371db">calcTFromPRho</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1boundaryGaussField.html">boundaryGaussField</a>&lt; <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &gt; &amp;<a class="el" href="dgFluxSolvers_2convectiveFluxSolver_2exactRiemannFluxSolver_2ExactToro_2dgExactToroFluxSolver_8C.html#a321a48806c8f4b6d07e24fd98f8e4cf1">p</a>, <a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1boundaryGaussField.html">boundaryGaussField</a>&lt; <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &gt; &amp;<a class="el" href="dgFluxSolvers_2convectiveFluxSolver_2exactRiemannFluxSolver_2ExactToro_2dgExactToroFluxSolver_8C.html#ac2f6bd0057296e22b6f1da8890d317de">rho</a>, <a class="el" href="classFoam_1_1boundaryGaussField.html">boundaryGaussField</a>&lt; <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> &gt; &amp;<a class="el" href="namespaceFoam.html#a5faf7f302ed6c6307e3668365456af74">T</a>) <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
 <tr class="separator:a6dad5294eef016cf745966645c1371db"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3291a187ff233d34e8fc78fd9a1fbca6" id="r_a3291a187ff233d34e8fc78fd9a1fbca6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="classFoam_1_1GaussField.html">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1eqnOfState.html#a3291a187ff233d34e8fc78fd9a1fbca6">canCalcRhoFromPT</a> () <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
-<tr class="memdesc:a3291a187ff233d34e8fc78fd9a1fbca6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if <a class="el" href="dynamicVarDeclaration_8cpp.html#ae7a21fded6f5e50f59fb05c0735f2479">rho(p,T)</a> is supported.  <br /></td></tr>
+<tr class="memdesc:a3291a187ff233d34e8fc78fd9a1fbca6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if <a class="el" href="dgFluxSolvers_2convectiveFluxSolver_2exactRiemannFluxSolver_2ExactToro_2dgExactToroFluxSolver_8C.html#ac2f6bd0057296e22b6f1da8890d317de">rho(p,T)</a> is supported.  <br /></td></tr>
 <tr class="separator:a3291a187ff233d34e8fc78fd9a1fbca6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8cd5ba40878162951db68ce90e4a46ae" id="r_a8cd5ba40878162951db68ce90e4a46ae"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="classFoam_1_1GaussField.html">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1eqnOfState.html#a8cd5ba40878162951db68ce90e4a46ae">canCalcPFromRhoT</a> () <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
-<tr class="memdesc:a8cd5ba40878162951db68ce90e4a46ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if p(rho,T) is supported.  <br /></td></tr>
+<tr class="memdesc:a8cd5ba40878162951db68ce90e4a46ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if <a class="el" href="dgFluxSolvers_2convectiveFluxSolver_2exactRiemannFluxSolver_2ExactToro_2dgExactToroFluxSolver_8C.html#a321a48806c8f4b6d07e24fd98f8e4cf1">p(rho,T)</a> is supported.  <br /></td></tr>
 <tr class="separator:a8cd5ba40878162951db68ce90e4a46ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac78add49a308131d2843c620930fce74" id="r_ac78add49a308131d2843c620930fce74"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="classFoam_1_1GaussField.html">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1eqnOfState.html#ac78add49a308131d2843c620930fce74">canCalcTFromPRho</a> () <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
-<tr class="memdesc:ac78add49a308131d2843c620930fce74"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if T(p,rho) is supported.  <br /></td></tr>
+<tr class="memdesc:ac78add49a308131d2843c620930fce74"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if <a class="el" href="dgFoamVolumeToVTU_2dgFoamVolumeToVTU_8C.html#a4dbc9afb19bab1e36dcd0d05f570b3a8">T(p,rho)</a> is supported.  <br /></td></tr>
 <tr class="separator:ac78add49a308131d2843c620930fce74"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abc2024d5477b960fe808964701746cfc" id="r_abc2024d5477b960fe808964701746cfc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="classFoam_1_1GaussField.html">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1eqnOfState.html#abc2024d5477b960fe808964701746cfc">canCalcTFromRhoE</a> () <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
+<tr class="memdesc:abc2024d5477b960fe808964701746cfc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if <a class="el" href="dgFoamVolumeToVTU_2dgFoamVolumeToVTU_8C.html#a4dbc9afb19bab1e36dcd0d05f570b3a8">T(rho,e)</a> is supported.  <br /></td></tr>
+<tr class="separator:abc2024d5477b960fe808964701746cfc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a40976b0b4b8cca628061c8023c70c891" id="r_a40976b0b4b8cca628061c8023c70c891"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="classFoam_1_1GaussField.html">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1eqnOfState.html#a40976b0b4b8cca628061c8023c70c891">canCalcPFromRhoE</a> () <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
+<tr class="memdesc:a40976b0b4b8cca628061c8023c70c891"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if <a class="el" href="dgFluxSolvers_2convectiveFluxSolver_2exactRiemannFluxSolver_2ExactToro_2dgExactToroFluxSolver_8C.html#a321a48806c8f4b6d07e24fd98f8e4cf1">p(rho,e)</a> is supported.  <br /></td></tr>
+<tr class="separator:a40976b0b4b8cca628061c8023c70c891"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abcb34b6d0c8614af208046a1bc93ef0a" id="r_abcb34b6d0c8614af208046a1bc93ef0a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="classFoam_1_1GaussField.html">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1eqnOfState.html#abcb34b6d0c8614af208046a1bc93ef0a">canCalcEFromRhoP</a> () <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
+<tr class="memdesc:abcb34b6d0c8614af208046a1bc93ef0a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if <a class="el" href="dgFoamVolumeToVTU_2dgFoamVolumeToVTU_8C.html#a4a1b92c1093ef60fa294e4d3293c6e76">e(rho,p)</a> is supported.  <br /></td></tr>
+<tr class="separator:abcb34b6d0c8614af208046a1bc93ef0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9ece7f47c187d1a0ff858464f5003214" id="r_a9ece7f47c187d1a0ff858464f5003214"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="classFoam_1_1GaussField.html">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1eqnOfState.html#a9ece7f47c187d1a0ff858464f5003214">canCalcEFromRhoT</a> () <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
+<tr class="memdesc:a9ece7f47c187d1a0ff858464f5003214"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if <a class="el" href="dgFoamVolumeToVTU_2dgFoamVolumeToVTU_8C.html#a4a1b92c1093ef60fa294e4d3293c6e76">e(rho,T)</a> is supported.  <br /></td></tr>
+<tr class="separator:a9ece7f47c187d1a0ff858464f5003214"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab457f8b848c6c5c3d69fb66c4193a379" id="r_ab457f8b848c6c5c3d69fb66c4193a379"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="classFoam_1_1GaussField.html">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1eqnOfState.html#ab457f8b848c6c5c3d69fb66c4193a379">canCalcAFromRhoE</a> () <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
+<tr class="memdesc:ab457f8b848c6c5c3d69fb66c4193a379"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if <a class="el" href="dgFoamVolumeToVTU_2dgFoamVolumeToVTU_8C.html#adeaf58b4864c841206ddbc4bacc3b760">a(rho,e)</a> is supported.  <br /></td></tr>
+<tr class="separator:ab457f8b848c6c5c3d69fb66c4193a379"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0d4f0890fe5145ecaa8bdb16897773e4" id="r_a0d4f0890fe5145ecaa8bdb16897773e4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="classFoam_1_1GaussField.html">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1eqnOfState.html#a0d4f0890fe5145ecaa8bdb16897773e4">isIdealGas</a> () <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
 <tr class="memdesc:a0d4f0890fe5145ecaa8bdb16897773e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ideal-gas–type EOS.  <br /></td></tr>
 <tr class="separator:a0d4f0890fe5145ecaa8bdb16897773e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -578,7 +659,7 @@ Protected Attributes</h2></td></tr>
 <p>Return gas constant R. </p>
 <p>Returns zero for incompressible EOS models. </p>
 
-<p>Implemented in <a class="el" href="classFoam_1_1idealGas.html#a7a246d21dd7c0d7b5b121ed8b6bbea59">Foam::idealGas</a>, and <a class="el" href="classFoam_1_1idealGas.html#a7a246d21dd7c0d7b5b121ed8b6bbea59">Foam::idealGas</a>.</p>
+<p>Implemented in <a class="el" href="classFoam_1_1idealGas.html#a7a246d21dd7c0d7b5b121ed8b6bbea59">Foam::idealGas</a>, <a class="el" href="classFoam_1_1pengRobinson.html#af671c0553b874b853bc30c81bbd49571">Foam::pengRobinson</a>, <a class="el" href="classFoam_1_1idealGas.html#a7a246d21dd7c0d7b5b121ed8b6bbea59">Foam::idealGas</a>, and <a class="el" href="classFoam_1_1pengRobinson.html#af671c0553b874b853bc30c81bbd49571">Foam::pengRobinson</a>.</p>
 
 </div>
 </div>
@@ -618,7 +699,7 @@ Protected Attributes</h2></td></tr>
 
 <p>Compute density from pressure and temperature at one point. </p>
 
-<p>Reimplemented in <a class="el" href="classFoam_1_1idealGas.html#a5e886123a06f2ac0d79cc151e43c593d">Foam::idealGas</a>, <a class="el" href="classFoam_1_1idealGas.html#a5e886123a06f2ac0d79cc151e43c593d">Foam::idealGas</a>, <a class="el" href="classFoam_1_1idealGas.html#a5e886123a06f2ac0d79cc151e43c593d">Foam::idealGas</a>, <a class="el" href="classFoam_1_1idealGas.html#a5e886123a06f2ac0d79cc151e43c593d">Foam::idealGas</a>, <a class="el" href="classFoam_1_1idealGas.html#a9408205a00df221588e5b6257a6bd1c9">Foam::idealGas</a>, and <a class="el" href="classFoam_1_1idealGas.html#a40f2c5827a082d810300b963b664e6e2">Foam::idealGas</a>.</p>
+<p>Reimplemented in <a class="el" href="classFoam_1_1idealGas.html#a5e886123a06f2ac0d79cc151e43c593d">Foam::idealGas</a>, <a class="el" href="classFoam_1_1idealGas.html#a5e886123a06f2ac0d79cc151e43c593d">Foam::idealGas</a>, <a class="el" href="classFoam_1_1pengRobinson.html#a5e886123a06f2ac0d79cc151e43c593d">Foam::pengRobinson</a>, <a class="el" href="classFoam_1_1pengRobinson.html#a5e886123a06f2ac0d79cc151e43c593d">Foam::pengRobinson</a>, <a class="el" href="classFoam_1_1idealGas.html#a5e886123a06f2ac0d79cc151e43c593d">Foam::idealGas</a>, <a class="el" href="classFoam_1_1idealGas.html#a5e886123a06f2ac0d79cc151e43c593d">Foam::idealGas</a>, <a class="el" href="classFoam_1_1pengRobinson.html#a5e886123a06f2ac0d79cc151e43c593d">Foam::pengRobinson</a>, <a class="el" href="classFoam_1_1pengRobinson.html#a5e886123a06f2ac0d79cc151e43c593d">Foam::pengRobinson</a>, <a class="el" href="classFoam_1_1idealGas.html#a9408205a00df221588e5b6257a6bd1c9">Foam::idealGas</a>, <a class="el" href="classFoam_1_1pengRobinson.html#a28bd04efe6c4c0dee864141c399d5cb8">Foam::pengRobinson</a>, <a class="el" href="classFoam_1_1idealGas.html#a40f2c5827a082d810300b963b664e6e2">Foam::idealGas</a>, and <a class="el" href="classFoam_1_1pengRobinson.html#ac6179894072ecf995e2559ffc59b03e8">Foam::pengRobinson</a>.</p>
 
 </div>
 </div>
@@ -658,7 +739,7 @@ Protected Attributes</h2></td></tr>
 
 <p>Compute pressure from density and temperature at one point. </p>
 
-<p>Reimplemented in <a class="el" href="classFoam_1_1idealGas.html#a5163e9f442480de5110481f90790b2b8">Foam::idealGas</a>, <a class="el" href="classFoam_1_1idealGas.html#a5163e9f442480de5110481f90790b2b8">Foam::idealGas</a>, <a class="el" href="classFoam_1_1idealGas.html#a5163e9f442480de5110481f90790b2b8">Foam::idealGas</a>, <a class="el" href="classFoam_1_1idealGas.html#a5163e9f442480de5110481f90790b2b8">Foam::idealGas</a>, <a class="el" href="classFoam_1_1idealGas.html#ac97b8ae11b0f5ea8009bb46813f3c17a">Foam::idealGas</a>, and <a class="el" href="classFoam_1_1idealGas.html#a7f39a8eb33546b2ed930951834dfade7">Foam::idealGas</a>.</p>
+<p>Reimplemented in <a class="el" href="classFoam_1_1idealGas.html#a5163e9f442480de5110481f90790b2b8">Foam::idealGas</a>, <a class="el" href="classFoam_1_1idealGas.html#a5163e9f442480de5110481f90790b2b8">Foam::idealGas</a>, <a class="el" href="classFoam_1_1pengRobinson.html#a5163e9f442480de5110481f90790b2b8">Foam::pengRobinson</a>, <a class="el" href="classFoam_1_1pengRobinson.html#a5163e9f442480de5110481f90790b2b8">Foam::pengRobinson</a>, <a class="el" href="classFoam_1_1idealGas.html#a5163e9f442480de5110481f90790b2b8">Foam::idealGas</a>, <a class="el" href="classFoam_1_1idealGas.html#a5163e9f442480de5110481f90790b2b8">Foam::idealGas</a>, <a class="el" href="classFoam_1_1pengRobinson.html#a5163e9f442480de5110481f90790b2b8">Foam::pengRobinson</a>, <a class="el" href="classFoam_1_1pengRobinson.html#a5163e9f442480de5110481f90790b2b8">Foam::pengRobinson</a>, <a class="el" href="classFoam_1_1idealGas.html#ac97b8ae11b0f5ea8009bb46813f3c17a">Foam::idealGas</a>, <a class="el" href="classFoam_1_1pengRobinson.html#a986b4e159f2ac5aea7904f85eb2b6eb9">Foam::pengRobinson</a>, <a class="el" href="classFoam_1_1idealGas.html#a7f39a8eb33546b2ed930951834dfade7">Foam::idealGas</a>, and <a class="el" href="classFoam_1_1pengRobinson.html#a61b6fb0fb85c1eed500a3ab874fb0818">Foam::pengRobinson</a>.</p>
 
 </div>
 </div>
@@ -698,7 +779,361 @@ Protected Attributes</h2></td></tr>
 
 <p>Compute temperature from pressure and density at one point. </p>
 
-<p>Reimplemented in <a class="el" href="classFoam_1_1idealGas.html#a06233e4f2305937651fd1a059e0e8352">Foam::idealGas</a>, <a class="el" href="classFoam_1_1idealGas.html#a06233e4f2305937651fd1a059e0e8352">Foam::idealGas</a>, <a class="el" href="classFoam_1_1idealGas.html#a06233e4f2305937651fd1a059e0e8352">Foam::idealGas</a>, <a class="el" href="classFoam_1_1idealGas.html#a06233e4f2305937651fd1a059e0e8352">Foam::idealGas</a>, <a class="el" href="classFoam_1_1idealGas.html#afecb8a5e20d237651b8d286724aae8b3">Foam::idealGas</a>, and <a class="el" href="classFoam_1_1idealGas.html#a0185ecaa615f85d85ec5872bd09f299e">Foam::idealGas</a>.</p>
+<p>Reimplemented in <a class="el" href="classFoam_1_1idealGas.html#a06233e4f2305937651fd1a059e0e8352">Foam::idealGas</a>, <a class="el" href="classFoam_1_1idealGas.html#a06233e4f2305937651fd1a059e0e8352">Foam::idealGas</a>, <a class="el" href="classFoam_1_1pengRobinson.html#a06233e4f2305937651fd1a059e0e8352">Foam::pengRobinson</a>, <a class="el" href="classFoam_1_1pengRobinson.html#a06233e4f2305937651fd1a059e0e8352">Foam::pengRobinson</a>, <a class="el" href="classFoam_1_1idealGas.html#a06233e4f2305937651fd1a059e0e8352">Foam::idealGas</a>, <a class="el" href="classFoam_1_1idealGas.html#a06233e4f2305937651fd1a059e0e8352">Foam::idealGas</a>, <a class="el" href="classFoam_1_1pengRobinson.html#a06233e4f2305937651fd1a059e0e8352">Foam::pengRobinson</a>, <a class="el" href="classFoam_1_1pengRobinson.html#a06233e4f2305937651fd1a059e0e8352">Foam::pengRobinson</a>, <a class="el" href="classFoam_1_1idealGas.html#afecb8a5e20d237651b8d286724aae8b3">Foam::idealGas</a>, <a class="el" href="classFoam_1_1pengRobinson.html#addced08f089e8bf50a8ffed6ceb945be">Foam::pengRobinson</a>, <a class="el" href="classFoam_1_1idealGas.html#a0185ecaa615f85d85ec5872bd09f299e">Foam::idealGas</a>, and <a class="el" href="classFoam_1_1pengRobinson.html#a412e2414f5a8302dacf0fd89e6b63858">Foam::pengRobinson</a>.</p>
+
+</div>
+</div>
+<a id="a8e2667722e2cc544d56976d9743bcdf8" name="a8e2667722e2cc544d56976d9743bcdf8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8e2667722e2cc544d56976d9743bcdf8">&#9670;&#160;</a></span>calcTFromRhoE() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> Foam::eqnOfState::calcTFromRhoE </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a>&#160;</td>
+          <td class="paramname"><em>rho</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a>&#160;</td>
+          <td class="paramname"><em>e</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Compute temperature from density and internal energy at one point. </p>
+
+<p>Reimplemented in <a class="el" href="classFoam_1_1pengRobinson.html#a527763350261fb43cdcdd82e5f052afa">Foam::pengRobinson</a>, and <a class="el" href="classFoam_1_1pengRobinson.html#a4bd023eaf67cff019c75b2f9e54a74e4">Foam::pengRobinson</a>.</p>
+
+</div>
+</div>
+<a id="a803af57f76b45f85e4e591d8fea044d1" name="a803af57f76b45f85e4e591d8fea044d1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a803af57f76b45f85e4e591d8fea044d1">&#9670;&#160;</a></span>calcPFromRhoE() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> Foam::eqnOfState::calcPFromRhoE </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a>&#160;</td>
+          <td class="paramname"><em>rho</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a>&#160;</td>
+          <td class="paramname"><em>e</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Compute pressure from density and internal energy at one point. </p>
+
+<p>Reimplemented in <a class="el" href="classFoam_1_1pengRobinson.html#ad3fdc68687210cb8c81234bb7f067f64">Foam::pengRobinson</a>, and <a class="el" href="classFoam_1_1pengRobinson.html#a5c54d1dd6f4f5038c91eec3f453a1fef">Foam::pengRobinson</a>.</p>
+
+</div>
+</div>
+<a id="a4c3873bea86c52ef9375d8c25b625c9e" name="a4c3873bea86c52ef9375d8c25b625c9e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4c3873bea86c52ef9375d8c25b625c9e">&#9670;&#160;</a></span>calcEFromRhoP() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> Foam::eqnOfState::calcEFromRhoP </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a>&#160;</td>
+          <td class="paramname"><em>rho</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a>&#160;</td>
+          <td class="paramname"><em>p</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Compute internal energy from density and pressure at one point. </p>
+
+<p>Reimplemented in <a class="el" href="classFoam_1_1pengRobinson.html#aa8d0550f8e405ecf72b2cbbfdcf1f01a">Foam::pengRobinson</a>, and <a class="el" href="classFoam_1_1pengRobinson.html#a57e2dd72ad3ccc5977fd055998f3346e">Foam::pengRobinson</a>.</p>
+
+</div>
+</div>
+<a id="a660b04de6842ae25054aeaa7243b3165" name="a660b04de6842ae25054aeaa7243b3165"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a660b04de6842ae25054aeaa7243b3165">&#9670;&#160;</a></span>calcEFromRhoT() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> Foam::eqnOfState::calcEFromRhoT </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a>&#160;</td>
+          <td class="paramname"><em>rho</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a>&#160;</td>
+          <td class="paramname"><em>T</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Compute internal energy from density and temperature at one point. </p>
+
+<p>Reimplemented in <a class="el" href="classFoam_1_1pengRobinson.html#a8e9ba3796e300acf53c22c8d618386e9">Foam::pengRobinson</a>, and <a class="el" href="classFoam_1_1pengRobinson.html#a2129d34edbb4a3c74b0d18581c5d2fc1">Foam::pengRobinson</a>.</p>
+
+</div>
+</div>
+<a id="a3c73738a42d0c7f8eaf56579cd7ad3ac" name="a3c73738a42d0c7f8eaf56579cd7ad3ac"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3c73738a42d0c7f8eaf56579cd7ad3ac">&#9670;&#160;</a></span>calcAFromRhoE() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> Foam::eqnOfState::calcAFromRhoE </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a>&#160;</td>
+          <td class="paramname"><em>rho</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a>&#160;</td>
+          <td class="paramname"><em>e</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Compute speed of sound from density and internal energy. </p>
+
+<p>Reimplemented in <a class="el" href="classFoam_1_1pengRobinson.html#abb593c19dda780436d6d6ab43604af2e">Foam::pengRobinson</a>, and <a class="el" href="classFoam_1_1pengRobinson.html#abae3b36adf90c5f09220959a1bf0a322">Foam::pengRobinson</a>.</p>
+
+</div>
+</div>
+<a id="a7f30a84e67cd7772c9b10bbc7e6b7563" name="a7f30a84e67cd7772c9b10bbc7e6b7563"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7f30a84e67cd7772c9b10bbc7e6b7563">&#9670;&#160;</a></span>calcGradPFromRhoT() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classFoam_1_1GaussField.html">Foam::vector</a> Foam::eqnOfState::calcGradPFromRhoT </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a>&#160;</td>
+          <td class="paramname"><em>rho</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a>&#160;</td>
+          <td class="paramname"><em>T</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">vector</a> &amp;&#160;</td>
+          <td class="paramname"><em>gradRho</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">vector</a> &amp;&#160;</td>
+          <td class="paramname"><em>gradT</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Compute \(\nabla p\) from \(p(\rho,T)\). </p>
+<p>The base implementation finite-differences the pointwise EOS relation. Derived EOS models should override this when analytic derivatives are available. </p>
+
+<p>Reimplemented in <a class="el" href="classFoam_1_1idealGas.html#aabe111853140b1283fd6676ff9e3e49a">Foam::idealGas</a>, <a class="el" href="classFoam_1_1pengRobinson.html#a6ff722d008fe254065ad51354ce8c8fa">Foam::pengRobinson</a>, <a class="el" href="classFoam_1_1idealGas.html#a81e73fc2410c5d0df695dc2db324076e">Foam::idealGas</a>, and <a class="el" href="classFoam_1_1pengRobinson.html#a30301149855ca55fc07f1a2521b40706">Foam::pengRobinson</a>.</p>
+
+</div>
+</div>
+<a id="aa1227f27351c86d23aef3ac549facce2" name="aa1227f27351c86d23aef3ac549facce2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa1227f27351c86d23aef3ac549facce2">&#9670;&#160;</a></span>calcGradTFromRhoE() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classFoam_1_1GaussField.html">Foam::vector</a> Foam::eqnOfState::calcGradTFromRhoE </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a>&#160;</td>
+          <td class="paramname"><em>rho</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a>&#160;</td>
+          <td class="paramname"><em>e</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">vector</a> &amp;&#160;</td>
+          <td class="paramname"><em>gradRho</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">vector</a> &amp;&#160;</td>
+          <td class="paramname"><em>gradE</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Compute \(\nabla T\) from \(T(\rho,e)\). </p>
+<p>The base implementation finite-differences the pointwise EOS relation. Here <code>e</code> is the specific internal energy and <code>gradE</code> is its gradient. </p>
+
+</div>
+</div>
+<a id="a307fb9b292a6b98b3f8ee11234a1f7de" name="a307fb9b292a6b98b3f8ee11234a1f7de"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a307fb9b292a6b98b3f8ee11234a1f7de">&#9670;&#160;</a></span>calcGradPFromRhoE() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classFoam_1_1GaussField.html">Foam::vector</a> Foam::eqnOfState::calcGradPFromRhoE </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a>&#160;</td>
+          <td class="paramname"><em>rho</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a>&#160;</td>
+          <td class="paramname"><em>e</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">vector</a> &amp;&#160;</td>
+          <td class="paramname"><em>gradRho</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">vector</a> &amp;&#160;</td>
+          <td class="paramname"><em>gradE</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Compute \(\nabla p\) from \(p(\rho,e)\). </p>
 
 </div>
 </div>
@@ -760,7 +1195,7 @@ Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p>Reimplemented in <a class="el" href="classFoam_1_1idealGas.html#ae404de5dd9983a37325cad5458972a04">Foam::idealGas</a>, <a class="el" href="classFoam_1_1idealGas.html#a522e27c192b854c825fdf6680ec42ef6">Foam::idealGas</a>, <a class="el" href="classFoam_1_1idealGas.html#ae404de5dd9983a37325cad5458972a04">Foam::idealGas</a>, and <a class="el" href="classFoam_1_1idealGas.html#a522e27c192b854c825fdf6680ec42ef6">Foam::idealGas</a>.</p>
+<p>Reimplemented in <a class="el" href="classFoam_1_1idealGas.html#ae404de5dd9983a37325cad5458972a04">Foam::idealGas</a>, <a class="el" href="classFoam_1_1idealGas.html#a522e27c192b854c825fdf6680ec42ef6">Foam::idealGas</a>, <a class="el" href="classFoam_1_1pengRobinson.html#ae404de5dd9983a37325cad5458972a04">Foam::pengRobinson</a>, <a class="el" href="classFoam_1_1pengRobinson.html#a522e27c192b854c825fdf6680ec42ef6">Foam::pengRobinson</a>, <a class="el" href="classFoam_1_1idealGas.html#ae404de5dd9983a37325cad5458972a04">Foam::idealGas</a>, <a class="el" href="classFoam_1_1idealGas.html#a522e27c192b854c825fdf6680ec42ef6">Foam::idealGas</a>, <a class="el" href="classFoam_1_1pengRobinson.html#ae404de5dd9983a37325cad5458972a04">Foam::pengRobinson</a>, and <a class="el" href="classFoam_1_1pengRobinson.html#a522e27c192b854c825fdf6680ec42ef6">Foam::pengRobinson</a>.</p>
 
 </div>
 </div>
@@ -804,7 +1239,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Reimplemented in <a class="el" href="classFoam_1_1idealGas.html#ac9893d915e3752c31ee418c7affe5881">Foam::idealGas</a>, <a class="el" href="classFoam_1_1idealGas.html#a4571c8f66975412a041234909c999cf3">Foam::idealGas</a>, <a class="el" href="classFoam_1_1idealGas.html#ac9893d915e3752c31ee418c7affe5881">Foam::idealGas</a>, and <a class="el" href="classFoam_1_1idealGas.html#a4571c8f66975412a041234909c999cf3">Foam::idealGas</a>.</p>
+<p>Reimplemented in <a class="el" href="classFoam_1_1idealGas.html#ac9893d915e3752c31ee418c7affe5881">Foam::idealGas</a>, <a class="el" href="classFoam_1_1idealGas.html#a4571c8f66975412a041234909c999cf3">Foam::idealGas</a>, <a class="el" href="classFoam_1_1pengRobinson.html#ac9893d915e3752c31ee418c7affe5881">Foam::pengRobinson</a>, <a class="el" href="classFoam_1_1pengRobinson.html#a4571c8f66975412a041234909c999cf3">Foam::pengRobinson</a>, <a class="el" href="classFoam_1_1idealGas.html#ac9893d915e3752c31ee418c7affe5881">Foam::idealGas</a>, <a class="el" href="classFoam_1_1idealGas.html#a4571c8f66975412a041234909c999cf3">Foam::idealGas</a>, <a class="el" href="classFoam_1_1pengRobinson.html#ac9893d915e3752c31ee418c7affe5881">Foam::pengRobinson</a>, and <a class="el" href="classFoam_1_1pengRobinson.html#a4571c8f66975412a041234909c999cf3">Foam::pengRobinson</a>.</p>
 
 </div>
 </div>
@@ -857,7 +1292,7 @@ Protected Attributes</h2></td></tr>
 <p>Compute pressure from density and temperature. </p>
 <p>Computes \( p = p(\rho, T) \) at Gauss points of a cell. </p>
 
-<p>Reimplemented in <a class="el" href="classFoam_1_1idealGas.html#aed9af958578fea8080cdcc3d1a0cc95d">Foam::idealGas</a>, <a class="el" href="classFoam_1_1idealGas.html#a65f54ba85805d32858e1397f16c71c67">Foam::idealGas</a>, <a class="el" href="classFoam_1_1idealGas.html#aed9af958578fea8080cdcc3d1a0cc95d">Foam::idealGas</a>, and <a class="el" href="classFoam_1_1idealGas.html#a65f54ba85805d32858e1397f16c71c67">Foam::idealGas</a>.</p>
+<p>Reimplemented in <a class="el" href="classFoam_1_1idealGas.html#aed9af958578fea8080cdcc3d1a0cc95d">Foam::idealGas</a>, <a class="el" href="classFoam_1_1idealGas.html#a65f54ba85805d32858e1397f16c71c67">Foam::idealGas</a>, <a class="el" href="classFoam_1_1pengRobinson.html#aed9af958578fea8080cdcc3d1a0cc95d">Foam::pengRobinson</a>, <a class="el" href="classFoam_1_1pengRobinson.html#a65f54ba85805d32858e1397f16c71c67">Foam::pengRobinson</a>, <a class="el" href="classFoam_1_1idealGas.html#aed9af958578fea8080cdcc3d1a0cc95d">Foam::idealGas</a>, <a class="el" href="classFoam_1_1idealGas.html#a65f54ba85805d32858e1397f16c71c67">Foam::idealGas</a>, <a class="el" href="classFoam_1_1pengRobinson.html#aed9af958578fea8080cdcc3d1a0cc95d">Foam::pengRobinson</a>, and <a class="el" href="classFoam_1_1pengRobinson.html#a65f54ba85805d32858e1397f16c71c67">Foam::pengRobinson</a>.</p>
 
 </div>
 </div>
@@ -901,7 +1336,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Reimplemented in <a class="el" href="classFoam_1_1idealGas.html#a794e8dd77870a52f6639f035e289a810">Foam::idealGas</a>, <a class="el" href="classFoam_1_1idealGas.html#aefe28373f9e4c45be5228ed43e2fd7ed">Foam::idealGas</a>, <a class="el" href="classFoam_1_1idealGas.html#a794e8dd77870a52f6639f035e289a810">Foam::idealGas</a>, and <a class="el" href="classFoam_1_1idealGas.html#aefe28373f9e4c45be5228ed43e2fd7ed">Foam::idealGas</a>.</p>
+<p>Reimplemented in <a class="el" href="classFoam_1_1idealGas.html#a794e8dd77870a52f6639f035e289a810">Foam::idealGas</a>, <a class="el" href="classFoam_1_1idealGas.html#aefe28373f9e4c45be5228ed43e2fd7ed">Foam::idealGas</a>, <a class="el" href="classFoam_1_1pengRobinson.html#a794e8dd77870a52f6639f035e289a810">Foam::pengRobinson</a>, <a class="el" href="classFoam_1_1pengRobinson.html#aefe28373f9e4c45be5228ed43e2fd7ed">Foam::pengRobinson</a>, <a class="el" href="classFoam_1_1idealGas.html#a794e8dd77870a52f6639f035e289a810">Foam::idealGas</a>, <a class="el" href="classFoam_1_1idealGas.html#aefe28373f9e4c45be5228ed43e2fd7ed">Foam::idealGas</a>, <a class="el" href="classFoam_1_1pengRobinson.html#a794e8dd77870a52f6639f035e289a810">Foam::pengRobinson</a>, and <a class="el" href="classFoam_1_1pengRobinson.html#aefe28373f9e4c45be5228ed43e2fd7ed">Foam::pengRobinson</a>.</p>
 
 </div>
 </div>
@@ -954,7 +1389,7 @@ Protected Attributes</h2></td></tr>
 <p>Compute temperature from pressure and density. </p>
 <p>Computes \( T = T(p, \rho) \) at Gauss points of a cell. </p>
 
-<p>Reimplemented in <a class="el" href="classFoam_1_1idealGas.html#ad6c796978db6c1616521de4cf852d31b">Foam::idealGas</a>, <a class="el" href="classFoam_1_1idealGas.html#ab66dce55045f7d82adcc73a81004888a">Foam::idealGas</a>, <a class="el" href="classFoam_1_1idealGas.html#ad6c796978db6c1616521de4cf852d31b">Foam::idealGas</a>, and <a class="el" href="classFoam_1_1idealGas.html#ab66dce55045f7d82adcc73a81004888a">Foam::idealGas</a>.</p>
+<p>Reimplemented in <a class="el" href="classFoam_1_1idealGas.html#ad6c796978db6c1616521de4cf852d31b">Foam::idealGas</a>, <a class="el" href="classFoam_1_1idealGas.html#ab66dce55045f7d82adcc73a81004888a">Foam::idealGas</a>, <a class="el" href="classFoam_1_1pengRobinson.html#ad6c796978db6c1616521de4cf852d31b">Foam::pengRobinson</a>, <a class="el" href="classFoam_1_1pengRobinson.html#ab66dce55045f7d82adcc73a81004888a">Foam::pengRobinson</a>, <a class="el" href="classFoam_1_1idealGas.html#ad6c796978db6c1616521de4cf852d31b">Foam::idealGas</a>, <a class="el" href="classFoam_1_1idealGas.html#ab66dce55045f7d82adcc73a81004888a">Foam::idealGas</a>, <a class="el" href="classFoam_1_1pengRobinson.html#ad6c796978db6c1616521de4cf852d31b">Foam::pengRobinson</a>, and <a class="el" href="classFoam_1_1pengRobinson.html#ab66dce55045f7d82adcc73a81004888a">Foam::pengRobinson</a>.</p>
 
 </div>
 </div>
@@ -998,7 +1433,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Reimplemented in <a class="el" href="classFoam_1_1idealGas.html#a78c992ff03d3b33d4c6f91eabfdf10e2">Foam::idealGas</a>, <a class="el" href="classFoam_1_1idealGas.html#a6dad5294eef016cf745966645c1371db">Foam::idealGas</a>, <a class="el" href="classFoam_1_1idealGas.html#a78c992ff03d3b33d4c6f91eabfdf10e2">Foam::idealGas</a>, and <a class="el" href="classFoam_1_1idealGas.html#a6dad5294eef016cf745966645c1371db">Foam::idealGas</a>.</p>
+<p>Reimplemented in <a class="el" href="classFoam_1_1idealGas.html#a78c992ff03d3b33d4c6f91eabfdf10e2">Foam::idealGas</a>, <a class="el" href="classFoam_1_1idealGas.html#a6dad5294eef016cf745966645c1371db">Foam::idealGas</a>, <a class="el" href="classFoam_1_1pengRobinson.html#a78c992ff03d3b33d4c6f91eabfdf10e2">Foam::pengRobinson</a>, <a class="el" href="classFoam_1_1pengRobinson.html#a6dad5294eef016cf745966645c1371db">Foam::pengRobinson</a>, <a class="el" href="classFoam_1_1idealGas.html#a78c992ff03d3b33d4c6f91eabfdf10e2">Foam::idealGas</a>, <a class="el" href="classFoam_1_1idealGas.html#a6dad5294eef016cf745966645c1371db">Foam::idealGas</a>, <a class="el" href="classFoam_1_1pengRobinson.html#a78c992ff03d3b33d4c6f91eabfdf10e2">Foam::pengRobinson</a>, and <a class="el" href="classFoam_1_1pengRobinson.html#a6dad5294eef016cf745966645c1371db">Foam::pengRobinson</a>.</p>
 
 </div>
 </div>
@@ -1025,9 +1460,9 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Return true if <a class="el" href="dynamicVarDeclaration_8cpp.html#ae7a21fded6f5e50f59fb05c0735f2479">rho(p,T)</a> is supported. </p>
+<p>Return true if <a class="el" href="dgFluxSolvers_2convectiveFluxSolver_2exactRiemannFluxSolver_2ExactToro_2dgExactToroFluxSolver_8C.html#ac2f6bd0057296e22b6f1da8890d317de">rho(p,T)</a> is supported. </p>
 
-<p>Reimplemented in <a class="el" href="classFoam_1_1idealGas.html#a2ca9b5548e826e94de1188d62d6078fe">Foam::idealGas</a>, and <a class="el" href="classFoam_1_1idealGas.html#a2ca9b5548e826e94de1188d62d6078fe">Foam::idealGas</a>.</p>
+<p>Reimplemented in <a class="el" href="classFoam_1_1idealGas.html#a2ca9b5548e826e94de1188d62d6078fe">Foam::idealGas</a>, <a class="el" href="classFoam_1_1pengRobinson.html#ac11d66016c6552c4b51c1ecbb2306f16">Foam::pengRobinson</a>, <a class="el" href="classFoam_1_1idealGas.html#a2ca9b5548e826e94de1188d62d6078fe">Foam::idealGas</a>, and <a class="el" href="classFoam_1_1pengRobinson.html#ac11d66016c6552c4b51c1ecbb2306f16">Foam::pengRobinson</a>.</p>
 
 </div>
 </div>
@@ -1054,9 +1489,9 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Return true if p(rho,T) is supported. </p>
+<p>Return true if <a class="el" href="dgFluxSolvers_2convectiveFluxSolver_2exactRiemannFluxSolver_2ExactToro_2dgExactToroFluxSolver_8C.html#a321a48806c8f4b6d07e24fd98f8e4cf1">p(rho,T)</a> is supported. </p>
 
-<p>Reimplemented in <a class="el" href="classFoam_1_1idealGas.html#afe70c39372a63474e3522510a5780456">Foam::idealGas</a>, and <a class="el" href="classFoam_1_1idealGas.html#afe70c39372a63474e3522510a5780456">Foam::idealGas</a>.</p>
+<p>Reimplemented in <a class="el" href="classFoam_1_1idealGas.html#afe70c39372a63474e3522510a5780456">Foam::idealGas</a>, <a class="el" href="classFoam_1_1pengRobinson.html#a8a855636d4c0b2a6f0b7dfa95ddb02f1">Foam::pengRobinson</a>, <a class="el" href="classFoam_1_1idealGas.html#afe70c39372a63474e3522510a5780456">Foam::idealGas</a>, and <a class="el" href="classFoam_1_1pengRobinson.html#a8a855636d4c0b2a6f0b7dfa95ddb02f1">Foam::pengRobinson</a>.</p>
 
 </div>
 </div>
@@ -1083,9 +1518,154 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Return true if T(p,rho) is supported. </p>
+<p>Return true if <a class="el" href="dgFoamVolumeToVTU_2dgFoamVolumeToVTU_8C.html#a4dbc9afb19bab1e36dcd0d05f570b3a8">T(p,rho)</a> is supported. </p>
 
-<p>Reimplemented in <a class="el" href="classFoam_1_1idealGas.html#a37d8f423c6552da1206d3994e6c1b5ce">Foam::idealGas</a>, and <a class="el" href="classFoam_1_1idealGas.html#a37d8f423c6552da1206d3994e6c1b5ce">Foam::idealGas</a>.</p>
+<p>Reimplemented in <a class="el" href="classFoam_1_1idealGas.html#a37d8f423c6552da1206d3994e6c1b5ce">Foam::idealGas</a>, <a class="el" href="classFoam_1_1pengRobinson.html#aba9496ae9a466db8f5c429b98e92b795">Foam::pengRobinson</a>, <a class="el" href="classFoam_1_1idealGas.html#a37d8f423c6552da1206d3994e6c1b5ce">Foam::idealGas</a>, and <a class="el" href="classFoam_1_1pengRobinson.html#aba9496ae9a466db8f5c429b98e92b795">Foam::pengRobinson</a>.</p>
+
+</div>
+</div>
+<a id="abc2024d5477b960fe808964701746cfc" name="abc2024d5477b960fe808964701746cfc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abc2024d5477b960fe808964701746cfc">&#9670;&#160;</a></span>canCalcTFromRhoE() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="classFoam_1_1GaussField.html">bool</a> Foam::eqnOfState::canCalcTFromRhoE </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Return true if <a class="el" href="dgFoamVolumeToVTU_2dgFoamVolumeToVTU_8C.html#a4dbc9afb19bab1e36dcd0d05f570b3a8">T(rho,e)</a> is supported. </p>
+
+<p>Reimplemented in <a class="el" href="classFoam_1_1pengRobinson.html#aa50bfec6db59a767b2227ad7184e2a60">Foam::pengRobinson</a>, and <a class="el" href="classFoam_1_1pengRobinson.html#aa50bfec6db59a767b2227ad7184e2a60">Foam::pengRobinson</a>.</p>
+
+</div>
+</div>
+<a id="a40976b0b4b8cca628061c8023c70c891" name="a40976b0b4b8cca628061c8023c70c891"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a40976b0b4b8cca628061c8023c70c891">&#9670;&#160;</a></span>canCalcPFromRhoE() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="classFoam_1_1GaussField.html">bool</a> Foam::eqnOfState::canCalcPFromRhoE </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Return true if <a class="el" href="dgFluxSolvers_2convectiveFluxSolver_2exactRiemannFluxSolver_2ExactToro_2dgExactToroFluxSolver_8C.html#a321a48806c8f4b6d07e24fd98f8e4cf1">p(rho,e)</a> is supported. </p>
+
+<p>Reimplemented in <a class="el" href="classFoam_1_1pengRobinson.html#a92aa971ef37bc63ea9921d81695badfe">Foam::pengRobinson</a>, and <a class="el" href="classFoam_1_1pengRobinson.html#a92aa971ef37bc63ea9921d81695badfe">Foam::pengRobinson</a>.</p>
+
+</div>
+</div>
+<a id="abcb34b6d0c8614af208046a1bc93ef0a" name="abcb34b6d0c8614af208046a1bc93ef0a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abcb34b6d0c8614af208046a1bc93ef0a">&#9670;&#160;</a></span>canCalcEFromRhoP() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="classFoam_1_1GaussField.html">bool</a> Foam::eqnOfState::canCalcEFromRhoP </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Return true if <a class="el" href="dgFoamVolumeToVTU_2dgFoamVolumeToVTU_8C.html#a4a1b92c1093ef60fa294e4d3293c6e76">e(rho,p)</a> is supported. </p>
+
+<p>Reimplemented in <a class="el" href="classFoam_1_1pengRobinson.html#a2730a8d16dc72544f80a69e8a2642edf">Foam::pengRobinson</a>, and <a class="el" href="classFoam_1_1pengRobinson.html#a2730a8d16dc72544f80a69e8a2642edf">Foam::pengRobinson</a>.</p>
+
+</div>
+</div>
+<a id="a9ece7f47c187d1a0ff858464f5003214" name="a9ece7f47c187d1a0ff858464f5003214"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9ece7f47c187d1a0ff858464f5003214">&#9670;&#160;</a></span>canCalcEFromRhoT() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="classFoam_1_1GaussField.html">bool</a> Foam::eqnOfState::canCalcEFromRhoT </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Return true if <a class="el" href="dgFoamVolumeToVTU_2dgFoamVolumeToVTU_8C.html#a4a1b92c1093ef60fa294e4d3293c6e76">e(rho,T)</a> is supported. </p>
+
+<p>Reimplemented in <a class="el" href="classFoam_1_1pengRobinson.html#a084c9d5d5c226a30386d7d8fa9e8a479">Foam::pengRobinson</a>, and <a class="el" href="classFoam_1_1pengRobinson.html#a084c9d5d5c226a30386d7d8fa9e8a479">Foam::pengRobinson</a>.</p>
+
+</div>
+</div>
+<a id="ab457f8b848c6c5c3d69fb66c4193a379" name="ab457f8b848c6c5c3d69fb66c4193a379"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab457f8b848c6c5c3d69fb66c4193a379">&#9670;&#160;</a></span>canCalcAFromRhoE() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="classFoam_1_1GaussField.html">bool</a> Foam::eqnOfState::canCalcAFromRhoE </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Return true if <a class="el" href="dgFoamVolumeToVTU_2dgFoamVolumeToVTU_8C.html#adeaf58b4864c841206ddbc4bacc3b760">a(rho,e)</a> is supported. </p>
+
+<p>Reimplemented in <a class="el" href="classFoam_1_1pengRobinson.html#aada3b0cfd32bb7ee2d2c34ca9ef6fc14">Foam::pengRobinson</a>, and <a class="el" href="classFoam_1_1pengRobinson.html#aada3b0cfd32bb7ee2d2c34ca9ef6fc14">Foam::pengRobinson</a>.</p>
 
 </div>
 </div>
@@ -1169,6 +1749,8 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Real-gas EOS. </p>
+
+<p>Reimplemented in <a class="el" href="classFoam_1_1pengRobinson.html#ad89b16e7be6cc5345ded2a15f8c88f32">Foam::pengRobinson</a>, and <a class="el" href="classFoam_1_1pengRobinson.html#ad89b16e7be6cc5345ded2a15f8c88f32">Foam::pengRobinson</a>.</p>
 
 </div>
 </div>
@@ -1343,7 +1925,7 @@ Protected Attributes</h2></td></tr>
 <p>Return gas constant R. </p>
 <p>Returns zero for incompressible EOS models. </p>
 
-<p>Implemented in <a class="el" href="classFoam_1_1idealGas.html#a7a246d21dd7c0d7b5b121ed8b6bbea59">Foam::idealGas</a>, and <a class="el" href="classFoam_1_1idealGas.html#a7a246d21dd7c0d7b5b121ed8b6bbea59">Foam::idealGas</a>.</p>
+<p>Implemented in <a class="el" href="classFoam_1_1idealGas.html#a7a246d21dd7c0d7b5b121ed8b6bbea59">Foam::idealGas</a>, <a class="el" href="classFoam_1_1pengRobinson.html#af671c0553b874b853bc30c81bbd49571">Foam::pengRobinson</a>, <a class="el" href="classFoam_1_1idealGas.html#a7a246d21dd7c0d7b5b121ed8b6bbea59">Foam::idealGas</a>, and <a class="el" href="classFoam_1_1pengRobinson.html#af671c0553b874b853bc30c81bbd49571">Foam::pengRobinson</a>.</p>
 
 </div>
 </div>
@@ -1383,7 +1965,7 @@ Protected Attributes</h2></td></tr>
 
 <p>Compute density from pressure and temperature at one point. </p>
 
-<p>Reimplemented in <a class="el" href="classFoam_1_1idealGas.html#a5e886123a06f2ac0d79cc151e43c593d">Foam::idealGas</a>, <a class="el" href="classFoam_1_1idealGas.html#a5e886123a06f2ac0d79cc151e43c593d">Foam::idealGas</a>, <a class="el" href="classFoam_1_1idealGas.html#a5e886123a06f2ac0d79cc151e43c593d">Foam::idealGas</a>, <a class="el" href="classFoam_1_1idealGas.html#a5e886123a06f2ac0d79cc151e43c593d">Foam::idealGas</a>, <a class="el" href="classFoam_1_1idealGas.html#a9408205a00df221588e5b6257a6bd1c9">Foam::idealGas</a>, and <a class="el" href="classFoam_1_1idealGas.html#a40f2c5827a082d810300b963b664e6e2">Foam::idealGas</a>.</p>
+<p>Reimplemented in <a class="el" href="classFoam_1_1idealGas.html#a5e886123a06f2ac0d79cc151e43c593d">Foam::idealGas</a>, <a class="el" href="classFoam_1_1idealGas.html#a5e886123a06f2ac0d79cc151e43c593d">Foam::idealGas</a>, <a class="el" href="classFoam_1_1pengRobinson.html#a5e886123a06f2ac0d79cc151e43c593d">Foam::pengRobinson</a>, <a class="el" href="classFoam_1_1pengRobinson.html#a5e886123a06f2ac0d79cc151e43c593d">Foam::pengRobinson</a>, <a class="el" href="classFoam_1_1idealGas.html#a5e886123a06f2ac0d79cc151e43c593d">Foam::idealGas</a>, <a class="el" href="classFoam_1_1idealGas.html#a5e886123a06f2ac0d79cc151e43c593d">Foam::idealGas</a>, <a class="el" href="classFoam_1_1pengRobinson.html#a5e886123a06f2ac0d79cc151e43c593d">Foam::pengRobinson</a>, <a class="el" href="classFoam_1_1pengRobinson.html#a5e886123a06f2ac0d79cc151e43c593d">Foam::pengRobinson</a>, <a class="el" href="classFoam_1_1idealGas.html#a9408205a00df221588e5b6257a6bd1c9">Foam::idealGas</a>, <a class="el" href="classFoam_1_1pengRobinson.html#a28bd04efe6c4c0dee864141c399d5cb8">Foam::pengRobinson</a>, <a class="el" href="classFoam_1_1idealGas.html#a40f2c5827a082d810300b963b664e6e2">Foam::idealGas</a>, and <a class="el" href="classFoam_1_1pengRobinson.html#ac6179894072ecf995e2559ffc59b03e8">Foam::pengRobinson</a>.</p>
 
 </div>
 </div>
@@ -1423,7 +2005,7 @@ Protected Attributes</h2></td></tr>
 
 <p>Compute pressure from density and temperature at one point. </p>
 
-<p>Reimplemented in <a class="el" href="classFoam_1_1idealGas.html#a5163e9f442480de5110481f90790b2b8">Foam::idealGas</a>, <a class="el" href="classFoam_1_1idealGas.html#a5163e9f442480de5110481f90790b2b8">Foam::idealGas</a>, <a class="el" href="classFoam_1_1idealGas.html#a5163e9f442480de5110481f90790b2b8">Foam::idealGas</a>, <a class="el" href="classFoam_1_1idealGas.html#a5163e9f442480de5110481f90790b2b8">Foam::idealGas</a>, <a class="el" href="classFoam_1_1idealGas.html#ac97b8ae11b0f5ea8009bb46813f3c17a">Foam::idealGas</a>, and <a class="el" href="classFoam_1_1idealGas.html#a7f39a8eb33546b2ed930951834dfade7">Foam::idealGas</a>.</p>
+<p>Reimplemented in <a class="el" href="classFoam_1_1idealGas.html#a5163e9f442480de5110481f90790b2b8">Foam::idealGas</a>, <a class="el" href="classFoam_1_1idealGas.html#a5163e9f442480de5110481f90790b2b8">Foam::idealGas</a>, <a class="el" href="classFoam_1_1pengRobinson.html#a5163e9f442480de5110481f90790b2b8">Foam::pengRobinson</a>, <a class="el" href="classFoam_1_1pengRobinson.html#a5163e9f442480de5110481f90790b2b8">Foam::pengRobinson</a>, <a class="el" href="classFoam_1_1idealGas.html#a5163e9f442480de5110481f90790b2b8">Foam::idealGas</a>, <a class="el" href="classFoam_1_1idealGas.html#a5163e9f442480de5110481f90790b2b8">Foam::idealGas</a>, <a class="el" href="classFoam_1_1pengRobinson.html#a5163e9f442480de5110481f90790b2b8">Foam::pengRobinson</a>, <a class="el" href="classFoam_1_1pengRobinson.html#a5163e9f442480de5110481f90790b2b8">Foam::pengRobinson</a>, <a class="el" href="classFoam_1_1idealGas.html#ac97b8ae11b0f5ea8009bb46813f3c17a">Foam::idealGas</a>, <a class="el" href="classFoam_1_1pengRobinson.html#a986b4e159f2ac5aea7904f85eb2b6eb9">Foam::pengRobinson</a>, <a class="el" href="classFoam_1_1idealGas.html#a7f39a8eb33546b2ed930951834dfade7">Foam::idealGas</a>, and <a class="el" href="classFoam_1_1pengRobinson.html#a61b6fb0fb85c1eed500a3ab874fb0818">Foam::pengRobinson</a>.</p>
 
 </div>
 </div>
@@ -1463,7 +2045,361 @@ Protected Attributes</h2></td></tr>
 
 <p>Compute temperature from pressure and density at one point. </p>
 
-<p>Reimplemented in <a class="el" href="classFoam_1_1idealGas.html#a06233e4f2305937651fd1a059e0e8352">Foam::idealGas</a>, <a class="el" href="classFoam_1_1idealGas.html#a06233e4f2305937651fd1a059e0e8352">Foam::idealGas</a>, <a class="el" href="classFoam_1_1idealGas.html#a06233e4f2305937651fd1a059e0e8352">Foam::idealGas</a>, <a class="el" href="classFoam_1_1idealGas.html#a06233e4f2305937651fd1a059e0e8352">Foam::idealGas</a>, <a class="el" href="classFoam_1_1idealGas.html#afecb8a5e20d237651b8d286724aae8b3">Foam::idealGas</a>, and <a class="el" href="classFoam_1_1idealGas.html#a0185ecaa615f85d85ec5872bd09f299e">Foam::idealGas</a>.</p>
+<p>Reimplemented in <a class="el" href="classFoam_1_1idealGas.html#a06233e4f2305937651fd1a059e0e8352">Foam::idealGas</a>, <a class="el" href="classFoam_1_1idealGas.html#a06233e4f2305937651fd1a059e0e8352">Foam::idealGas</a>, <a class="el" href="classFoam_1_1pengRobinson.html#a06233e4f2305937651fd1a059e0e8352">Foam::pengRobinson</a>, <a class="el" href="classFoam_1_1pengRobinson.html#a06233e4f2305937651fd1a059e0e8352">Foam::pengRobinson</a>, <a class="el" href="classFoam_1_1idealGas.html#a06233e4f2305937651fd1a059e0e8352">Foam::idealGas</a>, <a class="el" href="classFoam_1_1idealGas.html#a06233e4f2305937651fd1a059e0e8352">Foam::idealGas</a>, <a class="el" href="classFoam_1_1pengRobinson.html#a06233e4f2305937651fd1a059e0e8352">Foam::pengRobinson</a>, <a class="el" href="classFoam_1_1pengRobinson.html#a06233e4f2305937651fd1a059e0e8352">Foam::pengRobinson</a>, <a class="el" href="classFoam_1_1idealGas.html#afecb8a5e20d237651b8d286724aae8b3">Foam::idealGas</a>, <a class="el" href="classFoam_1_1pengRobinson.html#addced08f089e8bf50a8ffed6ceb945be">Foam::pengRobinson</a>, <a class="el" href="classFoam_1_1idealGas.html#a0185ecaa615f85d85ec5872bd09f299e">Foam::idealGas</a>, and <a class="el" href="classFoam_1_1pengRobinson.html#a412e2414f5a8302dacf0fd89e6b63858">Foam::pengRobinson</a>.</p>
+
+</div>
+</div>
+<a id="a8e2667722e2cc544d56976d9743bcdf8" name="a8e2667722e2cc544d56976d9743bcdf8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8e2667722e2cc544d56976d9743bcdf8">&#9670;&#160;</a></span>calcTFromRhoE() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> Foam::eqnOfState::calcTFromRhoE </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a>&#160;</td>
+          <td class="paramname"><em>rho</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a>&#160;</td>
+          <td class="paramname"><em>e</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Compute temperature from density and internal energy at one point. </p>
+
+<p>Reimplemented in <a class="el" href="classFoam_1_1pengRobinson.html#a527763350261fb43cdcdd82e5f052afa">Foam::pengRobinson</a>, and <a class="el" href="classFoam_1_1pengRobinson.html#a4bd023eaf67cff019c75b2f9e54a74e4">Foam::pengRobinson</a>.</p>
+
+</div>
+</div>
+<a id="a803af57f76b45f85e4e591d8fea044d1" name="a803af57f76b45f85e4e591d8fea044d1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a803af57f76b45f85e4e591d8fea044d1">&#9670;&#160;</a></span>calcPFromRhoE() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> Foam::eqnOfState::calcPFromRhoE </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a>&#160;</td>
+          <td class="paramname"><em>rho</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a>&#160;</td>
+          <td class="paramname"><em>e</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Compute pressure from density and internal energy at one point. </p>
+
+<p>Reimplemented in <a class="el" href="classFoam_1_1pengRobinson.html#ad3fdc68687210cb8c81234bb7f067f64">Foam::pengRobinson</a>, and <a class="el" href="classFoam_1_1pengRobinson.html#a5c54d1dd6f4f5038c91eec3f453a1fef">Foam::pengRobinson</a>.</p>
+
+</div>
+</div>
+<a id="a4c3873bea86c52ef9375d8c25b625c9e" name="a4c3873bea86c52ef9375d8c25b625c9e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4c3873bea86c52ef9375d8c25b625c9e">&#9670;&#160;</a></span>calcEFromRhoP() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> Foam::eqnOfState::calcEFromRhoP </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a>&#160;</td>
+          <td class="paramname"><em>rho</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a>&#160;</td>
+          <td class="paramname"><em>p</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Compute internal energy from density and pressure at one point. </p>
+
+<p>Reimplemented in <a class="el" href="classFoam_1_1pengRobinson.html#aa8d0550f8e405ecf72b2cbbfdcf1f01a">Foam::pengRobinson</a>, and <a class="el" href="classFoam_1_1pengRobinson.html#a57e2dd72ad3ccc5977fd055998f3346e">Foam::pengRobinson</a>.</p>
+
+</div>
+</div>
+<a id="a660b04de6842ae25054aeaa7243b3165" name="a660b04de6842ae25054aeaa7243b3165"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a660b04de6842ae25054aeaa7243b3165">&#9670;&#160;</a></span>calcEFromRhoT() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> Foam::eqnOfState::calcEFromRhoT </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a>&#160;</td>
+          <td class="paramname"><em>rho</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a>&#160;</td>
+          <td class="paramname"><em>T</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Compute internal energy from density and temperature at one point. </p>
+
+<p>Reimplemented in <a class="el" href="classFoam_1_1pengRobinson.html#a8e9ba3796e300acf53c22c8d618386e9">Foam::pengRobinson</a>, and <a class="el" href="classFoam_1_1pengRobinson.html#a2129d34edbb4a3c74b0d18581c5d2fc1">Foam::pengRobinson</a>.</p>
+
+</div>
+</div>
+<a id="a3c73738a42d0c7f8eaf56579cd7ad3ac" name="a3c73738a42d0c7f8eaf56579cd7ad3ac"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3c73738a42d0c7f8eaf56579cd7ad3ac">&#9670;&#160;</a></span>calcAFromRhoE() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a> Foam::eqnOfState::calcAFromRhoE </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a>&#160;</td>
+          <td class="paramname"><em>rho</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a>&#160;</td>
+          <td class="paramname"><em>e</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Compute speed of sound from density and internal energy. </p>
+
+<p>Reimplemented in <a class="el" href="classFoam_1_1pengRobinson.html#abb593c19dda780436d6d6ab43604af2e">Foam::pengRobinson</a>, and <a class="el" href="classFoam_1_1pengRobinson.html#abae3b36adf90c5f09220959a1bf0a322">Foam::pengRobinson</a>.</p>
+
+</div>
+</div>
+<a id="a1271066404571dac62cf4d7322f55be1" name="a1271066404571dac62cf4d7322f55be1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1271066404571dac62cf4d7322f55be1">&#9670;&#160;</a></span>calcGradPFromRhoT() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="classFoam_1_1GaussField.html">vector</a> Foam::eqnOfState::calcGradPFromRhoT </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a>&#160;</td>
+          <td class="paramname"><em>rho</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a>&#160;</td>
+          <td class="paramname"><em>T</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">vector</a> &amp;&#160;</td>
+          <td class="paramname"><em>gradRho</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">vector</a> &amp;&#160;</td>
+          <td class="paramname"><em>gradT</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Compute \(\nabla p\) from \(p(\rho,T)\). </p>
+<p>The base implementation finite-differences the pointwise EOS relation. Derived EOS models should override this when analytic derivatives are available. </p>
+
+<p>Reimplemented in <a class="el" href="classFoam_1_1idealGas.html#aabe111853140b1283fd6676ff9e3e49a">Foam::idealGas</a>, <a class="el" href="classFoam_1_1pengRobinson.html#a6ff722d008fe254065ad51354ce8c8fa">Foam::pengRobinson</a>, <a class="el" href="classFoam_1_1idealGas.html#a81e73fc2410c5d0df695dc2db324076e">Foam::idealGas</a>, and <a class="el" href="classFoam_1_1pengRobinson.html#a30301149855ca55fc07f1a2521b40706">Foam::pengRobinson</a>.</p>
+
+</div>
+</div>
+<a id="a58e4d8e0198bf8d5ec5ffe0bf8fb919e" name="a58e4d8e0198bf8d5ec5ffe0bf8fb919e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a58e4d8e0198bf8d5ec5ffe0bf8fb919e">&#9670;&#160;</a></span>calcGradTFromRhoE() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="classFoam_1_1GaussField.html">vector</a> Foam::eqnOfState::calcGradTFromRhoE </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a>&#160;</td>
+          <td class="paramname"><em>rho</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a>&#160;</td>
+          <td class="paramname"><em>e</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">vector</a> &amp;&#160;</td>
+          <td class="paramname"><em>gradRho</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">vector</a> &amp;&#160;</td>
+          <td class="paramname"><em>gradE</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Compute \(\nabla T\) from \(T(\rho,e)\). </p>
+<p>The base implementation finite-differences the pointwise EOS relation. Here <code>e</code> is the specific internal energy and <code>gradE</code> is its gradient. </p>
+
+</div>
+</div>
+<a id="aac4e036d259174ab78beb3aa27753d7f" name="aac4e036d259174ab78beb3aa27753d7f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aac4e036d259174ab78beb3aa27753d7f">&#9670;&#160;</a></span>calcGradPFromRhoE() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="classFoam_1_1GaussField.html">vector</a> Foam::eqnOfState::calcGradPFromRhoE </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a>&#160;</td>
+          <td class="paramname"><em>rho</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="namespaceFoam.html#a323f15688e458a7ab5bcca56fe1816c8">scalar</a>&#160;</td>
+          <td class="paramname"><em>e</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">vector</a> &amp;&#160;</td>
+          <td class="paramname"><em>gradRho</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">vector</a> &amp;&#160;</td>
+          <td class="paramname"><em>gradE</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Compute \(\nabla p\) from \(p(\rho,e)\). </p>
 
 </div>
 </div>
@@ -1525,7 +2461,7 @@ Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p>Reimplemented in <a class="el" href="classFoam_1_1idealGas.html#ae404de5dd9983a37325cad5458972a04">Foam::idealGas</a>, <a class="el" href="classFoam_1_1idealGas.html#a522e27c192b854c825fdf6680ec42ef6">Foam::idealGas</a>, <a class="el" href="classFoam_1_1idealGas.html#ae404de5dd9983a37325cad5458972a04">Foam::idealGas</a>, and <a class="el" href="classFoam_1_1idealGas.html#a522e27c192b854c825fdf6680ec42ef6">Foam::idealGas</a>.</p>
+<p>Reimplemented in <a class="el" href="classFoam_1_1idealGas.html#ae404de5dd9983a37325cad5458972a04">Foam::idealGas</a>, <a class="el" href="classFoam_1_1idealGas.html#a522e27c192b854c825fdf6680ec42ef6">Foam::idealGas</a>, <a class="el" href="classFoam_1_1pengRobinson.html#ae404de5dd9983a37325cad5458972a04">Foam::pengRobinson</a>, <a class="el" href="classFoam_1_1pengRobinson.html#a522e27c192b854c825fdf6680ec42ef6">Foam::pengRobinson</a>, <a class="el" href="classFoam_1_1idealGas.html#ae404de5dd9983a37325cad5458972a04">Foam::idealGas</a>, <a class="el" href="classFoam_1_1idealGas.html#a522e27c192b854c825fdf6680ec42ef6">Foam::idealGas</a>, <a class="el" href="classFoam_1_1pengRobinson.html#ae404de5dd9983a37325cad5458972a04">Foam::pengRobinson</a>, and <a class="el" href="classFoam_1_1pengRobinson.html#a522e27c192b854c825fdf6680ec42ef6">Foam::pengRobinson</a>.</p>
 
 </div>
 </div>
@@ -1569,7 +2505,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Reimplemented in <a class="el" href="classFoam_1_1idealGas.html#ac9893d915e3752c31ee418c7affe5881">Foam::idealGas</a>, <a class="el" href="classFoam_1_1idealGas.html#a4571c8f66975412a041234909c999cf3">Foam::idealGas</a>, <a class="el" href="classFoam_1_1idealGas.html#ac9893d915e3752c31ee418c7affe5881">Foam::idealGas</a>, and <a class="el" href="classFoam_1_1idealGas.html#a4571c8f66975412a041234909c999cf3">Foam::idealGas</a>.</p>
+<p>Reimplemented in <a class="el" href="classFoam_1_1idealGas.html#ac9893d915e3752c31ee418c7affe5881">Foam::idealGas</a>, <a class="el" href="classFoam_1_1idealGas.html#a4571c8f66975412a041234909c999cf3">Foam::idealGas</a>, <a class="el" href="classFoam_1_1pengRobinson.html#ac9893d915e3752c31ee418c7affe5881">Foam::pengRobinson</a>, <a class="el" href="classFoam_1_1pengRobinson.html#a4571c8f66975412a041234909c999cf3">Foam::pengRobinson</a>, <a class="el" href="classFoam_1_1idealGas.html#ac9893d915e3752c31ee418c7affe5881">Foam::idealGas</a>, <a class="el" href="classFoam_1_1idealGas.html#a4571c8f66975412a041234909c999cf3">Foam::idealGas</a>, <a class="el" href="classFoam_1_1pengRobinson.html#ac9893d915e3752c31ee418c7affe5881">Foam::pengRobinson</a>, and <a class="el" href="classFoam_1_1pengRobinson.html#a4571c8f66975412a041234909c999cf3">Foam::pengRobinson</a>.</p>
 
 </div>
 </div>
@@ -1622,7 +2558,7 @@ Protected Attributes</h2></td></tr>
 <p>Compute pressure from density and temperature. </p>
 <p>Computes \( p = p(\rho, T) \) at Gauss points of a cell. </p>
 
-<p>Reimplemented in <a class="el" href="classFoam_1_1idealGas.html#aed9af958578fea8080cdcc3d1a0cc95d">Foam::idealGas</a>, <a class="el" href="classFoam_1_1idealGas.html#a65f54ba85805d32858e1397f16c71c67">Foam::idealGas</a>, <a class="el" href="classFoam_1_1idealGas.html#aed9af958578fea8080cdcc3d1a0cc95d">Foam::idealGas</a>, and <a class="el" href="classFoam_1_1idealGas.html#a65f54ba85805d32858e1397f16c71c67">Foam::idealGas</a>.</p>
+<p>Reimplemented in <a class="el" href="classFoam_1_1idealGas.html#aed9af958578fea8080cdcc3d1a0cc95d">Foam::idealGas</a>, <a class="el" href="classFoam_1_1idealGas.html#a65f54ba85805d32858e1397f16c71c67">Foam::idealGas</a>, <a class="el" href="classFoam_1_1pengRobinson.html#aed9af958578fea8080cdcc3d1a0cc95d">Foam::pengRobinson</a>, <a class="el" href="classFoam_1_1pengRobinson.html#a65f54ba85805d32858e1397f16c71c67">Foam::pengRobinson</a>, <a class="el" href="classFoam_1_1idealGas.html#aed9af958578fea8080cdcc3d1a0cc95d">Foam::idealGas</a>, <a class="el" href="classFoam_1_1idealGas.html#a65f54ba85805d32858e1397f16c71c67">Foam::idealGas</a>, <a class="el" href="classFoam_1_1pengRobinson.html#aed9af958578fea8080cdcc3d1a0cc95d">Foam::pengRobinson</a>, and <a class="el" href="classFoam_1_1pengRobinson.html#a65f54ba85805d32858e1397f16c71c67">Foam::pengRobinson</a>.</p>
 
 </div>
 </div>
@@ -1666,7 +2602,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Reimplemented in <a class="el" href="classFoam_1_1idealGas.html#a794e8dd77870a52f6639f035e289a810">Foam::idealGas</a>, <a class="el" href="classFoam_1_1idealGas.html#aefe28373f9e4c45be5228ed43e2fd7ed">Foam::idealGas</a>, <a class="el" href="classFoam_1_1idealGas.html#a794e8dd77870a52f6639f035e289a810">Foam::idealGas</a>, and <a class="el" href="classFoam_1_1idealGas.html#aefe28373f9e4c45be5228ed43e2fd7ed">Foam::idealGas</a>.</p>
+<p>Reimplemented in <a class="el" href="classFoam_1_1idealGas.html#a794e8dd77870a52f6639f035e289a810">Foam::idealGas</a>, <a class="el" href="classFoam_1_1idealGas.html#aefe28373f9e4c45be5228ed43e2fd7ed">Foam::idealGas</a>, <a class="el" href="classFoam_1_1pengRobinson.html#a794e8dd77870a52f6639f035e289a810">Foam::pengRobinson</a>, <a class="el" href="classFoam_1_1pengRobinson.html#aefe28373f9e4c45be5228ed43e2fd7ed">Foam::pengRobinson</a>, <a class="el" href="classFoam_1_1idealGas.html#a794e8dd77870a52f6639f035e289a810">Foam::idealGas</a>, <a class="el" href="classFoam_1_1idealGas.html#aefe28373f9e4c45be5228ed43e2fd7ed">Foam::idealGas</a>, <a class="el" href="classFoam_1_1pengRobinson.html#a794e8dd77870a52f6639f035e289a810">Foam::pengRobinson</a>, and <a class="el" href="classFoam_1_1pengRobinson.html#aefe28373f9e4c45be5228ed43e2fd7ed">Foam::pengRobinson</a>.</p>
 
 </div>
 </div>
@@ -1719,7 +2655,7 @@ Protected Attributes</h2></td></tr>
 <p>Compute temperature from pressure and density. </p>
 <p>Computes \( T = T(p, \rho) \) at Gauss points of a cell. </p>
 
-<p>Reimplemented in <a class="el" href="classFoam_1_1idealGas.html#ad6c796978db6c1616521de4cf852d31b">Foam::idealGas</a>, <a class="el" href="classFoam_1_1idealGas.html#ab66dce55045f7d82adcc73a81004888a">Foam::idealGas</a>, <a class="el" href="classFoam_1_1idealGas.html#ad6c796978db6c1616521de4cf852d31b">Foam::idealGas</a>, and <a class="el" href="classFoam_1_1idealGas.html#ab66dce55045f7d82adcc73a81004888a">Foam::idealGas</a>.</p>
+<p>Reimplemented in <a class="el" href="classFoam_1_1idealGas.html#ad6c796978db6c1616521de4cf852d31b">Foam::idealGas</a>, <a class="el" href="classFoam_1_1idealGas.html#ab66dce55045f7d82adcc73a81004888a">Foam::idealGas</a>, <a class="el" href="classFoam_1_1pengRobinson.html#ad6c796978db6c1616521de4cf852d31b">Foam::pengRobinson</a>, <a class="el" href="classFoam_1_1pengRobinson.html#ab66dce55045f7d82adcc73a81004888a">Foam::pengRobinson</a>, <a class="el" href="classFoam_1_1idealGas.html#ad6c796978db6c1616521de4cf852d31b">Foam::idealGas</a>, <a class="el" href="classFoam_1_1idealGas.html#ab66dce55045f7d82adcc73a81004888a">Foam::idealGas</a>, <a class="el" href="classFoam_1_1pengRobinson.html#ad6c796978db6c1616521de4cf852d31b">Foam::pengRobinson</a>, and <a class="el" href="classFoam_1_1pengRobinson.html#ab66dce55045f7d82adcc73a81004888a">Foam::pengRobinson</a>.</p>
 
 </div>
 </div>
@@ -1763,7 +2699,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Reimplemented in <a class="el" href="classFoam_1_1idealGas.html#a78c992ff03d3b33d4c6f91eabfdf10e2">Foam::idealGas</a>, <a class="el" href="classFoam_1_1idealGas.html#a6dad5294eef016cf745966645c1371db">Foam::idealGas</a>, <a class="el" href="classFoam_1_1idealGas.html#a78c992ff03d3b33d4c6f91eabfdf10e2">Foam::idealGas</a>, and <a class="el" href="classFoam_1_1idealGas.html#a6dad5294eef016cf745966645c1371db">Foam::idealGas</a>.</p>
+<p>Reimplemented in <a class="el" href="classFoam_1_1idealGas.html#a78c992ff03d3b33d4c6f91eabfdf10e2">Foam::idealGas</a>, <a class="el" href="classFoam_1_1idealGas.html#a6dad5294eef016cf745966645c1371db">Foam::idealGas</a>, <a class="el" href="classFoam_1_1pengRobinson.html#a78c992ff03d3b33d4c6f91eabfdf10e2">Foam::pengRobinson</a>, <a class="el" href="classFoam_1_1pengRobinson.html#a6dad5294eef016cf745966645c1371db">Foam::pengRobinson</a>, <a class="el" href="classFoam_1_1idealGas.html#a78c992ff03d3b33d4c6f91eabfdf10e2">Foam::idealGas</a>, <a class="el" href="classFoam_1_1idealGas.html#a6dad5294eef016cf745966645c1371db">Foam::idealGas</a>, <a class="el" href="classFoam_1_1pengRobinson.html#a78c992ff03d3b33d4c6f91eabfdf10e2">Foam::pengRobinson</a>, and <a class="el" href="classFoam_1_1pengRobinson.html#a6dad5294eef016cf745966645c1371db">Foam::pengRobinson</a>.</p>
 
 </div>
 </div>
@@ -1790,9 +2726,9 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Return true if <a class="el" href="dynamicVarDeclaration_8cpp.html#ae7a21fded6f5e50f59fb05c0735f2479">rho(p,T)</a> is supported. </p>
+<p>Return true if <a class="el" href="dgFluxSolvers_2convectiveFluxSolver_2exactRiemannFluxSolver_2ExactToro_2dgExactToroFluxSolver_8C.html#ac2f6bd0057296e22b6f1da8890d317de">rho(p,T)</a> is supported. </p>
 
-<p>Reimplemented in <a class="el" href="classFoam_1_1idealGas.html#a2ca9b5548e826e94de1188d62d6078fe">Foam::idealGas</a>, and <a class="el" href="classFoam_1_1idealGas.html#a2ca9b5548e826e94de1188d62d6078fe">Foam::idealGas</a>.</p>
+<p>Reimplemented in <a class="el" href="classFoam_1_1idealGas.html#a2ca9b5548e826e94de1188d62d6078fe">Foam::idealGas</a>, <a class="el" href="classFoam_1_1pengRobinson.html#ac11d66016c6552c4b51c1ecbb2306f16">Foam::pengRobinson</a>, <a class="el" href="classFoam_1_1idealGas.html#a2ca9b5548e826e94de1188d62d6078fe">Foam::idealGas</a>, and <a class="el" href="classFoam_1_1pengRobinson.html#ac11d66016c6552c4b51c1ecbb2306f16">Foam::pengRobinson</a>.</p>
 
 </div>
 </div>
@@ -1819,9 +2755,9 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Return true if p(rho,T) is supported. </p>
+<p>Return true if <a class="el" href="dgFluxSolvers_2convectiveFluxSolver_2exactRiemannFluxSolver_2ExactToro_2dgExactToroFluxSolver_8C.html#a321a48806c8f4b6d07e24fd98f8e4cf1">p(rho,T)</a> is supported. </p>
 
-<p>Reimplemented in <a class="el" href="classFoam_1_1idealGas.html#afe70c39372a63474e3522510a5780456">Foam::idealGas</a>, and <a class="el" href="classFoam_1_1idealGas.html#afe70c39372a63474e3522510a5780456">Foam::idealGas</a>.</p>
+<p>Reimplemented in <a class="el" href="classFoam_1_1idealGas.html#afe70c39372a63474e3522510a5780456">Foam::idealGas</a>, <a class="el" href="classFoam_1_1pengRobinson.html#a8a855636d4c0b2a6f0b7dfa95ddb02f1">Foam::pengRobinson</a>, <a class="el" href="classFoam_1_1idealGas.html#afe70c39372a63474e3522510a5780456">Foam::idealGas</a>, and <a class="el" href="classFoam_1_1pengRobinson.html#a8a855636d4c0b2a6f0b7dfa95ddb02f1">Foam::pengRobinson</a>.</p>
 
 </div>
 </div>
@@ -1848,9 +2784,154 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Return true if T(p,rho) is supported. </p>
+<p>Return true if <a class="el" href="dgFoamVolumeToVTU_2dgFoamVolumeToVTU_8C.html#a4dbc9afb19bab1e36dcd0d05f570b3a8">T(p,rho)</a> is supported. </p>
 
-<p>Reimplemented in <a class="el" href="classFoam_1_1idealGas.html#a37d8f423c6552da1206d3994e6c1b5ce">Foam::idealGas</a>, and <a class="el" href="classFoam_1_1idealGas.html#a37d8f423c6552da1206d3994e6c1b5ce">Foam::idealGas</a>.</p>
+<p>Reimplemented in <a class="el" href="classFoam_1_1idealGas.html#a37d8f423c6552da1206d3994e6c1b5ce">Foam::idealGas</a>, <a class="el" href="classFoam_1_1pengRobinson.html#aba9496ae9a466db8f5c429b98e92b795">Foam::pengRobinson</a>, <a class="el" href="classFoam_1_1idealGas.html#a37d8f423c6552da1206d3994e6c1b5ce">Foam::idealGas</a>, and <a class="el" href="classFoam_1_1pengRobinson.html#aba9496ae9a466db8f5c429b98e92b795">Foam::pengRobinson</a>.</p>
+
+</div>
+</div>
+<a id="abc2024d5477b960fe808964701746cfc" name="abc2024d5477b960fe808964701746cfc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abc2024d5477b960fe808964701746cfc">&#9670;&#160;</a></span>canCalcTFromRhoE() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="classFoam_1_1GaussField.html">bool</a> Foam::eqnOfState::canCalcTFromRhoE </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Return true if <a class="el" href="dgFoamVolumeToVTU_2dgFoamVolumeToVTU_8C.html#a4dbc9afb19bab1e36dcd0d05f570b3a8">T(rho,e)</a> is supported. </p>
+
+<p>Reimplemented in <a class="el" href="classFoam_1_1pengRobinson.html#aa50bfec6db59a767b2227ad7184e2a60">Foam::pengRobinson</a>, and <a class="el" href="classFoam_1_1pengRobinson.html#aa50bfec6db59a767b2227ad7184e2a60">Foam::pengRobinson</a>.</p>
+
+</div>
+</div>
+<a id="a40976b0b4b8cca628061c8023c70c891" name="a40976b0b4b8cca628061c8023c70c891"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a40976b0b4b8cca628061c8023c70c891">&#9670;&#160;</a></span>canCalcPFromRhoE() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="classFoam_1_1GaussField.html">bool</a> Foam::eqnOfState::canCalcPFromRhoE </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Return true if <a class="el" href="dgFluxSolvers_2convectiveFluxSolver_2exactRiemannFluxSolver_2ExactToro_2dgExactToroFluxSolver_8C.html#a321a48806c8f4b6d07e24fd98f8e4cf1">p(rho,e)</a> is supported. </p>
+
+<p>Reimplemented in <a class="el" href="classFoam_1_1pengRobinson.html#a92aa971ef37bc63ea9921d81695badfe">Foam::pengRobinson</a>, and <a class="el" href="classFoam_1_1pengRobinson.html#a92aa971ef37bc63ea9921d81695badfe">Foam::pengRobinson</a>.</p>
+
+</div>
+</div>
+<a id="abcb34b6d0c8614af208046a1bc93ef0a" name="abcb34b6d0c8614af208046a1bc93ef0a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abcb34b6d0c8614af208046a1bc93ef0a">&#9670;&#160;</a></span>canCalcEFromRhoP() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="classFoam_1_1GaussField.html">bool</a> Foam::eqnOfState::canCalcEFromRhoP </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Return true if <a class="el" href="dgFoamVolumeToVTU_2dgFoamVolumeToVTU_8C.html#a4a1b92c1093ef60fa294e4d3293c6e76">e(rho,p)</a> is supported. </p>
+
+<p>Reimplemented in <a class="el" href="classFoam_1_1pengRobinson.html#a2730a8d16dc72544f80a69e8a2642edf">Foam::pengRobinson</a>, and <a class="el" href="classFoam_1_1pengRobinson.html#a2730a8d16dc72544f80a69e8a2642edf">Foam::pengRobinson</a>.</p>
+
+</div>
+</div>
+<a id="a9ece7f47c187d1a0ff858464f5003214" name="a9ece7f47c187d1a0ff858464f5003214"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9ece7f47c187d1a0ff858464f5003214">&#9670;&#160;</a></span>canCalcEFromRhoT() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="classFoam_1_1GaussField.html">bool</a> Foam::eqnOfState::canCalcEFromRhoT </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Return true if <a class="el" href="dgFoamVolumeToVTU_2dgFoamVolumeToVTU_8C.html#a4a1b92c1093ef60fa294e4d3293c6e76">e(rho,T)</a> is supported. </p>
+
+<p>Reimplemented in <a class="el" href="classFoam_1_1pengRobinson.html#a084c9d5d5c226a30386d7d8fa9e8a479">Foam::pengRobinson</a>, and <a class="el" href="classFoam_1_1pengRobinson.html#a084c9d5d5c226a30386d7d8fa9e8a479">Foam::pengRobinson</a>.</p>
+
+</div>
+</div>
+<a id="ab457f8b848c6c5c3d69fb66c4193a379" name="ab457f8b848c6c5c3d69fb66c4193a379"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab457f8b848c6c5c3d69fb66c4193a379">&#9670;&#160;</a></span>canCalcAFromRhoE() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classFoam_1_1GaussField.html">virtual</a> <a class="el" href="classFoam_1_1GaussField.html">bool</a> Foam::eqnOfState::canCalcAFromRhoE </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Return true if <a class="el" href="dgFoamVolumeToVTU_2dgFoamVolumeToVTU_8C.html#adeaf58b4864c841206ddbc4bacc3b760">a(rho,e)</a> is supported. </p>
+
+<p>Reimplemented in <a class="el" href="classFoam_1_1pengRobinson.html#aada3b0cfd32bb7ee2d2c34ca9ef6fc14">Foam::pengRobinson</a>, and <a class="el" href="classFoam_1_1pengRobinson.html#aada3b0cfd32bb7ee2d2c34ca9ef6fc14">Foam::pengRobinson</a>.</p>
 
 </div>
 </div>
@@ -1934,6 +3015,8 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Real-gas EOS. </p>
+
+<p>Reimplemented in <a class="el" href="classFoam_1_1pengRobinson.html#ad89b16e7be6cc5345ded2a15f8c88f32">Foam::pengRobinson</a>, and <a class="el" href="classFoam_1_1pengRobinson.html#ad89b16e7be6cc5345ded2a15f8c88f32">Foam::pengRobinson</a>.</p>
 
 </div>
 </div>

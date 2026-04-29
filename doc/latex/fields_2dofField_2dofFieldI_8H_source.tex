@@ -91,144 +91,175 @@
 \DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \ \ \ \ IOobject::NO\_WRITE}
 \DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ );}
 \DoxyCodeLine{00089\ }
-\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Determine\ if\ volField\ file\ exists}}
-\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classFoam_1_1GaussField}{probeIO}}.typeHeaderOk<\mbox{\hyperlink{classFoam_1_1GaussField}{GeometricField<Type,\ fvPatchField,\ volMesh>}}>(\textcolor{keyword}{true}))}
-\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//Info<<\ "{}Reading\ DoF\ volField:\ "{}\ <<\ fieldName\ <<\ nl;}}
-\DoxyCodeLine{00094\ }
-\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1dofField_a2d2bd9787be6f36e973d5fceac087418}{foamFields\_}}[\mbox{\hyperlink{classFoam_1_1GaussField}{d}}].reset}
-\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \ \ \ \ (}
-\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{new}\ \mbox{\hyperlink{classFoam_1_1GaussField}{GeometricField<Type,\ fvPatchField,\ volMesh>}}}
-\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (}
-\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{IOobject}}}
-\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (}
-\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fieldName,}
-\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{instance}},}
-\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mesh.\mbox{\hyperlink{classFoam_1_1dgGeomMesh_ac7c6d19810a6f488624715ad34230633}{getFvMesh}}(),}
-\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ IOobject::MUST\_READ,}
-\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{wOpt}}}
-\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ),}
-\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mesh.\mbox{\hyperlink{classFoam_1_1dgGeomMesh_ac7c6d19810a6f488624715ad34230633}{getFvMesh}}()}
-\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ )}
-\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \ \ \ \ );}
-\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
-\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//Info<<\ "{}DoF\ volField\ not\ found:\ "{}\ <<\ fieldName}}
-\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ <<\ "{}\ →\ creating\ zero\ field."{}\ <<\ nl;}}
-\DoxyCodeLine{00115\ }
-\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1dofField_a2d2bd9787be6f36e973d5fceac087418}{foamFields\_}}[\mbox{\hyperlink{classFoam_1_1GaussField}{d}}].reset}
-\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \ \ \ \ (}
-\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{new}\ \mbox{\hyperlink{classFoam_1_1GaussField}{GeometricField<Type,\ fvPatchField,\ volMesh>}}}
-\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (}
-\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{IOobject}}}
-\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (}
-\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fieldName,}
-\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{instance}},}
-\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mesh.\mbox{\hyperlink{classFoam_1_1dgGeomMesh_ac7c6d19810a6f488624715ad34230633}{getFvMesh}}(),}
-\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ IOobject::NO\_READ,}
-\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{wOpt}}}
-\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ),}
-\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mesh.\mbox{\hyperlink{classFoam_1_1dgGeomMesh_ac7c6d19810a6f488624715ad34230633}{getFvMesh}}(),}
-\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{dimensioned<Type>}}(\textcolor{stringliteral}{"{}zero"{}},\ \mbox{\hyperlink{classFoam_1_1GaussField}{dimless}},\ \mbox{\hyperlink{classFoam_1_1GaussField}{pTraits<Type>::zero}})}
-\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ )}
-\DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ \ \ \ \ );}
-\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00133\ \ \ \ \ \}}
-\DoxyCodeLine{00134\ }
-\DoxyCodeLine{00135\ \ \ \ \ \textcolor{comment}{//\ Construct\ cellDof\ list\ from\ volFields}}
-\DoxyCodeLine{00136\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1dofField_a01beb8110d74104665b40842e1d63325}{cellDofs\_}}.setSize(\mbox{\hyperlink{classFoam_1_1dofField_afdedafaf83bd6df3aa3a01818ddc1909}{nCells\_}});}
-\DoxyCodeLine{00137\ }
-\DoxyCodeLine{00138\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ c\ =\ 0;\ c\ <\ \mbox{\hyperlink{classFoam_1_1dofField_afdedafaf83bd6df3aa3a01818ddc1909}{nCells\_}};\ ++c)}
-\DoxyCodeLine{00139\ \ \ \ \ \{}
-\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ label\ nDof\ =\ \mbox{\hyperlink{classFoam_1_1dofField_a56e85ac46de29871fd545a1e061f18a5}{dofPerCell\_}}[c];}
-\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{List<Type>}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{local}}(nDof,\ \mbox{\hyperlink{classFoam_1_1GaussField}{pTraits<Type>::zero}});}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Determine\ if\ volField\ file\ exists.\ Honour\ NO\_READ\ so\ auxiliary}}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ DoF\ fields\ can\ be\ forced\ to\ start\ from\ zero\ even\ if\ stale\ files\ are}}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ present\ in\ the\ time\ directory.}}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ (}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{rOpt}}\ !=\ IOobject::NO\_READ}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \ \&\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{probeIO}}.typeHeaderOk<\mbox{\hyperlink{classFoam_1_1GaussField}{GeometricField<Type,\ fvPatchField,\ volMesh>}}>(\textcolor{keyword}{true})}
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ )}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//Info<<\ "{}Reading\ DoF\ volField:\ "{}\ <<\ fieldName\ <<\ nl;}}
+\DoxyCodeLine{00100\ }
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1dofField_a2d2bd9787be6f36e973d5fceac087418}{foamFields\_}}[\mbox{\hyperlink{classFoam_1_1GaussField}{d}}].reset}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \ \ \ \ (}
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{new}\ \mbox{\hyperlink{classFoam_1_1GaussField}{GeometricField<Type,\ fvPatchField,\ volMesh>}}}
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (}
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{IOobject}}}
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fieldName,}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{instance}},}
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mesh.\mbox{\hyperlink{classFoam_1_1dgGeomMesh_ac7c6d19810a6f488624715ad34230633}{getFvMesh}}(),}
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ IOobject::MUST\_READ,}
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{wOpt}}}
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ),}
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mesh.\mbox{\hyperlink{classFoam_1_1dgGeomMesh_ac7c6d19810a6f488624715ad34230633}{getFvMesh}}()}
+\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ )}
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ \ \ \ \ );}
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//Info<<\ "{}DoF\ volField\ not\ found:\ "{}\ <<\ fieldName}}
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ <<\ "{}\ →\ creating\ zero\ field."{}\ <<\ nl;}}
+\DoxyCodeLine{00121\ }
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1dofField_a2d2bd9787be6f36e973d5fceac087418}{foamFields\_}}[\mbox{\hyperlink{classFoam_1_1GaussField}{d}}].reset}
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ \ \ \ \ (}
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{new}\ \mbox{\hyperlink{classFoam_1_1GaussField}{GeometricField<Type,\ fvPatchField,\ volMesh>}}}
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (}
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{IOobject}}}
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (}
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fieldName,}
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{instance}},}
+\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mesh.\mbox{\hyperlink{classFoam_1_1dgGeomMesh_ac7c6d19810a6f488624715ad34230633}{getFvMesh}}(),}
+\DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ IOobject::NO\_READ,}
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{wOpt}}}
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ),}
+\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mesh.\mbox{\hyperlink{classFoam_1_1dgGeomMesh_ac7c6d19810a6f488624715ad34230633}{getFvMesh}}(),}
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{dimensioned<Type>}}(\textcolor{stringliteral}{"{}zero"{}},\ \mbox{\hyperlink{classFoam_1_1GaussField}{dimless}},\ \mbox{\hyperlink{classFoam_1_1GaussField}{pTraits<Type>::zero}})}
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ )}
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ \ \ \ \ );}
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00139\ }
+\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1dofField_ab04c80e11431c5d027dd2e0d68710271}{updateBoundaryField}}(\mbox{\hyperlink{classFoam_1_1GaussField}{d}});}
+\DoxyCodeLine{00141\ \ \ \ \ \}}
 \DoxyCodeLine{00142\ }
-\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{d}}\ =\ 0;\ \mbox{\hyperlink{classFoam_1_1GaussField}{d}}\ <\ nDof;\ ++\mbox{\hyperlink{classFoam_1_1GaussField}{d}})}
-\DoxyCodeLine{00144\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00145\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{local}}[\mbox{\hyperlink{classFoam_1_1GaussField}{d}}]\ =\ (*\mbox{\hyperlink{classFoam_1_1dofField_a2d2bd9787be6f36e973d5fceac087418}{foamFields\_}}[\mbox{\hyperlink{classFoam_1_1GaussField}{d}}])[\mbox{\hyperlink{classFoam_1_1GaussField}{c}}];}
-\DoxyCodeLine{00146\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00147\ }
-\DoxyCodeLine{00148\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1dofField_a01beb8110d74104665b40842e1d63325}{cellDofs\_}}[\mbox{\hyperlink{classFoam_1_1GaussField}{c}}]\ =\ \mbox{\hyperlink{classFoam_1_1GaussField}{cellDof<Type>}}(\mbox{\hyperlink{classFoam_1_1GaussField}{c}},\ nDof,\ \mbox{\hyperlink{classFoam_1_1GaussField}{local}});}
-\DoxyCodeLine{00149\ \ \ \ \ \}}
-\DoxyCodeLine{00150\ \}}
-\DoxyCodeLine{00151\ }
-\DoxyCodeLine{00152\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Type>}
-\DoxyCodeLine{00153\ \mbox{\hyperlink{classFoam_1_1dofField_a81c74b45a86dd15c9368210f4d34aaf6}{dofField<Type>::dofField}}}
-\DoxyCodeLine{00154\ (}
-\DoxyCodeLine{00155\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dgGeomMesh}}\&\ mesh}
-\DoxyCodeLine{00156\ )}
-\DoxyCodeLine{00157\ :}
-\DoxyCodeLine{00158\ \ \ \ \ dgMesh\_(mesh),}
-\DoxyCodeLine{00159\ \ \ \ \ cellDofs\_(),}
-\DoxyCodeLine{00160\ \ \ \ \ nCells\_(mesh.nCells()),}
-\DoxyCodeLine{00161\ \ \ \ \ foamFields\_(),}
-\DoxyCodeLine{00162\ \ \ \ \ dofPerCell\_(nCells\_,\ 0),}
-\DoxyCodeLine{00163\ \ \ \ \ maxDoF\_(0)}
-\DoxyCodeLine{00164\ \{}
-\DoxyCodeLine{00165\ \ \ \ \ \textcolor{comment}{//\ Determine\ number\ of\ DoFs\ per\ cell\ and\ maxDoF\_}}
-\DoxyCodeLine{00166\ \ \ \ \ \textcolor{keywordflow}{for}\ (\mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{c}}\ =\ 0;\ \mbox{\hyperlink{classFoam_1_1GaussField}{c}}\ <\ \mbox{\hyperlink{classFoam_1_1dofField_afdedafaf83bd6df3aa3a01818ddc1909}{nCells\_}};\ ++\mbox{\hyperlink{classFoam_1_1GaussField}{c}})}
-\DoxyCodeLine{00167\ \ \ \ \ \{}
-\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ nDof\ =\ mesh.\mbox{\hyperlink{classFoam_1_1dgGeomMesh_ad8cb28223f72f4f774d72c2824b7d0c7}{cells}}()[\mbox{\hyperlink{classFoam_1_1GaussField}{c}}]-\/>nDof();}
-\DoxyCodeLine{00169\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1dofField_a56e85ac46de29871fd545a1e061f18a5}{dofPerCell\_}}[\mbox{\hyperlink{classFoam_1_1GaussField}{c}}]\ =\ nDof;}
-\DoxyCodeLine{00170\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1dofField_a6735843d3aa0a320ea0c9e0ee51f2ba3}{maxDoF\_}}\ =\ \mbox{\hyperlink{classFoam_1_1GaussField}{max}}(\mbox{\hyperlink{classFoam_1_1dofField_a6735843d3aa0a320ea0c9e0ee51f2ba3}{maxDoF\_}},\ nDof);}
-\DoxyCodeLine{00171\ \ \ \ \ \}}
-\DoxyCodeLine{00172\ }
-\DoxyCodeLine{00173\ \ \ \ \ \textcolor{comment}{//\ Create\ zero\ cellDofs\_}}
-\DoxyCodeLine{00174\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1dofField_a01beb8110d74104665b40842e1d63325}{cellDofs\_}}.setSize(\mbox{\hyperlink{classFoam_1_1dofField_afdedafaf83bd6df3aa3a01818ddc1909}{nCells\_}});}
-\DoxyCodeLine{00175\ }
-\DoxyCodeLine{00176\ \ \ \ \ \textcolor{keywordflow}{for}\ (\mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{c}}\ =\ 0;\ \mbox{\hyperlink{classFoam_1_1GaussField}{c}}\ <\ \mbox{\hyperlink{classFoam_1_1dofField_afdedafaf83bd6df3aa3a01818ddc1909}{nCells\_}};\ ++\mbox{\hyperlink{classFoam_1_1GaussField}{c}})}
-\DoxyCodeLine{00177\ \ \ \ \ \{}
-\DoxyCodeLine{00178\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ nDof\ =\ \mbox{\hyperlink{classFoam_1_1dofField_a56e85ac46de29871fd545a1e061f18a5}{dofPerCell\_}}[\mbox{\hyperlink{classFoam_1_1GaussField}{c}}];}
-\DoxyCodeLine{00179\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{List<Type>}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{local}}(nDof,\ \mbox{\hyperlink{classFoam_1_1GaussField}{pTraits<Type>::zero}});}
+\DoxyCodeLine{00143\ \ \ \ \ \textcolor{comment}{//\ Construct\ cellDof\ list\ from\ volFields}}
+\DoxyCodeLine{00144\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1dofField_a01beb8110d74104665b40842e1d63325}{cellDofs\_}}.setSize(\mbox{\hyperlink{classFoam_1_1dofField_afdedafaf83bd6df3aa3a01818ddc1909}{nCells\_}});}
+\DoxyCodeLine{00145\ }
+\DoxyCodeLine{00146\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ c\ =\ 0;\ c\ <\ \mbox{\hyperlink{classFoam_1_1dofField_afdedafaf83bd6df3aa3a01818ddc1909}{nCells\_}};\ ++c)}
+\DoxyCodeLine{00147\ \ \ \ \ \{}
+\DoxyCodeLine{00148\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ label\ nDof\ =\ \mbox{\hyperlink{classFoam_1_1dofField_a56e85ac46de29871fd545a1e061f18a5}{dofPerCell\_}}[c];}
+\DoxyCodeLine{00149\ \ \ \ \ \ \ \ \ List<Type>\ local(nDof,\ pTraits<Type>::zero);}
+\DoxyCodeLine{00150\ }
+\DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{d}}\ =\ 0;\ \mbox{\hyperlink{classFoam_1_1GaussField}{d}}\ <\ nDof;\ ++\mbox{\hyperlink{classFoam_1_1GaussField}{d}})}
+\DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00153\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{local}}[\mbox{\hyperlink{classFoam_1_1GaussField}{d}}]\ =\ (*\mbox{\hyperlink{classFoam_1_1dofField_a2d2bd9787be6f36e973d5fceac087418}{foamFields\_}}[\mbox{\hyperlink{classFoam_1_1GaussField}{d}}])[\mbox{\hyperlink{classFoam_1_1GaussField}{c}}];}
+\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00155\ }
+\DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1dofField_a01beb8110d74104665b40842e1d63325}{cellDofs\_}}[\mbox{\hyperlink{classFoam_1_1GaussField}{c}}]\ =\ \mbox{\hyperlink{classFoam_1_1GaussField}{cellDof<Type>}}(\mbox{\hyperlink{classFoam_1_1GaussField}{c}},\ nDof,\ \mbox{\hyperlink{classFoam_1_1GaussField}{local}});}
+\DoxyCodeLine{00157\ \ \ \ \ \}}
+\DoxyCodeLine{00158\ \}}
+\DoxyCodeLine{00159\ }
+\DoxyCodeLine{00160\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Type>}
+\DoxyCodeLine{00161\ \mbox{\hyperlink{classFoam_1_1dofField_a81c74b45a86dd15c9368210f4d34aaf6}{dofField<Type>::dofField}}}
+\DoxyCodeLine{00162\ (}
+\DoxyCodeLine{00163\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dgGeomMesh}}\&\ mesh}
+\DoxyCodeLine{00164\ )}
+\DoxyCodeLine{00165\ :}
+\DoxyCodeLine{00166\ \ \ \ \ dgMesh\_(mesh),}
+\DoxyCodeLine{00167\ \ \ \ \ cellDofs\_(),}
+\DoxyCodeLine{00168\ \ \ \ \ nCells\_(mesh.nCells()),}
+\DoxyCodeLine{00169\ \ \ \ \ foamFields\_(),}
+\DoxyCodeLine{00170\ \ \ \ \ dofPerCell\_(nCells\_,\ 0),}
+\DoxyCodeLine{00171\ \ \ \ \ maxDoF\_(0)}
+\DoxyCodeLine{00172\ \{}
+\DoxyCodeLine{00173\ \ \ \ \ \textcolor{comment}{//\ Determine\ number\ of\ DoFs\ per\ cell\ and\ maxDoF\_}}
+\DoxyCodeLine{00174\ \ \ \ \ \textcolor{keywordflow}{for}\ (\mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{c}}\ =\ 0;\ \mbox{\hyperlink{classFoam_1_1GaussField}{c}}\ <\ \mbox{\hyperlink{classFoam_1_1dofField_afdedafaf83bd6df3aa3a01818ddc1909}{nCells\_}};\ ++\mbox{\hyperlink{classFoam_1_1GaussField}{c}})}
+\DoxyCodeLine{00175\ \ \ \ \ \{}
+\DoxyCodeLine{00176\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ nDof\ =\ mesh.\mbox{\hyperlink{classFoam_1_1dgGeomMesh_ad8cb28223f72f4f774d72c2824b7d0c7}{cells}}()[\mbox{\hyperlink{classFoam_1_1GaussField}{c}}]-\/>nDof();}
+\DoxyCodeLine{00177\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1dofField_a56e85ac46de29871fd545a1e061f18a5}{dofPerCell\_}}[\mbox{\hyperlink{classFoam_1_1GaussField}{c}}]\ =\ nDof;}
+\DoxyCodeLine{00178\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1dofField_a6735843d3aa0a320ea0c9e0ee51f2ba3}{maxDoF\_}}\ =\ \mbox{\hyperlink{classFoam_1_1GaussField}{max}}(\mbox{\hyperlink{classFoam_1_1dofField_a6735843d3aa0a320ea0c9e0ee51f2ba3}{maxDoF\_}},\ nDof);}
+\DoxyCodeLine{00179\ \ \ \ \ \}}
 \DoxyCodeLine{00180\ }
-\DoxyCodeLine{00181\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1dofField_a01beb8110d74104665b40842e1d63325}{cellDofs\_}}[\mbox{\hyperlink{classFoam_1_1GaussField}{c}}]\ =\ \mbox{\hyperlink{classFoam_1_1GaussField}{cellDof<Type>}}(\mbox{\hyperlink{classFoam_1_1GaussField}{c}},\ nDof,\ \mbox{\hyperlink{classFoam_1_1GaussField}{local}});}
-\DoxyCodeLine{00182\ \ \ \ \ \}}
-\DoxyCodeLine{00183\ \}}
-\DoxyCodeLine{00184\ }
-\DoxyCodeLine{00185\ }
-\DoxyCodeLine{00186\ \textcolor{comment}{//\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ Member\ Functions\ \ *\ *\ *\ *\ *\ *\ *\ *\ *\ //}}
-\DoxyCodeLine{00187\ }
-\DoxyCodeLine{00188\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Type>}
-\DoxyCodeLine{00189\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classFoam_1_1dofField_a896d8066a50aabe7b7e22a4481ee0327}{dofField<Type>::updateCellDof}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ cellID)}
-\DoxyCodeLine{00190\ \{}
-\DoxyCodeLine{00191\ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classFoam_1_1GaussField}{cellID\ <\ 0\ ||\ cellID\ >}}=\ nCells\_)}
-\DoxyCodeLine{00192\ \ \ \ \ \{}
-\DoxyCodeLine{00193\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{FatalErrorInFunction}}}
-\DoxyCodeLine{00194\ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{}Cell\ index\ "{}}\ <<\ \mbox{\hyperlink{classFoam_1_1GaussField_a31e56407c32c582500c051353b1ead2a}{cellID}}\ <<\ \textcolor{stringliteral}{"{}\ is\ out\ of\ range\ [0,\ "{}}}
-\DoxyCodeLine{00195\ \ \ \ \ \ \ \ \ \ \ \ \ <<\ nCells\_\ -\/\ 1\ <<\ \textcolor{stringliteral}{"{}]"{}}}
-\DoxyCodeLine{00196\ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \mbox{\hyperlink{classFoam_1_1GaussField_a962e524110de8fe842a07f16521c7086}{abort}}(\mbox{\hyperlink{classFoam_1_1GaussField}{FatalError}});}
-\DoxyCodeLine{00197\ \ \ \ \ \}}
-\DoxyCodeLine{00198\ }
-\DoxyCodeLine{00199\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ nDof\ =\ dofPerCell\_[\mbox{\hyperlink{classFoam_1_1GaussField_a31e56407c32c582500c051353b1ead2a}{cellID}}];}
-\DoxyCodeLine{00200\ }
-\DoxyCodeLine{00201\ \ \ \ \ \textcolor{keywordflow}{for}\ (\mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{d}}\ =\ 0;\ \mbox{\hyperlink{classFoam_1_1GaussField}{d}}\ <\ maxDoF\_;\ ++\mbox{\hyperlink{classFoam_1_1GaussField_a962e524110de8fe842a07f16521c7086}{d}})}
-\DoxyCodeLine{00202\ \ \ \ \ \{}
-\DoxyCodeLine{00203\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classFoam_1_1GaussField}{d}}\ <\ nDof)}
-\DoxyCodeLine{00204\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00205\ \ \ \ \ \ \ \ \ \ \ \ \ (*foamFields\_[\mbox{\hyperlink{classFoam_1_1GaussField_a962e524110de8fe842a07f16521c7086}{d}}])[\mbox{\hyperlink{classFoam_1_1GaussField_a31e56407c32c582500c051353b1ead2a}{cellID}}]\ =\ cellDofs\_[\mbox{\hyperlink{classFoam_1_1GaussField_a31e56407c32c582500c051353b1ead2a}{cellID}}][\mbox{\hyperlink{classFoam_1_1GaussField}{d}}];}
-\DoxyCodeLine{00206\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00207\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
-\DoxyCodeLine{00208\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00209\ \ \ \ \ \ \ \ \ \ \ \ \ (*foamFields\_[\mbox{\hyperlink{classFoam_1_1GaussField_a962e524110de8fe842a07f16521c7086}{d}}])[\mbox{\hyperlink{classFoam_1_1GaussField_a31e56407c32c582500c051353b1ead2a}{cellID}}]\ =\ \mbox{\hyperlink{classFoam_1_1GaussField}{pTraits<Type>::zero}};}
-\DoxyCodeLine{00210\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00211\ \ \ \ \ \}}
-\DoxyCodeLine{00212\ \}}
-\DoxyCodeLine{00213\ }
-\DoxyCodeLine{00214\ }
-\DoxyCodeLine{00215\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Type>}
-\DoxyCodeLine{00216\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classFoam_1_1dofField_ab3e229f0c38495f1fad1721498f3c9b7}{dofField<Type>::write}}()\textcolor{keyword}{\ const}}
-\DoxyCodeLine{00217\ \textcolor{keyword}{}\{}
-\DoxyCodeLine{00218\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{fld}}\ :\ foamFields\_)}
-\DoxyCodeLine{00219\ \ \ \ \ \{}
-\DoxyCodeLine{00220\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{fld}}-\/>write();}
-\DoxyCodeLine{00221\ \ \ \ \ \}}
-\DoxyCodeLine{00222\ \}}
-\DoxyCodeLine{00223\ }
-\DoxyCodeLine{00224\ \}\ \textcolor{comment}{//\ End\ namespace\ Foam}}
-\DoxyCodeLine{00225\ }
-\DoxyCodeLine{00226\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00181\ \ \ \ \ \textcolor{comment}{//\ Create\ zero\ cellDofs\_}}
+\DoxyCodeLine{00182\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1dofField_a01beb8110d74104665b40842e1d63325}{cellDofs\_}}.setSize(\mbox{\hyperlink{classFoam_1_1dofField_afdedafaf83bd6df3aa3a01818ddc1909}{nCells\_}});}
+\DoxyCodeLine{00183\ }
+\DoxyCodeLine{00184\ \ \ \ \ \textcolor{keywordflow}{for}\ (\mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{c}}\ =\ 0;\ \mbox{\hyperlink{classFoam_1_1GaussField}{c}}\ <\ \mbox{\hyperlink{classFoam_1_1dofField_afdedafaf83bd6df3aa3a01818ddc1909}{nCells\_}};\ ++\mbox{\hyperlink{classFoam_1_1GaussField}{c}})}
+\DoxyCodeLine{00185\ \ \ \ \ \{}
+\DoxyCodeLine{00186\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ nDof\ =\ \mbox{\hyperlink{classFoam_1_1dofField_a56e85ac46de29871fd545a1e061f18a5}{dofPerCell\_}}[\mbox{\hyperlink{classFoam_1_1GaussField}{c}}];}
+\DoxyCodeLine{00187\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{List<Type>}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{local}}(nDof,\ \mbox{\hyperlink{classFoam_1_1GaussField}{pTraits<Type>::zero}});}
+\DoxyCodeLine{00188\ }
+\DoxyCodeLine{00189\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1dofField_a01beb8110d74104665b40842e1d63325}{cellDofs\_}}[\mbox{\hyperlink{classFoam_1_1GaussField}{c}}]\ =\ \mbox{\hyperlink{classFoam_1_1GaussField}{cellDof<Type>}}(\mbox{\hyperlink{classFoam_1_1GaussField}{c}},\ nDof,\ \mbox{\hyperlink{classFoam_1_1GaussField}{local}});}
+\DoxyCodeLine{00190\ \ \ \ \ \}}
+\DoxyCodeLine{00191\ \}}
+\DoxyCodeLine{00192\ }
+\DoxyCodeLine{00193\ }
+\DoxyCodeLine{00194\ \textcolor{comment}{//\ *\ *\ *\ *\ *\ *\ *\ *\ *\ *\ Member\ Functions\ \ *\ *\ *\ *\ *\ *\ *\ *\ *\ //}}
+\DoxyCodeLine{00195\ }
+\DoxyCodeLine{00196\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Type>}
+\DoxyCodeLine{00197\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classFoam_1_1dofField_ab04c80e11431c5d027dd2e0d68710271}{dofField<Type>::updateBoundaryField}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{dofI}})}
+\DoxyCodeLine{00198\ \{}
+\DoxyCodeLine{00199\ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classFoam_1_1GaussField}{dofI\ <\ 0\ ||\ dofI\ >}}=\ foamFields\_.size())}
+\DoxyCodeLine{00200\ \ \ \ \ \{}
+\DoxyCodeLine{00201\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{FatalErrorInFunction}}}
+\DoxyCodeLine{00202\ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{}DoF\ index\ "{}}\ <<\ \mbox{\hyperlink{classFoam_1_1GaussField}{dofI}}\ <<\ \textcolor{stringliteral}{"{}\ is\ out\ of\ range\ [0,\ "{}}}
+\DoxyCodeLine{00203\ \ \ \ \ \ \ \ \ \ \ \ \ <<\ foamFields\_.size()\ -\/\ 1\ <<\ \textcolor{stringliteral}{"{}]"{}}}
+\DoxyCodeLine{00204\ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \mbox{\hyperlink{classFoam_1_1GaussField_a962e524110de8fe842a07f16521c7086}{abort}}(\mbox{\hyperlink{classFoam_1_1GaussField}{FatalError}});}
+\DoxyCodeLine{00205\ \ \ \ \ \}}
+\DoxyCodeLine{00206\ }
+\DoxyCodeLine{00207\ \ \ \ \ \textcolor{keyword}{typename}\ \mbox{\hyperlink{classFoam_1_1GaussField}{GeometricField<Type,\ fvPatchField,\ volMesh>::Boundary}}\&}
+\DoxyCodeLine{00208\ \ \ \ \ \ \ \ \ boundaryField\ =\ foamFields\_[\mbox{\hyperlink{classFoam_1_1GaussField_a962e524110de8fe842a07f16521c7086}{dofI}}]-\/>boundaryFieldRef();}
+\DoxyCodeLine{00209\ }
+\DoxyCodeLine{00210\ \ \ \ \ \mbox{\hyperlink{advanceStage_8H_a64a669ced2293965f99538a37d2c80d8}{forAll}}(boundaryField,\ \mbox{\hyperlink{classFoam_1_1GaussField}{patchI}})}
+\DoxyCodeLine{00211\ \ \ \ \ \{}
+\DoxyCodeLine{00212\ \ \ \ \ \ \ \ \ boundaryField[\mbox{\hyperlink{classFoam_1_1GaussField_a962e524110de8fe842a07f16521c7086}{patchI}}]\ =\ boundaryField[\mbox{\hyperlink{classFoam_1_1GaussField_a962e524110de8fe842a07f16521c7086}{patchI}}].patchInternalField();}
+\DoxyCodeLine{00213\ \ \ \ \ \}}
+\DoxyCodeLine{00214\ \}}
+\DoxyCodeLine{00215\ }
+\DoxyCodeLine{00216\ }
+\DoxyCodeLine{00217\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Type>}
+\DoxyCodeLine{00218\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classFoam_1_1dofField_a896d8066a50aabe7b7e22a4481ee0327}{dofField<Type>::updateCellDof}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ cellID)}
+\DoxyCodeLine{00219\ \{}
+\DoxyCodeLine{00220\ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classFoam_1_1GaussField}{cellID\ <\ 0\ ||\ cellID\ >}}=\ nCells\_)}
+\DoxyCodeLine{00221\ \ \ \ \ \{}
+\DoxyCodeLine{00222\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{FatalErrorInFunction}}}
+\DoxyCodeLine{00223\ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{}Cell\ index\ "{}}\ <<\ \mbox{\hyperlink{classFoam_1_1GaussField_a31e56407c32c582500c051353b1ead2a}{cellID}}\ <<\ \textcolor{stringliteral}{"{}\ is\ out\ of\ range\ [0,\ "{}}}
+\DoxyCodeLine{00224\ \ \ \ \ \ \ \ \ \ \ \ \ <<\ nCells\_\ -\/\ 1\ <<\ \textcolor{stringliteral}{"{}]"{}}}
+\DoxyCodeLine{00225\ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \mbox{\hyperlink{classFoam_1_1GaussField_a962e524110de8fe842a07f16521c7086}{abort}}(\mbox{\hyperlink{classFoam_1_1GaussField}{FatalError}});}
+\DoxyCodeLine{00226\ \ \ \ \ \}}
 \DoxyCodeLine{00227\ }
-\DoxyCodeLine{00228\ \textcolor{comment}{//\ *************************************************************************\ //}}
+\DoxyCodeLine{00228\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ nDof\ =\ dofPerCell\_[\mbox{\hyperlink{classFoam_1_1GaussField_a31e56407c32c582500c051353b1ead2a}{cellID}}];}
+\DoxyCodeLine{00229\ }
+\DoxyCodeLine{00230\ \ \ \ \ \textcolor{keywordflow}{for}\ (\mbox{\hyperlink{classFoam_1_1GaussField}{label}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{d}}\ =\ 0;\ \mbox{\hyperlink{classFoam_1_1GaussField}{d}}\ <\ maxDoF\_;\ ++\mbox{\hyperlink{classFoam_1_1GaussField_a962e524110de8fe842a07f16521c7086}{d}})}
+\DoxyCodeLine{00231\ \ \ \ \ \{}
+\DoxyCodeLine{00232\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classFoam_1_1GaussField}{d}}\ <\ nDof)}
+\DoxyCodeLine{00233\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00234\ \ \ \ \ \ \ \ \ \ \ \ \ (*foamFields\_[\mbox{\hyperlink{classFoam_1_1GaussField_a962e524110de8fe842a07f16521c7086}{d}}])[\mbox{\hyperlink{classFoam_1_1GaussField_a31e56407c32c582500c051353b1ead2a}{cellID}}]\ =\ cellDofs\_[\mbox{\hyperlink{classFoam_1_1GaussField_a31e56407c32c582500c051353b1ead2a}{cellID}}][\mbox{\hyperlink{classFoam_1_1GaussField}{d}}];}
+\DoxyCodeLine{00235\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00236\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00237\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00238\ \ \ \ \ \ \ \ \ \ \ \ \ (*foamFields\_[\mbox{\hyperlink{classFoam_1_1GaussField_a962e524110de8fe842a07f16521c7086}{d}}])[\mbox{\hyperlink{classFoam_1_1GaussField_a31e56407c32c582500c051353b1ead2a}{cellID}}]\ =\ \mbox{\hyperlink{classFoam_1_1GaussField}{pTraits<Type>::zero}};}
+\DoxyCodeLine{00239\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00240\ \ \ \ \ \}}
+\DoxyCodeLine{00241\ \}}
+\DoxyCodeLine{00242\ }
+\DoxyCodeLine{00243\ }
+\DoxyCodeLine{00244\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Type>}
+\DoxyCodeLine{00245\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classFoam_1_1dofField_ab3e229f0c38495f1fad1721498f3c9b7}{dofField<Type>::write}}()\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00246\ \textcolor{keyword}{}\{}
+\DoxyCodeLine{00247\ \ \ \ \ \mbox{\hyperlink{advanceStage_8H_a64a669ced2293965f99538a37d2c80d8}{forAll}}(foamFields\_,\ \mbox{\hyperlink{classFoam_1_1GaussField}{dofI}})}
+\DoxyCodeLine{00248\ \ \ \ \ \{}
+\DoxyCodeLine{00249\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const\_cast<}\mbox{\hyperlink{classFoam_1_1GaussField}{dofField<Type>}}\&\textcolor{keyword}{>}(*this).updateBoundaryField(\mbox{\hyperlink{classFoam_1_1GaussField}{dofI}});}
+\DoxyCodeLine{00250\ }
+\DoxyCodeLine{00251\ \ \ \ \ \ \ \ \ foamFields\_[\mbox{\hyperlink{classFoam_1_1GaussField_a962e524110de8fe842a07f16521c7086}{dofI}}]-\/>write();}
+\DoxyCodeLine{00252\ \ \ \ \ \}}
+\DoxyCodeLine{00253\ \}}
+\DoxyCodeLine{00254\ }
+\DoxyCodeLine{00255\ \}\ \textcolor{comment}{//\ End\ namespace\ Foam}}
+\DoxyCodeLine{00256\ }
+\DoxyCodeLine{00257\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00258\ }
+\DoxyCodeLine{00259\ \textcolor{comment}{//\ *************************************************************************\ //}}
 
 \end{DoxyCode}

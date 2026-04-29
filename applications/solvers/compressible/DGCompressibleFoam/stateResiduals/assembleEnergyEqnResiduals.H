@@ -17,8 +17,34 @@
 //
 //     d(E)/dt + div(E U + P U + tauT.U + qT) = Ek div(mD).
 //
-// The div(mD) operator is handled by a dgDiffusiveTerm, as in the mass
-// equation.
+// The kinetic mass-diffusion source is first moved to the left-hand side:
+//
+//     d(E)/dt + ... - Ek div(mD) = 0.
+//
+// Then use the product rule
+//
+//     Ek div(mD) = div(Ek mD) - mD.grad(Ek),
+//
+// giving the left-hand-side contribution
+//
+//     -Ek div(mD) = -div(Ek mD) + mD.grad(Ek).
+//
+// so for each test function phi on a cell K,
+//
+//     int_K phi [-Ek div(mD)] dV
+//       = -int_K phi div(Ek mD) dV
+//        +int_K phi mD.grad(Ek) dV
+//
+//       = -int_dK phi (Ek mD)^*.n dS
+//        +int_K Ek mD.grad(phi) dV
+//        +int_K phi mD.grad(Ek) dV.
+//
+// The dgDiffusiveTerm convention returns
+//
+//     R(F) = int_K F.grad(phi) dV - int_dK phi F^*.n dS,
+//
+// so choosing F = -Ek*mD assembles the -div(Ek*mD) part.  The remaining
+// volume correction is added separately as +mD.grad(Ek).
 //
 // Assemble the convective energy flux
 //
@@ -111,52 +137,64 @@ if (selfDiffusion)
         EG,
         tSelfDiffusionEnergyFlux,
         fluxSolverManager,
-        true
+        false
     );
 
     selfDiffusionEnergyTerm.updateFlux();
     selfDiffusionEnergyTerm.calcResidual();
 
-    dgDiffusiveTerm<scalar, vector> selfDiffusionMassDivergenceTerm
+    const auto kineticEnergyExpr =
+        scalar(0.5)*(dg::expr(UG) & dg::expr(UG));
+
+    const auto kineticMassDiffFluxExpr =
+       -kineticEnergyExpr*dg::expr(tMassDiffFlux());
+
+    tmp<GaussField<vector>> tKineticMassDiffFlux =
+        dg::evaluate<vector>
+        (
+            kineticMassDiffFluxExpr,
+            cellI,
+            &dgMesh
+        );
+
+    dgDiffusiveTerm<scalar, vector> kineticMassDiffFluxTerm
     (
-        "selfDiffusionMassTerm",
-        dgFluxSolver::equationType::massTransport,
+        "kineticMassDiffFluxTerm",
+        dgFluxSolver::equationType::energyTransport,
         dgFluxSolver::fluxType::diffusive,
         basisField,
-        rhoG,
-        tMassDiffFlux,
+        EG,
+        tKineticMassDiffFlux,
         fluxSolverManager,
-        true
+        false
     );
 
-    selfDiffusionMassDivergenceTerm.updateFlux();
-    selfDiffusionMassDivergenceTerm.calcResidual();
+    kineticMassDiffFluxTerm.updateFlux();
+    kineticMassDiffFluxTerm.calcResidual();
 
-    List<scalar> kineticMassDiffResidual
+    const auto gradKineticEnergyExpr =
+        dg::expr(UG) & dg::expr(gradUG);
+
+    const auto kineticMassDiffCorrectionExpr =
+       (dg::expr(tMassDiffFlux()) & gradKineticEnergyExpr);
+
+    tmp<GaussField<scalar>> tKineticMassDiffCorrection =
+        dg::evaluate<scalar>
+        (
+            kineticMassDiffCorrectionExpr,
+            cellI,
+            &dgMesh
+        );
+
+    dgSourceTerm<scalar> kineticMassDiffCorrectionTerm
     (
-        selfDiffusionMassDivergenceTerm.R().size(),
-        pTraits<scalar>::zero
+        "kineticMassDiffCorrectionTerm",
+        basisField,
+        tKineticMassDiffCorrection(),
+        false
     );
 
-    const cellDof<scalar>& rhoDof = rho.dof()[cellI];
-    const cellDof<vector>& rhoUDof = rhoU.dof()[cellI];
-
-    forAll(kineticMassDiffResidual, dofI)
-    {
-        const scalar rhoValue =
-            max(mag(rhoDof[dofI]), VSMALL);
-        const vector UValue = rhoUDof[dofI]/rhoValue;
-
-        const scalar kineticEnergy =
-            scalar(0.5)*(UValue & UValue);
-
-        // selfDiffusionMassDivergenceTerm.R() is the residual contribution
-        // for +div(mD) on the left-hand side of the mass equation, i.e.
-        // -div(mD) in the explicit update.  The energy equation has
-        // +Ek*div(mD) on the right-hand side, so the sign is reversed here.
-        kineticMassDiffResidual[dofI] =
-           -kineticEnergy*selfDiffusionMassDivergenceTerm.R()[dofI];
-    }
+    kineticMassDiffCorrectionTerm.calcResidual();
 
     timeDiscretization.addResidual
     (
@@ -183,7 +221,14 @@ if (selfDiffusion)
     (
         E.name(),
         cellI,
-        kineticMassDiffResidual
+        kineticMassDiffFluxTerm.R()
+    );
+
+    timeDiscretization.addResidual
+    (
+        E.name(),
+        cellI,
+        kineticMassDiffCorrectionTerm.R()
     );
 }
 else

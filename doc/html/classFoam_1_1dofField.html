@@ -83,6 +83,7 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
 <a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="classFoam_1_1dofField-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">Foam::dofField&lt; Type &gt; Class Template Reference</div></div>
@@ -154,6 +155,15 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ab3e229f0c38495f1fad1721498f3c9b7" id="r_ab3e229f0c38495f1fad1721498f3c9b7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1dofField.html#ab3e229f0c38495f1fad1721498f3c9b7">write</a> () <a class="el" href="classFoam_1_1GaussField.html">const</a></td></tr>
 <tr class="memdesc:ab3e229f0c38495f1fad1721498f3c9b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write all OpenFOAM DoF volFields to disk.  <br /></td></tr>
 <tr class="separator:ab3e229f0c38495f1fad1721498f3c9b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-methods" name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:ab04c80e11431c5d027dd2e0d68710271" id="r_ab04c80e11431c5d027dd2e0d68710271"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1dofField.html#ab04c80e11431c5d027dd2e0d68710271">updateBoundaryField</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">label</a> <a class="el" href="classFoam_1_1GaussField.html">dofI</a>)</td></tr>
+<tr class="memdesc:ab04c80e11431c5d027dd2e0d68710271"><td class="mdescLeft">&#160;</td><td class="mdescRight">Refresh boundary faces from the adjacent cell values.  <br /></td></tr>
+<tr class="separator:ab04c80e11431c5d027dd2e0d68710271"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab04c80e11431c5d027dd2e0d68710271" id="r_ab04c80e11431c5d027dd2e0d68710271"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFoam_1_1GaussField.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFoam_1_1dofField.html#ab04c80e11431c5d027dd2e0d68710271">updateBoundaryField</a> (<a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">label</a> <a class="el" href="classFoam_1_1GaussField.html">dofI</a>)</td></tr>
+<tr class="memdesc:ab04c80e11431c5d027dd2e0d68710271"><td class="mdescLeft">&#160;</td><td class="mdescRight">Refresh boundary faces from the adjacent cell values.  <br /></td></tr>
+<tr class="separator:ab04c80e11431c5d027dd2e0d68710271"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
@@ -374,6 +384,43 @@ template&lt;<a class="el" href="classFoam_1_1GaussField.html">class</a> <a class
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="ab04c80e11431c5d027dd2e0d68710271" name="ab04c80e11431c5d027dd2e0d68710271"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab04c80e11431c5d027dd2e0d68710271">&#9670;&#160;</a></span>updateBoundaryField() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="classFoam_1_1GaussField.html">class</a> <a class="el" href="classFoam_1_1GaussField.html">Type</a> &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classFoam_1_1GaussField.html">void</a> <a class="el" href="classFoam_1_1dofField.html">Foam::dofField</a>&lt; <a class="el" href="classFoam_1_1GaussField.html">Type</a> &gt;::updateBoundaryField </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">label</a>&#160;</td>
+          <td class="paramname"><em>dofI</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Refresh boundary faces from the adjacent cell values. </p>
+<p>This keeps the on-disk boundaryField section synchronized with the current cell values before a volField is written.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">dofI</td><td>DoF index whose boundary values should be refreshed. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a4e025c47ffecf244e79c6023c82c3653" name="a4e025c47ffecf244e79c6023c82c3653"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a4e025c47ffecf244e79c6023c82c3653">&#9670;&#160;</a></span>cellDofList() <span class="overload">[1/4]</span></h2>
 
@@ -553,6 +600,43 @@ template&lt;<a class="el" href="classFoam_1_1GaussField.html">class</a> <a class
 </div><div class="memdoc">
 
 <p>Write all OpenFOAM DoF volFields to disk. </p>
+
+</div>
+</div>
+<a id="ab04c80e11431c5d027dd2e0d68710271" name="ab04c80e11431c5d027dd2e0d68710271"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab04c80e11431c5d027dd2e0d68710271">&#9670;&#160;</a></span>updateBoundaryField() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="classFoam_1_1GaussField.html">class</a> <a class="el" href="classFoam_1_1GaussField.html">Type</a> &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classFoam_1_1GaussField.html">void</a> <a class="el" href="classFoam_1_1dofField.html">Foam::dofField</a>&lt; <a class="el" href="classFoam_1_1GaussField.html">Type</a> &gt;::updateBoundaryField </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classFoam_1_1GaussField.html">const</a> <a class="el" href="classFoam_1_1GaussField.html">label</a>&#160;</td>
+          <td class="paramname"><em>dofI</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Refresh boundary faces from the adjacent cell values. </p>
+<p>This keeps the on-disk boundaryField section synchronized with the current cell values before a volField is written.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">dofI</td><td>DoF index whose boundary values should be refreshed. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

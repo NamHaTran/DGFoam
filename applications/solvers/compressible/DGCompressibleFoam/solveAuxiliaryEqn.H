@@ -44,8 +44,8 @@ forAll(mesh.cells(), cellI)
     const GaussField<scalar>& EG    = E.gaussFields()[cellI];
 
     // Step 1b: create one local LDG projection term per conservative state.
-    // Each term owns a local copy of its GaussField because updateFlux()
-    // writes the central internal-face state into midValues().
+    // The terms reference the persistent GaussFields and evaluate central
+    // internal-face states directly during residual assembly.
     dgGradProjectionTerm<scalar> auxGradRhoTerm
     (
         "gradRhoFlux",
@@ -67,13 +67,9 @@ forAll(mesh.cells(), cellI)
         EG
     );
 
-    // Step 1c: fill C* on internal and processor faces, then assemble the
-    // modal residual for M S = R.  Physical boundary C* values are
-    // intentionally left as provided by the boundary-condition path.
-    auxGradRhoTerm.updateFlux();
-    auxGradRhoUTerm.updateFlux();
-    auxGradETerm.updateFlux();
-
+    // Step 1c: assemble the modal residual for M S = R. Physical boundary
+    // C* values are read from the boundary-condition path; internal and
+    // processor C* values are computed as 0.5*(C- + C+) on read.
     auxGradRhoTerm.calcResidual();
     auxGradRhoUTerm.calcResidual();
     auxGradETerm.calcResidual();

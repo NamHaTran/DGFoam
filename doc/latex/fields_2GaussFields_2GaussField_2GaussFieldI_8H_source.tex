@@ -73,7 +73,7 @@
 \DoxyCodeLine{00069\ \ \ \ \ cellID\_(cellID),}
 \DoxyCodeLine{00070\ \ \ \ \ mesh\_(mesh),}
 \DoxyCodeLine{00071\ \ \ \ \ cellField\_(mesh,\ \&(*\mbox{\hyperlink{classFoam_1_1dofField}{dofField}})[cellID]),}
-\DoxyCodeLine{00072\ \ \ \ \ faceField\_(cellID,\ mesh)}
+\DoxyCodeLine{00072\ \ \ \ \ faceField\_()}
 \DoxyCodeLine{00073\ \{}
 \DoxyCodeLine{00074\ \ \ \ \ \textcolor{keywordflow}{if}\ (!\mbox{\hyperlink{classFoam_1_1GaussField_a647b6db0acf6685a7129e63b9c34a092}{dofField\_}}\ ||\ !\mbox{\hyperlink{classFoam_1_1GaussField_a0bbe5d7cef3fc3e786da54ee51b67480}{mesh\_}})}
 \DoxyCodeLine{00075\ \ \ \ \ \{}
@@ -94,7 +94,7 @@
 \DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{cellsDof}}[\mbox{\hyperlink{classFoam_1_1GaussField}{i}}\ +\ 1]\ =\ (\mbox{\hyperlink{classFoam_1_1GaussField}{nid}}\ >=\ 0\ ?\ \&(*dofField\_)[\mbox{\hyperlink{classFoam_1_1GaussField_a962e524110de8fe842a07f16521c7086}{nid}}]\ :\ \textcolor{keyword}{nullptr});}
 \DoxyCodeLine{00091\ \ \ \ \ \}}
 \DoxyCodeLine{00092\ }
-\DoxyCodeLine{00093\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField_a3f286fc28a24a2f78d6338791024a71a}{faceField\_}}.setCellsDof(\mbox{\hyperlink{classFoam_1_1GaussField}{cellsDof}});}
+\DoxyCodeLine{00093\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField_a3f286fc28a24a2f78d6338791024a71a}{faceField\_}}\ =\ \mbox{\hyperlink{classFoam_1_1GaussField_a962e524110de8fe842a07f16521c7086}{faceGaussField<Type>}}(\mbox{\hyperlink{classFoam_1_1GaussField}{cellsDof}},\ \mbox{\hyperlink{classFoam_1_1GaussField_a0bbe5d7cef3fc3e786da54ee51b67480}{mesh\_}});}
 \DoxyCodeLine{00094\ \}}
 \DoxyCodeLine{00095\ }
 \DoxyCodeLine{00096\ }

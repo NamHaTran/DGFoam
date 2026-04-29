@@ -219,16 +219,16 @@
 \DoxyCodeLine{00215\ \ \ \ \ \textcolor{keyword}{const}\ label\ cellID\ =\ GField.cellID();}
 \DoxyCodeLine{00216\ }
 \DoxyCodeLine{00217\ \ \ \ \ \textcolor{comment}{//-\/\ Reference\ to\ faceGaussField\ of\ this\ cell}}
-\DoxyCodeLine{00218\ \ \ \ \ faceGaussField<Type>\&\ \mbox{\hyperlink{updateBC_8H_a236e8dce9665bd0a1c4e4992fcaa139d}{faceField}}\ =\ GField.faceField();}
+\DoxyCodeLine{00218\ \ \ \ \ faceGaussField<Type>\&\ faceField\ =\ GField.faceField();}
 \DoxyCodeLine{00219\ }
 \DoxyCodeLine{00220\ \ \ \ \ \textcolor{comment}{//-\/\ Loop\ over\ local\ faces\ of\ this\ cell}}
-\DoxyCodeLine{00221\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ faceI\ =\ 0;\ faceI\ <\ \mbox{\hyperlink{updateBC_8H_a236e8dce9665bd0a1c4e4992fcaa139d}{faceField}}.nFaces();\ ++faceI)}
+\DoxyCodeLine{00221\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ faceI\ =\ 0;\ faceI\ <\ faceField.nFaces();\ ++faceI)}
 \DoxyCodeLine{00222\ \ \ \ \ \{}
 \DoxyCodeLine{00223\ \ \ \ \ \ \ \ \ \textcolor{comment}{//-\/\ Check\ if\ boundary\ face}}
-\DoxyCodeLine{00224\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{updateBC_8H_a236e8dce9665bd0a1c4e4992fcaa139d}{faceField}}.isBoundary(faceI))}
+\DoxyCodeLine{00224\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (faceField.isBoundary(faceI))}
 \DoxyCodeLine{00225\ \ \ \ \ \ \ \ \ \{}
 \DoxyCodeLine{00226\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//-\/\ Get\ owner\ patch\ ID\ from\ faceGaussField}}
-\DoxyCodeLine{00227\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ label\ patchID\ =\ \mbox{\hyperlink{updateBC_8H_a236e8dce9665bd0a1c4e4992fcaa139d}{faceField}}.getOwnerPatchID(faceI);}
+\DoxyCodeLine{00227\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ label\ patchID\ =\ faceField.getOwnerPatchID(faceI);}
 \DoxyCodeLine{00228\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ label\ conditionI\ =\ this-\/>conditionIndex(patchID);}
 \DoxyCodeLine{00229\ }
 \DoxyCodeLine{00230\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//-\/\ Skip\ inactive/non-\/general\ patches\ (eg,\ empty,\ processor)}}
@@ -238,13 +238,13 @@
 \DoxyCodeLine{00234\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{00235\ }
 \DoxyCodeLine{00236\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//-\/\ Face\ unit\ normal\ vector}}
-\DoxyCodeLine{00237\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ vector\ n\ =\ \mbox{\hyperlink{updateBC_8H_a236e8dce9665bd0a1c4e4992fcaa139d}{faceField}}.faces()[faceI]-\/>normal();}
+\DoxyCodeLine{00237\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ vector\ n\ =\ faceField.faces()[faceI]-\/>normal();}
 \DoxyCodeLine{00238\ }
 \DoxyCodeLine{00239\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//-\/\ Loop\ over\ Gauss\ points\ on\ this\ face}}
-\DoxyCodeLine{00240\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ g\ =\ 0;\ g\ <\ \mbox{\hyperlink{updateBC_8H_a236e8dce9665bd0a1c4e4992fcaa139d}{faceField}}.nGaussPerFace();\ ++g)}
+\DoxyCodeLine{00240\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ g\ =\ 0;\ g\ <\ faceField.nGaussPerFace();\ ++g)}
 \DoxyCodeLine{00241\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00242\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Type\&\ mVal\ =\ \mbox{\hyperlink{updateBC_8H_a236e8dce9665bd0a1c4e4992fcaa139d}{faceField}}.minusValueOnFace(faceI,\ g);}
-\DoxyCodeLine{00243\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Type\&\ \ \ \ \ \ \ pVal\ =\ \mbox{\hyperlink{updateBC_8H_a236e8dce9665bd0a1c4e4992fcaa139d}{faceField}}.plusValueOnFace(faceI,\ g);}
+\DoxyCodeLine{00242\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Type\&\ mVal\ =\ faceField.minusValueOnFace(faceI,\ g);}
+\DoxyCodeLine{00243\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Type\&\ \ \ \ \ \ \ pVal\ =\ faceField.plusValueOnFace(faceI,\ g);}
 \DoxyCodeLine{00244\ }
 \DoxyCodeLine{00245\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//-\/\ Call\ BC\ implementation}}
 \DoxyCodeLine{00246\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ bConditions\_[conditionI]-\/>updateGhostStateValue}
@@ -271,14 +271,14 @@
 \DoxyCodeLine{00267\ \ \ \ \ \textcolor{keyword}{const}\ label\ cellID\ =\ GField.cellID();}
 \DoxyCodeLine{00268\ }
 \DoxyCodeLine{00269\ \ \ \ \ \textcolor{comment}{//-\/\ Reference\ to\ faceGaussField\ of\ this\ cell}}
-\DoxyCodeLine{00270\ \ \ \ \ faceGaussField<Type>\&\ \mbox{\hyperlink{updateBC_8H_a236e8dce9665bd0a1c4e4992fcaa139d}{faceField}}\ =\ GField.faceField();}
+\DoxyCodeLine{00270\ \ \ \ \ faceGaussField<Type>\&\ faceField\ =\ GField.faceField();}
 \DoxyCodeLine{00271\ }
 \DoxyCodeLine{00272\ \ \ \ \ \textcolor{comment}{//-\/\ Loop\ over\ local\ faces}}
-\DoxyCodeLine{00273\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ faceI\ =\ 0;\ faceI\ <\ \mbox{\hyperlink{updateBC_8H_a236e8dce9665bd0a1c4e4992fcaa139d}{faceField}}.nFaces();\ ++faceI)}
+\DoxyCodeLine{00273\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ faceI\ =\ 0;\ faceI\ <\ faceField.nFaces();\ ++faceI)}
 \DoxyCodeLine{00274\ \ \ \ \ \{}
-\DoxyCodeLine{00275\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{updateBC_8H_a236e8dce9665bd0a1c4e4992fcaa139d}{faceField}}.isBoundary(faceI))}
+\DoxyCodeLine{00275\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (faceField.isBoundary(faceI))}
 \DoxyCodeLine{00276\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00277\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ label\ patchID\ =\ \mbox{\hyperlink{updateBC_8H_a236e8dce9665bd0a1c4e4992fcaa139d}{faceField}}.getOwnerPatchID(faceI);}
+\DoxyCodeLine{00277\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ label\ patchID\ =\ faceField.getOwnerPatchID(faceI);}
 \DoxyCodeLine{00278\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ label\ conditionI\ =\ this-\/>conditionIndex(patchID);}
 \DoxyCodeLine{00279\ }
 \DoxyCodeLine{00280\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//-\/\ Skip\ inactive/non-\/general\ patches\ (eg,\ empty,\ processor)}}
@@ -287,13 +287,13 @@
 \DoxyCodeLine{00283\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
 \DoxyCodeLine{00284\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{00285\ }
-\DoxyCodeLine{00286\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ vector\ n\ =\ \mbox{\hyperlink{updateBC_8H_a236e8dce9665bd0a1c4e4992fcaa139d}{faceField}}.faces()[faceI].normal();}
+\DoxyCodeLine{00286\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ vector\ n\ =\ faceField.faces()[faceI].normal();}
 \DoxyCodeLine{00287\ }
 \DoxyCodeLine{00288\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//-\/\ Loop\ over\ Gauss\ points}}
-\DoxyCodeLine{00289\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ g\ =\ 0;\ g\ <\ \mbox{\hyperlink{updateBC_8H_a236e8dce9665bd0a1c4e4992fcaa139d}{faceField}}.nGaussPerFace();\ ++g)}
+\DoxyCodeLine{00289\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ g\ =\ 0;\ g\ <\ faceField.nGaussPerFace();\ ++g)}
 \DoxyCodeLine{00290\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00291\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Type\&\ mVal\ =\ \mbox{\hyperlink{updateBC_8H_a236e8dce9665bd0a1c4e4992fcaa139d}{faceField}}.minusValueOnFace(faceI,\ g);}
-\DoxyCodeLine{00292\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Type\&\ \ \ \ \ \ \ pVal\ =\ \mbox{\hyperlink{updateBC_8H_a236e8dce9665bd0a1c4e4992fcaa139d}{faceField}}.plusValueOnFace(faceI,\ g);}
+\DoxyCodeLine{00291\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Type\&\ mVal\ =\ faceField.minusValueOnFace(faceI,\ g);}
+\DoxyCodeLine{00292\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Type\&\ \ \ \ \ \ \ pVal\ =\ faceField.plusValueOnFace(faceI,\ g);}
 \DoxyCodeLine{00293\ }
 \DoxyCodeLine{00294\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//-\/\ Call\ gradient\ BC\ implementation}}
 \DoxyCodeLine{00295\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ bConditions\_[conditionI]-\/>updateGhostStateGrad}

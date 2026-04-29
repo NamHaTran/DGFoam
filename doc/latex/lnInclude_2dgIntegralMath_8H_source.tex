@@ -42,119 +42,174 @@
 \DoxyCodeLine{00038\ \textcolor{preprocessor}{\#include\ "{}cellGaussField.H"{}}}
 \DoxyCodeLine{00039\ \textcolor{preprocessor}{\#include\ "{}faceGaussField.H"{}}}
 \DoxyCodeLine{00040\ \textcolor{preprocessor}{\#include\ "{}dgGeomFace.H"{}}}
-\DoxyCodeLine{00041\ }
-\DoxyCodeLine{00042\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespaceFoam}{Foam}}}
-\DoxyCodeLine{00043\ \{}
-\DoxyCodeLine{00044\ }
-\DoxyCodeLine{00051\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}}\ \mbox{\hyperlink{namespaceFoam_abb4da9f774dc94a34630ee9ed788ec81}{volumeIntegral}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_ad37b81e04f62bcb189d6bf06799468ca}{cellGaussField<vector>}}\&\ gradPhi,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_ad37b81e04f62bcb189d6bf06799468ca}{cellGaussField<vector>}}\&\ F)}
-\DoxyCodeLine{00052\ \{}
-\DoxyCodeLine{00053\ \ \ \ \ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}}\ volInt\ =\ Zero;}
-\DoxyCodeLine{00054\ }
-\DoxyCodeLine{00055\ \ \ \ \ \textcolor{keyword}{const}\ label\ nGauss\ =\ F.size();}
-\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keyword}{const}\ List<scalar>\&\ w\ =\ F.cell()-\/>weights();}
-\DoxyCodeLine{00057\ \ \ \ \ \textcolor{keyword}{const}\ List<scalar>\&\ J3D\ =\ F.cell()-\/>J3D();}
-\DoxyCodeLine{00058\ }
-\DoxyCodeLine{00059\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ g\ =\ 0;\ g\ <\ nGauss;\ ++g)}
-\DoxyCodeLine{00060\ \ \ \ \ \{}
-\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ volInt\ +=\ J3D[g]\ *\ (gradPhi[g]\ \&\ F[g])\ *\ w[g];}
-\DoxyCodeLine{00062\ \ \ \ \ \}}
-\DoxyCodeLine{00063\ }
-\DoxyCodeLine{00064\ \ \ \ \ \textcolor{keywordflow}{return}\ volInt;}
-\DoxyCodeLine{00065\ \}}
-\DoxyCodeLine{00066\ }
-\DoxyCodeLine{00073\ \textcolor{keyword}{inline}\ vector\ \mbox{\hyperlink{namespaceFoam_abb4da9f774dc94a34630ee9ed788ec81}{volumeIntegral}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_ad37b81e04f62bcb189d6bf06799468ca}{cellGaussField<vector>}}\&\ gradPhi,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_acf5dd77db12499c0c5608dcec9267343}{cellGaussField<tensor>}}\&\ F)}
-\DoxyCodeLine{00074\ \{}
-\DoxyCodeLine{00075\ \ \ \ \ vector\ volInt\ =\ Zero;}
-\DoxyCodeLine{00076\ }
-\DoxyCodeLine{00077\ \ \ \ \ \textcolor{keyword}{const}\ label\ nGauss\ =\ F.size();}
-\DoxyCodeLine{00078\ \ \ \ \ \textcolor{keyword}{const}\ List<scalar>\&\ w\ =\ F.cell()-\/>weights();}
-\DoxyCodeLine{00079\ \ \ \ \ \textcolor{keyword}{const}\ List<scalar>\&\ J3D\ =\ F.cell()-\/>J3D();}
-\DoxyCodeLine{00080\ }
-\DoxyCodeLine{00081\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ g\ =\ 0;\ g\ <\ nGauss;\ ++g)}
-\DoxyCodeLine{00082\ \ \ \ \ \{}
-\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ volInt\ +=\ J3D[g]\ *\ (gradPhi[g]\ \&\ F[g])\ *\ w[g];}
-\DoxyCodeLine{00084\ \ \ \ \ \}}
-\DoxyCodeLine{00085\ }
-\DoxyCodeLine{00086\ \ \ \ \ \textcolor{keywordflow}{return}\ volInt;}
-\DoxyCodeLine{00087\ \}}
-\DoxyCodeLine{00088\ }
-\DoxyCodeLine{00096\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}}\ \mbox{\hyperlink{namespaceFoam_abb4da9f774dc94a34630ee9ed788ec81}{volumeIntegral}}(\textcolor{keyword}{const}\ List<scalar>\&\ F,\ \textcolor{keyword}{const}\ List<scalar>\&\ J,\ \textcolor{keyword}{const}\ List<scalar>\&\ w)}
-\DoxyCodeLine{00097\ \{}
-\DoxyCodeLine{00098\ \ \ \ \ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}}\ volInt\ =\ 0;}
-\DoxyCodeLine{00099\ }
-\DoxyCodeLine{00100\ \ \ \ \ \textcolor{keyword}{const}\ label\ nGauss\ =\ F.size();}
-\DoxyCodeLine{00101\ }
-\DoxyCodeLine{00102\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ g\ =\ 0;\ g\ <\ nGauss;\ ++g)}
-\DoxyCodeLine{00103\ \ \ \ \ \{}
-\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ volInt\ +=\ J[g]\ *\ F[g]\ *\ w[g];}
-\DoxyCodeLine{00105\ \ \ \ \ \}}
-\DoxyCodeLine{00106\ }
-\DoxyCodeLine{00107\ \ \ \ \ \textcolor{keywordflow}{return}\ volInt;}
-\DoxyCodeLine{00108\ \}}
-\DoxyCodeLine{00109\ }
-\DoxyCodeLine{00117\ \textcolor{keyword}{inline}\ vector\ \mbox{\hyperlink{namespaceFoam_abb4da9f774dc94a34630ee9ed788ec81}{volumeIntegral}}(\textcolor{keyword}{const}\ List<vector>\&\ F,\ \textcolor{keyword}{const}\ List<scalar>\&\ J,\ \textcolor{keyword}{const}\ List<scalar>\&\ w)}
-\DoxyCodeLine{00118\ \{}
-\DoxyCodeLine{00119\ \ \ \ \ vector\ volInt\ =\ Zero;}
+\DoxyCodeLine{00041\ \textcolor{preprocessor}{\#include\ "{}products.H"{}}}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespaceFoam}{Foam}}}
+\DoxyCodeLine{00044\ \{}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00052\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}}\ \mbox{\hyperlink{namespaceFoam_abb4da9f774dc94a34630ee9ed788ec81}{volumeIntegral}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_ad37b81e04f62bcb189d6bf06799468ca}{cellGaussField<vector>}}\&\ gradPhi,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_ad37b81e04f62bcb189d6bf06799468ca}{cellGaussField<vector>}}\&\ F)}
+\DoxyCodeLine{00053\ \{}
+\DoxyCodeLine{00054\ \ \ \ \ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}}\ volInt\ =\ Zero;}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keyword}{const}\ label\ nGauss\ =\ F.size();}
+\DoxyCodeLine{00057\ \ \ \ \ \textcolor{keyword}{const}\ List<scalar>\&\ \mbox{\hyperlink{dgFluxSolvers_2convectiveFluxSolver_2exactRiemannFluxSolver_2ExactToro_2dgExactToroFluxSolver_8C_a0cb09f9e16e84441cea67044382a4bf6}{w}}\ =\ F.cell()-\/>weights();}
+\DoxyCodeLine{00058\ \ \ \ \ \textcolor{keyword}{const}\ List<scalar>\&\ J3D\ =\ F.cell()-\/>J3D();}
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00060\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ g\ =\ 0;\ g\ <\ nGauss;\ ++g)}
+\DoxyCodeLine{00061\ \ \ \ \ \{}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ volInt\ +=\ J3D[g]\ *\ (gradPhi[g]\ \&\ F[g])\ *\ \mbox{\hyperlink{dgFluxSolvers_2convectiveFluxSolver_2exactRiemannFluxSolver_2ExactToro_2dgExactToroFluxSolver_8C_a0cb09f9e16e84441cea67044382a4bf6}{w}}[g];}
+\DoxyCodeLine{00063\ \ \ \ \ \}}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00065\ \ \ \ \ \textcolor{keywordflow}{return}\ volInt;}
+\DoxyCodeLine{00066\ \}}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00074\ \textcolor{keyword}{inline}\ vector\ \mbox{\hyperlink{namespaceFoam_abb4da9f774dc94a34630ee9ed788ec81}{volumeIntegral}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_ad37b81e04f62bcb189d6bf06799468ca}{cellGaussField<vector>}}\&\ gradPhi,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_acf5dd77db12499c0c5608dcec9267343}{cellGaussField<tensor>}}\&\ F)}
+\DoxyCodeLine{00075\ \{}
+\DoxyCodeLine{00076\ \ \ \ \ vector\ volInt\ =\ Zero;}
+\DoxyCodeLine{00077\ }
+\DoxyCodeLine{00078\ \ \ \ \ \textcolor{keyword}{const}\ label\ nGauss\ =\ F.size();}
+\DoxyCodeLine{00079\ \ \ \ \ \textcolor{keyword}{const}\ List<scalar>\&\ \mbox{\hyperlink{dgFluxSolvers_2convectiveFluxSolver_2exactRiemannFluxSolver_2ExactToro_2dgExactToroFluxSolver_8C_a0cb09f9e16e84441cea67044382a4bf6}{w}}\ =\ F.cell()-\/>weights();}
+\DoxyCodeLine{00080\ \ \ \ \ \textcolor{keyword}{const}\ List<scalar>\&\ J3D\ =\ F.cell()-\/>J3D();}
+\DoxyCodeLine{00081\ }
+\DoxyCodeLine{00082\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ g\ =\ 0;\ g\ <\ nGauss;\ ++g)}
+\DoxyCodeLine{00083\ \ \ \ \ \{}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ volInt\ +=\ J3D[g]\ *\ (gradPhi[g]\ \&\ F[g])\ *\ \mbox{\hyperlink{dgFluxSolvers_2convectiveFluxSolver_2exactRiemannFluxSolver_2ExactToro_2dgExactToroFluxSolver_8C_a0cb09f9e16e84441cea67044382a4bf6}{w}}[g];}
+\DoxyCodeLine{00085\ \ \ \ \ \}}
+\DoxyCodeLine{00086\ }
+\DoxyCodeLine{00087\ \ \ \ \ \textcolor{keywordflow}{return}\ volInt;}
+\DoxyCodeLine{00088\ \}}
+\DoxyCodeLine{00089\ }
+\DoxyCodeLine{00099\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Type>}
+\DoxyCodeLine{00100\ \textcolor{keyword}{inline}\ \textcolor{keyword}{typename}\ outerProduct<Type,\ vector>::type\ \mbox{\hyperlink{namespaceFoam_ad3253168300a364bf609a7175ed74967}{gradProjectionVolumeIntegral}}}
+\DoxyCodeLine{00101\ (}
+\DoxyCodeLine{00102\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_ad37b81e04f62bcb189d6bf06799468ca}{cellGaussField<vector>}}\&\ gradPhi,}
+\DoxyCodeLine{00103\ \ \ \ \ \textcolor{keyword}{const}\ cellGaussField<Type>\&\ C}
+\DoxyCodeLine{00104\ )}
+\DoxyCodeLine{00105\ \{}
+\DoxyCodeLine{00106\ \ \ \ \ \textcolor{keyword}{typename}\ outerProduct<Type,\ vector>::type\ volInt\ =}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ pTraits<typename\ outerProduct<Type,\ vector>::type>::zero;}
+\DoxyCodeLine{00108\ }
+\DoxyCodeLine{00109\ \ \ \ \ \textcolor{keyword}{const}\ label\ nGauss\ =\ C.size();}
+\DoxyCodeLine{00110\ \ \ \ \ \textcolor{keyword}{const}\ List<scalar>\&\ \mbox{\hyperlink{dgFluxSolvers_2convectiveFluxSolver_2exactRiemannFluxSolver_2ExactToro_2dgExactToroFluxSolver_8C_a0cb09f9e16e84441cea67044382a4bf6}{w}}\ =\ C.cell()-\/>weights();}
+\DoxyCodeLine{00111\ \ \ \ \ \textcolor{keyword}{const}\ List<scalar>\&\ J3D\ =\ C.cell()-\/>J3D();}
+\DoxyCodeLine{00112\ }
+\DoxyCodeLine{00113\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ g\ =\ 0;\ g\ <\ nGauss;\ ++g)}
+\DoxyCodeLine{00114\ \ \ \ \ \{}
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ volInt\ +=\ J3D[g]\ *\ (C[g]\ *\ gradPhi[g])\ *\ \mbox{\hyperlink{dgFluxSolvers_2convectiveFluxSolver_2exactRiemannFluxSolver_2ExactToro_2dgExactToroFluxSolver_8C_a0cb09f9e16e84441cea67044382a4bf6}{w}}[g];}
+\DoxyCodeLine{00116\ \ \ \ \ \}}
+\DoxyCodeLine{00117\ }
+\DoxyCodeLine{00118\ \ \ \ \ \textcolor{keywordflow}{return}\ volInt;}
+\DoxyCodeLine{00119\ \}}
 \DoxyCodeLine{00120\ }
-\DoxyCodeLine{00121\ \ \ \ \ \textcolor{keyword}{const}\ label\ nGauss\ =\ F.size();}
-\DoxyCodeLine{00122\ }
-\DoxyCodeLine{00123\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ g\ =\ 0;\ g\ <\ nGauss;\ ++g)}
-\DoxyCodeLine{00124\ \ \ \ \ \{}
-\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ volInt\ +=\ J[g]\ *\ F[g]\ *\ w[g];}
-\DoxyCodeLine{00126\ \ \ \ \ \}}
-\DoxyCodeLine{00127\ }
-\DoxyCodeLine{00128\ \ \ \ \ \textcolor{keywordflow}{return}\ volInt;}
-\DoxyCodeLine{00129\ \}}
-\DoxyCodeLine{00130\ }
-\DoxyCodeLine{00137\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}}\ \mbox{\hyperlink{namespaceFoam_ab4801fef406a81dc437da35df1149328}{surfaceIntegral}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_aafb4748e5e3faa67a8f367a361321194}{faceGaussField<scalar>}}\&\ phi,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_a1992d99c38176ae5a06f741390d43e9d}{faceGaussField<vector>}}\&\ F)}
-\DoxyCodeLine{00138\ \{}
-\DoxyCodeLine{00139\ \ \ \ \ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}}\ surfInt\ =\ 0.0;}
-\DoxyCodeLine{00140\ }
-\DoxyCodeLine{00141\ \ \ \ \ \textcolor{keyword}{const}\ label\ nFaces\ =\ F.nFaces();}
-\DoxyCodeLine{00142\ }
-\DoxyCodeLine{00143\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ faceI\ =\ 0;\ faceI\ <\ nFaces;\ ++faceI)}
-\DoxyCodeLine{00144\ \ \ \ \ \{}
-\DoxyCodeLine{00145\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ vector\ n\ =\ F.normals()[faceI];}
-\DoxyCodeLine{00146\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ label\ nGauss\ =\ F.nGaussPerFace();}
-\DoxyCodeLine{00147\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ List<scalar>\&\ w\ =\ F.faces()[faceI]-\/>weights();}
-\DoxyCodeLine{00148\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ List<scalar>\&\ \mbox{\hyperlink{namespacemeshVar_a5251cb6d813b3fef07aabd08f31fc87c}{J2D}}\ =\ F.faces()[faceI]-\/>J2D();}
-\DoxyCodeLine{00149\ }
-\DoxyCodeLine{00150\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ g\ =\ 0;\ g\ <\ nGauss;\ ++g)}
-\DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ F(g)\ is\ vector\ ⇒\ dot\ with\ n\ to\ get\ scalar\ flux}}
-\DoxyCodeLine{00153\ \ \ \ \ \ \ \ \ \ \ \ \ surfInt\ +=\ \mbox{\hyperlink{namespacemeshVar_a5251cb6d813b3fef07aabd08f31fc87c}{J2D}}[g]\ *\ phi.minusValueOnFace(faceI,\ g)\ *\ (F.fluxOnFace(faceI,\ g)\ \&\ n)\ *\ w[g];}
-\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00155\ \ \ \ \ \}}
-\DoxyCodeLine{00156\ }
-\DoxyCodeLine{00157\ \ \ \ \ \textcolor{keywordflow}{return}\ surfInt;}
-\DoxyCodeLine{00158\ \}}
+\DoxyCodeLine{00128\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}}\ \mbox{\hyperlink{namespaceFoam_abb4da9f774dc94a34630ee9ed788ec81}{volumeIntegral}}(\textcolor{keyword}{const}\ List<scalar>\&\ F,\ \textcolor{keyword}{const}\ List<scalar>\&\ J,\ \textcolor{keyword}{const}\ List<scalar>\&\ \mbox{\hyperlink{dgFluxSolvers_2convectiveFluxSolver_2exactRiemannFluxSolver_2ExactToro_2dgExactToroFluxSolver_8C_a0cb09f9e16e84441cea67044382a4bf6}{w}})}
+\DoxyCodeLine{00129\ \{}
+\DoxyCodeLine{00130\ \ \ \ \ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}}\ volInt\ =\ 0;}
+\DoxyCodeLine{00131\ }
+\DoxyCodeLine{00132\ \ \ \ \ \textcolor{keyword}{const}\ label\ nGauss\ =\ F.size();}
+\DoxyCodeLine{00133\ }
+\DoxyCodeLine{00134\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ g\ =\ 0;\ g\ <\ nGauss;\ ++g)}
+\DoxyCodeLine{00135\ \ \ \ \ \{}
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ volInt\ +=\ J[g]\ *\ F[g]\ *\ \mbox{\hyperlink{dgFluxSolvers_2convectiveFluxSolver_2exactRiemannFluxSolver_2ExactToro_2dgExactToroFluxSolver_8C_a0cb09f9e16e84441cea67044382a4bf6}{w}}[g];}
+\DoxyCodeLine{00137\ \ \ \ \ \}}
+\DoxyCodeLine{00138\ }
+\DoxyCodeLine{00139\ \ \ \ \ \textcolor{keywordflow}{return}\ volInt;}
+\DoxyCodeLine{00140\ \}}
+\DoxyCodeLine{00141\ }
+\DoxyCodeLine{00149\ \textcolor{keyword}{inline}\ vector\ \mbox{\hyperlink{namespaceFoam_abb4da9f774dc94a34630ee9ed788ec81}{volumeIntegral}}(\textcolor{keyword}{const}\ List<vector>\&\ F,\ \textcolor{keyword}{const}\ List<scalar>\&\ J,\ \textcolor{keyword}{const}\ List<scalar>\&\ \mbox{\hyperlink{dgFluxSolvers_2convectiveFluxSolver_2exactRiemannFluxSolver_2ExactToro_2dgExactToroFluxSolver_8C_a0cb09f9e16e84441cea67044382a4bf6}{w}})}
+\DoxyCodeLine{00150\ \{}
+\DoxyCodeLine{00151\ \ \ \ \ vector\ volInt\ =\ Zero;}
+\DoxyCodeLine{00152\ }
+\DoxyCodeLine{00153\ \ \ \ \ \textcolor{keyword}{const}\ label\ nGauss\ =\ F.size();}
+\DoxyCodeLine{00154\ }
+\DoxyCodeLine{00155\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ g\ =\ 0;\ g\ <\ nGauss;\ ++g)}
+\DoxyCodeLine{00156\ \ \ \ \ \{}
+\DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ volInt\ +=\ J[g]\ *\ F[g]\ *\ \mbox{\hyperlink{dgFluxSolvers_2convectiveFluxSolver_2exactRiemannFluxSolver_2ExactToro_2dgExactToroFluxSolver_8C_a0cb09f9e16e84441cea67044382a4bf6}{w}}[g];}
+\DoxyCodeLine{00158\ \ \ \ \ \}}
 \DoxyCodeLine{00159\ }
-\DoxyCodeLine{00166\ \textcolor{keyword}{inline}\ vector\ \mbox{\hyperlink{namespaceFoam_ab4801fef406a81dc437da35df1149328}{surfaceIntegral}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_aafb4748e5e3faa67a8f367a361321194}{faceGaussField<scalar>}}\&\ phi,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_aa188ff3ece5cd0d873cfede3398323ab}{faceGaussField<tensor>}}\&\ F)}
-\DoxyCodeLine{00167\ \{}
-\DoxyCodeLine{00168\ \ \ \ \ vector\ surfInt\ =\ Zero;}
-\DoxyCodeLine{00169\ }
-\DoxyCodeLine{00170\ \ \ \ \ \textcolor{keyword}{const}\ label\ nFaces\ =\ F.nFaces();}
-\DoxyCodeLine{00171\ }
-\DoxyCodeLine{00172\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ faceI\ =\ 0;\ faceI\ <\ nFaces;\ ++faceI)}
-\DoxyCodeLine{00173\ \ \ \ \ \{}
-\DoxyCodeLine{00174\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ label\ nGauss\ =\ F.nGaussPerFace();}
-\DoxyCodeLine{00175\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ List<scalar>\&\ w\ =\ F.faces()[faceI]-\/>weights();}
-\DoxyCodeLine{00176\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ List<scalar>\&\ \mbox{\hyperlink{namespacemeshVar_a5251cb6d813b3fef07aabd08f31fc87c}{J2D}}\ =\ F.faces()[faceI]-\/>J2D();}
-\DoxyCodeLine{00177\ }
-\DoxyCodeLine{00178\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ g\ =\ 0;\ g\ <\ nGauss;\ ++g)}
-\DoxyCodeLine{00179\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00180\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ fluxOnFace\ already\ returns\ T·n\ (vector)}}
-\DoxyCodeLine{00181\ \ \ \ \ \ \ \ \ \ \ \ \ surfInt\ +=\ \mbox{\hyperlink{namespacemeshVar_a5251cb6d813b3fef07aabd08f31fc87c}{J2D}}[g]\ *\ phi.minusValueOnFace(faceI,\ g)\ *\ F.fluxOnFace(faceI,\ g)\ *\ w[g];}
-\DoxyCodeLine{00182\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00183\ \ \ \ \ \}}
-\DoxyCodeLine{00184\ }
-\DoxyCodeLine{00185\ \ \ \ \ \textcolor{keywordflow}{return}\ surfInt;}
-\DoxyCodeLine{00186\ \}}
-\DoxyCodeLine{00187\ }
-\DoxyCodeLine{00188\ \}\ \textcolor{comment}{//\ End\ namespace\ Foam}}
-\DoxyCodeLine{00189\ }
-\DoxyCodeLine{00190\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00160\ \ \ \ \ \textcolor{keywordflow}{return}\ volInt;}
+\DoxyCodeLine{00161\ \}}
+\DoxyCodeLine{00162\ }
+\DoxyCodeLine{00169\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}}\ \mbox{\hyperlink{namespaceFoam_ab4801fef406a81dc437da35df1149328}{surfaceIntegral}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_aafb4748e5e3faa67a8f367a361321194}{faceGaussField<scalar>}}\&\ phi,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_a1992d99c38176ae5a06f741390d43e9d}{faceGaussField<vector>}}\&\ F)}
+\DoxyCodeLine{00170\ \{}
+\DoxyCodeLine{00171\ \ \ \ \ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}}\ surfInt\ =\ 0.0;}
+\DoxyCodeLine{00172\ }
+\DoxyCodeLine{00173\ \ \ \ \ \textcolor{keyword}{const}\ label\ nFaces\ =\ F.nFaces();}
+\DoxyCodeLine{00174\ }
+\DoxyCodeLine{00175\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ faceI\ =\ 0;\ faceI\ <\ nFaces;\ ++faceI)}
+\DoxyCodeLine{00176\ \ \ \ \ \{}
+\DoxyCodeLine{00177\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ vector\ n\ =\ F.normals()[faceI];}
+\DoxyCodeLine{00178\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ label\ nGauss\ =\ F.nGaussPerFace();}
+\DoxyCodeLine{00179\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ List<scalar>\&\ \mbox{\hyperlink{dgFluxSolvers_2convectiveFluxSolver_2exactRiemannFluxSolver_2ExactToro_2dgExactToroFluxSolver_8C_a0cb09f9e16e84441cea67044382a4bf6}{w}}\ =\ F.faces()[faceI]-\/>weights();}
+\DoxyCodeLine{00180\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ List<scalar>\&\ \mbox{\hyperlink{namespacemeshVar_a5251cb6d813b3fef07aabd08f31fc87c}{J2D}}\ =\ F.faces()[faceI]-\/>J2D();}
+\DoxyCodeLine{00181\ }
+\DoxyCodeLine{00182\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ g\ =\ 0;\ g\ <\ nGauss;\ ++g)}
+\DoxyCodeLine{00183\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00184\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ F(g)\ is\ vector\ ⇒\ dot\ with\ n\ to\ get\ scalar\ flux}}
+\DoxyCodeLine{00185\ \ \ \ \ \ \ \ \ \ \ \ \ surfInt\ +=\ \mbox{\hyperlink{namespacemeshVar_a5251cb6d813b3fef07aabd08f31fc87c}{J2D}}[g]\ *\ phi.minusValueOnFace(faceI,\ g)\ *\ (F.fluxOnFace(faceI,\ g)\ \&\ n)\ *\ \mbox{\hyperlink{dgFluxSolvers_2convectiveFluxSolver_2exactRiemannFluxSolver_2ExactToro_2dgExactToroFluxSolver_8C_a0cb09f9e16e84441cea67044382a4bf6}{w}}[g];}
+\DoxyCodeLine{00186\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00187\ \ \ \ \ \}}
+\DoxyCodeLine{00188\ }
+\DoxyCodeLine{00189\ \ \ \ \ \textcolor{keywordflow}{return}\ surfInt;}
+\DoxyCodeLine{00190\ \}}
 \DoxyCodeLine{00191\ }
-\DoxyCodeLine{00192\ \textcolor{comment}{//\ *************************************************************************\ //}}
+\DoxyCodeLine{00198\ \textcolor{keyword}{inline}\ vector\ \mbox{\hyperlink{namespaceFoam_ab4801fef406a81dc437da35df1149328}{surfaceIntegral}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_aafb4748e5e3faa67a8f367a361321194}{faceGaussField<scalar>}}\&\ phi,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_aa188ff3ece5cd0d873cfede3398323ab}{faceGaussField<tensor>}}\&\ F)}
+\DoxyCodeLine{00199\ \{}
+\DoxyCodeLine{00200\ \ \ \ \ vector\ surfInt\ =\ Zero;}
+\DoxyCodeLine{00201\ }
+\DoxyCodeLine{00202\ \ \ \ \ \textcolor{keyword}{const}\ label\ nFaces\ =\ F.nFaces();}
+\DoxyCodeLine{00203\ }
+\DoxyCodeLine{00204\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ faceI\ =\ 0;\ faceI\ <\ nFaces;\ ++faceI)}
+\DoxyCodeLine{00205\ \ \ \ \ \{}
+\DoxyCodeLine{00206\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ label\ nGauss\ =\ F.nGaussPerFace();}
+\DoxyCodeLine{00207\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ List<scalar>\&\ \mbox{\hyperlink{dgFluxSolvers_2convectiveFluxSolver_2exactRiemannFluxSolver_2ExactToro_2dgExactToroFluxSolver_8C_a0cb09f9e16e84441cea67044382a4bf6}{w}}\ =\ F.faces()[faceI]-\/>weights();}
+\DoxyCodeLine{00208\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ List<scalar>\&\ \mbox{\hyperlink{namespacemeshVar_a5251cb6d813b3fef07aabd08f31fc87c}{J2D}}\ =\ F.faces()[faceI]-\/>J2D();}
+\DoxyCodeLine{00209\ }
+\DoxyCodeLine{00210\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ g\ =\ 0;\ g\ <\ nGauss;\ ++g)}
+\DoxyCodeLine{00211\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00212\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ fluxOnFace\ already\ returns\ T·n\ (vector)}}
+\DoxyCodeLine{00213\ \ \ \ \ \ \ \ \ \ \ \ \ surfInt\ +=\ \mbox{\hyperlink{namespacemeshVar_a5251cb6d813b3fef07aabd08f31fc87c}{J2D}}[g]\ *\ phi.minusValueOnFace(faceI,\ g)\ *\ F.fluxOnFace(faceI,\ g)\ *\ \mbox{\hyperlink{dgFluxSolvers_2convectiveFluxSolver_2exactRiemannFluxSolver_2ExactToro_2dgExactToroFluxSolver_8C_a0cb09f9e16e84441cea67044382a4bf6}{w}}[g];}
+\DoxyCodeLine{00214\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00215\ \ \ \ \ \}}
+\DoxyCodeLine{00216\ }
+\DoxyCodeLine{00217\ \ \ \ \ \textcolor{keywordflow}{return}\ surfInt;}
+\DoxyCodeLine{00218\ \}}
+\DoxyCodeLine{00219\ }
+\DoxyCodeLine{00229\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Type>}
+\DoxyCodeLine{00230\ \textcolor{keyword}{inline}\ \textcolor{keyword}{typename}\ outerProduct<Type,\ vector>::type\ \mbox{\hyperlink{namespaceFoam_a498486533b802b1d0c51482c142338e1}{gradProjectionSurfaceIntegral}}}
+\DoxyCodeLine{00231\ (}
+\DoxyCodeLine{00232\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_aafb4748e5e3faa67a8f367a361321194}{faceGaussField<scalar>}}\&\ phi,}
+\DoxyCodeLine{00233\ \ \ \ \ \textcolor{keyword}{const}\ faceGaussField<Type>\&\ C}
+\DoxyCodeLine{00234\ )}
+\DoxyCodeLine{00235\ \{}
+\DoxyCodeLine{00236\ \ \ \ \ \textcolor{keyword}{typename}\ outerProduct<Type,\ vector>::type\ surfInt\ =}
+\DoxyCodeLine{00237\ \ \ \ \ \ \ \ \ pTraits<typename\ outerProduct<Type,\ vector>::type>::zero;}
+\DoxyCodeLine{00238\ }
+\DoxyCodeLine{00239\ \ \ \ \ \textcolor{keyword}{const}\ label\ nFaces\ =\ C.nFaces();}
+\DoxyCodeLine{00240\ }
+\DoxyCodeLine{00241\ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ faceI\ =\ 0;\ faceI\ <\ nFaces;\ ++faceI)}
+\DoxyCodeLine{00242\ \ \ \ \ \{}
+\DoxyCodeLine{00243\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ vector\ n\ =\ C.normals()[faceI];}
+\DoxyCodeLine{00244\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ label\ nGauss\ =\ C.nGaussPerFace();}
+\DoxyCodeLine{00245\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ List<scalar>\&\ \mbox{\hyperlink{dgFluxSolvers_2convectiveFluxSolver_2exactRiemannFluxSolver_2ExactToro_2dgExactToroFluxSolver_8C_a0cb09f9e16e84441cea67044382a4bf6}{w}}\ =\ C.faces()[faceI]-\/>weights();}
+\DoxyCodeLine{00246\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ List<scalar>\&\ \mbox{\hyperlink{namespacemeshVar_a5251cb6d813b3fef07aabd08f31fc87c}{J2D}}\ =\ C.faces()[faceI]-\/>J2D();}
+\DoxyCodeLine{00247\ }
+\DoxyCodeLine{00248\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ g\ =\ 0;\ g\ <\ nGauss;\ ++g)}
+\DoxyCodeLine{00249\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00250\ \ \ \ \ \ \ \ \ \ \ \ \ surfInt\ +=}
+\DoxyCodeLine{00251\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacemeshVar_a5251cb6d813b3fef07aabd08f31fc87c}{J2D}}[g]}
+\DoxyCodeLine{00252\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ phi.minusValueOnFace(faceI,\ g)}
+\DoxyCodeLine{00253\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ (C.midValueOnFace(faceI,\ g)\ *\ n)}
+\DoxyCodeLine{00254\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ \mbox{\hyperlink{dgFluxSolvers_2convectiveFluxSolver_2exactRiemannFluxSolver_2ExactToro_2dgExactToroFluxSolver_8C_a0cb09f9e16e84441cea67044382a4bf6}{w}}[g];}
+\DoxyCodeLine{00255\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00256\ \ \ \ \ \}}
+\DoxyCodeLine{00257\ }
+\DoxyCodeLine{00258\ \ \ \ \ \textcolor{keywordflow}{return}\ surfInt;}
+\DoxyCodeLine{00259\ \}}
+\DoxyCodeLine{00260\ }
+\DoxyCodeLine{00261\ \}\ \textcolor{comment}{//\ End\ namespace\ Foam}}
+\DoxyCodeLine{00262\ }
+\DoxyCodeLine{00263\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00264\ }
+\DoxyCodeLine{00265\ \textcolor{comment}{//\ *************************************************************************\ //}}
 
 \end{DoxyCode}

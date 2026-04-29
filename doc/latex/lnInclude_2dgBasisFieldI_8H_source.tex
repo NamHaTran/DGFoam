@@ -49,8 +49,8 @@
 \DoxyCodeLine{00045\ }
 \DoxyCodeLine{00046\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classFoam_1_1dgBasisField_ac3e27b0426dbbfcef6d52ed857c0814e}{dgBasisField::computeBasisField}}()}
 \DoxyCodeLine{00047\ \{}
-\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keyword}{const}\ dgGeomCell\&\ cell\ =\ *\mbox{\hyperlink{classFoam_1_1dgBasisField_a69d24c2be05420002221ce650bd4261d}{mesh\_}}.cells()[\mbox{\hyperlink{classFoam_1_1dgBasisField_a6f67002d887f567a177d616e2d7420de}{cellID\_}}];}
-\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keyword}{const}\ List<List<scalar>>\&\ basisCell\ =\ cell.basis();}
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keyword}{const}\ dgGeomCell\&\ \mbox{\hyperlink{namespaceFoam_1_1dg_a83a7c24dea6c53ef33c974ece7971783a8d27600b0cae5308441ddf6d9bb3c74c}{cell}}\ =\ *\mbox{\hyperlink{classFoam_1_1dgBasisField_a69d24c2be05420002221ce650bd4261d}{mesh\_}}.cells()[\mbox{\hyperlink{classFoam_1_1dgBasisField_a6f67002d887f567a177d616e2d7420de}{cellID\_}}];}
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keyword}{const}\ List<List<scalar>>\&\ basisCell\ =\ \mbox{\hyperlink{namespaceFoam_1_1dg_a83a7c24dea6c53ef33c974ece7971783a8d27600b0cae5308441ddf6d9bb3c74c}{cell}}.basis();}
 \DoxyCodeLine{00050\ }
 \DoxyCodeLine{00051\ \ \ \ \ \textcolor{keyword}{const}\ label\ nFaces\ =\ \mbox{\hyperlink{classFoam_1_1dgBasisField_a31add56260e983633478cb4456c0526e}{faceLabels\_}}.size();}
 \DoxyCodeLine{00052\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1dgBasisField_aac1d0ec113ce6c98bfe7484e95e3d62e}{basis\_}}.setSize(\mbox{\hyperlink{classFoam_1_1dgBasisField_a5a381ba39b9fc4291445ed31939f54ea}{nDof\_}});}
@@ -61,7 +61,7 @@
 \DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ GaussField<scalar>\ phi(\mbox{\hyperlink{classFoam_1_1dgBasisField_a6f67002d887f567a177d616e2d7420de}{cellID\_}},\ \&\mbox{\hyperlink{classFoam_1_1dgBasisField_a69d24c2be05420002221ce650bd4261d}{mesh\_}});}
 \DoxyCodeLine{00058\ }
 \DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/\ CELL\ GAUSS\ POINTS\ -\/-\/-\/-\/\ //}}
-\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ g\ =\ 0;\ g\ <\ cell.nGauss();\ ++g)}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ g\ =\ 0;\ g\ <\ \mbox{\hyperlink{namespaceFoam_1_1dg_a83a7c24dea6c53ef33c974ece7971783a8d27600b0cae5308441ddf6d9bb3c74c}{cell}}.nGauss();\ ++g)}
 \DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \{}
 \DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \ \ \ \ phi.cellValueAt(g)\ =\ basisCell[g][dof];}
 \DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \}}
@@ -70,35 +70,35 @@
 \DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ lf\ =\ 0;\ lf\ <\ nFaces;\ ++lf)}
 \DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \{}
 \DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ label\ faceID\ =\ \mbox{\hyperlink{classFoam_1_1dgBasisField_a31add56260e983633478cb4456c0526e}{faceLabels\_}}[lf];}
-\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ dgGeomFace\&\ face\ =\ *\mbox{\hyperlink{classFoam_1_1dgBasisField_a69d24c2be05420002221ce650bd4261d}{mesh\_}}.faces()[faceID];}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ dgGeomFace\&\ \mbox{\hyperlink{namespaceFoam_1_1dg_a83a7c24dea6c53ef33c974ece7971783ad5ca322453f2986b752e58b11af83d96}{face}}\ =\ *\mbox{\hyperlink{classFoam_1_1dgBasisField_a69d24c2be05420002221ce650bd4261d}{mesh\_}}.faces()[faceID];}
 \DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ isBoundary\ =\ (faceID\ >=\ \mbox{\hyperlink{classFoam_1_1dgBasisField_a69d24c2be05420002221ce650bd4261d}{mesh\_}}.nInternalFaces());}
 \DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ ownerSide\ =\ (\mbox{\hyperlink{classFoam_1_1dgBasisField_a69d24c2be05420002221ce650bd4261d}{mesh\_}}.faceOwner()[faceID]\ ==\ \mbox{\hyperlink{classFoam_1_1dgBasisField_a6f67002d887f567a177d616e2d7420de}{cellID\_}});}
 \DoxyCodeLine{00072\ }
 \DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ OWNER\ SIDE\ CASES}}
 \DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (ownerSide)}
 \DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ minusB\ =\ face.ownerBasis();}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ minusB\ =\ \mbox{\hyperlink{namespaceFoam_1_1dg_a83a7c24dea6c53ef33c974ece7971783ad5ca322453f2986b752e58b11af83d96}{face}}.ownerBasis();}
 \DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ plusB\ =}
-\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ isBoundary\ ?\ minusB\ :\ face.neighborBasis();}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ isBoundary\ ?\ minusB\ :\ \mbox{\hyperlink{namespaceFoam_1_1dg_a83a7c24dea6c53ef33c974ece7971783ad5ca322453f2986b752e58b11af83d96}{face}}.neighborBasis();}
 \DoxyCodeLine{00079\ }
-\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ label\ nG\ =\ face.gaussPointsOwner().size();}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ label\ nG\ =\ \mbox{\hyperlink{namespaceFoam_1_1dg_a83a7c24dea6c53ef33c974ece7971783ad5ca322453f2986b752e58b11af83d96}{face}}.gaussPointsOwner().size();}
 \DoxyCodeLine{00081\ }
 \DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ g\ =\ 0;\ g\ <\ nG;\ ++g)}
 \DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ phi.\mbox{\hyperlink{classFoam_1_1GaussField_a51cfbe38a04fac12ba9d8f73ce2ca890}{faceMinusValueAt}}(lf,\ g)\ =\ minusB[g][dof];}
-\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ phi.\mbox{\hyperlink{classFoam_1_1GaussField_a396ecdd4262ce1f979ca4e93a91b55ee}{facePlusValueAt}}(lf,\ g)\ \ =\ plusB[g][dof];}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ phi.faceMinusValueAt(lf,\ g)\ =\ minusB[g][dof];}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ phi.facePlusValueAt(lf,\ g)\ \ =\ plusB[g][dof];}
 \DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{comment}{//\ NEIGHBOR\ SIDE\ CASES}}
 \DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ minusB\ \ =\ face.neighborBasis();}
-\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ plusB\ \ \ =\ face.ownerBasis();}
-\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ label\ nG\ =\ face.gaussPointsNeighbor().size();}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ minusB\ \ =\ \mbox{\hyperlink{namespaceFoam_1_1dg_a83a7c24dea6c53ef33c974ece7971783ad5ca322453f2986b752e58b11af83d96}{face}}.neighborBasis();}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ plusB\ \ \ =\ \mbox{\hyperlink{namespaceFoam_1_1dg_a83a7c24dea6c53ef33c974ece7971783ad5ca322453f2986b752e58b11af83d96}{face}}.ownerBasis();}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ label\ nG\ =\ \mbox{\hyperlink{namespaceFoam_1_1dg_a83a7c24dea6c53ef33c974ece7971783ad5ca322453f2986b752e58b11af83d96}{face}}.gaussPointsNeighbor().size();}
 \DoxyCodeLine{00093\ }
 \DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ g\ =\ 0;\ g\ <\ nG;\ ++g)}
 \DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ phi.\mbox{\hyperlink{classFoam_1_1GaussField_a51cfbe38a04fac12ba9d8f73ce2ca890}{faceMinusValueAt}}(lf,\ g)\ =\ minusB[g][dof];}
-\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ phi.\mbox{\hyperlink{classFoam_1_1GaussField_a396ecdd4262ce1f979ca4e93a91b55ee}{facePlusValueAt}}(lf,\ g)\ \ =\ plusB[g][dof];}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ phi.faceMinusValueAt(lf,\ g)\ =\ minusB[g][dof];}
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ phi.facePlusValueAt(lf,\ g)\ \ =\ plusB[g][dof];}
 \DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \}}
@@ -112,12 +112,12 @@
 \DoxyCodeLine{00108\ }
 \DoxyCodeLine{00109\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classFoam_1_1dgBasisField_ac9e948221e039d9faaf3b84d95683b1d}{dgBasisField::computeDBasisField}}()}
 \DoxyCodeLine{00110\ \{}
-\DoxyCodeLine{00111\ \ \ \ \ \textcolor{keyword}{const}\ dgGeomCell\&\ cell\ =\ *\mbox{\hyperlink{classFoam_1_1dgBasisField_a69d24c2be05420002221ce650bd4261d}{mesh\_}}.cells()[\mbox{\hyperlink{classFoam_1_1dgBasisField_a6f67002d887f567a177d616e2d7420de}{cellID\_}}];}
-\DoxyCodeLine{00112\ \ \ \ \ \textcolor{keyword}{const}\ List<vector>\&\ cellPoints\ =\ cell.points();}
+\DoxyCodeLine{00111\ \ \ \ \ \textcolor{keyword}{const}\ dgGeomCell\&\ \mbox{\hyperlink{namespaceFoam_1_1dg_a83a7c24dea6c53ef33c974ece7971783a8d27600b0cae5308441ddf6d9bb3c74c}{cell}}\ =\ *\mbox{\hyperlink{classFoam_1_1dgBasisField_a69d24c2be05420002221ce650bd4261d}{mesh\_}}.cells()[\mbox{\hyperlink{classFoam_1_1dgBasisField_a6f67002d887f567a177d616e2d7420de}{cellID\_}}];}
+\DoxyCodeLine{00112\ \ \ \ \ \textcolor{keyword}{const}\ List<vector>\&\ cellPoints\ =\ \mbox{\hyperlink{namespaceFoam_1_1dg_a83a7c24dea6c53ef33c974ece7971783a8d27600b0cae5308441ddf6d9bb3c74c}{cell}}.points();}
 \DoxyCodeLine{00113\ }
-\DoxyCodeLine{00114\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ dB1\ =\ cell.dBasis\_dEta1();}
-\DoxyCodeLine{00115\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ dB2\ =\ cell.dBasis\_dEta2();}
-\DoxyCodeLine{00116\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ dB3\ =\ cell.dBasis\_dEta3();}
+\DoxyCodeLine{00114\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ dB1\ =\ \mbox{\hyperlink{namespaceFoam_1_1dg_a83a7c24dea6c53ef33c974ece7971783a8d27600b0cae5308441ddf6d9bb3c74c}{cell}}.dBasis\_dEta1();}
+\DoxyCodeLine{00115\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ dB2\ =\ \mbox{\hyperlink{namespaceFoam_1_1dg_a83a7c24dea6c53ef33c974ece7971783a8d27600b0cae5308441ddf6d9bb3c74c}{cell}}.dBasis\_dEta2();}
+\DoxyCodeLine{00116\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ dB3\ =\ \mbox{\hyperlink{namespaceFoam_1_1dg_a83a7c24dea6c53ef33c974ece7971783a8d27600b0cae5308441ddf6d9bb3c74c}{cell}}.dBasis\_dEta3();}
 \DoxyCodeLine{00117\ }
 \DoxyCodeLine{00118\ \ \ \ \ \textcolor{keyword}{const}\ label\ nFaces\ =\ \mbox{\hyperlink{classFoam_1_1dgBasisField_a31add56260e983633478cb4456c0526e}{faceLabels\_}}.size();}
 \DoxyCodeLine{00119\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1dgBasisField_a535e166482e432099634761b6cb16d39}{dBasis\_}}.setSize(\mbox{\hyperlink{classFoam_1_1dgBasisField_a5a381ba39b9fc4291445ed31939f54ea}{nDof\_}});}
@@ -127,25 +127,25 @@
 \DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ GaussField<vector>\ dPhi(\mbox{\hyperlink{classFoam_1_1dgBasisField_a6f67002d887f567a177d616e2d7420de}{cellID\_}},\ \&\mbox{\hyperlink{classFoam_1_1dgBasisField_a69d24c2be05420002221ce650bd4261d}{mesh\_}});}
 \DoxyCodeLine{00124\ }
 \DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/\ CELL\ GAUSS\ POINTS\ -\/-\/-\/-\/\ //}}
-\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ g\ =\ 0;\ g\ <\ cell.nGauss();\ ++g)}
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ g\ =\ 0;\ g\ <\ \mbox{\hyperlink{namespaceFoam_1_1dg_a83a7c24dea6c53ef33c974ece7971783a8d27600b0cae5308441ddf6d9bb3c74c}{cell}}.nGauss();\ ++g)}
 \DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ \{}
 \DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ vector\ gradEta(dB1[g][dof],\ dB2[g][dof],\ dB3[g][dof]);}
 \DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ tensor\ J\ =}
 \DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespaceFoam_1_1geometricJacobian_a2498cba10b4ae2344f02a764f9a8caa5}{geometricJacobian::calcJacobianTensorAtInteriorGaussPt}}}
 \DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (}
-\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cell.type(),}
-\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cell.gaussPoints()[g],}
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespaceFoam_1_1dg_a83a7c24dea6c53ef33c974ece7971783a8d27600b0cae5308441ddf6d9bb3c74c}{cell}}.type(),}
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespaceFoam_1_1dg_a83a7c24dea6c53ef33c974ece7971783a8d27600b0cae5308441ddf6d9bb3c74c}{cell}}.gaussPoints()[g],}
 \DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cellPoints}
 \DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ );}
 \DoxyCodeLine{00136\ }
-\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ \ \ \ \ dPhi.cellValueAt(g)\ =\ \mbox{\hyperlink{namespaceFoam_a5faf7f302ed6c6307e3668365456af74}{T}}(\mbox{\hyperlink{namespaceFoam_ab110e04e010c8c9a87630eea553d63d2}{inv}}(J))\ \&\ gradEta;}
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ \ \ \ \ dPhi.cellValueAt(g)\ =\ \mbox{\hyperlink{dgFoamVolumeToVTU_2dgFoamVolumeToVTU_8C_a4dbc9afb19bab1e36dcd0d05f570b3a8}{T}}(\mbox{\hyperlink{namespaceFoam_ab110e04e010c8c9a87630eea553d63d2}{inv}}(J))\ \&\ gradEta;}
 \DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{00139\ }
 \DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/\ FACE\ GAUSS\ POINTS\ -\/-\/-\/-\/\ //}}
 \DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ lf\ =\ 0;\ lf\ <\ nFaces;\ ++lf)}
 \DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ \{}
 \DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ label\ faceID\ =\ \mbox{\hyperlink{classFoam_1_1dgBasisField_a31add56260e983633478cb4456c0526e}{faceLabels\_}}[lf];}
-\DoxyCodeLine{00144\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ dgGeomFace\&\ face\ =\ *\mbox{\hyperlink{classFoam_1_1dgBasisField_a69d24c2be05420002221ce650bd4261d}{mesh\_}}.faces()[faceID];}
+\DoxyCodeLine{00144\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ dgGeomFace\&\ \mbox{\hyperlink{namespaceFoam_1_1dg_a83a7c24dea6c53ef33c974ece7971783ad5ca322453f2986b752e58b11af83d96}{face}}\ =\ *\mbox{\hyperlink{classFoam_1_1dgBasisField_a69d24c2be05420002221ce650bd4261d}{mesh\_}}.faces()[faceID];}
 \DoxyCodeLine{00145\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ isBoundary\ =\ (faceID\ >=\ \mbox{\hyperlink{classFoam_1_1dgBasisField_a69d24c2be05420002221ce650bd4261d}{mesh\_}}.nInternalFaces());}
 \DoxyCodeLine{00146\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ ownerSide\ =\ (\mbox{\hyperlink{classFoam_1_1dgBasisField_a69d24c2be05420002221ce650bd4261d}{mesh\_}}.faceOwner()[faceID]\ ==\ \mbox{\hyperlink{classFoam_1_1dgBasisField_a6f67002d887f567a177d616e2d7420de}{cellID\_}});}
 \DoxyCodeLine{00147\ }
@@ -159,18 +159,18 @@
 \DoxyCodeLine{00155\ }
 \DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (ownerSide)}
 \DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ m1\ =\ face.owner\_dBasis\_dEta1();}
-\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ m2\ =\ face.owner\_dBasis\_dEta2();}
-\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ m3\ =\ face.owner\_dBasis\_dEta3();}
+\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ m1\ =\ \mbox{\hyperlink{namespaceFoam_1_1dg_a83a7c24dea6c53ef33c974ece7971783ad5ca322453f2986b752e58b11af83d96}{face}}.owner\_dBasis\_dEta1();}
+\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ m2\ =\ \mbox{\hyperlink{namespaceFoam_1_1dg_a83a7c24dea6c53ef33c974ece7971783ad5ca322453f2986b752e58b11af83d96}{face}}.owner\_dBasis\_dEta2();}
+\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ m3\ =\ \mbox{\hyperlink{namespaceFoam_1_1dg_a83a7c24dea6c53ef33c974ece7971783ad5ca322453f2986b752e58b11af83d96}{face}}.owner\_dBasis\_dEta3();}
 \DoxyCodeLine{00161\ }
 \DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ p1\ =}
-\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ isBoundary\ ?\ m1\ :\ face.neighbor\_dBasis\_dEta1();}
+\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ isBoundary\ ?\ m1\ :\ \mbox{\hyperlink{namespaceFoam_1_1dg_a83a7c24dea6c53ef33c974ece7971783ad5ca322453f2986b752e58b11af83d96}{face}}.neighbor\_dBasis\_dEta1();}
 \DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ p2\ =}
-\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ isBoundary\ ?\ m2\ :\ face.neighbor\_dBasis\_dEta2();}
+\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ isBoundary\ ?\ m2\ :\ \mbox{\hyperlink{namespaceFoam_1_1dg_a83a7c24dea6c53ef33c974ece7971783ad5ca322453f2986b752e58b11af83d96}{face}}.neighbor\_dBasis\_dEta2();}
 \DoxyCodeLine{00166\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ p3\ =}
-\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ isBoundary\ ?\ m3\ :\ face.neighbor\_dBasis\_dEta3();}
+\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ isBoundary\ ?\ m3\ :\ \mbox{\hyperlink{namespaceFoam_1_1dg_a83a7c24dea6c53ef33c974ece7971783ad5ca322453f2986b752e58b11af83d96}{face}}.neighbor\_dBasis\_dEta3();}
 \DoxyCodeLine{00168\ }
-\DoxyCodeLine{00169\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ label\ nG\ =\ face.gaussPointsOwner().size();}
+\DoxyCodeLine{00169\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ label\ nG\ =\ \mbox{\hyperlink{namespaceFoam_1_1dg_a83a7c24dea6c53ef33c974ece7971783ad5ca322453f2986b752e58b11af83d96}{face}}.gaussPointsOwner().size();}
 \DoxyCodeLine{00170\ }
 \DoxyCodeLine{00171\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ g\ =\ 0;\ g\ <\ nG;\ ++g)}
 \DoxyCodeLine{00172\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
@@ -180,15 +180,15 @@
 \DoxyCodeLine{00176\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{00177\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
 \DoxyCodeLine{00178\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00179\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ m1\ =\ face.neighbor\_dBasis\_dEta1();}
-\DoxyCodeLine{00180\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ m2\ =\ face.neighbor\_dBasis\_dEta2();}
-\DoxyCodeLine{00181\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ m3\ =\ face.neighbor\_dBasis\_dEta3();}
+\DoxyCodeLine{00179\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ m1\ =\ \mbox{\hyperlink{namespaceFoam_1_1dg_a83a7c24dea6c53ef33c974ece7971783ad5ca322453f2986b752e58b11af83d96}{face}}.neighbor\_dBasis\_dEta1();}
+\DoxyCodeLine{00180\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ m2\ =\ \mbox{\hyperlink{namespaceFoam_1_1dg_a83a7c24dea6c53ef33c974ece7971783ad5ca322453f2986b752e58b11af83d96}{face}}.neighbor\_dBasis\_dEta2();}
+\DoxyCodeLine{00181\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ m3\ =\ \mbox{\hyperlink{namespaceFoam_1_1dg_a83a7c24dea6c53ef33c974ece7971783ad5ca322453f2986b752e58b11af83d96}{face}}.neighbor\_dBasis\_dEta3();}
 \DoxyCodeLine{00182\ }
-\DoxyCodeLine{00183\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ p1\ =\ face.owner\_dBasis\_dEta1();}
-\DoxyCodeLine{00184\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ p2\ =\ face.owner\_dBasis\_dEta2();}
-\DoxyCodeLine{00185\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ p3\ =\ face.owner\_dBasis\_dEta3();}
+\DoxyCodeLine{00183\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ p1\ =\ \mbox{\hyperlink{namespaceFoam_1_1dg_a83a7c24dea6c53ef33c974ece7971783ad5ca322453f2986b752e58b11af83d96}{face}}.owner\_dBasis\_dEta1();}
+\DoxyCodeLine{00184\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ p2\ =\ \mbox{\hyperlink{namespaceFoam_1_1dg_a83a7c24dea6c53ef33c974ece7971783ad5ca322453f2986b752e58b11af83d96}{face}}.owner\_dBasis\_dEta2();}
+\DoxyCodeLine{00185\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ p3\ =\ \mbox{\hyperlink{namespaceFoam_1_1dg_a83a7c24dea6c53ef33c974ece7971783ad5ca322453f2986b752e58b11af83d96}{face}}.owner\_dBasis\_dEta3();}
 \DoxyCodeLine{00186\ }
-\DoxyCodeLine{00187\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ label\ nG\ =\ face.gaussPointsNeighbor().size();}
+\DoxyCodeLine{00187\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ label\ nG\ =\ \mbox{\hyperlink{namespaceFoam_1_1dg_a83a7c24dea6c53ef33c974ece7971783ad5ca322453f2986b752e58b11af83d96}{face}}.gaussPointsNeighbor().size();}
 \DoxyCodeLine{00188\ }
 \DoxyCodeLine{00189\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ g\ =\ 0;\ g\ <\ nG;\ ++g)}
 \DoxyCodeLine{00190\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}

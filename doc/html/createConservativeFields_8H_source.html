@@ -94,7 +94,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="comment">// in terms of rho, rhoU, and total energy E.</span></div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span>Info&lt;&lt; <span class="stringliteral">&quot;Create conservative fields\n&quot;</span> &lt;&lt; endl;</div>
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span> </div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno"><a class="line" href="createConservativeFields_8H.html#ae120481480365fc3ed2e877aed5855f8">    6</a></span>dgField&lt;scalar&gt; <a class="code hl_variable" href="dynamicVarDeclaration_8cpp.html#ae7a21fded6f5e50f59fb05c0735f2479">rho</a></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno"><a class="line" href="createConservativeFields_8H.html#ae120481480365fc3ed2e877aed5855f8">    6</a></span>dgField&lt;scalar&gt; <a class="code hl_variable" href="dgFluxSolvers_2convectiveFluxSolver_2exactRiemannFluxSolver_2ExactToro_2dgExactToroFluxSolver_8C.html#ac2f6bd0057296e22b6f1da8890d317de">rho</a></div>
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span>(</div>
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span>    IOobject</div>
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>    (</div>
@@ -109,7 +109,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>);</div>
 <div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span> </div>
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="comment">// rhoU stores the momentum vector, not the primitive velocity.</span></div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno"><a class="line" href="createConservativeFields_8H.html#a4f450f5e1994b9626ccd4ea0964b1918">   21</a></span>dgField&lt;vector&gt; <a class="code hl_function" href="createConservativeFields_8H.html#a4f450f5e1994b9626ccd4ea0964b1918">rhoU</a></div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno"><a class="line" href="createConservativeFields_8H.html#a4f450f5e1994b9626ccd4ea0964b1918">   21</a></span>dgField&lt;vector&gt; <a class="code hl_variable" href="dgFoamVolumeToVTU_2dgFoamVolumeToVTU_8C.html#a2b73283c7d89e3e4adb09eefa3d9d6bb">rhoU</a></div>
 <div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>(</div>
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>    IOobject</div>
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>    (</div>
@@ -125,7 +125,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span> </div>
 <div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="comment">// E denotes the total energy per unit volume used by the conservative</span></div>
 <div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="comment">// thermo reconstruction.</span></div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno"><a class="line" href="createConservativeFields_8H.html#a3f370753d9872dffe05120a7a166ba5b">   37</a></span>dgField&lt;scalar&gt; <a class="code hl_function" href="createConservativeFields_8H.html#a3f370753d9872dffe05120a7a166ba5b">E</a></div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno"><a class="line" href="createConservativeFields_8H.html#a3f370753d9872dffe05120a7a166ba5b">   37</a></span>dgField&lt;scalar&gt; <a class="code hl_variable" href="dgFoamVolumeToVTU_2dgFoamVolumeToVTU_8C.html#a67c23b18fba94c8f5a0d8294a54ae3d9">E</a></div>
 <div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>(</div>
 <div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    IOobject</div>
 <div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>    (</div>
@@ -138,10 +138,58 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    <a class="code hl_function" href="solvers_2compressible_2DGCompressibleFoam_2createDGMesh_8H.html#ac2f70ae412900de0f8c13e91bd870b5c">dgMesh</a>,</div>
 <div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    <span class="keyword">true</span></div>
 <div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>);</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span> </div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span><span class="comment">// Conservative gradients S = grad(C), with C = (rho, rhoU, E).</span></div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span><span class="comment">// These auxiliary DG fields own DoFs but are initialized to zero and kept out</span></div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span><span class="comment">// of run-time I/O.</span></div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno"><a class="line" href="createConservativeFields_8H.html#a7462c3b7ed32542798b4a37676879f5c">   54</a></span>dgField&lt;vector&gt; <a class="code hl_function" href="createConservativeFields_8H.html#a7462c3b7ed32542798b4a37676879f5c">SRho</a></div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>(</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>    IOobject</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    (</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>        <span class="stringliteral">&quot;SRho&quot;</span>,</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>        <a class="code hl_variable" href="VarDeclaration_8h.html#a122df5dd52660cdfcef00ba179bd53a7">runTime</a>.timeName(),</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>        mesh,</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>        IOobject::NO_READ,</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>        IOobject::NO_WRITE</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>    ),</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>    <a class="code hl_function" href="solvers_2compressible_2DGCompressibleFoam_2createDGMesh_8H.html#ac2f70ae412900de0f8c13e91bd870b5c">dgMesh</a>,</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>    <span class="keyword">true</span></div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>);</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span> </div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno"><a class="line" href="createConservativeFields_8H.html#a5539ed9f816095edc6645225b668dc7e">   68</a></span>dgField&lt;tensor&gt; <a class="code hl_function" href="createConservativeFields_8H.html#a5539ed9f816095edc6645225b668dc7e">SRhoU</a></div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>(</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>    IOobject</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>    (</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>        <span class="stringliteral">&quot;SRhoU&quot;</span>,</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>        <a class="code hl_variable" href="VarDeclaration_8h.html#a122df5dd52660cdfcef00ba179bd53a7">runTime</a>.timeName(),</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>        mesh,</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>        IOobject::NO_READ,</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>        IOobject::NO_WRITE</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>    ),</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>    <a class="code hl_function" href="solvers_2compressible_2DGCompressibleFoam_2createDGMesh_8H.html#ac2f70ae412900de0f8c13e91bd870b5c">dgMesh</a>,</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>    <span class="keyword">true</span></div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>);</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span> </div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno"><a class="line" href="createConservativeFields_8H.html#af56509e2dabcd0fcb8f63cd0e164c1f5">   82</a></span>dgField&lt;vector&gt; <a class="code hl_function" href="createConservativeFields_8H.html#af56509e2dabcd0fcb8f63cd0e164c1f5">SE</a></div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>(</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>    IOobject</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>    (</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>        <span class="stringliteral">&quot;SE&quot;</span>,</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>        <a class="code hl_variable" href="VarDeclaration_8h.html#a122df5dd52660cdfcef00ba179bd53a7">runTime</a>.timeName(),</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>        mesh,</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>        IOobject::NO_READ,</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>        IOobject::NO_WRITE</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>    ),</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>    <a class="code hl_function" href="solvers_2compressible_2DGCompressibleFoam_2createDGMesh_8H.html#ac2f70ae412900de0f8c13e91bd870b5c">dgMesh</a>,</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>    <span class="keyword">true</span></div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>);</div>
 <div class="ttc" id="aVarDeclaration_8h_html_a122df5dd52660cdfcef00ba179bd53a7"><div class="ttname"><a href="VarDeclaration_8h.html#a122df5dd52660cdfcef00ba179bd53a7">runTime</a></div><div class="ttdeci">double runTime</div></div>
-<div class="ttc" id="acreateConservativeFields_8H_html_a3f370753d9872dffe05120a7a166ba5b"><div class="ttname"><a href="createConservativeFields_8H.html#a3f370753d9872dffe05120a7a166ba5b">E</a></div><div class="ttdeci">dgField&lt; scalar &gt; E(IOobject(&quot;E&quot;, runTime.timeName(), mesh, IOobject::MUST_READ, IOobject::AUTO_WRITE), dgMesh, true)</div></div>
-<div class="ttc" id="acreateConservativeFields_8H_html_a4f450f5e1994b9626ccd4ea0964b1918"><div class="ttname"><a href="createConservativeFields_8H.html#a4f450f5e1994b9626ccd4ea0964b1918">rhoU</a></div><div class="ttdeci">dgField&lt; vector &gt; rhoU(IOobject(&quot;rhoU&quot;, runTime.timeName(), mesh, IOobject::MUST_READ, IOobject::AUTO_WRITE), dgMesh, true)</div></div>
-<div class="ttc" id="adynamicVarDeclaration_8cpp_html_ae7a21fded6f5e50f59fb05c0735f2479"><div class="ttname"><a href="dynamicVarDeclaration_8cpp.html#ae7a21fded6f5e50f59fb05c0735f2479">rho</a></div><div class="ttdeci">double ** rho</div><div class="ttdef"><b>Definition</b> dynamicVarDeclaration.cpp:111</div></div>
+<div class="ttc" id="acreateConservativeFields_8H_html_a5539ed9f816095edc6645225b668dc7e"><div class="ttname"><a href="createConservativeFields_8H.html#a5539ed9f816095edc6645225b668dc7e">SRhoU</a></div><div class="ttdeci">dgField&lt; tensor &gt; SRhoU(IOobject(&quot;SRhoU&quot;, runTime.timeName(), mesh, IOobject::NO_READ, IOobject::NO_WRITE), dgMesh, true)</div></div>
+<div class="ttc" id="acreateConservativeFields_8H_html_a7462c3b7ed32542798b4a37676879f5c"><div class="ttname"><a href="createConservativeFields_8H.html#a7462c3b7ed32542798b4a37676879f5c">SRho</a></div><div class="ttdeci">dgField&lt; vector &gt; SRho(IOobject(&quot;SRho&quot;, runTime.timeName(), mesh, IOobject::NO_READ, IOobject::NO_WRITE), dgMesh, true)</div></div>
+<div class="ttc" id="acreateConservativeFields_8H_html_af56509e2dabcd0fcb8f63cd0e164c1f5"><div class="ttname"><a href="createConservativeFields_8H.html#af56509e2dabcd0fcb8f63cd0e164c1f5">SE</a></div><div class="ttdeci">dgField&lt; vector &gt; SE(IOobject(&quot;SE&quot;, runTime.timeName(), mesh, IOobject::NO_READ, IOobject::NO_WRITE), dgMesh, true)</div></div>
+<div class="ttc" id="adgFluxSolvers_2convectiveFluxSolver_2exactRiemannFluxSolver_2ExactToro_2dgExactToroFluxSolver_8C_html_ac2f6bd0057296e22b6f1da8890d317de"><div class="ttname"><a href="dgFluxSolvers_2convectiveFluxSolver_2exactRiemannFluxSolver_2ExactToro_2dgExactToroFluxSolver_8C.html#ac2f6bd0057296e22b6f1da8890d317de">rho</a></div><div class="ttdeci">scalar rho</div><div class="ttdef"><b>Definition</b> dgExactToroFluxSolver.C:96</div></div>
+<div class="ttc" id="adgFoamVolumeToVTU_2dgFoamVolumeToVTU_8C_html_a2b73283c7d89e3e4adb09eefa3d9d6bb"><div class="ttname"><a href="dgFoamVolumeToVTU_2dgFoamVolumeToVTU_8C.html#a2b73283c7d89e3e4adb09eefa3d9d6bb">rhoU</a></div><div class="ttdeci">std::vector&lt; vector &gt; rhoU</div><div class="ttdef"><b>Definition</b> dgFoamVolumeToVTU.C:59</div></div>
+<div class="ttc" id="adgFoamVolumeToVTU_2dgFoamVolumeToVTU_8C_html_a67c23b18fba94c8f5a0d8294a54ae3d9"><div class="ttname"><a href="dgFoamVolumeToVTU_2dgFoamVolumeToVTU_8C.html#a67c23b18fba94c8f5a0d8294a54ae3d9">E</a></div><div class="ttdeci">std::vector&lt; scalar &gt; E</div><div class="ttdef"><b>Definition</b> dgFoamVolumeToVTU.C:60</div></div>
 <div class="ttc" id="asolvers_2compressible_2DGCompressibleFoam_2createDGMesh_8H_html_ac2f70ae412900de0f8c13e91bd870b5c"><div class="ttname"><a href="solvers_2compressible_2DGCompressibleFoam_2createDGMesh_8H.html#ac2f70ae412900de0f8c13e91bd870b5c">dgMesh</a></div><div class="ttdeci">dgGeomMesh dgMesh(mesh)</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->

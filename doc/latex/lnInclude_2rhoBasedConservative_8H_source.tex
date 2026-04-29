@@ -55,61 +55,72 @@
 \DoxyCodeLine{00051\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Class\ rhoBasedConservative\ Declaration}}
 \DoxyCodeLine{00052\ \textcolor{comment}{\(\backslash\)*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
 \DoxyCodeLine{00053\ }
-\DoxyCodeLine{00089\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classFoam_1_1rhoBasedConservative}{rhoBasedConservative}}}
-\DoxyCodeLine{00090\ :}
-\DoxyCodeLine{00091\ \ \ \ \ \textcolor{keyword}{public}\ \mbox{\hyperlink{classFoam_1_1dgThermoConservative}{dgThermoConservative}}}
-\DoxyCodeLine{00092\ \{}
-\DoxyCodeLine{00093\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00094\ }
-\DoxyCodeLine{00095\ \ \ \ \ \textcolor{comment}{//-\/\ Runtime\ type\ information}}
-\DoxyCodeLine{00096\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1rhoBasedConservative_a61658d226cb153af194a0b896c1834f7}{TypeName}}(\textcolor{stringliteral}{"{}rhoBasedConservative"{}});}
-\DoxyCodeLine{00097\ }
-\DoxyCodeLine{00098\ \ \ \ \ \textcolor{comment}{//-\/\ Runtime\ selection\ table}}
-\DoxyCodeLine{00099\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1rhoBasedConservative_ab5ec5d35e8e4fe1aa2a3d1541564c315}{declareRunTimeSelectionTable}}}
-\DoxyCodeLine{00100\ \ \ \ \ (}
-\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{autoPtr}},}
-\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1rhoBasedConservative}{rhoBasedConservative}},}
-\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}},}
-\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ (}
-\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{word}}\&\ name,}
-\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}}\&\ dict,}
-\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dgGeomMesh}}\&\ mesh}
-\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ ),}
-\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ (name,\ dict,\ mesh)}
-\DoxyCodeLine{00110\ \ \ \ \ );}
-\DoxyCodeLine{00111\ }
-\DoxyCodeLine{00112\ \ \ \ \ \textcolor{comment}{//\ Constructors}}
-\DoxyCodeLine{00113\ }
-\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1rhoBasedConservative_a8f58ddcd36de20ead8e72606c43008b5}{rhoBasedConservative}}()\ =\ \textcolor{keyword}{delete};}
-\DoxyCodeLine{00116\ }
-\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1rhoBasedConservative_a8f58ddcd36de20ead8e72606c43008b5}{rhoBasedConservative}}}
-\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ (}
-\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{word}}\&\ name,}
-\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}}\&\ dict,}
-\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dgGeomMesh}}\&\ mesh}
-\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ );}
-\DoxyCodeLine{00130\ }
-\DoxyCodeLine{00132\ \ \ \ \ \textcolor{keyword}{virtual}\ \mbox{\hyperlink{classFoam_1_1rhoBasedConservative_a46987d10aa579b33aa667d569bb8ca66}{\string~rhoBasedConservative}}()\ =\ \textcolor{keywordflow}{default};}
-\DoxyCodeLine{00133\ }
+\DoxyCodeLine{00090\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classFoam_1_1rhoBasedConservative}{rhoBasedConservative}}}
+\DoxyCodeLine{00091\ :}
+\DoxyCodeLine{00092\ \ \ \ \ \textcolor{keyword}{public}\ \mbox{\hyperlink{classFoam_1_1dgThermoConservative}{dgThermoConservative}}}
+\DoxyCodeLine{00093\ \{}
+\DoxyCodeLine{00094\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00095\ }
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}}\ \mbox{\hyperlink{classFoam_1_1rhoBasedConservative_a5a73a9873981657888f4b34ea5c5883d}{calcTMean}}}
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ (}
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}}\ \mbox{\hyperlink{dynamicVarDeclaration_8cpp_af93d63604d62766b072b4caf3b403c25}{rho0}},}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{vector}}\&\ \mbox{\hyperlink{classFoam_1_1GaussField}{rhoU0}},}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespaceFoam_a323f15688e458a7ab5bcca56fe1816c8}{scalar}}\ \mbox{\hyperlink{classFoam_1_1GaussField}{E0}}}
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ )\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00110\ }
+\DoxyCodeLine{00111\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00112\ }
+\DoxyCodeLine{00113\ \ \ \ \ \textcolor{comment}{//-\/\ Runtime\ type\ information}}
+\DoxyCodeLine{00114\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1rhoBasedConservative_a61658d226cb153af194a0b896c1834f7}{TypeName}}(\textcolor{stringliteral}{"{}rhoBasedConservative"{}});}
+\DoxyCodeLine{00115\ }
+\DoxyCodeLine{00116\ \ \ \ \ \textcolor{comment}{//-\/\ Runtime\ selection\ table}}
+\DoxyCodeLine{00117\ \ \ \ \ \mbox{\hyperlink{classFoam_1_1rhoBasedConservative_ab5ec5d35e8e4fe1aa2a3d1541564c315}{declareRunTimeSelectionTable}}}
+\DoxyCodeLine{00118\ \ \ \ \ (}
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{autoPtr}},}
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1rhoBasedConservative}{rhoBasedConservative}},}
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}},}
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ (}
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{word}}\&\ name,}
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}}\&\ dict,}
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dgGeomMesh}}\&\ mesh}
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ ),}
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ (name,\ dict,\ mesh)}
+\DoxyCodeLine{00128\ \ \ \ \ );}
+\DoxyCodeLine{00129\ }
+\DoxyCodeLine{00130\ \ \ \ \ \textcolor{comment}{//\ Constructors}}
+\DoxyCodeLine{00131\ }
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1rhoBasedConservative_a8f58ddcd36de20ead8e72606c43008b5}{rhoBasedConservative}}()\ =\ \textcolor{keyword}{delete};}
 \DoxyCodeLine{00134\ }
-\DoxyCodeLine{00135\ \ \ \ \ \textcolor{comment}{//\ Model\ setup\ interface}}
-\DoxyCodeLine{00136\ }
-\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classFoam_1_1rhoBasedConservative_a890436460a44ecde44b7658e41964e13}{initModels}}()\ \textcolor{keyword}{override};}
-\DoxyCodeLine{00144\ }
-\DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classFoam_1_1rhoBasedConservative_a4796208132d49839213b5fb46ce07b01}{validateModels}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFoam_1_1rhoBasedConservative_a8f58ddcd36de20ead8e72606c43008b5}{rhoBasedConservative}}}
+\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ (}
+\DoxyCodeLine{00144\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{word}}\&\ name,}
+\DoxyCodeLine{00145\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{dictionary}}\&\ dict,}
+\DoxyCodeLine{00146\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1dgGeomMesh}{dgGeomMesh}}\&\ mesh}
+\DoxyCodeLine{00147\ \ \ \ \ \ \ \ \ );}
+\DoxyCodeLine{00148\ }
+\DoxyCodeLine{00150\ \ \ \ \ \textcolor{keyword}{virtual}\ \mbox{\hyperlink{classFoam_1_1rhoBasedConservative_a46987d10aa579b33aa667d569bb8ca66}{\string~rhoBasedConservative}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00151\ }
 \DoxyCodeLine{00152\ }
-\DoxyCodeLine{00153\ }
-\DoxyCodeLine{00154\ \ \ \ \ \textcolor{comment}{//\ Core\ API}}
-\DoxyCodeLine{00155\ }
-\DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classFoam_1_1rhoBasedConservative_aa571836786cf4474bcccef50159f8ca0}{update}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{label}}\&\ cellID)\ \textcolor{keyword}{override};}
-\DoxyCodeLine{00165\ }
-\DoxyCodeLine{00171\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classFoam_1_1rhoBasedConservative_a28f62aaf3186046afaa17fb5fc7373dc}{updateBC}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{label}}\&\ cellID)\ \textcolor{keyword}{override};}
-\DoxyCodeLine{00172\ \};}
+\DoxyCodeLine{00153\ \ \ \ \ \textcolor{comment}{//\ Model\ setup\ interface}}
+\DoxyCodeLine{00154\ }
+\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classFoam_1_1rhoBasedConservative_a890436460a44ecde44b7658e41964e13}{initModels}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00162\ }
+\DoxyCodeLine{00169\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classFoam_1_1rhoBasedConservative_a4796208132d49839213b5fb46ce07b01}{validateModels}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00170\ }
+\DoxyCodeLine{00171\ }
+\DoxyCodeLine{00172\ \ \ \ \ \textcolor{comment}{//\ Core\ API}}
 \DoxyCodeLine{00173\ }
-\DoxyCodeLine{00174\ \}\ \textcolor{comment}{//\ End\ namespace\ Foam}}
-\DoxyCodeLine{00175\ }
-\DoxyCodeLine{00176\ \textcolor{preprocessor}{\#endif}}
-\DoxyCodeLine{00177\ }
-\DoxyCodeLine{00178\ \textcolor{comment}{//\ *************************************************************************\ //}}
+\DoxyCodeLine{00182\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classFoam_1_1rhoBasedConservative_aa571836786cf4474bcccef50159f8ca0}{update}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{label}}\&\ cellID)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00183\ }
+\DoxyCodeLine{00189\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classFoam_1_1rhoBasedConservative_a28f62aaf3186046afaa17fb5fc7373dc}{updateBC}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{label}}\&\ cellID)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00190\ }
+\DoxyCodeLine{00197\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classFoam_1_1rhoBasedConservative_adf640b146089012a20e728be51a27de9}{updateGradient}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classFoam_1_1GaussField}{label}}\&\ cellID)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00198\ \};}
+\DoxyCodeLine{00199\ }
+\DoxyCodeLine{00200\ \}\ \textcolor{comment}{//\ End\ namespace\ Foam}}
+\DoxyCodeLine{00201\ }
+\DoxyCodeLine{00202\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00203\ }
+\DoxyCodeLine{00204\ \textcolor{comment}{//\ *************************************************************************\ //}}
 
 \end{DoxyCode}

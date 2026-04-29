@@ -11,7 +11,7 @@
 \DoxyCodeLine{00007\ \textcolor{comment}{//\ dgField\ objects,\ so\ they\ carry\ high-\/order\ Gauss-\/point\ data,\ not\ only\ one}}
 \DoxyCodeLine{00008\ \textcolor{comment}{//\ cell-\/average\ value\ per\ control\ volume.}}
 \DoxyCodeLine{00009\ }
-\DoxyCodeLine{00010\ dgField<scalar>\ \mbox{\hyperlink{createPrimaryFields_8H_ac26fa601ec3cea0a11ac0fd4f2a6bb63}{p}}}
+\DoxyCodeLine{00010\ dgField<scalar>\ \mbox{\hyperlink{dgFluxSolvers_2convectiveFluxSolver_2exactRiemannFluxSolver_2ExactToro_2dgExactToroFluxSolver_8C_a321a48806c8f4b6d07e24fd98f8e4cf1}{p}}}
 \DoxyCodeLine{00011\ (}
 \DoxyCodeLine{00012\ \ \ \ \ IOobject}
 \DoxyCodeLine{00013\ \ \ \ \ (}
@@ -25,7 +25,7 @@
 \DoxyCodeLine{00021\ \ \ \ \ \textcolor{keyword}{false}}
 \DoxyCodeLine{00022\ );}
 \DoxyCodeLine{00023\ }
-\DoxyCodeLine{00024\ dgField<scalar>\ \mbox{\hyperlink{createPrimaryFields_8H_a5b11ecf656fc672596a085cbdca53fae}{T}}}
+\DoxyCodeLine{00024\ dgField<scalar>\ \mbox{\hyperlink{dgFoamVolumeToVTU_2dgFoamVolumeToVTU_8C_a4dbc9afb19bab1e36dcd0d05f570b3a8}{T}}}
 \DoxyCodeLine{00025\ (}
 \DoxyCodeLine{00026\ \ \ \ \ IOobject}
 \DoxyCodeLine{00027\ \ \ \ \ (}
@@ -39,7 +39,7 @@
 \DoxyCodeLine{00035\ \ \ \ \ \textcolor{keyword}{false}}
 \DoxyCodeLine{00036\ );}
 \DoxyCodeLine{00037\ }
-\DoxyCodeLine{00038\ dgField<vector>\ \mbox{\hyperlink{createPrimaryFields_8H_acaa7fe8168a3a866f1958b3663d384c6}{U}}}
+\DoxyCodeLine{00038\ dgField<vector>\ \mbox{\hyperlink{dgFoamVolumeToVTU_2dgFoamVolumeToVTU_8C_a8efb00782cb42d557cc03644b6c8586f}{U}}}
 \DoxyCodeLine{00039\ (}
 \DoxyCodeLine{00040\ \ \ \ \ IOobject}
 \DoxyCodeLine{00041\ \ \ \ \ (}
@@ -53,9 +53,52 @@
 \DoxyCodeLine{00049\ \ \ \ \ \textcolor{keyword}{false}}
 \DoxyCodeLine{00050\ );}
 \DoxyCodeLine{00051\ }
-\DoxyCodeLine{00052\ \textcolor{comment}{//\ Primitive\ values\ are\ filled\ by\ the\ thermo\ reconstruction\ from\ rho/rhoU/E.}}
-\DoxyCodeLine{00053\ \textcolor{comment}{//\ Physical\ boundary\ ghost\ states\ are\ handled\ separately\ by\ the\ compressible}}
-\DoxyCodeLine{00054\ \textcolor{comment}{//\ boundary\ manager,\ which\ writes\ conservative\ traces\ and\ then\ asks\ thermo\ to}}
-\DoxyCodeLine{00055\ \textcolor{comment}{//\ rebuild\ the\ matching\ primitive\ boundary\ values.}}
+\DoxyCodeLine{00052\ \textcolor{comment}{//\ Primitive\ gradients\ are\ derived\ Gauss-\/value\ fields\ without\ DoFs.}}
+\DoxyCodeLine{00053\ dgField<tensor>\ \mbox{\hyperlink{createPrimaryFields_8H_a389167148ea4c620ed79ffbecc95a05d}{gradU}}}
+\DoxyCodeLine{00054\ (}
+\DoxyCodeLine{00055\ \ \ \ \ IOobject}
+\DoxyCodeLine{00056\ \ \ \ \ (}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}gradU"{}},}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{VarDeclaration_8h_a122df5dd52660cdfcef00ba179bd53a7}{runTime}}.timeName(),}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ mesh,}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ IOobject::NO\_READ,}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ IOobject::NO\_WRITE}
+\DoxyCodeLine{00062\ \ \ \ \ ),}
+\DoxyCodeLine{00063\ \ \ \ \ \mbox{\hyperlink{solvers_2compressible_2DGCompressibleFoam_2createDGMesh_8H_ac2f70ae412900de0f8c13e91bd870b5c}{dgMesh}},}
+\DoxyCodeLine{00064\ \ \ \ \ \textcolor{keyword}{false}}
+\DoxyCodeLine{00065\ );}
+\DoxyCodeLine{00066\ }
+\DoxyCodeLine{00067\ dgField<vector>\ \mbox{\hyperlink{createPrimaryFields_8H_a8fe0074335b9e518f3d40baf17084a13}{gradP}}}
+\DoxyCodeLine{00068\ (}
+\DoxyCodeLine{00069\ \ \ \ \ IOobject}
+\DoxyCodeLine{00070\ \ \ \ \ (}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}gradP"{}},}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{VarDeclaration_8h_a122df5dd52660cdfcef00ba179bd53a7}{runTime}}.timeName(),}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ mesh,}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ IOobject::NO\_READ,}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ IOobject::NO\_WRITE}
+\DoxyCodeLine{00076\ \ \ \ \ ),}
+\DoxyCodeLine{00077\ \ \ \ \ \mbox{\hyperlink{solvers_2compressible_2DGCompressibleFoam_2createDGMesh_8H_ac2f70ae412900de0f8c13e91bd870b5c}{dgMesh}},}
+\DoxyCodeLine{00078\ \ \ \ \ \textcolor{keyword}{false}}
+\DoxyCodeLine{00079\ );}
+\DoxyCodeLine{00080\ }
+\DoxyCodeLine{00081\ dgField<vector>\ \mbox{\hyperlink{createPrimaryFields_8H_a9e18fe91c9278a8b2e26a2c414ba7c5b}{gradT}}}
+\DoxyCodeLine{00082\ (}
+\DoxyCodeLine{00083\ \ \ \ \ IOobject}
+\DoxyCodeLine{00084\ \ \ \ \ (}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}gradT"{}},}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{VarDeclaration_8h_a122df5dd52660cdfcef00ba179bd53a7}{runTime}}.timeName(),}
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ mesh,}
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ IOobject::NO\_READ,}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ IOobject::NO\_WRITE}
+\DoxyCodeLine{00090\ \ \ \ \ ),}
+\DoxyCodeLine{00091\ \ \ \ \ \mbox{\hyperlink{solvers_2compressible_2DGCompressibleFoam_2createDGMesh_8H_ac2f70ae412900de0f8c13e91bd870b5c}{dgMesh}},}
+\DoxyCodeLine{00092\ \ \ \ \ \textcolor{keyword}{false}}
+\DoxyCodeLine{00093\ );}
+\DoxyCodeLine{00094\ }
+\DoxyCodeLine{00095\ \textcolor{comment}{//\ Primitive\ values\ are\ filled\ by\ the\ thermo\ reconstruction\ from\ rho/rhoU/E.}}
+\DoxyCodeLine{00096\ \textcolor{comment}{//\ Physical\ boundary\ ghost\ states\ are\ handled\ separately\ by\ the\ compressible}}
+\DoxyCodeLine{00097\ \textcolor{comment}{//\ boundary\ manager,\ which\ writes\ conservative\ traces\ and\ then\ asks\ thermo\ to}}
+\DoxyCodeLine{00098\ \textcolor{comment}{//\ rebuild\ the\ matching\ primitive\ boundary\ values.}}
 
 \end{DoxyCode}

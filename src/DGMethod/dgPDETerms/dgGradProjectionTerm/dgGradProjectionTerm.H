@@ -47,7 +47,7 @@ Description
 
         C* = 0.5*(C- + C+) on internal faces
 
-    stored in faceGaussField::midValues(). Boundary faces use the existing
+    directly during surface integration. Boundary faces use the existing
     mid-state supplied by the boundary update path.
 
     Supported state/result pairs:
@@ -86,12 +86,14 @@ namespace Foam
  *
  * \tparam UType Type of the projected state C. Supported: scalar or vector.
  *
- * The class owns a local GaussField copy of C for one cell because
- * updateFlux() writes the central face state into faceField().midValues().
- * calcResidual() then integrates
+ * Persistent GaussField inputs are referenced directly; temporaries are held
+ * through tmp. calcResidual() integrates
  *
- *     R_i = - int_Omega C grad(phi_i) dV
- *           + int_dOmega phi_i C* n dS
+ * \f[
+ *     R_i =
+ *     - \int_{\Omega} C \nabla \phi_i \, dV
+ *     + \int_{\partial\Omega} \phi_i C^* \boldsymbol{n} \, dS
+ * \f]
  *
  * for each basis function. termName_ is not used to look up dgSchemes or
  * select a flux solver; no Riemann solver is involved. This is intentionally
@@ -138,7 +140,8 @@ public:
     /**
      * \brief Construct from a persistent GaussField state C.
      *
-     * The state is copied locally so updateFlux() can store C* in midValues().
+     * The state is referenced directly; central internal-face states are
+     * evaluated on read during calcResidual().
      */
     dgGradProjectionTerm
     (
@@ -176,11 +179,10 @@ public:
     inline dgFluxSolver::equationType equationType() const { return eqnType_; }
 
     /**
-     * \brief Build the central mid-state C* on internal faces.
+     * \brief Compatibility hook for old callers.
      *
-     * Internal faces: C* = 0.5*(C- + C+).
-     * Boundary faces are left unchanged and should already contain the
-     * boundary-provided mid-state.
+     * Central internal-face states are evaluated directly in calcResidual(),
+     * so this function no longer mutates faceField().midValues().
      */
     void updateFlux();
 

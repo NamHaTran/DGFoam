@@ -20,41 +20,64 @@
 \DoxyCodeLine{00016\ \ \ \ \ )}
 \DoxyCodeLine{00017\ );}
 \DoxyCodeLine{00018\ }
-\DoxyCodeLine{00019\ \textcolor{comment}{//\ fluxSolverManager\ is\ the\ indirection\ layer\ that\ picks\ the\ right\ numerical}}
-\DoxyCodeLine{00020\ \textcolor{comment}{//\ flux\ for\ each\ equation\ term\ when\ dgGeneralPDETerm\ asks\ for\ a\ surface\ flux.}}
-\DoxyCodeLine{00021\ \textcolor{comment}{//\ This\ lets\ the\ PDE\ assembly\ code\ say\ "{}mass\ term"{},\ "{}momentum\ term"{},\ etc.}}
-\DoxyCodeLine{00022\ \textcolor{comment}{//\ without\ hard-\/wiring\ Roe/HLLC/Rusanov\ logic\ inside\ the\ solver.}}
-\DoxyCodeLine{00023\ dgFluxSolverManager\ \mbox{\hyperlink{readSolverSettings_8H_abc8b9b91a9193e1e23bcd871dcdff481}{fluxSolverManager}}}
-\DoxyCodeLine{00024\ (}
-\DoxyCodeLine{00025\ \ \ \ \ \mbox{\hyperlink{readSolverSettings_8H_a5fe45979d786d7fef7e805a5a2736c48}{dgSchemesDict}},}
-\DoxyCodeLine{00026\ \ \ \ \ \mbox{\hyperlink{solvers_2compressible_2DGCompressibleFoam_2createDGMesh_8H_ac2f70ae412900de0f8c13e91bd870b5c}{dgMesh}}}
-\DoxyCodeLine{00027\ );}
-\DoxyCodeLine{00028\ }
-\DoxyCodeLine{00029\ \textcolor{comment}{//\ limiterManager\ reads\ constant/dgOptions\ and\ constructs\ the\ ordered\ list\ of}}
-\DoxyCodeLine{00030\ \textcolor{comment}{//\ DG\ limiters\ to\ be\ applied\ after\ every\ explicit\ time\ stage.}}
-\DoxyCodeLine{00031\ dgLimiterManager\ \mbox{\hyperlink{readSolverSettings_8H_ab2c4c8bf35a5262a3a696fb728a9335c}{limiterManager}}}
-\DoxyCodeLine{00032\ (}
-\DoxyCodeLine{00033\ \ \ \ \ \mbox{\hyperlink{solvers_2compressible_2DGCompressibleFoam_2createDGMesh_8H_ac2f70ae412900de0f8c13e91bd870b5c}{dgMesh}}}
-\DoxyCodeLine{00034\ );}
-\DoxyCodeLine{00035\ }
-\DoxyCodeLine{00036\ \textcolor{comment}{//\ timeDiscretization\ stores\ residual\ buffers\ and\ applies\ the\ chosen\ explicit}}
-\DoxyCodeLine{00037\ \textcolor{comment}{//\ scheme\ (Euler,\ SSPRK,\ RK4,\ ...)\ to\ all\ registered\ conservative\ fields.}}
-\DoxyCodeLine{00038\ \textcolor{comment}{//\ Conceptually\ it\ is\ the\ stage\ driver\ for\ the\ semi-\/discrete\ system\ M\ dU/dt=R.}}
-\DoxyCodeLine{00039\ dgTimeDiscretization\ \mbox{\hyperlink{readSolverSettings_8H_a731ad9087afece7da5cbd3261100a133}{timeDiscretization}}}
-\DoxyCodeLine{00040\ (}
-\DoxyCodeLine{00041\ \ \ \ \ \mbox{\hyperlink{readSolverSettings_8H_a5fe45979d786d7fef7e805a5a2736c48}{dgSchemesDict}},}
-\DoxyCodeLine{00042\ \ \ \ \ \mbox{\hyperlink{VarDeclaration_8h_a122df5dd52660cdfcef00ba179bd53a7}{runTime}},}
-\DoxyCodeLine{00043\ \ \ \ \ \mbox{\hyperlink{solvers_2compressible_2DGCompressibleFoam_2createDGMesh_8H_ac2f70ae412900de0f8c13e91bd870b5c}{dgMesh}}}
-\DoxyCodeLine{00044\ );}
-\DoxyCodeLine{00045\ }
-\DoxyCodeLine{00046\ \textcolor{comment}{//\ Only\ conservative\ fields\ are\ registered\ because\ those\ are\ the\ unknowns}}
-\DoxyCodeLine{00047\ \textcolor{comment}{//\ advanced\ by\ the\ explicit\ update\ formula.\ Primitive\ fields\ are\ derived\ data}}
-\DoxyCodeLine{00048\ \textcolor{comment}{//\ and\ are\ reconstructed\ again\ after\ each\ stage\ update.}}
-\DoxyCodeLine{00049\ \mbox{\hyperlink{readSolverSettings_8H_a731ad9087afece7da5cbd3261100a133}{timeDiscretization}}.registerField(\mbox{\hyperlink{dynamicVarDeclaration_8cpp_ae7a21fded6f5e50f59fb05c0735f2479}{rho}});}
-\DoxyCodeLine{00050\ \mbox{\hyperlink{readSolverSettings_8H_a731ad9087afece7da5cbd3261100a133}{timeDiscretization}}.registerField(\mbox{\hyperlink{createConservativeFields_8H_a4f450f5e1994b9626ccd4ea0964b1918}{rhoU}});}
-\DoxyCodeLine{00051\ \mbox{\hyperlink{readSolverSettings_8H_a731ad9087afece7da5cbd3261100a133}{timeDiscretization}}.registerField(\mbox{\hyperlink{createConservativeFields_8H_a3f370753d9872dffe05120a7a166ba5b}{E}});}
-\DoxyCodeLine{00052\ }
-\DoxyCodeLine{00053\ \mbox{\hyperlink{readSolverSettings_8H_a731ad9087afece7da5cbd3261100a133}{timeDiscretization}}.writeInfo(Info);}
-\DoxyCodeLine{00054\ \mbox{\hyperlink{readSolverSettings_8H_ab2c4c8bf35a5262a3a696fb728a9335c}{limiterManager}}.listLimiters(Info);}
+\DoxyCodeLine{00019\ \textcolor{comment}{//\ NonSmooth\ artificial\ diffusion\ owns\ and\ registers\ muAV\ before\ the\ flux}}
+\DoxyCodeLine{00020\ \textcolor{comment}{//\ manager\ is\ built,\ so\ artificial-\/diffusion\ flux\ solvers\ can\ use\ muAV\ in\ their}}
+\DoxyCodeLine{00021\ \textcolor{comment}{//\ penalty\ coefficients.}}
+\DoxyCodeLine{00022\ dgArtificialDiffusionNonSmooth\ \mbox{\hyperlink{readSolverSettings_8H_a61de410b03b94be970705bf7c4c860b5}{artificialDiffusionNonSmooth}}}
+\DoxyCodeLine{00023\ (}
+\DoxyCodeLine{00024\ \ \ \ \ \mbox{\hyperlink{solvers_2compressible_2DGCompressibleFoam_2createDGMesh_8H_ac2f70ae412900de0f8c13e91bd870b5c}{dgMesh}},}
+\DoxyCodeLine{00025\ \ \ \ \ \mbox{\hyperlink{dgFluxSolvers_2convectiveFluxSolver_2exactRiemannFluxSolver_2ExactToro_2dgExactToroFluxSolver_8C_ac2f6bd0057296e22b6f1da8890d317de}{rho}},}
+\DoxyCodeLine{00026\ \ \ \ \ \mbox{\hyperlink{dgFoamVolumeToVTU_2dgFoamVolumeToVTU_8C_a8efb00782cb42d557cc03644b6c8586f}{U}},}
+\DoxyCodeLine{00027\ \ \ \ \ \mbox{\hyperlink{createDGFields_8H_a4a957c752605933cf3bb7896a1f8c53e}{thermo}}-\/>a()}
+\DoxyCodeLine{00028\ );}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \textcolor{comment}{//\ fluxSolverManager\ is\ the\ indirection\ layer\ that\ picks\ the\ right\ numerical}}
+\DoxyCodeLine{00031\ \textcolor{comment}{//\ flux\ for\ each\ equation\ term\ when\ dgConvectiveTerm\ asks\ for\ a\ surface\ flux.}}
+\DoxyCodeLine{00032\ \textcolor{comment}{//\ This\ lets\ the\ PDE\ assembly\ code\ say\ "{}mass\ term"{},\ "{}momentum\ term"{},\ etc.}}
+\DoxyCodeLine{00033\ \textcolor{comment}{//\ without\ hard-\/wiring\ Roe/HLLC/Rusanov\ logic\ inside\ the\ solver.}}
+\DoxyCodeLine{00034\ dgFluxSolverManager\ \mbox{\hyperlink{readSolverSettings_8H_abc8b9b91a9193e1e23bcd871dcdff481}{fluxSolverManager}}}
+\DoxyCodeLine{00035\ (}
+\DoxyCodeLine{00036\ \ \ \ \ \mbox{\hyperlink{readSolverSettings_8H_a5fe45979d786d7fef7e805a5a2736c48}{dgSchemesDict}},}
+\DoxyCodeLine{00037\ \ \ \ \ \mbox{\hyperlink{solvers_2compressible_2DGCompressibleFoam_2createDGMesh_8H_ac2f70ae412900de0f8c13e91bd870b5c}{dgMesh}}}
+\DoxyCodeLine{00038\ );}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \textcolor{comment}{//\ limiterManager\ reads\ constant/dgOptions\ and\ constructs\ the\ ordered\ list\ of}}
+\DoxyCodeLine{00041\ \textcolor{comment}{//\ DG\ limiters\ to\ be\ applied\ after\ every\ explicit\ time\ stage.}}
+\DoxyCodeLine{00042\ dgLimiterManager\ \mbox{\hyperlink{readSolverSettings_8H_ab2c4c8bf35a5262a3a696fb728a9335c}{limiterManager}}}
+\DoxyCodeLine{00043\ (}
+\DoxyCodeLine{00044\ \ \ \ \ \mbox{\hyperlink{solvers_2compressible_2DGCompressibleFoam_2createDGMesh_8H_ac2f70ae412900de0f8c13e91bd870b5c}{dgMesh}}}
+\DoxyCodeLine{00045\ );}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ \textcolor{comment}{//\ timeDiscretization\ stores\ residual\ buffers\ and\ applies\ the\ chosen\ explicit}}
+\DoxyCodeLine{00048\ \textcolor{comment}{//\ scheme\ (Euler,\ SSPRK,\ RK4,\ ...)\ to\ all\ registered\ conservative\ fields.}}
+\DoxyCodeLine{00049\ \textcolor{comment}{//\ Conceptually\ it\ is\ the\ stage\ driver\ for\ the\ semi-\/discrete\ system\ M\ dU/dt=R.}}
+\DoxyCodeLine{00050\ dgTimeDiscretization\ \mbox{\hyperlink{readSolverSettings_8H_a731ad9087afece7da5cbd3261100a133}{timeDiscretization}}}
+\DoxyCodeLine{00051\ (}
+\DoxyCodeLine{00052\ \ \ \ \ \mbox{\hyperlink{readSolverSettings_8H_a5fe45979d786d7fef7e805a5a2736c48}{dgSchemesDict}},}
+\DoxyCodeLine{00053\ \ \ \ \ \mbox{\hyperlink{VarDeclaration_8h_a122df5dd52660cdfcef00ba179bd53a7}{runTime}},}
+\DoxyCodeLine{00054\ \ \ \ \ \mbox{\hyperlink{solvers_2compressible_2DGCompressibleFoam_2createDGMesh_8H_ac2f70ae412900de0f8c13e91bd870b5c}{dgMesh}}}
+\DoxyCodeLine{00055\ );}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00057\ \textcolor{comment}{//\ Only\ conservative\ fields\ are\ registered\ because\ those\ are\ the\ unknowns}}
+\DoxyCodeLine{00058\ \textcolor{comment}{//\ advanced\ by\ the\ explicit\ update\ formula.\ Primitive\ fields\ are\ derived\ data}}
+\DoxyCodeLine{00059\ \textcolor{comment}{//\ and\ are\ reconstructed\ again\ after\ each\ stage\ update.}}
+\DoxyCodeLine{00060\ \mbox{\hyperlink{readSolverSettings_8H_a731ad9087afece7da5cbd3261100a133}{timeDiscretization}}.registerField(\mbox{\hyperlink{dgFluxSolvers_2convectiveFluxSolver_2exactRiemannFluxSolver_2ExactToro_2dgExactToroFluxSolver_8C_ac2f6bd0057296e22b6f1da8890d317de}{rho}});}
+\DoxyCodeLine{00061\ \mbox{\hyperlink{readSolverSettings_8H_a731ad9087afece7da5cbd3261100a133}{timeDiscretization}}.registerField(\mbox{\hyperlink{dgFoamVolumeToVTU_2dgFoamVolumeToVTU_8C_a2b73283c7d89e3e4adb09eefa3d9d6bb}{rhoU}});}
+\DoxyCodeLine{00062\ \mbox{\hyperlink{readSolverSettings_8H_a731ad9087afece7da5cbd3261100a133}{timeDiscretization}}.registerField(\mbox{\hyperlink{dgFoamVolumeToVTU_2dgFoamVolumeToVTU_8C_a67c23b18fba94c8f5a0d8294a54ae3d9}{E}});}
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00064\ \textcolor{comment}{//\ Auxiliary\ mass\ projection\ for\ conservative\ gradients}}
+\DoxyCodeLine{00065\ \textcolor{comment}{//\ \ \ \ \ S\ =\ grad(C),\ C\ =\ (rho,\ rhoU,\ E).}}
+\DoxyCodeLine{00066\ \textcolor{comment}{//\ The\ fields\ are\ solved\ algebraically\ each\ stage\ before\ flux\ assembly\ and\ are}}
+\DoxyCodeLine{00067\ \textcolor{comment}{//\ not\ time-\/advanced\ by\ dgTimeDiscretization.}}
+\DoxyCodeLine{00068\ dgMassProjection\ \mbox{\hyperlink{readSolverSettings_8H_ac0fa3ac04e4a2f94a0fd9f0dc9793f1f}{massProjection}}(\mbox{\hyperlink{solvers_2compressible_2DGCompressibleFoam_2createDGMesh_8H_ac2f70ae412900de0f8c13e91bd870b5c}{dgMesh}});}
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00070\ \mbox{\hyperlink{readSolverSettings_8H_ac0fa3ac04e4a2f94a0fd9f0dc9793f1f}{massProjection}}.registerField(\mbox{\hyperlink{createConservativeFields_8H_a7462c3b7ed32542798b4a37676879f5c}{SRho}});}
+\DoxyCodeLine{00071\ \mbox{\hyperlink{readSolverSettings_8H_ac0fa3ac04e4a2f94a0fd9f0dc9793f1f}{massProjection}}.registerField(\mbox{\hyperlink{createConservativeFields_8H_a5539ed9f816095edc6645225b668dc7e}{SRhoU}});}
+\DoxyCodeLine{00072\ \mbox{\hyperlink{readSolverSettings_8H_ac0fa3ac04e4a2f94a0fd9f0dc9793f1f}{massProjection}}.registerField(\mbox{\hyperlink{createConservativeFields_8H_af56509e2dabcd0fcb8f63cd0e164c1f5}{SE}});}
+\DoxyCodeLine{00073\ }
+\DoxyCodeLine{00074\ \mbox{\hyperlink{readSolverSettings_8H_a731ad9087afece7da5cbd3261100a133}{timeDiscretization}}.writeInfo(Info);}
+\DoxyCodeLine{00075\ \mbox{\hyperlink{readSolverSettings_8H_ac0fa3ac04e4a2f94a0fd9f0dc9793f1f}{massProjection}}.writeInfo(Info);}
+\DoxyCodeLine{00076\ \mbox{\hyperlink{readSolverSettings_8H_a61de410b03b94be970705bf7c4c860b5}{artificialDiffusionNonSmooth}}.writeInfo(Info);}
+\DoxyCodeLine{00077\ \mbox{\hyperlink{readSolverSettings_8H_ab2c4c8bf35a5262a3a696fb728a9335c}{limiterManager}}.listLimiters(Info);}
 
 \end{DoxyCode}

@@ -258,6 +258,59 @@ inline typename outerProduct<Type, vector>::type gradProjectionSurfaceIntegral
     return surfInt;
 }
 
+/**
+ * \brief Surface integral for gradient-projection terms using an on-read
+ * central state on internal/processor faces.
+ *
+ * Computes \f$\int_{\partial\Omega}\phi\,C^\ast n\,dS\f$ without writing
+ * to \c faceGaussField::midValues(). Physical boundary faces still use the
+ * boundary-provided middle state; internal and processor faces use
+ * \f$C^\ast = 0.5(C^- + C^+)\f$ directly.
+ */
+template<class Type>
+inline typename outerProduct<Type, vector>::type gradProjectionCentralSurfaceIntegral
+(
+    const faceGaussField<scalar>& phi,
+    const faceGaussField<Type>& C
+)
+{
+    typename outerProduct<Type, vector>::type surfInt =
+        pTraits<typename outerProduct<Type, vector>::type>::zero;
+
+    const label nFaces = C.nFaces();
+
+    for (label faceI = 0; faceI < nFaces; ++faceI)
+    {
+        const vector n = C.normals()[faceI];
+        const label nGauss = C.nGaussPerFace();
+        const List<scalar>& w = C.faces()[faceI]->weights();
+        const List<scalar>& J2D = C.faces()[faceI]->J2D();
+
+        const bool useBoundaryMid =
+            C.isBoundary(faceI) && !C.isProcessorPatch(faceI);
+
+        for (label g = 0; g < nGauss; ++g)
+        {
+            const Type CStar =
+                useBoundaryMid
+              ? C.midValueOnFace(faceI, g)
+              : scalar(0.5)
+               *(
+                    C.minusValueOnFace(faceI, g)
+                  + C.plusValueOnFace(faceI, g)
+                );
+
+            surfInt +=
+                J2D[g]
+              * phi.minusValueOnFace(faceI, g)
+              * (CStar * n)
+              * w[g];
+        }
+    }
+
+    return surfInt;
+}
+
 } // End namespace Foam
 
 #endif

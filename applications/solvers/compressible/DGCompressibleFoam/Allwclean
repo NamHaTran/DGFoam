@@ -1,0 +1,15 @@
+#!/bin/sh
+
+set -e
+
+APP_ROOT="$(CDPATH= cd -- "$(dirname -- "$0")" && pwd -P)"
+
+echo "==> Cleaning DGCompressibleFoam from $APP_ROOT"
+cd "$APP_ROOT"
+wclean
+
+echo "==> Cleaning derivedFunctionObjects from $APP_ROOT/derivedFunctionObjects"
+cd "$APP_ROOT/derivedFunctionObjects"
+wclean libso
+
+#------------------------------------------------------------------------------

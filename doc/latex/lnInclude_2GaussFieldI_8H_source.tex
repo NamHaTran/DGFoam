@@ -73,7 +73,7 @@
 \DoxyCodeLine{00069\ \ \ \ \ cellID\_(cellID),}
 \DoxyCodeLine{00070\ \ \ \ \ mesh\_(mesh),}
 \DoxyCodeLine{00071\ \ \ \ \ cellField\_(mesh,\ \&(*dofField)[cellID]),}
-\DoxyCodeLine{00072\ \ \ \ \ faceField\_(cellID,\ mesh)}
+\DoxyCodeLine{00072\ \ \ \ \ faceField\_()}
 \DoxyCodeLine{00073\ \{}
 \DoxyCodeLine{00074\ \ \ \ \ \textcolor{keywordflow}{if}\ (!dofField\_\ ||\ !mesh\_)}
 \DoxyCodeLine{00075\ \ \ \ \ \{}
@@ -94,7 +94,7 @@
 \DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ cellsDof[i\ +\ 1]\ =\ (nid\ >=\ 0\ ?\ \&(*dofField\_)[nid]\ :\ \textcolor{keyword}{nullptr});}
 \DoxyCodeLine{00091\ \ \ \ \ \}}
 \DoxyCodeLine{00092\ }
-\DoxyCodeLine{00093\ \ \ \ \ faceField\_.setCellsDof(cellsDof);}
+\DoxyCodeLine{00093\ \ \ \ \ faceField\_\ =\ faceGaussField<Type>(cellsDof,\ mesh\_);}
 \DoxyCodeLine{00094\ \}}
 \DoxyCodeLine{00095\ }
 \DoxyCodeLine{00096\ }

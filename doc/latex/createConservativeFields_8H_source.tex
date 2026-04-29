@@ -7,7 +7,7 @@
 \DoxyCodeLine{00003\ \textcolor{comment}{//\ in\ terms\ of\ rho,\ rhoU,\ and\ total\ energy\ E.}}
 \DoxyCodeLine{00004\ Info<<\ \textcolor{stringliteral}{"{}Create\ conservative\ fields\(\backslash\)n"{}}\ <<\ endl;}
 \DoxyCodeLine{00005\ }
-\DoxyCodeLine{00006\ dgField<scalar>\ \mbox{\hyperlink{dynamicVarDeclaration_8cpp_ae7a21fded6f5e50f59fb05c0735f2479}{rho}}}
+\DoxyCodeLine{00006\ dgField<scalar>\ \mbox{\hyperlink{dgFluxSolvers_2convectiveFluxSolver_2exactRiemannFluxSolver_2ExactToro_2dgExactToroFluxSolver_8C_ac2f6bd0057296e22b6f1da8890d317de}{rho}}}
 \DoxyCodeLine{00007\ (}
 \DoxyCodeLine{00008\ \ \ \ \ IOobject}
 \DoxyCodeLine{00009\ \ \ \ \ (}
@@ -22,7 +22,7 @@
 \DoxyCodeLine{00018\ );}
 \DoxyCodeLine{00019\ }
 \DoxyCodeLine{00020\ \textcolor{comment}{//\ rhoU\ stores\ the\ momentum\ vector,\ not\ the\ primitive\ velocity.}}
-\DoxyCodeLine{00021\ dgField<vector>\ \mbox{\hyperlink{createConservativeFields_8H_a4f450f5e1994b9626ccd4ea0964b1918}{rhoU}}}
+\DoxyCodeLine{00021\ dgField<vector>\ \mbox{\hyperlink{dgFoamVolumeToVTU_2dgFoamVolumeToVTU_8C_a2b73283c7d89e3e4adb09eefa3d9d6bb}{rhoU}}}
 \DoxyCodeLine{00022\ (}
 \DoxyCodeLine{00023\ \ \ \ \ IOobject}
 \DoxyCodeLine{00024\ \ \ \ \ (}
@@ -38,7 +38,7 @@
 \DoxyCodeLine{00034\ }
 \DoxyCodeLine{00035\ \textcolor{comment}{//\ E\ denotes\ the\ total\ energy\ per\ unit\ volume\ used\ by\ the\ conservative}}
 \DoxyCodeLine{00036\ \textcolor{comment}{//\ thermo\ reconstruction.}}
-\DoxyCodeLine{00037\ dgField<scalar>\ \mbox{\hyperlink{createConservativeFields_8H_a3f370753d9872dffe05120a7a166ba5b}{E}}}
+\DoxyCodeLine{00037\ dgField<scalar>\ \mbox{\hyperlink{dgFoamVolumeToVTU_2dgFoamVolumeToVTU_8C_a67c23b18fba94c8f5a0d8294a54ae3d9}{E}}}
 \DoxyCodeLine{00038\ (}
 \DoxyCodeLine{00039\ \ \ \ \ IOobject}
 \DoxyCodeLine{00040\ \ \ \ \ (}
@@ -51,5 +51,50 @@
 \DoxyCodeLine{00047\ \ \ \ \ \mbox{\hyperlink{solvers_2compressible_2DGCompressibleFoam_2createDGMesh_8H_ac2f70ae412900de0f8c13e91bd870b5c}{dgMesh}},}
 \DoxyCodeLine{00048\ \ \ \ \ \textcolor{keyword}{true}}
 \DoxyCodeLine{00049\ );}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00051\ \textcolor{comment}{//\ Conservative\ gradients\ S\ =\ grad(C),\ with\ C\ =\ (rho,\ rhoU,\ E).}}
+\DoxyCodeLine{00052\ \textcolor{comment}{//\ These\ auxiliary\ DG\ fields\ own\ DoFs\ but\ are\ initialized\ to\ zero\ and\ kept\ out}}
+\DoxyCodeLine{00053\ \textcolor{comment}{//\ of\ run-\/time\ I/O.}}
+\DoxyCodeLine{00054\ dgField<vector>\ \mbox{\hyperlink{createConservativeFields_8H_a7462c3b7ed32542798b4a37676879f5c}{SRho}}}
+\DoxyCodeLine{00055\ (}
+\DoxyCodeLine{00056\ \ \ \ \ IOobject}
+\DoxyCodeLine{00057\ \ \ \ \ (}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}SRho"{}},}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{VarDeclaration_8h_a122df5dd52660cdfcef00ba179bd53a7}{runTime}}.timeName(),}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ mesh,}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ IOobject::NO\_READ,}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ IOobject::NO\_WRITE}
+\DoxyCodeLine{00063\ \ \ \ \ ),}
+\DoxyCodeLine{00064\ \ \ \ \ \mbox{\hyperlink{solvers_2compressible_2DGCompressibleFoam_2createDGMesh_8H_ac2f70ae412900de0f8c13e91bd870b5c}{dgMesh}},}
+\DoxyCodeLine{00065\ \ \ \ \ \textcolor{keyword}{true}}
+\DoxyCodeLine{00066\ );}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00068\ dgField<tensor>\ \mbox{\hyperlink{createConservativeFields_8H_a5539ed9f816095edc6645225b668dc7e}{SRhoU}}}
+\DoxyCodeLine{00069\ (}
+\DoxyCodeLine{00070\ \ \ \ \ IOobject}
+\DoxyCodeLine{00071\ \ \ \ \ (}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}SRhoU"{}},}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{VarDeclaration_8h_a122df5dd52660cdfcef00ba179bd53a7}{runTime}}.timeName(),}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ mesh,}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ IOobject::NO\_READ,}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ IOobject::NO\_WRITE}
+\DoxyCodeLine{00077\ \ \ \ \ ),}
+\DoxyCodeLine{00078\ \ \ \ \ \mbox{\hyperlink{solvers_2compressible_2DGCompressibleFoam_2createDGMesh_8H_ac2f70ae412900de0f8c13e91bd870b5c}{dgMesh}},}
+\DoxyCodeLine{00079\ \ \ \ \ \textcolor{keyword}{true}}
+\DoxyCodeLine{00080\ );}
+\DoxyCodeLine{00081\ }
+\DoxyCodeLine{00082\ dgField<vector>\ \mbox{\hyperlink{createConservativeFields_8H_af56509e2dabcd0fcb8f63cd0e164c1f5}{SE}}}
+\DoxyCodeLine{00083\ (}
+\DoxyCodeLine{00084\ \ \ \ \ IOobject}
+\DoxyCodeLine{00085\ \ \ \ \ (}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}SE"{}},}
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{VarDeclaration_8h_a122df5dd52660cdfcef00ba179bd53a7}{runTime}}.timeName(),}
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ mesh,}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ IOobject::NO\_READ,}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ IOobject::NO\_WRITE}
+\DoxyCodeLine{00091\ \ \ \ \ ),}
+\DoxyCodeLine{00092\ \ \ \ \ \mbox{\hyperlink{solvers_2compressible_2DGCompressibleFoam_2createDGMesh_8H_ac2f70ae412900de0f8c13e91bd870b5c}{dgMesh}},}
+\DoxyCodeLine{00093\ \ \ \ \ \textcolor{keyword}{true}}
+\DoxyCodeLine{00094\ );}
 
 \end{DoxyCode}

@@ -65,7 +65,7 @@ Foam::dgGradProjectionTerm<UType>::dgGradProjectionTerm
     eqnType_(eqnType),
     cellID_(basis.cellID()),
     basis_(basis),
-    U_(new GaussField<UType>(U)),
+    U_(U),
     nDof_(basis_.nDof()),
     R_(nDof_, pTraits<residual_type>::zero)
 {
@@ -99,28 +99,8 @@ Foam::dgGradProjectionTerm<UType>::dgGradProjectionTerm
 template<class UType>
 void Foam::dgGradProjectionTerm<UType>::updateFlux()
 {
-    faceGaussField<UType>& UFace = U_.ref().faceField();
-
-    const label nFaces = UFace.nFaces();
-    const label nGauss = UFace.nGaussPerFace();
-
-    for (label faceI = 0; faceI < nFaces; ++faceI)
-    {
-        if (UFace.isBoundary(faceI) && !UFace.isProcessorPatch(faceI))
-        {
-            continue;
-        }
-
-        for (label gI = 0; gI < nGauss; ++gI)
-        {
-            UFace.midValueOnFace(faceI, gI) =
-                scalar(0.5)
-               *(
-                    UFace.minusValueOnFace(faceI, gI)
-                  + UFace.plusValueOnFace(faceI, gI)
-                );
-        }
-    }
+    // No-op: calcResidual() evaluates central internal/processor face states
+    // directly, avoiding a local GaussField copy and midValues() writes.
 }
 
 
@@ -149,7 +129,7 @@ void Foam::dgGradProjectionTerm<UType>::calcResidual()
         const GaussField<scalar>& phi = basis_.getBasis(i);
 
         const residual_type surfTerm =
-            Foam::gradProjectionSurfaceIntegral
+            Foam::gradProjectionCentralSurfaceIntegral
             (
                 phi.faceField(),
                 U_().faceField()

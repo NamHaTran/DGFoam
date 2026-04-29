@@ -74,7 +74,8 @@ namespace Foam
  *
  * add this residual directly to the matching time-discretization buffer.
  * If a model writes the source on the left-hand side, pass the negated source
- * field instead.
+ * field instead.  When \c removeHighOrder is true, only the cell-mean residual
+ * entry is assembled and all higher-mode entries remain zero.
  */
 template<class Type>
 class dgSourceTerm
@@ -96,6 +97,9 @@ private:
     /** Number of degrees of freedom in this cell. */
     label nDof_;
 
+    /** Restrict residual assembly to the cell-mean degree of freedom. */
+    bool removeHighOrder_;
+
     /** Residual values per degree of freedom. */
     List<Type> R_;
 
@@ -107,21 +111,24 @@ public:
     (
         const word& termName,
         const dgBasisField& basis,
-        const cellGaussField<Type>& S
+        const cellGaussField<Type>& S,
+        const bool removeHighOrder = false
     );
 
     dgSourceTerm
     (
         const word& termName,
         const dgBasisField& basis,
-        const tmp<cellGaussField<Type>>& tS
+        const tmp<cellGaussField<Type>>& tS,
+        const bool removeHighOrder = false
     );
 
     dgSourceTerm
     (
         const word& termName,
         const dgBasisField& basis,
-        const GaussField<Type>& S
+        const GaussField<Type>& S,
+        const bool removeHighOrder = false
     );
 
     ~dgSourceTerm() = default;
@@ -135,6 +142,8 @@ public:
     inline const cellGaussField<Type>& sourceField() const { return S_(); }
 
     inline const word& termName() const { return termName_; }
+
+    inline bool removeHighOrder() const { return removeHighOrder_; }
 
     /** \brief Assemble \f$R_i = \int \phi_i S\,dV\f$ on the owner cell. */
     void calcResidual();

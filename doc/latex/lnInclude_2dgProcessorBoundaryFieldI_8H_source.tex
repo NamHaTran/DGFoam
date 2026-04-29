@@ -249,14 +249,14 @@
 \DoxyCodeLine{00245\ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>dgMesh\_.getFvMesh().faceOwner()[faceID];}
 \DoxyCodeLine{00246\ }
 \DoxyCodeLine{00247\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ label\ nGauss\ =\ gFace-\/>nGauss();}
-\DoxyCodeLine{00248\ \ \ \ \ \ \ \ \ faceGaussField<Type>\&\ \mbox{\hyperlink{updateBC_8H_a236e8dce9665bd0a1c4e4992fcaa139d}{faceField}}\ =}
+\DoxyCodeLine{00248\ \ \ \ \ \ \ \ \ faceGaussField<Type>\&\ faceField\ =}
 \DoxyCodeLine{00249\ \ \ \ \ \ \ \ \ \ \ \ \ field.gaussFields()[ownerCellID].faceField();}
 \DoxyCodeLine{00250\ }
 \DoxyCodeLine{00251\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (label\ g\ =\ 0;\ g\ <\ nGauss;\ ++g)}
 \DoxyCodeLine{00252\ \ \ \ \ \ \ \ \ \{}
 \DoxyCodeLine{00253\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ The\ neighbour's\ exported\ minus\ state\ becomes\ this\ rank's\ local}}
 \DoxyCodeLine{00254\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ plus\ state\ on\ the\ same\ global\ face.}}
-\DoxyCodeLine{00255\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{updateBC_8H_a236e8dce9665bd0a1c4e4992fcaa139d}{faceField}}.plusValueOnGlobalFace(faceID,\ g)}
+\DoxyCodeLine{00255\ \ \ \ \ \ \ \ \ \ \ \ \ faceField.plusValueOnGlobalFace(faceID,\ g)}
 \DoxyCodeLine{00256\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ recvBuf\_[k];}
 \DoxyCodeLine{00257\ }
 \DoxyCodeLine{00258\ \ \ \ \ \ \ \ \ \ \ \ \ ++k;}
@@ -279,9 +279,9 @@
 \DoxyCodeLine{00275\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Store\ a\ copy\ in\ face-\/local\ buffered\ storage\ so\ later\ limiter\ /}}
 \DoxyCodeLine{00276\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ reconstruction\ code\ can\ query\ neighbourCellDof()\ safely\ without}}
 \DoxyCodeLine{00277\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ depending\ on\ the\ communication\ stream\ lifetime.}}
-\DoxyCodeLine{00278\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{updateBC_8H_a236e8dce9665bd0a1c4e4992fcaa139d}{faceField}}.setBufferedNeighbourDof}
+\DoxyCodeLine{00278\ \ \ \ \ \ \ \ \ \ \ \ \ faceField.setBufferedNeighbourDof}
 \DoxyCodeLine{00279\ \ \ \ \ \ \ \ \ \ \ \ \ (}
-\DoxyCodeLine{00280\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{updateBC_8H_a236e8dce9665bd0a1c4e4992fcaa139d}{faceField}}.localFaceIndex(faceID),}
+\DoxyCodeLine{00280\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ faceField.localFaceIndex(faceID),}
 \DoxyCodeLine{00281\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cellDof<Type>(-\/1,\ recvDof.size(),\ recvDof)}
 \DoxyCodeLine{00282\ \ \ \ \ \ \ \ \ \ \ \ \ );}
 \DoxyCodeLine{00283\ \ \ \ \ \ \ \ \ \}}

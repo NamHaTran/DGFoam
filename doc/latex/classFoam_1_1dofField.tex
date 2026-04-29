@@ -53,6 +53,13 @@ Collaboration diagram for Foam\+::dof\+Field\texorpdfstring{$<$}{<} Type \texorp
 \begin{DoxyCompactList}\small\item\em Update the Open\+FOAM vol\+Fields from one cell\textquotesingle{}s DG Do\+Fs. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dofField_ab3e229f0c38495f1fad1721498f3c9b7}{write}} () \mbox{\hyperlink{classFoam_1_1GaussField}{const}}
 \begin{DoxyCompactList}\small\item\em Write all Open\+FOAM DoF vol\+Fields to disk. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dofField_ab04c80e11431c5d027dd2e0d68710271}{update\+Boundary\+Field}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1GaussField}{dofI}})
+\begin{DoxyCompactList}\small\item\em Refresh boundary faces from the adjacent cell values. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dofField_ab04c80e11431c5d027dd2e0d68710271}{update\+Boundary\+Field}} (\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}} \mbox{\hyperlink{classFoam_1_1GaussField}{dofI}})
+\begin{DoxyCompactList}\small\item\em Refresh boundary faces from the adjacent cell values. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsubsection*{Private Attributes}
 \begin{DoxyCompactItemize}
 \item 
@@ -184,6 +191,24 @@ Allocates cell-\/local DoF storage for the given DG mesh and initializes all deg
 
 
 \doxysubsection{Member Function Documentation}
+\Hypertarget{classFoam_1_1dofField_ab04c80e11431c5d027dd2e0d68710271}\label{classFoam_1_1dofField_ab04c80e11431c5d027dd2e0d68710271} 
+\index{Foam::dofField$<$ Type $>$@{Foam::dofField$<$ Type $>$}!updateBoundaryField@{updateBoundaryField}}
+\index{updateBoundaryField@{updateBoundaryField}!Foam::dofField$<$ Type $>$@{Foam::dofField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{updateBoundaryField()}{updateBoundaryField()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dofField}{Foam\+::dof\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::update\+Boundary\+Field (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{dofI }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Refresh boundary faces from the adjacent cell values. 
+
+This keeps the on-\/disk boundary\+Field section synchronized with the current cell values before a vol\+Field is written.
+
+
+\begin{DoxyParams}{Parameters}
+{\em dofI} & DoF index whose boundary values should be refreshed. \\
+\hline
+\end{DoxyParams}
 \Hypertarget{classFoam_1_1dofField_a4e025c47ffecf244e79c6023c82c3653}\label{classFoam_1_1dofField_a4e025c47ffecf244e79c6023c82c3653} 
 \index{Foam::dofField$<$ Type $>$@{Foam::dofField$<$ Type $>$}!cellDofList@{cellDofList}}
 \index{cellDofList@{cellDofList}!Foam::dofField$<$ Type $>$@{Foam::dofField$<$ Type $>$}}
@@ -273,6 +298,24 @@ Copies the Do\+Fs of a single DG cell into the corresponding Open\+FOAM vol\+Fie
 
 Write all Open\+FOAM DoF vol\+Fields to disk. 
 
+\Hypertarget{classFoam_1_1dofField_ab04c80e11431c5d027dd2e0d68710271}\label{classFoam_1_1dofField_ab04c80e11431c5d027dd2e0d68710271} 
+\index{Foam::dofField$<$ Type $>$@{Foam::dofField$<$ Type $>$}!updateBoundaryField@{updateBoundaryField}}
+\index{updateBoundaryField@{updateBoundaryField}!Foam::dofField$<$ Type $>$@{Foam::dofField$<$ Type $>$}}
+\doxysubsubsection{\texorpdfstring{updateBoundaryField()}{updateBoundaryField()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classFoam_1_1GaussField}{class}} \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$ \\
+\mbox{\hyperlink{classFoam_1_1GaussField}{void}} \mbox{\hyperlink{classFoam_1_1dofField}{Foam\+::dof\+Field}}$<$ \mbox{\hyperlink{classFoam_1_1GaussField}{Type}} $>$\+::update\+Boundary\+Field (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFoam_1_1GaussField}{const}} \mbox{\hyperlink{classFoam_1_1GaussField}{label}}}]{dofI }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Refresh boundary faces from the adjacent cell values. 
+
+This keeps the on-\/disk boundary\+Field section synchronized with the current cell values before a vol\+Field is written.
+
+
+\begin{DoxyParams}{Parameters}
+{\em dofI} & DoF index whose boundary values should be refreshed. \\
+\hline
+\end{DoxyParams}
 \Hypertarget{classFoam_1_1dofField_a4e025c47ffecf244e79c6023c82c3653}\label{classFoam_1_1dofField_a4e025c47ffecf244e79c6023c82c3653} 
 \index{Foam::dofField$<$ Type $>$@{Foam::dofField$<$ Type $>$}!cellDofList@{cellDofList}}
 \index{cellDofList@{cellDofList}!Foam::dofField$<$ Type $>$@{Foam::dofField$<$ Type $>$}}
