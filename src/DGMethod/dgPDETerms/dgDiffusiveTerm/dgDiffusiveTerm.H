@@ -96,6 +96,9 @@ private:
     /** Flux solver manager. */
     dgFluxSolverManager& fluxSolver_;
 
+    /** Flux solver selected for this term. */
+    dgFluxSolver& termFluxSolver_;
+
     /** Number of degrees of freedom in this cell. */
     label nDof_;
 

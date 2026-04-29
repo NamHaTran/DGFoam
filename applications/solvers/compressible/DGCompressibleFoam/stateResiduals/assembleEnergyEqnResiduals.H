@@ -66,29 +66,21 @@ dgConvectiveTerm<scalar, vector> energyConvTerm
     fluxSolverManager
 );
 
-// Keep the pressure/NSF molecular/thermal energy flux separate from
-// Franz-Durst self-diffusion so each can select a distinct diffusive
-// numerical flux.
+// Assemble the pressure/NSF molecular/thermal energy flux.  Since
+// tMomentumDiffFlux already contains the total momentum diffusive flux,
+// including Franz-Durst self-diffusion when enabled, this term contains
+// tauT.U directly:
 //
-//     F_E,NSF = tau_NSF.U + q_NSF
-//             = tau_NSF.U - kappa grad(T)
+//     F_E = tauT.U - kappa grad(T)
 //
-// where tau_NSF is stored in tMomentumDiffFlux.
-const auto energyDiffFluxExpr =
-  (dg::expr(tMomentumDiffFlux()) & dg::expr(UG))
-  - dg::expr(kappaG)*dg::expr(gradTG);
-
-tmp<GaussField<vector>> tEnergyDiffFlux =
-    dg::evaluate<vector>(energyDiffFluxExpr, cellI, &dgMesh);
-
-tmp<GaussField<vector>> tSelfDiffusionEnergyFlux;
+// When self-diffusion is active, add the heat/mass and conservative kinetic
+// mass-diffusion fluxes before constructing the single energy diffusive term:
+//
+//     F_E,self = (e - Ek)*mD.
+tmp<GaussField<vector>> tEnergyDiffFlux;
 
 if (selfDiffusion)
 {
-    // Assemble the Franz-Durst molecular-momentum and heat-flux part:
-    //
-    //     Fd_E,self = tau_mD.U + e*mD.
-    //
     // Use the thermo model for e(T) instead of reconstructing it from
     // Ec - Ek.  This keeps the heat flux consistent with the active
     // caloric relation.
@@ -97,17 +89,31 @@ if (selfDiffusion)
 
     thermo->energyModel().calcHe(cellI, TG, tInternalEnergy.ref());
 
-    const auto selfDiffusionEnergyFluxExpr =
-        (dg::expr(tSelfDiffusionMomentumFlux()) & dg::expr(UG))
-      + dg::expr(tInternalEnergy())*dg::expr(tMassDiffFlux());
+    const auto kineticEnergyExpr =
+        scalar(0.5)*(dg::expr(UG) & dg::expr(UG));
 
-    tSelfDiffusionEnergyFlux =
+    const auto totalEnergyDiffFluxExpr =
+        (dg::expr(tMomentumDiffFlux()) & dg::expr(UG))
+      - dg::expr(kappaG)*dg::expr(gradTG)
+      + (dg::expr(tInternalEnergy()) - kineticEnergyExpr)
+       *dg::expr(tMassDiffFlux());
+
+    tEnergyDiffFlux =
         dg::evaluate<vector>
         (
-            selfDiffusionEnergyFluxExpr,
+            totalEnergyDiffFluxExpr,
             cellI,
             &dgMesh
         );
+}
+else
+{
+    const auto energyDiffFluxExpr =
+        (dg::expr(tMomentumDiffFlux()) & dg::expr(UG))
+      - dg::expr(kappaG)*dg::expr(gradTG);
+
+    tEnergyDiffFlux =
+        dg::evaluate<vector>(energyDiffFluxExpr, cellI, &dgMesh);
 }
 
 dgDiffusiveTerm<scalar, vector> energyDiffTerm
@@ -128,50 +134,6 @@ energyDiffTerm.calcResidual();
 
 if (selfDiffusion)
 {
-    dgDiffusiveTerm<scalar, vector> selfDiffusionEnergyTerm
-    (
-        "selfDiffusionEnergyTerm",
-        dgFluxSolver::equationType::energyTransport,
-        dgFluxSolver::fluxType::diffusive,
-        basisField,
-        EG,
-        tSelfDiffusionEnergyFlux,
-        fluxSolverManager,
-        false
-    );
-
-    selfDiffusionEnergyTerm.updateFlux();
-    selfDiffusionEnergyTerm.calcResidual();
-
-    const auto kineticEnergyExpr =
-        scalar(0.5)*(dg::expr(UG) & dg::expr(UG));
-
-    const auto kineticMassDiffFluxExpr =
-       -kineticEnergyExpr*dg::expr(tMassDiffFlux());
-
-    tmp<GaussField<vector>> tKineticMassDiffFlux =
-        dg::evaluate<vector>
-        (
-            kineticMassDiffFluxExpr,
-            cellI,
-            &dgMesh
-        );
-
-    dgDiffusiveTerm<scalar, vector> kineticMassDiffFluxTerm
-    (
-        "kineticMassDiffFluxTerm",
-        dgFluxSolver::equationType::energyTransport,
-        dgFluxSolver::fluxType::diffusive,
-        basisField,
-        EG,
-        tKineticMassDiffFlux,
-        fluxSolverManager,
-        false
-    );
-
-    kineticMassDiffFluxTerm.updateFlux();
-    kineticMassDiffFluxTerm.calcResidual();
-
     const auto gradKineticEnergyExpr =
         dg::expr(UG) & dg::expr(gradUG);
 
@@ -190,8 +152,7 @@ if (selfDiffusion)
     (
         "kineticMassDiffCorrectionTerm",
         basisField,
-        tKineticMassDiffCorrection(),
-        false
+        tKineticMassDiffCorrection()
     );
 
     kineticMassDiffCorrectionTerm.calcResidual();
@@ -208,20 +169,6 @@ if (selfDiffusion)
         E.name(),
         cellI,
         energyDiffTerm.R()
-    );
-
-    timeDiscretization.addResidual
-    (
-        E.name(),
-        cellI,
-        selfDiffusionEnergyTerm.R()
-    );
-
-    timeDiscretization.addResidual
-    (
-        E.name(),
-        cellI,
-        kineticMassDiffFluxTerm.R()
     );
 
     timeDiscretization.addResidual

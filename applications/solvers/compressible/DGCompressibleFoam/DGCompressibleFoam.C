@@ -73,6 +73,7 @@ Description
 
 #include "fvCFD.H"
 #include "pisoControl.H"
+#include "clockTime.H"
 #include "dgGeomMesh.H"
 
 // DG libs (must have)
@@ -133,6 +134,16 @@ int main(int argc, char *argv[])
     // derived from the same calculation.
     #include "calculateDeltaT.H"
 
+    const Switch profileTimings =
+        runTime.controlDict().getOrDefault<Switch>("profileTimings", false);
+
+    const Switch profileTimingsPerStage =
+        runTime.controlDict().getOrDefault<Switch>
+        (
+            "profileTimingsPerStage",
+            false
+        );
+
     // Each outer iteration is one physical time step.
     while (runTime.run())
     {
@@ -141,24 +152,163 @@ int main(int argc, char *argv[])
         Info<< "Time = " << runTime.timeName() << nl
             << "deltaT = " << runTime.deltaTValue() << nl << endl;
 
+        scalar prepareTime = 0;
+        scalar auxiliaryTime = 0;
+        scalar residualTime = 0;
+        scalar advanceTime = 0;
+        scalar auxRhoResidualTime = 0;
+        scalar auxRhoUResidualTime = 0;
+        scalar auxEResidualTime = 0;
+        scalar auxProjectionSolveTime = 0;
+        scalar auxInterpolationSynchTime = 0;
+        scalar auxGradUTime = 0;
+        scalar auxThermoGradientTime = 0;
+        scalar auxResidualReportTime = 0;
+        scalar nsfSharedFluxTime = 0;
+        scalar nsfMassResidualTime = 0;
+        scalar nsfMomentumResidualTime = 0;
+        scalar nsfEnergyResidualTime = 0;
+        label nProfiledStages = 0;
+        clockTime stageTimer;
+        clockTime profileDetailTimer;
+
         // The inner loop walks through explicit RK/Euler stages.
         // dgTimeDiscretization::loop() updates its internal stage index and
         // tells the solver when the current physical step is complete.
         while (timeDiscretization.loop())
         {
+            ++nProfiledStages;
+
             // 1) Synchronize stage input fields and impose BCs.
+            if (profileTimings)
+            {
+                stageTimer.resetTime();
+            }
             #include "prepareStageFields.H"
+            const scalar prepareElapsed =
+                profileTimings ? stageTimer.elapsedTime() : scalar(0);
+            prepareTime += prepareElapsed;
+
             // 2) Project conservative gradients and rebuild gradient-derived
             //    primitive/thermo data for this stage.
+            const scalar auxRhoResidualBefore = auxRhoResidualTime;
+            const scalar auxRhoUResidualBefore = auxRhoUResidualTime;
+            const scalar auxEResidualBefore = auxEResidualTime;
+            const scalar auxProjectionSolveBefore = auxProjectionSolveTime;
+            const scalar auxInterpolationSynchBefore = auxInterpolationSynchTime;
+            const scalar auxGradUBefore = auxGradUTime;
+            const scalar auxThermoGradientBefore = auxThermoGradientTime;
+            const scalar auxResidualReportBefore = auxResidualReportTime;
+
+            if (profileTimings)
+            {
+                stageTimer.resetTime();
+            }
             #include "solveAuxiliaryEqn.H"
+            const scalar auxiliaryElapsed =
+                profileTimings ? stageTimer.elapsedTime() : scalar(0);
+            auxiliaryTime += auxiliaryElapsed;
+
             // 3) Assemble the semi-discrete DG residual for this stage.
             //    This is where dgFoam feels most mathematical: Gauss fields
             //    support pointwise +, -, *, / just like ordinary values.
+            const scalar nsfSharedFluxBefore = nsfSharedFluxTime;
+            const scalar nsfMassResidualBefore = nsfMassResidualTime;
+            const scalar nsfMomentumResidualBefore = nsfMomentumResidualTime;
+            const scalar nsfEnergyResidualBefore = nsfEnergyResidualTime;
+
+            if (profileTimings)
+            {
+                stageTimer.resetTime();
+            }
             #include "stateResiduals/assembleStageResiduals.H"
+            const scalar residualElapsed =
+                profileTimings ? stageTimer.elapsedTime() : scalar(0);
+            residualTime += residualElapsed;
+
             // 4) Apply the explicit stage update to the registered fields.
+            if (profileTimings)
+            {
+                stageTimer.resetTime();
+            }
             #include "advanceStage.H"
+            const scalar advanceElapsed =
+                profileTimings ? stageTimer.elapsedTime() : scalar(0);
+            advanceTime += advanceElapsed;
+
+            if (profileTimings && profileTimingsPerStage)
+            {
+                Info<< "Profiling stage " << nProfiledStages
+                    << ": prepare=" << prepareElapsed
+                    << " s, auxiliary=" << auxiliaryElapsed
+                    << " s, residual=" << residualElapsed
+                    << " s, advance=" << advanceElapsed
+                    << " s, total="
+                    << prepareElapsed + auxiliaryElapsed
+                     + residualElapsed + advanceElapsed
+                    << " s" << nl;
+
+                Info<< "  Auxiliary residual detail: SRho="
+                    << auxRhoResidualTime - auxRhoResidualBefore
+                    << " s, SRhoU="
+                    << auxRhoUResidualTime - auxRhoUResidualBefore
+                    << " s, SE="
+                    << auxEResidualTime - auxEResidualBefore
+                    << " s, projectionSolve="
+                    << auxProjectionSolveTime - auxProjectionSolveBefore
+                    << " s, interp/synch="
+                    << auxInterpolationSynchTime - auxInterpolationSynchBefore
+                    << " s, gradU="
+                    << auxGradUTime - auxGradUBefore
+                    << " s, thermoGradient="
+                    << auxThermoGradientTime - auxThermoGradientBefore
+                    << " s, report="
+                    << auxResidualReportTime - auxResidualReportBefore
+                    << " s" << nl;
+
+                Info<< "  NSF residual detail: sharedFlux="
+                    << nsfSharedFluxTime - nsfSharedFluxBefore
+                    << " s, mass="
+                    << nsfMassResidualTime - nsfMassResidualBefore
+                    << " s, momentum="
+                    << nsfMomentumResidualTime - nsfMomentumResidualBefore
+                    << " s, energy="
+                    << nsfEnergyResidualTime - nsfEnergyResidualBefore
+                    << " s" << nl;
+            }
 
             timeDiscretization.writeResiduals(Info);
+        }
+
+        if (profileTimings)
+        {
+            const scalar totalProfileTime =
+                prepareTime + auxiliaryTime + residualTime + advanceTime;
+
+            Info<< nl
+                << "Profiling summary for time " << runTime.timeName()
+                << " over " << nProfiledStages << " stage(s)" << nl
+                << "    prepareStageFields  : " << prepareTime << " s" << nl
+                << "    solveAuxiliaryEqn   : " << auxiliaryTime << " s" << nl
+                << "    assembleResiduals   : " << residualTime << " s" << nl
+                << "    advanceStage        : " << advanceTime << " s" << nl
+                << "    profiled total      : " << totalProfileTime << " s"
+                << nl
+                << "  Auxiliary equation detail" << nl
+                << "    SRho residual       : " << auxRhoResidualTime << " s" << nl
+                << "    SRhoU residual      : " << auxRhoUResidualTime << " s" << nl
+                << "    SE residual         : " << auxEResidualTime << " s" << nl
+                << "    projection solve    : " << auxProjectionSolveTime << " s" << nl
+                << "    interpolate/synch   : " << auxInterpolationSynchTime << " s" << nl
+                << "    gradU reconstruct   : " << auxGradUTime << " s" << nl
+                << "    thermo gradients    : " << auxThermoGradientTime << " s" << nl
+                << "    residual report     : " << auxResidualReportTime << " s" << nl
+                << "  NSF residual detail" << nl
+                << "    shared flux setup   : " << nsfSharedFluxTime << " s" << nl
+                << "    mass equation       : " << nsfMassResidualTime << " s" << nl
+                << "    momentum equation   : " << nsfMomentumResidualTime << " s" << nl
+                << "    energy equation     : " << nsfEnergyResidualTime << " s"
+                << nl << endl;
         }
 
         // Clear stage bookkeeping so the next physical step starts from

@@ -70,9 +70,27 @@ forAll(mesh.cells(), cellI)
     // Step 1c: assemble the modal residual for M S = R. Physical boundary
     // C* values are read from the boundary-condition path; internal and
     // processor C* values are computed as 0.5*(C- + C+) on read.
+    if (profileTimings)
+    {
+        profileDetailTimer.resetTime();
+    }
     auxGradRhoTerm.calcResidual();
+    if (profileTimings)
+    {
+        auxRhoResidualTime += profileDetailTimer.elapsedTime();
+        profileDetailTimer.resetTime();
+    }
     auxGradRhoUTerm.calcResidual();
+    if (profileTimings)
+    {
+        auxRhoUResidualTime += profileDetailTimer.elapsedTime();
+        profileDetailTimer.resetTime();
+    }
     auxGradETerm.calcResidual();
+    if (profileTimings)
+    {
+        auxEResidualTime += profileDetailTimer.elapsedTime();
+    }
 
     // Step 1d: store the three residual vectors in the auxiliary projection
     // driver.  The actual division by the mass-matrix diagonal is done after
@@ -99,12 +117,23 @@ forAll(mesh.cells(), cellI)
     );
 }
 
+if (profileTimings)
+{
+    profileDetailTimer.resetTime();
+}
+
 forAll(mesh.cells(), cellI)
 {
     // Step 1e: solve the cell-local mass projections.  dgMassProjection writes
     // the modal DoFs of SRho, SRhoU, and SE, then interpolates the owner-cell
     // Gauss values for this cell.
     massProjection.solve(cellI);
+}
+
+if (profileTimings)
+{
+    auxProjectionSolveTime += profileDetailTimer.elapsedTime();
+    profileDetailTimer.resetTime();
 }
 
 // Refresh all Gauss values once more after every cell DoF has been solved.
@@ -120,6 +149,12 @@ forAll(mesh.cells(), cellI)
 SRho.synch();
 SRhoU.synch();
 SE.synch();
+
+if (profileTimings)
+{
+    auxInterpolationSynchTime += profileDetailTimer.elapsedTime();
+    profileDetailTimer.resetTime();
+}
 
 forAll(mesh.cells(), cellI)
 {
@@ -145,6 +180,12 @@ forAll(mesh.cells(), cellI)
 
 gradU.synch();
 
+if (profileTimings)
+{
+    auxGradUTime += profileDetailTimer.elapsedTime();
+    profileDetailTimer.resetTime();
+}
+
 forAll(mesh.cells(), cellI)
 {
     // Step 2b: let thermo finish the chain rules:
@@ -156,7 +197,18 @@ forAll(mesh.cells(), cellI)
 
 thermo->synchGradient();
 
+if (profileTimings)
+{
+    auxThermoGradientTime += profileDetailTimer.elapsedTime();
+    profileDetailTimer.resetTime();
+}
+
 massProjection.writeResiduals(Info);
+
+if (profileTimings)
+{
+    auxResidualReportTime += profileDetailTimer.elapsedTime();
+}
 
 massProjection.clearResiduals();
 

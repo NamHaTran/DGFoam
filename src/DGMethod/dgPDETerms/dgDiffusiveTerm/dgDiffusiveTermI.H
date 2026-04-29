@@ -65,6 +65,7 @@ Foam::dgDiffusiveTerm<UType, FType>::dgDiffusiveTerm
     U_(U),
     F_(new GaussField<FType>(F)),
     fluxSolver_(fluxSolver),
+    termFluxSolver_(fluxSolver_.solver(termName_+"Flux", fluxType_)),
     nDof_(basis_.nDof()),
     removeHighOrder_(removeHighOrder),
     R_(nDof_, pTraits<UType>::zero)
@@ -73,7 +74,7 @@ Foam::dgDiffusiveTerm<UType, FType>::dgDiffusiveTerm
 
     F_.ref().faceField().initFlux();
 
-    fluxSolver_.solver(termName_+"Flux", fluxType_).setEquationType(eqnType_);
+    termFluxSolver_.setEquationType(eqnType_);
 }
 
 
@@ -98,6 +99,7 @@ Foam::dgDiffusiveTerm<UType, FType>::dgDiffusiveTerm
     U_(U),
     F_(tF),
     fluxSolver_(fluxSolver),
+    termFluxSolver_(fluxSolver_.solver(termName_+"Flux", fluxType_)),
     nDof_(basis_.nDof()),
     removeHighOrder_(removeHighOrder),
     R_(nDof_, pTraits<UType>::zero)
@@ -106,7 +108,7 @@ Foam::dgDiffusiveTerm<UType, FType>::dgDiffusiveTerm
 
     F_.ref().faceField().initFlux();
 
-    fluxSolver_.solver(termName_+"Flux", fluxType_).setEquationType(eqnType_);
+    termFluxSolver_.setEquationType(eqnType_);
 }
 
 
@@ -115,7 +117,7 @@ Foam::dgDiffusiveTerm<UType, FType>::dgDiffusiveTerm
 template<class UType, class FType>
 void Foam::dgDiffusiveTerm<UType, FType>::updateFlux()
 {
-    fluxSolver_.solver(termName_+"Flux", fluxType_).computeFlux
+    termFluxSolver_.computeFlux
     (
         cellID_,
         F_.ref().faceField(),

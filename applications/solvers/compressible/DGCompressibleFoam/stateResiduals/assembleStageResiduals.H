@@ -50,6 +50,11 @@ forAll(mesh.cells(), cellI)
 
     if (selfDiffusion)
     {
+        if (profileTimings)
+        {
+            profileDetailTimer.resetTime();
+        }
+
         // Franz-Durst mass diffusion is preassembled once per cell and reused across all three PDEs
         const auto massDiffFluxExpr =
            -selfDiffCoeffScale*dg::expr(muG)
@@ -62,9 +67,32 @@ forAll(mesh.cells(), cellI)
             dg::evaluate<vector>(massDiffFluxExpr, cellI, &dgMesh);
 
         compressibleBC->correctFlux(tMassDiffFlux.ref());
+
+        if (profileTimings)
+        {
+            nsfSharedFluxTime += profileDetailTimer.elapsedTime();
+        }
     }
 
+    if (profileTimings)
+    {
+        profileDetailTimer.resetTime();
+    }
     #include "stateResiduals/assembleMassEqnResiduals.H"
+    if (profileTimings)
+    {
+        nsfMassResidualTime += profileDetailTimer.elapsedTime();
+        profileDetailTimer.resetTime();
+    }
     #include "stateResiduals/assembleMomentumEqnResiduals.H"
+    if (profileTimings)
+    {
+        nsfMomentumResidualTime += profileDetailTimer.elapsedTime();
+        profileDetailTimer.resetTime();
+    }
     #include "stateResiduals/assembleEnergyEqnResiduals.H"
+    if (profileTimings)
+    {
+        nsfEnergyResidualTime += profileDetailTimer.elapsedTime();
+    }
 }

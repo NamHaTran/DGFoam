@@ -30,7 +30,6 @@ if (selfDiffusion)
 {
     // Franz-Durst self-diffusive mass flux mD is preassembled once per cell
     // in assembleStageResiduals.H and reused across mass/momentum/energy.
-
     dgDiffusiveTerm<scalar, vector> selfDiffusionMassTerm
     (
         "selfDiffusionMassTerm",
@@ -39,8 +38,7 @@ if (selfDiffusion)
         basisField,
         rhoG,
         tMassDiffFlux,
-        fluxSolverManager,
-        false
+        fluxSolverManager
     );
 
     selfDiffusionMassTerm.updateFlux();

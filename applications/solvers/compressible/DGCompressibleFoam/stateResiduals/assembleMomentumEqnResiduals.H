@@ -36,9 +36,15 @@ dgConvectiveTerm<vector, tensor> momentumConvTerm
 //
 //     tau = mu*(gradU + gradU^T - 2/3 tr(gradU) I).
 //
-// The conservative NSF diffusive flux uses -tau.  The Franz-Durst
-// mass-diffusive molecular-momentum flux is assembled as a separate
-// dgDiffusiveTerm so it can use its own numerical flux setting.
+// The conservative NSF diffusive flux uses -tau.  When Franz-Durst
+// self-diffusion is enabled, add its molecular-momentum flux before
+// constructing the single momentum diffusive term:
+//
+//     Fd_m = -tau + tau_mD,
+//
+// with
+//
+//     tau_mD = mD (x) U + U (x) mD - 2/3 (mD.U) I.
 const auto tauExpr =
     dg::expr(muG)
    *(
@@ -49,21 +55,10 @@ const auto tauExpr =
        *dg::uniform(symmTensor::I)
     );
 
-tmp<GaussField<tensor>> tMomentumDiffFlux =
-    dg::evaluate<tensor>
-    (
-        -tauExpr,
-        cellI,
-        &dgMesh
-    );
-
-tmp<GaussField<tensor>> tSelfDiffusionMomentumFlux;
+tmp<GaussField<tensor>> tMomentumDiffFlux;
 
 if (selfDiffusion)
 {
-    // Assemble the Franz-Durst molecular-momentum transport tensor
-    //
-    //     tau_mD = mD (x) U + U (x) mD - 2/3 (mD.U) I.
     const auto massMomentumDiffFluxExpr =
         dg::expr(tMassDiffFlux())*dg::expr(UG)
       + dg::expr(UG)*dg::expr(tMassDiffFlux())
@@ -71,10 +66,23 @@ if (selfDiffusion)
        *(dg::expr(tMassDiffFlux()) & dg::expr(UG))
        *dg::uniform(symmTensor::I);
 
-    tSelfDiffusionMomentumFlux =
+    const auto totalMomentumDiffFluxExpr =
+        -tauExpr + massMomentumDiffFluxExpr;
+
+    tMomentumDiffFlux =
         dg::evaluate<tensor>
         (
-            massMomentumDiffFluxExpr,
+            totalMomentumDiffFluxExpr,
+            cellI,
+            &dgMesh
+        );
+}
+else
+{
+    tMomentumDiffFlux =
+        dg::evaluate<tensor>
+        (
+            -tauExpr,
             cellI,
             &dgMesh
         );
@@ -96,60 +104,19 @@ momentumDiffTerm.updateFlux();
 momentumConvTerm.calcResidual();
 momentumDiffTerm.calcResidual();
 
-if (selfDiffusion)
-{
-    dgDiffusiveTerm<vector, tensor> selfDiffusionMomentumTerm
-    (
-        "selfDiffusionMomentumTerm",
-        dgFluxSolver::equationType::momentumTransport,
-        dgFluxSolver::fluxType::diffusive,
-        basisField,
-        rhoUG,
-        tSelfDiffusionMomentumFlux,
-        fluxSolverManager,
-        false
-    );
+timeDiscretization.addResidual
+(
+    rhoU.name(),
+    cellI,
+    momentumConvTerm.R()
+);
 
-    selfDiffusionMomentumTerm.updateFlux();
-    selfDiffusionMomentumTerm.calcResidual();
-
-    timeDiscretization.addResidual
-    (
-        rhoU.name(),
-        cellI,
-        momentumConvTerm.R()
-    );
-
-    timeDiscretization.addResidual
-    (
-        rhoU.name(),
-        cellI,
-        momentumDiffTerm.R()
-    );
-
-    timeDiscretization.addResidual
-    (
-        rhoU.name(),
-        cellI,
-        selfDiffusionMomentumTerm.R()
-    );
-}
-else
-{
-    timeDiscretization.addResidual
-    (
-        rhoU.name(),
-        cellI,
-        momentumConvTerm.R()
-    );
-
-    timeDiscretization.addResidual
-    (
-        rhoU.name(),
-        cellI,
-        momentumDiffTerm.R()
-    );
-}
+timeDiscretization.addResidual
+(
+    rhoU.name(),
+    cellI,
+    momentumDiffTerm.R()
+);
 
 if (artificialDiffusion)
 {
