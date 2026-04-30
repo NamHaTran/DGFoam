@@ -33,17 +33,11 @@ Description
 
         - volInt(C*grad(phi) dv) + surfInt(phi*flux(C) dS)
 
-    This term is meant for the weak form block
-
-        volInt(C*grad(phi) dv) - surfInt(phi*flux(C) dS)
-
-    after it is moved to the residual side with the opposite sign:
-
-        R = -volInt(C*grad(phi) dv) + surfInt(phi*flux(C) dS)
-
-    The face flux is not obtained from dgFluxSolverManager, and termName_ is
-    not looked up in dgSchemes to select a flux solver. For auxiliary equations
-    this class always applies the default central face state:
+    This class stores/exposes the projected state field.  The residual is
+    assembled by auxEqnResidual.  The face flux is not obtained from
+    dgFluxSolverManager, and termName_ is not looked up in dgSchemes to select
+    a flux solver. For auxiliary equations the residual assembler applies the
+    default central face state:
 
         C* = 0.5*(C- + C+) on internal faces
 
@@ -82,23 +76,14 @@ namespace Foam
 
 /**
  * \class Foam::dgGradProjectionTerm
- * \brief Assemble the DG residual for an auxiliary gradient-projection term.
+ * \brief Cell-local auxiliary gradient-projection term.
  *
  * \tparam UType Type of the projected state C. Supported: scalar or vector.
  *
  * Persistent GaussField inputs are referenced directly; temporaries are held
- * through tmp. calcResidual() integrates
- *
- * \f[
- *     R_i =
- *     - \int_{\Omega} C \nabla \phi_i \, dV
- *     + \int_{\partial\Omega} \phi_i C^* \boldsymbol{n} \, dS
- * \f]
- *
- * for each basis function. termName_ is not used to look up dgSchemes or
- * select a flux solver; no Riemann solver is involved. This is intentionally
- * different from dgConvectiveTerm, which computes numerical fluxes through
- * dgFluxSolverManager and uses the opposite residual sign convention.
+ * through tmp. This class does not assemble a residual by itself.  It exposes
+ * the state field \f$C\f$ to auxEqnResidual, which evaluates
+ * \f$-\int C\nabla\phi\,dV + \int \phi C^\ast n\,dS\f$.
  */
 template<class UType>
 class dgGradProjectionTerm
@@ -119,12 +104,6 @@ private:
 
     /** Projected state C evaluated at cell and face Gauss points. */
     tmp<GaussField<UType>> U_;
-
-    /** Number of degrees of freedom in this cell. */
-    label nDof_;
-
-    /** Residual values per degree of freedom. */
-    List<typename outerProduct<UType, vector>::type> R_;
 
     /** Compile-time validation for supported state/result pairs. */
     inline void checkTypes() const;
@@ -168,28 +147,19 @@ public:
 
     ~dgGradProjectionTerm() = default;
 
-    inline label nDof() const { return nDof_; }
-
-    inline const List<residual_type>& R() const { return R_; }
-
-    inline List<residual_type>& R() { return R_; }
-
     inline const GaussField<UType>& stateField() const { return U_(); }
+
+    inline const GaussField<UType>* stateFieldPtr() const { return &U_(); }
 
     inline dgFluxSolver::equationType equationType() const { return eqnType_; }
 
     /**
      * \brief Compatibility hook for old callers.
      *
-     * Central internal-face states are evaluated directly in calcResidual(),
-     * so this function no longer mutates faceField().midValues().
+     * Central internal-face states are evaluated directly in auxEqnResidual,
+     * so this function does not mutate faceField().midValues().
      */
     void updateFlux();
-
-    /**
-     * \brief Assemble R = -volInt(C*grad(phi)) + surfInt(phi*C* n).
-     */
-    void calcResidual();
 };
 
 } // End namespace Foam

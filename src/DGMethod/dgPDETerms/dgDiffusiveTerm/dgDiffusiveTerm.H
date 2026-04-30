@@ -28,7 +28,7 @@ Class
     Foam::dgDiffusiveTerm
 
 Description
-    Diffusive DG PDE term used for residual assembly.
+    Diffusive DG PDE term used to compute and expose fluxes.
 
 SourceFiles
     dgDiffusiveTerm.C
@@ -47,6 +47,7 @@ SourceFiles
 #include "GaussField.H"
 #include "dgFluxSolverManager.H"
 #include "dgMath.H"
+#include "dgPDETerm.H"
 
 #include <type_traits>
 
@@ -59,16 +60,19 @@ namespace Foam
 
 /**
  * \class Foam::dgDiffusiveTerm
- * \brief Diffusive DG PDE term for residual assembly.
+ * \brief Diffusive DG PDE term for flux assembly.
  *
  * \tparam UType Type of solution variable (scalar or vector)
  * \tparam FType Type of diffusive flux (vector or tensor)
  *
  * The constructor mirrors dgConvectiveTerm. The numerical surface flux is
- * selected through dgFluxSolverManager using the PDE term name.
+ * selected through dgFluxSolverManager using the PDE term name, and the
+ * resulting flux field is integrated by dgResidual.
  */
 template<class UType, class FType>
 class dgDiffusiveTerm
+:
+    public dgPDETerm<UType, FType>
 {
 private:
 
@@ -99,15 +103,6 @@ private:
     /** Flux solver selected for this term. */
     dgFluxSolver& termFluxSolver_;
 
-    /** Number of degrees of freedom in this cell. */
-    label nDof_;
-
-    /** Keep only the cell-mean residual contribution when enabled. */
-    bool removeHighOrder_;
-
-    /** Residual values per degree of freedom. */
-    List<UType> R_;
-
     /** Compile-time validation of UType/FType combination. */
     inline void checkTypes() const;
 
@@ -124,8 +119,7 @@ public:
         const dgBasisField& basis,
         const GaussField<UType>& U,
         GaussField<FType>& F,
-        dgFluxSolverManager& fluxSolver,
-        const bool removeHighOrder = false
+        dgFluxSolverManager& fluxSolver
     );
 
     dgDiffusiveTerm
@@ -136,21 +130,21 @@ public:
         const dgBasisField& basis,
         const GaussField<UType>& U,
         const tmp<GaussField<FType>>& tF,
-        dgFluxSolverManager& fluxSolver,
-        const bool removeHighOrder = false
+        dgFluxSolverManager& fluxSolver
     );
 
     ~dgDiffusiveTerm() = default;
 
-    inline label nDof() const { return nDof_; }
-
-    inline const List<UType>& R() const { return R_; }
-
-    inline List<UType>& R() { return R_; }
+    inline bool isDiffusion() const override { return true; }
 
     inline const GaussField<UType>& stateField() const { return U_; }
 
     inline const GaussField<FType>& fluxField() const { return F_(); }
+
+    inline const GaussField<FType>* fluxFieldPtr() const override
+    {
+        return &F_();
+    }
 
     inline const word& termName() const { return termName_; }
 
@@ -166,11 +160,6 @@ public:
      */
     void updateFlux();
 
-    /**
-     * \brief Assemble cell residual with the same sign convention as
-     * dgConvectiveTerm.
-     */
-    void calcResidual();
 };
 
 } // End namespace Foam

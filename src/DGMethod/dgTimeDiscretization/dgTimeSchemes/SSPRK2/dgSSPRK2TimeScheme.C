@@ -138,7 +138,7 @@ void updateSSPRK2Stage
 
     List<Type>& UCellDof = U.dof()[cellID].dof();
     const List<Type>& UOldCellDof = state.UOld().dof()[cellID].dof();
-    const List<scalar> massDiag(mesh.cells()[cellID]->massMatrixDiag());
+    const List<scalar>& massDiag = mesh.cells()[cellID]->massMatrixDiag();
 
     switch (stageI)
     {

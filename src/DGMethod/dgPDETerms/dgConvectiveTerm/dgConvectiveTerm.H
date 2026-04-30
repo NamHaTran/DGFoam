@@ -28,7 +28,7 @@ Class
     Foam::dgConvectiveTerm
 
 Description
-    Convective DG PDE term used for residual assembly.
+    Convective DG PDE term used to compute and expose fluxes.
 
 SourceFiles
     dgConvectiveTerm.C
@@ -48,6 +48,7 @@ SourceFiles
 #include "GaussField.H"
 #include "dgFluxSolverManager.H"
 #include "dgMath.H"
+#include "dgPDETerm.H"
 
 #include <type_traits>
 
@@ -60,24 +61,15 @@ namespace Foam
 
 /**
  * \class Foam::dgConvectiveTerm
- * \brief Convective DG PDE term for residual assembly
+ * \brief Convective DG PDE term for flux assembly.
  *
  * \tparam UType Type of solution variable (scalar or vector)
  * \tparam FType Type of flux (vector or tensor)
  *
  * \details
- * This class represents a single PDE operator contribution to the DG
- * residual of one cell.
- *
- * The residual is assembled in the form:
- * \f[
- * R_i
- * =
- * - \int_{\Omega}
- *     \nabla \phi_i : \boldsymbol{F}\,\mathrm{d}V
- * + \int_{\partial\Omega}
- *     \phi_i (\boldsymbol{F}^{\ast}\cdot\boldsymbol{n})\,\mathrm{d}S
- * \f]
+ * This class represents a single PDE operator contribution on one cell.
+ * It updates the numerical face flux and exposes the Gauss flux field to
+ * dgResidual, which performs the common residual integration.
  *
  * Supported type combinations:
  * - UType = scalar, FType = vector
@@ -86,13 +78,13 @@ namespace Foam
  * The numerical surface flux \f$\boldsymbol{F}^{\ast}\f$ is computed
  * through dgFluxSolverManager based on the PDE term name.
  *
- * This class:
- * - Operates on a single cell
- * - Owns no global data
- * - Is used repeatedly during residual assembly
+ * This class owns no global data and is used repeatedly during residual
+ * assembly.
  */
 template<class UType, class FType>
 class dgConvectiveTerm
+:
+    public dgPDETerm<UType, FType>
 {
 private:
 
@@ -122,12 +114,6 @@ private:
 
     /** Flux solver selected for this term. */
     dgFluxSolver& termFluxSolver_;
-
-    /** Number of degrees of freedom in this cell */
-    label nDof_;
-
-    /** Residual values per degree of freedom */
-    List<UType> R_;
 
     /**
      * Compile-time validation of UType/FType combination
@@ -190,17 +176,15 @@ public:
 
     // Access --------------------------------------------------------------
 
-    /** Return number of degrees of freedom */
-    inline label nDof() const { return nDof_; }
-
-    /** Return residual values (const access) */
-    inline const List<UType>& R() const { return R_; }
-
-    /** Return residual values (mutable access) */
-    inline List<UType>& R() { return R_; }
+    inline bool isConvection() const override { return true; }
 
     /** Return Gauss flux field, including face numerical flux values */
     inline const GaussField<FType>& fluxField() const { return F_(); }
+
+    inline const GaussField<FType>* fluxFieldPtr() const override
+    {
+        return &F_();
+    }
 
     /** Return flux type required by this term */
     inline dgFluxSolver::fluxType fluxType() const { return fluxType_; }
@@ -215,13 +199,6 @@ public:
      */
     void updateFlux();
 
-    /**
-     * \brief Assemble cell residual
-     *
-     * Computes both volume and surface contributions to the
-     * residual vector for this PDE term.
-     */
-    void calcResidual();
 };
 
 } // End namespace Foam

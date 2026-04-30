@@ -28,103 +28,51 @@ License
 
 // * * * * * * * * * * * * * * * Constructors  * * * * * * * * * * * * * * * //
 
-template<class Type>
-Foam::dgSourceTerm<Type>::dgSourceTerm
+template<class Type, class FType>
+Foam::dgSourceTerm<Type, FType>::dgSourceTerm
 (
     const word& termName,
     const dgBasisField& basis,
-    const cellGaussField<Type>& S,
-    const bool removeHighOrder
+    const cellGaussField<Type>& S
 )
 :
     termName_(termName),
     cellID_(basis.cellID()),
     basis_(basis),
-    S_(new cellGaussField<Type>(S)),
-    nDof_(basis_.nDof()),
-    removeHighOrder_(removeHighOrder),
-    R_(nDof_, pTraits<Type>::zero)
+    S_(new cellGaussField<Type>(S))
 {}
 
 
-template<class Type>
-Foam::dgSourceTerm<Type>::dgSourceTerm
+template<class Type, class FType>
+Foam::dgSourceTerm<Type, FType>::dgSourceTerm
 (
     const word& termName,
     const dgBasisField& basis,
-    const tmp<cellGaussField<Type>>& tS,
-    const bool removeHighOrder
+    const tmp<cellGaussField<Type>>& tS
 )
 :
     termName_(termName),
     cellID_(basis.cellID()),
     basis_(basis),
-    S_(tS),
-    nDof_(basis_.nDof()),
-    removeHighOrder_(removeHighOrder),
-    R_(nDof_, pTraits<Type>::zero)
+    S_(tS)
 {}
 
 
-template<class Type>
-Foam::dgSourceTerm<Type>::dgSourceTerm
+template<class Type, class FType>
+Foam::dgSourceTerm<Type, FType>::dgSourceTerm
 (
     const word& termName,
     const dgBasisField& basis,
-    const GaussField<Type>& S,
-    const bool removeHighOrder
+    const GaussField<Type>& S
 )
 :
     termName_(termName),
     cellID_(basis.cellID()),
     basis_(basis),
-    S_(new cellGaussField<Type>(S.cellField())),
-    nDof_(basis_.nDof()),
-    removeHighOrder_(removeHighOrder),
-    R_(nDof_, pTraits<Type>::zero)
+    S_(new cellGaussField<Type>(S.cellField()))
 {}
 
 
 // * * * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * * //
-
-template<class Type>
-void Foam::dgSourceTerm<Type>::calcResidual()
-{
-    forAll (R_, i)
-    {
-        R_[i] = pTraits<Type>::zero;
-    }
-
-    const cellGaussField<Type>& S = S_();
-
-    if (S.cellID() != cellID_)
-    {
-        FatalErrorInFunction
-            << "Source field cellID " << S.cellID()
-            << " does not match basis cellID " << cellID_
-            << " for source term " << termName_
-            << abort(FatalError);
-    }
-
-    const List<scalar>& w = S.cell()->weights();
-    const List<scalar>& J3D = S.cell()->J3D();
-
-    const label nResidualDof = removeHighOrder_ ? min(nDof_, label(1)) : nDof_;
-
-    for (label dofI = 0; dofI < nResidualDof; ++dofI)
-    {
-        const cellGaussField<scalar>& phi =
-            basis_.getBasis(dofI).cellField();
-
-        Type volTerm = pTraits<Type>::zero;
-
-        for (label gpI = 0; gpI < S.size(); ++gpI)
-        {
-            volTerm += (J3D[gpI]*w[gpI]*phi[gpI])*S[gpI];
-        }
-
-        R_[dofI] += volTerm;
-    }
-}
 
 // ************************************************************************* //

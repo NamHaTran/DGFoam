@@ -55,6 +55,8 @@ namespace Foam
  * the conservative fields associated with density, momentum, and total energy.
  *
  * For each cell, the limiter:
+ * - clamps the conservative mean state into the configured rho/U/T bounds,
+ *   zeroing higher-order content when the mean is changed,
  * - evaluates the minimum density over cell and face Gauss samples,
  * - computes \c theta1 for density positivity using the \c rhoMin floor,
  * - evaluates the thermodynamic energy
@@ -72,22 +74,15 @@ namespace Foam
  * \text{scale higher-order modes}
  * \f]
  *
- * This implementation operates directly on every cell and therefore may be
- * used without a troubled-cell detector.
+ * Positivity scaling is skipped for p=0 cells because no higher-order modal
+ * content exists. This implementation operates directly on every cell and
+ * therefore may be used without a troubled-cell detector.
  */
 class positivityPreservingLimiter
 :
     public dgLimiter
 {
     // Private data
-
-        /** \brief Cached conservative state at one sampling point. */
-        struct conservativeSample
-        {
-            scalar rho;
-            vector rhoU;
-            scalar E;
-        };
 
         /** Name of the density field read from the limiter dictionary. */
         word densityFieldName_;
@@ -116,8 +111,17 @@ class positivityPreservingLimiter
         /** Minimum allowed density at limiter sample points. */
         scalar rhoMin_;
 
+        /** Maximum allowed mean density. */
+        scalar rhoMax_;
+
+        /** Maximum allowed mean velocity magnitude. */
+        scalar magUMax_;
+
         /** Minimum allowed temperature used to derive the energy floor. */
         scalar Tmin_;
+
+        /** Maximum allowed mean temperature. */
+        scalar Tmax_;
 
         /** Cell-local theta1 cached during correct(). */
         scalar theta1_;
@@ -168,6 +172,29 @@ class positivityPreservingLimiter
         /** \brief Return the thermodynamic-energy floor implied by \c Tmin_. */
         scalar calcRhoThermoEnergyFloor(const scalar rho) const;
 
+        /** \brief Return a sign-preserving safe density for division. */
+        scalar safeDensityForDivision(const scalar rho) const;
+
+        /** \brief Return the mean-state temperature reconstructed from conservative variables. */
+        scalar calcMeanTemperature
+        (
+            const label cellID,
+            const scalar rho,
+            const vector& rhoU,
+            const scalar E
+        ) const;
+
+        /** \brief Return the conservative total energy reconstructed from mean primitive variables. */
+        scalar calcMeanTotalEnergy
+        (
+            const scalar rho,
+            const vector& U,
+            const scalar T
+        ) const;
+
+        /** \brief Clamp the conservative mean state of one cell and return true when modified. */
+        bool limitCellMeanValue(const label cellID);
+
         /** \brief Clamp the Zhang-Shu style limiter coefficient to [0, 1]. */
         scalar thetaCoeff
         (
@@ -190,7 +217,7 @@ class positivityPreservingLimiter
             scalar& theta2
         ) const;
 
-        /** \brief Scale higher-order scalar modes and refresh the FOAM DoF view. */
+        /** \brief Scale higher-order scalar modes in one cell. */
         void scaleHighOrderModes
         (
             dgField<scalar>& field,
@@ -198,7 +225,7 @@ class positivityPreservingLimiter
             const scalar theta
         ) const;
 
-        /** \brief Scale higher-order vector modes and refresh the FOAM DoF view. */
+        /** \brief Scale higher-order vector modes in one cell. */
         void scaleHighOrderModes
         (
             dgField<vector>& field,
@@ -253,6 +280,12 @@ public:
      * rhoMin     1e-8;
      * Tmin       1e-8;
      * writeTheta false;
+     * \endverbatim
+     * Optional mean-value bounds:
+     * \verbatim
+     * rhoMax   GREAT;
+     * magUMax  GREAT;
+     * Tmax     GREAT;
      * \endverbatim
      *
      * Unlike detector-based limiters, this limiter may omit the base-class

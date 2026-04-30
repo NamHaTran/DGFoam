@@ -28,7 +28,7 @@ Class
     Foam::dgSourceTerm
 
 Description
-    Volume-source DG PDE term used for residual assembly.
+    Volume-source DG PDE term used to expose source fields.
 
 SourceFiles
     dgSourceTermI.H
@@ -45,6 +45,8 @@ SourceFiles
 
 #include "dgBasisField.H"
 #include "GaussField.H"
+#include "dgPDETerm.H"
+#include "products.H"
 
 namespace Foam
 {
@@ -55,30 +57,26 @@ namespace Foam
 
 /**
  * \class Foam::dgSourceTerm
- * \brief Cell-local DG volume source term for residual assembly.
+ * \brief Cell-local DG volume source term.
  *
  * \tparam Type Type of source and target conservative variable.
  *
  * \details
- * This class projects a source field \f$S\f$ onto the DG basis:
- *
- * \f[
- *     R_i = \int_{\Omega_K} \phi_i S\,\mathrm{d}V.
- * \f]
- *
+ * This class stores a cell-local source field and exposes it to dgResidual.
  * It has no face contribution and no numerical flux. For a conservation law
  *
  * \f[
  *     \partial_t Q + \nabla\cdot F = S,
  * \f]
  *
- * add this residual directly to the matching time-discretization buffer.
+ * add this source contribution directly to the matching residual.
  * If a model writes the source on the left-hand side, pass the negated source
- * field instead.  When \c removeHighOrder is true, only the cell-mean residual
- * entry is assembled and all higher-mode entries remain zero.
+ * field instead.
  */
-template<class Type>
+template<class Type, class FType = typename outerProduct<Type, vector>::type>
 class dgSourceTerm
+:
+    public dgPDETerm<Type, FType>
 {
 private:
 
@@ -94,15 +92,6 @@ private:
     /** Source field evaluated at cell-interior Gauss points. */
     tmp<cellGaussField<Type>> S_;
 
-    /** Number of degrees of freedom in this cell. */
-    label nDof_;
-
-    /** Restrict residual assembly to the cell-mean degree of freedom. */
-    bool removeHighOrder_;
-
-    /** Residual values per degree of freedom. */
-    List<Type> R_;
-
 public:
 
     using source_type = Type;
@@ -111,42 +100,35 @@ public:
     (
         const word& termName,
         const dgBasisField& basis,
-        const cellGaussField<Type>& S,
-        const bool removeHighOrder = false
+        const cellGaussField<Type>& S
     );
 
     dgSourceTerm
     (
         const word& termName,
         const dgBasisField& basis,
-        const tmp<cellGaussField<Type>>& tS,
-        const bool removeHighOrder = false
+        const tmp<cellGaussField<Type>>& tS
     );
 
     dgSourceTerm
     (
         const word& termName,
         const dgBasisField& basis,
-        const GaussField<Type>& S,
-        const bool removeHighOrder = false
+        const GaussField<Type>& S
     );
 
     ~dgSourceTerm() = default;
 
-    inline label nDof() const { return nDof_; }
-
-    inline const List<Type>& R() const { return R_; }
-
-    inline List<Type>& R() { return R_; }
+    inline bool isSource() const override { return true; }
 
     inline const cellGaussField<Type>& sourceField() const { return S_(); }
 
+    inline const cellGaussField<Type>* sourceFieldPtr() const override
+    {
+        return &S_();
+    }
+
     inline const word& termName() const { return termName_; }
-
-    inline bool removeHighOrder() const { return removeHighOrder_; }
-
-    /** \brief Assemble \f$R_i = \int \phi_i S\,dV\f$ on the owner cell. */
-    void calcResidual();
 };
 
 } // End namespace Foam

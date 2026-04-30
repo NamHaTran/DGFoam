@@ -101,22 +101,13 @@ dgDiffusiveTerm<vector, tensor> momentumDiffTerm
 
 momentumConvTerm.updateFlux();
 momentumDiffTerm.updateFlux();
-momentumConvTerm.calcResidual();
-momentumDiffTerm.calcResidual();
 
-timeDiscretization.addResidual
-(
-    rhoU.name(),
-    cellI,
-    momentumConvTerm.R()
-);
+dgResidual<vector, tensor> momentumResidual(basisField);
+momentumResidual.addTerm(momentumConvTerm);
+momentumResidual.addTerm(momentumDiffTerm);
 
-timeDiscretization.addResidual
-(
-    rhoU.name(),
-    cellI,
-    momentumDiffTerm.R()
-);
+std::optional<dgDiffusiveTerm<vector, tensor>>
+    artificialDiffusionMomentumTerm;
 
 if (artificialDiffusion)
 {
@@ -131,7 +122,7 @@ if (artificialDiffusion)
             &dgMesh
         );
 
-    dgDiffusiveTerm<vector, tensor> artificialDiffusionMomentumTerm
+    artificialDiffusionMomentumTerm.emplace
     (
         "artificialDiffusionMomentumTerm",
         dgFluxSolver::equationType::momentumTransport,
@@ -142,16 +133,18 @@ if (artificialDiffusion)
         fluxSolverManager
     );
 
-    artificialDiffusionMomentumTerm.updateFlux();
-    artificialDiffusionMomentumTerm.calcResidual();
-
-    timeDiscretization.addResidual
-    (
-        rhoU.name(),
-        cellI,
-        artificialDiffusionMomentumTerm.R()
-    );
+    artificialDiffusionMomentumTerm->updateFlux();
+    momentumResidual.addTerm(*artificialDiffusionMomentumTerm);
 }
+
+momentumResidual.calcResidual();
+
+timeDiscretization.addResidual
+(
+    rhoU.name(),
+    cellI,
+    momentumResidual.R()
+);
 
 // Gravity source is temporarily disabled for both selfDiffusion on/off while
 // isolating the self-diffusion terms.
@@ -172,12 +165,12 @@ if (artificialDiffusion)
 //         tMomentumSource()
 //     );
 //
-//     momentumSourceTerm.calcResidual();
+//     momentumResidual.addTerm(momentumSourceTerm);
 //
 //     timeDiscretization.addResidual
 //     (
 //         rhoU.name(),
 //         cellI,
-//         momentumSourceTerm.R()
+//         momentumResidual.R()
 //     );
 // }

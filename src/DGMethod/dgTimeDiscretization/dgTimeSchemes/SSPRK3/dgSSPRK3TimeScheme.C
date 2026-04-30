@@ -118,7 +118,7 @@ void updateSSPRK3Stage
 
     List<Type>& UCellDof = U.dof()[cellID].dof();
     const List<Type>& UOldCellDof = state.UOld().dof()[cellID].dof();
-    const List<scalar> massDiag(mesh.cells()[cellID]->massMatrixDiag());
+    const List<scalar>& massDiag = mesh.cells()[cellID]->massMatrixDiag();
 
     switch (stageI)
     {
@@ -138,14 +138,15 @@ void updateSSPRK3Stage
 
         case 1:
         {
-            const List<Type> U1CellDof(UCellDof);
             const List<Type>& R1 = state.R(1, cellID);
 
             forAll(UCellDof, dofI)
             {
+                const Type U1CellDof = UCellDof[dofI];
+
                 UCellDof[dofI] =
                     0.75*UOldCellDof[dofI]
-                  + 0.25*(U1CellDof[dofI] + dt*(R1[dofI]/massDiag[dofI]));
+                  + 0.25*(U1CellDof + dt*(R1[dofI]/massDiag[dofI]));
             }
 
             syncUpdatedCell(U, cellID);
@@ -154,14 +155,15 @@ void updateSSPRK3Stage
 
         case 2:
         {
-            const List<Type> U2CellDof(UCellDof);
             const List<Type>& R2 = state.R(2, cellID);
 
             forAll(UCellDof, dofI)
             {
+                const Type U2CellDof = UCellDof[dofI];
+
                 UCellDof[dofI] =
                     (1.0/3.0)*UOldCellDof[dofI]
-                  + (2.0/3.0)*(U2CellDof[dofI] + dt*(R2[dofI]/massDiag[dofI]));
+                  + (2.0/3.0)*(U2CellDof + dt*(R2[dofI]/massDiag[dofI]));
             }
 
             syncUpdatedCell(U, cellID);

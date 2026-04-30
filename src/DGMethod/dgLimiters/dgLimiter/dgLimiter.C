@@ -252,6 +252,7 @@ void dgLimiter::rebuildLimitedCellGaussFields()
             forAll(rebuildCellIDs, rebuildCellI)
             {
                 const label cellID = rebuildCellIDs[rebuildCellI];
+                field.dof().updateCellDof(cellID);
                 field.gaussFields()[cellID].interpolateFromDof();
             }
         }
@@ -267,6 +268,7 @@ void dgLimiter::rebuildLimitedCellGaussFields()
             forAll(rebuildCellIDs, rebuildCellI)
             {
                 const label cellID = rebuildCellIDs[rebuildCellI];
+                field.dof().updateCellDof(cellID);
                 field.gaussFields()[cellID].interpolateFromDof();
             }
         }

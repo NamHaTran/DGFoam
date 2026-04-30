@@ -65,9 +65,7 @@ Foam::dgGradProjectionTerm<UType>::dgGradProjectionTerm
     eqnType_(eqnType),
     cellID_(basis.cellID()),
     basis_(basis),
-    U_(U),
-    nDof_(basis_.nDof()),
-    R_(nDof_, pTraits<residual_type>::zero)
+    U_(U)
 {
     checkTypes();
 }
@@ -86,9 +84,7 @@ Foam::dgGradProjectionTerm<UType>::dgGradProjectionTerm
     eqnType_(eqnType),
     cellID_(basis.cellID()),
     basis_(basis),
-    U_(tU),
-    nDof_(basis_.nDof()),
-    R_(nDof_, pTraits<residual_type>::zero)
+    U_(tU)
 {
     checkTypes();
 }
@@ -99,45 +95,8 @@ Foam::dgGradProjectionTerm<UType>::dgGradProjectionTerm
 template<class UType>
 void Foam::dgGradProjectionTerm<UType>::updateFlux()
 {
-    // No-op: calcResidual() evaluates central internal/processor face states
+    // No-op: auxEqnResidual evaluates central internal/processor face states
     // directly, avoiding a local GaussField copy and midValues() writes.
-}
-
-
-template<class UType>
-void Foam::dgGradProjectionTerm<UType>::calcResidual()
-{
-    forAll (R_, i)
-    {
-        R_[i] = pTraits<residual_type>::zero;
-    }
-
-    for (label i = 0; i < nDof_; ++i)
-    {
-        residual_type volTerm = pTraits<residual_type>::zero;
-
-        if (i != 0)
-        {
-            const GaussField<vector>& gradPhi = basis_.getDBasis(i);
-            volTerm = Foam::gradProjectionVolumeIntegral
-            (
-                gradPhi.cellField(),
-                U_().cellField()
-            );
-        }
-
-        const GaussField<scalar>& phi = basis_.getBasis(i);
-
-        const residual_type surfTerm =
-            Foam::gradProjectionCentralSurfaceIntegral
-            (
-                phi.faceField(),
-                U_().faceField()
-            );
-
-        R_[i] -= volTerm;
-        R_[i] += surfTerm;
-    }
 }
 
 // ************************************************************************* //

@@ -24,13 +24,17 @@ dgConvectiveTerm<scalar, vector> massConvTerm
 );
 
 massConvTerm.updateFlux();
-massConvTerm.calcResidual();
+
+dgResidual<scalar, vector> massResidual(basisField);
+massResidual.addTerm(massConvTerm);
+
+std::optional<dgDiffusiveTerm<scalar, vector>> selfDiffusionMassTerm;
 
 if (selfDiffusion)
 {
     // Franz-Durst self-diffusive mass flux mD is preassembled once per cell
     // in assembleStageResiduals.H and reused across mass/momentum/energy.
-    dgDiffusiveTerm<scalar, vector> selfDiffusionMassTerm
+    selfDiffusionMassTerm.emplace
     (
         "selfDiffusionMassTerm",
         dgFluxSolver::equationType::massTransport,
@@ -41,32 +45,11 @@ if (selfDiffusion)
         fluxSolverManager
     );
 
-    selfDiffusionMassTerm.updateFlux();
-    selfDiffusionMassTerm.calcResidual();
-
-    timeDiscretization.addResidual
-    (
-        rho.name(),
-        cellI,
-        massConvTerm.R()
-    );
-
-    timeDiscretization.addResidual
-    (
-        rho.name(),
-        cellI,
-        selfDiffusionMassTerm.R()
-    );
+    selfDiffusionMassTerm->updateFlux();
+    massResidual.addTerm(*selfDiffusionMassTerm);
 }
-else
-{
-    timeDiscretization.addResidual
-    (
-        rho.name(),
-        cellI,
-        massConvTerm.R()
-    );
-}
+
+std::optional<dgDiffusiveTerm<scalar, vector>> artificialDiffusionMassTerm;
 
 if (artificialDiffusion)
 {
@@ -81,7 +64,7 @@ if (artificialDiffusion)
             &dgMesh
         );
 
-    dgDiffusiveTerm<scalar, vector> artificialDiffusionMassTerm
+    artificialDiffusionMassTerm.emplace
     (
         "artificialDiffusionMassTerm",
         dgFluxSolver::equationType::massTransport,
@@ -92,13 +75,15 @@ if (artificialDiffusion)
         fluxSolverManager
     );
 
-    artificialDiffusionMassTerm.updateFlux();
-    artificialDiffusionMassTerm.calcResidual();
-
-    timeDiscretization.addResidual
-    (
-        rho.name(),
-        cellI,
-        artificialDiffusionMassTerm.R()
-    );
+    artificialDiffusionMassTerm->updateFlux();
+    massResidual.addTerm(*artificialDiffusionMassTerm);
 }
+
+massResidual.calcResidual();
+
+timeDiscretization.addResidual
+(
+    rho.name(),
+    cellI,
+    massResidual.R()
+);

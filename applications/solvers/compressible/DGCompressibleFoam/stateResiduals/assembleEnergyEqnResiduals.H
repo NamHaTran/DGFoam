@@ -129,8 +129,12 @@ dgDiffusiveTerm<scalar, vector> energyDiffTerm
 
 energyConvTerm.updateFlux();
 energyDiffTerm.updateFlux();
-energyConvTerm.calcResidual();
-energyDiffTerm.calcResidual();
+
+dgResidual<scalar, vector> energyResidual(basisField);
+energyResidual.addTerm(energyConvTerm);
+energyResidual.addTerm(energyDiffTerm);
+
+std::optional<dgSourceTerm<scalar>> kineticMassDiffCorrectionTerm;
 
 if (selfDiffusion)
 {
@@ -148,52 +152,18 @@ if (selfDiffusion)
             &dgMesh
         );
 
-    dgSourceTerm<scalar> kineticMassDiffCorrectionTerm
+    kineticMassDiffCorrectionTerm.emplace
     (
         "kineticMassDiffCorrectionTerm",
         basisField,
         tKineticMassDiffCorrection()
     );
 
-    kineticMassDiffCorrectionTerm.calcResidual();
-
-    timeDiscretization.addResidual
-    (
-        E.name(),
-        cellI,
-        energyConvTerm.R()
-    );
-
-    timeDiscretization.addResidual
-    (
-        E.name(),
-        cellI,
-        energyDiffTerm.R()
-    );
-
-    timeDiscretization.addResidual
-    (
-        E.name(),
-        cellI,
-        kineticMassDiffCorrectionTerm.R()
-    );
+    energyResidual.addTerm(*kineticMassDiffCorrectionTerm);
 }
-else
-{
-    timeDiscretization.addResidual
-    (
-        E.name(),
-        cellI,
-        energyConvTerm.R()
-    );
 
-    timeDiscretization.addResidual
-    (
-        E.name(),
-        cellI,
-        energyDiffTerm.R()
-    );
-}
+std::optional<dgDiffusiveTerm<scalar, vector>>
+    artificialDiffusionEnergyTerm;
 
 if (artificialDiffusion)
 {
@@ -208,7 +178,7 @@ if (artificialDiffusion)
             &dgMesh
         );
 
-    dgDiffusiveTerm<scalar, vector> artificialDiffusionEnergyTerm
+    artificialDiffusionEnergyTerm.emplace
     (
         "artificialDiffusionEnergyTerm",
         dgFluxSolver::equationType::energyTransport,
@@ -219,13 +189,15 @@ if (artificialDiffusion)
         fluxSolverManager
     );
 
-    artificialDiffusionEnergyTerm.updateFlux();
-    artificialDiffusionEnergyTerm.calcResidual();
-
-    timeDiscretization.addResidual
-    (
-        E.name(),
-        cellI,
-        artificialDiffusionEnergyTerm.R()
-    );
+    artificialDiffusionEnergyTerm->updateFlux();
+    energyResidual.addTerm(*artificialDiffusionEnergyTerm);
 }
+
+energyResidual.calcResidual();
+
+timeDiscretization.addResidual
+(
+    E.name(),
+    cellI,
+    energyResidual.R()
+);

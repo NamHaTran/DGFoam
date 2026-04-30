@@ -53,8 +53,7 @@ Foam::dgDiffusiveTerm<UType, FType>::dgDiffusiveTerm
     const dgBasisField& basis,
     const GaussField<UType>& U,
     GaussField<FType>& F,
-    dgFluxSolverManager& fluxSolver,
-    const bool removeHighOrder
+    dgFluxSolverManager& fluxSolver
 )
 :
     termName_(termName),
@@ -65,10 +64,7 @@ Foam::dgDiffusiveTerm<UType, FType>::dgDiffusiveTerm
     U_(U),
     F_(new GaussField<FType>(F)),
     fluxSolver_(fluxSolver),
-    termFluxSolver_(fluxSolver_.solver(termName_+"Flux", fluxType_)),
-    nDof_(basis_.nDof()),
-    removeHighOrder_(removeHighOrder),
-    R_(nDof_, pTraits<UType>::zero)
+    termFluxSolver_(fluxSolver_.solver(termName_+"Flux", fluxType_))
 {
     checkTypes();
 
@@ -87,8 +83,7 @@ Foam::dgDiffusiveTerm<UType, FType>::dgDiffusiveTerm
     const dgBasisField& basis,
     const GaussField<UType>& U,
     const tmp<GaussField<FType>>& tF,
-    dgFluxSolverManager& fluxSolver,
-    const bool removeHighOrder
+    dgFluxSolverManager& fluxSolver
 )
 :
     termName_(termName),
@@ -99,10 +94,7 @@ Foam::dgDiffusiveTerm<UType, FType>::dgDiffusiveTerm
     U_(U),
     F_(tF),
     fluxSolver_(fluxSolver),
-    termFluxSolver_(fluxSolver_.solver(termName_+"Flux", fluxType_)),
-    nDof_(basis_.nDof()),
-    removeHighOrder_(removeHighOrder),
-    R_(nDof_, pTraits<UType>::zero)
+    termFluxSolver_(fluxSolver_.solver(termName_+"Flux", fluxType_))
 {
     checkTypes();
 
@@ -125,38 +117,5 @@ void Foam::dgDiffusiveTerm<UType, FType>::updateFlux()
     );
 }
 
-
-template<class UType, class FType>
-void Foam::dgDiffusiveTerm<UType, FType>::calcResidual()
-{
-    forAll (R_, i)
-    {
-        R_[i] = pTraits<UType>::zero;
-    }
-
-    const label nResidualDof = removeHighOrder_ ? min(nDof_, label(1)) : nDof_;
-
-    for (label i = 0; i < nResidualDof; ++i)
-    {
-        UType volTerm = pTraits<UType>::zero;
-
-        if (i != 0)
-        {
-            const GaussField<vector>& gradPhi = basis_.getDBasis(i);
-            volTerm = Foam::volumeIntegral
-            (
-                gradPhi.cellField(),
-                F_().cellField()
-            );
-        }
-
-        const GaussField<scalar>& phi = basis_.getBasis(i);
-
-        const UType surfTerm = Foam::surfaceIntegral(phi.faceField(), F_().faceField());
-
-        R_[i] += volTerm;
-        R_[i] -= surfTerm;
-    }
-}
 
 // ************************************************************************* //

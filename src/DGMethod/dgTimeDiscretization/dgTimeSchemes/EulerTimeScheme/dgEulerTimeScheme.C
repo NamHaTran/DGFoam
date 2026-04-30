@@ -116,7 +116,7 @@ void updateEulerState
     const List<Type>& UOldCellDof = UOld.dof()[cellID].dof();
     const List<Type>& RCell = state.R(cellID);
     List<Type>& UCellDof = U.dof()[cellID].dof();
-    const List<scalar> massDiag(mesh.cells()[cellID]->massMatrixDiag());
+    const List<scalar>& massDiag = mesh.cells()[cellID]->massMatrixDiag();
 
     forAll(UCellDof, dofI)
     {

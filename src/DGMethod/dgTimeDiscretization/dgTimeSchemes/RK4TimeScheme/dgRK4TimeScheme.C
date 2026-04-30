@@ -121,7 +121,7 @@ void updateRK4Stage
     const dgField<Type>& UOld = state.UOld();
     const List<Type>& UOldCellDof = UOld.dof()[cellID].dof();
     List<Type>& UCellDof = U.dof()[cellID].dof();
-    const List<scalar> massDiag(mesh.cells()[cellID]->massMatrixDiag());
+    const List<scalar>& massDiag = mesh.cells()[cellID]->massMatrixDiag();
 
     switch (stageI)
     {

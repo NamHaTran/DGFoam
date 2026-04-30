@@ -339,6 +339,115 @@ scalar positivityPreservingLimiter::calcRhoThermoEnergyFloor
 }
 
 
+scalar positivityPreservingLimiter::safeDensityForDivision
+(
+    const scalar rho
+) const
+{
+    return
+        mag(rho) > epsilon_
+      ? rho
+      : (rho >= 0 ? epsilon_ : -epsilon_);
+}
+
+
+scalar positivityPreservingLimiter::calcMeanTemperature
+(
+    const label cellID,
+    const scalar rho,
+    const vector& rhoU,
+    const scalar E
+) const
+{
+    const scalar rhoSafe = safeDensityForDivision(rho);
+    const vector U = rhoU/rhoSafe;
+    const scalar he = E/rhoSafe - 0.5*magSqr(U);
+
+    return thermoPtr_->calcTemperatureFromRhoHe(cellID, rhoSafe, he);
+}
+
+
+scalar positivityPreservingLimiter::calcMeanTotalEnergy
+(
+    const scalar rho,
+    const vector& U,
+    const scalar T
+) const
+{
+    const scalar he = thermoPtr_->calcHeFromRhoT(rho, T);
+    scalar E = rho*(he + 0.5*magSqr(U));
+
+    if (thermoPtr_->heIsEnthalpy())
+    {
+        E -= thermoPtr_->eos().calcPFromRhoT(rho, T);
+    }
+
+    return E;
+}
+
+
+bool positivityPreservingLimiter::limitCellMeanValue(const label cellID)
+{
+    if
+    (
+        !densityFieldPtr_->hasDof()
+     || !momentumFieldPtr_->hasDof()
+     || !energyFieldPtr_->hasDof()
+    )
+    {
+        return false;
+    }
+
+    cellDof<scalar>& rhoModes = densityFieldPtr_->dof()[cellID];
+    cellDof<vector>& rhoUModes = momentumFieldPtr_->dof()[cellID];
+    cellDof<scalar>& EModes = energyFieldPtr_->dof()[cellID];
+
+    if
+    (
+        rhoModes.nDof() < 1
+     || rhoUModes.nDof() < 1
+     || EModes.nDof() < 1
+    )
+    {
+        return false;
+    }
+
+    bool limited = false;
+
+    const scalar rho0NoClamp = rhoModes[0];
+    const scalar rho0Clamped = min(max(rho0NoClamp, rhoMin_), rhoMax_);
+
+    if (rho0Clamped != rho0NoClamp)
+    {
+        rhoModes[0] = rho0Clamped;
+        limited = true;
+    }
+
+    const vector U0 = rhoUModes[0]/safeDensityForDivision(rho0NoClamp);
+    const scalar magU0 = mag(U0);
+
+    if (magU0 > magUMax_ && magU0 > SMALL)
+    {
+        rhoUModes[0] = rhoModes[0]*U0*(magUMax_/magU0);
+        limited = true;
+    }
+
+    const scalar T0 =
+        calcMeanTemperature(cellID, rhoModes[0], rhoUModes[0], EModes[0]);
+    const scalar TClamped = min(max(T0, Tmin_), Tmax_);
+
+    if (TClamped != T0)
+    {
+        const vector UMean =
+            rhoUModes[0]/safeDensityForDivision(rhoModes[0]);
+        EModes[0] = calcMeanTotalEnergy(rhoModes[0], UMean, TClamped);
+        limited = true;
+    }
+
+    return limited;
+}
+
+
 scalar positivityPreservingLimiter::thetaCoeff
 (
     const scalar meanValue,
@@ -379,25 +488,11 @@ void positivityPreservingLimiter::computeThetaCoeffs
     const faceGaussField<vector>& rhoUFace = rhoUGF.faceField();
     const faceGaussField<scalar>& EFace = EGF.faceField();
 
-    label nFaceSamples = 0;
-
-    for (label localFaceI = 0; localFaceI < rhoFace.nFaces(); ++localFaceI)
-    {
-        nFaceSamples += rhoFace.faces()[localFaceI]->weights().size();
-    }
-
-    DynamicList<conservativeSample> samples(rhoCell.size() + nFaceSamples);
     scalar minRho = GREAT;
 
     forAll(rhoCell, gpI)
     {
-        conservativeSample sample;
-        sample.rho = rhoCell[gpI];
-        sample.rhoU = rhoUCell[gpI];
-        sample.E = ECell[gpI];
-
-        minRho = min(minRho, sample.rho);
-        samples.append(sample);
+        minRho = min(minRho, rhoCell[gpI]);
     }
 
     for (label localFaceI = 0; localFaceI < rhoFace.nFaces(); ++localFaceI)
@@ -407,13 +502,8 @@ void positivityPreservingLimiter::computeThetaCoeffs
 
         forAll(weights, gpI)
         {
-            conservativeSample sample;
-            sample.rho = rhoFace.minusValueOnFace(localFaceI, gpI);
-            sample.rhoU = rhoUFace.minusValueOnFace(localFaceI, gpI);
-            sample.E = EFace.minusValueOnFace(localFaceI, gpI);
-
-            minRho = min(minRho, sample.rho);
-            samples.append(sample);
+            minRho =
+                min(minRho, rhoFace.minusValueOnFace(localFaceI, gpI));
         }
     }
 
@@ -421,13 +511,12 @@ void positivityPreservingLimiter::computeThetaCoeffs
 
     scalar minRhoThermoEnergyMargin = GREAT;
 
-    forAll(samples, sampleI)
+    forAll(rhoCell, gpI)
     {
-        const conservativeSample& sample = samples[sampleI];
         const scalar rho =
-            modifiedDensityValue(sample.rho, meanRho, theta1);
+            modifiedDensityValue(rhoCell[gpI], meanRho, theta1);
         const scalar rhoThermoEnergy =
-            calcRhoThermoEnergy(rho, sample.rhoU, sample.E);
+            calcRhoThermoEnergy(rho, rhoUCell[gpI], ECell[gpI]);
         const scalar rhoThermoEnergyFloor =
             calcRhoThermoEnergyFloor(rho);
 
@@ -437,6 +526,39 @@ void positivityPreservingLimiter::computeThetaCoeffs
                 minRhoThermoEnergyMargin,
                 rhoThermoEnergy - rhoThermoEnergyFloor
             );
+    }
+
+    for (label localFaceI = 0; localFaceI < rhoFace.nFaces(); ++localFaceI)
+    {
+        const dgGeomFace& face = *rhoFace.faces()[localFaceI];
+        const List<scalar>& weights = face.weights();
+
+        forAll(weights, gpI)
+        {
+            const scalar rho =
+                modifiedDensityValue
+                (
+                    rhoFace.minusValueOnFace(localFaceI, gpI),
+                    meanRho,
+                    theta1
+                );
+            const scalar rhoThermoEnergy =
+                calcRhoThermoEnergy
+                (
+                    rho,
+                    rhoUFace.minusValueOnFace(localFaceI, gpI),
+                    EFace.minusValueOnFace(localFaceI, gpI)
+                );
+            const scalar rhoThermoEnergyFloor =
+                calcRhoThermoEnergyFloor(rho);
+
+            minRhoThermoEnergyMargin =
+                min
+                (
+                    minRhoThermoEnergyMargin,
+                    rhoThermoEnergy - rhoThermoEnergyFloor
+                );
+        }
     }
 
     const vector& meanRhoU = momentumFieldPtr_->dof()[cellID].dof()[0];
@@ -476,8 +598,6 @@ void positivityPreservingLimiter::scaleHighOrderModes
     {
         cellModes[modeI] *= theta;
     }
-
-    field.dof().updateCellDof(cellID);
 }
 
 
@@ -499,8 +619,6 @@ void positivityPreservingLimiter::scaleHighOrderModes
     {
         cellModes[modeI] *= theta;
     }
-
-    field.dof().updateCellDof(cellID);
 }
 
 
@@ -611,7 +729,10 @@ positivityPreservingLimiter::positivityPreservingLimiter
     epsilon_(dict.lookupOrDefault<scalar>("tolerance", 1.0e-8)),
     thermoPtr_(nullptr),
     rhoMin_(dict.lookupOrDefault<scalar>("rhoMin", epsilon_)),
+    rhoMax_(dict.lookupOrDefault<scalar>("rhoMax", GREAT)),
+    magUMax_(dict.lookupOrDefault<scalar>("magUMax", GREAT)),
     Tmin_(dict.lookupOrDefault<scalar>("Tmin", epsilon_)),
+    Tmax_(dict.lookupOrDefault<scalar>("Tmax", GREAT)),
     theta1_(1.0),
     theta2_(1.0),
     writeTheta_(dict.lookupOrDefault<bool>("writeTheta", false)),
@@ -637,11 +758,35 @@ positivityPreservingLimiter::positivityPreservingLimiter
             << exit(FatalIOError);
     }
 
+    if (rhoMin_ > rhoMax_)
+    {
+        FatalIOErrorInFunction(dict)
+            << "Entries 'rhoMin' and 'rhoMax' are inconsistent: rhoMin="
+            << rhoMin_ << ", rhoMax=" << rhoMax_ << '.'
+            << exit(FatalIOError);
+    }
+
+    if (magUMax_ < 0)
+    {
+        FatalIOErrorInFunction(dict)
+            << "Entry 'magUMax' must be non-negative, but got "
+            << magUMax_ << '.'
+            << exit(FatalIOError);
+    }
+
     if (Tmin_ <= 0)
     {
         FatalIOErrorInFunction(dict)
             << "Entry 'Tmin' must be positive, but got "
             << Tmin_ << '.'
+            << exit(FatalIOError);
+    }
+
+    if (Tmin_ > Tmax_)
+    {
+        FatalIOErrorInFunction(dict)
+            << "Entries 'Tmin' and 'Tmax' are inconsistent: Tmin="
+            << Tmin_ << ", Tmax=" << Tmax_ << '.'
             << exit(FatalIOError);
     }
 
@@ -691,7 +836,10 @@ void positivityPreservingLimiter::read(const dictionary& dict)
     dgLimiter::read(normalizePositivityLimiterDict(dict));
     epsilon_ = dict.lookupOrDefault<scalar>("tolerance", 1.0e-8);
     rhoMin_ = dict.lookupOrDefault<scalar>("rhoMin", epsilon_);
+    rhoMax_ = dict.lookupOrDefault<scalar>("rhoMax", GREAT);
+    magUMax_ = dict.lookupOrDefault<scalar>("magUMax", GREAT);
     Tmin_ = dict.lookupOrDefault<scalar>("Tmin", epsilon_);
+    Tmax_ = dict.lookupOrDefault<scalar>("Tmax", GREAT);
     theta1_ = 1.0;
     theta2_ = 1.0;
     writeTheta_ = dict.lookupOrDefault<bool>("writeTheta", false);
@@ -716,11 +864,35 @@ void positivityPreservingLimiter::read(const dictionary& dict)
             << exit(FatalIOError);
     }
 
+    if (rhoMin_ > rhoMax_)
+    {
+        FatalIOErrorInFunction(dict)
+            << "Entries 'rhoMin' and 'rhoMax' are inconsistent: rhoMin="
+            << rhoMin_ << ", rhoMax=" << rhoMax_ << '.'
+            << exit(FatalIOError);
+    }
+
+    if (magUMax_ < 0)
+    {
+        FatalIOErrorInFunction(dict)
+            << "Entry 'magUMax' must be non-negative, but got "
+            << magUMax_ << '.'
+            << exit(FatalIOError);
+    }
+
     if (Tmin_ <= 0)
     {
         FatalIOErrorInFunction(dict)
             << "Entry 'Tmin' must be positive, but got "
             << Tmin_ << '.'
+            << exit(FatalIOError);
+    }
+
+    if (Tmin_ > Tmax_)
+    {
+        FatalIOErrorInFunction(dict)
+            << "Entries 'Tmin' and 'Tmax' are inconsistent: Tmin="
+            << Tmin_ << ", Tmax=" << Tmax_ << '.'
             << exit(FatalIOError);
     }
 
@@ -767,13 +939,6 @@ void positivityPreservingLimiter::read(const dictionary& dict)
 
 void positivityPreservingLimiter::correct()
 {
-    // This limiter scales higher-order modal content around the cell mean.
-    // For p=0 only the mean remains, so leave the state unchanged here.
-    if (mesh_.pOrder() <= 0)
-    {
-        return;
-    }
-
     preCorrect();
     resetThetaFields();
 
@@ -786,23 +951,33 @@ void positivityPreservingLimiter::correct()
 
     for (label cellID = 0; cellID < mesh_.nCells(); ++cellID)
     {
-        if
+        const bool meanLimited = limitCellMeanValue(cellID);
+
+        if (meanLimited)
+        {
+            theta1_ = 0.0;
+            theta2_ = 0.0;
+        }
+        else if
         (
-            densityFieldPtr_->hasDof()
-         && densityFieldPtr_->dof()[cellID].nDof() <= 1
+            mesh_.pOrder() > 0
+         && densityFieldPtr_->hasDof()
+         && densityFieldPtr_->dof()[cellID].nDof() > 1
         )
         {
-            theta1_ = 1.0;
-            theta2_ = 1.0;
+            computeThetaCoeffs(cellID, theta1_, theta2_);
         }
         else
         {
-            computeThetaCoeffs(cellID, theta1_, theta2_);
+            // For p=0 only the mean remains, so skip the positivity scaling.
+            theta1_ = 1.0;
+            theta2_ = 1.0;
         }
 
         setThetaFields(cellID, theta1_, theta2_);
 
-        const bool thetaLimited = theta1_ < 1.0 || theta2_ < 1.0;
+        const bool thetaLimited =
+            meanLimited || theta1_ < 1.0 || theta2_ < 1.0;
 
         if (thetaLimited)
         {

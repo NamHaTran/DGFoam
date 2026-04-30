@@ -64,9 +64,7 @@ Foam::dgConvectiveTerm<UType, FType>::dgConvectiveTerm
     U_(U),
     F_(new GaussField<FType>(F)),
     fluxSolver_(fluxSolver),
-    termFluxSolver_(fluxSolver_.solver(termName_+"Flux", fluxType_)),
-    nDof_(basis_.nDof()),
-    R_(nDof_, pTraits<UType>::zero)
+    termFluxSolver_(fluxSolver_.solver(termName_+"Flux", fluxType_))
 {
     checkTypes();
 
@@ -97,9 +95,7 @@ Foam::dgConvectiveTerm<UType, FType>::dgConvectiveTerm
     U_(U),
     F_(tF),
     fluxSolver_(fluxSolver),
-    termFluxSolver_(fluxSolver_.solver(termName_+"Flux", fluxType_)),
-    nDof_(basis_.nDof()),
-    R_(nDof_, pTraits<UType>::zero)
+    termFluxSolver_(fluxSolver_.solver(termName_+"Flux", fluxType_))
 {
     checkTypes();
 
@@ -124,35 +120,5 @@ void Foam::dgConvectiveTerm<UType, FType>::updateFlux()
     );
 }
 
-
-template<class UType, class FType>
-void Foam::dgConvectiveTerm<UType, FType>::calcResidual()
-{
-    forAll (R_, i)
-    {
-        R_[i] = pTraits<UType>::zero;
-    }
-
-    for (label i = 0; i < nDof_; ++i)
-    {
-        // Gradient of basis phi_i
-        const GaussField<vector>& gradPhi = basis_.getDBasis(i);
-
-        const UType volTerm =
-        (
-            i == 0
-          ? pTraits<UType>::zero
-          : Foam::volumeIntegral(gradPhi.cellField(), F_().cellField())
-        );
-
-        // Basis phi_i on faces
-        const GaussField<scalar>& phi = basis_.getBasis(i);
-
-        const UType surfTerm = Foam::surfaceIntegral(phi.faceField(), F_().faceField());
-
-        R_[i] += volTerm;
-        R_[i] -= surfTerm;
-    }
-}
 
 // ************************************************************************* //

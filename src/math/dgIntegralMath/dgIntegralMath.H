@@ -44,145 +44,189 @@ namespace Foam
 {
 
 /**
- * \brief Volume integral for vector field F, used in DG weak form. F is vector
- * 
- * \param gradPhi Gradient of basis function at Gauss points
- * \param F       Vector field at Gauss points
+ * \brief Volume integral for the sum of vector flux fields.
+ *
+ * Computes \f$\int_K \nabla\phi \cdot \sum_m F_m\,dV\f$ without building a
+ * temporary summed field.
+ *
+ * \param gradPhi Gradient of basis function at cell Gauss points
+ * \param fields  Pointer list of vector flux fields
  */
-inline scalar volumeIntegral(const cellGaussField<vector>& gradPhi, const cellGaussField<vector>& F)
+template<class FieldPtrList>
+inline scalar volumeIntegral
+(
+    const cellGaussField<vector>& gradPhi,
+    const FieldPtrList& fields,
+    const label nFields
+)
 {
     scalar volInt = Zero;
 
-    const label nGauss = F.size();
-    const List<scalar>& w = F.cell()->weights();
-    const List<scalar>& J3D = F.cell()->J3D();
+    if (nFields == 0)
+    {
+        return volInt;
+    }
+
+    const label nGauss = gradPhi.size();
+    const List<scalar>& w = gradPhi.cell()->weights();
+    const List<scalar>& J3D = gradPhi.cell()->J3D();
 
     for (label g = 0; g < nGauss; ++g)
     {
-        volInt += J3D[g] * (gradPhi[g] & F[g]) * w[g];
+        scalar fluxAtGp = Zero;
+
+        for (label fieldI = 0; fieldI < nFields; ++fieldI)
+        {
+            fluxAtGp += gradPhi[g] & (*fields[fieldI])[g];
+        }
+
+        volInt += J3D[g] * fluxAtGp * w[g];
     }
 
     return volInt;
 }
 
 /**
- * \brief Volume integral for vector field F, used in DG weak form. F is tensor
- * 
- * \param gradPhi Gradient of basis function at Gauss points
- * \param F       Vector field at Gauss points
- */
-inline vector volumeIntegral(const cellGaussField<vector>& gradPhi, const cellGaussField<tensor>& F)
-{
-    vector volInt = Zero;
-
-    const label nGauss = F.size();
-    const List<scalar>& w = F.cell()->weights();
-    const List<scalar>& J3D = F.cell()->J3D();
-
-    for (label g = 0; g < nGauss; ++g)
-    {
-        volInt += J3D[g] * (gradPhi[g] & F[g]) * w[g];
-    }
-
-    return volInt;
-}
-
-/**
- * \brief Volume integral for the gradient-projection weak form.
+ * \brief Volume integral for the sum of tensor flux fields.
  *
- * Computes \f$\int_\Omega C\,\nabla\phi\,dV\f$.
- * If C is scalar the result is vector; if C is vector the result is tensor.
+ * Computes \f$\int_K \nabla\phi \cdot \sum_m F_m\,dV\f$ without building a
+ * temporary summed field.
  *
- * \param gradPhi Gradient of basis function at Gauss points
- * \param C       Projected field at cell Gauss points
+ * \param gradPhi Gradient of basis function at cell Gauss points
+ * \param fields  Pointer list of tensor flux fields
  */
-template<class Type>
-inline typename outerProduct<Type, vector>::type gradProjectionVolumeIntegral
+template<class FieldPtrList>
+inline vector volumeIntegral
 (
     const cellGaussField<vector>& gradPhi,
-    const cellGaussField<Type>& C
+    const FieldPtrList& fields,
+    const label nFields,
+    const tensor*
 )
-{
-    typename outerProduct<Type, vector>::type volInt =
-        pTraits<typename outerProduct<Type, vector>::type>::zero;
-
-    const label nGauss = C.size();
-    const List<scalar>& w = C.cell()->weights();
-    const List<scalar>& J3D = C.cell()->J3D();
-
-    for (label g = 0; g < nGauss; ++g)
-    {
-        volInt += J3D[g] * (C[g] * gradPhi[g]) * w[g];
-    }
-
-    return volInt;
-}
-
-/**
- * \brief General volume integral for scalar  field F over the cell
- * 
- * \param F Scalar field at Gauss points
- * \param J Jacobian determinants at Gauss points
- * \param w Weights at Gauss points
- */
-inline scalar volumeIntegral(const List<scalar>& F, const List<scalar>& J, const List<scalar>& w)
-{
-    scalar volInt = 0;
-
-    const label nGauss = F.size();
-
-    for (label g = 0; g < nGauss; ++g)
-    {
-        volInt += J[g] * F[g] * w[g];
-    }
-
-    return volInt;
-}
-
-/**
- * \brief General volume integral for vector field F over the cell
- * 
- * \param F Vector field at Gauss points
- * \param J Jacobian determinants at Gauss points
- * \param w Weights at Gauss points
- */
-inline vector volumeIntegral(const List<vector>& F, const List<scalar>& J, const List<scalar>& w)
 {
     vector volInt = Zero;
 
-    const label nGauss = F.size();
+    if (nFields == 0)
+    {
+        return volInt;
+    }
+
+    const label nGauss = gradPhi.size();
+    const List<scalar>& w = gradPhi.cell()->weights();
+    const List<scalar>& J3D = gradPhi.cell()->J3D();
 
     for (label g = 0; g < nGauss; ++g)
     {
-        volInt += J[g] * F[g] * w[g];
+        vector fluxAtGp = Zero;
+
+        for (label fieldI = 0; fieldI < nFields; ++fieldI)
+        {
+            fluxAtGp += gradPhi[g] & (*fields[fieldI])[g];
+        }
+
+        volInt += J3D[g] * fluxAtGp * w[g];
     }
 
     return volInt;
 }
 
 /**
- * \brief Surface integral for vector flux
- * 
- * \param phi Scalar field at face Gauss points
- * \param F   Vector field at face Gauss points
+ * \brief Volume integrals for several gradient-projection state fields.
+ *
+ * Computes, for each active field \f$C_m\f$,
+ *
+ * \f[
+ *     \int_K C_m \nabla\phi\,dV
+ * \f]
+ *
+ * in a shared quadrature loop.  No temporary summed field is built since each
+ * projection term produces a separate residual vector.
+ *
+ * \param gradPhi Gradient of basis function at cell Gauss points
+ * \param fields  Pointer list of projected state fields
+ * \param nFields Number of active entries in \p fields and \p results
+ * \param results Output integrals, one per active field
  */
-inline scalar surfaceIntegral(const faceGaussField<scalar>& phi, const faceGaussField<vector>& F)
+template<class Type, class FieldPtrList, class ResultList>
+inline void gradProjectionVolumeIntegrals
+(
+    const cellGaussField<vector>& gradPhi,
+    const FieldPtrList& fields,
+    const label nFields,
+    ResultList& results
+)
 {
-    scalar surfInt = 0.0;
+    using result_type = typename outerProduct<Type, vector>::type;
 
-    const label nFaces = F.nFaces();
-
-    for (label faceI = 0; faceI < nFaces; ++faceI)
+    for (label fieldI = 0; fieldI < nFields; ++fieldI)
     {
-        const vector n = F.normals()[faceI];
-        const label nGauss = F.nGaussPerFace();
-        const List<scalar>& w = F.faces()[faceI]->weights();
-        const List<scalar>& J2D = F.faces()[faceI]->J2D();
+        results[fieldI] = pTraits<result_type>::zero;
+    }
+
+    if (nFields == 0)
+    {
+        return;
+    }
+
+    const label nGauss = gradPhi.size();
+    const List<scalar>& w = gradPhi.cell()->weights();
+    const List<scalar>& J3D = gradPhi.cell()->J3D();
+
+    for (label g = 0; g < nGauss; ++g)
+    {
+        const scalar Jw = J3D[g]*w[g];
+
+        for (label fieldI = 0; fieldI < nFields; ++fieldI)
+        {
+            results[fieldI] += Jw*((*fields[fieldI])[g]*gradPhi[g]);
+        }
+    }
+}
+
+/**
+ * \brief Surface integral for the sum of vector numerical flux fields.
+ *
+ * Computes \f$\int_{\partial K} \phi \sum_m F^\ast_m\cdot n\,dS\f$ without
+ * building a temporary summed field.
+ *
+ * \param phi    Scalar basis function at face Gauss points
+ * \param fields Pointer list of vector face flux fields
+ */
+template<class FieldPtrList>
+inline scalar surfaceIntegral
+(
+    const faceGaussField<scalar>& phi,
+    const FieldPtrList& fields,
+    const label nFields
+)
+{
+    scalar surfInt = Zero;
+
+    if (nFields == 0)
+    {
+        return surfInt;
+    }
+
+    const faceGaussField<vector>& first = *fields[0];
+
+    for (label faceI = 0; faceI < first.nFaces(); ++faceI)
+    {
+        const vector n = first.normals()[faceI];
+        const label nGauss = first.nGaussPerFace();
+        const List<scalar>& w = first.faces()[faceI]->weights();
+        const List<scalar>& J2D = first.faces()[faceI]->J2D();
 
         for (label g = 0; g < nGauss; ++g)
         {
-            // F(g) is vector ⇒ dot with n to get scalar flux
-            surfInt += J2D[g] * phi.minusValueOnFace(faceI, g) * (F.fluxOnFace(faceI, g) & n) * w[g];
+            scalar fluxAtFace = Zero;
+
+            for (label fieldI = 0; fieldI < nFields; ++fieldI)
+            {
+                fluxAtFace += (*fields[fieldI]).fluxOnFace(faceI, g) & n;
+            }
+
+            surfInt +=
+                J2D[g] * phi.minusValueOnFace(faceI, g) * fluxAtFace * w[g];
         }
     }
 
@@ -190,68 +234,49 @@ inline scalar surfaceIntegral(const faceGaussField<scalar>& phi, const faceGauss
 }
 
 /**
- * \brief Surface integral for tensor flux
- * 
- * \param phi Scalar field at face Gauss points
- * \param F   Vector field at face Gauss points
+ * \brief Surface integral for the sum of tensor numerical flux fields.
+ *
+ * For tensor fluxes, \c fluxOnFace() already stores
+ * \f$F^\ast\cdot n\f$.
+ *
+ * \param phi    Scalar basis function at face Gauss points
+ * \param fields Pointer list of tensor face flux fields
  */
-inline vector surfaceIntegral(const faceGaussField<scalar>& phi, const faceGaussField<tensor>& F)
+template<class FieldPtrList>
+inline vector surfaceIntegral
+(
+    const faceGaussField<scalar>& phi,
+    const FieldPtrList& fields,
+    const label nFields,
+    const tensor*
+)
 {
     vector surfInt = Zero;
 
-    const label nFaces = F.nFaces();
-
-    for (label faceI = 0; faceI < nFaces; ++faceI)
+    if (nFields == 0)
     {
-        const label nGauss = F.nGaussPerFace();
-        const List<scalar>& w = F.faces()[faceI]->weights();
-        const List<scalar>& J2D = F.faces()[faceI]->J2D();
-
-        for (label g = 0; g < nGauss; ++g)
-        {
-            // fluxOnFace already returns T·n (vector)
-            surfInt += J2D[g] * phi.minusValueOnFace(faceI, g) * F.fluxOnFace(faceI, g) * w[g];
-        }
+        return surfInt;
     }
 
-    return surfInt;
-}
+    const faceGaussField<tensor>& first = *fields[0];
 
-/**
- * \brief Surface integral for gradient-projection terms using face mid-state.
- *
- * Computes \f$\int_{\partial\Omega}\phi\,C^\ast n\,dS\f$.
- * If C is scalar the result is vector; if C is vector the result is tensor.
- *
- * \param phi Scalar basis function at face Gauss points
- * \param C   Projected field at face Gauss points
- */
-template<class Type>
-inline typename outerProduct<Type, vector>::type gradProjectionSurfaceIntegral
-(
-    const faceGaussField<scalar>& phi,
-    const faceGaussField<Type>& C
-)
-{
-    typename outerProduct<Type, vector>::type surfInt =
-        pTraits<typename outerProduct<Type, vector>::type>::zero;
-
-    const label nFaces = C.nFaces();
-
-    for (label faceI = 0; faceI < nFaces; ++faceI)
+    for (label faceI = 0; faceI < first.nFaces(); ++faceI)
     {
-        const vector n = C.normals()[faceI];
-        const label nGauss = C.nGaussPerFace();
-        const List<scalar>& w = C.faces()[faceI]->weights();
-        const List<scalar>& J2D = C.faces()[faceI]->J2D();
+        const label nGauss = first.nGaussPerFace();
+        const List<scalar>& w = first.faces()[faceI]->weights();
+        const List<scalar>& J2D = first.faces()[faceI]->J2D();
 
         for (label g = 0; g < nGauss; ++g)
         {
+            vector fluxAtFace = Zero;
+
+            for (label fieldI = 0; fieldI < nFields; ++fieldI)
+            {
+                fluxAtFace += (*fields[fieldI]).fluxOnFace(faceI, g);
+            }
+
             surfInt +=
-                J2D[g]
-              * phi.minusValueOnFace(faceI, g)
-              * (C.midValueOnFace(faceI, g) * n)
-              * w[g];
+                J2D[g] * phi.minusValueOnFace(faceI, g) * fluxAtFace * w[g];
         }
     }
 
@@ -259,56 +284,122 @@ inline typename outerProduct<Type, vector>::type gradProjectionSurfaceIntegral
 }
 
 /**
- * \brief Surface integral for gradient-projection terms using an on-read
- * central state on internal/processor faces.
+ * \brief Volume integral for the sum of source fields.
  *
- * Computes \f$\int_{\partial\Omega}\phi\,C^\ast n\,dS\f$ without writing
- * to \c faceGaussField::midValues(). Physical boundary faces still use the
- * boundary-provided middle state; internal and processor faces use
- * \f$C^\ast = 0.5(C^- + C^+)\f$ directly.
+ * Computes \f$\int_K \phi \sum_m S_m\,dV\f$ without building a temporary
+ * summed source field.
+ *
+ * \param phi    Scalar basis function at cell Gauss points
+ * \param fields Pointer list of source fields
  */
-template<class Type>
-inline typename outerProduct<Type, vector>::type gradProjectionCentralSurfaceIntegral
+template<class Type, class FieldPtrList>
+inline Type sourceIntegral
 (
-    const faceGaussField<scalar>& phi,
-    const faceGaussField<Type>& C
+    const cellGaussField<scalar>& phi,
+    const FieldPtrList& fields,
+    const label nFields
 )
 {
-    typename outerProduct<Type, vector>::type surfInt =
-        pTraits<typename outerProduct<Type, vector>::type>::zero;
+    Type sourceInt = pTraits<Type>::zero;
 
-    const label nFaces = C.nFaces();
+    if (nFields == 0)
+    {
+        return sourceInt;
+    }
+
+    const cellGaussField<Type>& first = *fields[0];
+    const List<scalar>& w = first.cell()->weights();
+    const List<scalar>& J3D = first.cell()->J3D();
+
+    for (label g = 0; g < first.size(); ++g)
+    {
+        Type sourceAtGp = pTraits<Type>::zero;
+
+        for (label fieldI = 0; fieldI < nFields; ++fieldI)
+        {
+            sourceAtGp += (*fields[fieldI])[g];
+        }
+
+        sourceInt += (J3D[g] * w[g] * phi[g]) * sourceAtGp;
+    }
+
+    return sourceInt;
+}
+
+/**
+ * \brief Central surface integrals for several gradient-projection fields.
+ *
+ * Computes, for each active field \f$C_m\f$,
+ *
+ * \f[
+ *     \int_{\partial K}\phi C_m^\ast n\,dS
+ * \f]
+ *
+ * in a shared quadrature loop.  Boundary faces use the supplied middle state;
+ * internal and processor faces use
+ * \f$C^\ast = 0.5(C^- + C^+)\f$ on read.
+ *
+ * \param phi     Scalar basis function at face Gauss points
+ * \param fields  Pointer list of projected face fields
+ * \param nFields Number of active entries in \p fields and \p results
+ * \param results Output integrals, one per active field
+ */
+template<class Type, class FieldPtrList, class ResultList>
+inline void gradProjectionCentralSurfaceIntegrals
+(
+    const faceGaussField<scalar>& phi,
+    const FieldPtrList& fields,
+    const label nFields,
+    ResultList& results
+)
+{
+    using result_type = typename outerProduct<Type, vector>::type;
+
+    for (label fieldI = 0; fieldI < nFields; ++fieldI)
+    {
+        results[fieldI] = pTraits<result_type>::zero;
+    }
+
+    if (nFields == 0)
+    {
+        return;
+    }
+
+    const faceGaussField<Type>& first = *fields[0];
+    const label nFaces = first.nFaces();
 
     for (label faceI = 0; faceI < nFaces; ++faceI)
     {
-        const vector n = C.normals()[faceI];
-        const label nGauss = C.nGaussPerFace();
-        const List<scalar>& w = C.faces()[faceI]->weights();
-        const List<scalar>& J2D = C.faces()[faceI]->J2D();
+        const vector n = first.normals()[faceI];
+        const label nGauss = first.nGaussPerFace();
+        const List<scalar>& w = first.faces()[faceI]->weights();
+        const List<scalar>& J2D = first.faces()[faceI]->J2D();
 
         const bool useBoundaryMid =
-            C.isBoundary(faceI) && !C.isProcessorPatch(faceI);
+            first.isBoundary(faceI) && !first.isProcessorPatch(faceI);
 
         for (label g = 0; g < nGauss; ++g)
         {
-            const Type CStar =
-                useBoundaryMid
-              ? C.midValueOnFace(faceI, g)
-              : scalar(0.5)
-               *(
-                    C.minusValueOnFace(faceI, g)
-                  + C.plusValueOnFace(faceI, g)
-                );
+            const scalar JwPhi =
+                J2D[g]*w[g]*phi.minusValueOnFace(faceI, g);
 
-            surfInt +=
-                J2D[g]
-              * phi.minusValueOnFace(faceI, g)
-              * (CStar * n)
-              * w[g];
+            for (label fieldI = 0; fieldI < nFields; ++fieldI)
+            {
+                const faceGaussField<Type>& C = *fields[fieldI];
+
+                const Type CStar =
+                    useBoundaryMid
+                  ? C.midValueOnFace(faceI, g)
+                  : scalar(0.5)
+                   *(
+                        C.minusValueOnFace(faceI, g)
+                      + C.plusValueOnFace(faceI, g)
+                    );
+
+                results[fieldI] += JwPhi*(CStar*n);
+            }
         }
     }
-
-    return surfInt;
 }
 
 } // End namespace Foam
