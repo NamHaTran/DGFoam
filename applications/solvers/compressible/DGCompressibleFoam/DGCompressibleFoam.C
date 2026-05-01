@@ -64,8 +64,8 @@ Description
       numerical flux.
     - dgDiffusiveTerm assembles the central diffusive DG operators for
       viscous stress and heat conduction.
-    - dgGradProjectionTerm and dgMassProjection solve the LDG auxiliary
-      gradient blocks used by the Navier-Stokes-Fourier closure.
+    - auxEqnResidual and dgMassProjection solve the LDG auxiliary gradient
+      blocks used by the Navier-Stokes-Fourier closure.
     - dgTimeDiscretization drives the explicit stage loop and updates the
       registered conservative fields using the selected time scheme.
 
@@ -73,7 +73,6 @@ Description
 
 #include "fvCFD.H"
 #include "pisoControl.H"
-#include "clockTime.H"
 #include "dgGeomMesh.H"
 
 // DG libs (must have)
@@ -91,7 +90,6 @@ Description
 #include "dgDiffusiveTerm.H"
 #include "dgSourceTerm.H"
 #include "dgResidual.H"
-#include "dgGradProjectionTerm.H"
 #include "auxEqnResidual.H"
 
 #include <optional>

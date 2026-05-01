@@ -65,7 +65,6 @@ RK4FieldState<Type>::RK4FieldState
     // RK4 needs one saved field and four residual slots.
     allocateResiduals();
     saveOldField();
-    clearResiduals();
 }
 
 
@@ -187,9 +186,8 @@ void RK4FieldState<Type>::clearResidual(const label stageI)
 template<class Type>
 void RK4FieldState<Type>::reset()
 {
-    // Reset both the active field and all stage storage.
+    // Residual storage is reused and cleared stage-by-stage before assembly.
     restoreOldField();
-    clearResiduals();
 }
 
 } // End namespace Foam

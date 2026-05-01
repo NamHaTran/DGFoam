@@ -10,7 +10,7 @@
 //        SRhoU = grad(rhoU)
 //        SE    = grad(E)
 //
-//    dgGradProjectionTerm assembles the weak gradient equation
+//    auxEqnResidual assembles the weak gradient equation
 //
 //        M S = - int_Omega C grad(phi) dV
 //              + int_dOmega phi C* n dS
@@ -43,36 +43,15 @@ forAll(mesh.cells(), cellI)
     const GaussField<vector>& rhoUG = rhoU.gaussFields()[cellI];
     const GaussField<scalar>& EG    = E.gaussFields()[cellI];
 
-    // Step 1b: create one local LDG projection term per conservative state.
-    // The terms reference the persistent GaussFields and evaluate central
-    // internal-face states directly during residual assembly.
-    dgGradProjectionTerm<scalar> auxGradRhoTerm
-    (
-        "gradRhoFlux",
-        basisField,
-        rhoG
-    );
-
-    dgGradProjectionTerm<vector> auxGradRhoUTerm
-    (
-        "gradRhoUFlux",
-        basisField,
-        rhoUG
-    );
-
-    dgGradProjectionTerm<scalar> auxGradETerm
-    (
-        "gradEFlux",
-        basisField,
-        EG
-    );
-
+    // Step 1b: register one conservative state field per auxiliary residual.
+    // Central internal-face states are evaluated directly during residual
+    // assembly; no separate gradient-projection term is needed.
     auxEqnResidual<scalar> scalarAuxResidual(basisField);
-    const label rhoAuxTermI = scalarAuxResidual.addTerm(auxGradRhoTerm);
-    const label eAuxTermI = scalarAuxResidual.addTerm(auxGradETerm);
+    const label rhoAuxTermI = scalarAuxResidual.addTerm(rhoG);
+    const label eAuxTermI = scalarAuxResidual.addTerm(EG);
 
     auxEqnResidual<vector> vectorAuxResidual(basisField);
-    const label rhoUAuxTermI = vectorAuxResidual.addTerm(auxGradRhoUTerm);
+    const label rhoUAuxTermI = vectorAuxResidual.addTerm(rhoUG);
 
     // Step 1c: assemble the modal residual for M S = R. Physical boundary
     // C* values are read from the boundary-condition path; internal and

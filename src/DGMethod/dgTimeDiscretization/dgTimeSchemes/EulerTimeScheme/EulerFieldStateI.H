@@ -66,7 +66,6 @@ EulerFieldState<Type>::EulerFieldState
     // Allocate buffers once, then start from a clean saved state.
     allocateResidual();
     saveOldField();
-    clearResidual();
 }
 
 
@@ -164,9 +163,8 @@ void EulerFieldState<Type>::clearResidual()
 template<class Type>
 void EulerFieldState<Type>::reset()
 {
-    // Reset restores U and clears the working residual.
+    // Residual storage is reused and cleared just before assembly.
     restoreOldField();
-    clearResidual();
 }
 
 } // End namespace Foam

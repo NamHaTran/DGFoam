@@ -65,7 +65,6 @@ SSPRK2FieldState<Type>::SSPRK2FieldState
     allocateStageFields();
     allocateResiduals();
     saveOldField();
-    clearResiduals();
 }
 
 
@@ -227,13 +226,12 @@ void SSPRK2FieldState<Type>::clearResidual(const label stageI)
 template<class Type>
 void SSPRK2FieldState<Type>::reset()
 {
-    // Reset restores U and refreshes the stored stage field.
+    // Residual storage is reused and cleared stage-by-stage before assembly.
     restoreOldField();
     for (label stageFieldI = 0; stageFieldI < nStoredStages_; ++stageFieldI)
     {
         copyField(UStages_[stageFieldI], UOld_);
     }
-    clearResiduals();
 }
 
 } // End namespace Foam

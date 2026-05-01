@@ -505,13 +505,14 @@ public:
         /**
          * \brief Reset the driver after a physical time step has completed.
          *
-         * This clears accumulated residuals and marks the next \c loop() call as
-         * the beginning of a new physical time step.
+         * Residual buffers are allocated once when fields are registered and
+         * then cleared cell-by-cell before each stage assembly. The driver only
+         * resets stage bookkeeping here so those buffers can be reused across
+         * physical time steps.
          */
         inline void reset()
         {
             setStage(0);
-            clearResiduals();
             timeStepStarted_ = false;
             ++completedTimeSteps_;
         }

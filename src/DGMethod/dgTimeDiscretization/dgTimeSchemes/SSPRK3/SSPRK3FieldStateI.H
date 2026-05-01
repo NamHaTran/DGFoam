@@ -62,7 +62,6 @@ SSPRK3FieldState<Type>::SSPRK3FieldState
 {
     allocateResiduals();
     saveOldField();
-    clearResiduals();
 }
 
 
@@ -175,7 +174,6 @@ template<class Type>
 void SSPRK3FieldState<Type>::reset()
 {
     restoreOldField();
-    clearResiduals();
 }
 
 } // End namespace Foam

@@ -28,13 +28,13 @@ Description
 
 #include "FixedList.H"
 #include "List.H"
-#include "UPtrList.H"
 #include "dgBasisField.H"
-#include "dgGradProjectionTerm.H"
 #include "dgIntegralMath.H"
 #include "error.H"
 #include "pTraits.H"
 #include "products.H"
+
+#include <type_traits>
 
 namespace Foam
 {
@@ -48,11 +48,11 @@ namespace Foam
  * \brief Assemble auxiliary projection residuals for several state fields.
  *
  * \tparam UType Type of the projected conservative state \f$C\f$.
- *               Supported by \c dgGradProjectionTerm: \c scalar and \c vector.
+ *               Supported: \c scalar and \c vector.
  *
  * \details
  * This class mirrors the role of \c dgResidual for the auxiliary LDG block,
- * but each registered \c dgGradProjectionTerm produces a separate residual.
+ * but each registered state field produces a separate residual.
  * For every term \f$C_m\f$, it assembles
  *
  * \f[
@@ -67,8 +67,8 @@ namespace Foam
  * assembled together, while \c rhoU is a vector projection term and is
  * assembled by a separate \c auxEqnResidual<vector>.
  *
- * \note The class stores non-owning pointers to terms and fields.  Registered
- *       terms must outlive \c calcResidual().
+ * \note The class stores non-owning pointers to fields.  Registered fields
+ *       must outlive \c calcResidual().
  *
  * \note Storage is fixed at five terms to avoid dynamic allocation in the
  *       cell loop.
@@ -86,19 +86,33 @@ public:
 
 private:
 
+    static_assert
+    (
+        std::is_same<UType, scalar>::value
+     || std::is_same<UType, vector>::value,
+        "auxEqnResidual: invalid UType. Allowed: scalar or vector"
+    );
+
+    static_assert
+    (
+        std::is_same
+        <
+            residual_type,
+            typename outerProduct<vector, UType>::type
+        >::value,
+        "auxEqnResidual: volume and surface projection result types differ"
+    );
+
     /** Maximum number of auxiliary terms assembled together. */
     static constexpr label maxTerms_ = 5;
 
     /** Basis functions and derivatives for the owner cell. */
     const dgBasisField& basis_;
 
-    /** Non-owning list of registered projection terms. */
-    FixedList<const dgGradProjectionTerm<UType>*, maxTerms_> terms_;
-
-    /** Non-owning list of cell state fields extracted from terms. */
+    /** Non-owning list of registered cell state fields. */
     FixedList<const cellGaussField<UType>*, maxTerms_> cellFields_;
 
-    /** Non-owning list of face state fields extracted from terms. */
+    /** Non-owning list of registered face state fields. */
     FixedList<const faceGaussField<UType>*, maxTerms_> faceFields_;
 
     /** Residual storage, indexed by [term][dof]. */
@@ -113,34 +127,18 @@ public:
     auxEqnResidual(const dgBasisField& basis)
     :
         basis_(basis),
-        terms_(),
         cellFields_(),
         faceFields_(),
         R_(),
         nTerms_(0)
     {}
 
-    /** Construct an assembler from a non-owning pointer list. */
-    auxEqnResidual
-    (
-        const dgBasisField& basis,
-        const UPtrList<dgGradProjectionTerm<UType>>& terms
-    )
-    :
-        auxEqnResidual(basis)
-    {
-        forAll(terms, termI)
-        {
-            addTerm(terms[termI]);
-        }
-    }
-
     /**
-     * \brief Register one auxiliary projection term.
+     * \brief Register one state field for central auxiliary projection.
      *
-     * The returned residual index is the order in which the term was added.
+     * The returned residual index is the order in which the field was added.
      */
-    label addTerm(const dgGradProjectionTerm<UType>& term)
+    label addTerm(const GaussField<UType>& U)
     {
         if (nTerms_ >= maxTerms_)
         {
@@ -151,9 +149,8 @@ public:
 
         const label termI = nTerms_++;
 
-        terms_[termI] = &term;
-        cellFields_[termI] = &term.stateField().cellField();
-        faceFields_[termI] = &term.stateField().faceField();
+        cellFields_[termI] = &U.cellField();
+        faceFields_[termI] = &U.faceField();
         R_[termI].setSize(basis_.nDof(), pTraits<residual_type>::zero);
 
         return termI;

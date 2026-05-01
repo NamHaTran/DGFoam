@@ -1,20 +1,5 @@
 // Apply the explicit stage update to every conservative field once residuals
 // are known, then rebuild the primitive/thermo data required by the next stage.
-const Switch profileTimings =
-    runTime.controlDict().getOrDefault<Switch>("profileTimings", false);
-
-scalar updateStageTime = 0;
-scalar limiterTime = 0;
-scalar conservativeSynchTime = 0;
-scalar primitiveThermoUpdateTime = 0;
-scalar thermoSynchTime = 0;
-clockTime advanceStageTimer;
-
-if (profileTimings)
-{
-    advanceStageTimer.resetTime();
-}
-
 forAll(mesh.cells(), cellI)
 {
     // updateStage() pulls the residual buffer for this cell and applies the
@@ -23,32 +8,14 @@ forAll(mesh.cells(), cellI)
     timeDiscretization.updateStage(cellI);
 }
 
-if (profileTimings)
-{
-    updateStageTime = advanceStageTimer.elapsedTime();
-    advanceStageTimer.resetTime();
-}
-
 // Limit the updated conservative stage state before it is reused by the next
 // stage. Limiters act on the conservative DG fields directly, so refresh the
 // primitive and thermo fields afterwards.
 limiterManager.correct();
 
-if (profileTimings)
-{
-    limiterTime = advanceStageTimer.elapsedTime();
-    advanceStageTimer.resetTime();
-}
-
 // The limiter modifies the authoritative conservative stage state, so
 // synchronize rho/rhoU/E before rebuilding any primitive variables from it.
 #include "synchConservative.H"
-
-if (profileTimings)
-{
-    conservativeSynchTime = advanceStageTimer.elapsedTime();
-    advanceStageTimer.resetTime();
-}
 
 forAll(mesh.cells(), cellI)
 {
@@ -76,41 +43,11 @@ forAll(mesh.cells(), cellI)
     thermo->update(cellI);
 }
 
-if (profileTimings)
-{
-    primitiveThermoUpdateTime = advanceStageTimer.elapsedTime();
-    advanceStageTimer.resetTime();
-}
-
 // he, a, and mu are thermo-owned fields, so thermo handles their processor
 // synchronization internally after the cell-local reconstruction is complete.
 thermo->synch();
-
-if (profileTimings)
-{
-    thermoSynchTime = advanceStageTimer.elapsedTime();
-}
 
 // Once the primitive layer has been reconstructed from the synchronized
 // conservative state, exchange p/T/U so the next stage sees consistent
 // processor-face primitive values.
 // #include "synchPrimary.H"
-
-if (profileTimings)
-{
-    const scalar totalAdvanceStageTime =
-        updateStageTime
-      + limiterTime
-      + conservativeSynchTime
-      + primitiveThermoUpdateTime
-      + thermoSynchTime;
-
-    Info<< "Profiling advanceStage"
-        << ": updateStage=" << updateStageTime
-        << " s, limiter=" << limiterTime
-        << " s, synchConservative=" << conservativeSynchTime
-        << " s, primitiveThermoUpdate=" << primitiveThermoUpdateTime
-        << " s, thermoSynch=" << thermoSynchTime
-        << " s, total=" << totalAdvanceStageTime
-        << " s" << nl;
-}
