@@ -141,7 +141,7 @@ forAll(mesh.cells(), cellI)
 
 thermo->synchGradient();
 
-massProjection.writeResiduals(Info);
+//massProjection.writeResiduals(Info);
 
 massProjection.clearResiduals();
 

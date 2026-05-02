@@ -106,6 +106,22 @@ dgResidual<vector, tensor> momentumResidual(basisField);
 momentumResidual.addTerm(momentumConvTerm);
 momentumResidual.addTerm(momentumDiffTerm);
 
+//     S_m = rho*g.
+const auto momentumSourceExpr =
+    dg::expr(rhoG)*dg::uniform(g.value());
+
+tmp<GaussField<vector>> tMomentumSource =
+    dg::evaluate<vector>(momentumSourceExpr, cellI, &dgMesh);
+
+dgSourceTerm<vector> momentumSourceTerm
+(
+    "momentumSourceTerm",
+    basisField,
+    tMomentumSource()
+);
+
+momentumResidual.addTerm(momentumSourceTerm);
+
 std::optional<dgDiffusiveTerm<vector, tensor>>
     artificialDiffusionMomentumTerm;
 
@@ -145,32 +161,3 @@ timeDiscretization.addResidual
     cellI,
     momentumResidual.R()
 );
-
-// Gravity source is temporarily disabled for both selfDiffusion on/off while
-// isolating the self-diffusion terms.
-//
-// if (selfDiffusion)
-// {
-//     //     S_m = rho*g.
-//     const auto momentumSourceExpr =
-//         dg::expr(rhoG)*dg::uniform(g.value());
-//
-//     tmp<GaussField<vector>> tMomentumSource =
-//         dg::evaluate<vector>(momentumSourceExpr, cellI, &dgMesh);
-//
-//     dgSourceTerm<vector> momentumSourceTerm
-//     (
-//         "momentumSourceTerm",
-//         basisField,
-//         tMomentumSource()
-//     );
-//
-//     momentumResidual.addTerm(momentumSourceTerm);
-//
-//     timeDiscretization.addResidual
-//     (
-//         rhoU.name(),
-//         cellI,
-//         momentumResidual.R()
-//     );
-// }

@@ -4,6 +4,7 @@
 //
 //     d(rho Ec)/dt + div(rho U Ec)
 //       = div(qT) + Ek div(mD) - div(P U) - div(tauT.U)
+//         + rho U.g
 //
 // with E storing rho*Ec in the code and
 //
@@ -45,6 +46,10 @@
 //
 // so choosing F = -Ek*mD assembles the -div(Ek*mD) part.  The remaining
 // volume correction is added separately as +mD.grad(Ek).
+//
+// Gravity contributes the total-energy source
+//
+//     S_E = rho U.g = rhoU.g.
 //
 // Assemble the convective energy flux
 //
@@ -192,6 +197,22 @@ if (artificialDiffusion)
     artificialDiffusionEnergyTerm->updateFlux();
     energyResidual.addTerm(*artificialDiffusionEnergyTerm);
 }
+
+//     S_E = rhoU.g.
+const auto energyGravitySourceExpr =
+    dg::expr(rhoUG) & dg::uniform(g.value());
+
+tmp<GaussField<scalar>> tEnergyGravitySource =
+    dg::evaluate<scalar>(energyGravitySourceExpr, cellI, &dgMesh);
+
+dgSourceTerm<scalar> energyGravitySourceTerm
+(
+    "energyGravitySourceTerm",
+    basisField,
+    tEnergyGravitySource()
+);
+
+energyResidual.addTerm(energyGravitySourceTerm);
 
 energyResidual.calcResidual();
 
