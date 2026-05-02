@@ -30,6 +30,7 @@ Description
 #include "List.H"
 #include "UPtrList.H"
 #include "dgBasisField.H"
+#include "dgGeomMesh.H"
 #include "dgIntegralMath.H"
 #include "dgPDETerm.H"
 #include "error.H"
@@ -135,9 +136,9 @@ public:
      *
      * Terms can be appended later with \c addTerm().
      */
-    dgResidual(const dgBasisField& basis)
+    dgResidual(const dgGeomMesh& dgMesh, const label cellID)
     :
-        basis_(basis),
+        basis_(dgMesh.basisField(cellID)),
         terms_(),
         nTerms_(0),
         fluxCellFields_(),
@@ -145,7 +146,7 @@ public:
         nFluxFields_(0),
         sourceFields_(),
         nSourceFields_(0),
-        R_(basis.nDof(), pTraits<UType>::zero)
+        R_(basis_.nDof(), pTraits<UType>::zero)
     {}
 
     /**
@@ -153,11 +154,12 @@ public:
      */
     dgResidual
     (
-        const dgBasisField& basis,
+        const dgGeomMesh& dgMesh,
+        const label cellID,
         const UPtrList<dgPDETerm<UType, FType>>& terms
     )
     :
-        dgResidual(basis)
+        dgResidual(dgMesh, cellID)
     {
         forAll(terms, termI)
         {

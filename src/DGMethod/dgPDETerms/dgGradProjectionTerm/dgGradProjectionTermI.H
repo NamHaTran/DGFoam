@@ -56,47 +56,87 @@ template<class UType>
 Foam::dgGradProjectionTerm<UType>::dgGradProjectionTerm
 (
     const word& termName,
-    const dgBasisField& basis,
-    const GaussField<UType>& U,
+    const dgGeomMesh& dgMesh,
     const dgFluxSolver::equationType eqnType
 )
 :
     termName_(termName),
     eqnType_(eqnType),
-    cellID_(basis.cellID()),
-    basis_(basis),
-    U_(U)
+    dgMesh_(dgMesh),
+    U_(nullptr)
 {
     checkTypes();
 }
 
 
 template<class UType>
-Foam::dgGradProjectionTerm<UType>::dgGradProjectionTerm
+void Foam::dgGradProjectionTerm<UType>::add
 (
-    const word& termName,
-    const dgBasisField& basis,
-    const tmp<GaussField<UType>>& tU,
-    const dgFluxSolver::equationType eqnType
+    GaussField<UType>& U
 )
-:
-    termName_(termName),
-    eqnType_(eqnType),
-    cellID_(basis.cellID()),
-    basis_(basis),
-    U_(tU)
 {
-    checkTypes();
+    U_ = &U;
+}
+
+template<class UType>
+void Foam::dgGradProjectionTerm<UType>::clear()
+{
+    U_ = nullptr;
 }
 
 
 // * * * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * * //
 
 template<class UType>
-void Foam::dgGradProjectionTerm<UType>::updateFlux()
+void Foam::dgGradProjectionTerm<UType>::calculateFlux(const label cellID)
 {
-    // No-op: auxEqnResidual evaluates central internal/processor face states
-    // directly, avoiding a local GaussField copy and midValues() writes.
+    if (!U_)
+    {
+        FatalErrorInFunction
+            << "No active state field set for " << termName_
+            << ". Call add(U) before calculateFlux(cellID)."
+            << abort(FatalError);
+    }
+
+    if (U_->cellID() != cellID)
+    {
+        FatalErrorInFunction
+            << "Active state field for " << termName_ << " belongs to cell "
+            << U_->cellID()
+            << ", but calculateFlux was called for cell " << cellID
+            << abort(FatalError);
+    }
+
+    faceGaussField<UType>& C = U_->faceField();
+    C.initFlux();
+
+    for (label faceI = 0; faceI < C.nFaces(); ++faceI)
+    {
+        const vector& n = C.normals()[faceI];
+        const bool useBoundaryMid =
+            C.isBoundary(faceI) && !C.isProcessorPatch(faceI);
+
+        for (label g = 0; g < C.nGaussPerFace(); ++g)
+        {
+            const UType CStar =
+                useBoundaryMid
+              ? C.midValueOnFace(faceI, g)
+              : scalar(0.5)
+               *(
+                    C.minusValueOnFace(faceI, g)
+                  + C.plusValueOnFace(faceI, g)
+                );
+
+            if constexpr (std::is_same_v<UType, scalar>)
+            {
+                C.fluxOnFace(faceI, g) = CStar*n;
+            }
+            else
+            {
+                C.fluxOnFace(faceI, g) = CStar;
+            }
+        }
+    }
 }
 
 // ************************************************************************* //

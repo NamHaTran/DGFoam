@@ -443,6 +443,27 @@ public:
         }
 
         /**
+         * \brief Interpolate only owner-side local faces from DoFs.
+         *
+         * Local internal faces for which this cell is the neighbour are left
+         * untouched so a field-level pass can copy the already interpolated
+         * owner trace instead of reconstructing the same face twice.
+         */
+        void interpolateOwnerFacesFromDof();
+
+        /**
+         * \brief Fill this neighbour-side local face from its owner cell face.
+         *
+         * The owner plus trace is this cell's minus trace, and the owner minus
+         * trace is this cell's plus trace at the same physical Gauss points.
+         */
+        void copyNeighbourFaceFromOwner
+        (
+            const label localFaceI,
+            const faceGaussField<Type>& ownerFaceField
+        );
+
+        /**
          * \brief Store neighbour DoFs received for one processor face.
          *
          * The input is copied into face-local owned storage so callers can

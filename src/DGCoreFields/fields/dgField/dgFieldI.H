@@ -80,12 +80,12 @@ dgField<Type>::dgField
             )
         );
 
-        // Interpolate DOF → Gauss values
         for (label cellI = 0; cellI < nCells; ++cellI)
         {
             gaussFields_[cellI] = GaussField<Type>(dofPtr_, cellI, &mesh_);
-            gaussFields_[cellI].interpolateFromDof();
         }
+
+        interpolateFromDof();
 
         //Info<< "dgField<" << pTraits<Type>::typeName
         //    << ">: constructed conservative field " << io.name()
@@ -116,6 +116,44 @@ void dgField<Type>::synch()
     }
 
     procSyncPtr_().update(*this);
+}
+
+template<class Type>
+void dgField<Type>::interpolateFromDof()
+{
+    if (!dofPtr_)
+    {
+        FatalErrorInFunction
+            << "Cannot interpolate field " << this->name()
+            << " because it has no DOF storage."
+            << abort(FatalError);
+    }
+
+    forAll(gaussFields_, cellI)
+    {
+        gaussFields_[cellI].cellField().interpolateFromDof();
+        gaussFields_[cellI].faceField().interpolateOwnerFacesFromDof();
+    }
+
+    const labelList& owner = mesh_.getFvMesh().faceOwner();
+    const labelList& neighbour = mesh_.getFvMesh().faceNeighbour();
+
+    for (label faceI = 0; faceI < mesh_.nInternalFaces(); ++faceI)
+    {
+        const label ownerCellI = owner[faceI];
+        const label neighbourCellI = neighbour[faceI];
+
+        faceGaussField<Type>& neighbourFaceField =
+            gaussFields_[neighbourCellI].faceField();
+        const faceGaussField<Type>& ownerFaceField =
+            gaussFields_[ownerCellI].faceField();
+
+        neighbourFaceField.copyNeighbourFaceFromOwner
+        (
+            neighbourFaceField.localFaceIndex(faceI),
+            ownerFaceField
+        );
+    }
 }
 
 template<class Type>

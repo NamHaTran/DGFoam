@@ -55,16 +55,7 @@ const auto energyFluxExpr =
 tmp<GaussField<vector>> tEnergyFlux =
     dg::evaluate<vector>(energyFluxExpr, cellI, &dgMesh);
 
-dgConvectiveTerm<scalar, vector> energyConvTerm
-(
-    "energyConvTerm",
-    dgFluxSolver::equationType::energyTransport,
-    dgFluxSolver::fluxType::convective,
-    basisField,
-    EG,
-    tEnergyFlux,
-    fluxSolverManager
-);
+energyConvTerm.add(EG, tEnergyFlux);
 
 // Assemble the pressure/NSF molecular/thermal energy flux.  Since
 // tMomentumDiffFlux already contains the total momentum diffusive flux,
@@ -78,6 +69,8 @@ dgConvectiveTerm<scalar, vector> energyConvTerm
 //
 //     F_E,self = (e - Ek)*mD.
 tmp<GaussField<vector>> tEnergyDiffFlux;
+
+tmp<GaussField<scalar>> tKineticMassDiffCorrection;
 
 if (selfDiffusion)
 {
@@ -116,25 +109,14 @@ else
         dg::evaluate<vector>(energyDiffFluxExpr, cellI, &dgMesh);
 }
 
-dgDiffusiveTerm<scalar, vector> energyDiffTerm
-(
-    "energyDiffTerm",
-    dgFluxSolver::equationType::energyTransport,
-    dgFluxSolver::fluxType::diffusive,
-    basisField,
-    EG,
-    tEnergyDiffFlux,
-    fluxSolverManager
-);
+energyDiffTerm.add(EG, tEnergyDiffFlux);
 
-energyConvTerm.updateFlux();
-energyDiffTerm.updateFlux();
+energyConvTerm.updateFlux(cellI);
+energyDiffTerm.updateFlux(cellI);
 
-dgResidual<scalar, vector> energyResidual(basisField);
+dgResidual<scalar, vector> energyResidual(dgMesh, cellI);
 energyResidual.addTerm(energyConvTerm);
 energyResidual.addTerm(energyDiffTerm);
-
-std::optional<dgSourceTerm<scalar>> kineticMassDiffCorrectionTerm;
 
 if (selfDiffusion)
 {
@@ -144,7 +126,7 @@ if (selfDiffusion)
     const auto kineticMassDiffCorrectionExpr =
        (dg::expr(tMassDiffFlux()) & gradKineticEnergyExpr);
 
-    tmp<GaussField<scalar>> tKineticMassDiffCorrection =
+    tKineticMassDiffCorrection =
         dg::evaluate<scalar>
         (
             kineticMassDiffCorrectionExpr,
@@ -152,25 +134,18 @@ if (selfDiffusion)
             &dgMesh
         );
 
-    kineticMassDiffCorrectionTerm.emplace
-    (
-        "kineticMassDiffCorrectionTerm",
-        basisField,
-        tKineticMassDiffCorrection()
-    );
-
-    energyResidual.addTerm(*kineticMassDiffCorrectionTerm);
+    kineticMassDiffCorrectionTerm.add(tKineticMassDiffCorrection());
+    energyResidual.addTerm(kineticMassDiffCorrectionTerm);
 }
 
-std::optional<dgDiffusiveTerm<scalar, vector>>
-    artificialDiffusionEnergyTerm;
+tmp<GaussField<vector>> tArtificialDiffusionEnergyFlux;
 
 if (artificialDiffusion)
 {
     const auto artificialDiffusionEnergyFluxExpr =
        -dg::expr(muAVG)*dg::expr(SEG);
 
-    tmp<GaussField<vector>> tArtificialDiffusionEnergyFlux =
+    tArtificialDiffusionEnergyFlux =
         dg::evaluate<vector>
         (
             artificialDiffusionEnergyFluxExpr,
@@ -178,18 +153,8 @@ if (artificialDiffusion)
             &dgMesh
         );
 
-    artificialDiffusionEnergyTerm.emplace
-    (
-        "artificialDiffusionEnergyTerm",
-        dgFluxSolver::equationType::energyTransport,
-        dgFluxSolver::fluxType::diffusive,
-        basisField,
-        EG,
-        tArtificialDiffusionEnergyFlux,
-        fluxSolverManager
-    );
-
-    artificialDiffusionEnergyTerm->updateFlux();
+    artificialDiffusionEnergyTerm->add(EG, tArtificialDiffusionEnergyFlux);
+    artificialDiffusionEnergyTerm->updateFlux(cellI);
     energyResidual.addTerm(*artificialDiffusionEnergyTerm);
 }
 

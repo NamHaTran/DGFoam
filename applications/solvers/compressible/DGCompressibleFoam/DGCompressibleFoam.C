@@ -90,6 +90,7 @@ Description
 #include "dgDiffusiveTerm.H"
 #include "dgSourceTerm.H"
 #include "dgResidual.H"
+#include "dgGradProjectionTerm.H"
 #include "auxEqnResidual.H"
 
 #include <optional>
@@ -129,6 +130,7 @@ int main(int argc, char *argv[])
     // - dgFluxSolverManager selects numerical fluxes for each PDE term,
     // - dgTimeDiscretization manages stage looping and residual updates.
     #include "readSolverSettings.H"
+    #include "createPDETerms.H"
 
     // Estimate the stable explicit time step before the first stage. This is
     // especially important for pseudo-LTS because the per-cell increments are

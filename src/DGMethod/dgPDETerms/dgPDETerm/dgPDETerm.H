@@ -19,7 +19,7 @@ Class
     Foam::dgPDETerm
 
 Description
-    Cell-local polymorphic interface for DG PDE terms.
+    Mesh-level polymorphic interface for DG PDE terms.
 
 \*---------------------------------------------------------------------------*/
 
@@ -50,12 +50,11 @@ namespace Foam
  * \details
  * A \c dgPDETerm does not assemble a residual by itself.  It exposes either
  * a flux field, a source field, or both, and \c dgResidual performs the common
- * integration for all terms belonging to one equation on one cell.
+     * integration for all terms belonging to one equation on one active cell.
  *
- * The interface is intentionally non-owning.  The derived term object owns or
- * references its fields, while \c dgResidual stores only pointers to this base
- * interface.  Therefore each concrete term passed to \c dgResidual::addTerm()
- * must remain alive until after \c dgResidual::calcResidual() has finished.
+     * The interface is intentionally reusable.  A concrete term is constructed
+     * once from the mesh, receives its active cell fields through \c add(), and
+     * can then be passed to \c dgResidual for that cell.
  *
  * Flux terms such as \c dgConvectiveTerm and \c dgDiffusiveTerm override
  * \c fluxFieldPtr() and usually \c updateFlux().  Source terms such as
@@ -98,12 +97,12 @@ public:
     virtual bool isSource() const { return false; }
 
     /**
-     * \brief Update numerical face fluxes for flux-like terms.
+     * \brief Update numerical face fluxes for flux-like terms on one cell.
      *
      * The base implementation is a no-op so source-only terms can be stored in
      * the same list without special handling.
      */
-    virtual void updateFlux() {}
+    virtual void updateFlux(const label cellID) {}
 
     /**
      * \brief Return the term flux field, or \c nullptr for source-only terms.

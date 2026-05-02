@@ -8,6 +8,10 @@ forAll(mesh.cells(), cellI)
     timeDiscretization.updateStage(cellI);
 }
 
+rho.interpolateFromDof();
+rhoU.interpolateFromDof();
+E.interpolateFromDof();
+
 // Limit the updated conservative stage state before it is reused by the next
 // stage. Limiters act on the conservative DG fields directly, so refresh the
 // primitive and thermo fields afterwards.

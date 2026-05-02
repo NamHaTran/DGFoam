@@ -123,7 +123,6 @@ void updateEulerState
         UCellDof[dofI] = UOldCellDof[dofI] + dt*(RCell[dofI]/massDiag[dofI]);
     }
 
-    U.gaussFields()[cellID].interpolateFromDof();
     U.dof().updateCellDof(cellID);
 }
 

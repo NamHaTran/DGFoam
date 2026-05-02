@@ -67,9 +67,9 @@ namespace Foam
  * \tparam FType Type of flux (vector or tensor)
  *
  * \details
- * This class represents a single PDE operator contribution on one cell.
- * It updates the numerical face flux and exposes the Gauss flux field to
- * dgResidual, which performs the common residual integration.
+ * This class represents a reusable PDE operator contribution on the DG mesh.
+ * Per cell, call add(U, F), updateFlux(cellID), then register the term with
+ * dgResidual.
  *
  * Supported type combinations:
  * - UType = scalar, FType = vector
@@ -97,17 +97,14 @@ private:
     /** Flux type required by this PDE term */
     dgFluxSolver::fluxType fluxType_;
 
-    /** Owner cell index */
-    label cellID_;
-
-    /** Basis functions associated with this cell */
-    const dgBasisField& basis_;
+    /** DG mesh used to retrieve cell-local data. */
+    const dgGeomMesh& dgMesh_;
 
     /** Solution field evaluated at Gauss points */
-    const GaussField<UType>& U_;
+    const GaussField<UType>* U_;
 
-    /** Flux field evaluated at Gauss points */
-    tmp<GaussField<FType>> F_;
+    /** Flux field evaluated at Gauss points. Numerical flux is written here. */
+    GaussField<FType>* F_;
 
     /** Flux solver manager */
     dgFluxSolverManager& fluxSolver_;
@@ -130,13 +127,10 @@ public:
     // Constructors --------------------------------------------------------
 
     /**
-     * \brief Construct PDE term for a given cell
+     * \brief Construct reusable PDE term on the DG mesh.
      *
      * \param termName   Name of PDE term (used for flux solver lookup)
      * \param eqnType    Equation type (mass, momentum, energy, scalar)
-     * \param basis      Basis field associated with the owner cell
-     * \param U          Solution field at Gauss points
-     * \param F          Flux field at Gauss points
      * \param fluxSolver Flux solver manager
      */
     dgConvectiveTerm
@@ -144,32 +138,23 @@ public:
         const word& termName,
         dgFluxSolver::equationType eqnType,
         dgFluxSolver::fluxType fluxType,
-        const dgBasisField& basis,
-        const GaussField<UType>& U,
-        GaussField<FType>& F,
+        const dgGeomMesh& dgMesh,
         dgFluxSolverManager& fluxSolver
     );
 
-    /**
-     * \brief Construct PDE term for a given cell, with Flux field is tmp
-     *
-     * \param termName   Name of PDE term (used for flux solver lookup)
-     * \param eqnType    Equation type (mass, momentum, energy, scalar)
-     * \param basis      Basis field associated with the owner cell
-     * \param U          Solution field at Gauss points
-     * \param F          Flux field at Gauss points
-     * \param fluxSolver Flux solver manager
-     */
-    dgConvectiveTerm
+    void add
     (
-        const word& termName,
-        dgFluxSolver::equationType eqnType,
-        dgFluxSolver::fluxType fluxType,
-        const dgBasisField& basis,
         const GaussField<UType>& U,
-        const tmp<GaussField<FType>>& tF,
-        dgFluxSolverManager& fluxSolver
+        GaussField<FType>& F
     );
+
+    void add
+    (
+        const GaussField<UType>& U,
+        tmp<GaussField<FType>>& tF
+    );
+
+    void clear();
 
     //- Destructor
     ~dgConvectiveTerm() = default;
@@ -179,11 +164,11 @@ public:
     inline bool isConvection() const override { return true; }
 
     /** Return Gauss flux field, including face numerical flux values */
-    inline const GaussField<FType>& fluxField() const { return F_(); }
+    inline const GaussField<FType>& fluxField() const { return *F_; }
 
     inline const GaussField<FType>* fluxFieldPtr() const override
     {
-        return &F_();
+        return F_;
     }
 
     /** Return flux type required by this term */
@@ -197,7 +182,7 @@ public:
      * Selects the appropriate dgFluxSolver via dgFluxSolverManager
      * and updates the face Gauss flux field.
      */
-    void updateFlux();
+    void updateFlux(const label cellID);
 
 };
 

@@ -44,6 +44,7 @@ SourceFiles
 #include "pTraits.H"
 
 #include "dgBasisField.H"
+#include "dgGeomMesh.H"
 #include "GaussField.H"
 #include "dgFluxSolverManager.H"
 #include "dgMath.H"
@@ -85,17 +86,14 @@ private:
     /** Flux type required by this PDE term. */
     dgFluxSolver::fluxType fluxType_;
 
-    /** Owner cell index. */
-    label cellID_;
-
-    /** Basis functions associated with this cell. */
-    const dgBasisField& basis_;
+    /** DG mesh used to retrieve cell-local data. */
+    const dgGeomMesh& dgMesh_;
 
     /** Solution field evaluated at Gauss points. */
-    const GaussField<UType>& U_;
+    const GaussField<UType>* U_;
 
-    /** Diffusive flux field evaluated at Gauss points. */
-    tmp<GaussField<FType>> F_;
+    /** Diffusive flux field evaluated at Gauss points. Numerical flux is written here. */
+    GaussField<FType>* F_;
 
     /** Flux solver manager. */
     dgFluxSolverManager& fluxSolver_;
@@ -116,34 +114,35 @@ public:
         const word& termName,
         dgFluxSolver::equationType eqnType,
         dgFluxSolver::fluxType fluxType,
-        const dgBasisField& basis,
-        const GaussField<UType>& U,
-        GaussField<FType>& F,
+        const dgGeomMesh& dgMesh,
         dgFluxSolverManager& fluxSolver
     );
 
-    dgDiffusiveTerm
+    void add
     (
-        const word& termName,
-        dgFluxSolver::equationType eqnType,
-        dgFluxSolver::fluxType fluxType,
-        const dgBasisField& basis,
         const GaussField<UType>& U,
-        const tmp<GaussField<FType>>& tF,
-        dgFluxSolverManager& fluxSolver
+        GaussField<FType>& F
     );
+
+    void add
+    (
+        const GaussField<UType>& U,
+        tmp<GaussField<FType>>& tF
+    );
+
+    void clear();
 
     ~dgDiffusiveTerm() = default;
 
     inline bool isDiffusion() const override { return true; }
 
-    inline const GaussField<UType>& stateField() const { return U_; }
+    inline const GaussField<UType>& stateField() const { return *U_; }
 
-    inline const GaussField<FType>& fluxField() const { return F_(); }
+    inline const GaussField<FType>& fluxField() const { return *F_; }
 
     inline const GaussField<FType>* fluxFieldPtr() const override
     {
-        return &F_();
+        return F_;
     }
 
     inline const word& termName() const { return termName_; }
@@ -158,7 +157,7 @@ public:
      * Selects the appropriate dgFluxSolver via dgFluxSolverManager
      * and updates the face Gauss flux field.
      */
-    void updateFlux();
+    void updateFlux(const label cellID);
 
 };
 

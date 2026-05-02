@@ -36,13 +36,14 @@ Description
     This class stores/exposes the projected state field.  The residual is
     assembled by auxEqnResidual.  The face flux is not obtained from
     dgFluxSolverManager, and termName_ is not looked up in dgSchemes to select
-    a flux solver. For auxiliary equations the residual assembler applies the
-    default central face state:
+    a flux solver. For auxiliary equations calculateFlux() applies the default
+    central face state:
 
         C* = 0.5*(C- + C+) on internal faces
 
-    directly during surface integration. Boundary faces use the existing
-    mid-state supplied by the boundary update path.
+    and stores the resulting face contribution in faceGaussField::flux_.
+    Boundary faces use the existing mid-state supplied by the boundary update
+    path.
 
     Supported state/result pairs:
     - C scalar -> residual vector
@@ -61,6 +62,7 @@ Description
 #include "products.H"
 
 #include "dgBasisField.H"
+#include "dgGeomMesh.H"
 #include "GaussField.H"
 #include "dgFluxSolver.H"
 #include "dgMath.H"
@@ -80,9 +82,9 @@ namespace Foam
  *
  * \tparam UType Type of the projected state C. Supported: scalar or vector.
  *
- * Persistent GaussField inputs are referenced directly; temporaries are held
- * through tmp. This class does not assemble a residual by itself.  It exposes
- * the state field \f$C\f$ to auxEqnResidual, which evaluates
+ * This class does not assemble a residual by itself. It references the state
+ * field \f$C\f$ and writes its calculated face flux into that original field
+ * for auxEqnResidual, which evaluates
  * \f$-\int C\nabla\phi\,dV + \int \phi C^\ast n\,dS\f$.
  */
 template<class UType>
@@ -96,14 +98,11 @@ private:
     /** Equation type tag. Defaults to auxiliaryEqn. */
     dgFluxSolver::equationType eqnType_;
 
-    /** Owner cell index. */
-    label cellID_;
+    /** DG mesh used to retrieve cell-local data. */
+    const dgGeomMesh& dgMesh_;
 
-    /** Basis functions associated with the owner cell. */
-    const dgBasisField& basis_;
-
-    /** Projected state C evaluated at cell and face Gauss points. */
-    tmp<GaussField<UType>> U_;
+    /** Active projected state C evaluated at cell and face Gauss points. */
+    GaussField<UType>* U_;
 
     /** Compile-time validation for supported state/result pairs. */
     inline void checkTypes() const;
@@ -117,49 +116,37 @@ public:
     using residual_type = typename outerProduct<UType, vector>::type;
 
     /**
-     * \brief Construct from a persistent GaussField state C.
-     *
-     * The state is referenced directly; central internal-face states are
-     * evaluated on read during calcResidual().
+     * \brief Construct reusable projection term on the DG mesh.
      */
     dgGradProjectionTerm
     (
         const word& termName,
-        const dgBasisField& basis,
-        const GaussField<UType>& U,
+        const dgGeomMesh& dgMesh,
         const dgFluxSolver::equationType eqnType =
             dgFluxSolver::equationType::auxiliaryEqn
     );
 
-    /**
-     * \brief Construct from a temporary GaussField state C.
-     *
-     * The temporary is consumed when possible to avoid an extra copy.
-     */
-    dgGradProjectionTerm
+    void add
     (
-        const word& termName,
-        const dgBasisField& basis,
-        const tmp<GaussField<UType>>& tU,
-        const dgFluxSolver::equationType eqnType =
-            dgFluxSolver::equationType::auxiliaryEqn
+        GaussField<UType>& U
     );
+
+    void clear();
 
     ~dgGradProjectionTerm() = default;
 
-    inline const GaussField<UType>& stateField() const { return U_(); }
+    inline const GaussField<UType>& stateField() const { return *U_; }
 
-    inline const GaussField<UType>* stateFieldPtr() const { return &U_(); }
+    inline const GaussField<UType>* stateFieldPtr() const { return U_; }
 
     inline dgFluxSolver::equationType equationType() const { return eqnType_; }
 
     /**
-     * \brief Compatibility hook for old callers.
-     *
-     * Central internal-face states are evaluated directly in auxEqnResidual,
-     * so this function does not mutate faceField().midValues().
+     * \brief Compute and store the central auxiliary projection face flux.
      */
-    void updateFlux();
+    void calculateFlux(const label cellID);
+
+    void updateFlux(const label cellID) { calculateFlux(cellID); }
 };
 
 } // End namespace Foam

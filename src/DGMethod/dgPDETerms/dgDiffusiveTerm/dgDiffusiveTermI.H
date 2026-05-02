@@ -50,70 +50,82 @@ Foam::dgDiffusiveTerm<UType, FType>::dgDiffusiveTerm
     const word& termName,
     dgFluxSolver::equationType eqnType,
     dgFluxSolver::fluxType fluxType,
-    const dgBasisField& basis,
-    const GaussField<UType>& U,
-    GaussField<FType>& F,
+    const dgGeomMesh& dgMesh,
     dgFluxSolverManager& fluxSolver
 )
 :
     termName_(termName),
     eqnType_(eqnType),
     fluxType_(fluxType),
-    cellID_(basis.cellID()),
-    basis_(basis),
-    U_(U),
-    F_(new GaussField<FType>(F)),
+    dgMesh_(dgMesh),
+    U_(nullptr),
+    F_(nullptr),
     fluxSolver_(fluxSolver),
     termFluxSolver_(fluxSolver_.solver(termName_+"Flux", fluxType_))
 {
     checkTypes();
-
-    F_.ref().faceField().initFlux();
 
     termFluxSolver_.setEquationType(eqnType_);
 }
 
 
 template<class UType, class FType>
-Foam::dgDiffusiveTerm<UType, FType>::dgDiffusiveTerm
+void Foam::dgDiffusiveTerm<UType, FType>::add
 (
-    const word& termName,
-    dgFluxSolver::equationType eqnType,
-    dgFluxSolver::fluxType fluxType,
-    const dgBasisField& basis,
     const GaussField<UType>& U,
-    const tmp<GaussField<FType>>& tF,
-    dgFluxSolverManager& fluxSolver
+    GaussField<FType>& F
 )
-:
-    termName_(termName),
-    eqnType_(eqnType),
-    fluxType_(fluxType),
-    cellID_(basis.cellID()),
-    basis_(basis),
-    U_(U),
-    F_(tF),
-    fluxSolver_(fluxSolver),
-    termFluxSolver_(fluxSolver_.solver(termName_+"Flux", fluxType_))
 {
-    checkTypes();
+    U_ = &U;
+    F_ = &F;
+    F_->faceField().initFlux();
+}
 
-    F_.ref().faceField().initFlux();
+template<class UType, class FType>
+void Foam::dgDiffusiveTerm<UType, FType>::add
+(
+    const GaussField<UType>& U,
+    tmp<GaussField<FType>>& tF
+)
+{
+    add(U, tF.ref());
+}
 
-    termFluxSolver_.setEquationType(eqnType_);
+template<class UType, class FType>
+void Foam::dgDiffusiveTerm<UType, FType>::clear()
+{
+    U_ = nullptr;
+    F_ = nullptr;
 }
 
 
 // * * * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * * //
 
 template<class UType, class FType>
-void Foam::dgDiffusiveTerm<UType, FType>::updateFlux()
+void Foam::dgDiffusiveTerm<UType, FType>::updateFlux(const label cellID)
 {
+    if (!U_ || !F_)
+    {
+        FatalErrorInFunction
+            << "No active fields set for " << termName_
+            << ". Call add(U, F) before updateFlux(cellID)."
+            << abort(FatalError);
+    }
+
+    if (U_->cellID() != cellID || F_->cellID() != cellID)
+    {
+        FatalErrorInFunction
+            << "Active fields for " << termName_ << " belong to cell "
+            << U_->cellID() << "/" << F_->cellID()
+            << ", but updateFlux was called for cell " << cellID
+            << abort(FatalError);
+    }
+
     termFluxSolver_.computeFlux
     (
-        cellID_,
-        F_.ref().faceField(),
-        U_.faceField()
+        cellID,
+        F_->faceField(),
+        U_->faceField()
     );
 }
 

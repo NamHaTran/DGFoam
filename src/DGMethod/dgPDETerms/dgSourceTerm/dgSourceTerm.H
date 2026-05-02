@@ -44,6 +44,7 @@ SourceFiles
 #include "pTraits.H"
 
 #include "dgBasisField.H"
+#include "dgGeomMesh.H"
 #include "GaussField.H"
 #include "dgPDETerm.H"
 #include "products.H"
@@ -83,14 +84,11 @@ private:
     /** Name of PDE term, useful for diagnostics and symmetry with flux terms. */
     word termName_;
 
-    /** Owner cell index. */
-    label cellID_;
+    /** DG mesh used to retrieve cell-local data. */
+    const dgGeomMesh& dgMesh_;
 
-    /** Basis functions associated with this cell. */
-    const dgBasisField& basis_;
-
-    /** Source field evaluated at cell-interior Gauss points. */
-    tmp<cellGaussField<Type>> S_;
+    /** Active source field evaluated at cell-interior Gauss points. */
+    const cellGaussField<Type>* S_;
 
 public:
 
@@ -99,33 +97,30 @@ public:
     dgSourceTerm
     (
         const word& termName,
-        const dgBasisField& basis,
+        const dgGeomMesh& dgMesh
+    );
+
+    void add
+    (
         const cellGaussField<Type>& S
     );
 
-    dgSourceTerm
+    void add
     (
-        const word& termName,
-        const dgBasisField& basis,
-        const tmp<cellGaussField<Type>>& tS
-    );
-
-    dgSourceTerm
-    (
-        const word& termName,
-        const dgBasisField& basis,
         const GaussField<Type>& S
     );
+
+    void clear();
 
     ~dgSourceTerm() = default;
 
     inline bool isSource() const override { return true; }
 
-    inline const cellGaussField<Type>& sourceField() const { return S_(); }
+    inline const cellGaussField<Type>& sourceField() const { return *S_; }
 
     inline const cellGaussField<Type>* sourceFieldPtr() const override
     {
-        return &S_();
+        return S_;
     }
 
     inline const word& termName() const { return termName_; }

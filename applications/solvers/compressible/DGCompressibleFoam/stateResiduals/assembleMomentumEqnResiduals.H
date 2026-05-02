@@ -21,16 +21,7 @@ const auto momentumFluxExpr =
 tmp<GaussField<tensor>> tMomentumFlux =
     dg::evaluate<tensor>(momentumFluxExpr, cellI, &dgMesh);
 
-dgConvectiveTerm<vector, tensor> momentumConvTerm
-(
-    "momentumConvTerm",
-    dgFluxSolver::equationType::momentumTransport,
-    dgFluxSolver::fluxType::convective,
-    basisField,
-    rhoUG,
-    tMomentumFlux,
-    fluxSolverManager
-);
+momentumConvTerm.add(rhoUG, tMomentumFlux);
 
 // Assemble the Newtonian viscous stress
 //
@@ -88,33 +79,23 @@ else
         );
 }
 
-dgDiffusiveTerm<vector, tensor> momentumDiffTerm
-(
-    "momentumDiffTerm",
-    dgFluxSolver::equationType::momentumTransport,
-    dgFluxSolver::fluxType::diffusive,
-    basisField,
-    rhoUG,
-    tMomentumDiffFlux,
-    fluxSolverManager
-);
+momentumDiffTerm.add(rhoUG, tMomentumDiffFlux);
 
-momentumConvTerm.updateFlux();
-momentumDiffTerm.updateFlux();
+momentumConvTerm.updateFlux(cellI);
+momentumDiffTerm.updateFlux(cellI);
 
-dgResidual<vector, tensor> momentumResidual(basisField);
+dgResidual<vector, tensor> momentumResidual(dgMesh, cellI);
 momentumResidual.addTerm(momentumConvTerm);
 momentumResidual.addTerm(momentumDiffTerm);
 
-std::optional<dgDiffusiveTerm<vector, tensor>>
-    artificialDiffusionMomentumTerm;
+tmp<GaussField<tensor>> tArtificialDiffusionMomentumFlux;
 
 if (artificialDiffusion)
 {
     const auto artificialDiffusionMomentumFluxExpr =
        -dg::expr(muAVG)*dg::expr(SRhoUG);
 
-    tmp<GaussField<tensor>> tArtificialDiffusionMomentumFlux =
+    tArtificialDiffusionMomentumFlux =
         dg::evaluate<tensor>
         (
             artificialDiffusionMomentumFluxExpr,
@@ -122,18 +103,13 @@ if (artificialDiffusion)
             &dgMesh
         );
 
-    artificialDiffusionMomentumTerm.emplace
+    artificialDiffusionMomentumTerm->add
     (
-        "artificialDiffusionMomentumTerm",
-        dgFluxSolver::equationType::momentumTransport,
-        dgFluxSolver::fluxType::diffusive,
-        basisField,
         rhoUG,
-        tArtificialDiffusionMomentumFlux,
-        fluxSolverManager
+        tArtificialDiffusionMomentumFlux
     );
 
-    artificialDiffusionMomentumTerm->updateFlux();
+    artificialDiffusionMomentumTerm->updateFlux(cellI);
     momentumResidual.addTerm(*artificialDiffusionMomentumTerm);
 }
 
@@ -161,7 +137,7 @@ timeDiscretization.addResidual
 //     dgSourceTerm<vector> momentumSourceTerm
 //     (
 //         "momentumSourceTerm",
-//         basisField,
+//         dgMesh,
 //         tMomentumSource()
 //     );
 //

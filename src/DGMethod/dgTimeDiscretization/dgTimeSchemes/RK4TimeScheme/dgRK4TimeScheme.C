@@ -194,7 +194,6 @@ void updateRK4Stage
         }
     }
 
-    U.gaussFields()[cellID].interpolateFromDof();
     U.dof().updateCellDof(cellID);
 }
 

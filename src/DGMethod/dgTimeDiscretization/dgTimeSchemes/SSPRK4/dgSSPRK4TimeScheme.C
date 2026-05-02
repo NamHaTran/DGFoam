@@ -63,8 +63,6 @@ void copyCell(dgField<Type>& dst, const dgField<Type>& src, const label cellID)
 template<class Type>
 void syncUpdatedCell(dgField<Type>& U, const label cellID)
 {
-    // Update the Gauss representation after changing the DoFs.
-    U.gaussFields()[cellID].interpolateFromDof();
     U.dof().updateCellDof(cellID);
 }
 

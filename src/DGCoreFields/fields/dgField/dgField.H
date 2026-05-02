@@ -232,6 +232,17 @@ public:
         void synch();
 
         /**
+         * \brief Refresh all Gauss values from the owned DoF field.
+         *
+         * Cell-interior values are interpolated for every cell.  For local
+         * internal faces, only the owner cell reconstructs the face traces;
+         * the neighbour cell copies the owner plus/minus traces with sides
+         * swapped.  Boundary and processor faces keep the existing local
+         * interpolation behaviour.
+         */
+        void interpolateFromDof();
+
+        /**
          * \brief Access neighbour DoFs for one face of one cell.
          *
          * This helper hides whether the neighbour is local (internal face)

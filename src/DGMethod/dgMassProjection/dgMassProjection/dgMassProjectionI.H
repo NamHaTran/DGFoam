@@ -337,7 +337,6 @@ void dgMassProjection::solveFieldCell
         cellDof[dofI] = cellResidual[dofI]/massDiag[dofI];
     }
 
-    field.gaussFields()[cellID].interpolateFromDof();
     field.dof().updateCellDof(cellID);
 }
 

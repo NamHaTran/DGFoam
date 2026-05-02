@@ -432,10 +432,7 @@ dgField<scalar>& dgArtificialDiffusionNonSmooth::updateMuAV()
         */
     }
 
-    for (label cellI = 0; cellI < mesh_.nCells(); ++cellI)
-    {
-        muAV_.gaussFields()[cellI].interpolateFromDof();
-    }
+    muAV_.interpolateFromDof();
 
     muAV_.synch();
 

@@ -29,6 +29,8 @@ Description
 #include "FixedList.H"
 #include "List.H"
 #include "dgBasisField.H"
+#include "dgGeomMesh.H"
+#include "dgGradProjectionTerm.H"
 #include "dgIntegralMath.H"
 #include "error.H"
 #include "pTraits.H"
@@ -112,7 +114,7 @@ private:
     /** Non-owning list of registered cell state fields. */
     FixedList<const cellGaussField<UType>*, maxTerms_> cellFields_;
 
-    /** Non-owning list of registered face state fields. */
+    /** Non-owning list of registered face fields with precomputed fluxes. */
     FixedList<const faceGaussField<UType>*, maxTerms_> faceFields_;
 
     /** Residual storage, indexed by [term][dof]. */
@@ -124,9 +126,9 @@ private:
 public:
 
     /** Construct an empty auxiliary residual assembler for one cell. */
-    auxEqnResidual(const dgBasisField& basis)
+    auxEqnResidual(const dgGeomMesh& dgMesh, const label cellID)
     :
-        basis_(basis),
+        basis_(dgMesh.basisField(cellID)),
         cellFields_(),
         faceFields_(),
         R_(),
@@ -134,11 +136,11 @@ public:
     {}
 
     /**
-     * \brief Register one state field for central auxiliary projection.
+     * \brief Register one gradient-projection term.
      *
      * The returned residual index is the order in which the field was added.
      */
-    label addTerm(const GaussField<UType>& U)
+    label addTerm(const dgGradProjectionTerm<UType>& term)
     {
         if (nTerms_ >= maxTerms_)
         {
@@ -148,6 +150,7 @@ public:
         }
 
         const label termI = nTerms_++;
+        const GaussField<UType>& U = term.stateField();
 
         cellFields_[termI] = &U.cellField();
         faceFields_[termI] = &U.faceField();
@@ -174,9 +177,9 @@ public:
     /**
      * \brief Assemble residuals for all registered terms.
      *
-     * The quadrature work is delegated to \c dgIntegralMath helpers:
-     * \c gradProjectionVolumeIntegrals() and
-     * \c gradProjectionCentralSurfaceIntegrals().
+     * The quadrature work is delegated to \c dgIntegralMath helpers.
+     * The surface contribution reads fluxes already calculated by
+     * dgGradProjectionTerm::calculateFlux().
      */
     void calcResidual()
     {
@@ -209,7 +212,7 @@ public:
                 );
             }
 
-            Foam::gradProjectionCentralSurfaceIntegrals<UType>
+            Foam::gradProjectionFluxSurfaceIntegrals<UType>
             (
                 basis_.getBasis(dofI).faceField(),
                 faceFields_,

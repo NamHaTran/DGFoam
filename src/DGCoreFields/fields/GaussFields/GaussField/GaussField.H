@@ -297,6 +297,15 @@ public:
          *
          * Updates both cell and face Gauss fields using
          * the associated dofField<Type>.
+         *
+         * \warning This cell-local API always reconstructs both minus and
+         * plus face values, regardless of whether this cell owns the face or
+         * is the neighbour.  Use it only when local plus/minus values must be
+         * refreshed for selected cells.  To keep shared face information
+         * consistent, also call interpolateFromDof() for the neighbouring
+         * cells of any cell updated this way.
+         * If you want to update all cells, it's more efficient to call 
+         * interpolateFromDof() of dgField.
          */
         void interpolateFromDof();
 

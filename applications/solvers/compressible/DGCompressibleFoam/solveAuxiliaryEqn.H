@@ -31,31 +31,58 @@
 
 massProjection.clearResiduals();
 
+dgGradProjectionTerm<scalar> rhoGradProjectionTerm
+(
+    "rhoGradProjectionTerm",
+    dgMesh
+);
+
+dgGradProjectionTerm<scalar> eGradProjectionTerm
+(
+    "eGradProjectionTerm",
+    dgMesh
+);
+
+dgGradProjectionTerm<vector> rhoUGradProjectionTerm
+(
+    "rhoUGradProjectionTerm",
+    dgMesh
+);
+
 forAll(mesh.cells(), cellI)
 {
     // Step 1a: gather the stage-consistent conservative Gauss fields for
     // this cell.  prepareStageFields.H has already synchronized primitive
     // values and applied conservative boundary conditions, so face minus,
     // plus, and boundary mid states are ready for the auxiliary projection.
-    const Foam::dgBasisField& basisField = dgMesh.basisField(cellI);
+    GaussField<scalar>& rhoG  = rho.gaussFields()[cellI];
+    GaussField<vector>& rhoUG = rhoU.gaussFields()[cellI];
+    GaussField<scalar>& EG    = E.gaussFields()[cellI];
 
-    const GaussField<scalar>& rhoG  = rho.gaussFields()[cellI];
-    const GaussField<vector>& rhoUG = rhoU.gaussFields()[cellI];
-    const GaussField<scalar>& EG    = E.gaussFields()[cellI];
+    // Step 1b: register one conservative state field per projection term and
+    // calculate the central face flux stored on the term's face field.
+    rhoGradProjectionTerm.add(rhoG);
+    rhoGradProjectionTerm.calculateFlux(cellI);
 
-    // Step 1b: register one conservative state field per auxiliary residual.
-    // Central internal-face states are evaluated directly during residual
-    // assembly; no separate gradient-projection term is needed.
-    auxEqnResidual<scalar> scalarAuxResidual(basisField);
-    const label rhoAuxTermI = scalarAuxResidual.addTerm(rhoG);
-    const label eAuxTermI = scalarAuxResidual.addTerm(EG);
+    eGradProjectionTerm.add(EG);
+    eGradProjectionTerm.calculateFlux(cellI);
 
-    auxEqnResidual<vector> vectorAuxResidual(basisField);
-    const label rhoUAuxTermI = vectorAuxResidual.addTerm(rhoUG);
+    rhoUGradProjectionTerm.add(rhoUG);
+    rhoUGradProjectionTerm.calculateFlux(cellI);
+
+    auxEqnResidual<scalar> scalarAuxResidual(dgMesh, cellI);
+    const label rhoAuxTermI =
+        scalarAuxResidual.addTerm(rhoGradProjectionTerm);
+    const label eAuxTermI =
+        scalarAuxResidual.addTerm(eGradProjectionTerm);
+
+    auxEqnResidual<vector> vectorAuxResidual(dgMesh, cellI);
+    const label rhoUAuxTermI =
+        vectorAuxResidual.addTerm(rhoUGradProjectionTerm);
 
     // Step 1c: assemble the modal residual for M S = R. Physical boundary
-    // C* values are read from the boundary-condition path; internal and
-    // processor C* values are computed as 0.5*(C- + C+) on read.
+    // C* values are read from the term flux; internal and processor C* values
+    // were computed as 0.5*(C- + C+) by calculateFlux().
     scalarAuxResidual.calcResidual();
     vectorAuxResidual.calcResidual();
 
@@ -95,12 +122,9 @@ forAll(mesh.cells(), cellI)
 // Refresh all Gauss values once more after every cell DoF has been solved.
 // This is needed because face plus/minus values depend on neighbouring cell
 // DoFs, which may have been updated after an earlier cell was projected.
-forAll(mesh.cells(), cellI)
-{
-    SRho.gaussFields()[cellI].interpolateFromDof();
-    SRhoU.gaussFields()[cellI].interpolateFromDof();
-    SE.gaussFields()[cellI].interpolateFromDof();
-}
+SRho.interpolateFromDof();
+SRhoU.interpolateFromDof();
+SE.interpolateFromDof();
 
 SRho.synch();
 SRhoU.synch();

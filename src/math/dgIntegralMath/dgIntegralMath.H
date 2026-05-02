@@ -402,6 +402,69 @@ inline void gradProjectionCentralSurfaceIntegrals
     }
 }
 
+
+/**
+ * \brief Surface integrals for precomputed gradient-projection face fluxes.
+ *
+ * The central state is calculated by dgGradProjectionTerm::calculateFlux() and
+ * stored in faceGaussField::flux_. For scalar projection, flux_ stores C* n.
+ * For vector projection, flux_ stores C* and the normal contraction is applied
+ * here to recover C* n as a tensor residual contribution.
+ */
+template<class Type, class FieldPtrList, class ResultList>
+inline void gradProjectionFluxSurfaceIntegrals
+(
+    const faceGaussField<scalar>& phi,
+    const FieldPtrList& fields,
+    const label nFields,
+    ResultList& results
+)
+{
+    using result_type = typename outerProduct<Type, vector>::type;
+
+    for (label fieldI = 0; fieldI < nFields; ++fieldI)
+    {
+        results[fieldI] = pTraits<result_type>::zero;
+    }
+
+    if (nFields == 0)
+    {
+        return;
+    }
+
+    const faceGaussField<Type>& first = *fields[0];
+    const label nFaces = first.nFaces();
+
+    for (label faceI = 0; faceI < nFaces; ++faceI)
+    {
+        const vector n = first.normals()[faceI];
+        const label nGauss = first.nGaussPerFace();
+        const List<scalar>& w = first.faces()[faceI]->weights();
+        const List<scalar>& J2D = first.faces()[faceI]->J2D();
+
+        for (label g = 0; g < nGauss; ++g)
+        {
+            const scalar JwPhi =
+                J2D[g]*w[g]*phi.minusValueOnFace(faceI, g);
+
+            for (label fieldI = 0; fieldI < nFields; ++fieldI)
+            {
+                const vector& flux =
+                    (*fields[fieldI]).fluxOnFace(faceI, g);
+
+                if constexpr (std::is_same_v<Type, scalar>)
+                {
+                    results[fieldI] += JwPhi*flux;
+                }
+                else
+                {
+                    results[fieldI] += JwPhi*(flux*n);
+                }
+            }
+        }
+    }
+}
+
 } // End namespace Foam
 
 #endif

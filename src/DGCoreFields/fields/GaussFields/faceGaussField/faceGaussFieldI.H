@@ -467,6 +467,106 @@ void Foam::faceGaussField<Type>::interpolateFromDof()
 
 
 template<class Type>
+void Foam::faceGaussField<Type>::interpolateOwnerFacesFromDof()
+{
+    const cellDof<Type>& cellPDof = *cellsDof_[0];
+
+    for (label localFaceI = 0; localFaceI < nFaces_; ++localFaceI)
+    {
+        const label faceID = (*facesID_)[localFaceI];
+        const bool isOwner = (mesh_->faceOwner()[faceID] == cellID_);
+
+        if (!isOwner && !faces_[localFaceI]->isBoundary())
+        {
+            continue;
+        }
+
+        const bool hasNeighbourDof =
+        (
+            cellsDof_.size() > localFaceI + 1
+         && cellsDof_[localFaceI + 1] != nullptr
+        );
+        const bool isBoundaryFace =
+            faces_[localFaceI]->isBoundary() || !hasNeighbourDof;
+
+        const dgGeomFace& face = *faces_[localFaceI];
+        const List<vector>& gpOwner = face.gaussPointsOwner();
+        const List<List<scalar>>& ownerBasis = face.ownerBasis();
+        const label offset = gaussOffset_[localFaceI];
+
+        forAll(gpOwner, i)
+        {
+            minusValues_[offset + i] = pTraits<Type>::zero;
+            for (label k = 0; k < cellPDof.nDof(); ++k)
+            {
+                minusValues_[offset + i] += cellPDof[k]*ownerBasis[i][k];
+            }
+        }
+
+        if (isBoundaryFace)
+        {
+            forAll(gpOwner, i)
+            {
+                plusValues_[offset + i] = minusValues_[offset + i];
+            }
+        }
+        else
+        {
+            const List<vector>& gpNeigh = face.gaussPointsNeighbor();
+            const List<List<scalar>>& neighborBasis = face.neighborBasis();
+            const cellDof<Type>& cellNDof = neighbourCellDof(localFaceI);
+
+            forAll(gpNeigh, i)
+            {
+                plusValues_[offset + i] = pTraits<Type>::zero;
+                for (label k = 0; k < cellNDof.nDof(); ++k)
+                {
+                    plusValues_[offset + i] += cellNDof[k]*neighborBasis[i][k];
+                }
+            }
+        }
+    }
+}
+
+
+template<class Type>
+void Foam::faceGaussField<Type>::copyNeighbourFaceFromOwner
+(
+    const label localFaceI,
+    const faceGaussField<Type>& ownerFaceField
+)
+{
+    if (localFaceI < 0 || localFaceI >= nFaces_)
+    {
+        FatalErrorInFunction
+            << "Face index " << localFaceI << " is out of range [0, "
+            << nFaces_ - 1 << "] for cell " << cellID_
+            << abort(FatalError);
+    }
+
+    const label faceID = (*facesID_)[localFaceI];
+    const label ownerLocalFaceI = ownerFaceField.localFaceIndex(faceID);
+
+    if (ownerFaceField.nGaussPerFace() != nGaussPerFace_)
+    {
+        FatalErrorInFunction
+            << "Gauss-point count mismatch on face " << faceID
+            << " between owner cell " << ownerFaceField.cellID()
+            << " and neighbour cell " << cellID_
+            << abort(FatalError);
+    }
+
+    for (label gI = 0; gI < nGaussPerFace_; ++gI)
+    {
+        minusValueOnFace(localFaceI, gI) =
+            ownerFaceField.plusValueOnFace(ownerLocalFaceI, gI);
+        plusValueOnFace(localFaceI, gI) =
+            ownerFaceField.minusValueOnFace(ownerLocalFaceI, gI);
+    }
+}
+
+
+template<class Type>
 boundaryGaussField<Type> Foam::faceGaussField<Type>::extractBCGhostState() const
 {
     label nBoundaryGauss = 0;

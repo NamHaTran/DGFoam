@@ -12,9 +12,7 @@
 //     mass     : convective + Franz-Durst mass diffusion
 //     momentum : convective + viscous/mass-diffusive stress + gravity
 //     energy   : convective + mechanical/thermal fluxes + volume sources
-const bool selfDiffusion = thermo->selfDiffusion();
 const scalar selfDiffCoeffScale = thermo->selfDiffCoeffScale();
-const bool artificialDiffusion = artificialDiffusionNonSmooth.enabled();
 const dgField<scalar>& muAV =
     artificialDiffusion
   ? artificialDiffusionNonSmooth.updateMuAV()
@@ -22,10 +20,6 @@ const dgField<scalar>& muAV =
 
 forAll(mesh.cells(), cellI)
 {
-    // dgBasisField exposes basis values/derivatives for the current cell and
-    // is reused by every PDE term assembled on this cell.
-    const Foam::dgBasisField& basisField = dgMesh.basisField(cellI);
-
     GaussField<vector>& UG      = U.gaussFields()[cellI];
     GaussField<scalar>& TG      = T.gaussFields()[cellI];
     GaussField<scalar>& pG      = p.gaussFields()[cellI];

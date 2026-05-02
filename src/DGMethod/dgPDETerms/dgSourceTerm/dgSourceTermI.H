@@ -32,46 +32,38 @@ template<class Type, class FType>
 Foam::dgSourceTerm<Type, FType>::dgSourceTerm
 (
     const word& termName,
-    const dgBasisField& basis,
+    const dgGeomMesh& dgMesh
+)
+:
+    termName_(termName),
+    dgMesh_(dgMesh),
+    S_(nullptr)
+{}
+
+
+template<class Type, class FType>
+void Foam::dgSourceTerm<Type, FType>::add
+(
     const cellGaussField<Type>& S
 )
-:
-    termName_(termName),
-    cellID_(basis.cellID()),
-    basis_(basis),
-    S_(new cellGaussField<Type>(S))
-{}
-
+{
+    S_ = &S;
+}
 
 template<class Type, class FType>
-Foam::dgSourceTerm<Type, FType>::dgSourceTerm
+void Foam::dgSourceTerm<Type, FType>::add
 (
-    const word& termName,
-    const dgBasisField& basis,
-    const tmp<cellGaussField<Type>>& tS
-)
-:
-    termName_(termName),
-    cellID_(basis.cellID()),
-    basis_(basis),
-    S_(tS)
-{}
-
-
-template<class Type, class FType>
-Foam::dgSourceTerm<Type, FType>::dgSourceTerm
-(
-    const word& termName,
-    const dgBasisField& basis,
     const GaussField<Type>& S
 )
-:
-    termName_(termName),
-    cellID_(basis.cellID()),
-    basis_(basis),
-    S_(new cellGaussField<Type>(S.cellField()))
-{}
+{
+    S_ = &S.cellField();
+}
 
+template<class Type, class FType>
+void Foam::dgSourceTerm<Type, FType>::clear()
+{
+    S_ = nullptr;
+}
 
 // * * * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * * //
 
