@@ -27,6 +27,7 @@ License
 \*---------------------------------------------------------------------------*/
 
 #include "dgCompressibleSlipWallBoundaryField.H"
+#include "dgThermoConservative.H"
 #include "addToRunTimeSelectionTable.H"
 
 namespace Foam
@@ -89,6 +90,22 @@ void dgCompressibleSlipWallBoundaryField::updatePrimitiveBCValue
     rhoBC  = rhoMinus;
     rhoUBC = rhoUMinus - (n & rhoUMinus)*n;
     EBC    = EMinus;
+}
+
+
+void dgCompressibleSlipWallBoundaryField::correctFlux
+(
+    const label,
+    const label,
+    const label,
+    const vector& n,
+    vector& flux
+) const
+{
+    if (thermo_.selfDiffusion())
+    {
+        flux -= (flux & n)*n;
+    }
 }
 
 

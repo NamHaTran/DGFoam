@@ -109,6 +109,15 @@ public:
         scalar& EBC
     ) const override;
 
+    virtual void correctFlux
+    (
+        const label cellID,
+        const label faceLocalID,
+        const label localGauss,
+        const vector& n,
+        vector& flux
+    ) const override;
+
     virtual void checkPatchType() const override;
 };
 
